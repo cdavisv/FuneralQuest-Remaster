@@ -1,59 +1,68 @@
-## Funeral Quest source code release
+# Funeral Quest
 
-Funeral Quest is kind of an attempt to create a web-based "daily turn" BBS style game.  It allows real humans to partake in the cut throat world
-of the death care industry by running competing funeral parlors.
+Funeral Quest is a web-based, daily-turn multiplayer game in the style of old BBS games. It lets real humans compete in the cutthroat world of the death care industry by running rival funeral parlors.
 
-I'm primarly releasing this because someone wants to look at the source for his own clone (Hi Richard!), but also so maybe it can live on in its own way.
-Feel free to port this to anything.  See license.txt for the license, it's Proton SDK's license, which is basically "do whatever you want" with attribution.
+I originally released the source because someone wanted to look at it for his own clone (Hi Richard!), but also so the game could live on in its own way. Feel free to port it to anything! See [License](#license) for the source and asset terms.
 
-For more info on setting it up, see:  https://www.codedojo.com/?p=2189
+For background and help setting up the original server, see the [source release blog post](https://www.codedojo.com/?p=2189). The [Funeral Quest website](https://www.rtsoft.com/pages/funeral_quest.php) has more information and links to community servers.
 
-If you just want to play, a list of active games is here: https://rtsoft.com/pages/funeral_quest.php
+## Screenshots
 
-### WARNING:
+Screenshots from the original game, courtesy of the [Funeral Quest website](https://www.rtsoft.com/pages/funeral_quest.php). Artwork by Akiko Robinson. Click an image to view it at full size.
 
-This is a home-built http server that runs a game, so assume it could be hacked or exploited in some way, so you probably shouldn't run it
-publicly on a box with sensitive info on it, just in case.  It's old code from a different time, I mean, it requires Flash on a webbrowser to work.
+| Deathville town map | Customer negotiations |
+| --- | --- |
+| [![Deathville map with shops, funeral parlors, and a cemetery](docs/screenshots/fq_town.jpg)](docs/screenshots/fq_town.jpg) | [![Negotiating a funeral sale with a customer](docs/screenshots/fq_customer.jpg)](docs/screenshots/fq_customer.jpg) |
 
-Changes made for this source release:
+| News and announcements | Visiting rival parlors |
+| --- | --- |
+| [![Writing an announcement for the Funeral Times newspaper](docs/screenshots/fq_news.jpg)](docs/screenshots/fq_news.jpg) | [![Preparing to visit rival funeral parlors](docs/screenshots/fq_player_attack.jpg)](docs/screenshots/fq_player_attack.jpg) |
 
-* Upgraded projects to work with Visual Studio 2019 (free versions works fine)
-* Removed dependency on StringEx class, it no longer works due to CString changes that Microsoft has made
-* Removed dependency on some DirectX 7(?) math stuff by removing Vector3 type from the scripting engine, it was leftover from TeenageLawnmower
-and totally not needed for FQ.
-* Stripped out drm/protection code
-* Removed sub projects like FQStress (stress tester), drm server system
+## Community web port
 
-### Notes:
+[Funeral Quest for PHP and cPanel](https://github.com/auzziejay/funeral-quest-web) by auzziejay reimplements the server in PHP and uses the original Flash client through the bundled Ruffle emulator, allowing play in modern browsers. Visit the project's README for hosting instructions, requirements, and a live demo link.
 
-- The "Play local" button that uses localhost worked, but only if I ran the server on port 80.  82 didn't work, not sure why
-- The multiplayer/communication is 100% http polling based, no special sockets or cors stuff to worry about.  However, not
-being https capable freak out browsers.  It should be possible to run it through an https proxy if you really had to though,
-I've done this with similar projects.
-- Flash/graphics are included so things should work out the box.
-- User passwords are not encrypted and visible to the admin running the game
-- The sounds/music used in the Flash files are properly licensed only for FQ and are not part of the license.
-- The artwork (Flash vector art, etc) is done by Akiko Robinson and IS released under the Proton SDK license, so feel free to use it, but please credit her.
-- The Flash source is the .fla files in the dist dir.  The dist/public dir is what the built in webserver allows the public to see and contains the .swf
-(the compiled flash) versions
-- The .c files in dist/script are written in a scripting language similar to C.  (Same one used in Teenage Lawnmower)  They are directly processed by the server
-and not compiled.  (they are not distributed to the player, which only sees the Flash files)
-- The scripting system and a few other things require linking with Compressed File Library library (CFL3 written by Jari Komppa, zlib license) so I'm including that as well.
-- Including SAPI lib to link against, this is Microsoft's text to speech system, it's probably part of WinSDK10 now but I was too lazy to check
-- This uses MFC (Microsoft Foundation Class library) for the GUI, so that's why the GUI source looks weird and insane and why the server isn't
-easily portable to linux.  Could be done though...
+## Original server warning
 
-### How to compile:
+This repository contains the original Windows/MFC server and Flash client. The server is a home-built HTTP server using old code, so assume it could be hacked or exploited. Avoid running it publicly on a machine with sensitive information.
 
-- Install Visual Studio 2019. Make sure you've included C++ and the latest Windows 10 SDK install options.
-- Open source/fq.sln and compile.  Both Debug or Release should create dist/fq.exe.   Running the file should start the server
-- Clicking the "Logon Channel 1" button should allow you to play locally via your browser.  (Chrome worked for me, although you have to enable Flash)
+Player passwords are stored unencrypted and are visible to the server administrator. The original client requires a Flash-compatible runtime; the community port above includes Ruffle for modern browsers.
 
-### Credits:
+## Changes made for this source release
+
+- Upgraded the projects to Visual Studio 2019 (the free edition works fine).
+- Removed the dependency on StringEx, which no longer worked after Microsoft's CString changes.
+- Removed the unused Vector3 type from the scripting engine, eliminating a dependency on old DirectX math code left over from Teenage Lawnmower.
+- Stripped out DRM and protection code.
+- Removed subprojects such as FQStress (the stress tester) and the DRM server system.
+
+## Notes
+
+- In my original testing, the "Play local" button worked on localhost only when the server used port 80. Port 82 didn't work; I'm not sure why.
+- Multiplayer communication uses HTTP polling, with no special sockets. The server does not support HTTPS directly, but it should be possible to put it behind an HTTPS proxy.
+- The Flash client and graphics are included.
+- Flash source files (`.fla`) are under `dist/`. The built-in web server exposes `dist/public/`, which contains the compiled Flash (`.swf`) files.
+- The `.c` files in `dist/script/` use a C-like scripting language, the same one used in Teenage Lawnmower. The server interprets them directly; they are not compiled or sent to players.
+- The scripting system and a few other components link against Compressed File Library (CFL3, written by Jari Komppa under the zlib license), which is included.
+- Microsoft's SAPI text-to-speech library is included for linking.
+- The server GUI uses MFC (Microsoft Foundation Classes), which makes porting it to Linux more involved.
+
+## How to compile the original server
+
+1. Install Visual Studio 2019 with C++ and the Windows 10 SDK.
+2. Open `source/fq.sln` and build either Debug or Release. Both should produce `dist/fq.exe`.
+3. Run `dist/fq.exe` to start the server. The "Logon Channel 1" button opens the local client in your browser; playing requires a Flash-compatible runtime.
+
+## License
+
+- The source code uses the [Proton SDK license](license.txt), which permits reuse and porting subject to its attribution and other terms.
+- Akiko Robinson's artwork, including the Flash vector art, is also released under the Proton SDK license. Please credit her when using it.
+- The sounds and music in the Flash files are licensed only for Funeral Quest and are not covered by that license.
+
+## Credits
 
 - Seth A. Robinson - Programming, design
 - Akiko Robinson - Art
 - Greg Smith - Additional design
 
-Funeral Quest is Copyright 2001 Robinson Technologies
-
+Funeral Quest is copyright 2001 Robinson Technologies.
