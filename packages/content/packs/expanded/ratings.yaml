@@ -1,9 +1,7 @@
-# Expanded pack: rating lines that fill Classic's empty slots (67-69) and replace its repeated
-# "top 20 percent" lines (88-90; slot 86 keeps it). Every other slot is inherited (merge: append).
+# Expanded pack: rating lines that fill the original's empty slots (67-69). Every other slot is
+# inherited (merge: append), including slots 88-90, where the original repeats the slot 86 line
+# ("top 20 percent"): the original dialog must remain, repeats and all (CLAUDE.md).
 
 '67': 'June brings you extra fortune cookies.'
 '68': 'The Deathville Enquirer spells your name right.'
 '69': 'Families ask for you by name. Mostly the right name.'
-'88': 'Old Man Withers has put down a deposit.'
-'89': 'People drive over from Blaine just to die here.'
-'90': 'Father Smyth sends you his own relatives.'

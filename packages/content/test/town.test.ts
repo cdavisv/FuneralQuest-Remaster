@@ -39,7 +39,7 @@ function withTown(edit: (t: ExpandedTownContent) => void): ContentPack {
   return p;
 }
 function lint(p: ContentPack): string[] {
-  return lintPack(p, { base: classicPack, assetIds: expandedIds }).map(formatIssue);
+  return lintPack(p, { assetIds: expandedIds }).map(formatIssue);
 }
 /** The lint finds `re` in the planted pack, and the clean pack does not have it. */
 function catches(edit: (t: ExpandedTownContent) => void, re: RegExp): void {
@@ -184,7 +184,7 @@ describe("the town lint", () => {
     expect(town().pictures.graveyard.bg).toBe("places/graveyard");
     expect(lint(expandedPack)).toEqual([]);
     // ...and not when only the Classic manifest is known.
-    const classicOnly = lintPack(expandedPack, { base: classicPack, assetIds }).map(formatIssue);
+    const classicOnly = lintPack(expandedPack, { assetIds }).map(formatIssue);
     expect(classicOnly).toContainEqual(expect.stringMatching(/pictures\.yaml: graveyard\.bg/));
     expect(expandedIds.has("places/graveyard")).toBe(true);
     expect(assetIds.has("places/graveyard")).toBe(false);

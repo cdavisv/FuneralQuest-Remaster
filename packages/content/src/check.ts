@@ -15,9 +15,10 @@ export interface PackIssue {
   /**
    * `schema`: the pack is malformed. `asset`: a picture id is not in the asset manifest. `lint`: the
    * pack loads but breaks a content rule (lint.ts: placeholders, duplicates, prices, lengths,
-   * banned terms).
+   * banned terms). `original`: a built-in pack lost or changed a line of the original 2001 text
+   * (original.ts), which the owner's rule forbids.
    */
-  kind: "schema" | "asset" | "lint";
+  kind: "schema" | "asset" | "lint" | "original";
 }
 
 export interface CheckOptions {

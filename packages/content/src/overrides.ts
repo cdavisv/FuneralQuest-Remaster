@@ -2,6 +2,13 @@ import type { ContentPack } from "@fq/core";
 import { z } from "zod";
 import { TABLE_KEYS, type TableKey } from "./tables.js";
 
+/**
+ * Text overrides are a tool for a sysop's own pack (`FQ_PACKS_DIR`). The built-in packs may not use
+ * them: the original 2001 dialog must remain (CLAUDE.md, EDITS.md), so `loadPackFromDirectory` with
+ * `forbidOverrides` (which the built-in loads set) rejects an overrides file, and the build compares
+ * every built-in pack with a fresh import of the original (original.ts).
+ */
+
 /** Why an edit exists. Anything outside these is not an edit the policy allows. */
 export const EDIT_CATEGORIES = [
   "minors",

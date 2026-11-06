@@ -11,11 +11,11 @@ import {
   validatePack,
   vintagePack,
 } from "../src/index.js";
-import { loadPackFromDirectory, VINTAGE_DIR } from "../src/node.js";
+import { CLASSIC_DIR, loadPackFromDirectory } from "../src/node.js";
 import { assetIds } from "./support.js";
 
 function mutable(): ContentPack {
-  return structuredClone(vintagePack);
+  return structuredClone(classicPack);
 }
 
 function messages(pack: unknown, assets = false): string[] {
@@ -134,7 +134,7 @@ describe("validatePack error messages name the file and the entry", () => {
       expect(error).toBeInstanceOf(PackValidationError);
       const e = error as PackValidationError;
       expect(e.issues).toHaveLength(2);
-      expect(e.message).toMatch(/^Content pack "vintage" is invalid:\n {2}- hard_sell\.yaml: /);
+      expect(e.message).toMatch(/^Content pack "classic" is invalid:\n {2}- hard_sell\.yaml: /);
       expect(e.message).toContain("\n  - ratings.yaml: must have exactly 100 entries");
     }
   });
@@ -155,20 +155,20 @@ describe("loadPackFromDirectory", () => {
     return d;
   }
 
-  it("loads the Vintage source directory back into the built Vintage pack", () => {
-    expect(loadPackFromDirectory(VINTAGE_DIR, { assetIds })).toStrictEqual(vintagePack);
+  it("loads the Classic source directory back into the built Classic pack", () => {
+    expect(loadPackFromDirectory(CLASSIC_DIR, { assetIds })).toStrictEqual(classicPack);
   });
 
   it("loads a full copy of a pack and accepts JSON files next to YAML ones", () => {
     const d = join(root, "copy");
-    cpSync(VINTAGE_DIR, d, { recursive: true });
+    cpSync(CLASSIC_DIR, d, { recursive: true });
     writeFileSync(join(d, "pack.yaml"), "id: my-town\n");
     rmSync(join(d, "swear_words.yaml"));
     writeFileSync(join(d, "swear_words.json"), JSON.stringify([{ bad: "darn", good: "gosh" }]));
     const pack = loadPackFromDirectory(d, { assetIds });
     expect(pack.id).toBe("my-town");
     expect(pack.swearWords).toEqual([{ bad: "darn", good: "gosh" }]);
-    expect(pack.events).toStrictEqual(vintagePack.events);
+    expect(pack.events).toStrictEqual(classicPack.events);
   });
 
   it("a pack that extends Classic only needs the tables it changes, and may add overrides", () => {

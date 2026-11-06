@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { vintagePack } from "../src/index.js";
+import { classicPack } from "../src/index.js";
 import {
   atoi,
   legacyLines,
@@ -40,8 +40,8 @@ describe("text is kept byte for byte", () => {
     expect(table.ranges[0]?.entries[0]?.message).not.toContain("\n");
   });
 
-  it("keeps the real vintage texts as written", () => {
-    const first = vintagePack.risks[0];
+  it("keeps the original texts as written", () => {
+    const first = classicPack.risks[0];
     expect(first?.startMessage).toContain('\\n\\n`wWoman: `$"Hello *SIR*');
     expect(first?.normalLabel).toBe("  Give ring");
     expect(first?.riskLabel).toBe("      Lie");
@@ -177,12 +177,12 @@ describe("risks.txt: a key a block omits keeps the previous block's value", () =
   });
 
   it("the real file: risk 8 inherits normal_url_bg from risk 7", () => {
-    expect(vintagePack.risks[6]?.normalBackground).toBe("blank");
-    expect(vintagePack.risks[7]?.normalBackground).toBe("blank");
+    expect(classicPack.risks[6]?.normalBackground).toBe("blank");
+    expect(classicPack.risks[7]?.normalBackground).toBe("blank");
   });
 
   it("the real file keeps only the first path of start_url_bg|path|comment", () => {
-    expect(vintagePack.risks[3]?.startBackground).toBe("background/background_celemony");
+    expect(classicPack.risks[3]?.startBackground).toBe("background/background_celemony");
   });
 });
 
@@ -237,13 +237,13 @@ describe("ratings.txt and karma.txt are exactly 100 slots (load_strings)", () =>
   });
 
   it("the built packs have 100 slots; ratings fills 97 of them and karma 75", () => {
-    for (const table of [vintagePack.ratings, vintagePack.karma]) expect(table).toHaveLength(100);
-    expect(vintagePack.ratings.filter((s) => s !== "")).toHaveLength(97);
-    expect(vintagePack.ratings[66]).toBe("");
-    expect(vintagePack.ratings[65]).toBe("Mr Yang even remembers your name.");
-    expect(vintagePack.karma.filter((s) => s !== "")).toHaveLength(75);
-    expect(vintagePack.karma[59]).toBe("");
-    expect(vintagePack.karma[99]).toBe("Angelic ");
+    for (const table of [classicPack.ratings, classicPack.karma]) expect(table).toHaveLength(100);
+    expect(classicPack.ratings.filter((s) => s !== "")).toHaveLength(97);
+    expect(classicPack.ratings[66]).toBe("");
+    expect(classicPack.ratings[65]).toBe("Mr Yang even remembers your name.");
+    expect(classicPack.karma.filter((s) => s !== "")).toHaveLength(75);
+    expect(classicPack.karma[59]).toBe("");
+    expect(classicPack.karma[99]).toBe("Angelic ");
   });
 });
 

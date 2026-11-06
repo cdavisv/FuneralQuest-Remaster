@@ -1,8 +1,10 @@
 /**
  * The banned-terms part of the content policy (packages/content/EDITS.md, docs/REMASTER_PLAN.md
  * 3.2): real brands and products, real people (celebrities, politicians, real killers), and slurs.
- * New content that uses one fails the build; lines inherited unchanged from the reviewed Classic
- * pack are exempt (EDITS.md lists the references that review decided to keep, such as Elvis).
+ * New content that uses one fails the build. The policy applies only to new text: every line of the
+ * original game (the Classic pack, which is the untouched 2001 text) is exempt and is never changed
+ * because of these lists (the original dialog must remain: CLAUDE.md, EDITS.md). The original has
+ * many such references (KFC, Coors, Paul Crouch, ...); this file does not apply to them.
  *
  * The lists cannot be complete: they catch the usual suspects and typos of habit (a real cleaner
  * named in a joke), not every brand in the world. Reviewers still read new content.

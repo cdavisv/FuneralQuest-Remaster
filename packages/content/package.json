@@ -2,7 +2,7 @@
   "name": "@fq/content",
   "version": "0.0.0",
   "private": true,
-  "description": "Funeral Quest content packs (Vintage, Classic and Expanded) with importer, schema and loaders.",
+  "description": "Funeral Quest content packs (Classic, the untouched original text; Expanded; Vintage, a deprecated alias of Classic) with importer, schema and loaders.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

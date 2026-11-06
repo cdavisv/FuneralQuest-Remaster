@@ -3,16 +3,17 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { checkPack, formatIssue } from "./check.js";
 import { lintPack } from "./lint.js";
+import { checkOriginal } from "./original.js";
 import { renderReport } from "./report.js";
 import {
   BUILT_DIR,
+  CLASSIC_DIR,
   expandedAssetIds,
-  importVintage,
+  importOriginal,
   loadAssetIds,
   loadBuiltInSources,
   renderBuiltPacks,
   renderSourcePack,
-  VINTAGE_DIR,
   writeFiles,
 } from "./sources.js";
 
@@ -31,20 +32,20 @@ function main(argv: string[]): number {
   const strict = flags.includes("--strict");
   if (command === "import") {
     const assetIds = loadAssetIds();
-    const { pack, notes } = importVintage({ assetIds });
+    const { pack, notes } = importOriginal({ assetIds });
     const files = { ...renderSourcePack(pack), "IMPORT_REPORT.txt": renderReport(notes) };
     const issues = checkPack(pack, { assetIds });
     for (const i of issues) console.error(`schema: ${formatIssue(i)}`);
     if (issues.some((i) => i.kind === "schema")) return 1;
     if (check) {
-      const stale = differences(VINTAGE_DIR, files);
+      const stale = differences(CLASSIC_DIR, files);
       for (const f of stale) console.error(`out of date: ${f}`);
       return stale.length > 0 ? 1 : 0;
     }
-    writeFiles(VINTAGE_DIR, files);
+    writeFiles(CLASSIC_DIR, files);
     const warnings = notes.filter((n) => n.level === "warning");
     console.log(
-      `Imported ${Object.keys(files).length} files into ${VINTAGE_DIR}: ${warnings.length} warnings, ${notes.length - warnings.length} quirk notes (see IMPORT_REPORT.txt).`,
+      `Imported ${Object.keys(files).length} files into ${CLASSIC_DIR}: ${warnings.length} warnings, ${notes.length - warnings.length} quirk notes (see IMPORT_REPORT.txt).`,
     );
     for (const w of warnings) console.log(`  warning: ${w.file}:${w.line ?? "-"}: ${w.message}`);
     return strict && warnings.length > 0 ? 1 : 0;
@@ -72,10 +73,15 @@ function main(argv: string[]): number {
       console.error(error instanceof Error ? error.message : String(error));
       return 1;
     }
-    const issues = lintPack(packs.expanded, {
-      base: packs.classic,
-      assetIds: expandedAssetIds(assetIds),
-    }).filter((i) => filter === undefined || `${i.file} ${i.path}`.includes(filter));
+    // The original-text rule first (every built-in pack against a fresh import), then the policy
+    // lint of the Expanded pack's new text.
+    const original = importOriginal({ assetIds }).pack;
+    const issues = [
+      ...checkOriginal(packs.classic, original, { exact: true }),
+      ...checkOriginal(packs.vintage, original, { exact: true }),
+      ...checkOriginal(packs.expanded, original),
+      ...lintPack(packs.expanded, { original, assetIds: expandedAssetIds(assetIds) }),
+    ].filter((i) => filter === undefined || `${i.file} ${i.path}`.includes(filter));
     for (const i of issues) console.error(`${i.kind}: ${formatIssue(i)}`);
     console.log(`${issues.length} problem(s).`);
     return issues.length > 0 ? 1 : 0;

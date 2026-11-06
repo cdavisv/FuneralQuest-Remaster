@@ -23,6 +23,7 @@ A free, open-source remaster of Funeral Quest (Robinson Technologies, 2001). Rea
 - TypeScript strict, ES modules, `.js` extensions in relative imports, no `any`.
 - Classic rules are ported line by line from `legacy/source/`. Cite the source file and lines in a comment on each ported function, keep the original order of random draws, and add tests that cite the same lines.
 - When a rule is ported, change its section in `docs/classic-rules.md` from "Reviewed" to "Ported" and correct anything the review got wrong.
+- **Original content is kept exactly as it was: dialog, game content and behaviour, and visuals** (owner's rule, 2026-11-06). Do not censor it or apply modern ethical judgments to it. Never edit, soften, replace or remove an original line, picture or behaviour for reasons of taste, sensitivity or ethics, in any pack or mode. The Classic pack is the untouched original text and the Classic art pack the untouched original art; Expanded may add but must not replace or drop original material; content-policy and banned-term checks apply only to newly written text. Bug and exploit fixes listed in `docs/classic-rules.md` section 9 are a separate matter and stay behind rules flags.
 - Game text shown to players is data in a content pack, not string literals in engine code, unless the original hard-coded it and no pack exists yet.
 - Text is never HTML. Use the `RichText` spans from `packages/protocol`.
 - Legacy text files are CRLF and some are ISO-8859-1; `legacy/dist/script/*.c` are UTF-16 (read them with `iconv -f UTF-16`).

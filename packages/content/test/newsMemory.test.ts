@@ -21,7 +21,7 @@ import { describe, expect, it } from "vitest";
 import { applyNews, rollNews } from "../../core/src/expanded/town/world.js";
 import { makeXTown } from "../../core/test/support/expanded.js";
 import { edit, frontPage } from "../../core/test/support/xtown.js";
-import { classicPack, expandedPack, formatIssue, lintPack } from "../src/index.js";
+import { expandedPack, formatIssue, lintPack } from "../src/index.js";
 import { arcPaths, endingDays, newsConditionDay } from "../src/townLint.js";
 import { ctx, playToEnding } from "./arcPlay.js";
 import { expandedIds } from "./support.js";
@@ -33,7 +33,7 @@ const T = (() => {
 })();
 
 function lint(p: ContentPack): string[] {
-  return lintPack(p, { base: classicPack, assetIds: expandedIds }).map(formatIssue);
+  return lintPack(p, { assetIds: expandedIds }).map(formatIssue);
 }
 function planted(edit: (t: ExpandedTownContent, p: ContentPack) => void): string[] {
   const p = structuredClone(expandedPack);

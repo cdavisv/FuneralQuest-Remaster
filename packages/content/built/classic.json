@@ -479,7 +479,7 @@
             "message": "Your financial investments will sour."
           },
           {
-            "message": "Whoever drops a watch in the toilet is bound to have a crappy time."
+            "message": "Man who drop watch in toilet bound to have crappy time."
           },
           {
             "message": "Your favorite tv show will be canceled soon."
@@ -497,7 +497,7 @@
             "message": "Stay away from large ocean liners."
           },
           {
-            "message": "Anyone who stands on the toilet is high on pot."
+            "message": "Man who stand on toilet is high on pot."
           },
           {
             "message": "Buy life insurance.  Soon."
@@ -515,13 +515,13 @@
             "message": "Beware video tapes you thought you erased."
           },
           {
-            "message": "Baseball is wrong.  A man with four balls cannot walk."
+            "message": "Baseball wrong.  Man with four balls no walk."
           },
           {
             "message": "Do unto others, then run."
           },
           {
-            "message": "Anyone who runs behind a car gets exhausted."
+            "message": "Man who run behind car get exhausted."
           },
           {
             "message": "Chef without utensils can still find ways to stir soup."
@@ -1019,7 +1019,7 @@
   "hardSell": [
     {
       "article": "a",
-      "name": "Evergreen Lawn Premier Double Plot",
+      "name": "Forest Lawn Premier Double Plot",
       "price": 2250
     },
     {
@@ -1108,7 +1108,7 @@
     "Graffiti is a problem.",
     "Smell in the back alley is noticable.",
     "The preppy kids bury friends here.",
-    "Fairly popular for tailgate funerals.",
+    "Fairly popular for white trash funerals.",
     "Need mafia help.",
     "Phone soliciters calling often.",
     "Undead attacks common.",
@@ -1153,7 +1153,7 @@
     "Donates to charity.",
     "Shook hands with the president.",
     "Aquired a date with June.",
-    "You listen to the Lip Sync Brothers",
+    "You listen to Milli Vanilli",
     "Your parlor is in the top 20 percent.",
     "Even your relatives use you now!",
     "Your parlor is in the top 20 percent.",
@@ -1173,8 +1173,8 @@
   "karma": [
     "Demon Like (really evil karma is in red)",
     "Satan Himself",
-    "Bishop Billy Bucks",
-    "Media Conglomerate Executive",
+    "Paul Crouch",
+    "Sony Executive",
     "Tobbaco lawyer",
     "Eats Children",
     "Producer",
@@ -1184,19 +1184,19 @@
     "Might 'help' people get to your place",
     "Drug dealer",
     "Mobster",
-    "Dial-Up Online user",
-    "Couch Web Box user",
+    "AOL user",
+    "WebTV user",
     "Laughs at greeting cards",
-    "Enjoys Johnny Latenight",
-    "Kicks puppies",
-    "Steals candy from the church bake sale",
+    "Enjoys Jay Leno",
+    "Beats kids",
+    "Gives 'candy' to kids",
     "Cheap Porn star",
     "Bootlegs PlayStation CDs",
     "Bootlegs Id games",
-    "Enjoys Silver Moose Light",
-    "Eats at Colonel Clucky's",
+    "Enjoys Coors light",
+    "Eats at KFC",
     "Bootlegs Dreamcast CDs",
-    "Entertained by the Monster Truck Channel",
+    "Entertained by TNN",
     "Likes Hunting Games",
     "Plays UNO",
     "Knows all the Pokemon's names",
@@ -1207,7 +1207,7 @@
     "Nice guy, but evil",
     "Pops children's balloons",
     "Pets run from you",
-    "Enjoyed 'Mission to Neptune'",
+    "Enjoyed 'Mission to Mars'",
     "Has a cable \"black box\"",
     "Starves goldfish",
     "Hits on nuns",
@@ -1521,7 +1521,7 @@
       "sympathyLoved": [
         "{customer}\"It's just.. I feel like {dHe} is just in another room, you know?\"",
         "{customer}\"I still have dreams.. of {dHim} getting {dSmashed} a {dFridge} over and over.\"",
-        "{customer}\"I mean, usually someone's {dRelation} is close.. but we were REALLY close, we even shared a toothbrush.\"",
+        "{customer}\"I mean, usually someone's {dRelation} is close.. but we were REALLY close if you know what I mean.\"",
         "{customer}\"I appreciate what you're trying to do but I need to get this over with..for ${limit} or less..\""
       ],
       "interrupted": "`$You are interrupted!\n\n",
@@ -1733,8 +1733,8 @@
         "tv": "A Yang's commercial comes on. It looks like {parlor} in the background.",
         "news": [
           "`7SPOTLIGHT ON OUR TOWN\r\n`^Local mortician {name} is seen buying some Yang's for delivery.\r\n\r\n",
-          "`7YANG'S NOW DELIVERS\r\n`^\"Yes, delivery is very popular.  You see this package from {name}? I am going to deliver it all the way to {parlor}, no extra charge!\" Mr Yang smiles.\r\n\r\n",
-          "`7YANG'S DOING WELL\r\n`^\"Ah, yes.  Business is very good today! People like {name} are ordering so much delivery,\" Mr Yang comments.\r\n\r\n",
+          "`7YANG'S NOW DELIVERS\r\n`^\"Yes, delivery is very popular.  You see this package from {name}? I'm going deliver it all the way to {parlor}, no extra charge!\" Mr Yang smiles.\r\n\r\n",
+          "`7YANG'S DOING WELL\r\n`^\"Ah, yes.  Business is very good today! People like {name} buying so much delivery,\" Mr Yang comments.\r\n\r\n",
           "`7YANG'S MAKES A GREAT GIFT\r\n`^Looking for that special gift?  How about food? Today {name} was seen buying some, seems popular.\r\n\r\n"
         ],
         "tigerMail": "\n`$Some delicious smelling chinese food has been left on your doorstep.\nYour fortune cookie reads:\n`w\"{fortune}\"\n`$You lose `w{luck}`$ luck!\n",

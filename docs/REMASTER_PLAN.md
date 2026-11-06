@@ -67,9 +67,13 @@ Classic keeps every formula, probability, draw order and line of text. Exception
 | Free events, risks and script events; +200 exact-match bonus; random soft-sell item; duplicate soft-sell items | Kept |
 | Adult customer with a teen "girlfriend/boyfriend" deceased (`source/create_customer.cpp:113-118, 165-170`) | Fixed in the generator in every mode |
 
-**Text packs.** Classic ships with two interchangeable packs:
-- **Classic** (default): original text with a light edit for the handful of slurs, the lines about minors, and real brands and people.
-- **Vintage 2001**: the untouched original text, opt-in behind a content advisory, selectable per town by the sysop.
+**The original dialog stays (owner's rule, 2026-11-06).** The original 2001 dialog, even if dated or controversial, must remain. No built-in pack, mode or setting edits, softens, replaces or removes an original line. This replaces the earlier two-text-pack design (a lightly edited Classic and an untouched "Vintage 2001"): there is one original text and nobody is offered an edited version of it.
+
+- **Classic pack** (`classic`): the untouched original text, byte for byte: every table of `legacy/dist/*.txt` and every string the original C++ hard-coded (`CLASSIC_TEXT`). It is the default for Classic-ruleset towns and has no edits and no overrides.
+- **Expanded pack** (`expanded`): Classic plus newly written material. It may add lines (including to slots the original left empty) but never replaces or drops an original one; where the engine reads a table by position (hard-sell upgrades, soft sells, risks, ratings and karma slots, mood bands, hearses) every original entry stays at its original index.
+- **`vintage`** is a deprecated alias of `classic` (the same data under the old id), kept only so saves, towns and imports that name it still load. Nothing new should select it.
+- **Content policy applies only to new text.** The banned-terms and other policy lints (brands, real people, slurs, placeholders, lengths) hold the newly written Expanded text and are never applied to, or used to justify changing, an original line.
+- **Enforced, not trusted.** `@fq/content` fails the pack build, and its tests fail, if any built-in pack lacks any original line unchanged (compared with a fresh import of `legacy/dist` and `CLASSIC_TEXT`, slot by slot, entry by entry and string by string), or if a built-in pack has an overrides file. The record of what was reverted and what new lines await the owner's decision is `packages/content/EDITS.md`.
 
 ### 3.3 Expanded ruleset
 
