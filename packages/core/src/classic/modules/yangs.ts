@@ -173,7 +173,7 @@ function deliver(turn: Turn, dish: Dish, answer: string | null): View {
     data !== null && typeof data === "object" && !Array.isArray(data) ? Number(data.target) : -1;
   // "12ABORT12": the prompt was cancelled (:378-384).
   if (answer === null || target === -1) return showMenu(turn);
-  // The original never filtered fortunes; `filterUserText` does when `rules.filterUserText` is on.
+  // The original never filtered fortunes; `filterUserText` does only when `rules.filterUserText` is on (Expanded).
   let fortune = filterUserText(turn, answer.trim(), "fortune");
   const t = turn.text.places.yangs;
   const rule = turn.rules.places.yangs[dish];

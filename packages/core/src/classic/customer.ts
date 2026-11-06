@@ -91,18 +91,6 @@ export interface Customer {
   desiredCasket: Casket;
 }
 
-export interface CustomerRules {
-  /**
-   * The 2001 generator can pair an adult with a 15 to 19 year old as lovers.
-   * The remaster turns that outcome off in every mode; set this to true only
-   * to reproduce the original output exactly in parity tests. The random
-   * draws are consumed either way, so the rest of the customer is unchanged.
-   */
-  allowMinorAdultLover: boolean;
-}
-
-export const DEFAULT_CUSTOMER_RULES: CustomerRules = { allowMinorAdultLover: false };
-
 /** legacy/source/online_struct.cpp:611-622 */
 export function ageRangeOf(age: number): AgeRange {
   if (age >= 60) return AgeRange.Old;
@@ -118,26 +106,25 @@ function randomAge(rng: ClassicRandom, range: AgeRange): number {
 
 /**
  * Port of `define_relationship_with_the_deceased`
- * (legacy/source/create_customer.cpp:31-199). The branch structure and the
- * draws mirror the original, including the adult/adult case where the lover
- * and friend outcomes are unreachable.
+ * (legacy/source/create_customer.cpp:31-199), unaltered: every pairing of
+ * customer and deceased age range the original produces is produced here,
+ * with the same draws. The branch structure mirrors the original, including
+ * the adult/adult case where the lover and friend outcomes are unreachable.
+ * Exported so the tests can walk the table branch by branch.
  */
-function relationFor(
+export function defineRelationship(
   rng: ClassicRandom,
   customer: AgeRange,
   deceased: AgeRange,
   differentSex: boolean,
-  rules: CustomerRules,
 ): Relation {
-  const minorLover = rules.allowMinorAdultLover;
-
   if (customer === AgeRange.Teen) {
     if (deceased === AgeRange.Kid) return Relation.Sibling;
     if (deceased === AgeRange.Teen) {
       return rng.random(3) === 1 && differentSex ? Relation.Lover : Relation.Sibling;
     }
     if (deceased === AgeRange.Adult) {
-      return rng.random(3) === 1 && differentSex && minorLover ? Relation.Lover : Relation.Parent;
+      return rng.random(3) === 1 && differentSex ? Relation.Lover : Relation.Parent;
     }
     return Relation.GrandParent;
   }
@@ -145,7 +132,7 @@ function relationFor(
   if (customer === AgeRange.Adult) {
     if (deceased === AgeRange.Kid) return Relation.Child;
     if (deceased === AgeRange.Teen) {
-      return rng.random(3) === 1 && differentSex && minorLover ? Relation.Lover : Relation.Child;
+      return rng.random(3) === 1 && differentSex ? Relation.Lover : Relation.Child;
     }
     if (deceased === AgeRange.Adult) {
       return rng.random(6) > 3 && differentSex ? Relation.Spouse : Relation.Sibling;
@@ -159,9 +146,7 @@ function relationFor(
   if (customer === AgeRange.Old) {
     if (deceased === AgeRange.Kid) return Relation.GrandChild;
     if (deceased === AgeRange.Teen) {
-      return rng.random(10) === 1 && differentSex && minorLover
-        ? Relation.Lover
-        : Relation.GrandChild;
+      return rng.random(10) === 1 && differentSex ? Relation.Lover : Relation.GrandChild;
     }
     if (deceased === AgeRange.Adult) {
       const roll = rng.random(10);
@@ -185,10 +170,7 @@ function relationFor(
  * Port of `create_random_customer` (legacy/source/create_customer.cpp:242-293).
  * The order of random draws is part of the contract.
  */
-export function createRandomCustomer(
-  rng: ClassicRandom,
-  rules: CustomerRules = DEFAULT_CUSTOMER_RULES,
-): Customer {
+export function createRandomCustomer(rng: ClassicRandom): Customer {
   const customerMale = rng.random(2) === 0;
   // Kids are never customers, so the range roll skips 0.
   const customerAge = randomAge(rng, (1 + rng.random(3)) as AgeRange);
@@ -196,12 +178,11 @@ export function createRandomCustomer(
   const deceasedMale = rng.random(2) === 0;
   const deceasedAge = randomAge(rng, rng.random(4) as AgeRange);
 
-  const relation = relationFor(
+  const relation = defineRelationship(
     rng,
     ageRangeOf(customerAge),
     ageRangeOf(deceasedAge),
     customerMale !== deceasedMale,
-    rules,
   );
 
   const income = rng.random(4) as Income;

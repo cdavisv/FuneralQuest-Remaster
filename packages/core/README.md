@@ -86,7 +86,7 @@ The engine reads a `ContentPack` (`src/content/types.ts`): events, news blurbs, 
 
 ## Rules
 
-`CLASSIC_RULES` holds every tunable: Game Settings defaults (copied into `town.settings`), prices, BP multiplier, bonuses, mood and cheapness nudges, psych formulas, odds, the hearse table, and `fixes` (the deliberate fixes, `true` = fixed). `originalClassicRules()` turns every fix off for parity tests.
+`CLASSIC_RULES` holds every tunable: Game Settings defaults (copied into `town.settings`), prices, BP multiplier, bonuses, mood and cheapness nudges, psych formulas, odds, the hearse table, and `fixes` (the gameplay bug and exploit fixes of `docs/classic-rules.md` section 9, `true` = fixed). `originalClassicRules()` turns every fix off for parity tests. Original content is never altered on grounds of taste, so no rule switches any of it: the customer generator is the original's (`defineRelationship` ports `create_customer.cpp:31-199` unaltered), and the swear filter runs where the original ran it (new names, announcements, chat, `/me`, `/yell`, battle quotes). `filterUserText` is a host option for moderating what live players send each other: false in Classic, as the original never filtered mail or Yang's fortunes, and true in Expanded.
 
 ## The Expanded ruleset
 
@@ -94,7 +94,7 @@ The engine reads a `ContentPack` (`src/content/types.ts`): events, news blurbs, 
 
 - Code: `src/expanded/` (customer, negotiation, sale, scoring, parlor, pvp, newDay, wait, modifiers, scripts, panels, modules/), rules in `src/rules/expandedRules.ts`, content types in `src/expanded/content/types.ts`, the content check `checkExpandedContent`.
 - Hooks for later systems: `Registry.onMaintenance`, `onPlayerNewDay`, `onPlayerCreated`, `onView` (decorates every view; Expanded's adds the HUD panels of section 11.5), and `LocationModule.sessionEnd`; temporary rule changes with `addModifier` / `modValue`.
-- Classic is locked by `test/classicRegression.test.ts`: hashed transcripts of whole Classic playthroughs. Re-record only after a deliberate Classic change: `UPDATE_CLASSIC_TRANSCRIPTS=1 pnpm --filter @fq/core test classicRegression`. It was re-recorded once, for the empty mail overlay fix (section 1.3 says how the difference was proved).
+- Classic is locked by `test/classicRegression.test.ts`: hashed transcripts of whole Classic playthroughs. Re-record only after a deliberate Classic change: `UPDATE_CLASSIC_TRANSCRIPTS=1 pnpm --filter @fq/core test classicRegression`. It was re-recorded twice: for the empty mail overlay fix, and for restoring the original customer relationships and unfiltered mail and fortunes in Classic (section 1.3 says how each difference was proved).
 
 ## Tests
 

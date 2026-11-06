@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  CLASSIC_RULES,
   type EngineContext,
+  EXPANDED_RULES,
   enterGame,
   originalClassicRules,
   richTextToPlain,
   type StepResult,
   type TownState,
 } from "../src/index.js";
-import { context } from "./support/harness.js";
 import { act, chatFor, edit, ids, press, socialTown, submit } from "./support/social.js";
 
 const plain = richTextToPlain;
@@ -198,16 +199,22 @@ describe("letters (commands_getname.cpp, commands_send_mail.cpp, broadcast.cpp:2
     expect(chatFor(r, 1)).toEqual(["You have mail waiting for you at your parlor."]);
   });
 
-  it("mail is swear-filtered by default (filterUserText) and left alone with the original rules", () => {
-    const filtered = socialTown(5, 2);
-    const a = write(filtered.town, 0, "Morticia", "you shit", filtered.ctx);
-    const m = a.town.players[1]?.mail[0];
+  it("mail is left as typed in Classic: the original never filtered it (commands_send_mail.cpp has no swear_check)", () => {
+    const { town, ctx } = socialTown(5, 2);
+    const r = write(town, 0, "Morticia", "you shit", ctx);
+    const m = r.town.players[1]?.mail[0];
+    expect(m?.type === "text" && m.text).toContain("you shit");
+  });
+
+  it("the filterUserText host option filters mail; Expanded turns it on, Classic leaves it off", () => {
+    expect(CLASSIC_RULES.filterUserText).toBe(false);
+    expect(originalClassicRules().filterUserText).toBe(false);
+    expect(EXPANDED_RULES.filterUserText).toBe(true);
+    const rules = { ...CLASSIC_RULES, filterUserText: true };
+    const { town, ctx } = socialTown(5, 2, { rules });
+    const r = write(town, 0, "Morticia", "you shit", ctx);
+    const m = r.town.players[1]?.mail[0];
     expect(m?.type === "text" && m.text).toContain("you shoot");
-    const ctx = context(originalClassicRules());
-    const orig = socialTown(5, 2, { rules: originalClassicRules() });
-    const b = write(orig.town, 0, "Morticia", "you shit", ctx);
-    const n = b.town.players[1]?.mail[0];
-    expect(n?.type === "text" && n.text).toContain("you shit");
   });
 
   it("a recipient deleted meanwhile: Can't email (commands_send_mail.cpp:12-20)", () => {

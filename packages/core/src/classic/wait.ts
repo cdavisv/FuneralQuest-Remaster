@@ -26,7 +26,7 @@ export function waitForCustomer(turn: Turn): View {
   const rng = turn.rng;
   if (rng.frandom(1) < f32(settings.normalOdds)) return freeEvent(turn);
 
-  turn.session.customer = customerStateFrom(createRandomCustomer(rng, turn.rules.customer));
+  turn.session.customer = customerStateFrom(createRandomCustomer(rng));
 
   if (rng.frandom(1) < f32(settings.luckOdds)) return startRisk(turn);
 

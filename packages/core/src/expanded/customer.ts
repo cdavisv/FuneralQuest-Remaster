@@ -196,7 +196,7 @@ export function generateCustomer(turn: Turn, practice = false, incomeExtra = 0):
   const rng = turn.rng;
   const p = turn.player;
   const x = xp(turn);
-  const base = customerStateFrom(createRandomCustomer(rng, turn.rules.customer));
+  const base = customerStateFrom(createRandomCustomer(rng));
   const c: CustomerState = { ...base };
 
   const special = practice ? undefined : chooseSpecial(turn);
