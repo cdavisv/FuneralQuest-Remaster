@@ -121,7 +121,7 @@ Built almost entirely from the original authors' own cut ideas, in priority orde
 ## 4. Engine and architecture
 
 ### 4.1 Stack
-- **Language:** TypeScript (strict) everywhere. Node 22+, pnpm workspaces.
+- **Language:** TypeScript (strict) everywhere. Node 24+, pnpm workspaces.
 - **Rules engine:** a pure package with no I/O. `step(state, action, rng) → { state, view, effects }`. It runs on the server for multiplayer and in a Web Worker for Solo Career.
 - **Server:** Fastify, WebSocket for chat, TV broadcasts and presence, plain HTTP POST for game actions. SQLite via Drizzle (the original peaked near 230 logins a day; one file is plenty). One Docker image.
 - **Client:** Vite + React, DOM and SVG rendering, CSS and GSAP for motion, Howler for audio. Installable as a PWA.

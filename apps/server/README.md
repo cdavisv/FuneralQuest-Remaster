@@ -346,7 +346,7 @@ The engine silently removes some characters from a player's name and parlor name
 
 ## Persistence
 
-SQLite through the built-in `node:sqlite` (Node 22.13 or newer), in WAL mode.
+SQLite through the built-in `node:sqlite` (Node 24 or newer), in WAL mode.
 
 | Table                  | Holds                                                                                                                                                                              |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -31,7 +31,7 @@ tauri://localhost,http://tauri.localhost,https://localhost,capacitor://localhost
 
 ## Desktop (Tauri 2)
 
-Prerequisites: Node 22.13+, pnpm 12, Rust (stable, 1.77+), and for Linux the WebKitGTK stack (Arch: `webkit2gtk-4.1 gtk3 librsvg libayatana-appindicator`; Debian/Ubuntu: `libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf`).
+Prerequisites: Node 24+, pnpm 12, Rust (stable, 1.77+), and for Linux the WebKitGTK stack (Arch: `webkit2gtk-4.1 gtk3 librsvg libayatana-appindicator`; Debian/Ubuntu: `libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf`).
 
 ```sh
 pnpm install

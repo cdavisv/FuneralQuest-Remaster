@@ -11,7 +11,7 @@ The original 2001 server, Flash client and content are kept untouched in [`legac
 
 ## Play it in five minutes
 
-You need [Node.js](https://nodejs.org) 22.13 or newer and [pnpm](https://pnpm.io) 12 (`corepack enable` gives you the right one).
+You need [Node.js](https://nodejs.org) 24 or newer and [pnpm](https://pnpm.io) 12 (`corepack enable` gives you the right one).
 
 ```sh
 git clone <this repository> && cd FuneralQuest-Remaster

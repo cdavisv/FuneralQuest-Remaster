@@ -28,7 +28,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24
           cache: pnpm
       - uses: actions/setup-java@v4
         with:
@@ -71,7 +71,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Web bundle and cap sync

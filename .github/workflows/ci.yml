@@ -19,9 +19,10 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          # The floor, not the latest: node:sqlite (the server's database) needs 22.13, and
-          # vitest 5 supports 22.12+, 24 and 26+. Raise this together with "engines".
-          node-version: 22.13
+          # The floor, not the latest. Node 24 is needed because the solo and simulator tests
+          # start TypeScript worker threads, which fail to load on Node 22. Raise this together
+          # with "engines".
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
@@ -36,7 +37,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       # Derives the Classic UI art, typechecks, bundles the app, the Solo worker, the service
@@ -57,7 +58,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Install the browser

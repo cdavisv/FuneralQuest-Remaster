@@ -5,7 +5,7 @@
   "description": "Funeral Quest game server: Fastify, WebSocket, SQLite, day scheduler, admin API.",
   "type": "module",
   "engines": {
-    "node": ">=22.13"
+    "node": ">=24"
   },
   "exports": {
     ".": "./src/index.ts",
