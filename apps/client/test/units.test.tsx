@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createAudioManager } from "../src/audio/AudioManager.js";
@@ -76,10 +76,13 @@ describe("audio", () => {
     const spy = vi.spyOn(audio, "cue");
     renderGame(new ScriptedTransport(OVERLAY_FIXTURES.message), { audio });
     await screen.findByRole("dialog");
-    expect(spy).toHaveBeenCalledWith(
-      FIXTURES.desk.music,
-      ["cash"],
-      expect.objectContaining({ scene: "desk" }),
+    // The cue is handed over in an effect, which on a slow machine can run after the dialog shows.
+    await waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(
+        FIXTURES.desk.music,
+        ["cash"],
+        expect.objectContaining({ scene: "desk" }),
+      ),
     );
   });
 
