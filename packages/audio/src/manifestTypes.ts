@@ -8,9 +8,16 @@ export interface ManifestTrack {
   channels: number;
   /** Seconds in the file (a loop file has a lead-in and an overrun around the loop). */
   duration: number;
-  /** One entry per stem (the negotiation has three); paths relative to assets/audio/. */
+  /** One entry per stem (the negotiation has three); paths relative to the pack's directory. */
   files: { ogg: string; m4a: string; bytes: number }[];
   /** For loops: play from 0, then loop between these (seconds). */
+  /**
+   * How a player combines several stems. "mix" (the default, the Synth pack): the stems are
+   * layers of one piece and add up. "crossfade" (the Studio pack's negotiation): each stem is a
+   * whole piece in the same key, tempo and bar count, and one at a time is heard; a change of
+   * stem crossfades on a bar line (see `stemGains` and `nextBarTime`).
+   */
+  layerMode?: "mix" | "crossfade";
   loopStart?: number;
   loopEnd?: number;
   /**

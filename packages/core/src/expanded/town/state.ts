@@ -46,6 +46,11 @@ export interface PlayerLife {
   armor: boolean;
   /** Game day a bodyguard covers (hits that night are foiled). */
   bodyguardDay: number;
+  /**
+   * Game day the player last heard a hit-man rumour (section 20.4), shown as `Hud.warnings`
+   * that day. Absent in saves from before it existed (= never).
+   */
+  rumourDay?: number;
   /** Elected mayor this season (section 18.4). */
   mayor: boolean;
   /** Chain id, or null. */
@@ -138,6 +143,8 @@ export interface Election {
 export interface Chain {
   id: string;
   name: string;
+  /** Player id of the founder, who named it (absent in saves from before it was kept). */
+  founder?: number;
   members: number[];
   /** Season score: BP from sales earned while a member. */
   score: number;

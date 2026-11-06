@@ -1,13 +1,8 @@
-/** Extra customers that widen the original eighteen, and the m_adult_u shirt fix. */
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+/** Extra customers that widen the original eighteen. No original picture is replaced here. */
 import { bust, garment, hat, pts, SKINS, shadeHex } from "../face.mjs";
-import { lettering, textPath } from "../font.mjs";
+import { lettering } from "../font.mjs";
 import { circle, Defs, doc, ellipse, g, n, path, rng, scallop, smooth } from "../lib.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const classic = join(here, "..", "..", "..", "assets", "classic");
 const portraitDoc = (id, D, body) => doc({ title: `${id} (Remastered)`, body, defs: D });
 
 /** An elderly churchgoer in her Sunday hat, pearls, a lavender suit. */
@@ -456,35 +451,6 @@ function mOld7() {
   return portraitDoc("people/m_old_7", D, body);
 }
 
-/**
- * people/m_adult_u with the real band's logo on his shirt replaced by an invented one. The rest
- * is Akiko Robinson's drawing, untouched: the logo path is removed and new lettering drawn.
- */
-function mAdultU() {
-  let src = readFileSync(join(classic, "people", "m_adult_u.svg"), "utf8");
-  const before = src.length;
-  // The logo is the last path of the file (the only one starting at m213.46 347.01).
-  src = src.replace(/<path d="m213\.46 347\.01[^>]*\/>/, "");
-  if (src.length === before) throw new Error("m_adult_u: logo path not found");
-  src = src.replace(
-    /<title>[^<]*<\/title>/,
-    "<title>people/m_adult_u (Remastered: invented shirt logo)</title>",
-  );
-  // HEARSEFIRE in spiky capitals, sagging a little with the shirt.
-  const size = 15;
-  const { d, serifs } = textPath("HEARSEFIRE", 284, 348, size, {
-    align: "middle",
-    track: 0.1,
-    serif: true,
-  });
-  const logo = [
-    `<path d="${d}${serifs}" fill="none" stroke="#1a1a12" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter" transform="rotate(-1.5 284 356)"/>`,
-    // flames licking up off the letters
-    `<path d="M198 368H370" fill="none" stroke="#1a1a12" stroke-width="1.4"/>`,
-  ].join("");
-  return src.replace(/<\/svg>\s*$/, `<g opacity="0.92">${logo}</g></svg>\n`);
-}
-
 export const pieces = [
   {
     id: "people/f_old_3",
@@ -521,19 +487,6 @@ export const pieces = [
     notes:
       "A retired watchmaker with a trimmed white beard, reading glasses, cardigan and a loupe on a cord.",
     render: mOld7,
-  },
-  {
-    id: "people/m_adult_u",
-    kind: "fix",
-    overrides: "people/m_adult_u",
-    usedBy: "customers",
-    grade: "A",
-    notes:
-      "Akiko Robinson's original drawing with the real band's logo removed and an invented band, HEARSEFIRE, lettered in its place.",
-    credit:
-      "Akiko Robinson (drawing); the replacement shirt logo by the Funeral Quest Remastered project",
-    license: "Proton SDK license (the original drawing); CC BY 4.0 (the replacement logo)",
-    render: mAdultU,
   },
 ];
 void lettering;

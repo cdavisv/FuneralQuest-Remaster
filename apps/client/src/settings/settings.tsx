@@ -1,3 +1,4 @@
+import { DEFAULT_PACK as DEFAULT_SOUND_PACK, isPackId, type PackId } from "@fq/audio";
 import {
   createContext,
   type ReactNode,
@@ -25,6 +26,8 @@ export interface Settings {
   muted: boolean;
   /** The "2001 radio" filter: band-limited mono, like the original's 11 kHz sounds. */
   radio: boolean;
+  /** The sound pack: "synth" (the default) or "studio"; see @fq/audio's packs. */
+  soundPack: PackId;
 }
 
 /** Multiplier applied to text inside the cabinet (`--fq-font-scale`). */
@@ -60,6 +63,7 @@ export function defaultSettings(): Settings {
     volume: { master: 0.8, music: 0.6, ambience: 0.6, effects: 0.8 },
     muted: false,
     radio: false,
+    soundPack: DEFAULT_SOUND_PACK,
   };
 }
 
@@ -101,6 +105,7 @@ export function loadSettings(storage: Pick<Storage, "getItem"> | undefined): Set
       },
       muted: typeof data.muted === "boolean" ? data.muted : base.muted,
       radio: typeof data.radio === "boolean" ? data.radio : base.radio,
+      soundPack: isPackId(data.soundPack) ? data.soundPack : base.soundPack,
     };
   } catch {
     return base;

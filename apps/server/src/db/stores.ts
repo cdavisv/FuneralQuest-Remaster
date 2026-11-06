@@ -646,6 +646,11 @@ export interface ChallengeScore {
   walkouts: number;
 }
 
+export type ChallengeBoardRow = Pick<
+  ChallengeRunRow,
+  "account_id" | "name" | "parlor" | "score" | "money" | "sales" | "exact" | "walkouts"
+>;
+
 export class ChallengeStore {
   private readonly sql: Statements;
   constructor(db: Db) {
@@ -735,11 +740,15 @@ export class ChallengeStore {
     );
   }
 
-  /** Finished runs of registered accounts on `day`, for ranking. */
-  board(day: string): ChallengeRunRow[] {
-    return all<ChallengeRunRow>(
+  /**
+   * Finished runs of registered accounts on `day`, for ranking. The columns the board needs only:
+   * a run's saved state is tens of kilobytes and the board is read by anyone, unauthenticated.
+   */
+  board(day: string): ChallengeBoardRow[] {
+    return all<ChallengeBoardRow>(
       this.sql.get(
-        "SELECT * FROM challenge_runs WHERE day = ? AND status = 'finished' AND guest = 0",
+        `SELECT account_id, name, parlor, score, money, sales, exact, walkouts FROM challenge_runs
+         WHERE day = ? AND status = 'finished' AND guest = 0`,
       ),
       day,
     );

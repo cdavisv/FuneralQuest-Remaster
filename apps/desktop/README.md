@@ -10,30 +10,46 @@ pnpm --filter @fq/desktop icons    # redraw icons from apps/client/pwa/icon.svg 
 
 ## What is where
 
-| Path                                  | What                                                                                                                                                                                                                                            |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src-tauri/src/main.rs`               | The window (1024x768, centred, resizable, 480x360 minimum, size and position remembered by `tauri-plugin-window-state`), the menu (Game, Edit, View, Help > About with the credits line), the three commands the page may call, navigation lock |
-| `src-tauri/tauri.conf.json`           | App id, metadata, the strict Content-Security-Policy, bundle targets, the licence and credits shipped as resources                                                                                                                              |
-| `src-tauri/capabilities/default.json` | The window's plugin permissions: none                                                                                                                                                                                                           |
-| `shim/fq-wrapper.js`                  | The shared wrapper script (server address, gamepad, links, save files, F11 and Alt+Enter), also used by `apps/mobile`                                                                                                                           |
-| `scripts/build-client.mjs`            | Builds the client (no `VITE_SERVER_URL`) and copies it, minus sourcemaps and the service worker, to `dist/`                                                                                                                                     |
-| `scripts/make-icons.mjs`              | Draws the icon set from the game's own art                                                                                                                                                                                                      |
+| Path                                  | What                                                                                                                                                                                                                                           |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src-tauri/src/main.rs`               | The window (1024x768, centred, resizable, 480x360 minimum, size and position remembered by `tauri-plugin-window-state`), the menu (Game, Edit, View, Help > About with the credits line), the four commands the page may call, navigation lock |
+| `src-tauri/tauri.conf.json`           | App id, metadata, the strict Content-Security-Policy, bundle targets, the licence and credits shipped as resources                                                                                                                             |
+| `src-tauri/capabilities/default.json` | The window's plugin permissions: none                                                                                                                                                                                                          |
+| `shim/fq-wrapper.js`                  | The shared wrapper script (server address and its dialog, `saveFile` and `openFile`, links to the system browser, F11 and Alt+Enter), also used by `apps/mobile`                                                                               |
+| `scripts/build-client.mjs`            | Builds the client (no `VITE_SERVER_URL`) and copies it, minus sourcemaps and the service worker, to `dist/`                                                                                                                                    |
+| `scripts/make-icons.mjs`              | Draws the icon set from the game's own art                                                                                                                                                                                                     |
 
 The client is built exactly as for the web, with base path `/`, which is what Tauri's `tauri://localhost` (macOS, Linux) and `http://tauri.localhost` (Windows) origins serve. The service worker is left out: the app itself is the offline copy.
 
-Keys: F11 and Alt+Enter fullscreen; F2 server address; the client's own 1 to 5 and Escape. Gamepad: see BUILDING.md.
+Keys: F11 and Alt+Enter fullscreen; F2 server address; the client's own 1 to 5 and Escape. Gamepad: the client's own (BUILDING.md).
 
 `FQ_DEFAULT_SERVER=https://fq.example.com` at build time sets the address a fresh install starts with; the player's own setting always wins. The server must list the app's origins in `FQ_ALLOWED_ORIGINS` (BUILDING.md).
 
 ### Test build
 
-`cargo`'s `selftest` feature (`pnpm exec tauri build --no-bundle -- --features selftest`) adds a command that lets a script, named by `FQ_SELFTEST_SCRIPT`, drive the page and print results to stdout. It exists only to check that the packaged app launches and a solo game reaches the desk, and is never part of release builds.
+`cargo`'s `selftest` feature (`FQ_SKIP_TYPECHECK=1 pnpm exec tauri build --no-bundle -- --features selftest`) adds a command that lets a script, named by `FQ_SELFTEST_SCRIPT`, drive the page and print `SELFTEST <name> ok|FAIL <detail>` lines to stdout. It is never part of release builds.
 
-## Client changes (not made; the wrappers work around each)
+`scripts/selftest.js` is the script. Set `window.__FQ_SELFTEST_STEPS__` in a line before it to choose steps (default `boot,solo,pad`):
 
-1. **Runtime server address.** `src/net/config.ts` reads the server only from `VITE_SERVER_URL`. Wanted: also read `window.fqWrapper?.server` (a string, empty for "own origin") and let `createBackend` and the push socket use it, then drop the wrapper's fetch and WebSocket re-pointing. Until then the shim rewrites requests.
-2. **A Settings entry for it.** Add _Server address_ to the client's Settings dialog calling `window.fqWrapper?.openSettings()` (only shown when `window.fqWrapper` exists). Today the dialog is reached by menu, F2, a gamepad's Start, or on mobile through the back-button confirmation and the `funeralquest://settings` link, which players will not find by themselves.
-3. **Gamepad support owned by the client** (better than the wrapper's key synthesis): navigation across plaques, dialogs and forms with visible focus, A/B/X/Y glyph hints, and the system on-screen keyboard on text fields. Needed for Steam Deck _Verified_.
-4. **Save export without `<a download>`.** `SoloShell.download()` makes a blob link. The wrapper intercepts it; a client hook such as `window.fqWrapper?.saveFile(name, text)` would be cleaner and would report success or failure.
-5. **Back button hook (mobile).** Optional `window.fqHandleBack = () => boolean`: return true if the client handled "back" (for example, leaving a game screen through its Exit confirmation). The wrapper already handles dialogs (Escape), routed pages (history) and the exit confirmation.
-6. **Do not register the service worker in the wrappers** (`registerServiceWorker()` in `src/pwa.ts`), or skip it when `window.fqWrapper` exists; today it logs a failed registration in the desktop webview.
+- `boot`: `fqWrapper.saveFile` and `openFile` exist, the page's `fetch` and `WebSocket` are the browser's own (the shim no longer wraps them), no service worker is registered, the client's gamepad is on.
+- `solo`: from the front door to a new career and the desk.
+- `pad`: a synthetic pad (through the page's own Gamepad API) presses the d-pad eight times; focus must move at most once per press.
+- `save`: leaves the career, presses Export and stops at the native save dialog, which a person (or a keyboard injector on a desktop you own) answers.
+
+```sh
+( echo 'window.__FQ_SELFTEST_STEPS__="boot,solo,pad,save";'; cat scripts/selftest.js ) > /tmp/selftest.js
+FQ_SELFTEST_SCRIPT=/tmp/selftest.js ./src-tauri/target/release/funeral-quest
+```
+
+Last run (Linux, Arch, WebKitGTK): all `boot`, `solo` and `pad` lines `ok`; the Export press opened the GTK "Save File" dialog with the file name `funeral-quest-selftest-sam-day-1.fqsave.json`; accepting it wrote a valid `fq-solo` save (version 2, day 1). Not driven: the native _open_ dialog (`openFile`) and the dialog's cancel path.
+
+## Client side
+
+The client owns everything it can; the shim only adds what a plain page cannot have.
+
+1. **Runtime server address.** `src/net/config.ts` reads `window.fqWrapper.server` (empty for "own origin") before `VITE_SERVER_URL`; the shim no longer rewrites requests.
+2. **A Settings entry for it.** The client's Settings dialog shows _Server address_ when `window.fqWrapper.openSettings` exists.
+3. **Gamepad support is the client's** (`src/input`): focus moves once per press, with visible focus, button glyphs and the system keyboard on text fields. The shim has no gamepad code.
+4. **Save export and import.** The client calls `fqWrapper.saveFile(name, text, type)` (the native save dialog) and `fqWrapper.openFile(accept)` (the native open dialog), and falls back to a download link and its own file input when they are absent (a browser; the mobile app has no `openFile`).
+5. **Back button.** The client registers `window.fqHandleBack` (mobile).
+6. **No service worker in a wrapper** (`src/pwa.ts`).

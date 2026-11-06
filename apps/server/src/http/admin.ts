@@ -17,7 +17,7 @@ import { registerModerationAdmin } from "./adminModeration.js";
 import type { AppContext } from "./context.js";
 import { HttpError } from "./errors.js";
 import { asHttp } from "./safety.js";
-import { safeText } from "./schemas.js";
+import { queryBool, safeText } from "./schemas.js";
 
 const digest = (s: string) => createHash("sha256").update(s).digest();
 
@@ -412,9 +412,7 @@ export async function registerAdminRoutes(app: FastifyInstance, ctx: AppContext)
 
       admin.get("/towns/:townId/players", async (request) => {
         const t = townOf(z.object({ townId: z.string() }).parse(request.params).townId);
-        const q = Paging.extend({ includeInactive: z.coerce.boolean().default(false) }).parse(
-          request.query,
-        );
+        const q = Paging.extend({ includeInactive: queryBool.default(false) }).parse(request.query);
         const needle = q.search?.toLowerCase();
         const rows = t.snapshotState.players.filter(
           (p) =>

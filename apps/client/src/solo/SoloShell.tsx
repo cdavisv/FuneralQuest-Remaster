@@ -18,7 +18,10 @@ import { SoloMenu } from "./SoloMenu.js";
 import { Autosaver, SoloSession } from "./SoloSession.js";
 import { SoloSetup } from "./SoloSetup.js";
 
-/** The text packs this build can play (the worker carries them). */
+/**
+ * The text packs this build can play (the worker carries them). "vintage" is a deprecated alias
+ * of the same original text: saves made when it was offered still load, but it is never offered.
+ */
 const KNOWN_PACKS = ["classic", "vintage"];
 
 type Screen =

@@ -67,9 +67,7 @@ Classic keeps every formula, probability, draw order and line of text. Exception
 | Free events, risks and script events; +200 exact-match bonus; random soft-sell item; duplicate soft-sell items | Kept |
 | Adult customer with a teen "girlfriend/boyfriend" deceased (`source/create_customer.cpp:113-118, 165-170`) | Fixed in the generator in every mode |
 
-**Text packs.** Classic ships with two interchangeable packs:
-- **Classic** (default): original text with a light edit for the handful of slurs, the lines about minors, and real brands and people.
-- **Vintage 2001**: the untouched original text, opt-in behind a content advisory, selectable per town by the sysop.
+**Text.** The Classic pack is the untouched original text, in every mode (owner's rule, 2026-11-06: original content is kept exactly as it was). The pack id `vintage` remains only as a deprecated alias of the same data so older saves and town configurations keep loading; it is not offered to players.
 
 ### 3.3 Expanded ruleset
 
@@ -291,7 +289,7 @@ Nothing original ships. The existing inventory is the brief:
 | Solo scope creep | Classic is the only hard requirement for Alpha. Expanded systems are ordered and each is shippable alone. |
 | Art consistency with AI-assisted work | A written style guide, Akiko's art as reference, hand vector cleanup, one reviewer pass per batch. |
 | Audio license contamination | CC0 or self-made only, enforced by the ledger check in CI. |
-| Dated or offensive content | Two text packs; generator fix for minors in all modes; brand and real-person references removed outside Vintage. |
+| Dated or offensive content | Original content ships unaltered (owner's rule); store rating forms are answered truthfully for it (`docs/release/age-rating-and-content.md`). |
 | Low player counts in a multiplayer game | Bots fill towns; Solo Career and Daily Challenge work with one player. |
 | Parity drift from the original | Rules spec with source references, formula tests, the Ruffle bridge as a live oracle. |
 

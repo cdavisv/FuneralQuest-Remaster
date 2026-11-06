@@ -88,7 +88,62 @@ export interface CustomerEffects {
   estimate?: number;
 }
 
-export interface TraitDef {
+/**
+ * Who a line or trait suits (docs/expanded-rules.md 13.5): the customer's and the deceased's
+ * age in years, inclusive. Every key is optional; absent means no limit. A child customer is
+ * Customers are 15 or older (Classic never sends a kid to the desk; its bands are kid under
+ * 15, teen 15 to 27, adult 28 to 59, old 60+), so a minor customer is 15 to 17; the deceased
+ * can be any age.
+ */
+export interface AgeLimits {
+  minCustomerAge?: number;
+  maxCustomerAge?: number;
+  minDeceasedAge?: number;
+  maxDeceasedAge?: number;
+}
+
+/**
+ * The negotiation pools an `AgedLine` can join (fields of `ExpandedNegotiationText`; a dotted
+ * key is a nested list).
+ */
+export type AgedPool =
+  | "request"
+  | "petRequest"
+  | "repeat.happy"
+  | "repeat.ok"
+  | "repeat.sour"
+  | "repeat.walked"
+  | "impatient"
+  | "softPitch"
+  | "hardPitchWood"
+  | "hardPitchSilver"
+  | "guiltPitch"
+  | "sympathyPitch"
+  | "coffeePitch"
+  | "coffeeAccept.loved"
+  | "coffeeAccept.notLoved"
+  | "coffeeRefuse"
+  | "listenPitch"
+  | "listenLoved"
+  | "listenNotLoved"
+  | "discountPitch"
+  | "discountAccept"
+  | "discountHaggle"
+  | "packagePitch"
+  | "packageAccept"
+  | "packageRefuse";
+
+/**
+ * A negotiation line that is drawn only for some customers (13.5): it joins the pool `pool`
+ * when the customer and the deceased fit its `AgeLimits`. A line that is wrong for a child
+ * speaker goes here with `minCustomerAge: 15` instead of in the plain list.
+ */
+export interface AgedLine extends AgeLimits {
+  pool: AgedPool;
+  text: string;
+}
+
+export interface TraitDef extends AgeLimits {
   id: string;
   /** Shown on the customer panel, for example "Haggler". */
   label: string;
@@ -349,6 +404,11 @@ export interface ExpandedNegotiationText {
   raiseResult: string;
   /** Mob boss at mood 10, when the special has no `lines.threat`. */
   threat: string;
+  /**
+   * Lines restricted by age (section 13.5), each joining one of the pools above when the
+   * customer fits. Optional; the plain lists are always eligible.
+   */
+  agedLines?: AgedLine[];
 }
 
 export interface ExpandedDoneText {

@@ -37,6 +37,7 @@ export function AudioProvider({
   }, [audio, master, music, ambience, effects]);
   useEffect(() => audio.setMuted(settings.muted), [audio, settings.muted]);
   useEffect(() => audio.setRadio(settings.radio), [audio, settings.radio]);
+  useEffect(() => audio.setPack(settings.soundPack), [audio, settings.soundPack]);
 
   // Browsers allow sound only after the player interacts: unlock on the first gesture. Clicks
   // and hovers on controls get their UI sounds from here, so no component has to ask.

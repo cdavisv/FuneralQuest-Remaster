@@ -86,3 +86,11 @@ export const HallQuery = z.strictObject({
   before: z.coerce.number().int().min(1).optional(),
   limit: z.coerce.number().int().min(1).max(100).default(20),
 });
+
+/**
+ * A boolean in a query string. `z.coerce.boolean()` would read "false" as true (any non-empty
+ * string is truthy); only "true", "false", "1" and "0" are accepted here.
+ */
+export const queryBool = z
+  .enum(["true", "false", "1", "0"])
+  .transform((v) => v === "true" || v === "1");

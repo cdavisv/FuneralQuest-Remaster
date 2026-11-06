@@ -212,6 +212,13 @@ const MIGRATIONS: string[] = [
   );
   CREATE INDEX hall_owners_account ON hall_owners(account_id);
   `,
+  // Hardening: the account-erasure and data-export queries filter the audit log by account, and
+  // every Daily Challenge request looks for stale runs by status and time. Without these two
+  // indexes both scan whole tables on the main thread (node:sqlite is synchronous).
+  `
+  CREATE INDEX audit_account ON audit_log(account_id, id);
+  CREATE INDEX challenge_stale ON challenge_runs(status, updated_at);
+  `,
 ];
 
 export function openDatabase(path: string): Db {

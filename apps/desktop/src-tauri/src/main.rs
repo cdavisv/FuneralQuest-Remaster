@@ -1,5 +1,5 @@
 // Funeral Quest desktop shell. The game is the @fq/client bundle; this program owns the window,
-// the menu, the native file dialog for save files, and opening links in the system browser.
+// the menu, the native file dialogs for save files, and opening links in the system browser.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::menu::{AboutMetadataBuilder, MenuBuilder, MenuItemBuilder, SubmenuBuilder};
@@ -61,6 +61,29 @@ async fn save_file(app: AppHandle, name: String, text: String) -> Result<bool, S
     }
 }
 
+/// Shows the native "open" dialog and returns the picked file's name and text (null when the
+/// person cancels). The page never learns the path; only what the person picks is read.
+#[tauri::command]
+async fn open_file(app: AppHandle) -> Result<serde_json::Value, String> {
+    let picked = app
+        .dialog()
+        .file()
+        .add_filter("Funeral Quest save", &["json"])
+        .blocking_pick_file();
+    let Some(path) = picked else { return Ok(serde_json::Value::Null) };
+    let path = path.into_path().map_err(|e| e.to_string())?;
+    let size = std::fs::metadata(&path).map_err(|e| e.to_string())?.len();
+    if size > 64 * 1024 * 1024 {
+        return Err("file too large".into());
+    }
+    let text = std::fs::read_to_string(&path).map_err(|e| e.to_string())?;
+    let name = path
+        .file_name()
+        .map(|n| n.to_string_lossy().into_owned())
+        .unwrap_or_else(|| "save.json".into());
+    Ok(serde_json::json!({ "name": name, "text": text }))
+}
+
 fn set_fullscreen(window: &WebviewWindow, on: bool) {
     let _ = window.set_fullscreen(on);
     // The menu bar is hidden while fullscreen on Windows and Linux (macOS has one global bar).
@@ -99,6 +122,7 @@ fn host_script() -> String {
     saveFile: (name, text) => inv("save_file", {{ name, text }}).then((ok) => {{
       if (ok && window.fqWrapper) window.fqWrapper.toast("Saved.");
     }}),
+    openFile: () => inv("open_file"),
     toggleFullscreen: () => inv("toggle_fullscreen"),
   }};
 }})();
@@ -114,11 +138,11 @@ fn main() {
         .invoke_handler({
             #[cfg(feature = "selftest")]
             {
-                tauri::generate_handler![open_external, save_file, toggle_fullscreen, selftest_log]
+                tauri::generate_handler![open_external, save_file, open_file, toggle_fullscreen, selftest_log]
             }
             #[cfg(not(feature = "selftest"))]
             {
-                tauri::generate_handler![open_external, save_file, toggle_fullscreen]
+                tauri::generate_handler![open_external, save_file, open_file, toggle_fullscreen]
             }
         })
         .setup(|app| {

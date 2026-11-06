@@ -187,6 +187,7 @@ export function foundChain(turn: Turn, raw: string | null): View {
   const chain: Chain = {
     id: `c${l.nextChain++}`,
     name,
+    founder: p.id,
     members: [p.id],
     score: 0,
     invites: [],

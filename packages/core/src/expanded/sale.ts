@@ -1,4 +1,4 @@
-import type { Button, View } from "@fq/protocol";
+import type { Button, SaleOutcome, View } from "@fq/protocol";
 import { casketName, cMan, cYoung, incomeLabel } from "../classic/customerText.js";
 import { continueButton, currentBackground, makePicture } from "../classic/location.js";
 import {
@@ -131,7 +131,10 @@ export function walkOutX(turn: Turn, prefix: string, overLimit: boolean): View {
   if (special?.noWalkout) {
     const threat = special.lines?.threat ?? xc(turn).text.negotiation.threat;
     refreshRating(turn.rules, me);
-    return endView(turn, prefix + fill(threat, v), "stuff/battle_lose");
+    return {
+      ...endView(turn, prefix + fill(threat, v), "stuff/battle_lose"),
+      saleOutcome: "walkout",
+    };
   }
   reviewsMod(me, rules, rules.rating.walkout);
   // Section 3.8: specials are not families (a fixed person such as the Mayor must not come back
@@ -181,7 +184,12 @@ export function walkOutX(turn: Turn, prefix: string, overLimit: boolean): View {
       mailContinue(turn, rivalId);
     }
   }
-  return endView(turn, text, "stuff/money_bag");
+  return { ...endView(turn, text, "stuff/money_bag"), saleOutcome: "walkout" };
+}
+
+/** Section 11.5: a settled sale's closeness band as the view's `saleOutcome`. */
+export function saleOutcomeOf(bonusKey: string | null): SaleOutcome {
+  return bonusKey === "exact" || bonusKey === "great" || bonusKey === "nice" ? bonusKey : "plain";
 }
 
 /** Section 9.4: the BP leader's total, for the underdog bonus. */

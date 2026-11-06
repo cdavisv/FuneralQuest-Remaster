@@ -247,14 +247,22 @@ describe("Steal (commands_comp.cpp:521-613, 642-681)", () => {
     expect(mine).toBeLessThanOrEqual(3);
   });
 
-  it("a rival who logs on mid-visit cannot be robbed (fixes.visitTargetRecheck); the original allowed it", () => {
+  it("a rival who comes online mid-visit cannot be robbed (fixes.visitTargetRecheck); the original allowed it", () => {
     for (const [rules, refused] of [
       [CLASSIC_RULES, true],
       [originalClassicRules(), false],
     ] as const) {
       const { town, ctx } = socialTown(10, 3, { rules });
-      const inside = breakIn(edit(town, 1, { tags: [3, 3, 3] }), 0, "Morticia", ctx);
-      const woke = enterGame(inside.town, 1, ctx).town;
+      // The original refused a log-on while the parlor was held (funeral.cpp:357-363),
+      // so the rival "comes online" here as a session the host had reported
+      // disconnected and now reports back (classic/presence.ts).
+      const away = setPresence(
+        enterGame(edit(town, 1, { tags: [3, 3, 3] }), 1, ctx).town,
+        1,
+        false,
+      );
+      const inside = breakIn(away, 0, "Morticia", ctx);
+      const woke = setPresence(inside.town, 1, true);
       const r = press(woke, 0, "competitors:steal", ctx);
       expect(plain(r.view.text).includes("talking earnestly")).toBe(refused);
       if (refused) expect(r.town.players[1]?.tags).toEqual([3, 3, 3]);

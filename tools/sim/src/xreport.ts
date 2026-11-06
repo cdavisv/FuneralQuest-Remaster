@@ -92,22 +92,30 @@ export interface WinLine {
   ratio: number;
   bp: number;
   place: number;
+  /** Mean of (seat BP / its town's mean BP - 1), and the standard deviation of that. */
+  rel: number;
+  relSd: number;
 }
 
 /** Win rate by any key of a seat, regular seats only (late joiners excluded). */
 export function winsBy(r: XReport, key: (s: XSeat) => string): WinLine[] {
   const acc = new Map<
     string,
-    { seats: number; wins: number; bp: number; place: number; fair: number }
+    { seats: number; wins: number; bp: number; place: number; fair: number; rel: number[] }
   >();
   for (const t of r.towns) {
     const regular = t.seats.filter((s) => s.joined <= 1);
     const ranked = [...regular].sort((a, b) => b.bp - a.bp || a.playerId - b.playerId);
+    const townMean = div(
+      regular.reduce((sum, s) => sum + s.bp, 0),
+      regular.length,
+    );
     regular.forEach((s) => {
       const k = key(s);
-      const a = acc.get(k) ?? { seats: 0, wins: 0, bp: 0, place: 0, fair: 0 };
+      const a = acc.get(k) ?? { seats: 0, wins: 0, bp: 0, place: 0, fair: 0, rel: [] };
       a.seats++;
       a.bp += s.bp;
+      a.rel.push(div(s.bp, townMean) - 1);
       a.place += ranked.indexOf(s) + 1;
       a.fair += 1 / regular.length;
       if (ranked[0] === s) a.wins++;
@@ -124,13 +132,26 @@ export function winsBy(r: XReport, key: (s: XSeat) => string): WinLine[] {
       ratio: div(div(a.wins, a.seats), div(a.fair, a.seats)),
       bp: div(a.bp, a.seats),
       place: div(a.place, a.seats),
+      rel: mean(a.rel),
+      relSd: Math.sqrt(mean(a.rel.map((x) => (x - mean(a.rel)) ** 2))),
     }))
     .sort((a, b) => b.winRate - a.winRate || b.bp - a.bp);
 }
 
 function winTable(lines: WinLine[], label: string): string {
   return table(
-    [label, "seats", "wins", "win rate", "fair share", "win / fair", "mean final BP", "mean place"],
+    [
+      label,
+      "seats",
+      "wins",
+      "win rate",
+      "fair share",
+      "win / fair",
+      "mean final BP",
+      "mean place",
+      "BP vs town mean",
+      "sd of that",
+    ],
     lines.map((w) => [
       w.key,
       w.seats,
@@ -140,8 +161,20 @@ function winTable(lines: WinLine[], label: string): string {
       f2(w.ratio),
       f0(w.bp),
       f2(w.place),
+      `${w.rel >= 0 ? "+" : ""}${pct(w.rel)}`,
+      pct(w.relSd),
     ]),
   );
+}
+
+/** One line under a win table: the spread of the means and of the mean places. */
+function spreadLine(lines: WinLine[]): string {
+  if (lines.length === 0) return "";
+  const bps = lines.map((w) => w.bp);
+  const places = lines.map((w) => w.place);
+  const m = mean(bps);
+  const sd = Math.sqrt(mean(bps.map((b) => (b - m) ** 2)));
+  return `Spread: mean final BP from ${f0(Math.min(...bps))} to ${f0(Math.max(...bps))} (${f0(Math.max(...bps) - Math.min(...bps))} BP, sd ${f0(sd)} around ${f0(m)}); mean place from ${f2(Math.min(...places))} to ${f2(Math.max(...places))}.`;
 }
 
 /** The systems of money, BP and turns, as columns over personalities. */
@@ -251,12 +284,10 @@ export function xMarkdown(r: XReport): string[] {
 
   out.push("## Expanded: win rate by personality");
   out.push("");
-  out.push(
-    winTable(
-      winsBy(r, (s) => s.personality),
-      "personality",
-    ),
-  );
+  const byPersonality = winsBy(r, (s) => s.personality);
+  out.push(winTable(byPersonality, "personality"));
+  out.push("");
+  out.push(spreadLine(byPersonality));
   out.push("");
   out.push("## Expanded: win rate by karma path (at the end of the season)");
   out.push("");
@@ -360,6 +391,8 @@ export function xMarkdown(r: XReport): string[] {
         "listened",
         "coffee",
         "blessed",
+        "happy families",
+        "sour families",
       ],
       people.map((p) => {
         const c = P[p] ?? {};
@@ -379,6 +412,8 @@ export function xMarkdown(r: XReport): string[] {
           pct(div(c.salesListened ?? 0, sales)),
           pct(div(c.salesCoffee ?? 0, sales)),
           pct(div(c.salesBlessed ?? 0, sales)),
+          pct(div(c.salesHappy ?? 0, sales)),
+          pct(div(c.salesSour ?? 0, sales)),
         ];
       }),
     ),

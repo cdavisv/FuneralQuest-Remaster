@@ -1,0 +1,36 @@
+{
+  "_comment": "Ceilings in bytes (gzip). 15% over the build they were taken from.",
+  "app.js": {
+    "maxGzipBytes": 210944
+  },
+  "app.css": {
+    "maxGzipBytes": 30720
+  },
+  "solo-worker.js": {
+    "maxGzipBytes": 476160
+  },
+  "dev-town.js": {
+    "maxGzipBytes": 376832
+  },
+  "other-chunks.js": {
+    "maxGzipBytes": 65536
+  },
+  "fonts (woff2)": {
+    "maxGzipBytes": 345088
+  },
+  "pictures": {
+    "maxGzipBytes": 1714176
+  },
+  "audio": {
+    "maxGzipBytes": 16928768
+  },
+  "first-load.js+css": {
+    "maxGzipBytes": 241664
+  },
+  "total (no audio)": {
+    "maxGzipBytes": 3642368
+  },
+  "total": {
+    "maxGzipBytes": 20571136
+  }
+}

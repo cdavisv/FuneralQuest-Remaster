@@ -388,7 +388,8 @@ describe("3.4 walkouts", () => {
     p = px(p, "neg:guilt");
     expect(p.view.customer).toBeUndefined();
     expect(rivals(p.town)).toBeGreaterThanOrEqual(before + 5);
-    for (const q of p.town.players) expect(q.mail.some((m) => m.type === "varMod")).toBe(false);
+    for (const q of p.town.players)
+      expect(q.mail.some((m) => m.type === "varMod" && !m.applied)).toBe(false);
     expect(p.town.players[0]?.expanded?.reviews).toBe(X.rating.walkout);
     expect(p.town.players[0]?.expanded?.record.walkouts).toBe(1);
   });

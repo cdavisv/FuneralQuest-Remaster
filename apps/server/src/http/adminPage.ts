@@ -187,7 +187,36 @@ function reportDetail(main, id) {
       box.appendChild(h("div", { class: "card" }, h("h3", null, "Other reports about this account"), t));
     }
     box.appendChild(actionsCard(d));
+    var parlor0 = d.reported && d.reported.parlors[0];
+    if (parlor0) box.appendChild(storedTextCard(r, parlor0));
   }).catch(fail);
+}
+
+// What the reported player has written that is still stored, one item at a time.
+function storedTextCard(r, parlor) {
+  var body = h("div", null, "Loading...");
+  var card = h("div", { class: "card" }, h("h3", null, "Their stored text, item by item"), body);
+  var why = h("input", { type: "text", placeholder: "Reason (required, goes in the audit log)", class: "full" });
+  function drop(payload, label) {
+    return h("button", { class: "danger", onclick: function () {
+      var reason = why.value.trim(); if (!reason) { toast("Give a reason first.", true); why.focus(); return; }
+      if (!ask("Take down this " + label + "?\n\nReason: " + reason)) return;
+      api("POST", "/admin/moderation/remove-item", Object.assign({ townId: parlor.townId, reason: reason, reportId: r.id, resolve: false }, payload))
+        .then(function () { toast("Taken down."); render(); }).catch(fail);
+    } }, "Take down");
+  }
+  api("GET", "/admin/towns/" + encodeURIComponent(parlor.townId) + "/stored-text?playerId=" + parlor.playerId).then(function (d) {
+    clear(body);
+    if (!d.announcements.length && !d.letters.length) { body.appendChild(h("p", { class: "mut" }, "Nothing of theirs is stored: announcements have left the paper and letters have been read.")); return; }
+    body.appendChild(why);
+    d.announcements.forEach(function (a) {
+      body.appendChild(h("div", null, h("p", { class: "mut" }, (a.section === "crime" ? "Battle quote" : "Announcement") + ", day " + a.day), h("div", { class: "quote" }, a.text.replace(/\r\n/g, "\n").trim()), drop({ kind: "announcement", day: a.day, section: a.section, index: a.index, hash: a.hash }, "item")));
+    });
+    d.letters.forEach(function (l) {
+      body.appendChild(h("div", null, h("p", { class: "mut" }, "Letter waiting for " + l.toName), h("div", { class: "quote" }, l.text), drop({ kind: "letter", to: l.to, index: l.index, hash: l.hash }, "letter")));
+    });
+  }).catch(fail);
+  return card;
 }
 
 function accountCard(a) {
@@ -226,7 +255,7 @@ function actionsCard(d) {
     row("Dismiss", [run("Dismiss report", "Dismiss report " + r.id + " without action?", function (reason) { return api("POST", "/admin/reports/" + r.id + "/dismiss", { reason: reason }); })]));
   if (accountId !== null) {
     card.appendChild(h("div", null, row("Warn with a system letter", [msg, run("Send warning", "Send this letter to " + acct.login + "?", function (reason) { return api("POST", "/admin/moderation/warn", Object.assign(common(reason), { accountId: accountId, message: msg.value })); })])));
-    card.appendChild(h("div", null, row("Take down their text (the engine removes per player, not per message)", [scope, run("Take down", "Remove " + acct.login + "'s " + scope.value + " text from the town?", function (reason) { return api("POST", "/admin/moderation/takedown", Object.assign(common(reason), { accountId: accountId, scope: scope.value })); })])));
+    card.appendChild(h("div", null, row("Take down all their text", [scope, run("Take down", "Remove " + acct.login + "'s " + scope.value + " text from the town?", function (reason) { return api("POST", "/admin/moderation/takedown", Object.assign(common(reason), { accountId: accountId, scope: scope.value })); })])));
     card.appendChild(h("div", null, row("Mute", [hours, "hours", scopeBoxes.map(function (b, i) { return h("label", null, b, SCOPES[i]); }), run("Mute", "Mute " + acct.login + " for " + hours.value + " hours?", function (reason) { return api("POST", "/admin/moderation/mute", Object.assign(common(reason), { accountId: accountId, hours: Number(hours.value), scopes: scopeBoxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; }) })); })])));
     if (parlor) {
       card.appendChild(h("div", null, row("Force a rename", [newName, newParlor, h("button", { onclick: function () { newName.value = "Renamed " + parlor.playerId; } }, "Generic name"), run("Rename", "Rename " + parlor.name + "?", function (reason) { return api("POST", "/admin/moderation/rename", Object.assign(common(reason), { townId: parlor.townId, playerId: parlor.playerId }, newName.value ? { name: newName.value } : {}, newParlor.value ? { parlor: newParlor.value } : {})); })])));

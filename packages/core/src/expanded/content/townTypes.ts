@@ -455,6 +455,12 @@ export interface ChainText {
   duesUnpaid: string;
   /** `{name}` the chain-mate */
   noFriendlyFire: string;
+  /**
+   * The name a chain gets when a moderator takes its founder's text down
+   * (`removePlayerText`, docs/expanded-rules.md 29). `{n}` the chain's number. Optional: the
+   * engine uses the chain's id when a pack has none.
+   */
+  removedName?: string;
 }
 
 export interface HospitalText {

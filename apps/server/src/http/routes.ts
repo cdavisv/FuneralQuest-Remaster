@@ -1,6 +1,8 @@
 import { richTextToPlain } from "@fq/core";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import { type Account, AuthError } from "../auth/accounts.js";
+import { addressKey } from "../auth/ip.js";
+import { SlidingCounter } from "../auth/throttle.js";
 import { AlreadyPlayed, InvalidEntry, isChallengeDay, NotPlaying } from "../game/challenge.js";
 import { hallEntryOf } from "../game/hall.js";
 import { checkNames } from "../game/names.js";
@@ -106,6 +108,27 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
   };
 
   const authLimit = { max: config.rateAuthMax, timeWindow: windowMs };
+  // New accounts per address per hour, on top of the per-window budget: guests are free, and every
+  // account is a row, a rate-limit budget and an audit trail an attacker can multiply.
+  const signupsPerHour = config.signupsPerHour > 0 ? config.signupsPerHour : config.rateAuthMax * 3;
+  const newAccounts = new SlidingCounter(ctx.clock, 3_600_000);
+  const takeSignupSlot = (request: FastifyRequest): void => {
+    const key = addressKey(request.ip);
+    if (newAccounts.count(key) >= signupsPerHour) {
+      throw new HttpError(
+        429,
+        "rate_limited",
+        "Too many new accounts from your address this hour. Try again later.",
+      );
+    }
+    newAccounts.hit(key);
+  };
+  /** Refuses new work for a town whose queue is already long: it is slow, not broken. */
+  const assertTownNotSwamped = (town: TownRuntime): void => {
+    if (town.pendingOperations >= config.maxQueuedPerTown) {
+      throw new HttpError(503, "busy", "The town is very busy. Try again in a moment.");
+    }
+  };
   const actionLimit = {
     max: config.rateActionMax,
     timeWindow: windowMs,
@@ -113,7 +136,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
     // made-up tokens cannot buy itself a fresh budget each time.
     keyGenerator: (request: FastifyRequest) => {
       const auth = accounts.authenticate(bearer(request), request.ip);
-      return auth ? `account:${auth.account.id}` : `ip:${request.ip}`;
+      return auth ? `account:${auth.account.id}` : `ip:${addressKey(request.ip)}`;
     },
   };
 
@@ -192,6 +215,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
     } catch (error) {
       throw asHttp(error);
     }
+    takeSignupSlot(request);
     try {
       const made = await accounts.signUp(body.login, body.password, request.ip);
       ctx.host.audit.append({
@@ -225,6 +249,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
 
   app.post("/api/auth/guest", { config: { rateLimit: authLimit } }, async (request, reply) => {
     GuestBody.parse(request.body ?? {});
+    takeSignupSlot(request);
     try {
       const made = await accounts.createGuest(request.ip);
       return reply.status(201).send(authResponse(made));
@@ -261,6 +286,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
       const { account } = requireAuth(request);
       const town = townOf(request);
       const body = EnterBody.parse(request.body ?? {});
+      assertTownNotSwamped(town);
       if (body.parlor) {
         // The engine strips these characters without telling the player; say so up front.
         const problem = checkNames(body.parlor);
@@ -309,6 +335,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
       const { account } = requireAuth(request);
       const town = townOf(request);
       const body = ActionBody.parse(request.body);
+      assertTownNotSwamped(town);
       try {
         // A muted account is refused here, before the engine sees the action, by what the
         // action would publish; announcements and chain names meet the strict word list.
@@ -339,6 +366,9 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
 
   /** Maps the challenge service's errors onto the API's. */
   const daily = async <T>(work: () => Promise<T>): Promise<T> => {
+    if (host.challenge.pending >= config.maxQueuedPerTown) {
+      throw new HttpError(503, "busy", "The challenge is very busy. Try again in a moment.");
+    }
     try {
       return await work();
     } catch (error) {

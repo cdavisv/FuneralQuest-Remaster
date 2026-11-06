@@ -110,3 +110,18 @@ export function ruleMatches(rule: IpRule, address: ParsedAddress): boolean {
   const total = rule.family === 4 ? 32 : 128;
   return mask(address.value, total, rule.bits) === rule.value;
 }
+
+/**
+ * The key rate limits use for an address: an IPv4 address as it is (an IPv4-mapped IPv6 address
+ * counts as IPv4), an IPv6 address by its /64, the block one subscriber or one host is normally
+ * given, so rotating through the low 64 bits does not buy a fresh budget each time.
+ */
+export function addressKey(ip: string): string {
+  const parsed = parseAddress(ip);
+  if (!parsed) return ip.slice(0, 64);
+  if (parsed.family === 4) {
+    const v = parsed.value;
+    return `${(v >> 24n) & 255n}.${(v >> 16n) & 255n}.${(v >> 8n) & 255n}.${v & 255n}`;
+  }
+  return `${(parsed.value >> 64n).toString(16).padStart(16, "0")}::/64`;
+}

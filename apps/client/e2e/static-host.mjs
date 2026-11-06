@@ -7,12 +7,12 @@
  *   node e2e/static-host.mjs --port 18766 [--after http://127.0.0.1:18765/health]
  *
  * With --after it waits until that address answers (the test server finishes building the
- * client before it starts), then serves dist-build.
+ * client before it starts), then serves dist-build (or the directory given with --root).
  */
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { createServer } from "node:http";
-import { dirname, extname, join, normalize, resolve } from "node:path";
+import { dirname, extname, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
@@ -22,7 +22,9 @@ const option = (name, fallback) => {
 };
 const port = Number(option("port", "18766"));
 const after = option("after", "");
-const root = resolve(dirname(fileURLToPath(import.meta.url)), "../dist-build");
+const root = option("root", "")
+  ? resolve(option("root", ""))
+  : resolve(dirname(fileURLToPath(import.meta.url)), "../dist-build");
 
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -53,7 +55,7 @@ createServer(async (req, res) => {
   if (path.endsWith("/")) path += "index.html";
   const file = join(root, path);
   try {
-    if (!file.startsWith(root)) throw new Error("outside");
+    if (file !== root && !file.startsWith(root + sep)) throw new Error("outside");
     const info = await stat(file);
     if (!info.isFile()) throw new Error("not a file");
     res.writeHead(200, {

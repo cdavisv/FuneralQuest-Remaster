@@ -465,7 +465,10 @@ export class ModerationService {
       }
       case "chat": {
         const text = target.text.slice(0, 2000);
-        const line = mine === null ? null : this.chat.find(townId, mine, text, this.now());
+        const line =
+          mine === null
+            ? null
+            : this.chat.find(townId, mine, text, this.now(), target.fromPlayerId);
         if (!line) return { ...base, text, verified: false };
         const sender = line.senderPlayerId === null ? base : withPlayer(line.senderPlayerId);
         return {

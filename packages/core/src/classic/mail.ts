@@ -4,6 +4,7 @@ import { legacy } from "../engine/view.js";
 import type { MailButton, MailPacket, MailStat, TownState } from "../state/types.js";
 import { fill, replaceAll } from "../text/format.js";
 import { blockersOf } from "./blocking.js";
+import { stampNotice } from "./clock.js";
 import { addToNews } from "./news.js";
 import { expMod, luckMod, turnsMod } from "./players.js";
 
@@ -106,6 +107,9 @@ export function mailReward(
   if (!player?.active) return;
   if (!turn.rules.mailRewardsOnDelivery) {
     applyReward(turn, to, stat, amount);
+    // Expanded: the mail still records the reward (already applied), so the reader can tell a
+    // reward from a notice (View overlay `messageKind`, docs/expanded-rules.md 11.5).
+    sendPacket(turn.town, to, { type: "varMod", stat, amount, applied: true }, { expireDay });
     return;
   }
   sendPacket(turn.town, to, { type: "varMod", stat, amount }, { expireDay });
@@ -135,27 +139,36 @@ export function playersInCafe(town: TownState): number[] {
  * players in the cafe, and the host delivers it. Players outside the cafe
  * are skipped, as the original's chat packets were discarded at the desk.
  */
-export function chatTo(turn: Turn, ids: readonly number[], text: string): void {
+export function chatTo(turn: Turn, ids: readonly number[], text: string, from?: number): void {
   const inCafe = new Set(playersInCafe(turn.town));
   const to = [...new Set(ids)].filter((id) => inCafe.has(id)).sort((a, b) => a - b);
-  if (to.length > 0) turn.effects.push({ kind: "chat", to, text: legacy(text) });
+  if (to.length === 0) return;
+  // Expanded only (Classic transcripts are locked): who said it, as data.
+  const speaker = from !== undefined && turn.rules.expanded ? turn.town.players[from] : undefined;
+  turn.effects.push(
+    speaker
+      ? { kind: "chat", to, text: legacy(text), from: { playerId: speaker.id, name: speaker.name } }
+      : { kind: "chat", to, text: legacy(text) },
+  );
 }
 
 /**
- * `broadcast` (broadcast.cpp:391-407): a notice for everyone online. The
- * original prefixed the server's local time; the engine has no clock, so the
- * host may add one. Players in the cafe read it there (`add_que_messages_chat`
- * shows simple text as "`w" + text, broadcast.cpp:126-131), so they get a
- * `chat` effect instead of a queued packet.
+ * `broadcast` (broadcast.cpp:391-407): a notice for everyone online, with the
+ * server's local time in front (`"%s:%s"` of `show_time()` and the text,
+ * classic/clock.ts). Players in the cafe read it there
+ * (`add_que_messages_chat` shows simple text as "`w" + text,
+ * broadcast.cpp:126-131), so they get a `chat` effect instead of a queued
+ * packet. The `broadcast` effect carries the text without the time.
  */
-export function broadcast(turn: Turn, text: string): void {
+export function broadcast(turn: Turn, plain: string, from?: number): void {
+  const text = stampNotice(turn.engine, plain);
   const cafe = playersInCafe(turn.town);
   for (const key of Object.keys(turn.town.sessions)) {
     if (cafe.includes(Number(key))) continue;
     sendPacket(turn.town, Number(key), { type: "simpleText", text }, { importance: "normal" });
   }
-  chatTo(turn, cafe, fill(turn.text.social.cafe.notice, { text }));
-  turn.effects.push({ kind: "broadcast", text });
+  chatTo(turn, cafe, fill(turn.text.social.cafe.notice, { text }), from);
+  turn.effects.push({ kind: "broadcast", text: plain });
 }
 
 /**
@@ -164,7 +177,7 @@ export function broadcast(turn: Turn, text: string): void {
  */
 export function chatFrom(turn: Turn, from: number, ids: readonly number[], text: string): void {
   const blockers = blockersOf(turn.town, from);
-  chatTo(turn, blockers.size === 0 ? ids : ids.filter((id) => !blockers.has(id)), text);
+  chatTo(turn, blockers.size === 0 ? ids : ids.filter((id) => !blockers.has(id)), text, from);
 }
 
 /** `broadcastChat` for a line said by `from`: blockers of `from` do not get it. */
@@ -173,12 +186,13 @@ export function broadcastChatFrom(turn: Turn, from: number, text: string): void 
 }
 
 /** `broadcast` for a line typed by `from` (`/yell`): blockers of `from` do not get it. */
-export function broadcastFrom(turn: Turn, from: number, text: string): void {
+export function broadcastFrom(turn: Turn, from: number, plain: string): void {
   const blockers = blockersOf(turn.town, from);
   if (blockers.size === 0) {
-    broadcast(turn, text);
+    broadcast(turn, plain, from);
     return;
   }
+  const text = stampNotice(turn.engine, plain);
   const cafe = playersInCafe(turn.town);
   for (const key of Object.keys(turn.town.sessions)) {
     const id = Number(key);
@@ -189,8 +203,9 @@ export function broadcastFrom(turn: Turn, from: number, text: string): void {
     turn,
     cafe.filter((id) => !blockers.has(id)),
     fill(turn.text.social.cafe.notice, { text }),
+    from,
   );
-  turn.effects.push({ kind: "broadcast", text });
+  turn.effects.push({ kind: "broadcast", text: plain });
 }
 
 /** `broadcast_chat` (broadcast.cpp:409-425): a line for everyone in the cafe. */
@@ -266,6 +281,8 @@ export interface Delivery {
   buttons?: MailButton[];
   /** The last quote packet read (`st_quote`): what a reply starts with. */
   quote?: string;
+  /** A reward packet was read (Expanded marks the overlay as a reward). */
+  reward?: boolean;
 }
 
 /**
@@ -301,6 +318,8 @@ export function deliverMail(turn: Turn, message: string): Delivery {
         out.message += fill(turn.text.desk.mailLine, { text: packet.text });
         break;
       case "varMod":
+        out.reward = true;
+        if (packet.applied) break;
         if (packet.stat === "luck") luckMod(turn.rules, player, packet.amount);
         if (packet.stat === "bp") expMod(player, packet.amount);
         break;

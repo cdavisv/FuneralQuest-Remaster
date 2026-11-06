@@ -8,6 +8,7 @@ import type { Turn } from "../engine/turn.js";
 import { button, hud, legacy } from "../engine/view.js";
 import type { CustomerState } from "../state/types.js";
 import { fill, intToCash, type TemplateVars } from "../text/format.js";
+import { agedPool } from "./ages.js";
 import type { ExpandedSaleItem, PackageCategory } from "./content/types.js";
 import {
   affinityOf,
@@ -43,6 +44,7 @@ import {
   choosePrep,
   endView,
   finishView,
+  saleOutcomeOf,
   settleSale,
   walkOutX,
 } from "./sale.js";
@@ -96,7 +98,7 @@ function usePatience(turn: Turn, c: CustomerState, cost: number): string {
   if (cost <= 0) return "";
   if (x.patience <= 0) {
     moodUp(turn, c, nudge(turn.rng, xr(turn).actions.impatience));
-    return `${fill(pick(turn.rng, xc(turn).text.negotiation.impatient), vars(turn))}\n\n`;
+    return `${fill(pick(turn.rng, agedPool(turn, c, "impatient", xc(turn).text.negotiation.impatient)), vars(turn))}\n\n`;
   }
   x.patience = Math.max(0, x.patience - cost);
   return "";
@@ -383,9 +385,9 @@ export function arriveX(turn: Turn): View {
   if (special) {
     parts.push(fill(special.intro, { ...v, casket }));
   } else {
-    const pool = x.repeat ? t.repeat[x.repeat] : null;
+    const pool = x.repeat ? agedPool(turn, c, `repeat.${x.repeat}`, t.repeat[x.repeat]) : null;
     if (pool && pool.length > 0) parts.push(fill(pick(rng, pool), v));
-    parts.push(fill(pick(rng, t.request), { ...v, casket }));
+    parts.push(fill(pick(rng, agedPool(turn, c, "request", t.request)), { ...v, casket }));
   }
   if (special?.offer) {
     x.notes.push(fill(special.intro, { ...v, casket }));
@@ -397,7 +399,8 @@ export function arriveX(turn: Turn): View {
     view.customer = panel(turn, c);
     return view;
   }
-  if (x.pet !== "" && !special?.intro) parts.push(fill(pick(rng, t.petRequest), { ...v, casket }));
+  if (x.pet !== "" && !special?.intro)
+    parts.push(fill(pick(rng, agedPool(turn, c, "petRequest", t.petRequest)), { ...v, casket }));
   const notes = arrivalNotes(turn, c);
   parts.push(...notes.text);
   const estimate = fill(t.estimate, {
@@ -425,7 +428,10 @@ function guilt(turn: Turn): View {
   const rng = turn.rng;
   if (walks(turn, c)) return walkOutX(turn, n.interrupted, false);
   const prefix = usePatience(turn, c, 1);
-  const pitch = fill(pick(rng, [...n.guiltPitch, ...t.guiltPitch]), vars(turn));
+  const pitch = fill(
+    pick(rng, agedPool(turn, c, "guiltPitch", [...n.guiltPitch, ...t.guiltPitch])),
+    vars(turn),
+  );
   const mult = multOf(effectsOf(turn, c), "guilt");
   moodUp(turn, c, nudge(rng, rules.guiltMood));
   let answer: string;
@@ -450,7 +456,10 @@ function sympathy(turn: Turn): View {
   const rng = turn.rng;
   if (walks(turn, c)) return walkOutX(turn, n.interrupted, false);
   const prefix = usePatience(turn, c, 1);
-  const pitch = fill(pick(rng, [...n.sympathyPitch, ...t.sympathyPitch]), vars(turn));
+  const pitch = fill(
+    pick(rng, agedPool(turn, c, "sympathyPitch", [...n.sympathyPitch, ...t.sympathyPitch])),
+    vars(turn),
+  );
   const mult = multOf(effectsOf(turn, c), "sympathy");
   moodUp(turn, c, nudge(rng, rules.sympathyMood));
   let answer: string;
@@ -478,8 +487,8 @@ function hardSell(turn: Turn): View {
   const fromWood = c.desiredCasket === 0;
   const price = (x.casketPrices[c.desiredCasket + 1] ?? 0) - (x.casketPrices[c.desiredCasket] ?? 0);
   const pool = fromWood
-    ? [...n.hardPitchWood, ...t.hardPitchWood]
-    : [...n.hardPitchSilver, ...t.hardPitchSilver];
+    ? agedPool(turn, c, "hardPitchWood", [...n.hardPitchWood, ...t.hardPitchWood])
+    : agedPool(turn, c, "hardPitchSilver", [...n.hardPitchSilver, ...t.hardPitchSilver]);
   const pitch = fill(pick(rng, pool), vars(turn, { price: intToCash(price) }));
   const tier = fromWood ? "silver" : "gold";
   const markupCheap = Math.max(0, x.markup / 10) * xrules.markup.cheapnessPer10;
@@ -534,7 +543,7 @@ function pitchCard(turn: Turn, slot: number): View {
   x.pane = "main";
   const prefix = usePatience(turn, c, 1);
   const pitch = fill(
-    pick(rng, [...n.softPitch, ...t.softPitch]),
+    pick(rng, agedPool(turn, c, "softPitch", [...n.softPitch, ...t.softPitch])),
     vars(turn, { article: item.article, item: item.name, price: intToCash(item.price) }),
   );
   const cheap = effectiveCheapness(turn, c, item.tags);
@@ -596,18 +605,27 @@ function pitchPackage(turn: Turn, id: string): View {
     price: intToCash(tier.price),
     last,
   });
-  const pitch = fill(pick(rng, [...cat.pitch, ...t.packagePitch]), v);
+  const pitch = fill(
+    pick(rng, agedPool(turn, c, "packagePitch", [...cat.pitch, ...t.packagePitch])),
+    v,
+  );
   const cheap = effectiveCheapness(turn, c, tier.tags);
   if (rng.frandom(10) < cheap || cheap > rules.hardRefuseCheapness) {
     moodUp(turn, c, nudge(rng, rules.upgradeRefuseMood));
     if (walks(turn, c)) return walkOutX(turn, prefix + pitch, false);
-    const pool = [...t.packageRefuse, ...n.upgradeRefuse.map((l) => loved(l, c.loved))];
+    const pool = agedPool(turn, c, "packageRefuse", [
+      ...t.packageRefuse,
+      ...n.upgradeRefuse.map((l) => loved(l, c.loved)),
+    ]);
     return negView(turn, prefix + pitch + fill(pick(rng, pool), { ...v, rawPrice: tier.price }));
   }
   let answer: string;
   if (canAfford(turn, c, tier.price - (cat.tiers[x.packages[cat.id] ?? 0]?.price ?? 0))) {
     x.packages[cat.id] = next;
-    answer = fill(pick(rng, [...t.packageAccept, ...n.upgradeAccept]), v);
+    answer = fill(
+      pick(rng, agedPool(turn, c, "packageAccept", [...t.packageAccept, ...n.upgradeAccept])),
+      v,
+    );
   } else {
     if (c.mood > rules.overLimitLeaveMood) return walkOutX(turn, prefix + pitch, true);
     moodUp(turn, c, nudge(rng, rules.overLimitMood));
@@ -625,17 +643,27 @@ function coffee(turn: Turn): View {
   const rng = turn.rng;
   x.coffee = true;
   x.actions++;
-  const pitch = fill(pick(rng, t.coffeePitch), vars(turn));
+  const pitch = fill(pick(rng, agedPool(turn, c, "coffeePitch", t.coffeePitch)), vars(turn));
   let mult = multOf(effectsOf(turn, c), "coffee");
   if (mult === 0) {
     const prefix = usePatience(turn, c, 1);
-    return negView(turn, prefix + pitch + fill(pick(rng, t.coffeeRefuse), vars(turn)));
+    return negView(
+      turn,
+      prefix +
+        pitch +
+        fill(pick(rng, agedPool(turn, c, "coffeeRefuse", t.coffeeRefuse)), vars(turn)),
+    );
   }
   if (hasUpgrade(turn.player, "coffee-machine")) mult *= a.machineMult;
   c.mood = Math.max(0, c.mood - nudge(rng, a.mood) * mult);
   x.patience = Math.min(x.patienceMax, x.patience + a.patience);
   const answer = fill(
-    pick(rng, c.loved ? t.coffeeAccept.loved : t.coffeeAccept.notLoved),
+    pick(
+      rng,
+      c.loved
+        ? agedPool(turn, c, "coffeeAccept.loved", t.coffeeAccept.loved)
+        : agedPool(turn, c, "coffeeAccept.notLoved", t.coffeeAccept.notLoved),
+    ),
     vars(turn),
   );
   return negView(turn, pitch + answer);
@@ -655,7 +683,7 @@ function listen(turn: Turn): View {
   const rng = turn.rng;
   const prefix = usePatience(turn, c, a.patience);
   x.listens++;
-  const pitch = fill(pick(rng, t.listenPitch), vars(turn));
+  const pitch = fill(pick(rng, agedPool(turn, c, "listenPitch", t.listenPitch)), vars(turn));
   const parts: string[] = [];
   const reveals = listenCount(effectsOf(turn, c));
   for (let i = 0; i < reveals && canListen(c); i++) {
@@ -689,10 +717,10 @@ function listen(turn: Turn): View {
   }
   if (c.loved) {
     c.mood = Math.max(0, c.mood + a.lovedMood);
-    parts.push(fill(pick(rng, t.listenLoved), vars(turn)));
+    parts.push(fill(pick(rng, agedPool(turn, c, "listenLoved", t.listenLoved)), vars(turn)));
   } else {
     moodUp(turn, c, nudge(rng, a.notLovedMood));
-    parts.push(fill(pick(rng, t.listenNotLoved), vars(turn)));
+    parts.push(fill(pick(rng, agedPool(turn, c, "listenNotLoved", t.listenNotLoved)), vars(turn)));
   }
   if (walks(turn, c)) return walkOutX(turn, `${prefix}${pitch}${parts.join(" ")}\n\n`, false);
   return negView(turn, prefix + pitch + parts.join(" "));
@@ -716,8 +744,19 @@ function discount(turn: Turn): View {
   c.mood = Math.max(0, c.mood - nudge(rng, d.mood) * mult);
   c.cheapness = clamp(c.cheapness - d.cheapness * mult, 0, 10);
   if (c.income === 0) karmaMod(turn.player, d.poorKarma);
-  const pitch = fill(pick(rng, t.discountPitch), vars(turn, { amount: intToCash(amount) }));
-  const answer = fill(pick(rng, mult > 1 ? t.discountHaggle : t.discountAccept), vars(turn));
+  const pitch = fill(
+    pick(rng, agedPool(turn, c, "discountPitch", t.discountPitch)),
+    vars(turn, { amount: intToCash(amount) }),
+  );
+  const answer = fill(
+    pick(
+      rng,
+      mult > 1
+        ? agedPool(turn, c, "discountHaggle", t.discountHaggle)
+        : agedPool(turn, c, "discountAccept", t.discountAccept),
+    ),
+    vars(turn),
+  );
   return negView(turn, prefix + pitch + answer);
 }
 
@@ -822,12 +861,15 @@ function offer(turn: Turn, accept: boolean): View {
 function done(turn: Turn): View {
   const { c, x } = customer(turn);
   if (specialDef(turn, c)?.offer) throw new Error("Answer the offer");
-  const { text } = settleSale(turn);
+  const { text, result } = settleSale(turn);
   if (x.practice) {
     const xpl = xp(turn);
     xpl.tutorial.step = TUTORIAL_FINISH;
   }
-  return finishView(turn, text, choosePrep(turn));
+  const view = finishView(turn, text, choosePrep(turn));
+  // Section 11.5: how the sale ended, as data (sound cues).
+  view.saleOutcome = saleOutcomeOf(result.bonusKey);
+  return view;
 }
 
 /** Tutorial step meaning "the practice sale is done; show the clerk's last words". */

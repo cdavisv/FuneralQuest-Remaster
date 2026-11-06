@@ -4,7 +4,7 @@
  * Run by `pnpm --filter @fq/client art` and automatically before dev, build and test.
  * Never writes to assets/.
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deriveUiSvg } from "./svg-clean.mjs";
@@ -19,7 +19,12 @@ let total = 0;
 for (const [name, recipe] of Object.entries(CLASSIC_UI)) {
   const source = await readFile(join(sourceDir, `${recipe.from}.svg`), "utf8");
   const { svg, report } = deriveUiSvg(source, recipe);
-  await writeFile(join(outDir, `${name}.svg`), svg);
+  // Written whole, then moved into place: another build running at the same time (two end-to-end
+  // runs, say) never reads a half-written file.
+  const target = join(outDir, `${name}.svg`);
+  const temp = `${target}.${process.pid}.tmp`;
+  await writeFile(temp, svg);
+  await rename(temp, target);
   total += svg.length;
   if (process.argv.includes("--verbose")) {
     console.log(

@@ -19,6 +19,11 @@ export interface RemovedText {
   quotes: number;
   /** Lucky Sparrow fortunes still queued (the Cursed Tiger's are anonymous and cannot be traced). */
   fortunes: number;
+  /**
+   * Expanded towns only: parlor chains the player founded (and so named), renamed to the pack's
+   * neutral `chains.removedName`. Absent in a Classic town.
+   */
+  chains?: number;
 }
 
 const ANY = "([\\s\\S]*?)";
@@ -34,6 +39,7 @@ function escapeRegExp(text: string): string {
 function templateRegex(
   template: string,
   fixed: Record<string, string>,
+  any = ANY,
 ): { re: RegExp; keys: string[] } {
   const keys: string[] = [];
   let source = "";
@@ -45,7 +51,7 @@ function templateRegex(
     if (value !== undefined) source += escapeRegExp(value);
     else {
       keys.push(key);
-      source += ANY;
+      source += any;
     }
     last = (m.index ?? 0) + m[0].length;
   }
@@ -74,8 +80,9 @@ function matchesMail(packet: MailPacket, template: string, name: string): boolea
  * quotes (queued quote mails; crime-page entries keep the fight and lose the
  * quote) and their Lucky Sparrow fortunes still queued. `names` adds names
  * the player used before (the engine keeps no history of a self-rename).
- * Chat is never stored. Expanded chain names are not touched (rename the
- * chain's founder or report it to the host).
+ * Chat is never stored. In an Expanded town the chains the player founded
+ * (whose names they typed) are renamed to the pack's neutral name, also where
+ * the old name stands in stored text.
  */
 export function removePlayerText(
   town: TownState,
@@ -147,7 +154,53 @@ export function removePlayerText(
       }
     }
   }
+  // Expanded: chain names the player typed.
+  const life = out.expanded?.life;
+  if (life) {
+    removed.chains = 0;
+    const template = ctx.content.expanded?.town?.text.chains.removedName;
+    const swaps: [string, string][] = [];
+    for (const chain of life.chains) {
+      const founder = chain.founder ?? chain.members[0];
+      if (founder !== playerId) continue;
+      const n = chain.id.replace(/^\D+/, "");
+      const name = template ? fill(template, { n }) : chain.id;
+      if (name === chain.name) continue;
+      swaps.push([chain.name, name]);
+      chain.name = name;
+      removed.chains++;
+    }
+    swapStoredText(out, swaps);
+  }
   return { town: out, removed };
+}
+
+/** Replaces each `[from, to]` where `from` stands as whole words in a string. */
+function wholeWordSwap(text: string, swaps: readonly [string, string][]): string {
+  let t = text;
+  for (const [from, to] of swaps) {
+    if (from === "") continue;
+    // Whole words; a colour code (a backtick and one character) counts as a boundary.
+    const re = new RegExp(`(?<=^|[^A-Za-z0-9]|\`.)${escapeRegExp(from)}(?![A-Za-z0-9])`, "g");
+    t = t.replace(re, to);
+  }
+  return t;
+}
+
+/** `wholeWordSwap` over the stored paper, queued mail, the mayor's name and the Book of Deeds. */
+function swapStoredText(out: TownState, swaps: readonly [string, string][]): void {
+  if (swaps.length === 0) return;
+  const swap = (text: string) => wholeWordSwap(text, swaps);
+  for (const day of Object.values(out.news) as NewsDay[]) {
+    day.front = swap(day.front);
+    day.crime = swap(day.crime);
+  }
+  for (const q of out.players)
+    for (const packet of q.mail)
+      if ("text" in packet && typeof packet.text === "string") packet.text = swap(packet.text);
+  const election = out.expanded?.life?.election;
+  if (election?.mayorName) election.mayorName = swap(election.mayorName);
+  out.deeds = out.deeds.map(swap);
 }
 
 export type RenameError = "noSuchPlayer" | "nameLength" | "nameTaken" | "parlorLength";
@@ -184,26 +237,188 @@ export function renamePlayer(
   if (parlor !== undefined && parlor !== p.parlor) swaps.push([p.parlor, parlor]);
   if (name !== undefined) p.name = name;
   if (parlor !== undefined) p.parlor = parlor;
-  const swap = (text: string): string => {
-    let t = text;
-    for (const [from, to] of swaps) {
-      if (from === "") continue;
-      // Whole words; a colour code (a backtick and one character) counts as a boundary.
-      const re = new RegExp(`(?<=^|[^A-Za-z0-9]|\`.)${escapeRegExp(from)}(?![A-Za-z0-9])`, "g");
-      t = t.replace(re, to);
-    }
-    return t;
-  };
-  if (swaps.length > 0) {
-    for (const day of Object.values(out.news) as NewsDay[]) {
-      day.front = swap(day.front);
-      day.crime = swap(day.crime);
-    }
-    for (const q of out.players)
-      for (const packet of q.mail)
-        if ("text" in packet && typeof packet.text === "string") packet.text = swap(packet.text);
-    const election = out.expanded?.life?.election;
-    if (election?.mayorName) election.mayorName = swap(election.mayorName);
-  }
+  swapStoredText(out, swaps);
   return { town: out };
+}
+
+// ---------------------------------------------------------------- single items
+
+/** One stored piece of player text a moderator can take down on its own. */
+export interface StoredText {
+  /** 0-based position among the listed items (on that page, or in that player's mail). */
+  index: number;
+  /** FNV-1a (32 bit, hex) of the stored text exactly as it stands: stable while it stays put. */
+  hash: string;
+  /** Who wrote it: the name in the announcement header or crime entry, or the letter's sender id. */
+  author: string | number | null;
+  /** The stored text (legacy markup). */
+  text: string;
+}
+
+/** FNV-1a, 32 bit, as 8 hex digits: a content hash without a crypto dependency (core is pure). */
+export function textHash(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
+
+interface PageItem extends StoredText {
+  start: number;
+  end: number;
+  /** What the item becomes when removed ("" for an announcement). */
+  replacement: string;
+}
+
+function pageItems(page: string, ctx: EngineContext, section: "front" | "crime"): PageItem[] {
+  const social = ctx.content.text.social;
+  const found: Omit<PageItem, "index">[] = [];
+  if (section === "front") {
+    // A name or parlor never spans a line, so a capture cannot reach back to an earlier story.
+    const header = templateRegex(social.news.announcementHeader, {}, "([^\\r\\n]*?)");
+    const re = new RegExp(`${header.re.source}[\\s\\S]*?\\r\\n\\r\\n`, "g");
+    for (const m of page.matchAll(re)) {
+      const vars = groups(m, header.keys);
+      found.push({
+        start: m.index ?? 0,
+        end: (m.index ?? 0) + m[0].length,
+        hash: textHash(m[0]),
+        author: vars.name ?? null,
+        text: m[0],
+        replacement: "",
+      });
+    }
+  } else {
+    for (const [quoted, plain, who] of [
+      [social.battle.crimeWinQuote, social.battle.crimeWin, "winner"],
+      [social.battle.crimeLostQuote, social.battle.crimeLost, "loser"],
+    ] as const) {
+      const { re, keys } = templateRegex(quoted, {}, "([^\\r\\n]*?)");
+      for (const m of page.matchAll(re)) {
+        const vars = groups(m, keys);
+        found.push({
+          start: m.index ?? 0,
+          end: (m.index ?? 0) + m[0].length,
+          hash: textHash(m[0]),
+          author: vars[who] ?? null,
+          text: m[0],
+          replacement: fill(plain, vars),
+        });
+      }
+    }
+  }
+  return found.sort((a, b) => a.start - b.start).map((f, index) => ({ ...f, index }));
+}
+
+/**
+ * The player-written items on one stored page: announcements on the front
+ * page, battle quotes on the crime page (a crime entry's quote is the
+ * loser's or winner's own words). For a moderator's list; read only.
+ */
+export function listAnnouncements(
+  town: TownState,
+  ctx: EngineContext,
+  day: number,
+  section: "front" | "crime" = "front",
+): StoredText[] {
+  const page = town.news[String(day)]?.[section] ?? "";
+  return pageItems(page, ctx, section).map(({ index, hash, author, text }) => ({
+    index,
+    hash,
+    author,
+    text,
+  }));
+}
+
+/**
+ * Takes one announcement off a stored front page (header and body), or one
+ * battle quote off a crime page (the entry keeps the fight and loses the
+ * quote), by its `index` on that page or its `hash` (`listAnnouncements`).
+ * With both, both must match. `removed` is false when nothing matched.
+ */
+export function removeAnnouncement(
+  town: TownState,
+  ctx: EngineContext,
+  ref: { day: number; section?: "front" | "crime"; index?: number; hash?: string },
+): { town: TownState; removed: boolean } {
+  const section = ref.section ?? "front";
+  const stored = town.news[String(ref.day)];
+  if (!stored || (ref.index === undefined && ref.hash === undefined))
+    return { town, removed: false };
+  const item = pageItems(stored[section], ctx, section).find(
+    (i) =>
+      (ref.index === undefined || i.index === ref.index) &&
+      (ref.hash === undefined || i.hash === ref.hash),
+  );
+  if (!item) return { town, removed: false };
+  const out = JSON.parse(JSON.stringify(town)) as TownState;
+  const day = out.news[String(ref.day)] as NewsDay;
+  day[section] =
+    day[section].slice(0, item.start) + item.replacement + day[section].slice(item.end);
+  return { town: out, removed: true };
+}
+
+interface LetterAt extends StoredText {
+  /** Index of the letter's first packet in the mail queue, and how many packets it has. */
+  at: number;
+  packets: number;
+}
+
+function lettersIn(mail: readonly MailPacket[]): LetterAt[] {
+  const out: LetterAt[] = [];
+  mail.forEach((packet, i) => {
+    if (packet.type !== "buttons") return;
+    const reply = packet.buttons.find((b) => b.id.startsWith("mailbox:reply:"));
+    if (!reply) return;
+    // A letter is its text, its quote, then these buttons (classic/mail.ts sendLetter).
+    let at = i;
+    if (mail[at - 1]?.type === "quote") at--;
+    const text = mail[at - 1];
+    if (text?.type === "text") at--;
+    const body = text?.type === "text" ? text.text : "";
+    out.push({
+      index: out.length,
+      hash: textHash(body),
+      author: Number(reply.id.slice("mailbox:reply:".length)),
+      text: body,
+      at,
+      packets: i - at + 1,
+    });
+  });
+  return out;
+}
+
+/** The letters waiting in player `to`'s mail, oldest first. Read only. */
+export function listQueuedLetters(town: TownState, to: number): StoredText[] {
+  return lettersIn(town.players[to]?.mail ?? []).map(({ index, hash, author, text }) => ({
+    index,
+    hash,
+    author,
+    text,
+  }));
+}
+
+/**
+ * Removes one letter still queued in player `to`'s mail (its text, quote and
+ * Reply packets), by `index` among the waiting letters or by the `hash` of its
+ * text (`listQueuedLetters`). With both, both must match.
+ */
+export function removeLetter(
+  town: TownState,
+  ref: { to: number; index?: number; hash?: string },
+): { town: TownState; removed: boolean } {
+  const player = town.players[ref.to];
+  if (!player || (ref.index === undefined && ref.hash === undefined))
+    return { town, removed: false };
+  const letter = lettersIn(player.mail).find(
+    (l) =>
+      (ref.index === undefined || l.index === ref.index) &&
+      (ref.hash === undefined || l.hash === ref.hash),
+  );
+  if (!letter) return { town, removed: false };
+  const out = JSON.parse(JSON.stringify(town)) as TownState;
+  (out.players[ref.to] as PlayerState).mail.splice(letter.at, letter.packets);
+  return { town: out, removed: true };
 }

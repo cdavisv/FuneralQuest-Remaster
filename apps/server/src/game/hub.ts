@@ -82,6 +82,25 @@ export class Hub {
     for (const socket of [...sockets]) socket.close(code, reason);
   }
 
+  /** Closes the oldest sockets of a player until at most `keep` remain. Returns how many. */
+  evictOldest(
+    townId: string,
+    playerId: number,
+    keep: number,
+    code: number,
+    reason: string,
+  ): number {
+    const sockets = this.towns.get(townId)?.get(playerId);
+    if (!sockets) return 0;
+    let n = 0;
+    for (const socket of [...sockets]) {
+      if (sockets.size - n <= keep) break;
+      socket.close(code, reason);
+      n++;
+    }
+    return n;
+  }
+
   closeTown(townId: string, code: number, reason: string): void {
     const players = this.towns.get(townId);
     if (!players) return;

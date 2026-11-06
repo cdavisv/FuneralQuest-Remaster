@@ -119,7 +119,13 @@ export type MailPacket = MailPacketBase &
     | { type: "simpleText"; text: string }
     | { type: "chat"; text: string }
     | { type: "newsLog"; text: string }
-    | { type: "varMod"; stat: MailStat; amount: number }
+    | {
+        type: "varMod";
+        stat: MailStat;
+        amount: number;
+        /** Expanded: already applied when sent (`mailRewardsOnDelivery` off); only reported. */
+        applied?: true;
+      }
     | { type: "picture"; layer: "fg" | "bg"; picture: AssetId | null }
     | { type: "quote"; text: string }
     | { type: "buttons"; buttons: MailButton[] }

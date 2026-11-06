@@ -36,22 +36,37 @@ async function fakePad(page: Page): Promise<void> {
   });
 }
 
-/** One press: down for a couple of frames, then up. */
+/**
+ * Waits for `n` animation frames of the page. The page polls the pad once per frame, so a button
+ * held for frames, not milliseconds, is always seen: a slow machine (or an engine that throttles
+ * a headless page) stretches the frames and the press along with them.
+ */
+const frames = (page: Page, n = 2) =>
+  page.evaluate(
+    (count) =>
+      new Promise<void>((resolve) => {
+        let left = count;
+        const next = () => (--left <= 0 ? resolve() : requestAnimationFrame(next));
+        requestAnimationFrame(next);
+      }),
+    n,
+  );
+
+/** One press: down for a couple of frames, then up for a couple. */
 async function tap(page: Page, name: keyof typeof BUTTON): Promise<void> {
-  await page.evaluate((i) => {
-    const b = (window as unknown as { __pad: { buttons: { pressed: boolean }[] } }).__pad.buttons[
-      i
-    ];
-    if (b) b.pressed = true;
-  }, BUTTON[name]);
-  await page.waitForTimeout(70);
-  await page.evaluate((i) => {
-    const b = (window as unknown as { __pad: { buttons: { pressed: boolean }[] } }).__pad.buttons[
-      i
-    ];
-    if (b) b.pressed = false;
-  }, BUTTON[name]);
-  await page.waitForTimeout(70);
+  const set = (pressed: boolean) =>
+    page.evaluate(
+      ([i, down]) => {
+        const b = (window as unknown as { __pad: { buttons: { pressed: boolean }[] } }).__pad
+          .buttons[i as number];
+        if (b) b.pressed = down as boolean;
+      },
+      [BUTTON[name], pressed] as const,
+    );
+  await set(true);
+  await frames(page);
+  await set(false);
+  await frames(page);
 }
 
 const focused = (page: Page) =>

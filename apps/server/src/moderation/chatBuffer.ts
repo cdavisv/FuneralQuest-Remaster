@@ -56,15 +56,31 @@ export class ChatBuffer {
     return this.towns.get(townId)?.length ?? 0;
   }
 
-  /** The newest line `receiver` was sent whose text is `text` (ignoring surrounding space). */
-  find(townId: string, receiver: number, text: string, now: number): BufferedLine | null {
+  /**
+   * The newest line `receiver` was sent whose text is `text` (ignoring surrounding space), and,
+   * when `speaker` is given, that this player said (the line's own data, so two players saying
+   * the same words are told apart).
+   */
+  find(
+    townId: string,
+    receiver: number,
+    text: string,
+    now: number,
+    speaker?: number,
+  ): BufferedLine | null {
     const lines = this.towns.get(townId);
     if (!lines) return null;
     this.trim(lines, now);
     const wanted = text.trim();
     for (let i = lines.length - 1; i >= 0; i--) {
       const line = lines[i] as BufferedLine;
-      if (line.text.trim() === wanted && line.recipients.has(receiver)) return line;
+      if (
+        line.text.trim() === wanted &&
+        line.recipients.has(receiver) &&
+        (speaker === undefined || line.senderPlayerId === speaker)
+      ) {
+        return line;
+      }
     }
     return null;
   }

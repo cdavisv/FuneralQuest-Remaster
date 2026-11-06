@@ -34,7 +34,9 @@ export const DEFAULT_TEXT_COLOR = LEGACY_COLORS.yellow;
  * was markup); RichText is never HTML, so these three are escaped.
  */
 export function escapeHtml(text: string): string {
-  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // ">" stays as typed: the original sent it raw (letters quote with ">", add_var
+  // funeral_util.cpp:317-335), and a Flash HTML field shows a lone ">" as is.
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 }
 
 /** A line break in an HTML text field. The client's fields are HTML, where a raw LF is only white space under Ruffle. */

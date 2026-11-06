@@ -161,7 +161,7 @@ Every action except Done (and opening the hand or packages) uses one patience (L
 | Action | Rule |
 |---|---|
 | Guilt, Sympathy | Classic (`commands_complicated.cpp:860-1074`) with trait multipliers on the cheapness cut (and on the loved Guilt mood penalty, at least x1). Guilt on a customer who loved the deceased also costs 1 karma. |
-| Hard Sell | Classic's casket ladder (wood to silver to gold), price difference at the customer's markup. Refused when `frandom(10) < cheapness + hardSell effects + 0.5 per 10% markup above 0` or that is above 8. Disabled (with a hint) at gold or on the cremation track. The Classic big upgrades after gold are replaced by Packages. |
+| Hard Sell | Classic's casket ladder (wood to silver to gold), price difference at the customer's markup. Refused when `frandom(10) < cheapness + hardSell effects + 1.3 per 10% markup above 0 (`markup.cheapnessPer10`)` or that is above 8. Disabled (with a hint) at gold or on the cremation track. The Classic big upgrades after gold are replaced by Packages. |
 | Soft Sell | Opens the hand (section 4). |
 | Packages | Opens the package cards (section 5). |
 | Offer Coffee | Once per customer. Mood `-(0.8 + frandom(1)) x coffee effect x 1.5 with the coffee machine`, patience +1 (to its maximum). In a Hurry wastes it (and a patience). |
@@ -254,7 +254,7 @@ Di-Mart's Caskets shelf sells at wholesale `roundUp(0.75 x list price, $50)` ($6
 
 ### 6.3 Markup
 
-Set at the office: -10, 0, +10, +20 or +30%. Casket prices become `round(list x (1 + markup) / 50) x 50`. Each 10% above 0 adds 1 cheapness to Hard Sell tests and costs 4 rating (gives 4 at -10%); wanted caskets must still fit the limit. Trade-off: bigger bills with fewer actions versus harder sells and a worse reputation.
+Set at the office: -10, 0, +10, +20 or +30%. Casket prices become `round(list x (1 + markup) / 50) x 50`. Each 10% above 0 adds 1.3 cheapness to Hard Sell tests and costs 5 rating (gives 5 at -10%; balance round, was 1 and 4); wanted caskets must still fit the limit. Trade-off: bigger bills with fewer actions versus harder sells and a worse reputation.
 
 ### 6.4 Plot income
 
@@ -264,7 +264,7 @@ Every plot pays $2 a day, premium plots more (5.1), paid at the player's new day
 
 ### 7.1 Rating
 
-Computed, 0 to 100: `10 + upgrade ratings + hearse rating + min(15, floor(plots / 20)) + word of mouth (-20..20) + karma (85+: +5, 70+: +2, 30-: -2, 15-: -4) - 4 per 10% markup`. Word of mouth moves +1 per happy family, -1 per sour one, -2 per walkout, with prep choices, specials and arson, and fades 10% toward 0 each new day. The rating shifts the income roll (3.1) and picks the `ratings.txt` line shown at the office. Initial rating 10, as the Design Doc wanted.
+Computed, 0 to 100: `10 + upgrade ratings + hearse rating + min(15, floor(plots / 20)) + word of mouth (-20..20) + karma (85+: +5, 70+: +2, 30-: -2, 15-: -4) - 5 per 10% markup`. Word of mouth moves +1 per happy family, -1 per sour one, -2 per walkout, with prep choices, specials and arson, and fades 10% toward 0 each new day. The rating shifts the income roll (3.1) and picks the `ratings.txt` line shown at the office. Initial rating 10, as the Design Doc wanted.
 
 ### 7.2 Upgrades
 
@@ -281,16 +281,16 @@ Bought with money from the contractor at the office; each changes play.
 | Alarm System | $16,000 | | Security 2 (needs Guard Dog) |
 | Viewing Room | $18,000 | +4 | Patience +2; building level (needs Paint) |
 | Incinerator | $24,000 | +2 | Cremation track; sets `incinerator` |
-| Night Watchman | $20,000 | +2 | Security 3 (needs Alarm) |
+| Night Watchman | $12,000 | +2 | Security 3 (needs Alarm); income roll +5 |
 | Chapel | $50,000 | +8 | Income roll +15; building level (needs Viewing Room) |
 | Mausoleum | $80,000 | +8 | Crypt plots; building level (needs Chapel) |
-| Billboard on Route 9 | $14,000 | +2 | Income roll +10 (needs the Signage Permit, 18.1) |
-| Memorial Garden | $30,000 | +6 | Patience +1 (needs the Zoning Variance) |
+| Billboard on Route 9 | $20,000 | +2 | Income roll +7 (needs the Signage Permit, 18.1) |
+| Memorial Garden | $20,000 | +6 | Patience +2, income roll +4 (needs the Zoning Variance) |
 | Crematorium Annex | $60,000 | +4 | Income roll +8 (needs the Incinerator and the Crematory Emissions Permit) |
 
 `UpgradeRule.permit` names the City Hall permit an upgrade needs; without it the card is disabled with "Needs a ... from City Hall". Upgrade prices are read through the `parlor.upgradePrice` modifier (an ordinance can discount them), rounded to $50.
 
-Building level is the count of building upgrades: Shack, Fixer-Upper, Respectable, Chapel House, Colonial Mansion. The office shows the building at its stage, `places/parlor-1` (level 0, the Shack) to `places/parlor-5` (level 4, the Colonial Mansion), from the Remastered art pack (`parlorPicture`). The prices of the Night Watchman, the Billboard and the Memorial Garden were lowered in the engine pass (`docs/balance/expanded-tuning-log.md`, "Loose ends").
+Building level is the count of building upgrades: Shack, Fixer-Upper, Respectable, Chapel House, Colonial Mansion. The office shows the building at its stage, `places/parlor-1` (level 0, the Shack) to `places/parlor-5` (level 4, the Colonial Mansion), from the Remastered art pack (`parlorPicture`). The prices of the Night Watchman, the Billboard and the Memorial Garden were lowered in the engine pass (`docs/balance/expanded-tuning-log.md`, "Loose ends") and set again in the balance round (rounds 13 to 15): the Billboard returned three times a monument per dollar, the other two nothing (bought on day 26, a rating buy cannot pay back that late), so the Garden and the Watchman now also shift the income roll.
 
 ## 8. Karma
 
@@ -309,7 +309,7 @@ After 40% of sales (always for the practice customer; times the `prep.chance` mo
 | 70+ | Trusted | Customers arrive with mood -0.8, cheapness -0.5; rating +2 (+5 at 85). |
 | 85+ | Church Associate | Bless once per customer (8.1); rivals win half as much from you (sanctuary). |
 | 30- | Grave Robber | Dishonest choices pay double money; Di-Mart's back-room price (x0.85); Dig for Goodies at the office: up to 2 a day (shared with robbing graves, 16.3), no turn, `randomYesNo(luck, 0.9)`: $200 to $900 or (1 in 5) a gold tag; failure costs 1 karma and 1 word of mouth. Rating -2. |
-| 15- | Necromancer | Raise Mourners once per customer (cheapness -2.5, mood +1); +1 turn a day ("accidents"); your attack gains x1.25. Rating -4. |
+| 15- | Necromancer | Raise Mourners once per customer (cheapness -2.5, mood +1); +1 turn a day ("accidents"); your attack gains x1.15 (x1.25 before the balance round). Rating -4. |
 
 Play styles: good is reputation (rating, richer and calmer customers, information, defence); evil is money, turns and intimidation (and aggression, for players who fight).
 
@@ -317,7 +317,7 @@ Play styles: good is reputation (rating, richer and calmer customers, informatio
 
 ### 9.1 What a fight is worth (answers F6)
 
-A winning attacker gains `min(95, floor(1.1 x sqrt(victim's total BP)))` times the multiplier, and the victim loses half of that (Classic: 2% and 1% of the total, without limit). A defender who wins gains the same curve on the attacker's total and the attacker loses half. Multipliers: both cutthroat x1.25; attacker Necromancer x1.25; victim Church Associate x0.5; victim security `x(1 - 0.15 x level)`. Examples: a 1,600 BP victim pays 44 to the attacker and loses 22; any victim over about 7,500 BP pays the cap.
+A winning attacker gains `min(95, floor(1.1 x sqrt(victim's total BP)))` times the multiplier, and the victim loses half of that (Classic: 2% and 1% of the total, without limit). A defender who wins gains the same curve on the attacker's total and the attacker loses half. Multipliers: both cutthroat x1.25; attacker Necromancer x1.15 (`pvp.necroMult`, x1.25 before the balance round); victim Church Associate x0.5; victim security `x(1 - 0.15 x level)`. Examples: a 1,600 BP victim pays 44 to the attacker and loses 22; any victim over about 7,500 BP pays the cap.
 
 ### 9.2 Defence
 
@@ -329,7 +329,7 @@ Chosen at the office, changeable once every 3 days. Standard is the default. Pea
 
 ### 9.4 Underdogs and caps
 
-- Underdog: a parlor below 70% of the leader's total gains `min(25%, 50% x (1 - mine / leader))` of each sale's base BP extra. A parlor created after day 1 of a season (a late starter) uses `min(150%, 300% x (1 - mine / leader))` below 98% of the leader instead, whichever is higher (`underdog.late`): established parlors that trail keep the mild rule, so the field is not flattened, and a newcomer can reach the middle of the table.
+- Underdog: a parlor below 70% of the leader's total gains `min(25%, 50% x (1 - mine / leader))` of each sale's base BP extra. A parlor created after day 1 of a season (a late starter) uses `min(150%, 300% x (1 - mine / leader))` below 98% of the leader instead, whichever is higher (`underdog.late`): established parlors that trail keep the mild rule, so the field is not flattened, and a newcomer can reach the middle of the table. A late starter also opens with `underdog.late.money` ($1,500) more starting money for every season day already played (a day-10 parlor: $13,500 more), because the others bought their first upgrades in that time (balance round, round 13; applied by the Expanded player-created hook, not in a Daily Challenge, which sets its own money).
 - Caps (the Design Doc's "set maximums for HP and strength"): psych internal level 7, max HP 60, strength 15. Spirit University refuses past them and charges nothing.
 
 ### 9.5 Hearses (answers F2)
@@ -348,7 +348,7 @@ On the first desk visit of a game day, after Classic's `base_new_day`, in order:
 
 ### 10.2 Rewards apply at once
 
-`mailRewardsOnDelivery: false`: luck, BP and turn rewards (top seller, top parlors, the news blurb's gift, a walkout's rival) apply when sent, and the mail only reports them. A Continue stop with nothing read since the previous one (the news blurb's gift mail starts with one, maint.cpp:33-95) is skipped instead of showing an empty message with only OK. This now holds in Classic too: the empty overlay was the remaster's conversion of mail into overlays, not original behaviour (the Flash client showed the desk with a Continue button), so the Classic transcripts were re-recorded with exactly those overlays removed (1.3).
+`mailRewardsOnDelivery: false`: luck, BP and turn rewards (top seller, top parlors, the news blurb's gift, a walkout's rival) apply when sent, and the mail only reports them (the reward packet is still queued, marked `applied`, so the reader is not paid twice and the overlay can say it was a reward, 11.5). A Continue stop with nothing read since the previous one (the news blurb's gift mail starts with one, maint.cpp:33-95) is skipped instead of showing an empty message with only OK. This now holds in Classic too: the empty overlay was the remaster's conversion of mail into overlays, not original behaviour (the Flash client showed the desk with a Continue button), so the Classic transcripts were re-recorded with exactly those overlays removed (1.3).
 
 ### 10.3 New players are never deleted in their first week
 
@@ -396,6 +396,11 @@ Each Expanded screen also sends its facts as typed fields (`packages/protocol/sr
 - **`View.prep: PrepPanel`** (body preparation): `choices [{buttonId, effects: RewardFacts, evil, risk? {chance, fail: RewardFacts}}]`. `effects.karma` is the karma direction and size (money already doubled for a Grave Robber's dishonest choice); `risk.chance` is the percent `randomYesNo(luck, weight)` succeeds with today. Sort and draw the moral choice from these instead of parsing `detail`.
 - **`View.tutorial: TutorialPanel`**: on a tour page `{page, pages, speaker}`; on a practice-sale screen `{hint, speaker}` with the hint as RichText without its "Clerk:" tag. `note` still carries "3 / 6" and "Clerk: ..." for older clients.
 - **`TownPanel.ordinance.daysLeft`** and **`TownPanel.ballots[].daysLeft`** (desk and map strip).
+- **`View.monuments: MonumentsPanel`** (every graveyard screen but the duel): `{built, tiers: [{name, price, bp, rating}]}`, every tier from the rules with the pack's name; tiers `0 .. built - 1` stand (16.1). Light the built ones from it.
+- **Sound cues as data.** `View.saleOutcome` on the view that closes a sale: `exact`, `great`, `nice` (the closeness band, 3.7), `plain` (no band) or `walkout` (3.4, the Mob Boss's threat included); a flat offer (County Contract, Cousin Sal) is not a sale and has none. `NewsPanel.meteor: true` on an edition whose stored front page carries the season-ending meteor story. `Overlay.messageKind` on a message overlay: `reward` (mail that reported a luck, BP or turns reward: under 10.2 the reward is applied when sent and the mail now also queues the reward packet marked `applied`, which the reader only uses to say so), otherwise `notice`; the Reply question of a player's letter (a `confirm`, `mailbox:reply`) is `letter`.
+- **`ChatLine.from` and the `chat` effect's `from`**: `{playerId, name}` of the player who said the line (talk, `/me`, `/give` and its notices, `/yell`); absent for the room's own lines (arrivals, leaving, the TV, broadcasts). Report a line by `from`, not its text.
+- **`Hud.warnings: Warning[]`**: `{kind: "hit-rumour", day}` on every view of the game day a lucky target heard a hit-man rumour (20.4), so a client or bot can react without reading the mail.
+- **Classic is not decorated.** Every field above is filled only under Expanded rules (the view hook, the Expanded modules, or a branch guarded by `turn.rules.expanded` in `classic/mail.ts`, `classic/modules/mailbox.ts` and `classic/modules/cafe.ts`): the Classic regression transcripts hash every view and effect and have no ignore list, so a Classic field would change them (1.3). The Classic simulator report for a fixed seed is unchanged.
 
 ## 12. Extension points
 
@@ -433,6 +438,17 @@ Legacy markup with backtick colours, never HTML; pictures are manifest ids; any 
 
 `checkExpandedContent(content, EXPANDED)` returns problems (and, when the pack has a `town` section, those of `checkTownContent`, 25.3): missing lists, duplicate or unknown ids, prices off the $50 grid, package tier 0 not free or tiers not getting dearer, unknown upgrade requirements, upgrades without names, prep events with fewer than two options. The starter passes (tested). `@fq/content` accepts an optional `expanded` object and leaves it to this check.
 
+### 13.5 Age-aware lines and traits
+
+This is a tool for newly written Expanded lines and traits only (owner's rule, CLAUDE.md: original 2001 content is never suppressed, skipped or reworded). It cannot touch an original line: the plain lists, which hold Classic's original lines where a pool merges them and every plain line of the pack, are always eligible and drawn exactly as before; restrictions live only on entries of `agedLines`, and an aged line whose text repeats a plain line is ignored. The traits are Expanded's own (no original content has traits).
+
+Content can say who a line or trait suits (`AgeLimits`: `minCustomerAge`, `maxCustomerAge`, `minDeceasedAge`, `maxDeceasedAge`, whole years, inclusive, each optional). Customers are 15 or older (Classic never sends a kid to the desk), so a minor customer is 15 to 17; the deceased can be any age.
+
+- **Lines:** `ExpandedNegotiationText.agedLines: AgedLine[]`, each `{pool, text, ...AgeLimits}`. `pool` names the list it joins: `request`, `petRequest`, `repeat.happy`, `repeat.ok`, `repeat.sour`, `repeat.walked`, `impatient`, `softPitch`, `hardPitchWood`, `hardPitchSilver`, `guiltPitch`, `sympathyPitch`, `coffeePitch`, `coffeeAccept.loved`, `coffeeAccept.notLoved`, `coffeeRefuse`, `listenPitch`, `listenLoved`, `listenNotLoved`, `discountPitch`, `discountAccept`, `discountHaggle`, `packagePitch`, `packageAccept`, `packageRefuse`. The plain lists stay plain and always eligible; a line that is wrong for some customers moves out of the plain list into `agedLines` with its limits. Selection (`expanded/ages.ts`, `agedPool`): the plain list (with Classic's lines where the pool merges them) plus the aged lines that fit; when that is empty, the pool's unrestricted lines, then all of its lines, so a screen always has its line. A pool with no aged lines draws exactly as before (the same random draws). Classic's pools are untouched.
+- **Traits:** `TraitDef` takes the same four optional fields. A trait is drawn only for customers it fits; when none fits, the unrestricted ones. A special customer's forced traits are its design and are not filtered.
+- **Starter example:** two aged Sympathy lines, one for customers of 17 or younger (`maxCustomerAge: 17`), one for adults burying someone 60 or older (`minCustomerAge: 18, minDeceasedAge: 60`).
+- **Checks** (13.4): unknown pool, empty text, an aged line with no limit, a bound that is not a whole age from 0 to 120, a minimum above its maximum, and fewer than three traits without limits.
+
 ## 14. Verification
 
 Section 27 covers the town's tests; the list below is the foundation's.
@@ -469,11 +485,11 @@ The table above and the three claims come from the numbers before the simulator 
 
 ### The simulator baseline (tuned)
 
-The numbers in this document are now tuned against whole seasons of the `@fq/bots` personalities (twelve committed strategies that play the Expanded game from Views alone and the public rule book of the content pack, `packages/bots/src/expanded/`) in `tools/sim --rules expanded`: 200 towns of 8 for 30 days with `expandedPack`, plus mixed-difficulty, late-joiner, oracle and no-fighter comparisons. Every round is in `docs/balance/expanded-tuning-log.md`. In short: mean final BP by personality within -6% / +6% of the field and the karma paths within 4.4% (Classic's spread was 21,843 to 36,074); hard bots 15% ahead of easy ones of the same personality, 2.6 times the luck spread; the leader at 1.11x the median; the most-targeted parlor that never fights loses 4.6% of its season; nothing mints money, tags or BP.
+The numbers in this document are now tuned against whole seasons of the `@fq/bots` personalities (twelve committed strategies that play the Expanded game from Views alone and the public rule book of the content pack, `packages/bots/src/expanded/`) in `tools/sim --rules expanded`: 200 towns of 8 for 30 days with `expandedPack`, plus mixed-difficulty, late-joiner, oracle and no-fighter comparisons. Every round is in `docs/balance/expanded-tuning-log.md`. In short (after the balance round, rounds 13 to 16): mean final BP by personality from -7.0% to +4.3% of its towns' mean, ten of twelve within 3%, mean place 2.75 to 6.26 (Classic's spread was 21,843 to 36,074); the karma paths within 1% on BP except evil at -3.8% (the two fighters); hard bots 16.7% ahead of easy ones; a day-10 starter finishes 5.10th of 9; the leader at 1.07x the median; the most-targeted parlor that never fights loses 4.1% of its season; no purchase returns more than a monument per dollar; nothing mints money, tags or BP.
 
 ### What remains to tune
 
-- **Win shares.** In a field this tight the steady sellers rarely win unless their mean is ahead, and the fighters win more than their mean deserves because PvP makes their seasons swing: necromancer 2.75x and tycoon 2.54x their fair share, scholar, organiser, gambler, builder and Soft Touch below a third. The levers are PvP variance (smaller, more frequent stakes) and the personalities' own habits; see the baseline's reading.
+- **Win shares.** Still missed after the balance round: politician 2.67x and necromancer 2.45x their fair share (a strong seller with a small spread, and a fighter whose season swings three times as wide as a seller's), organiser 0.17, scholar 0.28 and saboteur 0.29. Read by mean place and BP against the town mean the field is fair; the baseline's reading explains why win share in an eight-seat field rewards variance, and lists the levers not yet tried (a cap on fight BP a day, the exact-match share).
 - **Walkouts.** Bots almost never let a customer walk (0.06% of customers). Mood pacing, patience and the generosity of Coffee and Discount need human play.
 - **The exact match** lands on a quarter of a careful seller's sales and the closeness bonuses are a quarter of sale BP; that rewards reading, but pinning the limit with small cards is the grindiest play there is. Playtest whether it feels like skill or chores.
 - **Numbers the bots exercise but cannot judge:** trait strengths and tell frequency (bots read tells perfectly at hard), special customers' rewards, the content's prep choices (karma still moves fast: both paths reach their second perk within a few days), hearse upkeep.
@@ -491,12 +507,12 @@ Bought in order with money; each pays BP once, on purchase, and adds rating whil
 | 1 | A Tasteful Granite Bench | $3,000 | 60 | +1 | 20 |
 | 2 | The Weeping Angel (Slightly Cross-Eyed) | $8,000 | 130 | +1 | 16 |
 | 3 | A Marble Obelisk With Your Name On It | $20,000 | 260 | +2 | 13 |
-| 4 | The Eternal Flame (Gas Bill Included) | $45,000 | 340 | +2 | 7.6 |
-| 5 | A Bronze Statue of Yourself, Pointing at Something Important | $90,000 | 420 | +3 | 4.7 |
+| 4 | The Eternal Flame (Gas Bill Included) | $45,000 | 160 | +2 | 3.6 |
+| 5 | A Bronze Statue of Yourself, Pointing at Something Important | $90,000 | 180 | +3 | 2.0 |
 
 The Expanded pack names the tiers: 1. A Granite Bench With Your Name on the Seat; 2. The Weeping Angel (Slightly Cross-Eyed); 3. A Marble Obelisk You Can See From Blaine; 4. The Eternal Flame (Gas Bill Included); 5. A Bronze Statue of You, One Foot Taller Than the Mayor's.
 
-All five: $166,000 for 1,210 BP and +9 rating. Each tier buys less per dollar than the one before, so money keeps a use to the end of the season without becoming the best way to score: a good seller makes 30 to 60 BP a sale.
+All five: $166,000 for 790 BP and +9 rating (tiers 4 and 5 were 340 and 420 BP before the balance round: only the richest parlors build them, and they were most of the tycoon's lead). Each tier buys less per dollar than the one before, so money keeps a use to the end of the season without becoming the best way to score: a good seller makes 30 to 60 BP a sale.
 
 ### 16.2 Tending the graves (the peaceful use)
 
@@ -527,7 +543,7 @@ Rules that differ from the parlor fight (section 9):
 | Strong but nearly beaten (15 v 5, 3 HP v 20 HP) | -11.0 | +1.1 | -10 | Shove |
 | Weak and beaten (5 v 15, 3 HP v 40 HP) | -20 | -20 | -10 | Yield |
 | Old rule: even / strong but nearly beaten / weak | +29.9 / -11.0 / -20 | -18.7 / -14.2 / -20 | -10 | Shove never beats Swing |
-- The stake: the winner gains `floor(pvpGain(loser BP) x 0.75 x multipliers)` (9.1), the loser loses half of that and gets an injury (Sprained Ankle or Cracked Skull, at random). Multipliers: both cutthroat x1.25, winner Necromancer x1.25, loser Church Associate x0.5, the `pvp.gainMult` modifier. Security does not reduce it.
+- The stake: the winner gains `floor(pvpGain(loser BP) x 0.75 x multipliers)` (9.1), the loser loses half of that and gets an injury (Sprained Ankle or Cracked Skull, at random). Multipliers: both cutthroat x1.25, winner Necromancer x1.15, loser Church Associate x0.5, the `pvp.gainMult` modifier. Security does not reduce it.
 - The rival is mailed, the crime page reports it ("GRAVEYARD BRAWL"), a beaten rival counts toward their chain's shelter.
 - Logging off mid-duel yields (`sessionEnd`).
 
@@ -604,7 +620,7 @@ Each midnight the inspector calls on one random parlor that owns at least one up
 - Filing: days 1 to 7, $6,000. Candidates may buy campaign ads ($5,000 each, at most 5) until the count; each ad is a vote.
 - Voting: days 8 to 10 (the ballot opens at the midnight starting day 8 with every candidate still in town). One vote per player, changeable.
 - The count, at the midnight starting day 11: votes plus ads, at least 1 per candidate, so a lone candidate wins unopposed; ties drawn on the town stream. No candidates: the NPC mayor stays ("ELECTION CANCELLED").
-- The mayor's perks for the rest of the season: +3 rating (ribbon cuttings, 7.1; the text's `{rating}`), 2 votes on every ordinance (`election.perks.turns` can add turns every morning, the chauffeur; 0 since tuning), and the "Mayor takes credit" ending of the cough arc (22.3).
+- The mayor's perks for the rest of the season: +1 rating (+3 before the balance round) (ribbon cuttings, 7.1; the text's `{rating}`), 2 votes on every ordinance (`election.perks.turns` can add turns every morning, the chauffeur; 0 since tuning), and the "Mayor takes credit" ending of the cough arc (22.3).
 - In a town without seasons (`tournamentActive` off) the season day repeats every 30 days and each term starts over.
 
 ## 19. The hospital (the Nurse)
@@ -690,7 +706,7 @@ Each is disabled with a reason when it would do nothing (vest worn, storeroom fu
 ### 20.4 The hit man, the bodyguard, and their consequences
 
 - Price: `$3,000 + $1 x the target's BP` (through `club.hitPrice`; $5,000 + $2 before the engine pass), -5 karma, one hit a day, one hit per target per night. Refused for yourself, Peace Pledge parlors and chain-mates.
-- A target with luck 60 or more hears a rumour by mail that night (counterplay time).
+- A target with luck 60 or more hears a rumour by mail that night (counterplay time). The rumour is also data: `PlayerLife.rumourDay` is set to the day and every view of that day carries `Hud.warnings: [{kind: "hit-rumour", day}]` (11.5). The bots that protect themselves (scholar, tycoon, politician, organiser, builder) go to the club at once and hire the bodyguard, or Tiny or the vest from the black market when the bodyguard is out of reach.
 - Resolved at midnight, in order: foiled by police protection, a bodyguard for that night ($3,000 at the club, or Tiny), body armour (used up), being on the Peace Pledge by then, or a roll of `random(100) < 20 x security level + 25 if Church Associate`.
 - Landed: the target loses `floor(pvpGain(target BP) x 0.75)` BP (`hit.lossShare`, 0.5 before the engine pass; the hirer gains nothing: no farming), gets Busted Kneecaps, a mail and the crime page.
 - Foiled: the target and the hirer are mailed; half the time the hit man talks: the target learns who paid, the hirer is fined `min(cash, $2,000)` and -3 word of mouth, and the crime page names them.
@@ -711,7 +727,7 @@ The Classic bank wrapped (`expanded/town/bank.ts`): tag exchange as Classic, plu
 
 ### 21.2 Savings
 
-Deposit and withdraw any amount (or all) at no cost. Interest at every midnight: `floor(min(savings, $100,000) x 0.2%)`, plus `bank.savingsRate`. Savings cannot be stolen from the till (9.6). No deposits while a loan is outstanding, so borrowed money cannot earn interest.
+Deposit and withdraw any amount (or all) at no cost. Interest at every midnight: `floor(min(savings, $100,000) x 0.15%)` (0.2% before the balance round), plus `bank.savingsRate`. Savings cannot be stolen from the till (9.6). No deposits while a loan is outstanding, so borrowed money cannot earn interest.
 
 ### 21.3 Loans
 
@@ -938,15 +954,15 @@ The table above is from the numbers before the simulator tuning; `townBalance` r
 
 ### Measured by the simulator (tuned)
 
-`docs/balance/expanded-baseline.md` measures every town system under play by the twelve personalities. Money: sales are 83% of all income, stock 48% of all spending (the storeroom is the money engine), upgrades 17%, monuments 11%, tithes 5%. Monuments return 0.010 BP a dollar over all five tiers, tithes 0.009 (0.012 for the good path): flat on purpose, so money keeps a use to the end of the season without becoming the way to win. With the endgame spending of the bots, money no longer piles up except for the richest parlors (the shark and the tycoon, whose sinks are capped: five monuments and $10,000 of tithes a day). The house returns its exact edge at every stake. 2,378 loans were taken (builders and tycoons, to buy an upgrade sooner) and every one was repaid; the first day's interest is now charged when the money is lent. Every ballot is voted on by every parlor; the politician is elected in 114 of 200 towns; 140 chains form.
+`docs/balance/expanded-baseline.md` measures every town system under play by the twelve personalities. Money: sales are 83% of all income, stock 48% of all spending (the storeroom is the money engine), upgrades 17%, monuments 11%, tithes 5%. Monuments return 0.009 BP a dollar over all five tiers (after the balance round cut tiers 4 and 5 to 160 and 180 BP), tithes 0.009 (0.012 for the good path): flat on purpose, so money keeps a use to the end of the season without becoming the way to win. With the endgame spending of the bots, money no longer piles up except for the richest parlors (the shark and the tycoon, whose sinks are capped: five monuments and $10,000 of tithes a day). The house returns its exact edge at every stake. 2,669 loans were taken (builders and tycoons, to buy an upgrade sooner) and every one was repaid; the first day's interest is now charged when the money is lent. Every ballot is voted on by every parlor; the politician is elected in 114 of 200 towns; 140 chains form.
 
 ### What remains to tune
 
-- **Hits** removed 0.001 BP from the victim per dollar ($5,000 + $2 x the target's BP); the engine pass made them $3,000 + $1 a BP with three quarters of the curve as the loss (about 0.005 BP a dollar against a 10,000 BP target, still half a monument's rate, and the hirer still gains nothing). Bots hire them rarely, so the simulator cannot judge them; how much griefing is wanted needs human play.
-- **The duel's Shove** was never better than a Swing; since the engine pass a shove that lands costs the shoved side their next move (16.4), and each of Swing, Shove and Yield is best in some position. The bots' duel policy (`@fq/bots`) still values a shove by the old rule.
-- **The election** draws one candidate (the politician) in most towns and nobody runs against it; the mayor's perks are now +3 rating and a double vote (the extra turn was worth about 700 BP a season). Contested elections need people.
+- **Hits** removed 0.001 BP from the victim per dollar ($5,000 + $2 x the target's BP); the engine pass made them $3,000 + $1 a BP with three quarters of the curve as the loss (about 0.005 BP a dollar against a 10,000 BP target, still half a monument's rate, and the hirer still gains nothing). Bots hire them rarely, so the simulator cannot judge them; how much griefing is wanted needs human play. Since the rumour became data (20.4, 11.5) five personalities hire a bodyguard or buy the vest when warned: 74% of hits land (was 83%).
+- **The duel's Shove** was never better than a Swing; since the engine pass a shove that lands costs the shoved side their next move (16.4), and each of Swing, Shove and Yield is best in some position. The bots now solve the duel with the exact rules.
+- **The election** draws one candidate (the politician) in most towns and nobody runs against it; the mayor's perks are now +1 rating and a double vote (the extra turn was worth about 700 BP a season). Contested elections need people.
 - **Story arcs, news and weather** are exercised (every seat lives through them) but not measured against each other; their frequency (news 60% of days, arcs 35% a day in their windows) needs human play.
-- **Unused late upgrades:** the Billboard, the Memorial Garden and the Night Watchman were bought by no personality; the engine pass lowered their prices (7.2, tuning log "Loose ends"). The bots buy upgrades from fixed lists (`@fq/bots` `personalities.ts`): only the builder lists the Billboard and the Garden, after the mausoleum, and none lists the Night Watchman, so the simulator cannot show the change until the lists do.
+- **Late upgrades:** after the balance round the Billboard returns 0.009 BP a dollar, the Night Watchman 0.010 and the Memorial Garden 0.007, against 0.009 for monuments (7.2). The Watchman and the Garden are still bought on day 26 because the bots' lists put them late.
 - The black market's gold tag is the only money-to-tag path; watch it if tags get scarce.
 - The Remastered art pack now draws the places, the duel and two map buildings (25.4); there is still no `ui/building-graveyard`.
 
@@ -959,7 +975,14 @@ setBlocked(town: TownState, playerId: number, blocked: readonly number[]): TownS
 blockedList(town, playerId): number[];  isBlocking(town, blocker, other): boolean;  blockersOf(town, playerId): Set<number>
 removePlayerText(town, playerId, ctx, { names? }): { town, removed: { letters, announcements, quotes, fortunes } }
 renamePlayer(town, playerId, ctx, { name?, parlor? }): { town, error?: "noSuchPlayer" | "nameLength" | "nameTaken" | "parlorLength" }
+listAnnouncements(town, ctx, day, section = "front"): StoredText[]      // {index, hash, author, text}
+removeAnnouncement(town, ctx, { day, section?: "front" | "crime", index?, hash? }): { town, removed: boolean }
+listQueuedLetters(town, to): StoredText[]                               // author = the sender's player id
+removeLetter(town, { to, index?, hash? }): { town, removed: boolean }
+textHash(text): string                                                  // FNV-1a 32-bit, 8 hex digits
 ```
+
+Single items: on the front page an item is an announcement (header and body); on the crime page it is a battle quote, and removing it leaves the fight's entry without the quote (as `removePlayerText` does). `index` counts the items on that page (or the letters waiting for that player) from 0 in stored order; `hash` is `textHash` of the item's stored text, stable while the item stays; with both, both must match; nothing matching returns the town unchanged and `removed: false`. A letter is its three packets (text, quote, Reply).
 
 What a block does (the blocker no longer receives the blocked player's text; it is one way):
 
@@ -970,4 +993,4 @@ What a block does (the blocker no longer receives the blocked player's text; it 
 - **Never a combat shield**: visits, fights, arson, theft, duels and hits ignore blocks (tested: the visit flow is identical with and without a block).
 - **Public text is not filtered per reader.** An announcement or a crime-page quote that names the blocker stays in the paper for everyone, the blocker included. Decided because the Funeral Times is one shared page (Classic stores each day's paper as one text and every reader sees the same), hiding it from the person named alone does nothing about everyone else reading it, and per-reader papers would let readers see different news. Announcements and quotes are always swear-filtered; abuse is handled by the host's report and `removePlayerText`.
 
-`removePlayerText` (account deletion, a moderator's takedown) removes the player's letters still queued for others (text, quote and Reply packets), their announcements on every stored front page (header and body), their battle quotes (queued quote mails; crime-page entries keep the fight and lose the quote) and their queued Lucky Sparrow fortunes. Matching uses the content's templates with the player's name; `names` adds earlier names (the engine keeps no rename history). Not reachable: chat (never stored), the Cursed Tiger's fortunes (anonymous by design, so not traceable), and Expanded chain names (rename them through the host). `renamePlayer` is a moderator's rename: the creation length rules and a unique name, no fee, no announcement, and the old name and parlor replaced as whole words in the stored paper, queued mail and the mayor's name, so a later takedown still finds the player's text. Tests: `test/blocking.test.ts`.
+`removePlayerText` (account deletion, a moderator's takedown) removes the player's letters still queued for others (text, quote and Reply packets), their announcements on every stored front page (header and body), their battle quotes (queued quote mails; crime-page entries keep the fight and lose the quote) and their queued Lucky Sparrow fortunes. Matching uses the content's templates with the player's name; `names` adds earlier names (the engine keeps no rename history). In an Expanded town it also renames the chains the player founded (`Chain.founder`, or the first member for chains from older saves) to the pack's `chains.removedName` (`{n}` the chain's number; the starter's is "Parlor Chain No. {n}"; the chain id when a pack has none), also where the old chain name stands in stored text, and reports `removed.chains` (absent in a Classic town). Not reachable: chat (never stored) and the Cursed Tiger's fortunes (anonymous by design, so not traceable). `renamePlayer` is a moderator's rename: the creation length rules and a unique name, no fee, no announcement, and the old name and parlor replaced as whole words in the stored paper, queued mail, the mayor's name and the Book of Deeds, so a later takedown still finds the player's text. Tests: `test/blocking.test.ts`.

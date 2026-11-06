@@ -32,8 +32,8 @@ test("the setup form offers the ruleset, with a line on each", async ({ page }) 
   const rules = page.getByRole("group", { name: "Ruleset" });
   await expect(rules.getByRole("radio", { name: "Classic" })).toBeChecked();
   await expect(rules).toContainText("The 2001 game");
-  // Classic has its wording choice and no tour question.
-  await expect(page.getByRole("group", { name: "Which wording?" })).toBeVisible();
+  // Classic has no tour question, and no choice of wording: the text is the original in every mode.
+  await expect(page.getByRole("group", { name: "Which wording?" })).toHaveCount(0);
   await expect(page.getByRole("group", { name: "The guided first day?" })).toHaveCount(0);
 
   await rules.getByRole("radio", { name: "Expanded" }).check({ force: true });

@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { legacyCompat, REPO_ROOT } from "@fq/legacy-compat";
 import type { FastifyInstance } from "fastify";
+import { addressKey } from "../auth/ip.js";
 import type { AppContext } from "../http/context.js";
 import { createMuseumHost } from "./host.js";
 import { MUSEUM_PATH } from "./path.js";
@@ -101,9 +102,10 @@ export async function registerMuseum(app: FastifyInstance, ctx: AppContext): Pro
         const verb = query.split("&")[0]?.toLowerCase();
         if (verb !== "logon" && verb !== "new") return;
         const now = ctx.clock.now();
-        const recent = (attempts.get(request.ip) ?? []).filter((t) => now - t < windowMs);
+        const who = addressKey(request.ip);
+        const recent = (attempts.get(who) ?? []).filter((t) => now - t < windowMs);
         if (recent.length >= config.rateAuthMax) {
-          attempts.set(request.ip, recent);
+          attempts.set(who, recent);
           return reply.status(429).send({
             error: "rate_limited",
             message: "Too many requests. Slow down and try again shortly.",
@@ -111,7 +113,7 @@ export async function registerMuseum(app: FastifyInstance, ctx: AppContext): Pro
         }
         recent.push(now);
         if (attempts.size > 10_000) attempts.clear();
-        attempts.set(request.ip, recent);
+        attempts.set(who, recent);
       });
       await scope.register(legacyCompat, {
         host: museum.host,
@@ -119,6 +121,7 @@ export async function registerMuseum(app: FastifyInstance, ctx: AppContext): Pro
         legacyRoot: paths.legacyRoot,
         ruffleRoot: paths.ruffleRoot,
         manifestPath: paths.manifestPath,
+        secureCookie: config.secureCookies,
         log: (line) => ctx.log.info(line),
         onBridge: (bridge) => museum.attach(bridge),
       });

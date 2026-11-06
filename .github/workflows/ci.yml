@@ -10,39 +10,65 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# The jobs below run side by side. Everything that exists is run somewhere:
+#   lint        biome, the art pack check, every package's typecheck
+#   unit        every package's and tool's unit tests, in four groups (the oracle's tests are in
+#               "tools"; they skip themselves without a C++ toolchain, and the runner has g++)
+#   build       the production client, with the bundle-size budget (docs/performance.md)
+#   e2e         the Playwright suites in Chromium, Firefox and WebKit, one job each
+#   audit       known vulnerabilities in the dependencies
 jobs:
-  check:
-    name: Lint, typecheck, unit tests
+  lint:
+    name: Lint and typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          # The floor, not the latest. Node 24 is needed because the solo and simulator tests
-          # start TypeScript worker threads, which fail to load on Node 22. Raise this together
-          # with "engines".
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm lint
+      - run: node tools/art/check.mjs
       - run: pnpm typecheck
-      - run: pnpm test
 
-  client-build:
-    name: Client build
+  unit:
+    name: Unit tests (${{ matrix.group }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - group: packages
+            filter: "./packages/*"
+          - group: tools
+            filter: "./tools/*"
+          - group: client
+            filter: "@fq/client"
+          - group: server
+            filter: "@fq/server"
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
+      - name: C++ toolchain (the oracle's tests build the original engine with it)
+        if: matrix.group == 'tools'
+        run: g++ --version
+      - run: pnpm --filter "${{ matrix.filter }}" test
+      # Desktop and mobile have no unit tests; their scripts are syntax-checked.
+      - name: Wrappers
+        if: matrix.group == 'client'
+        run: pnpm --filter @fq/desktop --filter @fq/mobile typecheck
+
+  build:
+    name: Client build and bundle size
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
       # Derives the Classic UI art, typechecks, bundles the app, the Solo worker, the service
       # worker and the pictures into apps/client/dist-build.
       - run: pnpm --filter @fq/client build
+      # Fails when a chunk, or the total, grows past the budget in apps/client/bundle-budget.json.
+      - run: pnpm --filter @fq/client bundle:check
       - uses: actions/upload-artifact@v4
         with:
           name: client-dist
@@ -50,29 +76,53 @@ jobs:
           retention-days: 7
 
   e2e:
-    name: Playwright (online and solo)
+    name: Playwright (${{ matrix.browser }})
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup
+      - name: Playwright version
+        id: playwright
+        run: echo "version=$(pnpm --filter @fq/client exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - name: Cache the browser
+        id: browsers
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-${{ matrix.browser }}
+      # The download is skipped on a cache hit; the system libraries are not part of the cache.
       - name: Install the browser
-        run: pnpm --filter @fq/client exec playwright install --with-deps chromium
-      # Builds the client, starts the real server on a temporary database (online suite) and a
-      # plain file host with no server (solo suite), and drives both with Chromium.
-      - run: pnpm --filter @fq/client e2e
+        if: steps.browsers.outputs.cache-hit != 'true'
+        run: pnpm --filter @fq/client exec playwright install --with-deps ${{ matrix.browser }}
+      - name: Install the browser's system libraries
+        if: steps.browsers.outputs.cache-hit == 'true'
+        run: pnpm --filter @fq/client exec playwright install-deps ${{ matrix.browser }}
+      # Builds the client into a directory of its own, starts the real server on temporary
+      # databases (online, museum and Expanded suites) and a plain file host with no server
+      # (solo suite), and drives them all with the chosen browser. One retry is allowed here;
+      # the report names every test that needed it.
+      - run: pnpm --filter @fq/client e2e:${{ matrix.browser }}
       - name: Upload traces and screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-traces
+          name: playwright-traces-${{ matrix.browser }}
           path: |
             apps/client/e2e/results
             apps/client/playwright-report
           if-no-files-found: ignore
           retention-days: 14
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm audit --audit-level=high

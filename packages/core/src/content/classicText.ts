@@ -49,6 +49,12 @@ export interface ClassicText {
     loggedOn: string;
     /** {name} */
     loggedOff: string;
+    /**
+     * Log-on refused while another player is inside the parlor
+     * (funeral.cpp:357-363). Optional so packs built before it was added
+     * still load; the engine falls back to the original wording.
+     */
+    parlorLocked?: string;
   };
   desk: {
     title: string;
@@ -499,6 +505,8 @@ export const CLASSIC_TEXT: ClassicText = {
   session: {
     loggedOn: "{name} logged on.",
     loggedOff: "{name} logged off.",
+    parlorLocked:
+      "Someone is currently poking around your parlor...please log back on in a few minutes!",
   },
   desk: {
     title: "At Home",

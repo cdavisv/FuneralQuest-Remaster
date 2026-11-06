@@ -7,6 +7,7 @@ import {
   LAYERED,
   type MusicId,
   moodLayers,
+  type PackId,
   PLACE_MUSIC,
   pickCue,
   type SoundId,
@@ -48,6 +49,8 @@ export interface AudioBackend {
   setRadio(on: boolean): void;
   /** False while the tab is hidden or the sound is muted: the backend may suspend itself. */
   setActive(active: boolean): void;
+  /** The sound pack to play from (tracks it lacks play from the Synth pack). */
+  setPack?(pack: PackId): void;
   dispose(): void;
 }
 
@@ -72,6 +75,8 @@ export interface AudioState {
   ambience: AmbienceId | null;
   mood: number;
   volumes: Volumes;
+  /** The selected sound pack (Settings, "Sound pack"). */
+  pack: PackId;
 }
 
 export interface AudioManager {
@@ -86,6 +91,8 @@ export interface AudioManager {
   setVolumes(volumes: Partial<Volumes>): void;
   setMuted(muted: boolean): void;
   setRadio(on: boolean): void;
+  /** The sound pack (Synth or Studio). */
+  setPack(pack: PackId): void;
   /** The tab became hidden or visible. */
   setHidden(hidden: boolean): void;
   /** The first user interaction: browsers allow sound from here on. */
@@ -124,6 +131,7 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
     ambience: null,
     mood: 0,
     volumes: { master: 1, music: 1, ambience: 1, effects: 1 },
+    pack: "synth",
   };
   const listeners = new Set<() => void>();
   // An immutable copy for React (useSyncExternalStore wants a stable snapshot between changes).
@@ -244,6 +252,12 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
       backend?.setRadio(on);
       notify();
     },
+    setPack(pack) {
+      if (pack === state.pack) return;
+      state.pack = pack;
+      backend?.setPack?.(pack);
+      notify();
+    },
     setHidden(hidden) {
       if (hidden === state.hidden) return;
       state.hidden = hidden;
@@ -257,6 +271,7 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
       if (backend) {
         backend.setGains(gains());
         backend.setRadio(state.radio);
+        backend.setPack?.(state.pack);
         backend.setActive(!state.hidden && !state.muted);
         sync(0.5);
       }

@@ -174,6 +174,44 @@ describe("report and block next to cafe lines", () => {
   });
 });
 
+describe("cafe lines that say who spoke, as data (Expanded)", () => {
+  // The words give no name to parse: the speaker is `from`.
+  const EXPANDED_CAFE: View = viewWith({
+    scene: "cafe",
+    title: "Pale Horse Cafe",
+    text: [sp("The cafe hums.")],
+    chat: [
+      { text: [sp("* Skelly rattles his bones *")], from: { playerId: 7, name: "Skelly" } },
+      { text: [sp("* Bob waves *")], from: { playerId: 1, name: "Bob" } },
+      { text: [sp("* Gravy saunters in *")] },
+    ],
+    buttons: [{ id: "go:map", label: "Leave" }],
+  });
+
+  it("offers the menu on another player's /me line and not on the player's own or the room's", async () => {
+    await play(new ModBackend(), EXPANDED_CAFE);
+    await screen.findByRole("button", { name: "Report or block Skelly" });
+    expect(screen.getAllByRole("button", { name: /^Report or block/ })).toHaveLength(1);
+  });
+
+  it("reports and blocks the line by the speaker's id, not by its words alone", async () => {
+    const backend = new ModBackend();
+    const user = await play(backend, EXPANDED_CAFE);
+    await user.click(await screen.findByRole("button", { name: "Report or block Skelly" }));
+    await user.click(screen.getByRole("button", { name: "Report" }));
+    const dialog = await screen.findByRole("dialog", { name: "Report to the moderators" });
+    await user.click(within(dialog).getByRole("radio", { name: "Spam" }));
+    await user.click(within(dialog).getByRole("button", { name: "Send report" }));
+    expect(backend.mod.reports).toEqual([
+      {
+        townId: "main",
+        target: { kind: "chat", text: "* Skelly rattles his bones *", fromPlayerId: 7 },
+        category: "spam",
+      },
+    ]);
+  });
+});
+
 // ------------------------------------------------------------------ report form
 
 describe("the report form", () => {
@@ -671,7 +709,7 @@ describe("the notice before online play", () => {
     expect(gate).toHaveTextContent(
       "No harassment or bullying, no hate, no sexual content, no threats, no spam, no cheating",
     );
-    expect(gate).toHaveTextContent("Report anything nasty and block");
+    expect(gate).toHaveTextContent("Report a player who breaks the rules and block");
     expect(gate).toHaveTextContent("mute, rename or ban");
     expect(gate).toHaveTextContent("[MINIMUM AGE - OWNER TO FILL IN]");
     expect(screen.queryByText("Please enter your name and password")).toBeNull();

@@ -40,8 +40,8 @@ Valve rates games *Verified*, *Playable*, *Unsupported* or *Unknown* from a revi
 
 | Valve's check | State of this build |
 | --- | --- |
-| Controller support: all functionality reachable with the built-in controls, including the first launch | **Not yet.** The wrapper maps a gamepad (d-pad and stick move focus, A presses, B is Escape, X/Y/LB/RB are 1 to 4, Start opens server settings), but the client has no native gamepad navigation or on-screen glyphs, and text entry (log-on, name, chat) needs the Deck's on-screen keyboard (the Steam button + X; the client does not bring it up by itself). Expect *Playable* until the client owns gamepad support |
-| In-game button glyphs match the controller | **Not done.** The client shows no glyphs; it shows numbered buttons. Add glyphs (or no glyph, only plain "Press A") |
+| Controller support: all functionality reachable with the built-in controls, including the first launch | **Built into the client, never tried on a Deck.** The client owns gamepad navigation (d-pad and stick move focus once per press, A presses, B goes back, X submits, shoulder buttons scroll, Start opens Settings), and tests drive it with a synthetic pad. Text entry (log-on, name, chat) focuses the field and relies on the Deck's on-screen keyboard (the Steam button + X); the client does not bring it up by itself. Expect *Playable* until it is checked on a Deck |
+| In-game button glyphs match the controller | **Done in the client** (A/B/X/Y labels by controller family, shown only while a pad is in use); unverified on a Deck's own controller ids |
 | Default text is legible at 1280x800 | Likely: the client's three layouts adapt to the viewport, and 1280x800 is wider than 1.55:1, so the *wide* layout is chosen. **Unverified on a Deck.** Check body text against Valve's minimum size |
 | The game runs on the Deck without extra setup / a launcher that is not Steam | Yes (the app starts straight into the front door). No anti-cheat, no launcher |
 | Default graphics config suits the Deck | Yes: 2D, no GPU demands |
@@ -49,7 +49,7 @@ Valve rates games *Verified*, *Playable*, *Unsupported* or *Unknown* from a revi
 
 To prepare: set the Deck-friendly defaults, add a Steam Input *Gamepad* controller template in Steamworks (*Edit Steam Input Configuration* > template *Gamepad*; the game reads a standard gamepad through the browser Gamepad API), test with *Steam > Settings > Controller* and on a real Deck in game mode and desktop mode, and then request a compatibility review in *Steamworks > Steam Deck*. Mention controllers only in the store page's *Controller support* field when it is honestly "Partial".
 
-**Client work that moves the rating to Verified** (client, not wrapper): native gamepad navigation and glyph hints in `apps/client`, bringing up the system on-screen keyboard on text fields (the Deck does this for web inputs in some modes), and a text-size setting.
+**Work that moves the rating to Verified:** a check on a real Deck (focus, glyphs, the first launch), the system on-screen keyboard on text fields (the Deck does this for web inputs in some modes), and a text-size setting.
 
 ## Updating
 

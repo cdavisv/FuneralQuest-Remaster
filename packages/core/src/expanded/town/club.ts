@@ -462,6 +462,8 @@ function bookHit(turn: Turn, id: number | null): View {
   townLife(turn.town).hits.push({ by: me.id, target: target.id, day: turn.town.day });
   if (target.luck >= h.rumourLuck) {
     sendPacket(turn.town, target.id, { type: "text", text: xt(turn).text.club.hitRumour });
+    // Section 11.5: the warning as data (`Hud.warnings`), so a client or bot can act on it.
+    lifeOf(turn.town, target).rumourDay = turn.town.day;
   }
   refreshRating(turn.rules, me);
   return main(turn, fill(xt(turn).text.club.hitBooked, { name: target.name }));

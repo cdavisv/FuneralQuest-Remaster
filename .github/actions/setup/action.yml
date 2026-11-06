@@ -1,0 +1,15 @@
+name: Set up the workspace
+description: Node 24, pnpm and the installed workspace, with the pnpm store cached.
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        # The floor, not the latest. Node 24 is needed because the solo and simulator tests
+        # start TypeScript worker threads, which fail to load on Node 22. Raise this together
+        # with "engines".
+        node-version: 24
+        cache: pnpm
+    - run: pnpm install --frozen-lockfile
+      shell: bash

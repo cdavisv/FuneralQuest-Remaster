@@ -11,5 +11,13 @@
     "resolveJsonModule": true,
     "sourceMap": false
   },
-  "include": ["src", "test", "e2e", "vite.config.ts", "playwright.config.ts", "tools/*.d.mts"]
+  "include": [
+    "src",
+    "test",
+    "e2e",
+    "perf",
+    "vite.config.ts",
+    "playwright.config.ts",
+    "tools/*.d.mts"
+  ]
 }

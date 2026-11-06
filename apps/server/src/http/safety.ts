@@ -1,6 +1,7 @@
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { AuthError } from "../auth/accounts.js";
+import { addressKey } from "../auth/ip.js";
 import { deleteAccount, exportAccount } from "../moderation/account.js";
 import { SafetyError } from "../moderation/service.js";
 import {
@@ -18,7 +19,11 @@ const playerId = z.number().int().min(0).max(1_000_000);
 export const SafetyTargetSchema = z.discriminatedUnion("kind", [
   z.strictObject({ kind: z.literal("player"), playerId }),
   z.strictObject({ kind: z.literal("name"), name: safeText(1, 64) }),
-  z.strictObject({ kind: z.literal("chat"), text: safeText(1, 1000) }),
+  z.strictObject({
+    kind: z.literal("chat"),
+    text: safeText(1, 1000),
+    fromPlayerId: playerId.optional(),
+  }),
   z.strictObject({
     kind: z.literal("letter"),
     text: safeText(1, 4000),
@@ -84,7 +89,7 @@ export function registerSafetyRoutes(app: FastifyInstance, ctx: AppContext): voi
     timeWindow: windowMs,
     keyGenerator: (request: FastifyRequest) => {
       const auth = accounts.authenticate(bearer(request), request.ip);
-      return auth ? `account:${auth.account.id}` : `ip:${request.ip}`;
+      return auth ? `account:${auth.account.id}` : `ip:${addressKey(request.ip)}`;
     },
   };
   const authLimit = { max: config.rateAuthMax, timeWindow: windowMs };

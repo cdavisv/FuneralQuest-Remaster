@@ -1,3 +1,4 @@
+import { PACK_IDS as SOUND_PACK_IDS, type PackId as SoundPackId } from "@fq/audio";
 import { useId } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { PACKS } from "../art/packs.js";
@@ -169,6 +170,14 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         checked={settings.radio}
         onChange={(radio) => update({ radio })}
       />
+      <Choice<SoundPackId>
+        legend={t("settings.audio.pack")}
+        name="fq-sound-pack"
+        value={settings.soundPack}
+        options={opts("settings.audio.pack", [...SOUND_PACK_IDS])}
+        onChange={(soundPack) => update({ soundPack })}
+      />
+      <p className="fq-set-note">{t("settings.audio.pack.note")}</p>
       <p className="fq-set-note">{t("settings.audio.note")}</p>
       <p className="fq-set-note">
         {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}

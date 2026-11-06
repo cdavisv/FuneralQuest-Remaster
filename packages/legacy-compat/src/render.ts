@@ -60,6 +60,12 @@ export interface RenderContext {
   quote?: string;
   /** Who a Reply goes to (`i_his_id`). */
   replyTo?: number;
+  /**
+   * The pack's desk texts and Reply question, so a letter is drawn as the
+   * original's desk text: `desk.sitting` / `sittingPolice` stand in for an
+   * empty desk message, `replyPrompt` is the remaster's question.
+   */
+  letterText?: { sitting: readonly string[]; replyPrompt: string };
 }
 
 export interface Rendered {
@@ -395,6 +401,41 @@ function overlayKind(id: string): string {
   return at === -1 ? id : id.slice(at + 1);
 }
 
+/** Drops `suffix` (plain text) from the end of `text`, if it ends with it. */
+function dropSuffix(text: RichText, suffix: string): RichText {
+  if (!richTextToPlain(text).endsWith(suffix)) return text;
+  const out = text.map((span) => ({ ...span }));
+  let left = suffix.length;
+  while (left > 0 && out.length > 0) {
+    const last = out[out.length - 1] as RichText[number];
+    if (last.text.length <= left) {
+      left -= last.text.length;
+      out.pop();
+    } else {
+      last.text = last.text.slice(0, last.text.length - left);
+      left = 0;
+    }
+  }
+  return out;
+}
+
+/**
+ * What the original's desk said with a letter on it (commands_main.cpp:89-108):
+ * the desk message read so far ("Welcome back..." or nothing), then what the
+ * queue gave, each text packet "`w%s\n" (broadcast.cpp:58-70). The engine
+ * puts the first part under the overlay (or "You are sitting at your desk."
+ * when there was none) and adds its Reply question to the second.
+ */
+function letterText(ctx: RenderContext, overlay: Overlay): RichText {
+  const body = overlay.kind === "message" || overlay.kind === "confirm" ? overlay.text : [];
+  const known = ctx.letterText;
+  if (!known) return body;
+  const head = richTextToPlain(ctx.view.text);
+  const under = known.sitting.includes(head) ? [] : ctx.view.text;
+  const letter = overlay.kind === "confirm" ? dropSuffix(body, `\n\n${known.replyPrompt}`) : body;
+  return [...under, ...letter];
+}
+
 /**
  * A letter from another player or a notice arrives as a message or a
  * question on the desk. The original showed these as the desk text with a
@@ -405,8 +446,7 @@ function renderLetter(ctx: RenderContext, overlay: Overlay): Rendered {
   const { view, previous } = ctx;
   const fresh = previous.object !== "m_main" || ctx.forceNew;
   b.addAll(hudVars(view.hud));
-  const text = overlay.kind === "message" || overlay.kind === "confirm" ? overlay.text : [];
-  b.add("st_main", html(text));
+  b.add("st_main", html(letterText(ctx, overlay)));
   const pic = overlay.kind === "message" ? overlay.picture : undefined;
   const shown: ClientState = fresh ? BLANK_CLIENT : previous;
   const fg = pic?.fg ?? view.picture?.fg;

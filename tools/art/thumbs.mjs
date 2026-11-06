@@ -312,7 +312,6 @@ for (const p of [
   "m_adult_5",
   "f_adult_3",
   "m_old_7",
-  "m_adult_u",
 ]) {
   T[`people/${p}`] = () => rect(0, 0, 550, 400, "#000") + bust("#b08070");
 }

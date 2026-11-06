@@ -27,7 +27,7 @@ Choose **Play online**, then **New user** (or **Play as guest**), pick a name fo
 
 ### Solo (offline, against computer rivals)
 
-Choose **Play solo**. You make a career (your name, your parlor, how many rivals from none to seven, how good they are, a 30-day career or endless, Classic or Vintage wording) and play it entirely on your own device: the rivals' days run in a Web Worker, careers are saved in your browser after every move (you can keep several, export one to a file, and import it on another device), and nothing needs a server. **End the Day** on the desk lets the rivals take their turns and starts the next morning's paper.
+Choose **Play solo**. You make a career (your name, your parlor, how many rivals from none to seven, how good they are, a 30-day career or endless) and play it entirely on your own device: the rivals' days run in a Web Worker, careers are saved in your browser after every move (you can keep several, export one to a file, and import it on another device), and nothing needs a server. **End the Day** on the desk lets the rivals take their turns and starts the next morning's paper.
 
 Solo needs no game server at all. It works from the installed app with no connection (the page keeps itself for offline use after its first visit) and from any static file host:
 
@@ -49,7 +49,7 @@ The front door links to it when the server has it switched on. On a server of yo
 
 ## Host a town
 
-A server hosts any number of towns (Classic rules, with Classic or Vintage wording), with accounts, a day scheduler, an admin API and SQLite storage. The quick way is Docker, which builds the web client and serves the whole game on one port:
+A server hosts any number of towns (Classic or Expanded rules; the original 2001 text in both), with accounts, a day scheduler, an admin API and SQLite storage. The quick way is Docker, which builds the web client and serves the whole game on one port:
 
 ```sh
 cp apps/server/.env.example apps/server/.env     # set FQ_ADMIN_TOKEN (openssl rand -hex 32)
@@ -61,26 +61,26 @@ Without Docker: `pnpm --filter @fq/client build`, then `FQ_CLIENT_DIR=apps/clien
 
 ## Repository layout
 
-| Path                     | What is there                                                                                                          |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `packages/protocol`      | The `View` and `Action` types shared by the engine, server and clients. Text is rich-text spans, never HTML.           |
-| `packages/core`          | The rules engine: pure, deterministic, no I/O. Classic ported line by line from `legacy/source`; Expanded in progress. |
-| `packages/content`       | Content packs (`classicPack`, `vintagePack`) converted from `legacy/dist/*.txt`, with the importer and schema.         |
-| `packages/bots`          | AI rival parlors that play from the same Views a person sees.                                                          |
-| `packages/solo`          | Offline Solo mode: a whole town in a Web Worker, save slots, save files.                                               |
-| `packages/legacy-compat` | The bridge that lets the original Flash client play the new engine (museum mode).                                      |
-| `apps/server`            | The game server: Fastify, WebSocket, SQLite, accounts, towns, the day scheduler, the admin API.                        |
-| `apps/client`            | The web client (React, Vite): front door, the game in three layouts, Solo mode, PWA, Playwright tests.                 |
-| `tools/sim`              | The balance simulator: many towns of rival bots, a report, invariant and exploit checks.                               |
-| `tools/extract`          | Exports the original assets and text from `legacy/` (art as SVG, tables as data).                                      |
-| `legacy/`                | The original 2001 server, Flash client and content, untouched. [Its README](legacy/README.md) is the original one.     |
-| `docs/`                  | The plan, the rules, balance reports and reference notes (below).                                                      |
+| Path                     | What is there                                                                                                                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/protocol`      | The `View` and `Action` types shared by the engine, server and clients. Text is rich-text spans, never HTML.                       |
+| `packages/core`          | The rules engine: pure, deterministic, no I/O. Classic ported line by line from `legacy/source`; Expanded in progress.             |
+| `packages/content`       | Content packs (`classicPack`, the original text; `expandedPack`) converted from `legacy/dist/*.txt`, with the importer and schema. |
+| `packages/bots`          | AI rival parlors that play from the same Views a person sees.                                                                      |
+| `packages/solo`          | Offline Solo mode: a whole town in a Web Worker, save slots, save files.                                                           |
+| `packages/legacy-compat` | The bridge that lets the original Flash client play the new engine (museum mode).                                                  |
+| `apps/server`            | The game server: Fastify, WebSocket, SQLite, accounts, towns, the day scheduler, the admin API.                                    |
+| `apps/client`            | The web client (React, Vite): front door, the game in three layouts, Solo mode, PWA, Playwright tests.                             |
+| `tools/sim`              | The balance simulator: many towns of rival bots, a report, invariant and exploit checks.                                           |
+| `tools/extract`          | Exports the original assets and text from `legacy/` (art as SVG, tables as data).                                                  |
+| `legacy/`                | The original 2001 server, Flash client and content, untouched. [Its README](legacy/README.md) is the original one.                 |
+| `docs/`                  | The plan, the rules, balance reports and reference notes (below).                                                                  |
 
 ## Working on it
 
 ```sh
 pnpm check                         # lint, typecheck and tests for every package
-pnpm e2e                           # builds the client and runs the Playwright suites (online and solo) in Chromium
+pnpm e2e                           # builds the client and runs the Playwright suites (online, solo, museum, Expanded) in Chromium, Firefox and WebKit
 pnpm dev:server                    # game server with auto-restart, http://127.0.0.1:8080
 pnpm dev:client                    # web client with hot reload, http://localhost:5173 (talks to the dev server)
 pnpm sim --days 30 --towns 20      # balance simulation (tools/sim)
@@ -90,9 +90,12 @@ Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScrip
 
 ### Where the plan and the rules are
 
+- [`docs/STATUS.md`](docs/STATUS.md): what is finished, what is only tested, what has never been run, and what needs a human.
 - [`docs/REMASTER_PLAN.md`](docs/REMASTER_PLAN.md): what the remaster is, what the review of the original found, the phases and the decisions.
 - [`docs/classic-rules.md`](docs/classic-rules.md): the Classic rules specification, each section marked Reviewed or Ported against the original source.
 - [`docs/balance/`](docs/balance): the simulator's baseline report for Classic.
+- [`docs/security.md`](docs/security.md) and [`docs/performance.md`](docs/performance.md): the server's threat model and the performance budget.
+- [`docs/release/`](docs/release): store, build and launch checklists.
 - [`docs/reference/`](docs/reference): notes on the original Flash client (its structure, protocol script and sound inventory).
 
 ## Licence

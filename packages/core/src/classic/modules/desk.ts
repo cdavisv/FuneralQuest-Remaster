@@ -36,10 +36,10 @@ function enterDesk(turn: Turn): View {
 
   let mail = deliverMail(turn, message);
   // A Continue stop with nothing read since the last stop (the news blurb's gift mail starts
-  // with one, maint.cpp:33-95) would become an empty message overlay with only OK. That is
-  // the remaster's overlay conversion (the original client showed the desk with Continue),
-  // not original behaviour, so both rulesets read on past it.
-  while (isEmptyStop(mail, message)) {
+  // with one, maint.cpp:33-95). `fixes.emptyMailStop` reads on past it; the original
+  // (commands_main.cpp:89-108) showed the desk ("You are sitting at your desk.") with only
+  // that Continue button, and the gift was read at the next click.
+  while (turn.rules.fixes.emptyMailStop && isEmptyStop(mail, message)) {
     const next = deliverMail(turn, message);
     mail = {
       ...next,
@@ -47,8 +47,9 @@ function enterDesk(turn: Turn): View {
       ...(next.bg === undefined && mail.bg !== undefined ? { bg: mail.bg } : {}),
     };
   }
-  if (mail.buttons) {
-    // A stop is read as an overlay, one message at a time (modules/mailbox.ts).
+  if (mail.buttons && !isEmptyStop(mail, message)) {
+    // A stop is read as an overlay, one message at a time (modules/mailbox.ts). An empty stop
+    // (only when `fixes.emptyMailStop` is off) is the desk with the stop's buttons, below.
     const head =
       message.toLowerCase() === "`$" ? (p.policeProtected ? t.sittingPolice : t.sitting) : message;
     const letter = letterView(turn, head, { ...mail, message: mail.message.slice(message.length) });

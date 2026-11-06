@@ -32,7 +32,7 @@ Policies and sizes are from memory and change often. **Verify each item in Play 
 
 ## App content declarations
 
-- [ ] **Content rating (IARC)**: answers in `age-rating-and-content.md`. Expect Mature 17+ / PEGI 16-ish depending on language and Vintage inclusion. Answer simulated gambling, UGC and online interaction truthfully
+- [ ] **Content rating (IARC)**: answers in `age-rating-and-content.md`. Expect Mature 17+ / PEGI 16-ish depending on how language and sexual references are weighed (one content profile: the original text ships unaltered). Answer simulated gambling, UGC and online interaction truthfully
 - [ ] **Target audience and content**: select 18+ (or 13+); **not** under 13. "Appeals to children" = no, to avoid the Families policy
 - [ ] **Data safety form**: from `privacy-labels.md`. Online-capable build: collects user IDs, user content, in-app messages; no sharing; encrypted in transit; deletion available. Solo-only build: no data collected
 - [ ] **Account deletion**: because the app lets users create accounts, Play requires (1) an in-app path to start deletion and (2) a web link where users can request deletion without reinstalling, entered in the Data safety form `[ACCOUNT DELETION URL - OWNER TO FILL IN]`. **Built:** Settings, Delete my account (password re-entry; guests confirm) and the public page `GET /account/delete` on the server (the operator sets `FQ_CONTACT_EMAIL`); see `ugc-and-moderation.md`. Check the deployed URL loads and shows the real contact address

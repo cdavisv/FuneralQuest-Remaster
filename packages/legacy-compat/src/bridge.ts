@@ -321,6 +321,9 @@ export class LegacyBridge {
     const id = await this.host.accounts.verify(logon.trim(), password.trim());
     if (id === null) return [["i_sent", Logon.unknownUser]];
     const result = await this.apply((town, ctx) => enterGame(town, id, ctx));
+    // A refusal the original explained (someone inside the parlor, funeral.cpp:357-363)
+    // is its error box: send_error_message, commands_misc.cpp:3-14.
+    if (result.rejected && result.message) return this.fatal(richTextToPlain(result.message));
     if (result.rejected) return [["i_sent", Logon.unknownUser]];
     session.playerId = id;
     return this.show(session, result.view, { forceNew: true });
@@ -423,8 +426,44 @@ export class LegacyBridge {
     return [["i_sent", Sent.quit]];
   }
 
+  /**
+   * The paper's own controls (welcome.swf): today (`c_request_news`), yesterday,
+   * front page and crime. The original answered each by reading the day's file
+   * again (commands_news.cpp:3-170), so the page is always current, even when it
+   * is the page already on screen. The engine's paper offers only the other tab
+   * and the other day, so the bridge reaches the asked-for page in one or two
+   * presses (or, for the page on screen, by turning away and back).
+   */
+  private async newsCommand(session: BridgeSession, cmd: number): Promise<LegacyVars> {
+    const paper = session.view?.news;
+    if (!paper || session.view?.overlay) return this.rerender(session);
+    const wantYesterday = cmd === Request.yesterday || (cmd !== Request.news && paper.isYesterday);
+    const wantSection = cmd === Request.crime ? "crime" : "front";
+    const presses: string[] = [];
+    let section = paper.section;
+    if (wantYesterday !== paper.isYesterday || (cmd === Request.news && paper.isYesterday)) {
+      presses.push(wantYesterday ? "news:yesterday" : "news:today");
+      section = "front";
+    }
+    if (section !== wantSection)
+      presses.push(wantSection === "crime" ? "news:crime" : "news:front");
+    if (presses.length === 0) {
+      presses.push(section === "front" ? "news:crime" : "news:front");
+      presses.push(section === "front" ? "news:front" : "news:crime");
+    }
+    let result: StepResult | null = null;
+    for (const id of presses) {
+      result = await this.act(session, { type: "press", buttonId: id });
+      if (result.rejected) return this.rerender(session, result.view);
+      session.view = result.view;
+    }
+    return result ? this.show(session, result.view, { forceNew: false }) : this.rerender(session);
+  }
+
   /** The table lookup, with the fall-backs the client's fixed controls need. */
   private async press(session: BridgeSession, cmd: number): Promise<LegacyVars> {
+    if (session.view?.scene === "news" && NEWS_COMMANDS.has(cmd))
+      return this.newsCommand(session, cmd);
     let action = session.table.get(cmd);
     if (!action) action = this.fixedFallback(session, cmd);
     if (!action) {
@@ -516,6 +555,11 @@ export class LegacyBridge {
       this.log(`legacy bridge: engine refused ${JSON.stringify(action)}: ${result.rejected}`);
       return this.rerender(session, result.view);
     }
+    if (cmd === Request.main && result.view.scene === "desk" && session.playerId !== null) {
+      // command_main reads the whole queue (add_que_messages, broadcast.cpp:14-100) and
+      // drops the cafe lines in it unshown: a line not polled before leaving the cafe is gone.
+      this.chatInbox.delete(session.playerId);
+    }
     return this.show(session, result.view, { forceNew: cmd === Request.main });
   }
 
@@ -582,7 +626,7 @@ export class LegacyBridge {
    */
   private async getName(session: BridgeSession, input: string, hisId: number): Promise<LegacyVars> {
     let overlay = session.view?.overlay;
-    if (overlay?.kind === "playerPicker") return this.pickerSearch(overlay, input, hisId);
+    if (overlay?.kind === "playerPicker") return await this.pickerSearch(overlay, input, hisId);
     if (overlay?.kind === "confirm" && overlay.id.endsWith(":namenext") && hisId > 0) {
       // "No": search again from the next player.
       return this.run(
@@ -617,16 +661,23 @@ export class LegacyBridge {
     );
   }
 
-  /** A player picker is searched here, the way `get_id_from_full_or_partial_handle` does from slot `start`. */
-  private pickerSearch(
+  /**
+   * A player picker is searched here, the way `get_id_from_full_or_partial_handle`
+   * (misc_utils.cpp:222-259) does from slot `start`: over the players as they are
+   * now (a rename since the picker opened counts, as the original read the live
+   * list), limited to the ones the picker offers.
+   */
+  private async pickerSearch(
     overlay: Extract<NonNullable<View["overlay"]>, { kind: "playerPicker" }>,
     input: string,
     start: number,
-  ): LegacyVars {
+  ): Promise<LegacyVars> {
     const wanted = (input === "" ? "skljdskljdslkj" : input).toLowerCase();
-    const found = overlay.players.find(
-      (pl) => pl.id >= Math.max(0, start) && pl.name.toLowerCase().includes(wanted),
-    );
+    const town = await this.host.getTown();
+    const offered = new Set(overlay.players.map((pl) => pl.id));
+    const found = town.players
+      .filter((pl) => pl.active && offered.has(pl.id))
+      .find((pl) => pl.id >= Math.max(0, start) && pl.name.toLowerCase().includes(wanted));
     const vars: [string, string | number][] = found
       ? [
           ["st_object", "i_namenext"],
@@ -737,10 +788,16 @@ export class LegacyBridge {
   private async chatUpdate(session: BridgeSession, input: string): Promise<LegacyVars> {
     const id = session.playerId;
     if (id === null) return this.fatal("Connection with server died. (user not logged on)");
-    const lines: RichText[] = [];
+    // One queue in the original (add_que_messages_chat, broadcast.cpp:103-154): lines
+    // queued before this request come first, then what the request itself said.
+    const waiting = this.chatInbox.get(id) ?? [];
+    this.chatInbox.delete(id);
+    const lines: RichText[] = [...waiting];
     const inCafe = session.view?.scene === "cafe";
-    if (inCafe && input.trim() !== "") {
-      const result = await this.act(session, { type: "chat", text: input });
+    if (inCafe) {
+      // Every poll goes to the engine, even an empty one: it also reads the notices
+      // waiting in the queue (add_que_messages_chat). get_token_st trimmed the input.
+      const result = await this.act(session, { type: "chat", text: input.trim() });
       if (!result.rejected) {
         session.view = result.view;
         for (const line of result.view.chat ?? []) lines.push(line.text);
@@ -748,9 +805,10 @@ export class LegacyBridge {
         this.log(`legacy bridge: chat refused: ${result.rejected}`);
       }
     }
-    const waiting = this.chatInbox.get(id) ?? [];
+    // Others' lines for this player that the chat action produced arrive in the same poll.
+    const after = this.chatInbox.get(id) ?? [];
     this.chatInbox.delete(id);
-    lines.push(...waiting);
+    lines.push(...after);
     const ctx = this.contextFor(session, session.view ?? emptyCafe(), { forceNew: false });
     ctx.chat = { text: chatLines(lines), update: true };
     const rendered = renderView({ ...ctx, view: { ...ctx.view, scene: "cafe" } });
@@ -791,16 +849,28 @@ export class LegacyBridge {
     }
     const ctx = this.contextFor(session, view, options);
     if (town) ctx.day = town.day;
+    const texts = this.host.context().content.text;
+    const plain = (markup: string) => richTextToPlain(parseLegacyText(markup));
+    ctx.letterText = {
+      sitting: [plain(texts.desk.sitting), plain(texts.desk.sittingPolice)],
+      replyPrompt: plain(texts.social.mail.replyPrompt),
+    };
     await this.addOverlayFacts(session, ctx, town);
     if (view.scene === "cafe" && !view.overlay) {
       const waiting = id === null ? [] : (this.chatInbox.get(id) ?? []);
       if (id !== null) this.chatInbox.delete(id);
       const own = (view.chat ?? []).map((l) => l.text);
       const wasCafe = session.client.object === "i_chat";
-      const lines = chatLines([...own, ...waiting]);
-      ctx.chat = wasCafe
-        ? { text: lines, update: true }
-        : { text: [...view.text, ...lines], update: false };
+      if (wasCafe) {
+        ctx.chat = { text: chatLines([...waiting, ...own]), update: true };
+      } else {
+        // command_chat_start (commands_bar.cpp:321-348) answers with the room's text
+        // only; "X saunters in." and anything queued come with the next poll.
+        ctx.chat = { text: view.text, update: false };
+        if (id !== null && waiting.length + own.length > 0) {
+          this.chatInbox.set(id, [...waiting, ...own]);
+        }
+      }
     }
     const rendered: Rendered = renderView(ctx);
     for (const note of rendered.notes) this.log(`legacy bridge: ${note}`);

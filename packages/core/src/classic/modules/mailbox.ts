@@ -43,12 +43,31 @@ function save(turn: Turn, d: MailboxData): void {
   turn.session.sceneData = { ...d } as unknown as Json;
 }
 
-/** The desk, read again (`c_request_main`): what every finished or cancelled step returns to. */
+/**
+ * The desk, read again (`c_request_main`): after a letter is sent (the
+ * notepad's callback asks for it, welcome.swf sprite 456), after "Can't
+ * email" and after a letter read at the desk.
+ */
 function backToDesk(turn: Turn): View {
   const desk = turn.registry.module("desk");
   if (!desk?.enter) throw new Error("No desk");
   turn.session.scene = "desk";
   return desk.enter(turn, undefined);
+}
+
+/**
+ * The desk drawn again without asking the server. The name box's Cancel and
+ * its "nobody by that name" box (welcome.swf buttons 496 and 504, which call
+ * `callback_email_fail`: at the desk's pen that only replays m_main from
+ * frame 1) and the notepad's close button (button 451) send no request, so
+ * the original read no mail there; the queue waits for the next desk visit.
+ */
+function deskRedrawn(turn: Turn): View {
+  turn.session.scene = "desk";
+  const t = turn.text.desk;
+  return deskScreen(turn, turn.player.policeProtected ? t.sittingPolice : t.sitting, {
+    fg: "places/desk",
+  });
 }
 
 /** The desk screen under an overlay, without reading mail. */
@@ -128,6 +147,8 @@ export function letterView(turn: Turn, deskText: string, mail: Delivery): View |
     view.overlay = { kind: "confirm", id: `${MAILBOX}:reply`, text: [...text, ...prompt] };
   } else {
     view.overlay = { kind: "message", id: `${MAILBOX}:letter`, text, picture };
+    // Expanded only (Classic transcripts are locked): mail that reported a reward.
+    if (turn.rules.expanded && mail.reward) view.overlay.messageKind = "reward";
   }
   return view;
 }
@@ -142,14 +163,14 @@ export const mailboxModule: LocationModule = {
   submitText(turn, overlayId, text) {
     const d = data(turn);
     if (overlayId === `${MAILBOX}:getname`) {
-      if (text === null) return backToDesk(turn);
+      if (text === null) return deskRedrawn(turn);
       const answer = nameAnswer(turn, MAILBOX, stripLegacyCodes(text), 0);
       save(turn, { ...d, ...answer.state });
       return onDesk(turn, answer.overlay);
     }
     if (overlayId === `${MAILBOX}:compose`) {
       // The notepad's close button (welcome.swf button 451) sends nothing.
-      if (text === null) return backToDesk(turn);
+      if (text === null) return deskRedrawn(turn);
       return send(turn, d, text);
     }
     throw new Error(`Unknown overlay ${overlayId}`);
@@ -170,13 +191,10 @@ export const mailboxModule: LocationModule = {
     throw new Error(`Unknown overlay ${overlayId}`);
   },
   dismiss(turn, overlayId) {
-    if (
-      overlayId === `${MAILBOX}:letter` ||
-      overlayId === `${MAILBOX}:noname` ||
-      overlayId === `${MAILBOX}:nosuch`
-    ) {
+    if (overlayId === `${MAILBOX}:letter` || overlayId === `${MAILBOX}:nosuch`) {
       return backToDesk(turn);
     }
+    if (overlayId === `${MAILBOX}:noname`) return deskRedrawn(turn);
     throw new Error(`Unknown overlay ${overlayId}`);
   },
 };

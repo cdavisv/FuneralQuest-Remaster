@@ -112,7 +112,9 @@ function ConfirmDialog({
           {t("overlay.no")}
         </button>
         {/* moderation hook: a letter from another player */}
-        {overlay.id === "mailbox:reply" && <LetterActions text={spanText(overlay.text)} />}
+        {(overlay.id === "mailbox:reply" || overlay.messageKind === "letter") && (
+          <LetterActions text={spanText(overlay.text)} />
+        )}
       </div>
     </Dialog>
   );

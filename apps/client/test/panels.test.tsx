@@ -257,6 +257,56 @@ describe("the graveyard's monuments", () => {
   });
 });
 
+describe("the graveyard's monuments, from the engine's data", () => {
+  const withData = (built: number) => ({
+    ...xview("monuments"),
+    monuments: {
+      built,
+      tiers: [
+        { name: "A Wooden Cross", price: 500, bp: 10, rating: 1 },
+        { name: "A Granite Bench", price: 3000, bp: 60, rating: 2 },
+        { name: "A Stone Angel", price: 9000, bp: 150, rating: 3 },
+        { name: "A Marble Obelisk", price: 20000, bp: 320, rating: 4 },
+        { name: "A Mausoleum", price: 50000, bp: 800, rating: 5 },
+      ],
+    },
+  });
+
+  it("lights the tiers that stand and dims the rest", async () => {
+    renderGame(new ScriptedTransport(withData(2)));
+    const panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    const tiers = within(panel).getAllByRole("listitem");
+    expect(tiers.map((li) => li.getAttribute("data-built"))).toEqual([
+      "true",
+      "true",
+      "false",
+      "false",
+      "false",
+    ]);
+    expect(tiers[0]).toHaveTextContent("Built");
+    expect(tiers[2]).toHaveTextContent("$9,000");
+    expect(tiers[1]).toHaveAttribute("title", "A Granite Bench");
+  });
+
+  it("shows no stone lit when none is built, and every one when all are", async () => {
+    const { unmount } = renderGame(new ScriptedTransport(withData(0)));
+    let panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    expect(
+      within(panel)
+        .getAllByRole("listitem")
+        .every((li) => li.getAttribute("data-built") === "false"),
+    ).toBe(true);
+    unmount();
+    renderGame(new ScriptedTransport(withData(5)));
+    panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    expect(
+      within(panel)
+        .getAllByRole("listitem")
+        .every((li) => li.getAttribute("data-built") === "true"),
+    ).toBe(true);
+  });
+});
+
 describe("the same panels in every layout", () => {
   const names = [
     "office",
