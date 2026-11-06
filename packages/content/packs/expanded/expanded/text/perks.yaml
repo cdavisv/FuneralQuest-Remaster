@@ -9,7 +9,7 @@ grave-robber:
   description: 'Dishonest choices pay double, Di-Mart gives you the back-room price, and you can dig for goodies at your office or rob fresh graves, neither of which costs a turn.'
 necromancer:
   name: 'Necromancer'
-  description: 'Raise mourners once per customer to scare them out of haggling, one ''accident'' customer a day, and your attacks pay a quarter more.'
+  description: 'Raise mourners once per customer to scare them out of haggling, one ''accident'' customer a day, and your attacks pay 15% more.'
 neutral:
   name: 'Neutral'
   description: 'Neither trusted nor feared. Families treat you like a vending machine that talks.'

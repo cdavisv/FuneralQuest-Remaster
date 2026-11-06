@@ -141,7 +141,8 @@ export class ChallengeService {
 
   private ctx(): EngineContext {
     this.baseCtx ??= expandedContext(this.deps.content.load("expanded"));
-    return { ...this.baseCtx, now: this.deps.clock.now() };
+    // The challenge's day is the UTC date, so its clock is UTC too.
+    return { ...this.baseCtx, now: this.deps.clock.now(), localTimeOffsetMinutes: 0 };
   }
 
   /**

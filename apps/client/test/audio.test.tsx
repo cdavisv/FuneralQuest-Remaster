@@ -301,6 +301,18 @@ describe("sound settings", () => {
     expect(loadSettings(window.localStorage).radio).toBe(true);
   });
 
+  it("the note under the sound packs describes the pack selected", () => {
+    setup();
+    const note = screen.getByTestId("sound-pack-note");
+    expect(note).toHaveTextContent("Synth pack");
+    expect(note).toHaveTextContent("synthesised from the game's own source code");
+    fireEvent.click(screen.getByLabelText("Studio"));
+    expect(loadSettings(window.localStorage).soundPack).toBe("studio");
+    expect(note).toHaveTextContent("Studio pack");
+    expect(note).toHaveTextContent("ElevenLabs");
+    expect(note).not.toHaveTextContent("synthesised from the game's own source code");
+  });
+
   it("the sound button unlocks first, then mutes and unmutes", () => {
     const { audio } = setup();
     const button = screen.getByRole("button", { name: /Sound on/ });

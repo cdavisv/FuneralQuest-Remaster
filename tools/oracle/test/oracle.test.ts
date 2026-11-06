@@ -3,7 +3,7 @@
  * (`pnpm --filter @fq/oracle run build`); without it every test is skipped,
  * so a machine without g++ stays green.
  */
-import { Mt19937 } from "@fq/core";
+import { CLASSIC_RULES, Mt19937, originalClassicRules } from "@fq/core";
 import { describe, expect, it } from "vitest";
 import { compareCustomers } from "../src/customers.js";
 import { oracleAvailable, runOracle } from "../src/oracle.js";
@@ -12,6 +12,18 @@ import { FAMILIES } from "../src/suite.js";
 import { parseOriginal } from "../src/vars.js";
 
 const built = oracleAvailable();
+
+describe("the rules the oracle compares", () => {
+  it("the default rules differ from originalClassicRules() only in the fixes flags", () => {
+    const { fixes: defaultFixes, ...defaults } = CLASSIC_RULES;
+    const { fixes: originalFixes, ...original } = originalClassicRules();
+    // Everything else, the customer generator and the text filter included, is the original's.
+    expect(defaults).toEqual(original);
+    expect(Object.keys(defaultFixes).sort()).toEqual(Object.keys(originalFixes).sort());
+    for (const value of Object.values(defaultFixes)) expect(value).toBe(true);
+    for (const value of Object.values(originalFixes)) expect(value).toBe(false);
+  });
+});
 
 describe.skipIf(!built)("the compiled original", () => {
   it("starts a new game: server_init runs init.c and the first maintenance (day 1)", () => {

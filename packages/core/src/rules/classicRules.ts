@@ -1,5 +1,4 @@
 import type { AssetId } from "@fq/protocol";
-import { type CustomerRules, DEFAULT_CUSTOMER_RULES } from "../classic/customer.js";
 import type { ExpandedRules } from "./expandedRules.js";
 
 /**
@@ -114,9 +113,10 @@ export interface Nudge {
 }
 
 /**
- * Deliberate fixes from docs/classic-rules.md section 9. `true` means fixed,
- * the default; parity tests set them to `false` to reproduce the original.
- * (The adult/teen lover fix is `customer.allowMinorAdultLover`.)
+ * Deliberate gameplay bug and exploit fixes from docs/classic-rules.md section
+ * 9. `true` means fixed, the default; parity tests set them to `false` to
+ * reproduce the original. Original content is never altered on grounds of
+ * taste, so nothing here covers it.
  */
 export interface ClassicFixes {
   /** Show the new-player welcome (commands_newday.cpp:88 tests the day after it was overwritten). */
@@ -201,7 +201,6 @@ export interface ClassicRules {
   /** Present only in the Expanded ruleset. */
   expanded?: ExpandedRules;
   settings: GameSettings;
-  customer: CustomerRules;
   /** online_struct.h:17-19, indexed by casket tier. */
   casketPrices: [number, number, number];
   /** commands_complicated.cpp:40: `int(float(price) * 0.0064f)`. */
@@ -276,10 +275,13 @@ export interface ClassicRules {
   /** Mailed rewards (luck, BP) apply when the mail is read, as in the original. */
   mailRewardsOnDelivery: boolean;
   /**
-   * Also run the swear filter over text the original left unfiltered (mail and
-   * Yang's fortunes). Classic always filters announcements, chat and battle
-   * quotes, as the original did (commands_news.cpp:180, commands_bar.cpp:284-380,
-   * commands_battle.cpp:571, 630).
+   * Host option: also run the swear filter over text the original left
+   * unfiltered (mail and Yang's fortunes). Classic leaves it off, as the
+   * original did; Expanded turns it on. Announcements, chat and battle quotes
+   * are always filtered, as the original did (commands_news.cpp:180,
+   * commands_bar.cpp:284-380, commands_battle.cpp:571, 630); this flag never
+   * changes that. Whether a town filters at all is the sysop's
+   * `settings.swearFilter`.
    */
   filterUserText: boolean;
   pvp: PvpRules;
@@ -324,7 +326,6 @@ export const CLASSIC_SETTINGS: GameSettings = {
 export const CLASSIC_RULES: ClassicRules = {
   ruleset: "classic",
   settings: CLASSIC_SETTINGS,
-  customer: DEFAULT_CUSTOMER_RULES,
   casketPrices: [800, 2600, 5300],
   bpMultiplier: 0.0064,
   perfectSaleBonus: 200,
@@ -400,7 +401,7 @@ export const CLASSIC_RULES: ClassicRules = {
   },
   zeroBpGraceDays: 3,
   mailRewardsOnDelivery: true,
-  filterUserText: true,
+  filterUserText: false,
   pvp: {
     lockpickDamage: { min: 5, max: 10 },
     stealMax: 3,
@@ -426,12 +427,10 @@ export const CLASSIC_RULES: ClassicRules = {
   },
 };
 
-/** The original's behaviour everywhere, for parity tests. */
+/** The original's behaviour everywhere (every gameplay fix off), for parity tests. */
 export function originalClassicRules(): ClassicRules {
   return {
     ...CLASSIC_RULES,
-    customer: { ...CLASSIC_RULES.customer, allowMinorAdultLover: true },
-    filterUserText: false,
     fixes: {
       newPlayerWelcome: false,
       policeNewDayMessage: false,

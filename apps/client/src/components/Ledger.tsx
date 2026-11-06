@@ -1,4 +1,4 @@
-import type { Hud, KarmaBand } from "@fq/protocol";
+import type { Hud, KarmaBand, Warning } from "@fq/protocol";
 import { type CSSProperties, useState } from "react";
 import { debtLevel, type HudChip, hudChips, karmaPosition } from "../expanded/hud.js";
 import { useT } from "../i18n/I18nContext.js";
@@ -124,8 +124,35 @@ function Chip({ chip, scale }: { chip: HudChip; scale: readonly KarmaBand[] | un
 }
 
 /**
+ * Threats the engine says the player can still act on (`Hud.warnings`, docs/expanded-rules.md
+ * 20.4): one line each, under the chips, announced when it appears. Nothing when there are none.
+ */
+function Warnings({ warnings }: { warnings: readonly Warning[] | undefined }) {
+  const t = useT();
+  if (!warnings || warnings.length === 0) return null;
+  return (
+    <div className="fq-ledger-warnings">
+      {warnings.map((w) => (
+        <p
+          key={`${w.kind}:${w.day}`}
+          className="fq-ledger-warning"
+          data-warning={w.kind}
+          role="alert"
+        >
+          <span className="fq-ledger-warning-icon" aria-hidden="true">
+            <XIcon name="injuries" />
+          </span>
+          <span>{t(`x.ledger.warning.${w.kind}`)}</span>
+        </p>
+      ))}
+    </div>
+  );
+}
+
+/**
  * The Expanded HUD as a ledger strip: turns, cash, karma with its axis and path, rating, and the
- * rest only when there is something to say (savings, a debt with its due day, injuries, leads).
+ * rest only when there is something to say (savings, a debt with its due day, injuries, leads),
+ * and any warning the engine sent (a hit-man rumour).
  * On a phone it is one line that unfolds.
  */
 export function Ledger({
@@ -185,6 +212,7 @@ export function Ledger({
             <XIcon name="chevron" />
           </span>
         </button>
+        <Warnings warnings={hud.warnings} />
         {open && (
           <div className="fq-ledger-open">
             <ul className="fq-ledger-row">
@@ -209,6 +237,7 @@ export function Ledger({
           <Chip key={c.id} chip={c} scale={scale} />
         ))}
       </ul>
+      <Warnings warnings={hud.warnings} />
     </section>
   );
 }

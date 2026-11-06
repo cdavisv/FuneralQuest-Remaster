@@ -1,4 +1,4 @@
-import type { ExpandedContent, ExpandedTownContent, Reward } from "@fq/core";
+import type { AgedPool, ExpandedContent, ExpandedTownContent, Reward } from "@fq/core";
 import { z } from "zod";
 import { pictureSchema } from "./pictures.js";
 
@@ -27,6 +27,40 @@ export const newsConditionSchema = z.strictObject({
   notArcs: z.array(z.string().min(1)).exactOptional(),
   mayor: z.boolean().exactOptional(),
 });
+
+/** Every `AgedPool` (packages/core/src/expanded/content/types.ts); the checks below keep the two equal. */
+const AGED_POOLS = [
+  "request",
+  "petRequest",
+  "repeat.happy",
+  "repeat.ok",
+  "repeat.sour",
+  "repeat.walked",
+  "impatient",
+  "softPitch",
+  "hardPitchWood",
+  "hardPitchSilver",
+  "guiltPitch",
+  "sympathyPitch",
+  "coffeePitch",
+  "coffeeAccept.loved",
+  "coffeeAccept.notLoved",
+  "coffeeRefuse",
+  "listenPitch",
+  "listenLoved",
+  "listenNotLoved",
+  "discountPitch",
+  "discountAccept",
+  "discountHaggle",
+  "packagePitch",
+  "packageAccept",
+  "packageRefuse",
+] as const satisfies readonly AgedPool[];
+/** A type error here names a pool core has and `AGED_POOLS` lacks. */
+const agedPoolsComplete: [Exclude<AgedPool, (typeof AGED_POOLS)[number]>] extends [never]
+  ? true
+  : { error: "AGED_POOLS lacks"; pools: Exclude<AgedPool, (typeof AGED_POOLS)[number]> } = true;
+void agedPoolsComplete;
 
 const text = z.string();
 const lines = (what = "line") =>
@@ -66,7 +100,17 @@ export function buildExpandedSchema(mode: SchemaMode) {
     protection: z.boolean().exactOptional(),
   });
 
+  // AgeLimits (13.5): whole years, inclusive, each optional.
+  const age = z.number().int().min(0).max(120).exactOptional();
+  const ageLimits = {
+    minCustomerAge: age,
+    maxCustomerAge: age,
+    minDeceasedAge: age,
+    maxDeceasedAge: age,
+  };
+
   const trait = obj({
+    ...ageLimits,
     id: z.string().min(1),
     label: z.string().min(1),
     hint: z.string().min(1),
@@ -232,6 +276,15 @@ export function buildExpandedSchema(mode: SchemaMode) {
     raisePitch: text,
     raiseResult: text,
     threat: text,
+    agedLines: z
+      .array(
+        obj({
+          ...ageLimits,
+          pool: z.enum(AGED_POOLS),
+          text: z.string().min(1),
+        }),
+      )
+      .exactOptional(),
   });
 
   const textSection = obj({
@@ -692,6 +745,7 @@ function buildTownSchema(mode: SchemaMode, reward: z.ZodType<Reward>) {
     badName: text,
     duesUnpaid: text,
     noFriendlyFire: text,
+    removedName: text.exactOptional(),
   });
 
   const hospital = obj({

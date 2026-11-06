@@ -225,6 +225,33 @@ describe("injuries, from Hud.injuryList", () => {
   });
 });
 
+describe("warnings, from Hud.warnings (expanded-rules.md 20.4)", () => {
+  const warned = (): View => {
+    const view = xview("deskQuiet");
+    if (!view.hud) throw new Error("no hud");
+    return { ...view, hud: { ...view.hud, warnings: [{ kind: "hit-rumour", day: 4 }] } };
+  };
+
+  for (const layout of layouts) {
+    it(`the ledger shows the hit-man rumour (${layout})`, async () => {
+      renderGame(new ScriptedTransport(warned()), { settings: { layout } });
+      const ledger = await screen.findByRole("region", { name: "Your parlor's books" });
+      const alert = within(ledger).getByRole("alert");
+      expect(alert).toHaveAttribute("data-warning", "hit-rumour");
+      expect(alert).toHaveTextContent("hit man has been hired against you");
+      expect(alert).toHaveTextContent("Peace Pledge");
+      cleanup();
+    });
+  }
+
+  it("draws nothing when the engine sends no warning", async () => {
+    renderGame(new ScriptedTransport(xview("deskQuiet")), { settings: { layout: "phone" } });
+    const ledger = await screen.findByRole("region", { name: "Your parlor's books" });
+    expect(within(ledger).queryByRole("alert")).toBeNull();
+    expect(ledger.querySelector(".fq-ledger-warning")).toBeNull();
+  });
+});
+
 describe("karma, from Hud.karmaPath and View.karmaScale", () => {
   it("the ledger names the band the engine put the player in", async () => {
     renderGame(new ScriptedTransport(xview("deskQuiet")));

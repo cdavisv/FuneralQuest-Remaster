@@ -178,7 +178,9 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         onChange={(soundPack) => update({ soundPack })}
       />
       <p className="fq-set-note">{t("settings.audio.pack.note")}</p>
-      <p className="fq-set-note">{t("settings.audio.note")}</p>
+      <p className="fq-set-note" data-testid="sound-pack-note">
+        {t(`settings.audio.note.${settings.soundPack}`)}
+      </p>
       <p className="fq-set-note">
         {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
       </p>

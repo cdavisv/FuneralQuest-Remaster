@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  CLASSIC_RULES,
   computeEvent,
   enterGame,
   openStream,
@@ -376,25 +377,43 @@ describe("the Yang's cost array bug (:13-33)", () => {
   });
 });
 
-describe("custom fortunes are swear-filtered like other typed text (userText.ts)", () => {
+describe("custom fortunes (userText.ts)", () => {
   const fortuneOf = (p: Placed): string =>
     /reads:\n`w"(.*)"\n/.exec((player(p.town, 2).mail[0] as { text: string }).text)?.[1] ?? "";
+  const filtering = { ...CLASSIC_RULES, filterUserText: true };
 
-  it("a swear word in a fortune is replaced, for the tiger and the sparrow", () => {
+  it("are left as typed in Classic: the original never filtered them", () => {
     const tiger = submit(prompt(atPlace("yangs", { setup: rich(50) }), "tiger", 2), "you shit");
+    expect(fortuneOf(tiger)).toBe("you shit");
+    expect(tiger.effects).toContainEqual({
+      kind: "log",
+      text: "Skelly sent Yang's to Digby, cookie: you shit",
+    });
+    const sparrow = submit(
+      pick(pressOn(atPlace("yangs", { setup: rich(50) }), "yangs:sparrow"), 2),
+      "you shit",
+    );
+    expect(fortuneOf(sparrow)).toBe("you shit");
+  });
+
+  it("are filtered, for the tiger and the sparrow, when the host turns filterUserText on (Expanded does)", () => {
+    const tiger = submit(
+      prompt(atPlace("yangs", { setup: rich(50), rules: filtering }), "tiger", 2),
+      "you shit",
+    );
     expect(fortuneOf(tiger)).toBe("you shoot");
     expect(tiger.effects).toContainEqual({
       kind: "log",
       text: "Skelly sent Yang's to Digby, cookie: you shoot",
     });
     const sparrow = submit(
-      pick(pressOn(atPlace("yangs", { setup: rich(50) }), "yangs:sparrow"), 2),
+      pick(pressOn(atPlace("yangs", { setup: rich(50), rules: filtering }), "yangs:sparrow"), 2),
       "you shit",
     );
     expect(fortuneOf(sparrow)).toBe("you shoot");
   });
 
-  it("the original rules leave it alone (the original never filtered fortunes)", () => {
+  it("stay as typed under the original rules too", () => {
     const p = submit(
       prompt(atPlace("yangs", { setup: rich(50), rules: originalClassicRules() }), "tiger", 2),
       "you shit",
@@ -402,9 +421,13 @@ describe("custom fortunes are swear-filtered like other typed text (userText.ts)
     expect(fortuneOf(p)).toBe("you shit");
   });
 
-  it("the sysop's swear filter setting switches it off", () => {
+  it("the sysop's swear filter setting switches the host option off", () => {
     const p = submit(
-      prompt(atPlace("yangs", { setup: rich(50), settings: { swearFilter: false } }), "tiger", 2),
+      prompt(
+        atPlace("yangs", { setup: rich(50), settings: { swearFilter: false }, rules: filtering }),
+        "tiger",
+        2,
+      ),
       "you shit",
     );
     expect(fortuneOf(p)).toBe("you shit");

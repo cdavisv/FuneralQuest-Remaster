@@ -30,6 +30,7 @@ town = runDailyMaintenance(r.town, ctx, { missedDays: 1 }).town; // at midnight
 ## What a host must do
 
 - **Deliver `chat` effects.** `{ kind: "chat", to: number[], text: RichText }` is a cafe line (talk, `/me`, `/give`, arrivals, notices, TV reports while the TV is on) for each listed player, now. It is not stored; the acting player's own lines are already in the returned view's `chat`. Everything else a player must see is in their next view or queued as mail.
+- **Pass the local time.** Set `EngineContext.localTimeOffsetMinutes` (local time minus UTC, in minutes, for the moment `now`, so it follows daylight saving) on every call. The original stamped log-on, log-off, new-player, `/yell` and shop-closing notices with the server's local time ("12:05 AM:Bob logged on.", `classic/clock.ts`); absent means UTC. The server uses each town's time zone, Solo the player's.
 - **Report connections.** `setPresence(town, playerId, online)` returns a new town. A player counts as online (cannot be visited, shows "on now") while they have a session and the host has not reported them disconnected. Call `leaveGame` when the session should end; a fight in progress then counts as a loss (`fixes.battleDisconnect`).
 - **Midnight.** `runDailyMaintenance` also ends tournaments: after the final day it ends every session (`sessionEnded`, reason "reset"), resets the town to day 1 with no players (`tournamentReset`), and keeps the Book of Deeds. `resetTown(town, ctx, { paused })` is the sysop's reset; `lobbyStatus(town, ctx)` gives the log-on screen's game line and why new accounts are refused, if they are.
 - `tv` and `broadcast` effects are for logs and tickers; their in-game delivery is already handled (mail or `chat` effects).
@@ -86,7 +87,7 @@ The engine reads a `ContentPack` (`src/content/types.ts`): events, news blurbs, 
 
 ## Rules
 
-`CLASSIC_RULES` holds every tunable: Game Settings defaults (copied into `town.settings`), prices, BP multiplier, bonuses, mood and cheapness nudges, psych formulas, odds, the hearse table, and `fixes` (the deliberate fixes, `true` = fixed). `originalClassicRules()` turns every fix off for parity tests.
+`CLASSIC_RULES` holds every tunable: Game Settings defaults (copied into `town.settings`), prices, BP multiplier, bonuses, mood and cheapness nudges, psych formulas, odds, the hearse table, and `fixes` (the gameplay bug and exploit fixes of `docs/classic-rules.md` section 9, `true` = fixed). `originalClassicRules()` turns every fix off for parity tests. Original content is never altered on grounds of taste, so no rule switches any of it: the customer generator is the original's (`defineRelationship` ports `create_customer.cpp:31-199` unaltered), and the swear filter runs where the original ran it (new names, announcements, chat, `/me`, `/yell`, battle quotes). `filterUserText` is a host option for moderating what live players send each other: false in Classic, as the original never filtered mail or Yang's fortunes, and true in Expanded.
 
 ## The Expanded ruleset
 
@@ -94,7 +95,7 @@ The engine reads a `ContentPack` (`src/content/types.ts`): events, news blurbs, 
 
 - Code: `src/expanded/` (customer, negotiation, sale, scoring, parlor, pvp, newDay, wait, modifiers, scripts, panels, modules/), rules in `src/rules/expandedRules.ts`, content types in `src/expanded/content/types.ts`, the content check `checkExpandedContent`.
 - Hooks for later systems: `Registry.onMaintenance`, `onPlayerNewDay`, `onPlayerCreated`, `onView` (decorates every view; Expanded's adds the HUD panels of section 11.5), and `LocationModule.sessionEnd`; temporary rule changes with `addModifier` / `modValue`.
-- Classic is locked by `test/classicRegression.test.ts`: hashed transcripts of whole Classic playthroughs. Re-record only after a deliberate Classic change: `UPDATE_CLASSIC_TRANSCRIPTS=1 pnpm --filter @fq/core test classicRegression`. It was re-recorded once, for the empty mail overlay fix (section 1.3 says how the difference was proved).
+- Classic is locked by `test/classicRegression.test.ts`: hashed transcripts of whole Classic playthroughs. Re-record only after a deliberate Classic change: `UPDATE_CLASSIC_TRANSCRIPTS=1 pnpm --filter @fq/core test classicRegression`. It was re-recorded twice: for the empty mail overlay fix, and for restoring the original customer relationships and unfiltered mail and fortunes in Classic (section 1.3 says how each difference was proved).
 
 ## Tests
 

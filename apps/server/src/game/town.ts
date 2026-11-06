@@ -40,7 +40,7 @@ import type { Hub } from "./hub.js";
 import { reportPresence } from "./presence.js";
 import { SerialQueue } from "./queue.js";
 import { getRuleset, type RulesetDef } from "./rulesets.js";
-import { createSchedule, type DaySchedule } from "./schedule.js";
+import { createSchedule, type DaySchedule, utcOffsetMinutes } from "./schedule.js";
 import type { RuleOverrides } from "./tuning.js";
 
 /** Everything a town runtime shares with its host. */
@@ -217,7 +217,7 @@ export class TownRuntime {
         ...(spec.settings ? { settings: spec.settings } : {}),
         ...(spec.serverNews !== undefined ? { serverNews: spec.serverNews } : {}),
       },
-      { ...baseCtx, now },
+      { ...baseCtx, now, localTimeOffsetMinutes: utcOffsetMinutes(spec.timeZone, now) },
     );
     const schedule = createSchedule({
       timeZone: spec.timeZone,
@@ -310,7 +310,13 @@ export class TownRuntime {
   }
 
   private ctx(): EngineContext {
-    return { ...this.baseCtx, now: this.deps.clock.now() };
+    const now = this.deps.clock.now();
+    // The original printed notices in the server's local time; a town's is its own time zone.
+    return {
+      ...this.baseCtx,
+      now,
+      localTimeOffsetMinutes: utcOffsetMinutes(this.row.time_zone, now),
+    };
   }
 
   /** Runs `fn` after everything queued before it. */
@@ -1256,9 +1262,14 @@ export class TownRuntime {
         out.push(push);
         continue;
       }
-      // The engine names the speaker of a line as data where it can (Expanded); else it is whoever
-      // the change was for.
-      const speaker = message.notice.from?.playerId ?? sender;
+      // Expanded names the speaker of every spoken line as data (`ChatLine.from`); a line without
+      // one is the room's own (an arrival, the TV, a notice), said by nobody. Classic lines carry
+      // no speaker (its transcripts are locked), so there it is whoever the change was for.
+      const speaker = message.notice.from
+        ? message.notice.from.playerId
+        : this.state.ruleset === "expanded"
+          ? null
+          : sender;
       const senderAccount = speaker === null ? null : mod.accountOfPlayer(this.row.id, speaker);
       const senderName =
         message.notice.from?.name ??

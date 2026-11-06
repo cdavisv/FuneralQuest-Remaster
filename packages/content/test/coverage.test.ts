@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { CLASSIC_TEXT } from "@fq/core";
 import { describe, expect, it } from "vitest";
 import { classicPack, vintagePack } from "../src/index.js";
-import { VINTAGE_DIR } from "../src/node.js";
+import { CLASSIC_DIR } from "../src/node.js";
 import { fromYaml } from "../src/yamlio.js";
 
 /** Every path to a string or an array in `value`, e.g. "social.battle.won" or "places.bank.title". */
@@ -33,11 +33,11 @@ describe("the built packs cover every field of CLASSIC_TEXT", () => {
   });
 
   const sources: [string, () => unknown][] = [
-    ["built vintage.json", () => vintagePack.text],
+    ["built vintage.json (deprecated alias)", () => vintagePack.text],
     ["built classic.json", () => classicPack.text],
     [
-      "packs/vintage/text.yaml",
-      () => fromYaml(readFileSync(join(VINTAGE_DIR, "text.yaml"), "utf8"), "text.yaml"),
+      "packs/classic/text.yaml",
+      () => fromYaml(readFileSync(join(CLASSIC_DIR, "text.yaml"), "utf8"), "text.yaml"),
     ],
   ];
 

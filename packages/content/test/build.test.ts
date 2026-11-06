@@ -4,21 +4,21 @@ import { describe, expect, it } from "vitest";
 import { classicPack, expandedPack, TABLE_KEYS, vintagePack } from "../src/index.js";
 import {
   BUILT_DIR,
-  importVintage,
+  CLASSIC_DIR,
+  importOriginal,
   renderBuiltPacks,
   renderReport,
   renderSourcePack,
-  VINTAGE_DIR,
 } from "../src/node.js";
 import { fromYaml, recordToSlots, slotsToRecord, toYaml } from "../src/yamlio.js";
 import { assetIds } from "./support.js";
 
-const { pack, notes } = importVintage({ assetIds });
+const { pack, notes } = importOriginal({ assetIds });
 
 describe("the importer", () => {
   it("is stable: running it again writes the same bytes, and they match the checked-in files", () => {
     const first = { ...renderSourcePack(pack), "IMPORT_REPORT.txt": renderReport(notes) };
-    const again = importVintage({ assetIds });
+    const again = importOriginal({ assetIds });
     const second = {
       ...renderSourcePack(again.pack),
       "IMPORT_REPORT.txt": renderReport(again.notes),
@@ -26,7 +26,7 @@ describe("the importer", () => {
     expect(second).toStrictEqual(first);
     expect(Object.keys(first)).toHaveLength(TABLE_KEYS.length + 2);
     for (const [name, text] of Object.entries(first)) {
-      expect(readFileSync(join(VINTAGE_DIR, name), "utf8"), name).toBe(text);
+      expect(readFileSync(join(CLASSIC_DIR, name), "utf8"), name).toBe(text);
     }
   });
 
@@ -68,7 +68,7 @@ describe("the importer", () => {
   });
 
   it("reports an unresolved picture when the manifest lacks it", () => {
-    const { notes: withGaps } = importVintage({
+    const { notes: withGaps } = importOriginal({
       assetIds: new Set([...assetIds].filter((i) => i !== "ring/ring")),
     });
     expect(
@@ -98,6 +98,9 @@ describe("the build step", () => {
       expect(readFileSync(join(BUILT_DIR, name), "utf8"), name).toBe(text);
     }
     expect(JSON.parse(built["vintage.json"] as string)).toStrictEqual(vintagePack);
+    // The deprecated Vintage pack is Classic under another id and nothing else.
+    expect(vintagePack).toStrictEqual({ ...classicPack, id: "vintage" });
+    expect(Object.keys(vintagePack)).toEqual(Object.keys(classicPack));
     expect(JSON.parse(built["classic.json"] as string)).toStrictEqual(classicPack);
     expect(JSON.parse(built["expanded.json"] as string)).toStrictEqual(expandedPack);
   });

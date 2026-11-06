@@ -55,7 +55,7 @@ It cannot be played as shipped: Flash is dead, the server is Windows-only and in
 
 ### 3.2 Classic fidelity policy
 
-Classic keeps every formula, probability, draw order and line of text. Exceptions are listed, not improvised:
+Classic keeps every formula, probability, draw order and line of text. The exceptions are gameplay bug and exploit fixes only, listed and not improvised (original content is never an exception):
 
 | Original behaviour | Classic remaster |
 |---|---|
@@ -65,9 +65,14 @@ Classic keeps every formula, probability, draw order and line of text. Exception
 | One player per IP per day | Dropped; accounts and rate limits instead |
 | New-player welcome never shows; police message never shows | Fixed |
 | Free events, risks and script events; +200 exact-match bonus; random soft-sell item; duplicate soft-sell items | Kept |
-| Adult customer with a teen "girlfriend/boyfriend" deceased (`source/create_customer.cpp:113-118, 165-170`) | Fixed in the generator in every mode |
 
-**Text.** The Classic pack is the untouched original text, in every mode (owner's rule, 2026-11-06: original content is kept exactly as it was). The pack id `vintage` remains only as a deprecated alias of the same data so older saves and town configurations keep loading; it is not offered to players.
+**The original dialog stays (owner's rule, 2026-11-06).** The original 2001 dialog, even if dated or controversial, must remain. No built-in pack, mode or setting edits, softens, replaces or removes an original line. This replaces the earlier two-text-pack design (a lightly edited Classic and an untouched "Vintage 2001"): there is one original text and nobody is offered an edited version of it.
+
+- **Classic pack** (`classic`): the untouched original text, byte for byte: every table of `legacy/dist/*.txt` and every string the original C++ hard-coded (`CLASSIC_TEXT`). It is the default for Classic-ruleset towns and has no edits and no overrides.
+- **Expanded pack** (`expanded`): Classic plus newly written material. It may add lines (including to slots the original left empty) but never replaces or drops an original one; where the engine reads a table by position (hard-sell upgrades, soft sells, risks, ratings and karma slots, mood bands, hearses) every original entry stays at its original index.
+- **`vintage`** is a deprecated alias of `classic` (the same data under the old id), kept only so saves, towns and imports that name it still load. Nothing new should select it.
+- **Content policy applies only to new text.** The banned-terms and other policy lints (brands, real people, slurs, placeholders, lengths) hold the newly written Expanded text and are never applied to, or used to justify changing, an original line.
+- **Enforced, not trusted.** `@fq/content` fails the pack build, and its tests fail, if any built-in pack lacks any original line unchanged (compared with a fresh import of `legacy/dist` and `CLASSIC_TEXT`, slot by slot, entry by entry and string by string), or if a built-in pack has an overrides file. The record of what was reverted and what new lines await the owner's decision is `packages/content/EDITS.md`.
 
 ### 3.3 Expanded ruleset
 
@@ -111,8 +116,8 @@ Built almost entirely from the original authors' own cut ideas, in priority orde
 - Web push when a new day dawns. One-tap tag exchange. Player pickers instead of typed names.
 
 **G. Characters**
-- Existing cast gets real roles and arcs: Elijah, Father Smyth, June, Mr. Yang, The Twins, the Nurse, the Teller, Morty, Cousin Sal, Old Man Withers, the unnamed Mayor.
-- New cast: a Reaper Club owner, a health inspector, a rival AI parlor family, a coroner. Mr. Yang and June are rewritten without the broken-English stereotype.
+- Existing cast gets real roles and arcs: Elijah, Father Smyth, June, Mr. Yang, The Twins, the Nurse, the Teller, Morty, Cousin Sal, Old Man Withers, the unnamed Mayor. Every original line of these characters stays exactly as written; Expanded only adds new lines, scenes and roles beside them.
+- New cast: a Reaper Club owner, a health inspector, a rival AI parlor family, a coroner.
 
 **Content targets for Expanded v1:** 120 events, 80 news blurbs plus 6 story arcs, 40 risks, 150 soft-sell items, 30 upgrades, 150 fortunes, 40+ portraits built from layered parts, 20 locations.
 
@@ -131,7 +136,7 @@ Built almost entirely from the original authors' own cut ideas, in priority orde
 ```
 legacy/                 original source/ and dist/, moved here untouched
 packages/core           rules engine, both rulesets, scene scripts, RNGs
-packages/content        classic, vintage and expanded packs + Zod schemas
+packages/content        classic (alias `vintage`) and expanded packs + Zod schemas
 packages/protocol       View and Action types shared by client and server
 packages/legacy-compat  request.xp adapter for the original Flash client
 packages/bots           AI rival parlor policies
@@ -198,7 +203,7 @@ Design work happens in Penpot (open source). Every screen is mocked next to its 
 
 **Tools:** Inkscape for vector work, Krita for paint-overs, Penpot for UI. AI image tools are used for concept exploration and background drafts with Akiko Robinson's art as the style reference; everything is then redrawn or cleaned by hand as vectors. AI assistance is disclosed in the credits and on the Steam page.
 
-**Cleanup list:** the Metallica shirt, the leftover Reckless Thief advert, the `Ring/` folder case mismatch, and the abusive placeholder string in the client source.
+**Cleanup list (technical only; nothing that changes what is shown):** the `Ring/` folder case mismatch, so asset ids and file names are all lowercase like the rest. Original art and text are never altered, in any pack or mode (owner's rule, 2026-11-06, `CLAUDE.md`).
 
 **License:** new art is CC BY 4.0, credited alongside Akiko Robinson.
 
@@ -289,9 +294,9 @@ Nothing original ships. The existing inventory is the brief:
 | Solo scope creep | Classic is the only hard requirement for Alpha. Expanded systems are ordered and each is shippable alone. |
 | Art consistency with AI-assisted work | A written style guide, Akiko's art as reference, hand vector cleanup, one reviewer pass per batch. |
 | Audio license contamination | CC0 or self-made only, enforced by the ledger check in CI. |
-| Dated or offensive content | Original content ships unaltered (owner's rule); store rating forms are answered truthfully for it (`docs/release/age-rating-and-content.md`). |
+| Dated or offensive content | The original is preserved as-is, in every pack and mode (owner's rule, 2026-11-06). It is disclosed through the store age ratings and content descriptors (Phase 6; the forms are answered truthfully for it, `docs/release/age-rating-and-content.md`), not edited. |
 | Low player counts in a multiplayer game | Bots fill towns; Solo Career and Daily Challenge work with one player. |
-| Parity drift from the original | Rules spec with source references, formula tests, the Ruffle bridge as a live oracle. |
+| Parity drift from the original | Rules spec with source references, formula tests, the Ruffle bridge as a live oracle, and the original C++ compiled and compared step by step with the port (`tools/oracle`, `docs/classic-fidelity.md`). |
 
 ## 10. Verification
 

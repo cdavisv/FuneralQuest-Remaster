@@ -1,7 +1,9 @@
 import { join } from "node:path";
-import { vintagePack } from "@fq/content";
+import { classicPack } from "@fq/content";
 import {
+  CLASSIC_RULES,
   ClassicRandom,
+  type ClassicRules,
   classicContext,
   createClassicRegistry,
   createTown,
@@ -17,17 +19,27 @@ import { REPO_ROOT } from "../scripts/config.js";
 /** The oracle's starting clock (oracle_main.cpp): 2001-01-01 00:00:00 UTC. */
 export const START_CLOCK_S = 978307200;
 
+/** The rules the port runs: `originalClassicRules()`, or `CLASSIC_RULES` with `ORACLE_RULES=default`. */
+export function oracleRules(): ClassicRules {
+  return process.env.ORACLE_RULES === "default" ? CLASSIC_RULES : originalClassicRules();
+}
+
 /**
  * The port, driven the way the oracle is: a town in memory behind the
  * original-protocol bridge (@fq/legacy-compat, used as is), Classic rules
- * with every deliberate fix off (`originalClassicRules()`), the Vintage
- * content pack, and every random draw from one shared generator
+ * with every deliberate fix off (`originalClassicRules()`), the Classic
+ * content pack (the original text, untouched), and every random draw from one shared generator
  * (`EngineContext.sharedRandom`), as the original server drew from one
  * global Mersenne Twister and one `rand()`.
+ *
+ * `ORACLE_RULES=default` runs the port with the remaster's default rules
+ * (`CLASSIC_RULES`) instead. They differ from `originalClassicRules()` only in
+ * the `fixes` flags (test/oracle.test.ts checks this), so every difference
+ * such a run reports must come from a fix in docs/classic-rules.md section 9.
  */
 export class PortDriver {
   private readonly registry = createClassicRegistry();
-  private readonly rules = originalClassicRules();
+  private readonly rules = oracleRules();
   private rng = new ClassicRandom(4357, 1);
   private town: TownState | null = null;
   private clockMs = START_CLOCK_S * 1000;
@@ -66,7 +78,7 @@ export class PortDriver {
 
   context(): EngineContext {
     return {
-      ...classicContext(vintagePack, {
+      ...classicContext(classicPack, {
         rules: this.rules,
         registry: this.registry,
         now: this.clockMs,

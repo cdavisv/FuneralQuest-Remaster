@@ -1,6 +1,7 @@
 import {
   exportSave,
   importSave,
+  pageTimeZone,
   type SaveSummary,
   type SoloConfig,
   type SoloSave,
@@ -65,6 +66,15 @@ function download(filename: string, text: string, type: string): void {
 }
 
 const reason = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
+/**
+ * What the worker cannot find out for itself: the page's time zone, for the time the original
+ * printed in front of notices ("12:05 AM:Bob logged on."), following daylight saving.
+ */
+function hostOptions(): { timeZone?: string } {
+  const timeZone = pageTimeZone();
+  return timeZone ? { timeZone } : {};
+}
 
 /**
  * Solo mode as the player meets it: the list of saved careers, the new-career form, and the
@@ -133,7 +143,7 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
       try {
         const save = await platform.storage.read(slot);
         if (!save) throw new Error("The save is gone.");
-        await play(slot, (client) => client.load(save));
+        await play(slot, (client) => client.load(save, undefined, hostOptions()));
       } catch (error) {
         setPlayingSolo(null);
         if (alive.current) {
@@ -151,7 +161,7 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
     async (config: SoloConfig) => {
       setBusy(true);
       try {
-        await play(newSlot(platform), (client) => client.create(config));
+        await play(newSlot(platform), (client) => client.create(config, undefined, hostOptions()));
       } finally {
         if (alive.current) setBusy(false);
       }

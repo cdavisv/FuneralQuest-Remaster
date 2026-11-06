@@ -5,10 +5,11 @@ export { importLegacyTables } from "./legacy.js";
 export { renderReport } from "./report.js";
 export {
   BUILT_DIR,
+  type BuiltInDirs,
   CLASSIC_DIR,
   EXPANDED_DIR,
   expandedAssetIds,
-  importVintage,
+  importOriginal,
   LEGACY_DIST,
   type LoadOptions,
   loadAssetIds,
@@ -22,6 +23,5 @@ export {
   readLegacySources,
   renderBuiltPacks,
   renderSourcePack,
-  VINTAGE_DIR,
   writeFiles,
 } from "./sources.js";

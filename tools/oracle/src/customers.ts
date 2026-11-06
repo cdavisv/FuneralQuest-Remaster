@@ -54,8 +54,8 @@ export interface CustomerReport {
  * `create_random_customer` (create_customer.cpp:242-293) against the port's
  * `createRandomCustomer`, one customer per seed, both generators seeded the
  * same way. Compares every field, the derived labels and the number of draws.
- * The port runs with `allowMinorAdultLover: true`, the original behaviour; the
- * remaster's fix (docs/classic-rules.md section 2) is a deliberate difference.
+ * The port's generator is the original's unaltered (docs/classic-rules.md
+ * section 2), so there is no switch to set: the default is the original.
  */
 export function compareCustomers(firstSeed: number, count: number): CustomerReport {
   const original = oracleCustomers(firstSeed, count);
@@ -63,7 +63,7 @@ export function compareCustomers(firstSeed: number, count: number): CustomerRepo
   let exact = 0;
   for (const line of original) {
     const rng = new ClassicRandom(line.seed, crtSeedFor(line.seed));
-    const c = createRandomCustomer(rng, { allowMinorAdultLover: true });
+    const c = createRandomCustomer(rng);
     const state = stateOf(c);
     const o = line.customer;
     const pairs: [string, unknown, unknown][] = [

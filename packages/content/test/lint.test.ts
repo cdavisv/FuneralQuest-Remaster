@@ -27,7 +27,11 @@ function xp(p: ContentPack) {
   return p.expanded;
 }
 function lint(p: ContentPack): string[] {
-  return lintPack(p, { base: classicPack }).map(formatIssue);
+  return lintPack(p).map(formatIssue);
+}
+/** The same pack with every string emptied: nothing in it exempts any text. */
+function blanked(p: ContentPack): ContentPack {
+  return JSON.parse(JSON.stringify(p, (_k, v: unknown) => (typeof v === "string" ? "" : v)));
 }
 const event = (p: ContentPack) => {
   const e = p.events.ranges[1]?.entries.at(-1);
@@ -36,10 +40,10 @@ const event = (p: ContentPack) => {
 };
 
 describe("the content lint", () => {
-  it("passes the built-in Expanded pack and exempts Classic's reviewed lines", () => {
+  it("passes the built-in Expanded pack and exempts every original line", () => {
     expect(lint(expandedPack)).toEqual([]);
-    // Without the reviewed base, the originals' own quirks show up (Elvis, the unfilled *NAME*).
-    const raw = lintPack(expandedPack, {});
+    // Without the original to exempt, its own quirks show up (Elvis, the unfilled *NAME*).
+    const raw = lintPack(expandedPack, { original: blanked(classicPack) });
     expect(raw.some((i) => i.message.includes("Elvis"))).toBe(true);
     expect(raw.some((i) => i.message.includes("*NAME* is not filled in"))).toBe(true);
   });
@@ -102,6 +106,31 @@ describe("the content lint", () => {
     const out = lint(p);
     expect(out.filter((l) => l.includes("duplicate line"))).toHaveLength(3);
     expect(out).toContainEqual(expect.stringMatching(/^events\.yaml: ranges\[2\]/));
+  });
+
+  it("checks an aged line (13.5) against the pool it joins", () => {
+    const p = pack();
+    const aged = xp(p).text.negotiation.agedLines ?? [];
+    expect(aged.length).toBeGreaterThan(0);
+    // A soft-sell line may name the item; a sympathy line may not.
+    aged.push({ pool: "softPitch", minCustomerAge: 18, text: '`w{player}: `$"The {item}?"\n\n' });
+    aged.push({
+      pool: "sympathyPitch",
+      minCustomerAge: 18,
+      text: '`w{player}: `$"About the {item}..."\n\n',
+    });
+    // It must not repeat a line of its pool.
+    aged.push({
+      pool: "sympathyPitch",
+      maxCustomerAge: 17,
+      text: xp(p).text.negotiation.sympathyPitch[0] as string,
+    });
+    xp(p).text.negotiation.agedLines = aged;
+    const out = lint(p);
+    expect(out.filter((l) => l.includes("agedLines"))).toEqual([
+      expect.stringMatching(/agedLines\[3\]\.text.*placeholder \{item\} is not filled in here/),
+      expect.stringMatching(/agedLines\[4\]\.text.*duplicate line/),
+    ]);
   });
 
   it("checks price grids and ranges, and articles", () => {

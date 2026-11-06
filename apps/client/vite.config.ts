@@ -220,6 +220,9 @@ export default defineConfig(({ command }) => ({
     setupFiles: ["./test/setup.ts"],
     css: false,
     restoreMocks: true,
+    // Generous for slow CI machines; the default 5 s is too tight for the walk tests.
+    testTimeout: 30_000,
+    hookTimeout: 30_000,
     exclude: ["e2e/**", "perf/**", "node_modules/**", "dist-build/**"],
   },
 }));

@@ -1,3 +1,5 @@
+> This baseline predates the restoration of the original customer relationships and the original (unfiltered) mail and fortunes in Classic; relationship labels only choose the word the text uses for the deceased and do not affect scoring, so its figures stand.
+
 # Balance report: classic rules
 
 ## What it says about the original design

@@ -2,7 +2,7 @@ import { CLASSIC_TEXT, type ContentPack } from "@fq/core";
 import { describe, expect, it } from "vitest";
 import { legacyContent } from "../../core/test/support/legacyContent.js";
 import { classicPack, TABLE_KEYS, vintagePack } from "../src/index.js";
-import { importVintage } from "../src/node.js";
+import { importOriginal } from "../src/node.js";
 import { assetIds, legacySources } from "./support.js";
 
 function legacy(file: string): string {
@@ -10,11 +10,12 @@ function legacy(file: string): string {
 }
 
 const reference = legacyContent();
-const imported = importVintage({ assetIds }).pack;
+const imported = importOriginal({ assetIds }).pack;
 
-describe("Vintage equals what the core test loader reads from legacy/dist", () => {
+describe("Classic equals what the core test loader reads from legacy/dist", () => {
   for (const table of TABLE_KEYS) {
     it(`${table} (built pack)`, () => {
+      expect(classicPack[table]).toStrictEqual(reference[table]);
       expect(vintagePack[table]).toStrictEqual(reference[table]);
     });
     it(`${table} (fresh import)`, () => {
@@ -23,10 +24,11 @@ describe("Vintage equals what the core test loader reads from legacy/dist", () =
   }
 
   it("has the same keys as the reference pack", () => {
-    expect(Object.keys(vintagePack).sort()).toEqual(Object.keys(reference).sort());
+    expect(Object.keys(classicPack).sort()).toEqual(Object.keys(reference).sort());
   });
 
   it("keeps CLASSIC_TEXT as is", () => {
+    expect(classicPack.text).toStrictEqual(CLASSIC_TEXT);
     expect(vintagePack.text).toStrictEqual(CLASSIC_TEXT);
   });
 });
@@ -44,7 +46,7 @@ function entryCounts(pack: ContentPack): Record<string, number[]> {
 
 describe("counts match the originals", () => {
   it("has 23 events, 21 news blurbs, 35 cursed and 5 nice fortunes, 16 no-customer lines", () => {
-    expect(entryCounts(vintagePack)).toEqual({
+    expect(entryCounts(classicPack)).toEqual({
       events: [23],
       newsBlurbs: [21],
       noCustomers: [16],
@@ -54,10 +56,10 @@ describe("counts match the originals", () => {
   });
 
   it("has 10 risks, 55 soft-sell items, 10 hard-sell upgrades, 11 swear words", () => {
-    expect(vintagePack.risks).toHaveLength(10);
-    expect(vintagePack.softSell).toHaveLength(55);
-    expect(vintagePack.hardSell).toHaveLength(10);
-    expect(vintagePack.swearWords).toHaveLength(11);
+    expect(classicPack.risks).toHaveLength(10);
+    expect(classicPack.softSell).toHaveLength(55);
+    expect(classicPack.hardSell).toHaveLength(10);
+    expect(classicPack.swearWords).toHaveLength(11);
   });
 
   it("counts the entry markers in the legacy files the same way", () => {
@@ -73,13 +75,15 @@ describe("counts match the originals", () => {
     expect(count(legacy("hard_sell.txt"), "add_item")).toBe(10);
   });
 
-  it("Classic keeps every table length (edits replace text, never add or remove entries)", () => {
-    expect(entryCounts(classicPack)).toEqual(entryCounts(vintagePack));
-    expect(classicPack.risks).toHaveLength(vintagePack.risks.length);
-    expect(classicPack.softSell).toHaveLength(vintagePack.softSell.length);
-    expect(classicPack.hardSell).toHaveLength(vintagePack.hardSell.length);
+  it("Classic has every table length of the original", () => {
+    expect(entryCounts(classicPack)).toEqual({
+      events: [23],
+      newsBlurbs: [21],
+      noCustomers: [16],
+      fortunes: [35],
+      niceFortunes: [5],
+    });
     expect(classicPack.ratings).toHaveLength(100);
     expect(classicPack.karma).toHaveLength(100);
-    expect(classicPack.swearWords).toHaveLength(vintagePack.swearWords.length);
   });
 });

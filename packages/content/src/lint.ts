@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noTemplateCurlyInString: "${price}" in messages is a dollar sign before a {price} placeholder.
 import {
+  type AgedLine,
   CLASSIC_TEXT,
   type ContentPack,
   checkExpandedContent,
@@ -10,6 +11,7 @@ import {
   TOWN_STARTER,
 } from "@fq/core";
 import { bannedTerms } from "./banned.js";
+import { classicPack } from "./builtin.js";
 import type { PackIssue } from "./check.js";
 import { EXPANDED_KEY, TABLE_FILE, type TableKey } from "./tables.js";
 import { lintNewsWhen, lintTown, townFieldRule, townStructural } from "./townLint.js";
@@ -35,12 +37,19 @@ import { lintNewsWhen, lintTown, townFieldRule, townStructural } from "./townLin
  *   endings, 5 to 12 days, inside the season), prices, rewards, and pictures in the manifest;
  * - `checkExpandedContent` from @fq/core (ids, upgrade names, tier order) against the rules.
  *
- * Lines found unchanged in `base` (the reviewed Classic pack) are exempt from the text rules, so
- * the originals Expanded keeps (Elvis, the snakehead blurb's unfilled `*NAME*`) do not fail it.
+ * The policy applies only to new text. Every line of the original game (the Classic pack: a fresh
+ * import of the 2001 files plus `CLASSIC_TEXT`) is exempt from the text rules, automatically and
+ * exactly (a line is exempt when it is, character for character, an original string), so the
+ * originals Expanded keeps (Elvis, KFC, the snakehead blurb's unfilled `*NAME*`) never fail it and
+ * are never a reason to change an original line (CLAUDE.md: the original dialog must remain).
+ * Whether the original lines are still all there is `checkOriginal`'s job (original.ts).
  */
 export interface LintOptions {
-  /** The reviewed pack this one builds on; its lines are exempt from the text rules. */
-  base?: ContentPack;
+  /**
+   * The original game's pack; every string in it is exempt from the text rules. Default: the
+   * built-in Classic pack, which is the original (the build checks that against a fresh import).
+   */
+  original?: ContentPack;
   /**
    * Known asset ids (assets/manifest.json). The town's pictures (`fg`/`bg`) are checked here, since
    * `checkPack` finds pictures by key name; others are `checkPack`'s job.
@@ -288,6 +297,14 @@ function expandedRule(path: string): FieldRule {
   return { tokens: ["*"], max: 700 };
 }
 
+/** An aged line (13.5) takes the placeholders of the pool it joins. */
+function agedLineRule(pack: ContentPack, path: Path): FieldRule {
+  const lines = pack.expanded?.text.negotiation.agedLines ?? [];
+  const pool = lines[path[3] as number]?.pool ?? "";
+  const top = pool.split(".")[0] ?? "";
+  return { tokens: [...X, ...(NEGOTIATION_EXTRAS[top] ?? [])], max: 220 };
+}
+
 /** Tokens CLASSIC_TEXT already uses at `path` (all alternatives of an array together). */
 function classicTextTokens(path: string): Set<string> {
   const out = new Set<string>();
@@ -452,7 +469,7 @@ export const REWARD_LIMITS = {
 
 export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssue[] {
   const issues: PackIssue[] = [];
-  const reviewed = options.base ? allStrings(options.base) : new Set<string>();
+  const reviewed = allStrings(options.original ?? classicPack);
   const isNew = (s: string): boolean => !reviewed.has(s);
   const push = (
     table: TableKey | typeof EXPANDED_KEY,
@@ -508,7 +525,9 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
       if (isNew(leaf.value)) {
         const rule =
           table === EXPANDED_KEY
-            ? expandedRule(path)
+            ? path === "text.negotiation.agedLines[].text"
+              ? agedLineRule(pack, leaf.path)
+              : expandedRule(path)
             : table === "text"
               ? classicTextRule(path)
               : (TABLE_RULES[table]?.find(([re]) => re.test(path))?.[1] ?? {
@@ -549,6 +568,14 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
     for (const c of cKeys) {
       for (const l of leaves(cn[c], ["negotiation", c])) addToGroup(key, "text", l);
     }
+    // An aged line joins its pool when the ages fit, so it must not repeat a line of the pool.
+    (xn?.agedLines as AgedLine[] | undefined)?.forEach((l, i) => {
+      if (l.pool !== xKey) return;
+      addToGroup(key, EXPANDED_KEY, {
+        path: ["text", "negotiation", "agedLines", i, "text"],
+        value: l.text,
+      });
+    });
   }
   for (const list of groups.values()) {
     const seen = new Map<string, { value: string }>();
@@ -759,7 +786,7 @@ function isStructural(table: TableKey | typeof EXPANDED_KEY, path: string): bool
   if (table === "newsBlurbs") return /\.when\./.test(path);
   if (table === EXPANDED_KEY) {
     if (path.startsWith("town.")) return /\.id$/.test(path) || townStructural(path);
-    return /(\.id|\.article|\.tags\[\]|\.track|\.requires|\.excludes\[\]|\.traits\[\]|\.pet\[\]|\.perk|\.label|\.portrait|\.picture|\.person\.\w+)$/.test(
+    return /(\.id|\.pool|\.article|\.tags\[\]|\.track|\.requires|\.excludes\[\]|\.traits\[\]|\.pet\[\]|\.perk|\.label|\.portrait|\.picture|\.person\.\w+)$/.test(
       path,
     );
   }

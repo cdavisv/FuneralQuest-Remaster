@@ -126,7 +126,7 @@ describe("the engine plays several days with each built-in pack", () => {
     });
   }
 
-  it("Classic edits change words only: the same seed plays the same game under both packs", () => {
+  it("the deprecated vintage pack plays the same game as Classic (it is the same data)", () => {
     const vintage = playDays(vintagePack, 11);
     const classic = playDays(classicPack, 11);
     expect(classic.texts).toEqual(vintage.texts);

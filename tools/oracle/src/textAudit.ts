@@ -2,7 +2,7 @@
  * Static text audit: every string literal the original C++ game logic and the
  * scripts in legacy/dist/script can send to a player, checked verbatim against
  * the port's text (the Classic text tables, the social text, the rules' place
- * text, the script ports and the Vintage pack).
+ * text, the script ports and the Classic pack).
  *
  *   pnpm --filter @fq/oracle run text-audit
  *
@@ -125,7 +125,7 @@ function pieces(text: string): string[] {
     .filter((p) => p.replace(/[^A-Za-z]/g, "").length >= 3);
 }
 
-/** Every string in the port's text: TS string literals of core's Classic code and the Vintage pack. */
+/** Every string in the port's text: TS string literals of core's Classic code and the Classic pack. */
 function portCorpus(): string[] {
   const strings: string[] = [];
   const collectTs = (dir: string) => {
@@ -147,7 +147,7 @@ function portCorpus(): string[] {
   collectTs(join(REPO_ROOT, "packages", "core", "src"));
   collectTs(join(REPO_ROOT, "packages", "legacy-compat", "src"));
   const pack = JSON.parse(
-    readFileSync(join(REPO_ROOT, "packages", "content", "built", "vintage.json"), "utf8"),
+    readFileSync(join(REPO_ROOT, "packages", "content", "built", "classic.json"), "utf8"),
   ) as unknown;
   const walk = (v: unknown): void => {
     if (typeof v === "string") strings.push(v);

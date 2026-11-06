@@ -12,8 +12,10 @@ import { SLOT_COUNT, type TableKey } from "./tables.js";
  *   and every bracket keeps the original entries. A base range no file range overlaps is dropped,
  *   so give ranges that cover the base's.
  * - Ratings and karma: a mapping of slot number to text; each slot given replaces the base's, the
- *   rest are inherited.
- * - Text: merged key by key; a string replaces the base's, an array is added to the end of the
+ *   rest are inherited. A built-in pack may only give slots the original left empty: a slot that
+ *   replaces an original line fails the build (original.ts).
+ * - Text: merged key by key; a string replaces the base's (a built-in pack may not do that to an
+ *   original string: original.ts), an array is added to the end of the
  *   base's (more alternatives for the same line), an object merges recursively. Arrays the engine
  *   indexes by position (`negotiation.softAccept`, by mood band; the hearse tables) must not be
  *   appended to: the schema rejects the hearse tables and the extra soft-accept lines would never

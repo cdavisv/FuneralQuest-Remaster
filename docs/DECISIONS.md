@@ -11,7 +11,7 @@ Each item is a yes/no question with a recommendation. Fill in **Answer** and, if
 - **Decided 2026-11-06: No.** Same rule. The original relationship table is restored as the default and the switch is removed.
 
 ### 1b. Keep the Remastered art pack's altered copy of one original portrait (a real band's logo on a shirt replaced with an invented one)?
-- **Decided by the same rule: No.** The override is being removed, so the original portrait shows under every art pack. One note for you, not a recommendation to change it: a real band's logo is a trademark, which is a legal question, not an ethical one. If you ever want it handled, that is your call to raise.
+- **Decided by the same rule: No.** The override has been removed, so the original portrait shows under every art pack. One note for you, not a recommendation to change it: a real band's logo is a trademark, which is a legal question, not an ethical one. If you ever want it handled, that is your call to raise.
 
 ### 2 and 3. Replace any of the eight flagged lines newly written for Expanded?
 - **Decided 2026-11-06: No, keep all eight as written.** The alternative wordings have been removed from `packages/content/EDITS.md`.
@@ -110,7 +110,7 @@ Each item is a yes/no question with a recommendation. Fill in **Answer** and, if
 
 ### 15a. Make the ElevenLabs "Studio" sound pack the default once you have listened to it?
 - **Recommend:** Decide after listening
-- **Why:** A second sound pack is being generated with your ElevenLabs account (budget cap 120,000 credits, about $20). The code-synthesised "Synth" pack stays as the default and as a fully open-source fallback. A page at `docs/audio/listen.html` will play both side by side with a notes field per track.
+- **Why:** A second sound pack has been generated with your ElevenLabs account (`assets/audio-studio/`, 19,801 credits of the 120,000 budget cap) and can be picked under Settings, Sound pack. The code-synthesised "Synth" pack stays the default and the fully open-source fallback. `docs/audio/listen.html` plays both side by side with a notes field per track. A build bundles Studio only when asked (`FQ_AUDIO_PACKS=synth,studio`).
 - **Also needed from you:** confirm that your ElevenLabs plan's terms allow these files to be distributed in a public repository and in store builds. I cannot verify that, and the pack's licence file says so.
 - **Answer:**
 - **Notes:**

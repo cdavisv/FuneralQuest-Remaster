@@ -41,6 +41,12 @@ export {
 } from "./lint.js";
 export { appendTable } from "./merge.js";
 export {
+  checkOriginal,
+  INDEXED_TEXT,
+  type OriginalCheckOptions,
+  POOLED_TEXT,
+} from "./original.js";
+export {
   applyOverrides,
   EDIT_CATEGORIES,
   type Edit,

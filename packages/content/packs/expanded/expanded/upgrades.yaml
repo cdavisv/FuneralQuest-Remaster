@@ -29,7 +29,7 @@ incinerator:
   description: 'Unlocks the cremation track: offer to cremate instead of bury, then sell urns. Do not use it for the leaves.'
 'night-watchman':
   name: 'Night Watchman'
-  description: 'Security level 3. He is mostly asleep, but loudly. Needs the Alarm System.'
+  description: 'Security level 3. He is mostly asleep, but loudly, and families like a parlor with a man at the door: richer families notice you. Needs the Alarm System.'
 chapel:
   name: 'Chapel'
   description: 'A real chapel. Richer families come to you, and the full-orchestra service opens up. Needs the Viewing Room.'
@@ -41,7 +41,7 @@ billboard:
   description: 'Your face, forty feet wide, next to the words YOU''RE NEXT. Richer families notice you. Needs a signage permit from City Hall.'
 'memorial-garden':
   name: 'Memorial Garden'
-  description: 'Roses, a fountain, a bench nobody sits on. Customers have 1 more patience. Needs a zoning permit from City Hall.'
+  description: 'Roses, a fountain, a bench nobody sits on. Customers have 2 more patience, and richer families notice you. Needs a zoning permit from City Hall.'
 crematorium:
   name: 'Crematorium'
   description: 'A real crematorium with a chimney you can see from Blaine. Richer families notice you. Needs the Incinerator and a crematory permit from City Hall.'

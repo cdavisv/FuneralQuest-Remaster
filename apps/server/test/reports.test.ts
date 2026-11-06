@@ -1,6 +1,7 @@
 import { richTextToPlain } from "@fq/core";
 import { afterEach, describe, expect, it } from "vitest";
 import { ChatBuffer } from "../src/moderation/chatBuffer.js";
+import { finishTutorial, type Send, visit } from "./support/expanded.js";
 import {
   connectSocket,
   type Harness,
@@ -158,6 +159,49 @@ describe("reporting", () => {
     const right = filed(await report(1));
     expect(right.blockOffer).toMatchObject({ name: "bobby" });
     expect(rows().at(-1)).toEqual({ verified: 1, login: "bobby" });
+  });
+
+  it("in an Expanded town the speaker is the line's own data, and a room line has none", async () => {
+    h = await startServer({
+      listen: true,
+      towns: [{ id: "main", name: "New Deathville", seed: 77, ruleset: "expanded" }],
+    });
+    const alice = await player("alice", 1);
+    const bobby = await player("bobby", 2);
+    const toExpandedCafe = async (p: TestPlayer) => {
+      const send: Send = (action) => p.act(action);
+      await visit(send, await finishTutorial(send, await p.enter()), "cafe");
+    };
+    await toExpandedCafe(alice);
+    const aliceSocket = await connectSocket(h, alice.token);
+    sockets.push(aliceSocket);
+    // Bobby walks in: the room announces him; nobody said that line.
+    await toExpandedCafe(bobby);
+    await aliceSocket.until((m) => chatLines(m).some((l) => l.includes("bobby")));
+    await bobby.act({ type: "chat", text: "a line bobby really said" });
+    await aliceSocket.until((m) => chatLines(m).some((l) => l.includes("really said")));
+    const lines = chatLines(aliceSocket.messages);
+    const arrival = lines.find((l) => l.includes("bobby") && !l.includes("really said"));
+    const spoken = lines.find((l) => l.includes("really said"));
+    expect(arrival).toBeDefined();
+    expect(spoken).toBeDefined();
+    const report = async (text: string) =>
+      filed(
+        await alice.request("POST", "/api/reports", {
+          townId: "main",
+          target: { kind: "chat", text },
+          category: "harassment",
+        }),
+      );
+    expect((await report(arrival as string)).blockOffer).toBeNull();
+    expect((await report(spoken as string)).blockOffer).toMatchObject({ name: "bobby" });
+    const rows = h.server.db
+      .prepare("SELECT verified, reported_login AS login FROM reports ORDER BY id")
+      .all() as { verified: number; login: string | null }[];
+    expect(rows).toEqual([
+      { verified: 1, login: null },
+      { verified: 1, login: "bobby" },
+    ]);
   });
 
   it("the chat window tells two speakers of the same words apart", () => {

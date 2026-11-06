@@ -15,8 +15,8 @@ const ALWAYS_FILTERED: ReadonlySet<UserTextKind> = new Set(["announcement", "cha
  * SWEAR-FILTER CALL SITE for every player-typed text. `swear_check`
  * (classic/swearFilter.ts) with the pack's word list, gated by the sysop's
  * `swearFilter` setting. Mail and fortunes are filtered only when
- * `rules.filterUserText` is on (the default; `originalClassicRules()` turns
- * it off, as the original never filtered them).
+ * `rules.filterUserText` is on (off in Classic, as the original never
+ * filtered them; the Expanded ruleset turns it on).
  */
 export function filterUserText(turn: Turn, text: string, kind: UserTextKind): string {
   if (!ALWAYS_FILTERED.has(kind) && !turn.rules.filterUserText) return text;

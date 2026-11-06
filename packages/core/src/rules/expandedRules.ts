@@ -402,6 +402,8 @@ export const EXPANDED_RULES: ClassicRules = {
   },
   // Section 10.2: rewards apply at once.
   mailRewardsOnDelivery: false,
+  // Host moderation of what live players type to each other (mail, fortunes).
+  filterUserText: true,
   // Section 10.3.
   zeroBpGraceDays: EXPANDED.newPlayerGraceDays,
   pvp: { ...CLASSIC_RULES.pvp, stealMax: 4 },

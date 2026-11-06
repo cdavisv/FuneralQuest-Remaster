@@ -34,7 +34,7 @@ describe("the Expanded pack", () => {
 
   it("passes the schema (strict about Expanded fields), the asset manifest and the lint", () => {
     expect(checkPack(expandedPack, { assetIds: expandedIds, strictExpanded: true })).toEqual([]);
-    expect(lintPack(expandedPack, { base: classicPack, assetIds: expandedIds })).toEqual([]);
+    expect(lintPack(expandedPack, { assetIds: expandedIds })).toEqual([]);
   });
 
   it("keeps every Classic entry: Expanded is Classic plus new material", () => {
@@ -62,11 +62,15 @@ describe("the Expanded pack", () => {
       const mine = (expandedPack.text.negotiation as unknown as Record<string, unknown>)[k];
       if (Array.isArray(v)) expect((mine as unknown[]).slice(0, v.length), k).toStrictEqual(v);
     }
-    // Ratings and karma: every Classic line is kept except the three repeats of slot 86.
+    // Ratings and karma: every Classic line is kept, including the three repeats of slot 86 at
+    // 88 to 90 (the original dialog must remain; only empty slots are filled).
     const changed = classicPack.ratings.flatMap((l, i) =>
       l !== "" && l !== expandedPack.ratings[i] ? [i + 1] : [],
     );
-    expect(changed).toEqual([88, 89, 90]);
+    expect(changed).toEqual([]);
+    for (const slot of [88, 89, 90]) {
+      expect(expandedPack.ratings[slot - 1]).toBe("Your parlor is in the top 20 percent.");
+    }
     expect(classicPack.karma.every((l, i) => l === "" || l === expandedPack.karma[i])).toBe(true);
   });
 
