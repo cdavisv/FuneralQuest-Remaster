@@ -1,0 +1,129 @@
+# Injuries (docs/expanded-rules.md 19.1). `causes` says which mishaps can give each one: duel (lost
+# graveyard duel), fight (dropped in a parlor fight), rob (failed grave robbery), roulette (lost glass
+# of Formaldehyde Roulette), hit (a landed hit). Every cause has at least three injuries (lint), and
+# each text must make sense for every cause it names: the hit mail says a tire iron, so no hit
+# injury mentions a shovel, lilies or a dog.
+
+- id: 'dog-bite'
+  causes: ['rob']
+  name: 'Dog Bite'
+  text: '`$Deacon, the groundskeeper''s dog, took a piece of you and buried it somewhere. You will never see it again.'
+  days: 2
+  hp: 3
+  treatPrice: 400
+- id: 'sprained-ankle'
+  causes: ['duel']
+  name: 'Sprained Ankle'
+  text: '`$You stepped into an open grave mid-swing. The occupant was very understanding about it, being dead.'
+  days: 2
+  hp: 4
+  turns: 1
+  treatPrice: 800
+- id: 'cracked-skull'
+  causes: ['duel', 'fight', 'rob', 'hit']
+  name: 'Cracked Skull'
+  text: '`$Something cracked. You hope it was a walnut. You were not carrying a walnut.'
+  days: 3
+  hp: 8
+  patience: 1
+  treatPrice: 1500
+- id: 'pickled-liver'
+  causes: ['roulette']
+  name: 'Pickled Liver'
+  text: '`$That was not vodka. Your liver is now legally a specimen and will outlive you in a jar.'
+  days: 2
+  hp: 2
+  patience: 1
+  treatPrice: 600
+- id: 'kneecapped'
+  causes: ['hit']
+  name: 'Busted Kneecaps'
+  text: '`$Two men with a tire iron explained a few things to your knees. Your knees understood right away.'
+  days: 4
+  hp: 10
+  patience: 1
+  turns: 1
+  treatPrice: 3000
+- id: 'shovel-face'
+  causes: ['duel', 'rob']
+  name: 'Shovel-Shaped Face'
+  text: '`$Something flat and heavy met your face. The imprint is shovel-shaped, and perfect. Customers keep asking where you had it done.'
+  days: 2
+  hp: 3
+  patience: 1
+  treatPrice: 700
+- id: 'broken-toe'
+  causes: ['duel', 'rob']
+  name: 'Broken Toe (Granite)'
+  text: '`$You kicked a headstone for emphasis. It was granite. You now walk like Old Man Withers, but slower.'
+  days: 2
+  hp: 2
+  treatPrice: 350
+- id: 'lily-rash'
+  causes: ['duel', 'fight', 'roulette']
+  name: 'Lily Rash'
+  text: '`$You landed face first in the funeral lilies. You are allergic to lilies. You are now mostly rash.'
+  days: 1
+  hp: 1
+  patience: 1
+  treatPrice: 300
+- id: 'embalmed-thumb'
+  causes: ['fight']
+  name: 'Embalmed Thumb'
+  text: '`$You stuck yourself with the trocar. Your thumb is preserved for the ages and will never bend again.'
+  days: 3
+  hp: 2
+  treatPrice: 500
+- id: 'thrown-back'
+  causes: ['duel', 'fight', 'rob', 'hit']
+  name: 'Thrown-Out Back'
+  text: '`$Somebody threw you over a shoulder like a sack of flour. Your back went out and has not called.'
+  days: 3
+  hp: 4
+  turns: 1
+  treatPrice: 1200
+- id: 'bingo-elbow'
+  causes: ['duel', 'fight']
+  name: 'Bingo Elbow'
+  text: '`$Old Man Withers elbowed you on his way to the front row. He is eighty-three and he is mostly elbow.'
+  days: 2
+  hp: 2
+  treatPrice: 400
+- id: 'rib-splinter'
+  causes: ['fight']
+  name: 'Rib Splinter'
+  text: '`$Morty fell on you. You have a splinter of rib in your arm. Morty is one rib short and won''t discuss it.'
+  days: 2
+  hp: 3
+  treatPrice: 600
+- id: 'tag-cut'
+  causes: ['fight', 'rob']
+  name: 'Gold Tag Paper Cut'
+  text: '`$A gold casket tag sliced your finger. It is the most expensive cut in town and it knows it.'
+  days: 1
+  hp: 1
+  treatPrice: 300
+- id: 'fluid-eyes'
+  causes: ['roulette']
+  name: 'Formaldehyde Eyes'
+  text: '`$Embalming fluid in both eyes. Everything looks peaceful, slightly yellow and very far away.'
+  days: 2
+  hp: 2
+  patience: 1
+  treatPrice: 800
+- id: 'lectern-lump'
+  causes: ['fight']
+  name: 'Lectern Lump'
+  text: '`$You leaned on the eulogy lectern and it gave way. The Lord took the lectern''s side.'
+  days: 2
+  hp: 3
+  patience: 1
+  treatPrice: 900
+- id: 'bouncer-grip'
+  causes: ['roulette']
+  name: 'Bouncer''s Handprint'
+  text: '`$The Reaper Club''s bouncer helped you out the door by the neck. You can still feel every finger. All six.'
+  days: 3
+  hp: 5
+  patience: 1
+  treatPrice: 1500

@@ -1,0 +1,5 @@
+# `docker compose up` from the repository root: the same service as apps/server/docker-compose.yml
+# (the game server with the web client, on http://localhost:8080). Settings go in
+# apps/server/.env (copy apps/server/.env.example); see the server README.
+include:
+  - apps/server/docker-compose.yml

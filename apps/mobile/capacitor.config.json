@@ -1,0 +1,39 @@
+{
+  "appId": "org.funeralquest.remaster",
+  "appName": "Funeral Quest",
+  "webDir": "www",
+  "backgroundColor": "#070b12",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#070b12"
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#070b12"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0,
+      "launchAutoHide": false,
+      "backgroundColor": "#070b12",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_INSIDE"
+    },
+    "Keyboard": {
+      "resize": "native"
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon",
+      "iconColor": "#C99A2C"
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "DARK",
+      "hidden": false
+    }
+  }
+}

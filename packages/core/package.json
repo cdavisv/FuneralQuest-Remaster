@@ -1,0 +1,20 @@
+{
+  "name": "@fq/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Funeral Quest rules engine: pure, deterministic, no I/O.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  }
+}

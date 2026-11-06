@@ -1,0 +1,31 @@
+title: 'Parlor Chains'
+intro: '`$A chain is up to `w{max}`$ parlors sharing a season score board, like a bowling league with embalming. Founding one costs `w${fee}`$, joining one `w${join}`$, and every member pays `w${dues}`$ a day in dues. Members get a better rating, cheaper caskets, and families that walk out are sent to a chain-mate. Chain-mates can never fight, rob, burn or put a hit on each other.
+
+
+  '
+line: '`w{name}`$: {members}. Season score `5{score}`$
+
+  '
+none: '`$No chains are registered yet. The clerk has a stack of blank forms and an unearned sense of anticipation.'
+yours: '`$You belong to `w{name}`$.
+
+  '
+buttons:
+  found: 'Found a Chain'
+  invite: 'Invite a Parlor'
+  join: 'Join {name}'
+  leave: 'Leave the Chain'
+  back: 'Back'
+namePrompt: 'What will your chain be called?'
+invitePrompt: 'Which parlor do you want to invite?'
+founded: '`$The clerk registers `w{name}`$ and charges you for the ink, the pen and his time.'
+invited: '`$An invitation goes out to `w{name}`$ on City Hall letterhead, which smells of floor wax.'
+inviteMail: '`w{name}`$ invites you to join the parlor chain `w{chain}`$. Visit City Hall to accept, or to pretend you never got this.'
+joined: '`$You''re now part of `w{name}`$. Somebody gives you a lapel pin and a firm, damp handshake.'
+joinedMail: '`w{name}`$ joined your chain. Make them feel welcome, or at least not robbed.'
+left: '`$You hand back the lapel pin. The clerk files your resignation under Traitors.'
+full: 'That chain is full'
+cooldown: 'You left a chain recently ({days} more days)'
+badName: '`$The clerk won''t register that name. Try another, preferably one the Mayor can say in church.'
+duesUnpaid: '`4You couldn''t pay the ${dues} chain dues, so the chain dropped you. They want the lapel pin back by mail.`$'
+noFriendlyFire: '`${name} is in your chain. You can''t do that to family.'

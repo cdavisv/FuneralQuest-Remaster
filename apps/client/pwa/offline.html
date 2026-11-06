@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Funeral Quest - offline</title>
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: radial-gradient(circle at 50% 0%, #1b2234, #070b12 70%);
+        color: #f4ead0;
+        font-family: "Atkinson Hyperlegible", Verdana, system-ui, sans-serif;
+        text-align: center;
+      }
+      main {
+        width: min(100%, 460px);
+        padding: 28px 24px;
+        border: 5px solid;
+        border-color: #947845 #56391b #56391b #947845;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #5d4a28, #3f2a10);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-family: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
+        font-style: italic;
+        font-size: 2.4rem;
+        background: linear-gradient(180deg, #f6dc8c, #c99a2c 50%, #7d5409);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      p { margin: 0 0 14px; line-height: 1.5; }
+      button {
+        min-height: 44px;
+        padding: 0 26px;
+        border: 3px solid #947845;
+        border-radius: 5px;
+        background: linear-gradient(180deg, #b79d6a, #a38855 55%, #8f7545);
+        color: #120900;
+        font: italic 700 1.3rem "Cormorant Garamond", Georgia, serif;
+        cursor: pointer;
+      }
+      a.solo {
+        display: inline-block;
+        min-height: 44px;
+        padding: 0 26px;
+        border: 3px solid #947845;
+        border-radius: 5px;
+        background: linear-gradient(180deg, #d9bf86, #b79d6a 55%, #8f7545);
+        color: #120900;
+        font: italic 700 1.3rem/44px "Cormorant Garamond", Georgia, serif;
+        text-decoration: none;
+      }
+      a.solo:focus-visible,
+      button:focus-visible { outline: 3px solid #ffe566; outline-offset: 2px; }
+      .note { font-size: 0.9rem; opacity: 0.8; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Funeral Quest</h1>
+      <p role="status">You appear to be offline, and this device has not kept a copy of the game.</p>
+      <p>
+        Online play needs the server. Solo play, against computer rivals, needs nothing but this
+        page: open the game once while you are connected and it stays on this device.
+      </p>
+      <p><a class="solo" href="/?solo">Play solo</a></p>
+      <button type="button" onclick="location.reload()">Try again</button>
+    </main>
+    <script>
+      // Come back by itself as soon as the browser says the network is back.
+      addEventListener("online", () => location.reload());
+    </script>
+  </body>
+</html>

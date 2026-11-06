@@ -1,0 +1,104 @@
+{
+  "seed 1, 4 players, 4 days": {
+    "days": [
+      {
+        "hash": "3e30095f39db980b3715e1e02cc2e721f6d3fb327e7f7040412a77f257e0c1b3",
+        "actions": 452
+      },
+      {
+        "hash": "cd36c324dd55f107a536bff2a7e6323ea4247b4fc880ac0005210862d874b95d",
+        "actions": 492
+      },
+      {
+        "hash": "fa1e2da285fe560cff79b04f67a0268467d14a0c4d867cb8c2e71e5ff7a94d2a",
+        "actions": 560
+      },
+      {
+        "hash": "d1964e3fbf0b36449544788b30e8b4fe0db5d9555f0209a90c3ebfc9bb2a57a3",
+        "actions": 628
+      }
+    ],
+    "hash": "99b8ecf81ef7716c3ac3005411a3d678b5b7731c9b140e4cf6dd45db403786bd",
+    "actions": 2132
+  },
+  "seed 77, 5 players, 3 days": {
+    "days": [
+      {
+        "hash": "58b8ac9e878ef35176083d81ee501a9946d97848c53744b64da2fb8cd6b02aa3",
+        "actions": 750
+      },
+      {
+        "hash": "2e9f2592cc850f9770d315bb5ab4493ed33650d139dd715f98245a181fb4b836",
+        "actions": 617
+      },
+      {
+        "hash": "5640d3a7c05c0ffb16327247b5767df7df35abe86a3f4056b38e3f25ea7adbc1",
+        "actions": 668
+      }
+    ],
+    "hash": "aac65136e72d9428d131bd1dcfed68df4d1cedd0587e535f1d492e9b3f07852b",
+    "actions": 2035
+  },
+  "seed 2024, 3 players, 5 days": {
+    "days": [
+      {
+        "hash": "cddef6a4724013b3c39913f0fe1c46d4298577b8617869b90c4bb9616db2d153",
+        "actions": 365
+      },
+      {
+        "hash": "1adfd18181f3e623ae182c95ed89ddc0bbb6e7a4a04454ca94889b03f1d61f01",
+        "actions": 463
+      },
+      {
+        "hash": "87d4a8a148dd1b6d9027363b1ba50e0b4e67542f4a74df8fa1cab3adc03328da",
+        "actions": 516
+      },
+      {
+        "hash": "99adefa1cd4fbefe4ac806932b81a86583d79fcf4bbfa3ddefc573d7a6c12c38",
+        "actions": 373
+      },
+      {
+        "hash": "1f18d61a4c4598f4d8006399483d8ad9b67d7446dc8144c9a3dc56f933f28aaf",
+        "actions": 332
+      }
+    ],
+    "hash": "da871e335b4800daa22c4b038330e6542a1a473f150cfb9791205dfca966f814",
+    "actions": 2049
+  },
+  "seed 31337, 6 players, 3 days": {
+    "days": [
+      {
+        "hash": "2bf50b5c3235c2c9233dde460feb0798c57a5a3a78089e1aee5b86df63e9e961",
+        "actions": 801
+      },
+      {
+        "hash": "624ca69c42b11edadc63a07efe07d5e4e5126dddd2b3ece5ecd2f8c7aeebac53",
+        "actions": 942
+      },
+      {
+        "hash": "d1e3a6ad6712b67e6407db5cde78e8130eaecf3deecafc4822d5990c2f78a697",
+        "actions": 815
+      }
+    ],
+    "hash": "bba96839654cb9766b9db4c9dec7e6217d23d941c8f63f9e6c1a9262d3be2934",
+    "actions": 2558
+  },
+  "seed 4242, 4 players, 3 days, original rules": {
+    "days": [
+      {
+        "hash": "9f84a2166324aa23416e233abec732485b729840f476f1a2c3e39fd8e424b641",
+        "actions": 542
+      },
+      {
+        "hash": "c10e340fbebb67d6b199113cfeee06cf9474150ae70b9145bd06e4654828f6a0",
+        "actions": 414
+      },
+      {
+        "hash": "e2af574da9c61bcdce04207a72fcb1fc31fa1923871f96fdc497b04962a4ef0c",
+        "actions": 768
+      }
+    ],
+    "hash": "feb6800aa283db322e465be964ee4ebd58d2c64a3723e96f76723fa5ffa9a8ae",
+    "actions": 1724
+  }
+}

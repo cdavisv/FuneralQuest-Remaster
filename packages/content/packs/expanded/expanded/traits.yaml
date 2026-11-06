@@ -1,0 +1,610 @@
+- id: 'haggler'
+  label: 'Haggler'
+  hint: 'Wants a deal. Discounts calm them twice as much; a Hard Sell goes down badly.'
+  lines:
+    - '{customer}"Before we start, I never pay sticker price. Not for tires, not for {dHim}."'
+    - '{customer}"What kind of discount do you do for cash? Or for no receipt?"'
+    - '{customer}"Everything''s negotiable. I once talked a cop down to a warning and a sandwich."'
+    - '{customerName} circles the prices in the brochure and writes lower ones next to them.'
+  effects:
+    discount: 2
+    hardSell: 1
+    cheapness: 0.5
+- id: 'heir'
+  label: 'Guilt-Ridden Heir'
+  hint: 'Inherited everything and feels awful about it. Didn''t love the deceased; Guilt works extra well.'
+  lines:
+    - '{customer}"{dHeCap} left me the house, the boat and the timeshare. I didn''t even visit at Christmas."'
+    - '{customer}"The will reading is Tuesday. I should feel sadder than I do."'
+    - '{customer}"I got everything. My sister got the cat. She''s not speaking to me. The cat is."'
+  effects:
+    loved: false
+    guilt: 1.6
+  excludes:
+    - 'heartbroken'
+    - 'prodigal'
+- id: 'hurry'
+  label: 'In a Hurry'
+  hint: 'Has somewhere to be: little patience and no time for coffee.'
+  lines:
+    - '{customer}"I''m double parked, so whatever you''re going to do, do it fast."'
+    - '{customer}"I''ve got a thing at four. Another thing at four-fifteen. Let''s move this along."'
+    - '{customerName} hasn''t taken {cHis} coat off, or {cHis} car keys out of {cHis} hand.'
+  effects:
+    patience: -4
+    coffee: 0
+  excludes:
+    - 'chatterbox'
+    - 'serene'
+- id: 'pincher'
+  label: 'Penny-Pincher'
+  hint: 'Hates spending money. Harder to sell, harder to read, and allergic to anything prestigious.'
+  lines:
+    - '{customer}"I brought my own coupons. They''re for a pizza place but I think they should count."'
+    - '{customer}"Do you charge for the chair I''m sitting in? Because I''ll stand."'
+    - '{customerName} has turned off the lamp on your desk. "You weren''t using it."'
+  effects:
+    cheapness: 2
+    estimate: 1.3
+    affinity:
+      prestige: 1.5
+  excludes:
+    - 'showoff'
+    - 'windfall'
+- id: 'showoff'
+  label: 'Show-Off'
+  hint: 'Wants the neighbors talking. Anything flashy sells itself.'
+  lines:
+    - '{customer}"The Hendersons had a horse-drawn carriage. I want two horses. Bigger horses."'
+    - '{customer}"Money is no object. Well, it''s an object. A shiny one I like to wave around."'
+    - '{customer}"When people drive past the cemetery I want them to slow down and say ''whose is THAT?''"'
+  effects:
+    cheapness: -0.5
+    limitMult: 1.1
+    affinity:
+      prestige: -3
+      vanity: -3
+  excludes:
+    - 'pincher'
+    - 'minimalist'
+    - 'no-nonsense'
+- id: 'heartbroken'
+  label: 'Heartbroken'
+  hint: 'Truly grieving. Loved the deceased; Sympathy works wonders, and Guilt is cruel.'
+  lines:
+    - '{customerName} can barely get the words out between sobs.'
+    - '{customer}"We had plans. We had so many plans. Now it''s just me and the parakeet."'
+    - '{customerName} blows {cHis} nose, apologises, and starts crying again at the word "casket".'
+  effects:
+    loved: true
+    sympathy: 1.5
+    moodMult: 0.8
+  excludes:
+    - 'heir'
+    - 'estranged'
+    - 'grudge'
+    - 'executor'
+    - 'relieved'
+- id: 'estranged'
+  label: 'Estranged'
+  hint: 'Hadn''t spoken in years. Didn''t love the deceased; Guilt works, sentimental extras fall flat.'
+  lines:
+    - '{customer}"Last time I saw {dHim} was 1987. {dHeCap} owed me twenty bucks."'
+    - '{customer}"The hospital found my number in {dHis} phone under ''Do Not Answer''."'
+    - '{customer}"I had to look at a photo to remember what {dHe} looked like. It was a mugshot."'
+  effects:
+    loved: false
+    guilt: 1.3
+    affinity:
+      sentimental: 2
+  excludes:
+    - 'heartbroken'
+    - 'prodigal'
+- id: 'skeptic'
+  label: 'Skeptic'
+  hint: 'Thinks you are a crook. A Hard Sell bounces off, but they open up when you Listen.'
+  lines:
+    - '{customerName} reads every word of the price list, then reads it again upside down.'
+    - '{customer}"I watched a documentary about you people."'
+    - '{customer}"Before you say anything, I know what a casket costs to make. I looked it up."'
+  effects:
+    hardSell: 1.5
+    listen: 2
+  excludes:
+    - 'superstitious'
+- id: 'devout'
+  label: 'Devout'
+  hint: 'Church every Sunday. Loves religious touches; cremation is out of the question.'
+  lines:
+    - '{customer}"Father Smyth said you were... adequate."'
+    - '{customerName} makes the sign of the cross every time you mention a price.'
+    - '{customer}"{dFirst} is with the Lord now. I want the Lord to see {dHim} arrive in style."'
+  effects:
+    affinity:
+      religious: -3
+      cremation: 4
+  excludes:
+    - 'green'
+    - 'new-age'
+- id: 'hothead'
+  label: 'Hot-Headed'
+  hint: 'Short fuse: everything annoys them more, and coffee helps more.'
+  lines:
+    - '{customer}"The guy at the hospital looked at me funny. Don''t look at me funny."'
+    - '{customerName} has already kicked your umbrella stand.'
+    - '{customer}"I''m calm. I''m CALM. Why does everybody keep asking if I''m calm?"'
+  effects:
+    moodMult: 1.4
+    coffee: 1.5
+  excludes:
+    - 'serene'
+- id: 'sentimental'
+  label: 'Sentimental'
+  hint: 'Keeps everything. Keepsakes and flowers practically sell themselves.'
+  lines:
+    - '{customer}"I still have {dHis} baby teeth in a jar. Is that weird? Don''t answer that."'
+    - '{customerName} is clutching a shoebox of old photos and one sock.'
+    - '{customer}"I kept the ticket stub from every movie we saw together. Can those go in with {dHim}?"'
+  effects:
+    sympathy: 1.2
+    affinity:
+      sentimental: -3
+      flowers: -2
+- id: 'green'
+  label: 'Eco-Minded'
+  hint: 'Wants it natural. Open to cremation and green extras, appalled by embalming.'
+  lines:
+    - '{customer}"Is the casket compostable? {dHeCap} would want to be a tree. A small tree. A shrub."'
+    - '{customerName} arrived on a bicycle with a trailer, looking for a place to plug it in.'
+    - '{customer}"No chemicals. I don''t want {dHim} pickled. I want {dHim} returned to the earth, like a banana peel."'
+  effects:
+    affinity:
+      cremation: -4
+      embalming: 3
+      vanity: 1
+      green: -2
+  excludes:
+    - 'devout'
+    - 'traditionalist'
+    - 'germophobe'
+- id: 'foodie'
+  label: 'Here for the Buffet'
+  hint: 'Mostly here for the food. Catering sells easily; little else impresses them.'
+  lines:
+    - '{customer}"Is there a lunch after? There''s usually a lunch after. I''d like to know about the lunch."'
+    - '{customerName} keeps glancing at the candy dish on your desk, then at you, then at the candy dish.'
+    - '{customer}"At Aunt Bev''s funeral they had a ham shaped like Aunt Bev. That''s the bar."'
+  effects:
+    affinity:
+      food: -3
+      prestige: 1
+    patience: -1
+- id: 'music-lover'
+  label: 'Music Lover'
+  hint: 'Lives for music. Musical extras sell well, and they warm up to Sympathy.'
+  lines:
+    - '{customerName} is humming {dFirst}''s favorite song and tapping the rhythm on your desk.'
+    - '{customer}"Whatever we do, the music has to be right. Bad music at a funeral is a second death."'
+    - '{customer}"{dHeCap} sang in the shower every morning. Badly. I want something that sounds like that, but good."'
+  effects:
+    affinity:
+      music: -3
+    sympathy: 1.2
+- id: 'chatterbox'
+  label: 'Chatterbox'
+  hint: 'Talks forever: a lot of patience, and every Listen reveals twice as much. Hard to read at a glance.'
+  lines:
+    - '{customer}"So anyway, before I get to {dFirst}, you have to understand about my sister''s knee."'
+    - '{customerName} has been talking for ten minutes and has not yet reached the part where someone died.'
+    - '{customer}"Stop me if I''ve told you this. No, don''t stop me. Where was I?"'
+  effects:
+    patience: 4
+    listen: 2
+    estimate: 1.2
+  excludes:
+    - 'hurry'
+    - 'tight-lipped'
+- id: 'tight-lipped'
+  label: 'Tight-Lipped'
+  hint: 'Gives nothing away: a wide estimate and Sympathy falls flat, but endlessly patient.'
+  lines:
+    - '{customerName} answers every question with a nod, a shrug, or nothing.'
+    - '{customer}"Don''t need to talk about it. Just the funeral."'
+    - '{customerName} sits very still and lets you do all the talking. It''s unnerving.'
+  effects:
+    estimate: 1.4
+    sympathy: 0.6
+    patience: 2
+  excludes:
+    - 'chatterbox'
+    - 'accountant'
+    - 'loudmouth'
+- id: 'accountant'
+  label: 'Bean Counter'
+  hint: 'Knows their budget to the cent and tells you: a narrow estimate. Stingy, and loves a Discount.'
+  lines:
+    - '{customer}"I''ve allocated a budget. I have it in a spreadsheet. The spreadsheet has tabs."'
+    - '{customerName} asks for the price of everything to the cent, and writes it down in a ledger.'
+    - '{customer}"I''d like an itemised quote, please, including tax and whatever you call the smell fee."'
+  effects:
+    estimate: 0.7
+    cheapness: 1
+    discount: 1.5
+  excludes:
+    - 'tight-lipped'
+- id: 'litigious'
+  label: 'Litigious'
+  hint: 'Threatens to sue over everything: quick to anger, Guilt half as useful, Hard Sells bounce.'
+  lines:
+    - '{customer}"I want you to know my lawyer is on speed dial. He''s also my cousin. He''s on speed dial twice."'
+    - '{customer}"Is this conversation being recorded? Because I''m recording it."'
+    - '{customerName} asks for your full name, spelled, "for the paperwork". There is no paperwork.'
+  effects:
+    mood: 0.5
+    guilt: 0.5
+    hardSell: 1
+- id: 'superstitious'
+  label: 'Superstitious'
+  hint: 'Believes in omens and spirits. Spooky and religious extras work; cremation feels like bad luck.'
+  lines:
+    - '{customerName} throws salt over {cHis} shoulder before sitting down. Some of it hits you.'
+    - '{customer}"A black cat crossed my path on the way here. Twice. It was the same cat. It went back for me."'
+    - '{customer}"{dHeCap} broke a mirror in March. I said this would happen. Nobody listened."'
+  effects:
+    affinity:
+      spooky: -3
+      religious: -1
+      cremation: 2
+  excludes:
+    - 'skeptic'
+- id: 'death-fan'
+  label: 'Death Enthusiast'
+  hint: 'Thinks death is the coolest thing that ever happened to anyone. Spooky extras sell; sentimental ones don''t.'
+  lines:
+    - '{customer}"Is it true you drain the blood? Where does it go? Can I see where it goes?"'
+    - '{customerName} is wearing black lipstick and a shirt that says I''D RATHER BE EMBALMED.'
+    - '{customer}"I''ve always wanted to plan a funeral. I mean, I''m sorry about {dFirst}. But also, finally."'
+  effects:
+    affinity:
+      spooky: -4
+      vanity: -1
+      sentimental: 1
+    mood: -0.5
+- id: 'conspiracy'
+  label: 'Conspiracy Buff'
+  hint: 'Trusts nothing but locks and sealed boxes. Practical security extras sell; Listen gets twice the rambling truth.'
+  lines:
+    - '{customer}"Does the casket lock? From the outside? And who has the key? Write down who has the key."'
+    - '{customer}"The coroner says {aFridge}. That''s what they WANT us to think."'
+    - '{customerName} checks under your desk for microphones, finds a gum wrapper, and pockets it as evidence.'
+  effects:
+    affinity:
+      practical: -3
+      prestige: 1
+    listen: 2
+    hardSell: 0.5
+- id: 'no-nonsense'
+  label: 'No-Nonsense'
+  hint: 'Wants it plain and useful. Practical extras sell; vanity and keepsakes don''t. Short patience.'
+  lines:
+    - '{customer}"I don''t need a dove release. I need a box, a hole and a lid that stays shut."'
+    - '{customer}"Skip the poetry. What does it do, and what does it cost?"'
+    - '{customerName} wipes your sales brochure off the desk with one sweep and says, "Next."'
+  effects:
+    affinity:
+      practical: -3
+      sentimental: 2
+      vanity: 2
+    patience: -2
+  excludes:
+    - 'showoff'
+- id: 'gossip'
+  label: 'Town Gossip'
+  hint: 'Cares what everyone will say. Guilt about appearances works, and prestige sells. Sticks around to chat.'
+  lines:
+    - '{customer}"Did you hear about the Pickett funeral? Paper plates. PAPER. At a FUNERAL."'
+    - '{customerName} tells you three secrets about your competitors before you''ve even said hello.'
+    - '{customer}"People are going to talk. I''m going to talk. I want to have something nice to talk about."'
+  effects:
+    guilt: 1.4
+    affinity:
+      prestige: -2
+    patience: 2
+- id: 'pushover'
+  label: 'Pushover'
+  hint: 'Agrees with everyone and calms down easily, but there isn''t much money behind the smile.'
+  lines:
+    - '{customer}"Oh, whatever you think is best. You''re the expert. Sorry. Sorry for saying sorry."'
+    - '{customerName} apologises for coming in, for sitting down, and for {dFirst} dying on a weekday.'
+    - '{customer}"I''m not good at saying no. My cousin has borrowed my car for six years."'
+  effects:
+    mood: -1
+    moodMult: 0.8
+    cheapness: -0.5
+    limitMult: 0.8
+- id: 'windfall'
+  label: 'Insurance Payout'
+  hint: 'The check just cleared: a big budget, and they know exactly how big. Guilt works less; they feel entitled.'
+  lines:
+    - '{customer}"The insurance check cleared this morning. I counted it in the car. Twice. Then once more for fun."'
+    - '{customer}"{dHeCap} was insured for a lot more than {dHe} was worth. I mean that with love. Some love."'
+    - '{customerName} keeps patting {cHis} breast pocket, where something thick and envelope-shaped lives.'
+  effects:
+    limitMult: 1.3
+    estimate: 0.8
+    guilt: 0.7
+  excludes:
+    - 'pincher'
+    - 'broke'
+- id: 'broke'
+  label: 'Flat Broke'
+  hint: 'Not much money, and not afraid to say so. Small budget, but Sympathy goes a long way.'
+  lines:
+    - '{customer}"I''ll be honest, I''ve got about four dollars and a really good attitude."'
+    - '{customerName}''s coat is held together with safety pins and determination.'
+    - '{customer}"I want to do right by {dHim}. I just need right to be on the cheaper side."'
+  effects:
+    limitMult: 0.7
+    sympathy: 1.3
+    cheapness: -0.5
+  excludes:
+    - 'windfall'
+    - 'country-club'
+- id: 'grudge'
+  label: 'Holds a Grudge'
+  hint: 'Never forgave the deceased. Doesn''t love them, arrives angry, and coffee does little. Guilt bites hard.'
+  lines:
+    - '{customer}"{dHeCap} ran over my mailbox in 1992 and never apologised. I want that on the stone."'
+    - '{customer}"I''m here to make sure {dHe}''s really dead. Then we''ll talk about the box."'
+    - '{customerName} spits the name "{dFirst}" like it tastes of something.'
+  effects:
+    loved: false
+    mood: 1
+    guilt: 1.5
+    coffee: 0.5
+  excludes:
+    - 'heartbroken'
+    - 'prodigal'
+- id: 'prodigal'
+  label: 'Came Home Too Late'
+  hint: 'Loved the deceased and missed the end. Sympathy and keepsakes work; Guilt cuts deep.'
+  lines:
+    - '{customer}"I was going to visit this summer. I kept saying this summer."'
+    - '{customerName} is still carrying a suitcase with an airline tag on it.'
+    - '{customer}"The last thing I said to {dHim} was ''talk soon''. I want something that says sorry for that."'
+  effects:
+    loved: true
+    sympathy: 1.3
+    affinity:
+      sentimental: -2
+    cheapness: 0.5
+  excludes:
+    - 'heir'
+    - 'estranged'
+    - 'grudge'
+    - 'executor'
+    - 'relieved'
+- id: 'nervous'
+  label: 'Nervous Wreck'
+  hint: 'Jumpy and anxious: everything upsets them more and coffee barely helps (they''re jittery enough), but Sympathy soothes.'
+  lines:
+    - '{customerName} jumps when your phone rings, then when it stops ringing.'
+    - '{customer}"Is it hot in here? It''s hot in here. Is it me? Is it the bodies? Are there bodies?"'
+    - '{customerName} has shredded a tissue into confetti and started on a second one.'
+  effects:
+    moodMult: 1.3
+    coffee: 0.5
+    sympathy: 1.3
+    patience: -1
+  excludes:
+    - 'serene'
+- id: 'executor'
+  label: 'Executor of the Estate'
+  hint: 'Spending someone else''s money: a bigger budget and a cool head, but no love lost and no interest in discounts.'
+  lines:
+    - '{customer}"I''m the executor. The estate is paying. Just send the bill to the estate."'
+    - '{customer}"The will says ''a dignified service''. I''m paid by the hour, so let''s define dignified quickly."'
+    - '{customerName} has a briefcase, a notarised letter and the warmth of a filing cabinet.'
+  effects:
+    loved: false
+    limitMult: 1.2
+    discount: 0.5
+    cheapness: -0.5
+  excludes:
+    - 'heartbroken'
+    - 'prodigal'
+- id: 'collector'
+  label: 'Kitsch Collector'
+  hint: 'Loves anything weird and novel. Novelty extras sell like hotcakes; prestige leaves them cold.'
+  lines:
+    - '{customer}"Do you have anything with {dHis} face on it? A mug? A snow globe? A bobblehead?"'
+    - '{customerName}''s keychain has nineteen tiny plastic things on it, and one key.'
+    - '{customer}"The tackier the better. {dFirst} had a lamp shaped like a leg. I want that energy."'
+  effects:
+    affinity:
+      novelty: -4
+      prestige: 1
+  excludes:
+    - 'minimalist'
+- id: 'country-club'
+  label: 'Country Club'
+  hint: 'Old money and older manners. Big budget, prestige sells, and gold caskets go down easy; plain extras offend.'
+  lines:
+    - '{customer}"We''re a Lake Bleak family. Lakefront. You understand."'
+    - '{customerName} wipes the chair with a handkerchief before sitting on it.'
+    - '{customer}"We don''t do ''nice''. Nice is for Blaine. We do ''appropriate''."'
+  effects:
+    limitMult: 1.2
+    affinity:
+      prestige: -2
+      practical: 2
+    hardSell: -1
+    patience: -1
+  excludes:
+    - 'broke'
+- id: 'germophobe'
+  label: 'Germophobe'
+  hint: 'Terrified of germs. Embalming and practical sealed extras sell; cremation sounds hygienic.'
+  lines:
+    - '{customerName} won''t shake your hand. Or touch the pen. Or look at the chair.'
+    - '{customer}"Is the body... clean? Like, clean clean? Hospital clean? Cleaner than hospital?"'
+    - '{customerName} wipes down your desk with {cHis} own wet wipes, then wipes down the wet wipes.'
+  effects:
+    affinity:
+      embalming: -3
+      practical: -2
+      cremation: -2
+    patience: -1
+  excludes:
+    - 'green'
+- id: 'rivalry'
+  label: 'Sibling Rivalry'
+  hint: 'Spending to outdo the rest of the family. Guilt about what the relatives will think works; Sympathy doesn''t.'
+  lines:
+    - '{customer}"My brother is going to see this funeral. I want him to see it and feel small."'
+    - '{customer}"Whatever my sister would pick, I want the next one up."'
+    - '{customerName} takes a photo of the price list "for evidence".'
+  effects:
+    limitMult: 1.1
+    guilt: 1.4
+    sympathy: 0.7
+- id: 'animal-lover'
+  label: 'Animal Lover'
+  hint: 'Cares more about animals than people. Green extras and sentimental touches work; Sympathy helps.'
+  lines:
+    - '{customerName} has dog hair on every inch of {cHis} clothes and is proud of every hair.'
+    - '{customer}"Is there a pet section? {dHeCap} would want to be near the dogs. Honestly, so would I."'
+    - '{customer}"Did they say how the cat''s taking it? Someone needs to tell the cat."'
+  effects:
+    affinity:
+      green: -2
+      sentimental: -1
+    sympathy: 1.2
+- id: 'been-here'
+  label: 'Funeral Veteran'
+  hint: 'Has buried half the family and knows the tricks. Hard Sells bounce, but they respect a Discount.'
+  lines:
+    - '{customer}"This is my fourth funeral this year. I''ve got a punch card from the florist."'
+    - '{customer}"Don''t do the speech about worms. I''ve heard the speech about worms."'
+    - '{customerName} corrects you on the price of a plot, accurately, from memory.'
+  effects:
+    hardSell: 1
+    discount: 1.3
+    patience: 1
+- id: 'serene'
+  label: 'Serene'
+  hint: 'Calm as a pond: arrives relaxed and hardly gets angry, but Guilt and Sympathy barely move them.'
+  lines:
+    - '{customerName} breathes in slowly through {cHis} nose and smiles at nothing in particular.'
+    - '{customer}"Death is just a door. I''m here to pick the door."'
+    - '{customerName} hasn''t blinked in a while and seems perfectly at peace with your prices.'
+  effects:
+    mood: -1
+    moodMult: 0.7
+    guilt: 0.5
+    sympathy: 0.5
+  excludes:
+    - 'hothead'
+    - 'nervous'
+    - 'hurry'
+- id: 'shutterbug'
+  label: 'Shutterbug'
+  hint: 'Photographing everything for later. Looks matter: flowers and vanity extras sell; patience is short.'
+  lines:
+    - '{customerName} takes a photo of the casket, then of you, then of you with the casket.'
+    - '{customer}"Is the lighting in the viewing room good? I want the pictures to come out."'
+    - '{customer}"Can we do {dHis} hair like in this photo? Not this one. This one. Scroll back."'
+  effects:
+    affinity:
+      flowers: -2
+      vanity: -2
+    patience: -1
+- id: 'know-it-all'
+  label: 'Know-It-All'
+  hint: 'Has read up and brags about it, including what they can spend: a narrow estimate. Hard to guilt, quick to scoff.'
+  lines:
+    - '{customer}"Actually, embalming isn''t legally required. I read that. I read a lot."'
+    - '{customer}"I''ve budgeted exactly what the industry average is, plus four percent for emotional damages."'
+    - '{customerName} explains your own job to you, wrongly, for several minutes.'
+  effects:
+    estimate: 0.8
+    guilt: 0.6
+    mood: 0.5
+    hardSell: 0.5
+- id: 'new-age'
+  label: 'Spiritual Seeker'
+  hint: 'Crystals and auras. Spooky and green extras appeal; church stuff and embalming don''t.'
+  lines:
+    - '{customer}"{dFirst}''s aura was a sort of mustard color at the end. I want something to balance that."'
+    - '{customerName} places a crystal on your desk "to absorb your energy". It''s not clear whose side it''s on.'
+    - '{customer}"We''re not saying goodbye. We''re saying ''see you on the next plane''. The astral one."'
+  effects:
+    affinity:
+      spooky: -2
+      green: -2
+      religious: 2
+      embalming: 2
+  excludes:
+    - 'devout'
+    - 'traditionalist'
+- id: 'traditionalist'
+  label: 'Traditionalist'
+  hint: 'Wants it the way it''s always been done. Religious touches and embalming sell; cremation and novelties don''t.'
+  lines:
+    - '{customer}"Black hearse, black suits, an organ, a hole. That''s a funeral. Anything else is a party."'
+    - '{customer}"My grandfather was buried properly, and his grandfather. I''m not breaking the chain for {dFirst}."'
+    - '{customerName} frowns at the word "celebration" in your brochure and crosses it out.'
+  effects:
+    affinity:
+      cremation: 4
+      embalming: -2
+      religious: -1
+      novelty: 3
+  excludes:
+    - 'green'
+    - 'new-age'
+- id: 'relieved'
+  label: 'Secretly Relieved'
+  hint: 'Didn''t love the deceased and is quietly glad. Arrives calm; keepsakes fall flat; a little Guilt goes a long way.'
+  lines:
+    - '{customerName} looks ten years younger than {cHe} probably did last week.'
+    - '{customer}"It''s very sad. Very, very sad. I slept nine hours last night."'
+    - '{customer}"{dHeCap} was a difficult person. It''s going to be so quiet. So nice and quiet."'
+  effects:
+    loved: false
+    mood: -0.5
+    guilt: 1.2
+    affinity:
+      sentimental: 2
+  excludes:
+    - 'heartbroken'
+    - 'prodigal'
+- id: 'loudmouth'
+  label: 'Loudmouth'
+  hint: 'Says everything at full volume. Loves loud music; a bit touchy, but sticks around.'
+  lines:
+    - '{customer}"I SAID WE''RE HERE ABOUT {dFirst}! NO, I''M NOT SHOUTING!"'
+    - '{customerName} laughs at something you said so loudly that a mourner in the next room drops a cup.'
+    - '{customer}"I want a BAND. And a horn section. {dFirst} wasn''t a quiet person and this won''t be a quiet funeral!"'
+  effects:
+    affinity:
+      music: -2
+    moodMult: 1.2
+    patience: 1
+  excludes:
+    - 'tight-lipped'
+- id: 'minimalist'
+  label: 'Minimalist'
+  hint: 'Owns six things and wants it simple. Vanity and prestige extras flop; green ones are welcome.'
+  lines:
+    - '{customer}"Just the essentials. {dFirst} owned one fork. One. {dHeCap} was happy."'
+    - '{customerName} looks at the gold-trim brochure like it insulted {cHis} mother.'
+    - '{customer}"Less is more. Except the price. Less price is less."'
+  effects:
+    affinity:
+      vanity: 3
+      prestige: 3
+      green: -1
+  excludes:
+    - 'showoff'
+    - 'collector'

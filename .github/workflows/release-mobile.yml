@@ -1,0 +1,99 @@
+name: Release mobile
+
+# Builds the Capacitor apps: an Android debug APK and a release APK and AAB (unsigned unless the
+# signing secrets exist), and an unsigned iOS archive on a macOS runner. Run it by hand or push
+# a tag such as v0.1.0. Store signing and upload are described in docs/release/BUILDING.md.
+on:
+  workflow_dispatch:
+    inputs:
+      default_server:
+        description: "Default server address baked into the apps (optional; players can change it)"
+        required: false
+        default: ""
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+env:
+  FQ_DEFAULT_SERVER: ${{ inputs.default_server }}
+
+jobs:
+  android:
+    name: Android (APK, AAB)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - name: Android SDK packages
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - run: pnpm install --frozen-lockfile
+      - name: Build debug APK
+        working-directory: apps/mobile
+        run: node scripts/build-android.mjs debug
+      - name: Build release APK and AAB (unsigned)
+        working-directory: apps/mobile
+        env:
+          FQ_SKIP_CLIENT_BUILD: "1"
+        run: node scripts/build-android.mjs release
+      # Optional signing: add ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS
+      # and ANDROID_KEY_PASSWORD as repository secrets, then uncomment.
+      # - name: Sign the AAB
+      #   run: |
+      #     echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > release.jks
+      #     jarsigner -keystore release.jks -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+      #       apps/mobile/android/app/build/outputs/bundle/release/app-release.aab "$ANDROID_KEY_ALIAS"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: funeral-quest-android
+          path: |
+            apps/mobile/android/app/build/outputs/apk/debug/*.apk
+            apps/mobile/android/app/build/outputs/apk/release/*.apk
+            apps/mobile/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+          retention-days: 14
+
+  ios:
+    name: iOS (unsigned archive)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Web bundle and cap sync
+        working-directory: apps/mobile
+        run: |
+          node scripts/prepare-web.mjs
+          pnpm exec cap sync ios
+      - name: Archive without signing
+        working-directory: apps/mobile/ios/App
+        run: |
+          xcodebuild archive \
+            -project App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$RUNNER_TEMP/FuneralQuest.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+      - name: Zip the archive
+        run: ditto -c -k --keepParent "$RUNNER_TEMP/FuneralQuest.xcarchive" FuneralQuest-unsigned.xcarchive.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: funeral-quest-ios-unsigned
+          path: FuneralQuest-unsigned.xcarchive.zip
+          if-no-files-found: error
+          retention-days: 14

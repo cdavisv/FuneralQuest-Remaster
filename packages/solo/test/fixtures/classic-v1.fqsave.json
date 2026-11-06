@@ -1,0 +1,388 @@
+{
+  "format": "fq-solo",
+  "version": 1,
+  "createdAt": 1767225600000,
+  "savedAt": 1767225600000,
+  "config": {
+    "seed": 20010101,
+    "contentPack": "classic",
+    "ruleset": "classic",
+    "mode": "career",
+    "careerDays": 30,
+    "clock": "manual",
+    "player": { "name": "Oldtimer", "parlor": "Oldtimer Rest", "male": true },
+    "rivals": [{ "personality": "shark", "difficulty": "normal" }]
+  },
+  "town": {
+    "version": 1,
+    "ruleset": "classic",
+    "seed": 20010101,
+    "settings": {
+      "turnsPerDay": 15,
+      "startingMoney": 500,
+      "experiencePerDay": 5,
+      "startingKarma": 50,
+      "startingRating": 40,
+      "startingLuck": 50,
+      "startingHp": 10,
+      "startingStrength": 3,
+      "startingWood": 5,
+      "startingSilver": 2,
+      "startingGold": 0,
+      "startingPlots": 0,
+      "casketSp": [1, 2, 3],
+      "plotSp": 1,
+      "yangsPerDay": 1,
+      "risk": 50,
+      "tournamentActive": true,
+      "tournamentDays": 30,
+      "bonusExp": 20,
+      "bonusLuck": 25,
+      "tradeBonus": 25,
+      "visitsPerDay": 2,
+      "normalOdds": 0.08,
+      "luckOdds": 0.08,
+      "scriptOdds": 0.05,
+      "tagsReceivablePerDay": 1,
+      "nameChangeCost": 1,
+      "maintDelete": false,
+      "maxPlayers": 800,
+      "inactiveDays": 15,
+      "swearFilter": true
+    },
+    "day": 2,
+    "lastMaintenance": 1767225600000,
+    "players": [
+      {
+        "id": 0,
+        "active": true,
+        "name": "Oldtimer",
+        "logon": "soloplayer",
+        "parlor": "Oldtimer Rest",
+        "email": "player@solo.invalid",
+        "wantEmail": false,
+        "male": true,
+        "lastLogon": 1767225600000,
+        "lastPacket": 1767225600000,
+        "accountCreated": 1767225600000,
+        "dayCreated": 1,
+        "turns": 0,
+        "money": 500,
+        "bp": 0,
+        "bpToday": 0,
+        "karma": 50,
+        "rating": 40,
+        "tags": [0, 0, 0],
+        "incinerator": false,
+        "transportation": 0,
+        "plots": 0,
+        "dayLastLoggedOn": 0,
+        "luck": 50,
+        "yangsSent": 0,
+        "psych": 0,
+        "kickedOutOfYangs": false,
+        "strength": 3,
+        "hpMax": 10,
+        "hp": 10,
+        "playerFights": 0,
+        "canBeAttacked": true,
+        "policeProtected": false,
+        "custom": [
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ],
+        "tagsReceivedToday": 0,
+        "mail": [
+          {
+            "type": "text",
+            "text": "\n`$Some delicious smelling chinese food has been left on your doorstep.\nYour fortune cookie reads:\n`w\"Act natural. Don't turn around.  \"\n`$You lose `w10`$ luck!\n",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "varMod",
+            "stat": "luck",
+            "amount": -10,
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "picture",
+            "layer": "fg",
+            "picture": "chinese_takeout",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "buttons",
+            "buttons": [{ "id": "go:desk", "label": "Continue" }],
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "text",
+            "text": "\n`wYou caught Vera Vulture sneaking around inside your parlor!`$\nYou scare her off before she could steal anything.",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "picture",
+            "layer": "fg",
+            "picture": "people/man_prowl",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "buttons",
+            "buttons": [{ "id": "go:desk", "label": "Continue" }],
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "simpleText",
+            "text": "Oldtimer logged on.",
+            "importance": "normal",
+            "from": -1,
+            "expireDay": null
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "active": true,
+        "name": "Vera Vulture",
+        "logon": "bot1xshark",
+        "parlor": "Last Gasp Caskets",
+        "email": "bot1xshark@bots.invalid",
+        "wantEmail": false,
+        "male": false,
+        "lastLogon": 1767225600000,
+        "lastPacket": 1767225600000,
+        "accountCreated": 1767225600000,
+        "dayCreated": 1,
+        "turns": 0,
+        "money": 500,
+        "bp": 370,
+        "bpToday": 0,
+        "karma": 50,
+        "rating": 40,
+        "tags": [2, 0, 8],
+        "incinerator": false,
+        "transportation": 0,
+        "plots": 15,
+        "dayLastLoggedOn": 1,
+        "luck": 50,
+        "yangsSent": 0,
+        "psych": 0,
+        "kickedOutOfYangs": false,
+        "strength": 3,
+        "hpMax": 10,
+        "hp": 10,
+        "playerFights": 1,
+        "canBeAttacked": true,
+        "policeProtected": false,
+        "custom": [
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ],
+        "tagsReceivedToday": 0,
+        "mail": [
+          {
+            "type": "text",
+            "text": "`wCongratulations!\n`$You were the top seller for yesterday.  You earn `w25`$ luck and `w20`$ Bury Points.\n",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "varMod",
+            "stat": "luck",
+            "amount": 25,
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "varMod",
+            "stat": "bp",
+            "amount": 20,
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "text",
+            "text": "`wCongratulations!\n`$You ran the top parlor in town yesterday.  You earn `w25`$ luck and `w20`$ Bury Points.\n",
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "varMod",
+            "stat": "luck",
+            "amount": 25,
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          },
+          {
+            "type": "varMod",
+            "stat": "bp",
+            "amount": 20,
+            "importance": "high",
+            "from": -1,
+            "expireDay": null
+          }
+        ]
+      }
+    ],
+    "sessions": {
+      "0": {
+        "status": "play",
+        "location": "News",
+        "gaveLogonMessage": false,
+        "scene": "news",
+        "sceneData": 2,
+        "customer": {
+          "active": false,
+          "customerMale": false,
+          "customerAge": 0,
+          "deceasedMale": false,
+          "deceasedAge": 0,
+          "relation": 0,
+          "income": 0,
+          "desiredCasket": 0,
+          "bigUpgrade": 0,
+          "deathMethod": 0,
+          "deathObject": 0,
+          "moneyToSpend": 0,
+          "flow": "none",
+          "mood": 0,
+          "cheapness": 0,
+          "loved": false,
+          "riskType": 0,
+          "portrait": null,
+          "showResistance": false,
+          "options": []
+        },
+        "hisId": -1,
+        "locked": false,
+        "script": null,
+        "view": {
+          "scene": "news",
+          "title": "News",
+          "text": [],
+          "hud": {
+            "turns": 0,
+            "bpToday": 0,
+            "bpTotal": 0,
+            "luck": 50,
+            "tags": { "wood": 0, "silver": 0, "gold": 0 }
+          },
+          "news": {
+            "day": 2,
+            "section": "front",
+            "isYesterday": false,
+            "body": [
+              { "text": "COMPETITION IS FIERCE IN FUNERAL INDUSTRY\n", "color": "grey" },
+              {
+                "text": "\"There just aren't enough bodies to go around.  Some of these places will die off,\" admits Mayor.\n\n",
+                "color": "black"
+              }
+            ],
+            "topToday": [{ "text": "Sadly, no one has managed to sell anything yet today." }],
+            "topYesterday": [
+              { "text": "Vera Vulture from Last Gasp Caskets with 370 Bury Points.\n\n" }
+            ]
+          },
+          "buttons": [
+            { "id": "news:crime", "label": "Crime" },
+            { "id": "news:yesterday", "label": "Yesterday" },
+            { "id": "news:announce", "label": "Make Announcement" },
+            { "id": "go:desk", "label": "Continue" }
+          ]
+        },
+        "loggedOnAt": 1767225600000
+      }
+    },
+    "news": {
+      "1": {
+        "front": "`7LEGISLATOR PASSES TAX BREAK FOR MORTICIANS\r\n`^Deathsville's funeral parlors are filled with glee today at the news of the tax break. Said one owner, \"They said I was a freak for becoming a mortician. Who's laughing now?\"\r\n\r\n`5A new parlor (Oldtimer Rest) run by Oldtimer has been opened!\r\n\r\n`5A new parlor (Last Gasp Caskets) run by Vera Vulture has been opened!\r\n\r\n",
+        "crime": ""
+      },
+      "2": {
+        "front": "`7COMPETITION IS FIERCE IN FUNERAL INDUSTRY\r\n`^\"There just aren't enough bodies to go around.  Some of these places will die off,\" admits Mayor.\r\n\r\n",
+        "crime": ""
+      }
+    },
+    "topYesterday": { "name": "Vera Vulture", "parlor": "Last Gasp Caskets", "bp": 370, "id": 1 },
+    "deeds": [],
+    "streams": {
+      "1": { "day": 1, "mt": 417, "crt": 154 },
+      "town": { "day": 2, "mt": 1, "crt": 0 }
+    },
+    "serverNews": ""
+  },
+  "humanId": 0,
+  "bots": [
+    {
+      "playerId": 1,
+      "memory": {
+        "version": 1,
+        "self": { "playerId": 1, "name": "Vera Vulture", "parlor": "Last Gasp Caskets" },
+        "personality": "shark",
+        "difficulty": "normal",
+        "known": {
+          "psych": 0,
+          "strength": 3,
+          "hpMax": 10,
+          "lockpicks": 0,
+          "plots": 0,
+          "visitsLeft": 1,
+          "yangsLeft": 0,
+          "ride": "Bicycle",
+          "owns": { "padlock": false, "smoke": false, "safe": false }
+        },
+        "learned": {
+          "softPrices": [100, 150, 300, 350, 400, 450, 500, 550],
+          "upgrades": [2250, 2560, 3100]
+        },
+        "rivals": [{ "id": 0, "name": "Oldtimer", "bp": 0, "online": false, "status": "" }],
+        "grudges": [],
+        "session": {
+          "morning": [],
+          "evening": [],
+          "current": null,
+          "errandSteps": 0,
+          "scratch": {},
+          "lastSig": "desk|At Home|desk:wait,go:map,go:news,go:stats,go:rankings,go:mailbox,desk:quit||32:3662705590|0",
+          "repeats": 0,
+          "lastAction": "press:desk:quit",
+          "tried": ["Oldtimer"],
+          "steps": 125,
+          "leaving": true
+        },
+        "customer": null,
+        "days": 1
+      }
+    }
+  ],
+  "realDay": null
+}

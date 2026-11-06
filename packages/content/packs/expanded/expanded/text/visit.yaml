@@ -1,0 +1,6 @@
+selfPeaceful: '`$You signed the Peace Pledge. Visiting rivals is off the table until you change your rivalry at your office.'
+targetPeaceful: '`$There''s a Peace Pledge sign on {name}''s door and a police car idling across the street. Not today.'
+turnedAway: '`$Something big and hairy hurls itself at {name}''s window. You decide to come back never.'
+turnedAwayMail: "\n`$Your security scared off a prowler last night!\n"
+cashStolen: "\n`$You also find `w${money}`$ in the register."
+cashStolenMail: "\n`$The thief also emptied `4${money}`$ from your register.\n"

@@ -1,0 +1,696 @@
+/*
+ * The structured Expanded panels (docs/expanded-rules.md 11.5): office and contractor, Bingo,
+ * City Hall's ballots, the bank, the hospital's injuries, the graveyard's monuments, the Reaper
+ * Club's round result, and the karma moment's consequences. Each sits on the parchment note's
+ * place (`.fq-npanel`, see expanded.css) and is sized from `--u`. Ink is `--fq-parchment-ink`.
+ */
+
+/* ---------- Shared: a scrolling sheet with titled blocks ---------- */
+
+.fq-ballots,
+.fq-bank,
+.fq-injuries,
+.fq-monuments {
+  display: flex;
+  flex-direction: column;
+  font-size: max(11.5px, calc(var(--u) * 13));
+  line-height: 1.2;
+}
+
+.fq-ballots-scroll,
+.fq-bank-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 9);
+  padding: calc(var(--u) * 9) calc(var(--u) * 14);
+  scrollbar-width: thin;
+  scrollbar-color: #7a5a1a transparent;
+}
+
+.fq-ballot-block h3,
+.fq-bank-block h3,
+.fq-injuries h2,
+.fq-monuments h2 {
+  margin: 0 0 calc(var(--u) * 3);
+  padding-bottom: calc(var(--u) * 2);
+  border-bottom: 1.5px solid #5a3d12;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: max(15px, calc(var(--u) * 19));
+  line-height: 1.05;
+}
+
+.fq-ballot-block p,
+.fq-bank-block p {
+  margin: calc(var(--u) * 2) 0;
+}
+
+.fq-ballot-none,
+.fq-bank-note {
+  font-style: italic;
+  color: #4a3010;
+}
+
+/* ---------- City Hall ---------- */
+
+.fq-ballot-title {
+  font-weight: 700;
+}
+
+.fq-ballot-effect {
+  display: block;
+  color: #3a2209;
+}
+
+.fq-ballot-when b[data-phase="filing"],
+.fq-ballot-when b[data-phase="voting"] {
+  color: #1d5a08;
+}
+
+.fq-ballot-options {
+  margin: calc(var(--u) * 3) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: calc(var(--u) * 5);
+}
+
+.fq-ballot-options li {
+  display: grid;
+  gap: calc(var(--u) * 1);
+  padding: calc(var(--u) * 5) calc(var(--u) * 8);
+  border: 1.5px solid rgba(90, 61, 18, 0.55);
+  border-radius: calc(var(--u) * 5);
+  background: rgba(255, 244, 205, 0.4);
+}
+
+.fq-ballot-options li[data-mine] {
+  border-color: #7a4a00;
+  border-width: 2.5px;
+  background: linear-gradient(160deg, rgba(255, 230, 140, 0.75), rgba(232, 196, 90, 0.6));
+}
+
+.fq-ballot-yours {
+  display: inline-block;
+  margin-left: calc(var(--u) * 6);
+  padding: 0 calc(var(--u) * 6);
+  border-radius: calc(var(--u) * 3);
+  background: #3a2209;
+  color: #ffe9b0;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+.fq-ballot-votes {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 6);
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-ballot-bar {
+  flex: 1;
+  height: calc(var(--u) * 7);
+  border-radius: calc(var(--u) * 4);
+  background: rgba(90, 61, 18, 0.25);
+  overflow: hidden;
+}
+
+.fq-ballot-bar i {
+  display: block;
+  height: 100%;
+  background: #7a5a1a;
+}
+
+.fq-ballot-votes[data-mine] .fq-ballot-bar i {
+  background: #b07a0a;
+}
+
+.fq-ballot-lobby,
+.fq-ballot-mayor {
+  font-size: 0.92em;
+}
+
+/* ---------- The bank ---------- */
+
+.fq-bank-block dl {
+  margin: 0;
+  display: grid;
+  gap: calc(var(--u) * 2);
+}
+
+.fq-bank-block dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 8);
+  border-bottom: 1px dotted rgba(90, 61, 18, 0.55);
+}
+
+.fq-bank-block dt {
+  font-weight: 700;
+}
+
+.fq-bank-block dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-bank-block dd small {
+  display: block;
+  font-size: 0.85em;
+  color: #4a3010;
+}
+
+.fq-bank-debt {
+  padding: calc(var(--u) * 4) calc(var(--u) * 8);
+  border-left: calc(var(--u) * 5) solid #9a2a14;
+  background: rgba(154, 42, 20, 0.12);
+}
+
+.fq-bank-limit meter {
+  width: calc(var(--u) * 90);
+  height: calc(var(--u) * 10);
+  vertical-align: middle;
+}
+
+/* ---------- Injuries and monuments ---------- */
+
+.fq-injuries,
+.fq-monuments {
+  padding: calc(var(--u) * 9) calc(var(--u) * 14);
+  overflow-y: auto;
+}
+
+.fq-injuries ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: calc(var(--u) * 6);
+}
+
+.fq-injuries li {
+  display: grid;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 5) calc(var(--u) * 8);
+  border: 1.5px solid rgba(90, 61, 18, 0.55);
+  border-left: calc(var(--u) * 5) solid #9a2a14;
+  border-radius: calc(var(--u) * 5);
+  background: rgba(255, 244, 205, 0.4);
+}
+
+.fq-injury-name {
+  font-weight: 700;
+}
+
+.fq-injury-fx {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 4) calc(var(--u) * 10);
+}
+
+.fq-injury-fx b {
+  font-weight: 700;
+  color: #7a1a0c;
+}
+
+.fq-monument-tiers {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(var(--u) * 4);
+  margin: 0;
+  padding: calc(var(--u) * 6) 0;
+  list-style: none;
+  border-top: 1px solid rgba(90, 61, 18, 0.5);
+  border-bottom: 1px solid rgba(90, 61, 18, 0.5);
+}
+
+.fq-monument-tiers li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.fq-monument-tiers img {
+  width: 100%;
+  max-width: calc(var(--u) * 62);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.fq-monument-num {
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 40);
+  height: calc(var(--u) * 40);
+  border: 2px solid #5a3d12;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.fq-monument-next {
+  margin: calc(var(--u) * 8) 0 0;
+}
+
+/* ---------- The contractor ---------- */
+
+.fq-upgrades {
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--u) * 8) calc(var(--u) * 12);
+  font-size: max(11.5px, calc(var(--u) * 13));
+}
+
+.fq-up-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: calc(var(--u) * 6) calc(var(--u) * 6) calc(var(--u) * 6) calc(var(--u) * 2);
+  scrollbar-width: thin;
+  scrollbar-color: #7a5a1a transparent;
+  display: grid;
+  gap: calc(var(--u) * 8);
+  align-content: start;
+}
+
+.fq-up-group h3 {
+  margin: 0 0 calc(var(--u) * 4);
+  font-size: max(11px, calc(var(--u) * 12));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3a2209;
+}
+
+.fq-up-group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--u) * 6);
+}
+
+.fq-up-card {
+  position: relative;
+  display: grid;
+  gap: calc(var(--u) * 2);
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: calc(var(--u) * 6) calc(var(--u) * 8);
+  border: 2px solid #7a5a1c;
+  border-radius: calc(var(--u) * 6);
+  background: linear-gradient(160deg, #e6d9a6, #cdb97f 70%, #b79d62);
+  color: #2a1a08;
+  font: inherit;
+  text-align: left;
+}
+
+button.fq-up-card {
+  cursor: pointer;
+}
+
+button.fq-up-card:hover {
+  filter: brightness(1.06);
+}
+
+.fq-up[data-state="owned"] .fq-up-card {
+  border-color: #3f7a1e;
+  background: linear-gradient(160deg, #d4e0a6, #b4c880 70%, #94ac5e);
+}
+
+.fq-up[data-state="locked"] .fq-up-card,
+.fq-up[data-state="unaffordable"] .fq-up-card[aria-disabled="true"] {
+  background: linear-gradient(160deg, #cfc49a, #b3a77c);
+}
+
+.fq-up[data-state="locked"] .fq-up-card {
+  border-style: dashed;
+}
+
+.fq-up-head {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 6);
+  align-items: baseline;
+}
+
+.fq-up-name {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: max(14px, calc(var(--u) * 17));
+  line-height: 1.05;
+}
+
+.fq-up-price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fq-up-desc {
+  font-size: 0.92em;
+  line-height: 1.15;
+}
+
+.fq-up-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 3) calc(var(--u) * 8);
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.fq-up-state {
+  margin-left: auto;
+  padding: 0 calc(var(--u) * 6);
+  border-radius: calc(var(--u) * 4);
+  background: #3a2209;
+  color: #ffe9b0;
+  font-weight: 700;
+}
+
+.fq-up-state[data-state="owned"] {
+  background: #2f5a10;
+}
+
+.fq-up-state[data-state="unaffordable"] {
+  background: #7a2208;
+}
+
+.fq-up-state[data-state="locked"] {
+  background: #5a1a0c;
+}
+
+.fq-up-reason {
+  font-style: italic;
+  color: #5a1a0c;
+}
+
+.fq-up-req {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2) calc(var(--u) * 8);
+  font-size: 0.9em;
+}
+
+.fq-up-req li {
+  color: #7a1a0c;
+}
+
+.fq-up-req li[data-have] {
+  color: #1d5a08;
+}
+
+.fq-up-req small {
+  margin-left: calc(var(--u) * 3);
+  opacity: 0.85;
+}
+
+/* ---------- Office extras ---------- */
+
+.fq-office-name small {
+  display: block;
+  font-family: var(--fq-font-ui, inherit);
+  font-style: normal;
+  font-size: max(11px, calc(var(--u) * 12));
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3a2209;
+}
+
+.fq-office-meter {
+  width: calc(var(--u) * 60);
+  height: calc(var(--u) * 9);
+  vertical-align: middle;
+}
+
+.fq-office-wait {
+  display: block;
+  font-size: 0.85em;
+  color: #4a3010;
+}
+
+/* ---------- Bingo extras ---------- */
+
+.fq-bingo {
+  overflow-y: auto;
+  justify-content: flex-start;
+}
+
+.fq-bingo-cells li[data-state="taken"],
+.fq-bingo-key i[data-state="taken"] {
+  background: rgba(90, 61, 18, 0.45);
+  color: #fff3c4;
+}
+
+.fq-bingo-pot small {
+  font-size: 0.8em;
+}
+
+.fq-bingo-facts {
+  margin: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--u) * 2) calc(var(--u) * 14);
+  font-size: max(11px, calc(var(--u) * 13));
+  text-align: left;
+}
+
+.fq-bingo-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 6);
+  border-bottom: 1px dotted rgba(90, 61, 18, 0.55);
+}
+
+.fq-bingo-facts dt {
+  font-weight: 700;
+}
+
+.fq-bingo-facts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-bingo-free {
+  margin: 0;
+  font-weight: 700;
+  color: #1d5a08;
+}
+
+/* ---------- The round just played ---------- */
+
+.fq-round-result {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 12);
+  font-weight: 400;
+}
+
+.fq-round-art {
+  flex: none;
+  width: calc(var(--u) * 96);
+  height: auto;
+}
+
+.fq-round-words {
+  display: grid;
+  gap: calc(var(--u) * 1);
+  min-width: 0;
+}
+
+.fq-round-game {
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.fq-round-verdict {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: max(17px, calc(var(--u) * 24));
+  line-height: 1;
+}
+
+.fq-round-net {
+  font-weight: 700;
+  font-size: max(15px, calc(var(--u) * 19));
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-round-net[data-sign="up"] {
+  color: #8ee08e;
+}
+
+.fq-round-net[data-sign="down"] {
+  color: #ff9a8a;
+}
+
+.fq-round-result[data-result="push"] .fq-round-net {
+  color: #b8cdff;
+}
+
+.fq-round-words small {
+  font-size: 0.85em;
+  opacity: 0.9;
+}
+
+/* ---------- The karma moment's consequences ---------- */
+
+.fq-mb-fx {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--u) * 3) calc(var(--u) * 8);
+  align-items: center;
+  font-size: max(11px, calc(var(--u) * 13));
+}
+
+.fq-mb-karma .fq-mb-arrows {
+  margin-right: calc(var(--u) * 3);
+  letter-spacing: -0.1em;
+  font-size: 0.85em;
+}
+
+.fq-mb-fact[data-sign="down"] {
+  color: #ffb4a6;
+}
+
+.fq-mb-risk {
+  flex-basis: 100%;
+  display: grid;
+  justify-items: center;
+  gap: calc(var(--u) * 2);
+  font-size: 0.92em;
+}
+
+.fq-mb-risk meter {
+  width: calc(var(--u) * 80);
+  height: calc(var(--u) * 8);
+}
+
+.fq-mb-risk small {
+  font-size: 0.9em;
+  opacity: 0.95;
+}
+
+.fq-karmascale-bands {
+  margin: calc(var(--u) * 4) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--u) * 2) calc(var(--u) * 8);
+  font-size: max(10.5px, calc(var(--u) * 12));
+}
+
+.fq-karmascale-bands li {
+  opacity: 0.75;
+}
+
+.fq-karmascale-bands li[data-here] {
+  opacity: 1;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.fq-karmascale-bands small {
+  margin-left: calc(var(--u) * 3);
+}
+
+.fq-karmaaxis-tick {
+  position: absolute;
+  top: calc(var(--u) * -2);
+  bottom: calc(var(--u) * -2);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.fq-gauge2-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 4);
+}
+
+.fq-tip-x {
+  white-space: pre-line;
+}
+
+/* ---------- Bingo, compact ---------- */
+
+.fq-bingo {
+  gap: calc(var(--u) * 5);
+  padding-top: calc(var(--u) * 6);
+}
+
+.fq-bingo-head {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--u) * 8);
+}
+
+.fq-bingo-cells {
+  grid-template-columns: repeat(6, calc(var(--u) * 34));
+  gap: calc(var(--u) * 4);
+}
+
+.fq-bingo-cells li {
+  height: calc(var(--u) * 34);
+}
+
+.fq-bingo-pot {
+  gap: calc(var(--u) * 6);
+}
+
+.fq-bingo-pot b {
+  font-size: 1.35em;
+}
+
+.fq-bingo-pot .fq-coffin {
+  width: calc(var(--u) * 28);
+}
+
+.fq-ballots-scroll,
+.fq-bank-scroll,
+.fq-up-scroll,
+.fq-bingo,
+.fq-injuries,
+.fq-monuments {
+  scrollbar-color: #5a3d12 rgba(90, 61, 18, 0.2);
+}
+
+/* The choice in force: gold, lit, never greyed like a card that cannot be pressed. */
+.fq-card[data-state="chosen"][aria-disabled="true"],
+.fq-card[data-state="chosen"][aria-disabled="true"]:hover {
+  filter: none;
+  cursor: default;
+  border-color: #8a5a00;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 45%),
+    linear-gradient(160deg, #f6dc7a, #e2b93e 70%, #c99a1c);
+  transform: none;
+}

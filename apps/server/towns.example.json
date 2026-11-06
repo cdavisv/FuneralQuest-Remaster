@@ -1,0 +1,29 @@
+{
+  "towns": [
+    {
+      "id": "expanded",
+      "name": "Dead Calm",
+      "ruleset": "expanded",
+      "timeZone": "America/New_York",
+      "serverNews": "A new season has begun. Mind the graveyard."
+    },
+    {
+      "id": "classic",
+      "name": "Dead Calm Classic",
+      "ruleset": "classic",
+      "contentPack": "classic",
+      "timeZone": "America/New_York",
+      "serverNews": "Welcome to Dead Calm. Be nice to your rivals."
+    },
+    {
+      "id": "blitz",
+      "name": "Blitz Row",
+      "ruleset": "expanded",
+      "timeZone": "UTC",
+      "dayLengthMinutes": 15,
+      "settings": { "turnsPerDay": 10, "tournamentActive": true, "tournamentDays": 28 },
+      "rules": { "town.bank.loan.rate": 0.05 },
+      "seed": 20010101
+    }
+  ]
+}

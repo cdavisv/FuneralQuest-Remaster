@@ -1,0 +1,3 @@
+id: expanded
+extends: classic
+merge: append

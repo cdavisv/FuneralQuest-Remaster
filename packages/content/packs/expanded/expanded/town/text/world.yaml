@@ -1,0 +1,11 @@
+morningWeather: '
+
+  `$Weather: `w{label}`$. {line} `5({effect})`$'
+morningNews: '
+
+  `$In the Funeral Times: `w{title}`$ `5({effect})`$'
+deskStatus: '{weather} {news}'
+quietNews: 'Nothing in the paper worth dying for.'
+morningArc: '
+
+  `$The whole town is talking about: `w{title}`$'

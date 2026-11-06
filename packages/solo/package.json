@@ -1,0 +1,27 @@
+{
+  "name": "@fq/solo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Offline Solo Career: a whole town (the player plus AI rivals) run in the browser, in a Web Worker, with saves.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./worker": "./src/worker.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/bots": "workspace:*",
+    "@fq/content": "workspace:*",
+    "@fq/core": "workspace:*",
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "fake-indexeddb": "^6.2.7",
+    "tsx": "^4.23.15"
+  }
+}

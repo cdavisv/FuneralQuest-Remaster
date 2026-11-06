@@ -1,0 +1,1482 @@
+{
+  "generator": "packages/audio (pnpm --filter @fq/audio run render)",
+  "license": "Generated from source in packages/audio; same licence as the project (see license.txt).",
+  "sampleRate": 48000,
+  "totalBytes": 14696778,
+  "live": [
+    "ui-click",
+    "ui-hover",
+    "ui-page",
+    "ui-notepad",
+    "ui-chat",
+    "ui-coin",
+    "ui-tag",
+    "ui-stamp",
+    "ui-mail"
+  ],
+  "tracks": {
+    "alarm-bell": {
+      "kind": "sfx",
+      "title": "Fire alarm bell",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.3,
+      "files": [
+        {
+          "ogg": "sfx/alarm-bell.ogg",
+          "m4a": "sfx/alarm-bell.m4a",
+          "bytes": 31554
+        }
+      ],
+      "lufs": -18,
+      "peakDb": -11.8,
+      "lufsEncoded": -21
+    },
+    "amb-birds": {
+      "kind": "ambience",
+      "title": "Morning birdsong",
+      "loop": true,
+      "channels": 1,
+      "duration": 16.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-birds.ogg",
+          "m4a": "ambience/amb-birds.m4a",
+          "bytes": 127060
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -17.3,
+      "lufsEncoded": -29.2,
+      "loopStart": 0.25,
+      "loopEnd": 16.25,
+      "loopCheck": {
+        "periodDb": -5.5,
+        "rawJoin": 0.03,
+        "joinRatio": 0
+      }
+    },
+    "amb-bubbles": {
+      "kind": "ambience",
+      "title": "Embalming room: bubbling fluid and a pump",
+      "loop": true,
+      "channels": 1,
+      "duration": 10.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-bubbles.ogg",
+          "m4a": "ambience/amb-bubbles.m4a",
+          "bytes": 80437
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -12.4,
+      "lufsEncoded": -29,
+      "loopStart": 0.25,
+      "loopEnd": 10.25,
+      "loopCheck": {
+        "periodDb": -9.6,
+        "rawJoin": 3.86,
+        "joinRatio": 0.26
+      }
+    },
+    "amb-clock": {
+      "kind": "ambience",
+      "title": "Parlor wall clock, tick-tock, room tone",
+      "loop": true,
+      "channels": 1,
+      "duration": 8.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-clock.ogg",
+          "m4a": "ambience/amb-clock.m4a",
+          "bytes": 58240
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -6.6,
+      "lufsEncoded": -29.1,
+      "loopStart": 0.25,
+      "loopEnd": 8.25,
+      "loopCheck": {
+        "periodDb": -13.6,
+        "rawJoin": 0,
+        "joinRatio": 0
+      }
+    },
+    "amb-fire": {
+      "kind": "ambience",
+      "title": "Crematorium fire: roar and crackle",
+      "loop": true,
+      "channels": 1,
+      "duration": 12.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-fire.ogg",
+          "m4a": "ambience/amb-fire.m4a",
+          "bytes": 89184
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -10.5,
+      "lufsEncoded": -29.3,
+      "loopStart": 0.25,
+      "loopEnd": 12.25,
+      "loopCheck": {
+        "periodDb": -14.3,
+        "rawJoin": 1.03,
+        "joinRatio": 0.73
+      }
+    },
+    "amb-fogbell": {
+      "kind": "ambience",
+      "title": "Fog: low wind and a buoy bell",
+      "loop": true,
+      "channels": 1,
+      "duration": 18.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-fogbell.ogg",
+          "m4a": "ambience/amb-fogbell.m4a",
+          "bytes": 132449
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -13.4,
+      "lufsEncoded": -29.1,
+      "loopStart": 0.25,
+      "loopEnd": 18.25,
+      "loopCheck": {
+        "periodDb": -10.7,
+        "rawJoin": 1.52,
+        "joinRatio": 0.91
+      }
+    },
+    "amb-hospital": {
+      "kind": "ambience",
+      "title": "Hospital lobby: air handling, a distant chime, footsteps",
+      "loop": true,
+      "channels": 1,
+      "duration": 16.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-hospital.ogg",
+          "m4a": "ambience/amb-hospital.m4a",
+          "bytes": 116035
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -9.4,
+      "lufsEncoded": -28.9,
+      "loopStart": 0.25,
+      "loopEnd": 16.25,
+      "loopCheck": {
+        "periodDb": -8.2,
+        "rawJoin": 3.19,
+        "joinRatio": 0.2
+      }
+    },
+    "amb-kitchen": {
+      "kind": "ambience",
+      "title": "Yang's kitchen: wok sizzle, scrapes, clinks, the hood fan",
+      "loop": true,
+      "channels": 1,
+      "duration": 10.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-kitchen.ogg",
+          "m4a": "ambience/amb-kitchen.m4a",
+          "bytes": 75750
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -12.1,
+      "lufsEncoded": -30.3,
+      "loopStart": 0.25,
+      "loopEnd": 10.25,
+      "loopCheck": {
+        "periodDb": -1.9,
+        "rawJoin": 0.14,
+        "joinRatio": 0.21
+      }
+    },
+    "amb-monitor": {
+      "kind": "ambience",
+      "title": "Hospital room: heart monitor at 70 bpm, ventilator, hum",
+      "loop": true,
+      "channels": 1,
+      "duration": 12.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-monitor.ogg",
+          "m4a": "ambience/amb-monitor.m4a",
+          "bytes": 90568
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -17.4,
+      "lufsEncoded": -28.9,
+      "loopStart": 0.25,
+      "loopEnd": 12.25,
+      "loopCheck": {
+        "periodDb": -10,
+        "rawJoin": 0.04,
+        "joinRatio": 0.01
+      }
+    },
+    "amb-night": {
+      "kind": "ambience",
+      "title": "Night: crickets and an owl",
+      "loop": true,
+      "channels": 1,
+      "duration": 20.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-night.ogg",
+          "m4a": "ambience/amb-night.m4a",
+          "bytes": 167759
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -11.4,
+      "lufsEncoded": -28.9,
+      "loopStart": 0.25,
+      "loopEnd": 20.25,
+      "loopCheck": {
+        "periodDb": -9.1,
+        "rawJoin": 0.01,
+        "joinRatio": 0
+      }
+    },
+    "amb-rain": {
+      "kind": "ambience",
+      "title": "Steady rain on a roof",
+      "loop": true,
+      "channels": 1,
+      "duration": 12.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-rain.ogg",
+          "m4a": "ambience/amb-rain.m4a",
+          "bytes": 88884
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -18.1,
+      "lufsEncoded": -31.7,
+      "loopStart": 0.25,
+      "loopEnd": 12.25,
+      "loopCheck": {
+        "periodDb": -0.4,
+        "rawJoin": 0.36,
+        "joinRatio": 0.18
+      }
+    },
+    "amb-storm": {
+      "kind": "ambience",
+      "title": "Storm: heavy rain and a distant thunder roll",
+      "loop": true,
+      "channels": 1,
+      "duration": 20.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-storm.ogg",
+          "m4a": "ambience/amb-storm.m4a",
+          "bytes": 143638
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -6.1,
+      "lufsEncoded": -30.9,
+      "loopStart": 0.25,
+      "loopEnd": 20.25,
+      "loopCheck": {
+        "periodDb": 0,
+        "rawJoin": 0.2,
+        "joinRatio": 0.48
+      }
+    },
+    "amb-street": {
+      "kind": "ambience",
+      "title": "Quiet small-town street: breeze, far birds, a distant dog",
+      "loop": true,
+      "channels": 1,
+      "duration": 20.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-street.ogg",
+          "m4a": "ambience/amb-street.m4a",
+          "bytes": 143323
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -10.3,
+      "lufsEncoded": -29.2,
+      "loopStart": 0.25,
+      "loopEnd": 20.25,
+      "loopCheck": {
+        "periodDb": -8.1,
+        "rawJoin": 1.38,
+        "joinRatio": 0.28
+      }
+    },
+    "amb-wind": {
+      "kind": "ambience",
+      "title": "Graveyard wind with gusts",
+      "loop": true,
+      "channels": 1,
+      "duration": 20.75,
+      "files": [
+        {
+          "ogg": "ambience/amb-wind.ogg",
+          "m4a": "ambience/amb-wind.m4a",
+          "bytes": 147686
+        }
+      ],
+      "lufs": -26,
+      "peakDb": -10.4,
+      "lufsEncoded": -29.6,
+      "loopStart": 0.25,
+      "loopEnd": 20.25,
+      "loopCheck": {
+        "periodDb": -8.9,
+        "rawJoin": 0.61,
+        "joinRatio": 0.13
+      }
+    },
+    "angelic": {
+      "kind": "sfx",
+      "title": "Divine approval: choir chord and harp",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.97,
+      "files": [
+        {
+          "ogg": "sfx/angelic.ogg",
+          "m4a": "sfx/angelic.m4a",
+          "bytes": 20804
+        }
+      ],
+      "lufs": -18.8,
+      "peakDb": -9.2,
+      "lufsEncoded": -21.9
+    },
+    "bank": {
+      "kind": "music",
+      "title": "Hold Music for the Bereaved",
+      "loop": true,
+      "channels": 2,
+      "duration": 37.673,
+      "files": [
+        {
+          "ogg": "music/bank.ogg",
+          "m4a": "music/bank.m4a",
+          "bytes": 504190
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 37.173083,
+      "loopCheck": {
+        "periodDb": -12.8,
+        "rawJoin": 1.01,
+        "joinRatio": 0.25
+      },
+      "bpm": 104,
+      "key": "E-flat major",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "battle": {
+      "kind": "music",
+      "title": "Casket Brawl",
+      "loop": true,
+      "channels": 2,
+      "duration": 26.013,
+      "files": [
+        {
+          "ogg": "music/battle.ogg",
+          "m4a": "music/battle.m4a",
+          "bytes": 314601
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 25.513167,
+      "loopCheck": {
+        "periodDb": -14.5,
+        "rawJoin": 0.24,
+        "joinRatio": 0.25
+      },
+      "bpm": 152,
+      "key": "E minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "bingo-ball": {
+      "kind": "sfx",
+      "title": "Bingo cage turning, a ball drops out",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.69,
+      "files": [
+        {
+          "ogg": "sfx/bingo-ball.ogg",
+          "m4a": "sfx/bingo-ball.m4a",
+          "bytes": 22585
+        }
+      ],
+      "lufs": -18,
+      "peakDb": -3.4,
+      "lufsEncoded": -20.6
+    },
+    "bingo-lose": {
+      "kind": "sfx",
+      "title": "Bingo loss: falling marimba and a bonk",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.449,
+      "files": [
+        {
+          "ogg": "sfx/bingo-lose.ogg",
+          "m4a": "sfx/bingo-lose.m4a",
+          "bytes": 16155
+        }
+      ],
+      "lufs": -18,
+      "peakDb": -2.2,
+      "lufsEncoded": -21
+    },
+    "bingo-win": {
+      "kind": "sfx",
+      "title": "Bingo win: xylophone run and bells",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.8,
+      "files": [
+        {
+          "ogg": "sfx/bingo-win.ogg",
+          "m4a": "sfx/bingo-win.m4a",
+          "bytes": 24375
+        }
+      ],
+      "lufs": -19.5,
+      "peakDb": -10.8,
+      "lufsEncoded": -22.5
+    },
+    "cafe": {
+      "kind": "music",
+      "title": "Pale Horse Rag",
+      "loop": true,
+      "channels": 2,
+      "duration": 44.386,
+      "files": [
+        {
+          "ogg": "music/cafe.ogg",
+          "m4a": "music/cafe.m4a",
+          "bytes": 530608
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 43.886354,
+      "loopCheck": {
+        "periodDb": -12,
+        "rawJoin": 0.65,
+        "joinRatio": 0.01
+      },
+      "bpm": 132,
+      "key": "B-flat major",
+      "bars": 24,
+      "beatsPerBar": 4
+    },
+    "cards": {
+      "kind": "sfx",
+      "title": "Cards shuffled and three dealt",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.324,
+      "files": [
+        {
+          "ogg": "sfx/cards.ogg",
+          "m4a": "sfx/cards.m4a",
+          "bytes": 14843
+        }
+      ],
+      "lufs": -18.2,
+      "peakDb": -5.2,
+      "lufsEncoded": -23.5
+    },
+    "cash-register": {
+      "kind": "sfx",
+      "title": "Cash register: keys, drawer, bell, drawer stop",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.7,
+      "files": [
+        {
+          "ogg": "sfx/cash-register.ogg",
+          "m4a": "sfx/cash-register.m4a",
+          "bytes": 23613
+        }
+      ],
+      "lufs": -19.7,
+      "peakDb": -11.1,
+      "lufsEncoded": -22.3
+    },
+    "casket-thump": {
+      "kind": "sfx",
+      "title": "A casket set down: wooden thud and rattling hardware",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.019,
+      "files": [
+        {
+          "ogg": "sfx/casket-thump.ogg",
+          "m4a": "sfx/casket-thump.m4a",
+          "bytes": 8355
+        }
+      ],
+      "lufs": -19.5,
+      "peakDb": -2,
+      "lufsEncoded": -22.7
+    },
+    "ceremony": {
+      "kind": "music",
+      "title": "Dearly Departed (Processional)",
+      "loop": true,
+      "channels": 2,
+      "duration": 58.932,
+      "files": [
+        {
+          "ogg": "music/ceremony.ogg",
+          "m4a": "music/ceremony.m4a",
+          "bytes": 765534
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 58.431813,
+      "loopCheck": {
+        "periodDb": -10.4,
+        "rawJoin": 3.25,
+        "joinRatio": 0.18
+      },
+      "bpm": 66,
+      "key": "F major",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "cityhall": {
+      "kind": "music",
+      "title": "Hail to the Coroner",
+      "loop": true,
+      "channels": 2,
+      "duration": 52.179,
+      "files": [
+        {
+          "ogg": "music/cityhall.ogg",
+          "m4a": "music/cityhall.m4a",
+          "bytes": 717104
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3.7,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 51.678563,
+      "loopCheck": {
+        "periodDb": -12.3,
+        "rawJoin": 0.62,
+        "joinRatio": 0.23
+      },
+      "bpm": 112,
+      "key": "B-flat major",
+      "bars": 24,
+      "beatsPerBar": 4
+    },
+    "club": {
+      "kind": "music",
+      "title": "Last Call at the Reaper Club",
+      "loop": true,
+      "channels": 2,
+      "duration": 54.083,
+      "files": [
+        {
+          "ogg": "music/club.ogg",
+          "m4a": "music/club.m4a",
+          "bytes": 633887
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3.3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 53.583333,
+      "loopCheck": {
+        "periodDb": -14.6,
+        "rawJoin": 0.69,
+        "joinRatio": 0.29
+      },
+      "bpm": 108,
+      "key": "F minor",
+      "bars": 24,
+      "beatsPerBar": 4
+    },
+    "coins": {
+      "kind": "sfx",
+      "title": "A handful of coins on a counter",
+      "loop": false,
+      "channels": 1,
+      "duration": 0.945,
+      "files": [
+        {
+          "ogg": "sfx/coins.ogg",
+          "m4a": "sfx/coins.m4a",
+          "bytes": 12774
+        }
+      ],
+      "lufs": -19.9,
+      "peakDb": -8.8,
+      "lufsEncoded": -22.4
+    },
+    "defeat": {
+      "kind": "stinger",
+      "title": "Grave Error",
+      "loop": false,
+      "channels": 2,
+      "duration": 7.043,
+      "files": [
+        {
+          "ogg": "music/defeat.ogg",
+          "m4a": "music/defeat.m4a",
+          "bytes": 91965
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.9,
+      "lufsEncoded": -16,
+      "bpm": 84,
+      "key": "D minor",
+      "bars": 2,
+      "beatsPerBar": 4
+    },
+    "desk": {
+      "kind": "music",
+      "title": "Office Hours",
+      "loop": true,
+      "channels": 2,
+      "duration": 54.083,
+      "files": [
+        {
+          "ogg": "music/desk.ogg",
+          "m4a": "music/desk.m4a",
+          "bytes": 665047
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 53.583333,
+      "loopCheck": {
+        "periodDb": -13.3,
+        "rawJoin": 0.5,
+        "joinRatio": 0.17
+      },
+      "bpm": 72,
+      "key": "A minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "dice": {
+      "kind": "sfx",
+      "title": "Dice shaken and thrown",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.026,
+      "files": [
+        {
+          "ogg": "sfx/dice.ogg",
+          "m4a": "sfx/dice.m4a",
+          "bytes": 14568
+        }
+      ],
+      "lufs": -18.9,
+      "peakDb": -4.6,
+      "lufsEncoded": -21.2
+    },
+    "dimart": {
+      "kind": "music",
+      "title": "Aisle Nine",
+      "loop": true,
+      "channels": 2,
+      "duration": 58.35,
+      "files": [
+        {
+          "ogg": "music/dimart.ogg",
+          "m4a": "music/dimart.m4a",
+          "bytes": 789862
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.2,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 57.85,
+      "loopCheck": {
+        "periodDb": -10.3,
+        "rawJoin": 2.75,
+        "joinRatio": 0.08
+      },
+      "bpm": 100,
+      "key": "C major",
+      "bars": 24,
+      "beatsPerBar": 4
+    },
+    "door": {
+      "kind": "sfx",
+      "title": "Door: latch, creaking hinge, closing thud",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.1,
+      "files": [
+        {
+          "ogg": "sfx/door.ogg",
+          "m4a": "sfx/door.m4a",
+          "bytes": 27885
+        }
+      ],
+      "lufs": -18.9,
+      "peakDb": -3.5,
+      "lufsEncoded": -22
+    },
+    "doorbell": {
+      "kind": "sfx",
+      "title": "Customer arrives: the shop bell over the door",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.556,
+      "files": [
+        {
+          "ogg": "sfx/doorbell.ogg",
+          "m4a": "sfx/doorbell.m4a",
+          "bytes": 21215
+        }
+      ],
+      "lufs": -18.4,
+      "peakDb": -12,
+      "lufsEncoded": -21.4
+    },
+    "endday": {
+      "kind": "stinger",
+      "title": "Lights Out at the Parlor",
+      "loop": false,
+      "channels": 2,
+      "duration": 20.643,
+      "files": [
+        {
+          "ogg": "music/endday.ogg",
+          "m4a": "music/endday.m4a",
+          "bytes": 282448
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.1,
+      "lufsEncoded": -16,
+      "bpm": 84,
+      "key": "F major",
+      "bars": 8,
+      "beatsPerBar": 3
+    },
+    "fail-trombone": {
+      "kind": "sfx",
+      "title": "Muted trombone, falling (a fail)",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.59,
+      "files": [
+        {
+          "ogg": "sfx/fail-trombone.ogg",
+          "m4a": "sfx/fail-trombone.m4a",
+          "bytes": 35984
+        }
+      ],
+      "lufs": -17,
+      "peakDb": -9.9,
+      "lufsEncoded": -19.7
+    },
+    "fanfare-exact": {
+      "kind": "sfx",
+      "title": "Exact-match fanfare: the house motif in D major and a chord",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.14,
+      "files": [
+        {
+          "ogg": "sfx/fanfare-exact.ogg",
+          "m4a": "sfx/fanfare-exact.m4a",
+          "bytes": 23847
+        }
+      ],
+      "lufs": -18.2,
+      "peakDb": -7.2,
+      "lufsEncoded": -21.2
+    },
+    "glint": {
+      "kind": "sfx",
+      "title": "A ring sparkles",
+      "loop": false,
+      "channels": 1,
+      "duration": 0.72,
+      "files": [
+        {
+          "ogg": "sfx/glint.ogg",
+          "m4a": "sfx/glint.m4a",
+          "bytes": 8698
+        }
+      ],
+      "lufs": -19.2,
+      "peakDb": -11.4,
+      "lufsEncoded": -22.9
+    },
+    "gong": {
+      "kind": "sfx",
+      "title": "Gong (a loss)",
+      "loop": false,
+      "channels": 1,
+      "duration": 4.8,
+      "files": [
+        {
+          "ogg": "sfx/gong.ogg",
+          "m4a": "sfx/gong.m4a",
+          "bytes": 59503
+        }
+      ],
+      "lufs": -20.6,
+      "peakDb": -8.8,
+      "lufsEncoded": -23.6
+    },
+    "graveyard": {
+      "kind": "music",
+      "title": "Plot Twist",
+      "loop": true,
+      "channels": 2,
+      "duration": 57.221,
+      "files": [
+        {
+          "ogg": "music/graveyard.ogg",
+          "m4a": "music/graveyard.m4a",
+          "bytes": 721321
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -5.8,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 56.720583,
+      "loopCheck": {
+        "periodDb": -15.1,
+        "rawJoin": 1.83,
+        "joinRatio": 0.18
+      },
+      "bpm": 68,
+      "key": "G minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "growl": {
+      "kind": "sfx",
+      "title": "A small dog growls, then arfs",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.337,
+      "files": [
+        {
+          "ogg": "sfx/growl.ogg",
+          "m4a": "sfx/growl.m4a",
+          "bytes": 17197
+        }
+      ],
+      "lufs": -17.4,
+      "peakDb": -3.1,
+      "lufsEncoded": -20.5
+    },
+    "harp-good-news": {
+      "kind": "sfx",
+      "title": "Harp glissando up (good news)",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.648,
+      "files": [
+        {
+          "ogg": "sfx/harp-good-news.ogg",
+          "m4a": "sfx/harp-good-news.m4a",
+          "bytes": 29182
+        }
+      ],
+      "lufs": -18.5,
+      "peakDb": -7.5,
+      "lufsEncoded": -21.6
+    },
+    "hospital": {
+      "kind": "music",
+      "title": "Visiting Hours",
+      "loop": true,
+      "channels": 2,
+      "duration": 51.276,
+      "files": [
+        {
+          "ogg": "music/hospital.ogg",
+          "m4a": "music/hospital.m4a",
+          "bytes": 604208
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 50.776313,
+      "loopCheck": {
+        "periodDb": -14,
+        "rawJoin": 1.4,
+        "joinRatio": 0.15
+      },
+      "bpm": 76,
+      "key": "F major",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "level-up": {
+      "kind": "sfx",
+      "title": "Training complete: rising arpeggio and shimmer",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.6,
+      "files": [
+        {
+          "ogg": "sfx/level-up.ogg",
+          "m4a": "sfx/level-up.m4a",
+          "bytes": 20876
+        }
+      ],
+      "lufs": -18.9,
+      "peakDb": -7.7,
+      "lufsEncoded": -22
+    },
+    "lockpick": {
+      "kind": "sfx",
+      "title": "Lock pick working the pins, then the click",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.313,
+      "files": [
+        {
+          "ogg": "sfx/lockpick.ogg",
+          "m4a": "sfx/lockpick.m4a",
+          "bytes": 18335
+        }
+      ],
+      "lufs": -17.4,
+      "peakDb": -2,
+      "lufsEncoded": -20.1
+    },
+    "main": {
+      "kind": "music",
+      "title": "Open Casket Policy",
+      "loop": true,
+      "channels": 2,
+      "duration": 85.75,
+      "files": [
+        {
+          "ogg": "music/main.ogg",
+          "m4a": "music/main.m4a",
+          "bytes": 1023650
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.5,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 85.25,
+      "loopCheck": {
+        "periodDb": -8.2,
+        "rawJoin": 0.64,
+        "joinRatio": 0.17
+      },
+      "bpm": 96,
+      "key": "D minor",
+      "bars": 34,
+      "beatsPerBar": 4
+    },
+    "main-stinger": {
+      "kind": "stinger",
+      "title": "Open Casket Policy (sting)",
+      "loop": false,
+      "channels": 2,
+      "duration": 6.792,
+      "files": [
+        {
+          "ogg": "music/main-stinger.ogg",
+          "m4a": "music/main-stinger.m4a",
+          "bytes": 80974
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "bpm": 96,
+      "key": "D minor",
+      "bars": 2,
+      "beatsPerBar": 4
+    },
+    "meteor": {
+      "kind": "music",
+      "title": "The Sky Is Falling",
+      "loop": true,
+      "channels": 2,
+      "duration": 48.75,
+      "files": [
+        {
+          "ogg": "music/meteor.ogg",
+          "m4a": "music/meteor.m4a",
+          "bytes": 662279
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3.2,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 48.25,
+      "loopCheck": {
+        "periodDb": -9.1,
+        "rawJoin": 0.32,
+        "joinRatio": 0.37
+      },
+      "bpm": 80,
+      "key": "C minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "monument": {
+      "kind": "sfx",
+      "title": "A heavy stone set in place",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.373,
+      "files": [
+        {
+          "ogg": "sfx/monument.ogg",
+          "m4a": "sfx/monument.m4a",
+          "bytes": 11379
+        }
+      ],
+      "lufs": -18.3,
+      "peakDb": -3.5,
+      "lufsEncoded": -21.3
+    },
+    "negotiation": {
+      "kind": "music",
+      "title": "Pre-Need Arrangements",
+      "loop": true,
+      "channels": 2,
+      "duration": 32.75,
+      "files": [
+        {
+          "ogg": "music/negotiation.layer0.ogg",
+          "m4a": "music/negotiation.layer0.m4a",
+          "bytes": 458513
+        },
+        {
+          "ogg": "music/negotiation.layer1.ogg",
+          "m4a": "music/negotiation.layer1.m4a",
+          "bytes": 456273
+        },
+        {
+          "ogg": "music/negotiation.layer2.ogg",
+          "m4a": "music/negotiation.layer2.m4a",
+          "bytes": 413502
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3.5,
+      "loopStart": 0.25,
+      "loopEnd": 32.25,
+      "loopCheck": {
+        "periodDb": -9.6,
+        "rawJoin": 0.19,
+        "joinRatio": 0.09
+      },
+      "bpm": 120,
+      "key": "E minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "newday": {
+      "kind": "stinger",
+      "title": "Rise and Shine, Deathville",
+      "loop": false,
+      "channels": 2,
+      "duration": 5.836,
+      "files": [
+        {
+          "ogg": "music/newday.ogg",
+          "m4a": "music/newday.m4a",
+          "bytes": 85442
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16.1,
+      "bpm": 132,
+      "key": "G major",
+      "bars": 2,
+      "beatsPerBar": 4
+    },
+    "padlock-break": {
+      "kind": "sfx",
+      "title": "Padlock broken off: strike, chain, the lock hits the floor",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.258,
+      "files": [
+        {
+          "ogg": "sfx/padlock-break.ogg",
+          "m4a": "sfx/padlock-break.m4a",
+          "bytes": 15577
+        }
+      ],
+      "lufs": -21.3,
+      "peakDb": -5.3,
+      "lufsEncoded": -24
+    },
+    "psychic": {
+      "kind": "sfx",
+      "title": "Psychic theremin swoop",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.11,
+      "files": [
+        {
+          "ogg": "sfx/psychic.ogg",
+          "m4a": "sfx/psychic.m4a",
+          "bytes": 23741
+        }
+      ],
+      "lufs": -16.8,
+      "peakDb": -15.5,
+      "lufsEncoded": -19.6
+    },
+    "punch": {
+      "kind": "sfx",
+      "title": "Comic punch: whoosh and thump",
+      "loop": false,
+      "channels": 1,
+      "duration": 0.519,
+      "files": [
+        {
+          "ogg": "sfx/punch.ogg",
+          "m4a": "sfx/punch.m4a",
+          "bytes": 5717
+        }
+      ],
+      "lufs": -16.1,
+      "peakDb": -2.9,
+      "lufsEncoded": -19.3
+    },
+    "rain-hit": {
+      "kind": "sfx",
+      "title": "A gust of rain arriving",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.4,
+      "files": [
+        {
+          "ogg": "sfx/rain-hit.ogg",
+          "m4a": "sfx/rain-hit.m4a",
+          "bytes": 23188
+        }
+      ],
+      "lufs": -18.5,
+      "peakDb": -9.7,
+      "lufsEncoded": -21.4
+    },
+    "rattle": {
+      "kind": "sfx",
+      "title": "Rattlesnake rattle",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.52,
+      "files": [
+        {
+          "ogg": "sfx/rattle.ogg",
+          "m4a": "sfx/rattle.m4a",
+          "bytes": 14945
+        }
+      ],
+      "lufs": -17.6,
+      "peakDb": -2.8,
+      "lufsEncoded": -22.3
+    },
+    "safe-click": {
+      "kind": "sfx",
+      "title": "Safe dial clicks, the bolts and the door",
+      "loop": false,
+      "channels": 1,
+      "duration": 1.838,
+      "files": [
+        {
+          "ogg": "sfx/safe-click.ogg",
+          "m4a": "sfx/safe-click.m4a",
+          "bytes": 22886
+        }
+      ],
+      "lufs": -19.4,
+      "peakDb": -2,
+      "lufsEncoded": -22.4
+    },
+    "siren": {
+      "kind": "sfx",
+      "title": "Ambulance passing",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.6,
+      "files": [
+        {
+          "ogg": "sfx/siren.ogg",
+          "m4a": "sfx/siren.m4a",
+          "bytes": 34594
+        }
+      ],
+      "lufs": -19.7,
+      "peakDb": -14.7,
+      "lufsEncoded": -22.7
+    },
+    "slap": {
+      "kind": "sfx",
+      "title": "Slap",
+      "loop": false,
+      "channels": 1,
+      "duration": 0.14,
+      "files": [
+        {
+          "ogg": "sfx/slap.ogg",
+          "m4a": "sfx/slap.m4a",
+          "bytes": 2427
+        }
+      ],
+      "lufs": -21.1,
+      "peakDb": -3,
+      "lufsEncoded": -70
+    },
+    "slot-machine": {
+      "kind": "sfx",
+      "title": "Slot machine: lever, reels, three stops, a small payout",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.6,
+      "files": [
+        {
+          "ogg": "sfx/slot-machine.ogg",
+          "m4a": "sfx/slot-machine.m4a",
+          "bytes": 32500
+        }
+      ],
+      "lufs": -20.3,
+      "peakDb": -11.3,
+      "lufsEncoded": -23.3
+    },
+    "sneak": {
+      "kind": "music",
+      "title": "Tiptoe Through the Tulip Beds",
+      "loop": true,
+      "channels": 2,
+      "duration": 39.15,
+      "files": [
+        {
+          "ogg": "music/sneak.ogg",
+          "m4a": "music/sneak.m4a",
+          "bytes": 523454
+        }
+      ],
+      "lufs": -16.2,
+      "peakDb": -4.5,
+      "lufsEncoded": -16.2,
+      "loopStart": 0.25,
+      "loopEnd": 38.65,
+      "loopCheck": {
+        "periodDb": -16.7,
+        "rawJoin": 0.28,
+        "joinRatio": 0.31
+      },
+      "bpm": 100,
+      "key": "C minor",
+      "bars": 16,
+      "beatsPerBar": 4
+    },
+    "thunder": {
+      "kind": "sfx",
+      "title": "Thunder: crack and roll",
+      "loop": false,
+      "channels": 1,
+      "duration": 4.764,
+      "files": [
+        {
+          "ogg": "sfx/thunder.ogg",
+          "m4a": "sfx/thunder.m4a",
+          "bytes": 52173
+        }
+      ],
+      "lufs": -21.8,
+      "peakDb": -4.7,
+      "lufsEncoded": -25.1
+    },
+    "toilet-flush": {
+      "kind": "sfx",
+      "title": "Toilet flush: handle, rush, gurgles, refill",
+      "loop": false,
+      "channels": 1,
+      "duration": 3.8,
+      "files": [
+        {
+          "ogg": "sfx/toilet-flush.ogg",
+          "m4a": "sfx/toilet-flush.m4a",
+          "bytes": 34995
+        }
+      ],
+      "lufs": -20.4,
+      "peakDb": -2,
+      "lufsEncoded": -23.7
+    },
+    "town": {
+      "kind": "music",
+      "title": "Main Street, Deathville",
+      "loop": true,
+      "channels": 2,
+      "duration": 69.321,
+      "files": [
+        {
+          "ogg": "music/town.ogg",
+          "m4a": "music/town.m4a",
+          "bytes": 838914
+        }
+      ],
+      "lufs": -16.1,
+      "peakDb": -4.5,
+      "lufsEncoded": -16.1,
+      "loopStart": 0.25,
+      "loopEnd": 68.821438,
+      "loopCheck": {
+        "periodDb": -14,
+        "rawJoin": 0.44,
+        "joinRatio": 0.13
+      },
+      "bpm": 112,
+      "key": "G major",
+      "bars": 32,
+      "beatsPerBar": 4
+    },
+    "university": {
+      "kind": "music",
+      "title": "Office of Psychic Studies",
+      "loop": true,
+      "channels": 2,
+      "duration": 44.386,
+      "files": [
+        {
+          "ogg": "music/university.ogg",
+          "m4a": "music/university.m4a",
+          "bytes": 587167
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.5,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 43.886354,
+      "loopCheck": {
+        "periodDb": -13.4,
+        "rawJoin": 0.81,
+        "joinRatio": 0.2
+      },
+      "bpm": 132,
+      "key": "A minor",
+      "bars": 32,
+      "beatsPerBar": 3
+    },
+    "victory": {
+      "kind": "stinger",
+      "title": "Ashes to Ashes, Bust to Bust",
+      "loop": false,
+      "channels": 2,
+      "duration": 5.54,
+      "files": [
+        {
+          "ogg": "music/victory.ogg",
+          "m4a": "music/victory.m4a",
+          "bytes": 73470
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -4.3,
+      "lufsEncoded": -16,
+      "bpm": 120,
+      "key": "D major",
+      "bars": 2,
+      "beatsPerBar": 4
+    },
+    "walkout": {
+      "kind": "sfx",
+      "title": "Customer walks out: door slam and the jangling shop bell",
+      "loop": false,
+      "channels": 1,
+      "duration": 2.272,
+      "files": [
+        {
+          "ogg": "sfx/walkout.ogg",
+          "m4a": "sfx/walkout.m4a",
+          "bytes": 27666
+        }
+      ],
+      "lufs": -20,
+      "peakDb": -8.8,
+      "lufsEncoded": -19.5
+    },
+    "yangs": {
+      "kind": "music",
+      "title": "Fortune Favors the Takeout",
+      "loop": true,
+      "channels": 2,
+      "duration": 54.083,
+      "files": [
+        {
+          "ogg": "music/yangs.ogg",
+          "m4a": "music/yangs.m4a",
+          "bytes": 657216
+        }
+      ],
+      "lufs": -16,
+      "peakDb": -3,
+      "lufsEncoded": -16,
+      "loopStart": 0.25,
+      "loopEnd": 53.583333,
+      "loopCheck": {
+        "periodDb": -12.8,
+        "rawJoin": 1.18,
+        "joinRatio": 0.28
+      },
+      "bpm": 108,
+      "key": "A major",
+      "bars": 24,
+      "beatsPerBar": 4
+    }
+  }
+}

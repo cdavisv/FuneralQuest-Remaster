@@ -1,0 +1,266 @@
+/*
+ * Player safety: the report and block menus, their dialogs, the Settings section, the notice
+ * players agree to before online play, and the mute banner. Same units as app.css (--u).
+ */
+
+/* ---------- The "Report or block" menu next to a name or a line ---------- */
+
+.fq-mod-menu {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-left: 0.5em;
+  vertical-align: baseline;
+}
+
+.fq-mod-toggle,
+.fq-mod-item {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(232, 195, 90, 0.55);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--fq-gold-light);
+  font: inherit;
+  font-size: 0.8em;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.fq-mod-toggle {
+  min-width: 30px;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.fq-mod-toggle:hover,
+.fq-mod-toggle:focus-visible,
+.fq-mod-toggle[aria-expanded="true"],
+li:hover > .fq-mod-menu .fq-mod-toggle,
+tr:hover .fq-mod-toggle {
+  opacity: 1;
+}
+
+.fq-mod-toggle:hover,
+.fq-mod-item:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+@media (pointer: coarse) {
+  .fq-mod-toggle,
+  .fq-mod-item {
+    min-height: 40px;
+    min-width: 44px;
+    opacity: 1;
+  }
+}
+
+/* On the parchment sheets (rankings, the paper) the menu is dark on light. */
+.fq-surface-light .fq-mod-toggle,
+.fq-surface-light .fq-mod-item,
+.fq-rank-table .fq-mod-toggle,
+.fq-rank-table .fq-mod-item {
+  border-color: rgba(60, 35, 5, 0.6);
+  background: rgba(255, 246, 216, 0.6);
+  color: #3a2208;
+}
+
+.fq-mod-news {
+  display: block;
+  margin-top: 0.8em;
+  font-size: 0.85em;
+}
+
+/* ---------- Dialogs ---------- */
+
+.fq-mod-dialog {
+  width: min(calc(var(--u) * 600), 100%);
+}
+
+.fq-mod-title {
+  margin: 0 0 calc(var(--u) * 10);
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 1.5em;
+  color: var(--fq-gold-light);
+}
+
+.fq-mod-subject {
+  margin: 0 0 calc(var(--u) * 10);
+  padding: 6px 10px;
+  border-left: 3px solid var(--fq-gold);
+  background: rgba(0, 0, 0, 0.22);
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.fq-mod-subject span {
+  color: #ffe9b0;
+}
+
+.fq-mod-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 14px;
+}
+
+.fq-mod-label {
+  display: block;
+  margin: 8px 0 4px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fq-mod-note,
+.fq-mod-input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 2px solid var(--fq-olive-dark);
+  border-radius: 6px;
+  background: #fff6d8;
+  color: #1b1004;
+  font: inherit;
+  box-shadow: inset 0 2px 4px rgba(60, 35, 5, 0.35);
+}
+
+.fq-mod-input {
+  min-height: 44px;
+}
+
+.fq-mod-error {
+  margin: 8px 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ffb4a4;
+  background: rgba(120, 16, 5, 0.55);
+  color: #fff;
+  font-weight: 700;
+}
+
+.fq-mod-explain {
+  color: #fff;
+}
+
+.fq-mod-explain p {
+  margin: 8px 0 2px;
+  font-weight: 700;
+  color: #ffe9b0;
+}
+
+.fq-mod-explain ul {
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--fq-text-body);
+}
+
+.fq-mod-dialog .fq-dialog-actions {
+  margin-top: calc(var(--u) * 16);
+}
+
+.fq-app .fq-dbtn.fq-mod-danger {
+  border-color: #8c1206;
+  background: linear-gradient(180deg, #d98a7a, #b9604f 55%, #98402f);
+  color: #fff;
+}
+
+.fq-mod-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.fq-mod-blocks,
+.fq-mod-announcements {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.fq-mod-blocks li,
+.fq-mod-announcements li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #fff;
+}
+
+.fq-mod-announcements li {
+  display: block;
+}
+
+.fq-mod-announcements p {
+  margin: 0 0 4px;
+}
+
+.fq-mod-snippet {
+  color: var(--fq-text-body);
+  overflow-wrap: anywhere;
+}
+
+.fq-mod-parlor {
+  color: #ffe9b0;
+  font-size: 0.9em;
+}
+
+.fq-mod-blocks .fq-dbtn,
+.fq-mod-announcements .fq-dbtn,
+.fq-mod-row .fq-dbtn {
+  min-width: 0;
+  min-height: 40px;
+  font-size: max(15px, calc(var(--u) * 18));
+}
+
+/* ---------- The mute banner ---------- */
+
+.fq-mod-banner {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  z-index: 60;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(640px, calc(100vw - 16px));
+  padding: 8px 14px;
+  border: 2px solid #8c1206;
+  border-radius: 8px;
+  background: #3a0d07;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- The notice before online play ---------- */
+
+.fq-gate {
+  max-height: 100%;
+  overflow: auto;
+}
+
+.fq-gate-points {
+  margin: 0 0 calc(var(--u) * 6);
+  padding-left: 1.1em;
+  font-size: 0.92em;
+  line-height: 1.35;
+}
+
+.fq-gate-points li {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 560px) {
+  .fq-mod-choices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

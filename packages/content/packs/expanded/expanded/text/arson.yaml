@@ -1,0 +1,4 @@
+offer: "`wThe Twins: `y\"We like to play with fire. We'll discreetly pay a 'visit' to any funeral parlor in town for only {cost} gold tags.\"\n\nA fire burns 5 percent of the gravestones, all wood tags, half the caskets in stock and the parlor's reputation. A smoke detector stops it 80 percent of the time; a safe saves the tags."
+peaceful: '`yThe twins look at the Peace Pledge sign, then at the police car across the street. "No way, boss."'
+burned: "`yYou watch from your window.\n\n`wA fire engulfs {home}!\n\n`y{name} loses `w{burned}`y gravestone(s), `w{tags}`y wood tag(s) and `w{stock}`y casket(s). The neighbours will be talking for a week."
+burnedMail: "\n`yA mysterious fire was started on your property. You lost `4{burned}`y gravestone(s), `4{tags}`y wood tag(s) and `4{stock}`y casket(s) from the storeroom. Customers can smell the smoke.\n"

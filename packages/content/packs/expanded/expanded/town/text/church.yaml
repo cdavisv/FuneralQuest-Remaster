@@ -1,0 +1,66 @@
+title: 'St. Mortimer''s Church'
+note: 'Father Smyth greets you warmly, a little too warmly. You wonder if he has anything on under that robe.'
+greeting:
+  - '`wFather Smyth: `y"Why hello there, {player}. Isn''t it a wonderfully fantastic day today? Praise the Lord."'
+  - '`wFather Smyth: `y"{player}! The Lord loves a cheerful giver, and so do I. Mostly the giving part."'
+  - '`wFather Smyth: `y"Ah, {player}. You look like a person with something on their conscience. Or their shoe."'
+  - '`wFather Smyth: `y"{player}, my child! Mind the bucket. The roof is having one of its days."'
+  - '`wFather Smyth: `y"Welcome, {player}. Have a lemon bar. They''re from a fresh batch. A fresher batch. A batch."'
+  - '`wFather Smyth: `y"{player}! I prayed for you this morning. Not by name, but you''ll know which bit."'
+  - '`wFather Smyth: `y"Come in, {player}. Old Man Withers is in the back pew, so speak up. Or don''t."'
+  - '`wFather Smyth: `y"The prodigal undertaker returns! {player}, the collection plate has missed you terribly."'
+  - '`wFather Smyth: `y"{player}. Sit anywhere except the third pew. Something happened in the third pew."'
+buttons:
+  bingo: 'Bingo Night'
+  confess: 'Confession'
+  holyWater: 'Holy Water'
+  service: 'Lead the Service'
+  tithe: 'Tithe'
+  leave: 'Leave'
+  back: 'Back'
+  buyOne: 'Buy a Card'
+  buyThree: 'Buy 3 Cards'
+bingoIntro: '`$"Get your cards, ladies and gentlemen," calls Father Smyth, spinning the cage. "B-4 it''s too late!"
+
+
+  `$There are `w{cards}`$ cards tonight; `w{sold}`$ are sold. One card wins at midnight, and its owner takes the pot: `w{pot} wood tags`$ (`w{carry}`$ carried over from nights nobody held the winner). The church keeps a small cut for the roof.
+
+
+  Each card costs a wood tag. Your cards: `w{mine}`$ (at most {max}). You have `w{wood}`$ wood tags.'
+bingoBought: '`$Father Smyth hands you {count} card(s): number `w{numbers}`$. "Good luck, my child. Luck is a sin, but good luck."'
+bingoFree: 'Free tonight'
+bingoWinMail: '`$BINGO! Your card `w#{card}`$ won last night. Father Smyth hands over `w{pot} wood tags`$ through a smile and gritted teeth.'
+bingoNews: '`7BINGO NIGHT
+
+  `^{name} won {pot} wood tags at St. Mortimer''s with card #{card}. Old Man Withers says it was rigged. It wasn''t. He says that every week.
+
+
+  '
+bingoCarryNews: '`7BINGO NIGHT
+
+  `^Father Smyth called card #{card}, but nobody had bought it. The pot of {pot} wood tags rolls over to tonight. Withers is already in line.
+
+
+  '
+confessed:
+  - '`$You confess. Father Smyth listens, winces, and accepts `w${price}`$ "for the candles." You feel cleaner. `5(+1 karma)`$'
+  - '`$Father Smyth hears you out, gasps twice, and takes `w${price}`$. "Say three Hail Marys and never tell me that again." `5(+1 karma)`$'
+  - '`$A long silence through the grille, then the sound of Father Smyth writing something down. `w${price}`$ "for the candles." `5(+1 karma)`$'
+  - '`$Father Smyth asks you to start again, slower, so he gets it right. `w${price}`$, and your soul is a little lighter. `5(+1 karma)`$'
+  - '`$"Is that all?" asks Father Smyth. You tell him the rest. "Ah." He takes `w${price}`$ and opens a window. `5(+1 karma)`$'
+  - '`$You confess to Father Smyth and, by mistake, to Old Man Withers, asleep on the other side of the booth. `w${price}`$. `5(+1 karma)`$'
+  - '`$The Lord forgives everything, Father Smyth explains, and the church forgives everything over `w${price}`$. You pay. `5(+1 karma)`$'
+  - '`$You tell Father Smyth about the toe tags. He laughs until he cries, then charges you `w${price}`$ for the laugh. `5(+1 karma)`$'
+  - '`$"Go in peace," says Father Smyth, pocketing `w${price}`$. "Quite a lot of peace, actually. You paid for the large." `5(+1 karma)`$'
+confessCapped: '`$Father Smyth closes the little window. "That''s as clean as money gets you, my child. The rest you''ll have to earn."'
+holyWaterBought: '`$Father Smyth fills a bottle from the font and corks it with his thumb. "Bless a grieving family with it. Not your fries." You have `w{have}`$ bottle(s).'
+served: '`$You lead the Sunday service. Nobody falls asleep, which is a first, and the hymn ends at the same time for everyone. `5(+{bp} BP, +{reviews} reputation)`$'
+tithed:
+  - '`$You drop `w${money}`$ in the plate. It makes a satisfying thud. The parish newsletter will mention you. `5(+{bp} BP)`$'
+  - '`$Father Smyth takes your `w${money}`$ and looks at you like a son. A son with money. `5(+{bp} BP)`$'
+  - '`$You fold `w${money}`$ into the plate. Father Smyth unfolds it before it reaches the end of the pew. `5(+{bp} BP)`$'
+  - '`$`w${money}`$ for the roof fund. A drop of rain lands on your head, which Father Smyth calls a sign. `5(+{bp} BP)`$'
+  - '`$You tithe `w${money}`$. The organist plays a little louder for you, then stops, because you''ve left. `5(+{bp} BP)`$'
+  - '`$Your `w${money}`$ goes in the poor box. Father Smyth explains, gently, that he is the poor. `5(+{bp} BP)`$'
+  - '`$You give `w${money}`$. Old Man Withers sees you and gives a button. Father Smyth thanks you both the same. `5(+{bp} BP)`$'
+  - '`$`w${money}`$ to St. Mortimer''s. Your name goes on the donor board in letters Father Smyth calls generous. `5(+{bp} BP)`$'

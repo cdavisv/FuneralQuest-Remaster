@@ -1,0 +1,379 @@
+# Expanded pack: the daily front-page item, added to Classic's (merge: append).
+# Three brackets by game day (a season is 30 days); each bracket also gets every Classic blurb.
+#   early: days 1 to 7   mid: days 8 to 22   late: day 23 on
+# Running stories: the Mayor's election (Doris Fenwick), Bill's Big Burger, the zoo tiger, the
+# Zombie Scarecrow (Old Man Withers), Lake Bleak's monster, Dead Man's Curve, the 'weather balloon'.
+
+ranges:
+  - low: -229999999
+    high: 7
+    entries:
+      - title: 'NEW UNDERTAKERS FLOOD DEATHVILLE'
+        message: '"Every week somebody hangs out a shingle. Every month somebody gets buried under one," says the Mayor, who has asked for a cut of both.'
+      - title: 'ZOO ACQUIRES "MOSTLY TAME" TIGER'
+        message: 'Deathville Zoo director Hank Pruitt says the new tiger "has only eaten one keeper, and that was during orientation." Visitors are asked not to wear meat-scented cologne.'
+        picture: 'animals/rattler'
+      - title: 'BILL''S BIG BURGER LAUNCHES THE QUADRUPLE BYPASS'
+        message: '"Four patties, four cheeses and a fried egg where the bun should be," says owner Bill. "In Blaine it''s legally a weapon. Here it''s lunch."'
+        giveRandom: '`wThe phone rings - It''s Bill''s Big Burger.\n\n`$"We need a guy for... customer feedback. The quiet kind."'
+        addLog: '`7BURGER FEEDBACK HANDLED\n`^*NAME* of *HOME* has quietly collected Bill''s Big Burger''s first Quadruple Bypass reviewers. Coupons were handed out at the graveside.'
+        modBp: [ 20, 40 ]
+        modLuck: [ 1, 3 ]
+      - title: 'WITHERS DENIES SCARECROW COMEBACK'
+        message: '"I am retired from scaring," says Old Man Withers, 83, speaking to reporters from the middle of a cornfield while wearing the mask.'
+      - title: 'HEAT WAVE: ICE CREAM SALES AND FUNERALS BOTH UP'
+        message: 'The thermometer outside City Hall melted Tuesday. "Drink water, stay inside, and pre-plan," advises the county, in that order.'
+        giveRandom: '`wThe phone rings - It''s Golden Oaks Retirement Home.\n\n`$"The air conditioning broke on Sunday. Bring the big hearse."'
+        addLog: '`7HEAT WAVE TOLL\n`^*NAME* of *HOME* has been called to Golden Oaks Retirement Home. Families are asked to bring fans, and checkbooks.'
+        modBp: [ 40, 80 ]
+        modLuck: [ 1, 5 ]
+      - title: 'MAYOR UNVEILS STATUE OF MAYOR'
+        message: '"Children need to know what a leader looks like," says the Mayor of the eleven-foot bronze, paid for out of the cemetery fund. "The dead don''t vote. Mostly."'
+      - title: 'DI-MART: BURY ONE, GET ONE FREE'
+        message: '"Limit one per family per day," says Di-Mart clerk Elijah, who shoppers report did not blink once the entire weekend.'
+      - title: 'LAKE BLEAK SWIMMING SEASON OPENS'
+        message: '"The lifeguard is new and very enthusiastic," says the parks department. "He can almost swim."'
+      - title: 'CHURCH BAKE SALE HOSPITALIZES TWELVE'
+        message: 'Father Smyth blames "a bad batch of lemon bars" and "possibly the Lord''s will". The surviving lemon bars are now half price.'
+        giveRandom: '`wThe phone rings - It''s Father Smyth.\n\n`$"About the lemon bars. Discretion, please. A lot of discretion."'
+        addLog: '`7CHURCH CHOOSES PARLOR\n`^Father Smyth has asked *NAME* of *HOME* to handle the bake sale victims quietly. Very quietly.'
+        picture: 'people/churchguy_h'
+        modBp: [ 30, 60 ]
+        modLuck: [ 1, 5 ]
+      - title: 'SPIRIT UNIVERSITY OPENS MORTUARY WING'
+        message: '"Ninety percent of our graduates find work within a year," says the Dean. "The other ten percent, we find in the lab."'
+      - title: 'NEW BYPASS NAMED "DEAD MAN''S CURVE" BY POPULAR VOTE'
+        message: 'Highway engineers call the name "premature". Residents call it "confident". Two undertakers have already bought the billboard space.'
+      - title: 'LOCAL MAN EATS 40 HOT DOGS, WINS TROPHY, DIES'
+        message: '"He was so proud," says his widow. "For about four minutes." The trophy will be buried with him, at his request, in his hand.'
+        giveRandom: '`wThe phone rings - It''s the County Fair committee.\n\n`$"We need a casket shaped like a trophy. Or a hot dog. Your call."'
+        addLog: '`7FAIR CHAMPION LAID TO REST\n`^*NAME* of *HOME* buries the hot dog champion with full honors. Mustard was served.'
+        modBp: [ 20, 40 ]
+        modLuck: [ 1, 3 ]
+      - title: 'TELLER OF THE MONTH, NINTH YEAR RUNNING'
+        message: 'Deathville Savings has again named its teller Employee of the Month. "Nobody else applied," she explains, slowly, as if to a child.'
+        picture: 'places/bank'
+      - title: 'HOSPITAL LAUNCHES PATIENT LOYALTY CARD'
+        message: '"Your tenth visit is free," says the Nurse. "Not many make it to ten, but it''s the thought that counts."'
+        picture: 'places/hospital_desk'
+      - title: 'PALE HORSE CAFE ADDS "LAST MEAL" SPECIAL'
+        message: 'Steak, pie and a priest on request. "Business is booming," says the owner. "Repeat business, not so much."'
+      - title: 'ELM STREET POTHOLE SWALLOWS SECOND SEDAN'
+        message: 'The Mayor promises to fill the pothole "right after the election". The sedan''s owner is listed as "somewhere down there".'
+      - title: 'TWINS SPOTTED AT HARDWARE STORE'
+        message: 'A clerk reports the Twins bought forty gallons of lighter fluid and asked, at exactly the same time, whether it came in "extra".'
+      - title: 'CEMETERY PLOTS NOW PRICIER THAN HOUSES'
+        message: '"At least the neighbors are quiet," said one buyer. Realtors are reportedly digging up their own back yards to get in on the market.'
+      - title: 'CARNIVAL IN TOWN, FERRIS WHEEL INSPECTED "BY EYE"'
+        message: '"I looked at it real hard," says the county inspector. "It looked fine. Mostly round."'
+        giveRandom: '`wThe phone rings - It''s the carnival.\n\n`$"The wheel came off. It rolled a real long way. Bring several hearses."'
+        addLog: '`7CARNIVAL TRAGEDY\n`^*NAME* from *HOME* collects the Ferris wheel riders from three counties. Free cotton candy for every mourner.'
+        modBp: [ 50, 100 ]
+        modLuck: [ 1, 5 ]
+      - title: 'FIRST FROST KILLS DAISIES, TWO GARDENERS'
+        message: '"They wouldn''t come in without the daisies," says a neighbor. The daisies have been composted. The gardeners are still being discussed.'
+  - low: 8
+    high: 22
+    entries:
+      - title: 'BILL''S BIG BURGER RECALLS QUADRUPLE BYPASS'
+        message: '"We are pulling it from the menu out of respect," says Bill. "Also the health department took the grill."'
+        giveRandom: '`wThe president of Bill''s Big Burger walks in, sweating.\n\n`$"Some of the recall came too late..."'
+        addLog: '`7BURGER CHAIN SIGNS UNDERTAKER\n`^Bill''s Big Burger has named *NAME* of *HOME* its official funeral partner. Every mourner gets a coupon.'
+        modBp: [ 40, 90 ]
+        modLuck: [ 1, 5 ]
+      - title: 'ZOO TIGER ESCAPES, RETURNS FOR DINNER'
+        message: '"He came back on his own, and very full," says zoo director Hank Pruitt. A head count of the night staff is under way.'
+        giveRandom: '`wThe zoo director walks in with a shovel and a sad face.\n\n`$"We found most of the night watchman."'
+        addLog: '`7TIGER TRAGEDY\n`^*NAME* of *HOME* will bury the zoo''s night watchman, and whatever else turns up in the tiger enclosure.'
+        picture: 'animals/rattler'
+        modBp: [ 30, 60 ]
+        modLuck: [ 1, 5 ]
+      - title: 'DENTIST DORIS FENWICK TO RUN FOR MAYOR'
+        message: 'Retired dentist Doris Fenwick challenges the Mayor on a platform of "fewer statues". The Mayor responded by unveiling a statue.'
+      - title: 'ZOMBIE SCARECROW RETURNS; WITHERS "AT BINGO"'
+        message: 'A figure in a scarecrow mask terrorized farmers Thursday. Old Man Withers says he was at bingo. Bingo staff confirm he left early, "shedding straw".'
+      - title: 'BLAINE: OUR CEMETERY IS BETTER'
+        message: 'Blaine''s mayor calls Deathville''s cemetery "a gravel lot with feelings". Our Mayor fired back that Blaine is "a cemetery that hasn''t been told yet".'
+      - title: 'DI-MART RECALLS DURAREST (TM) NECK BRACE'
+        message: '"It works perfectly," says Elijah. "The problem is people keep wearing it while they''re alive." Refunds are available in store credit, for caskets.'
+      - title: 'FLU SEASON ARRIVES EARLY, PLANS TO STAY'
+        message: 'Doctors urge residents to wash their hands and avoid the bingo hall. Residents have agreed to the first one.'
+        giveRandom: '`wThe phone rings - It''s the Nurse.\n\n`$"Hi, prince. The flu ward made you a list. It''s a long list."'
+        addLog: '`7FLU WARD TURNS TO LOCAL PARLOR\n`^The hospital has sent its flu cases to *NAME* of *HOME*. The Nurse says *NAME* "has a lovely bedside manner, for after".'
+        picture: 'places/hospital_room'
+        modBp: [ 40, 80 ]
+        modLuck: [ 1, 5 ]
+      - title: 'CHURCH BINGO NIGHT ENDS IN BRAWL'
+        message: '"Somebody called bingo on last week''s card," says Father Smyth. "Then somebody threw a folding chair. This can''t be good."'
+        giveRandom: '`wThe phone rings - It''s Golden Oaks Retirement Home.\n\n`$"Bingo got out of hand. Bring chairs. And several boxes."'
+        addLog: '`7BINGO BRAWL VICTIMS LAID TO REST\n`^*NAME* from *HOME* handles the bingo brawl. The winning card will be buried with its owner.'
+        modBp: [ 30, 70 ]
+        modLuck: [ 1, 5 ]
+      - title: 'ENQUIRER ASKS: ARE UNDERTAKERS HAPPIER?'
+        message: 'A Deathville Enquirer survey finds 100 percent of local funeral directors "satisfied with demand". The other questions were left blank.'
+      - title: 'LAKE BLEAK MONSTER SPOTTED'
+        message: 'Fisherman Earl Dunlop describes the creature as "big, green, and wearing my brother''s hat". Earl''s brother has not been seen since the fishing trip.'
+      - title: 'MAYOR PROMISES "A FUNERAL IN EVERY POT"'
+        message: 'Critics point out the slogan means nothing. The Mayor says it means "jobs". Doris Fenwick says it means "he needs a dentist".'
+      - title: 'FOG ROLLS IN, STAYS A WEEK'
+        message: 'Visibility on Dead Man''s Curve is under a foot. Drivers are advised to use their horns, their lights and their prayers.'
+        giveRandom: '`wThe phone rings - It''s the highway patrol.\n\n`$"Pileup on Dead Man''s Curve. Bring the long hearse."'
+        addLog: '`7CURVE LIVES UP TO ITS NAME\n`^Highway patrol thanks *NAME* of *HOME* for clearing Dead Man''s Curve in record time.'
+        picture: 'wait'
+        modBp: [ 50, 110 ]
+        modLuck: [ 1, 5 ]
+      - title: 'UNDERTAKER''S CAT RUNS FOR CITY COUNCIL'
+        message: 'The cat, owned by an unnamed local undertaker, is polling ahead of every human candidate. "It''s the eyes," says one voter. "It''s seen things."'
+      - title: 'CASKET PRICES SOAR AFTER LUMBER MILL FIRE'
+        message: 'Investigators are questioning the Twins, who deny everything at exactly the same time and in the same words.'
+      - title: 'FREE CPR CLASS CANCELLED FOR LACK OF INTEREST'
+        message: '"We had the dummy and everything," says the Nurse. "The dummy showed up. Nobody else did."'
+      - title: 'POLKA FESTIVAL DRAWS RECORD CROWD, RECORD HEATSTROKE'
+        message: '"The accordions just kept going," says one survivor. "Nobody could hear the ambulances."'
+        giveRandom: '`wThe phone rings - It''s the Polka Festival committee.\n\n`$"Our headliner collapsed mid-song. He''d want an accordion on the casket."'
+        addLog: '`7POLKA KING SQUEEZED INTO CASKET\n`^*NAME* of *HOME* buries the polka festival''s headliner. The band plays on, over the hole.'
+        modBp: [ 30, 60 ]
+        modLuck: [ 1, 4 ]
+      - title: 'WITHERS BUYS NEW TEETH'
+        message: '"These babies will outlive every undertaker in town," said Old Man Withers, demonstrating by biting a fence post.'
+      - title: 'PSYCH PROFESSOR "CAN READ YOUR MIND"'
+        message: '"Most of you are thinking about money," the Spirit University professor told the press. "Especially the undertakers. I can hear them from here."'
+        picture: 'places/psych'
+      - title: 'YANG''S PROMISES DELIVERY IN 30 MINUTES'
+        message: '"Anywhere in Deathville, thirty minutes," says Mr. Yang. "Tiger, sparrow, it does not matter. My car is very fast and my conscience is very quiet."'
+        picture: 'chinese_takeout'
+      - title: 'POLICE BUY NEW SQUAD CAR, CRASH IT'
+        message: '"It''s a learning curve," says the chief of the Deathville PD. "Specifically, Dead Man''s Curve."'
+      - title: 'SPEED DATING NIGHT AT GOLDEN OAKS'
+        message: 'Three engagements, two broken hips and one funeral. "A typical Tuesday," says management.'
+        picture: 'people/f_old_2'
+      - title: 'BILL''S BIG BURGER FIGHTS BACK WITH FREE REFILLS'
+        message: '"Unlimited gravy," says Bill. "We''re not saying it''s safe. We''re saying it''s unlimited."'
+      - title: 'ST. MORTIMER''S BELLS DROWN OUT WITHERS'' NOISE COMPLAINT'
+        message: 'Old Man Withers filed a complaint about the rebuilt bells, and the bells rang through the hearing. "I could not hear myself being right," he said. The complaint has been filed under B, for Bells.'
+        when:
+          arcs:
+            - id: 'steeple'
+              endings: [ 'rebuilt' ]
+      - title: 'CHOIR PRACTISES ON LEVEL 3 OF THE GARAGE ''FOR THE ACOUSTICS'''
+        message: 'The choir has moved into Vane''s garage, where a sedan on Level 2 has been joining in on its alarm. Father Smyth says it is the best the Kyrie has ever sounded, and also the cheapest he has ever paid for parking.'
+        when:
+          arcs:
+            - id: 'steeple'
+              endings: [ 'paved' ]
+      - title: 'BIGTOWN SENDS THANK-YOU CARD, THEN INVOICE'
+        message: 'The card thanked Deathville for its business. The invoice charged Deathville for the card. Nurse Gertie has pinned both to the fridge, next to a drawing of a cough.'
+        when:
+          arcs:
+            - id: 'cough'
+              endings: [ 'fled' ]
+      - title: 'MORTY HOLDS CITY HALL DOOR FOR FOUR HOURS; NOBODY COMPLAINS'
+        message: 'A man with a clipboard arrived at nine and was held at the door until one. "I thought it was a hold-up," he said. "It was Morty." The man has joined the fan club''s committee.'
+        picture: 'people/morty'
+        when:
+          arcs:
+            - id: 'morty'
+              endings: [ 'conceded' ]
+      - title: 'MORTY''S FIRST DECREE SIGNED WITH AN X'
+        message: 'The Honorary Mayor declared the first Tuesday of the month "a day of leaning". The council is reading the decree for hidden meanings. So far it has found none, and several leaves.'
+        picture: 'people/morty'
+        when:
+          arcs:
+            - id: 'morty'
+              endings: [ 'honorary' ]
+      - title: 'RACCOON IN HAT PROMOTED TO NIGHT WATCHMAN''S ASSISTANT'
+        message: 'The raccoon was given a lantern, a whistle and a smaller hat for night shifts. The watchman says the raccoon is "a natural", and has asked that nobody mention how.'
+        when:
+          arcs:
+            - id: 'robber'
+              endings: [ 'caught' ]
+      - title: 'RACCOON IN A HAT SPOTTED IN ROW C, WEARING A SECOND HAT'
+        message: 'The second hat is larger. Nobody asked where it came from. Nobody asked where the shovel came from either, since the shovel is the church''s.'
+        when:
+          arcs:
+            - id: 'robber'
+              endings: [ 'emptied' ]
+      - title: 'ELIJAH''S PLAQUE STOLEN, RETURNED, STOLEN'
+        message: 'The plaque has now been stolen and returned three times, each time in better condition. Store cameras show Elijah putting it back at 3 a.m., not blinking.'
+        picture: 'people/store_guy'
+        when:
+          arcs:
+            - id: 'dimart'
+              endings: [ 'saved' ]
+      - title: 'DI-MART OPENS ''LEGACY AISLE'' FOR OLD PRICES'
+        message: 'The aisle holds one tin of beans, priced at "historical value". Elijah restocks it hourly and has never been seen arriving or leaving.'
+        picture: 'people/store_guy'
+        when:
+          arcs:
+            - id: 'dimart'
+              endings: [ 'closed' ]
+      - title: 'FIRE BRIGADE DALMATIAN RECEIVES A TINY HELMET'
+        message: 'The dalmatian who held the line on Elm Street was presented with a helmet by the grateful brigade. The dalmatian ate the helmet. The brigade says that counts as a salute.'
+        when:
+          arcs:
+            - id: 'twins'
+              endings: [ 'doused' ]
+      - title: 'TWINS SEND ELM STREET A CARD: ''GLAD YOU LIKED IT'''
+        message: 'The card features a drawing of a birdhouse. The sheriff has asked politely that the Twins stay in Blaine. The Twins replied, at the same time, "we like it here".'
+        when:
+          arcs:
+            - id: 'twins'
+              endings: [ 'blaze' ]
+      - title: 'EVERYONE WHO BET AGAINST WITHERS DEMANDS A PULSE CHECK'
+        message: 'Withers cooperated and offered his wrist, then his neck, then a mirror to hold under his nose. "Still here," he said. "Check again tomorrow." The bookmakers have set his odds at "ridiculous".'
+        when:
+          arcs:
+            - id: 'withers'
+              endings: [ 'pool' ]
+      - title: 'WITHERS'' EULOGY NOW ON CASSETTE; SIDE B IS A REBUTTAL'
+        message: 'The tape runs two hours and nine minutes. Di-Mart sells it at the register next to the gum, and Elijah has been seen listening to it without blinking.'
+        picture: 'people/store_guy'
+        when:
+          arcs:
+            - id: 'withers'
+              endings: [ 'wake' ]
+      - title: 'MAN WITH THE TEETH SPOTTED AT LOCAL PARLOR, ''JUST LOOKING'''
+        message: 'He measured the carpet and asked about plot income. He left when a staff member offered him a casket "to try on". The casket is still in the lobby, and so is his business card.'
+        when:
+          arcs:
+            - id: 'solemncorp'
+              endings: [ 'repelled' ]
+      - title: 'NURSE GERTIE''S COFFEE MUG BECOMES TOURIST ATTRACTION'
+        message: 'The mug reads WORLD''S OKAYEST NURSE and has been in service since before the hospital had a roof. A coach party queued for a photo. Gertie made them leave their cups at the door.'
+        picture: 'places/hospital_desk'
+        when:
+          arcs:
+            - id: 'gertie'
+              endings: [ 'stays' ]
+      - title: 'HEAD NURSE SAL REQUESTS NAME TAG; HOSPITAL PRINTS ''ALSO SAL'''
+        message: 'His white coat still bears the previous owner''s name. The hospital printed the tag in good faith and nobody has had the heart to correct it. Gertie checks it daily, for evidence.'
+        picture: 'places/hospital_desk'
+        when:
+          arcs:
+            - id: 'gertie'
+              endings: [ 'sal' ]
+  - low: 23
+    high: 299999999
+    entries:
+      - title: 'MAYOR WINS IN A LANDSLIDE. AN ACTUAL ONE.'
+        message: 'A mudslide buried the polling station along with most of Doris Fenwick''s supporters. "Democracy has spoken," says the Mayor.'
+        giveRandom: '`wThe phone rings - It''s City Hall.\n\n`$"Some of the voters need digging out. Sort of."'
+        addLog: '`7MAYOR THANKS LOCAL PARLOR\n`^*NAME* from *HOME* buries the Fenwick campaign team. The Mayor sends a fruit basket and a small statue of himself.'
+        modBp: [ 80, 140 ]
+        modLuck: [ 1, 8 ]
+      - title: 'ZOMBIE SCARECROW UNMASKED. IT''S STILL WITHERS.'
+        message: '"I want my cornfield back," says Old Man Withers. "And my mask. That''s my good mask." The sheriff has given up and lent him a better one.'
+      - title: 'BILL OF BILL''S BIG BURGER DIES AT HIS OWN GRILL'
+        message: '"He died doing what he loved, which was frying things," says his widow. The restaurant will reopen Thursday under the slogan "Still Big".'
+        giveRandom: '`wBill''s widow walks in holding a spatula.\n\n`$"He wanted to be buried in a bun. Can you do a bun?"'
+        addLog: '`7BILL LAID TO REST IN A BUN\n`^*NAME* of *HOME* buries Bill in a sesame-seed casket. The buffet is, of course, burgers.'
+        modBp: [ 50, 90 ]
+        modLuck: [ 1, 5 ]
+      - title: 'SEASON''S END NEARS: UNDERTAKERS EXHAUSTED, RICH'
+        message: '"I haven''t slept in a month," says one funeral director. "I have, however, bought a boat."'
+      - title: 'ZOO CLOSES TIGER EXHIBIT, OPENS TIGER MEMORIAL'
+        message: 'The tiger is fine. The memorial is for everyone else. Zoo director Hank Pruitt will be honored in a separate ceremony, in the reptile house.'
+      - title: 'ASTRONOMER: NOTHING TO WORRY ABOUT IN THE SKY'
+        message: 'The Spirit University astronomer insists the big glowing thing is a weather balloon. "A very big, very hot weather balloon. Moving very fast. Toward us."'
+      - title: 'METEOR RUMOR SPARKS RUN ON CASKETS'
+        message: '"People want to be ready," says Elijah at Di-Mart. "Also, I raised the prices. Also, I am not blinking. I never blink."'
+        giveRandom: '`wThe phone rings - It''s Di-Mart.\n\n`$"Elijah here. Some customers bought caskets and then panicked. Can you finish the job?"'
+        addLog: '`7DI-MART PARTNERS WITH PARLOR\n`^Di-Mart has named *NAME* of *HOME* its preferred undertaker. Elijah could not be reached to blink for comment.'
+        picture: 'people/store_guy'
+        modBp: [ 40, 80 ]
+        modLuck: [ 1, 5 ]
+      - title: 'CHURCH ROOF FINALLY FIXED, IMMEDIATELY FALLS IN'
+        message: '"This can''t be good," said Father Smyth, from under it. It was not good.'
+        giveRandom: '`wFather Smyth walks in covered in plaster.\n\n`$"The roof came in during the sermon. I need a parlor with a forgiving price list."'
+        addLog: '`7ROOF COLLAPSE AT ST. MORBID''S\n`^*NAME* of *HOME* handles the services for the congregation. Lemon bars to follow, sadly.'
+        picture: 'background/background_church'
+        modBp: [ 60, 110 ]
+        modLuck: [ 1, 5 ]
+      - title: 'LAKE BLEAK MONSTER IDENTIFIED AS EARL''S BROTHER'
+        message: '"He always loved that lake," says Earl Dunlop. "And my hat. I''d like the hat back, if it''s all the same."'
+      - title: 'MAYOR SPENDS CEMETERY FUND ON MORE STATUES'
+        message: 'A third statue of the Mayor now stands on top of the grave of the second. "It''s called legacy," he explains.'
+      - title: 'COSTUME PARADE ENDS IN HAYRIDE PILEUP'
+        message: '"The tractor was dressed as a ghost," a witness says. "It was very convincing. Nobody saw it coming."'
+        giveRandom: '`wThe phone rings - It''s the Parade committee.\n\n`$"The hayride went into the quarry. Most people were in costume, so check the toe tags twice."'
+        addLog: '`7COSTUME PARADE CLEANUP\n`^*NAME* from *HOME* recovers the hayride riders. Several were buried in costume, at their families'' request.'
+        modBp: [ 50, 100 ]
+        modLuck: [ 1, 6 ]
+      - title: 'BLAINE UNDERTAKERS'' CONVENTION BANS DEATHVILLE'
+        message: 'Organizers cite "the incident with the open bar, the hearse and the swimming pool." Nobody from Deathville would comment, but several smiled.'
+      - title: 'HOSPITAL TO NAME WING AFTER TOP UNDERTAKER'
+        message: '"We want to honor whoever sends us the nicest thank-you cards," says the Nurse. "And the biggest fruit baskets. Mostly the baskets."'
+      - title: 'WINTER STORM BURIES GOLDEN OAKS'
+        message: 'Snowdrifts reached the second floor overnight. The bingo game continued by candlelight until the candles ran out.'
+        giveRandom: '`wThe phone rings - It''s Golden Oaks Retirement Home.\n\n`$"The plow just got here. We''ll need you. And a ladder."'
+        addLog: '`7STORM TOLL CLIMBS\n`^Golden Oaks hires *NAME* of *HOME*. Families thank the plow driver, then *NAME*.'
+        modBp: [ 60, 120 ]
+        modLuck: [ 1, 6 ]
+      - title: 'THE TWINS OPEN A FIREWORKS STAND'
+        message: '"We like to play with fire," they told reporters, together. "Now it''s legal. Mostly." The stand is located next to the gas station.'
+        giveRandom: '`wThe phone rings - It''s the fire department.\n\n`$"The fireworks stand went up. All of it. The Twins are fine. The customers... bring a bucket."'
+        addLog: '`7FIREWORKS STAND EXPLODES\n`^*NAME* of *HOME* buries the Twins'' customers. The Twins send a wreath. It is on fire.'
+        picture: 'places/fire'
+        modBp: [ 50, 100 ]
+        modLuck: [ 1, 5 ]
+      - title: 'WITHERS FINALLY PICKS HIS CASKET'
+        message: 'After 52 years of price-checking, Old Man Withers chose the cheapest wood model. "I''m still not dying," he added. "I just want it on the porch."'
+      - title: 'FINAL STANDINGS NEAR; UNDERTAKERS STOP SLEEPING'
+        message: '"I just stand by the phone now," says one. "Sometimes I call the hospital to make sure their phone works."'
+      - title: 'MORTY THE SKELETON VOTED MOST POPULAR RESIDENT'
+        message: 'Morty beat the Mayor by twelve votes. The Mayor demands a recount, an apology and a statue, not necessarily in that order.'
+        picture: 'people/morty'
+      - title: 'ENQUIRER: WHICH UNDERTAKER IS STEALING THE RINGS?'
+        message: 'Three families report wedding rings missing after open-casket viewings. "The dead don''t take jewelry," says the sheriff. "Somebody living does."'
+        picture: 'ring/ring'
+      - title: 'YANG''S NAMES FORTUNE COOKIE OF THE YEAR'
+        message: '"This year''s winner: You will be buried by someone cheap," says Mr. Yang. "Very popular. People keep it in their wallet, for the funeral."'
+        picture: 'chinese_takeout'
+      - title: 'CURE PARADE RETURNS FOR A SECOND LAP'
+        message: 'The Mayor''s cure parade went around the square a second time "for the people at the back". Attendance was higher on the second lap, owing to the free cough drops.'
+        when:
+          arcs:
+            - id: 'cough'
+              endings: [ 'credit' ]
+      - title: 'PIGEONS PETITION FOR A PLACE ON THE UNKNOWN UNDERTAKER'
+        message: 'A flock has applied for the statue''s shoulder. The council says the application is under review and the statue is under the pigeons.'
+        when:
+          arcs:
+            - id: 'cough'
+              endings: [ 'statue' ]
+      - title: 'SOLEMNCORP CEMETERY (FORMERLY CEMETERY) UNVEILS NEW SIGN'
+        message: 'The new sign was hung above the old sign, which was hung above the older sign. Mourners say it feels like being buried by a spreadsheet.'
+        when:
+          arcs:
+            - id: 'solemncorp'
+              endings: [ 'takeover' ]
+      - title: 'SOLEMNCORP LIQUIDATES: 400 BALLOONS, ONE TELEPHONE'
+        message: 'The Elm Street branch auction raised eleven dollars. The balloons went to a birthday and the telephone to a man named Ted, who says it has not stopped ringing and is very sorry for his loss.'
+        when:
+          arcs:
+            - id: 'solemncorp'
+              endings: [ 'bust' ]
+      - title: 'EARL DUNLOP: ''THE FERRY WAS NOT WEARING MY BROTHER''S HAT'''
+        message: 'Earl says the hat is still missing and that the ferry "never had a head". Lucius Vane''s harpoon has been returned to his collection, which now holds four harpoons and no boat.'
+        when:
+          arcs:
+            - id: 'lake'
+              endings: [ 'hunted' ]
+      - title: 'MONSTER FAN CLUB MEETS; MONSTER UNABLE TO ATTEND'
+        message: 'The club''s first newsletter asks members for photographs. The second page is a photograph of a log. The treasurer says the log "has a lot of character".'
+        when:
+          arcs:
+            - id: 'lake'
+              endings: [ 'studied' ]
+      - title: 'COUNCIL VOTES ON WHETHER THE VOTE COUNTED, FOUR TO ONE'
+        message: 'The Mayor''s office says it will be fine whichever way it goes, which is the same way. The one vote in favor was reported to be a clerical error, and a cousin.'
+        when:
+          arcs:
+            - id: 'confidence'
+              endings: [ 'carried' ]
+      - title: 'MAYOR''S STATUE OF SURVIVAL RULED ''TECHNICALLY A FOUNTAIN'''
+        message: 'The fourth statue has been fitted with a pump so that it can survive and also spit. The permit office says the water comes out of the medal, and is billing the medal.'
+        when:
+          arcs:
+            - id: 'confidence'
+              endings: [ 'survived' ]

@@ -1,0 +1,1089 @@
+# Body-preparation choices after a sale (docs/expanded-rules.md section 8.2), the Design Doc's
+# ring first. Placeholders: {dFirst} {surname} {dHis} {dHim} {dHe} {dHeCap} {player}. Karma steps
+# are kept small (-3 to +2); `evil` marks the dishonest choice (Grave Robber doubles its money).
+- id: 'ring'
+  text: '`$While dressing the body you notice a ring is still on {dFirst} {surname}''s finger. It''s a shame to bury such a beautiful stone.'
+  picture: 'ring/ring&hand'
+  options:
+    - label: 'Take It'
+      text: '`$You gently work it off and tuck {dHis} hand into a pocket so no one will notice. A pawn shop gives you a good price.'
+      effects:
+        money: 400
+        karma: -2
+      risk:
+        weight: 0.9
+        failText: '`$At the viewing, {surname}''s sister notices the pale band of skin where the ring was. She notices it loudly.'
+        failEffects:
+          karma: -3
+          reviews: -3
+      evil: true
+    - label: 'Leave It'
+      text: '`$You smile and gently pat it. Some things should go in the ground.'
+      effects:
+        karma: 1
+- id: 'gold-tooth'
+  text: '`${dFirst} has a gold tooth. A big one. It catches the light every time you lean over the table.'
+  options:
+    - label: 'Pliers'
+      text: '`$One good yank. Deathville Dental Recycling pays by the gram.'
+      effects:
+        money: 150
+        karma: -1
+      evil: true
+    - label: 'Leave It'
+      text: '`$You close {dHis} mouth. {dHeCap} smiles with it, in a way.'
+      effects:
+        karma: 1
+- id: 'wallet'
+  picture: 'places/prep-table'
+  text: '`$There''s a fat wallet in {dFirst}''s back pocket. The family never asked about it.'
+  options:
+    - label: 'Pocket It'
+      text: '`$Finders keepers. {dFirst} won''t be needing bus fare.'
+      effects:
+        money: 300
+        karma: -2
+      evil: true
+    - label: 'Return It'
+      text: '`$You hand it to the family. They tell everyone at the wake how honest you are.'
+      effects:
+        karma: 2
+        reviews: 1
+- id: 'glass-cleaner'
+  text: '`$You''re out of embalming fluid. There''s a jug of Streak-B-Gone glass cleaner under the sink. It''s blue. Embalming fluid is... sort of blue.'
+  picture: 'places/embalming-room'
+  track: 'burial'
+  options:
+    - label: 'Use the Streak-B-Gone'
+      text: '`$Nobody notices a thing. {dFirst} has never looked so streak-free.'
+      effects:
+        money: 100
+        karma: -1
+      risk:
+        weight: 0.85
+        failText: '`$At the viewing {dFirst} faintly glows under the lights. A child points. Then everyone points.'
+        failEffects:
+          reviews: -3
+      evil: true
+    - label: 'Buy Proper Fluid'
+      text: '`$You run to Di-Mart for the real stuff. Elijah charges you the emergency price, the crook.'
+      effects:
+        money: -100
+        karma: 1
+- id: 'love-letter'
+  picture: 'places/prep-table'
+  text: '`$A folded love letter is tucked in {dFirst}''s shirt pocket. It is not addressed to {dHis} spouse.'
+  options:
+    - label: 'Read It at the Service'
+      text: '`$There isn''t a dry eye in the house. Also there''s a fistfight in the parking lot. People will talk about this one for years.'
+      effects:
+        reviews: 2
+        karma: -1
+    - label: 'Sell It to the Tabloid'
+      text: '`$The Deathville Enquirer pays cash and runs it on page three.'
+      effects:
+        money: 250
+        karma: -2
+      evil: true
+    - label: 'Bury It With {dHim}'
+      text: '`$Some secrets belong six feet down.'
+      effects:
+        karma: 2
+- id: 'dog'
+  text: '`${dFirst}''s old dog followed the hearse all the way here and is now lying by the back door, whining.'
+  options:
+    - label: 'Adopt It'
+      text: '`$You name it Formaldehyde. It is a good dog. It eats like three dogs.'
+      effects:
+        money: -50
+        karma: 2
+        luck: 3
+    - label: 'Shoo It Away'
+      text: '`$You throw a shoe. The dog takes the shoe. You are now down a shoe.'
+      effects:
+        karma: -1
+- id: 'wrong-body'
+  picture: 'places/prep-table'
+  text: '`$The toe tag says {surname}, but this one has a tattoo that says "BIG STEVE". You have a feeling there has been a mix-up at the hospital.'
+  options:
+    - label: 'Bury Him Anyway'
+      text: '`$Big Steve, {surname}, close enough. Nobody looks closely at a closed casket.'
+      effects:
+        karma: -2
+      risk:
+        weight: 0.8
+        failText: '`$Halfway through the eulogy the real {dFirst} is wheeled in the side door. Awkward does not begin to cover it.'
+        failEffects:
+          reviews: -4
+    - label: 'Call the Hospital'
+      text: '`$It takes all afternoon, but the right body arrives. The family never knows how close it was.'
+      effects:
+        karma: 1
+        reviews: 1
+- id: 'spare-parts'
+  picture: 'places/prep-table'
+  text: '`$A man in a lab coat at the back door offers $500 for "spare parts, no questions asked." He has a cooler.'
+  karmaBelow: 60
+  options:
+    - label: 'Take the Cooler'
+      text: '`$You don''t ask what he takes. He doesn''t ask how you sleep. Everyone is happy except {dFirst}, who is past caring.'
+      effects:
+        money: 500
+        karma: -3
+      evil: true
+    - label: 'Slam the Door'
+      text: '`$You slam the door on his foot. It feels great.'
+      effects:
+        karma: 1
+- id: 'twitch'
+  text: '`${dFirst}''s finger twitches. Then the foot. With the right words from that book in your basement, {dHe} could mop floors for a week.'
+  picture: 'mother/finger'
+  karmaBelow: 30
+  options:
+    - label: 'Say the Words'
+      text: '`${dFirst} sits up, groans, and mops the embalming room. Badly, but for free. The smell lingers for days.'
+      effects:
+        money: 300
+        karma: -3
+        luck: 5
+      evil: true
+    - label: 'Lay {dHim} to Rest'
+      text: '`$You put a hand on {dHis} chest until the twitching stops. Not today, {dFirst}.'
+      effects:
+        karma: 1
+- id: 'blessing'
+  text: '`$Father Smyth drops by and offers to bless {dFirst} for free, as long as you put the bake sale flyer in the program.'
+  picture: 'people/churchguy_h'
+  karmaAbove: 70
+  options:
+    - label: 'Accept the Blessing'
+      text: '`$Father Smyth blesses the body, the casket, you, the coffee machine and, for some reason, the hearse.'
+      effects:
+        karma: 1
+        reviews: 2
+    - label: 'No Flyers'
+      text: '`$Father Smyth leaves, muttering something about lemon bars.'
+      effects: {}
+- id: 'light-ashes'
+  text: '`${dFirst}''s ashes come out about a pound light. The cat litter is right there on the shelf.'
+  picture: 'places/creamation_oven'
+  track: 'cremation'
+  options:
+    - label: 'Top It Up'
+      text: '`$A cup of Kitty Klump and nobody is any the wiser. Clumps a little, though.'
+      effects:
+        money: 50
+        karma: -1
+      evil: true
+    - label: 'Tell the Family'
+      text: '`$You explain that some people are just light. They seem oddly proud.'
+      effects:
+        karma: 1
+        reviews: -1
+- id: 'grin'
+  picture: 'places/prep-cosmetics'
+  text: '`$Rigor mortis has left {dFirst} with an enormous grin, like {dHe} just heard a filthy joke.'
+  options:
+    - label: 'Leave the Grin'
+      text: '`$At the viewing everyone agrees {dFirst} looks happier than {dHe} ever did alive. One aunt faints. It''s taken as a good omen.'
+      effects:
+        luck: 5
+        reviews: -1
+    - label: 'Staple Gun'
+      text: '`$Two staples and a firm hand. {dFirst} looks dignified, and only slightly surprised.'
+      effects:
+        karma: 1
+        reviews: 1
+      risk:
+        weight: 0.9
+        failText: '`$During the viewing a staple gives out with an audible ping. The grin returns. So does the aunt, to faint again.'
+        failEffects:
+          reviews: -3
+- id: 'glass-eye'
+  text: '`${dFirst}''s glass eye pops out and rolls under the embalming table. When you find it, it is looking right at you.'
+  picture: 'people/m_doctor'
+  options:
+    - label: 'Put It Back'
+      text: '`$You pop it back in, a little crooked. All through the viewing {dFirst} appears to be winking at the widows.'
+      effects:
+        luck: 2
+        reviews: -1
+    - label: 'Sell It to Cousin Sal'
+      text: '`$Sal pays fifty bucks and says he has "a patient" who needs it. You decide not to ask which way it will face.'
+      effects:
+        money: 50
+        karma: -1
+      evil: true
+    - label: 'Give It to Morty'
+      text: '`$Morty the skeleton finally has an eye. One. He seems more confident already.'
+      effects:
+        luck: 3
+        karma: -1
+- id: 'coins'
+  text: '`$Someone has laid two silver dollars on {dFirst}''s eyes, the old way. You turn one over. 1921. Collector''s coins.'
+  picture: 'stuff/money_bag'
+  options:
+    - label: 'Leave Them'
+      text: '`$Ferry fare for the far side. You''d hate for {dFirst} to have to swim.'
+      effects:
+        karma: 1
+    - label: 'Swap In Quarters'
+      text: '`$Inflation hits the afterlife hard. The coin shop on Main pays well and asks nothing.'
+      effects:
+        money: 150
+        karma: -2
+      risk:
+        weight: 0.85
+        failText: '`$The grandson leans in to say goodbye and loudly asks why Grandpa''s eyes say "Delaware".'
+        failEffects:
+          karma: -2
+          reviews: -3
+      evil: true
+- id: 'false-bottom'
+  text: '`$The family''s heirloom casket has a false bottom. Inside: rolls of twenties and a note that says NOT FOR THE GOVERNMENT.'
+  picture: 'stuff/money_bag_2'
+  track: 'burial'
+  options:
+    - label: 'Tell the Family'
+      text: '`$Three cousins dive into the casket at once. You''ve never seen people so happy at a funeral.'
+      effects:
+        karma: 2
+        reviews: 1
+    - label: 'Take a Finder''s Fee'
+      text: '`$You take one roll. A finder''s fee. You did find it.'
+      effects:
+        money: 200
+        karma: -1
+      evil: true
+    - label: 'Take All of It'
+      text: '`$The government isn''t getting it. Neither is the family. Neither is {dFirst}.'
+      effects:
+        money: 600
+        karma: -3
+      risk:
+        weight: 0.75
+        failText: '`$The family comes back for "Grandpa''s special box" with a flashlight and a lawyer.'
+        failEffects:
+          karma: -3
+          reviews: -4
+      evil: true
+- id: 'zoo-will'
+  text: '`$Folded inside {dFirst}''s sock: a handwritten will, dated last Tuesday, leaving everything to the Deathville Zoo.'
+  options:
+    - label: 'Give It to the Lawyer'
+      text: '`$The zoo gets a new gorilla house. The family gets nothing and blames you, loudly, at the wake.'
+      effects:
+        karma: 2
+        reviews: -1
+    - label: 'Shred It'
+      text: '`$The family never knows. They tip you very well for no reason they can explain.'
+      effects:
+        money: 250
+        karma: -2
+      evil: true
+    - label: 'Mail It to the Zoo'
+      text: '`$A week later a zookeeper drops off a thank-you card and a penguin, which you are not allowed to keep.'
+      effects:
+        karma: 1
+        luck: 3
+- id: 'tape'
+  picture: 'places/prep-table'
+  text: '`${dFirst} left a cassette labelled PLAY AT MY FUNERAL. You play a bit of it in the back room. It is forty minutes of grudges, by name.'
+  options:
+    - label: 'Play It All'
+      text: '`$The Mayor is mentioned eleven times. The cafe talks about nothing else for a month.'
+      effects:
+        reviews: 3
+        luck: -2
+    - label: 'Play the Nice Parts'
+      text: '`$That takes nine seconds. You loop it twice. The family is very moved.'
+      effects:
+        karma: 1
+        reviews: 1
+- id: 'chili-recipe'
+  text: '`$In {dFirst}''s apron pocket: the recipe for {dHis} famous chili, which {dHe} refused to share for forty years.'
+  options:
+    - label: 'Give It to the Family'
+      text: '`$They read it at the wake. The secret ingredient is ketchup. Some of them never recover.'
+      effects:
+        karma: 2
+    - label: 'Sell It to Bill''s'
+      text: '`$Bill''s Big Burger puts it on the menu as the Final Bowl. It sells out in a day.'
+      effects:
+        money: 300
+        karma: -2
+      evil: true
+    - label: 'Memorize It'
+      text: '`$You bury the card with {dHim}. Your chili wins the church cook-off every year from now on.'
+      effects:
+        luck: 3
+        karma: -1
+- id: 'glasses'
+  picture: 'places/prep-cosmetics'
+  text: '`${dFirst}''s reading glasses are in {dHis} breast pocket. You try them on. Your exact prescription.'
+  options:
+    - label: 'Keep Them'
+      text: '`$The world is suddenly sharp. You can read the fine print on your own contracts, which is a mistake.'
+      effects:
+        luck: 2
+        karma: -1
+      evil: true
+    - label: 'Put Them On {dHim}'
+      text: '`${dFirst} looks ready to read the small print on the afterlife.'
+      effects:
+        karma: 1
+- id: 'butterscotch'
+  picture: 'places/prep-cosmetics'
+  text: '`${dFirst}''s cardigan pockets are full of butterscotch candies. Hundreds. It''s like {dHe} was preparing for a siege.'
+  options:
+    - label: 'Leave Them'
+      text: '`$Someday an archaeologist is going to have a very confusing afternoon.'
+      effects:
+        karma: 1
+    - label: 'Fill the Lobby Bowl'
+      text: '`$Every mourner takes one and quietly weeps. It''s the most effective marketing you have ever done.'
+      effects:
+        reviews: 2
+    - label: 'Eat Them'
+      text: '`$You eat eleven before you remember where they came from. You eat a twelfth anyway.'
+      effects:
+        luck: 1
+        karma: -1
+- id: 'biscuit'
+  picture: 'places/prep-cosmetics'
+  text: '`$In {dFirst}''s coat pocket: a film canister of ashes labelled BISCUIT. The dog, you hope.'
+  options:
+    - label: 'Bury Biscuit With {dHim}'
+      text: '`$Together again. You add a dog biscuit for the road.'
+      effects:
+        karma: 2
+    - label: 'Return Biscuit'
+      text: '`$The family had been looking everywhere for Biscuit. They thought {dFirst} had sold him.'
+      effects:
+        karma: 1
+        reviews: 1
+- id: 'fingerprints'
+  picture: 'places/prep-table'
+  text: '`${dFirst}''s fingerprints come back under three different names. Two men in sunglasses have been parked outside since dawn.'
+  options:
+    - label: 'Ask No Questions'
+      text: '`$The men in sunglasses tip you in cash and assure you {dFirst} was never here. Neither were they.'
+      effects:
+        money: 300
+        karma: -1
+    - label: 'Call Deathville PD'
+      text: '`$The police thank you. The sunglasses men do not. Someone keys your hearse that night.'
+      effects:
+        karma: 2
+        luck: -3
+- id: 'phone'
+  picture: 'places/prep-table'
+  text: '`$Something in {dFirst}''s jacket keeps buzzing. It''s {dHis} phone: 41 missed calls from a number saved as DO NOT ANSWER.'
+  options:
+    - label: 'Answer It'
+      text: '`$It''s about {dHis} car''s extended warranty. You say {dFirst} has passed. They ask for {dHis} new address.'
+      effects:
+        luck: 3
+    - label: 'Leave It Buzzing'
+      text: '`$It buzzes faintly all through the eulogy. Everyone agrees it''s {dFirst} still trying to get a word in.'
+      effects:
+        reviews: 1
+- id: 'trophy'
+  text: '`${dFirst} asked to be buried with {dHis} bowling trophy. It''s solid brass, two feet tall, and frankly gorgeous.'
+  options:
+    - label: 'Bury It'
+      text: '`${dFirst} rests with {dHis} greatest triumph: 1983 Deathville Lanes, Second Place.'
+      effects:
+        karma: 1
+    - label: 'Put It on Your Shelf'
+      text: '`$It looks fantastic in the lobby. Customers assume you bowl. You let them.'
+      effects:
+        luck: 3
+        karma: -1
+      evil: true
+- id: 'safe-deposit'
+  text: '`$The bank Teller calls. {dFirst}''s safe deposit key is in {dHis} pocket and the bank "would appreciate its prompt and proper return".'
+  picture: 'stuff/safe'
+  options:
+    - label: 'Return the Key'
+      text: '`$The Teller thanks you in a tone that suggests she expected otherwise.'
+      effects:
+        karma: 1
+    - label: 'Open the Box First'
+      text: '`$Inside: savings bonds, a bad poem, and cash. You keep the cash. The poem you return.'
+      effects:
+        money: 300
+        karma: -2
+      risk:
+        weight: 0.8
+        failText: '`$The box holds one note: I KNEW YOU WOULD LOOK. The Teller reads it over your shoulder and tells the whole bank.'
+        failEffects:
+          karma: -2
+          reviews: -3
+      evil: true
+- id: 'gold-swap'
+  text: '`$The family paid for a gold casket. A silver one is sitting right there, and Di-Mart takes returns within thirty days.'
+  picture: 'stuff/padlock'
+  track: 'burial'
+  options:
+    - label: 'Switch Caskets'
+      text: '`$Elijah processes the refund without blinking. Elijah never blinks.'
+      effects:
+        money: 600
+        karma: -3
+      risk:
+        weight: 0.8
+        failText: '`$At the viewing a nephew raps on the lid and asks why gold sounds so hollow. Uncle Ray pulls out the receipt.'
+        failEffects:
+          karma: -3
+          reviews: -4
+      evil: true
+    - label: 'Use the Gold'
+      text: '`${dFirst} goes into the ground in the casket {dHe} paid for. Your accountant weeps quietly.'
+      effects:
+        karma: 1
+- id: 'too-long'
+  text: '`${dFirst} is about four inches longer than the casket.'
+  track: 'burial'
+  options:
+    - label: 'Bend the Knees'
+      text: '`$Nobody looks at the knees. You hope nobody looks at the knees.'
+      effects:
+        luck: 2
+        karma: -1
+      risk:
+        weight: 0.8
+        failText: '`$Halfway through the viewing a knee straightens with a crack and the lid rises two inches.'
+        failEffects:
+          reviews: -3
+    - label: 'Rush a Longer One'
+      text: '`$Elijah''s boy, who is 64, delivers it on foot. It costs you, but {dFirst} lies flat.'
+      effects:
+        money: -300
+        karma: 1
+        reviews: 1
+- id: 'flooded-grave'
+  text: '`$It rained all night. {dFirst}''s grave is half full of water, and there''s a frog in it.'
+  track: 'burial'
+  options:
+    - label: 'Bail It Out'
+      text: '`$Two hours with a Bill''s Big Burger cup. The frog stays. You decide the frog is a mourner.'
+      effects:
+        karma: 1
+        reviews: 1
+    - label: 'Lower {dHim} In Anyway'
+      text: '`$There is a small splash. Then a large one, when Uncle Ray slips in after {dHim}.'
+      effects:
+        reviews: -2
+        luck: 2
+- id: 'bees'
+  text: '`$There is a humming coming from inside the casket lining. It is getting louder, and the viewing starts in ten minutes.'
+  track: 'burial'
+  options:
+    - label: 'Open It Anyway'
+      text: '`$A single bee drifts out, circles {dFirst} like a halo and flies away. People call it a sign.'
+      effects:
+        luck: 2
+        reviews: 1
+      risk:
+        weight: 0.7
+        failText: '`$They are not bees. They are wasps. Father Smyth sets a new parish record for the hundred-yard dash.'
+        failEffects:
+          reviews: -3
+          luck: -2
+    - label: 'Call the Exterminator'
+      text: '`$He charges an extra fee for working near the deceased, and another for working near you.'
+      effects:
+        money: -100
+        karma: 1
+- id: 'borrowed-flowers'
+  text: '`$You forgot to order the casket spray. The grave next door got a fresh delivery this morning.'
+  picture: 'stuff/red_rose'
+  options:
+    - label: 'Borrow Them'
+      text: '`$They''re barely used. The dead don''t look at their flowers anyway.'
+      effects:
+        money: 100
+        karma: -1
+      risk:
+        weight: 0.85
+        failText: '`$The widow from next door visits during the service and recognizes her own carnations.'
+        failEffects:
+          karma: -1
+          reviews: -3
+      evil: true
+    - label: 'Buy Fresh Ones'
+      text: '`$The florist charges you the panic price. You pay the panic price.'
+      effects:
+        money: -50
+        karma: 1
+- id: 'flag'
+  picture: 'places/prep-viewing'
+  text: '`${dFirst} served in the army. The flag the family brought has a hole in it the exact shape of a cigarette burn.'
+  options:
+    - label: 'Buy a New Flag'
+      text: '`$Di-Mart has exactly one left. Elijah charges you as if it''s the last one in the country.'
+      effects:
+        money: -100
+        karma: 2
+    - label: 'Fold It Hole-Side In'
+      text: '`$Nobody will ever know.'
+      effects:
+        luck: 1
+      risk:
+        weight: 0.85
+        failText: '`$The honor guard unfolds it, snaps it open, and everybody gets a long look through the hole.'
+        failEffects:
+          reviews: -3
+- id: 'hearse-flat'
+  text: '`$The hearse gets a flat on the way to the cemetery. The spare is under {dFirst}.'
+  picture: 'hearse/hearse1'
+  options:
+    - label: 'Change It in the Rain'
+      text: '`$Twenty minutes in your good suit. The mourners hold umbrellas. It''s weirdly bonding.'
+      effects:
+        karma: 1
+        reviews: 1
+    - label: 'Ask the Mourners to Push'
+      text: '`$Six pallbearers, one hearse, half a mile. They''re dressed for it, technically.'
+      effects:
+        luck: 3
+        reviews: -1
+- id: 'toupee'
+  text: '`${dFirst} came in wearing a toupee. It has come off. It is on the floor. It may be a raccoon.'
+  picture: 'people/store_guy'
+  options:
+    - label: 'Glue It Back On'
+      text: '`$Back on and nearly straight. {dFirst} looks like {dHe} did in every photo.'
+      effects:
+        reviews: 1
+      risk:
+        weight: 0.85
+        failText: '`$Under the viewing lamps the glue lets go, and the toupee slides gently onto the casket pillow like a sleeping pet.'
+        failEffects:
+          reviews: -3
+    - label: 'Bury {dHim} Bald'
+      text: '`${dFirst} meets eternity as {dHe} truly was. The family is shocked. Then they''re kind of moved.'
+      effects:
+        karma: 1
+    - label: 'Sell It to Elijah'
+      text: '`$Elijah buys it without a word and is wearing it by the afternoon.'
+      effects:
+        money: 50
+        karma: -1
+      evil: true
+- id: 'tattoo'
+  picture: 'places/prep-cosmetics'
+  text: '`${dFirst} has a large tattoo of an ex''s name on {dHis} forearm. The new spouse will be at the viewing.'
+  options:
+    - label: 'Cover It With Makeup'
+      text: '`$Three coats of Deathly Beige. You can''t see a thing.'
+      effects:
+        reviews: 1
+      risk:
+        weight: 0.8
+        failText: '`$Under the hot lights the makeup sweats off one letter at a time. By the closing hymn, everyone can read it.'
+        failEffects:
+          reviews: -3
+    - label: 'Long Sleeves'
+      text: '`$You buy a shirt at Di-Mart. Elijah upsells you cufflinks. Somehow you also own a tie clip now.'
+      effects:
+        money: -50
+        karma: 1
+    - label: 'Leave It Showing'
+      text: '`$It''s the most honest thing at the funeral.'
+      effects:
+        luck: 2
+        reviews: -1
+- id: 'dentures'
+  text: '`${dFirst}''s dentures don''t fit any more. Rigor mortis has opinions about dentures.'
+  picture: 'stuff/battle_lose'
+  options:
+    - label: 'Leave Them Out'
+      text: '`${dFirst} looks like a very sad jack-o''-lantern. You put a hymnal under {dHis} chin and hope.'
+      effects:
+        reviews: -1
+        luck: 1
+    - label: 'Borrow Morty''s Teeth'
+      text: '`$They fit perfectly. Morty doesn''t complain. Morty never complains.'
+      effects:
+        luck: 2
+        reviews: 1
+      risk:
+        weight: 0.85
+        failText: '`$A mourner leans close and counts. There are noticeably too many teeth.'
+        failEffects:
+          reviews: -2
+- id: 'yearbook'
+  picture: 'places/prep-viewing'
+  text: '`$The family brought a photo for the makeup. It''s {dFirst}''s yearbook photo from 1971.'
+  options:
+    - label: 'Do the 1971 Look'
+      text: '`$Feathered hair, blue eyeshadow, sideburns that may not be historically accurate. The family is thrilled. Everyone else is unsettled.'
+      effects:
+        luck: 3
+        reviews: -1
+    - label: 'Do {dHim} Natural'
+      text: '`$A little powder, a little blush. {dFirst} looks like {dHe} did last week, minus the {surname} family scowl.'
+      effects:
+        reviews: 1
+- id: 'bingo-suit'
+  picture: 'places/prep-cosmetics'
+  text: '`$The family dropped off {dFirst}''s best outfit. It''s covered in dog hair and the pockets are full of bingo daubers.'
+  options:
+    - label: 'Lend {dHim} Your Suit'
+      text: '`$Your good black suit. It fits {dHim} better than it fits you, which hurts.'
+      effects:
+        money: -200
+        karma: 1
+        reviews: 1
+    - label: 'Daubers and All'
+      text: '`$Father Smyth spots the daubers and announces {dFirst} was a regular. The whole bingo hall turns out.'
+      effects:
+        reviews: 2
+        luck: 1
+- id: 'fishing-pose'
+  picture: 'places/prep-viewing'
+  text: '`$The family wants one last photo of {dFirst} sitting up in the casket, holding {dHis} favorite fishing rod.'
+  options:
+    - label: 'Pose {dHim}'
+      text: '`$It''s a lovely photo. The rod bends like {dHe} just hooked a big one.'
+      effects:
+        reviews: 2
+      risk:
+        weight: 0.8
+        failText: '`$The rod tips. Then {dFirst} tips. Then Aunt Pearl tips, onto the buffet.'
+        failEffects:
+          reviews: -2
+          luck: -2
+    - label: 'Politely Refuse'
+      text: '`$You explain the casket has a weight limit. It doesn''t. They don''t know that.'
+      effects:
+        karma: 1
+        reviews: -1
+- id: 'fly'
+  text: '`$A fly lands on {dFirst}''s nose just as the family walks in.'
+  options:
+    - label: 'Swat It'
+      text: '`$One clean swat. The family thinks you were wiping away a tear.'
+      effects:
+        luck: 2
+        reviews: 1
+      risk:
+        weight: 0.6
+        failText: '`$You miss the fly. You do not miss {dFirst}.'
+        failEffects:
+          reviews: -3
+    - label: 'Pretend Not to See'
+      text: '`$The fly stays for the whole viewing. Some people find it very spiritual.'
+      effects:
+        reviews: -1
+- id: 'final-breath'
+  picture: 'places/prep-viewing'
+  text: '`$As you lift {dFirst} into the casket, {dHe} lets out a long, mournful last breath. From the wrong end. In front of the family.'
+  options:
+    - label: 'Blame the Organist'
+      text: '`$The organist is fired on the spot. He didn''t do it. He never does it. Nobody believes him.'
+      effects:
+        reviews: 1
+        karma: -1
+    - label: 'Say Bless You'
+      text: '`$There''s a long silence. Then the widow laughs for the first time in a week.'
+      effects:
+        karma: 1
+        luck: 1
+- id: 'morty-hand'
+  text: '`$Morty the skeleton fell over in the night. Most of his left hand is now in the casket with {dFirst}.'
+  picture: 'people/morty'
+  track: 'burial'
+  options:
+    - label: 'Sort It Out'
+      text: '`$It takes all afternoon and a diagram from Spirit University, but every finger goes home.'
+      effects:
+        karma: 1
+        luck: 1
+    - label: 'Close Enough'
+      text: '`$Thirty-one bones, give or take. The lid is closed. Morty will adapt.'
+      effects:
+        luck: 3
+        karma: -1
+      risk:
+        weight: 0.8
+        failText: '`$At the viewing, {dFirst}''s folded hands are noticeably bonier than the rest of {dHim}.'
+        failEffects:
+          reviews: -3
+- id: 'pacemaker'
+  text: '`${dFirst} still has a pacemaker in. Pacemakers do not like incinerators. Taking it out properly is an hour''s work.'
+  picture: 'places/creamation_oven'
+  track: 'cremation'
+  options:
+    - label: 'Take It Out'
+      text: '`$An hour, a pair of tongs and a very steady hand. Procedure followed.'
+      effects:
+        karma: 1
+    - label: 'Fire It Up Anyway'
+      text: '`$You save an hour. There''s a muffled pop. Nothing to worry about.'
+      effects:
+        luck: 2
+      risk:
+        weight: 0.7
+        failText: '`$The furnace door blows open with a bang that rattles windows on three streets. Across the road, Father Smyth hits the floor.'
+        failEffects:
+          reviews: -3
+          karma: -1
+    - label: 'Sell It to Cousin Sal'
+      text: '`$Sal swears it''s for a patient. You saw his patients. You take the money.'
+      effects:
+        money: 200
+        karma: -2
+      evil: true
+- id: 'urn-mixup'
+  text: '`$Two urns, two families, one shelf. The labels have fallen off, and both families are coming at four.'
+  picture: 'places/creamation_oven'
+  track: 'cremation'
+  options:
+    - label: 'Weigh Them and Guess'
+      text: '`$You guess. You are probably right. Probably is doing a lot of work in that sentence.'
+      effects:
+        karma: -1
+      risk:
+        weight: 0.75
+        failText: '`$One family finds a hip replacement in the urn. Their grandmother never had a hip replacement.'
+        failEffects:
+          reviews: -4
+          karma: -1
+    - label: 'Tell Both Families'
+      text: '`$They agree to split both urns down the middle. It''s very fair. Nobody is happy.'
+      effects:
+        karma: 2
+        reviews: -2
+- id: 'pizza'
+  picture: 'places/prep-table'
+  text: '`$The incinerator is still roaring from {dFirst}, you skipped lunch, and there''s a frozen pizza in the break room.'
+  track: 'cremation'
+  options:
+    - label: 'Use the Heat'
+      text: '`$Best crust you''ve ever had. You don''t think about it. You think about it.'
+      effects:
+        luck: 3
+        karma: -1
+      risk:
+        weight: 0.85
+        failText: '`$Father Smyth drops by mid-slice and asks what smells so good.'
+        failEffects:
+          karma: -2
+          reviews: -2
+    - label: 'Wait for the Microwave'
+      text: '`$Soggy, lukewarm, respectful.'
+      effects:
+        karma: 1
+- id: 'smoke-alarm'
+  text: '`$The incinerator''s smoke sets off the fire alarm at the Pale Horse Cafe next door. Again. The owner is at your door with a mop.'
+  picture: 'stuff/fire_alarm'
+  track: 'cremation'
+  options:
+    - label: 'Apologize With Pie'
+      text: '`$A peace offering from Di-Mart''s bakery aisle. The owner accepts and steals your mop.'
+      effects:
+        money: -50
+        karma: 1
+        reviews: 1
+    - label: 'Unplug Their Alarm'
+      text: '`$No more complaints. Peace and quiet for everyone.'
+      effects:
+        luck: 2
+        karma: -2
+      risk:
+        weight: 0.7
+        failText: '`$That night the Pale Horse actually catches fire. The Twins are seen across the street, smiling in unison.'
+        failEffects:
+          karma: -2
+          reviews: -3
+      evil: true
+- id: 'sister'
+  text: '`${dFirst}''s sister asks to sit alone with {dHim} for an hour before the viewing. You usually charge for the room.'
+  picture: 'people/f_old'
+  options:
+    - label: 'Charge Her'
+      text: '`$Hourly rate, two-hour minimum. Grief is a premium service.'
+      effects:
+        money: 100
+        karma: -1
+      evil: true
+    - label: 'Let Her Sit'
+      text: '`$She talks to {dFirst} about things you pretend not to hear. She leaves lighter.'
+      effects:
+        karma: 2
+        reviews: 1
+    - label: 'Bring Her Coffee Too'
+      text: '`$And a muffin. She tells everyone at church, which is how you get three funerals next month.'
+      effects:
+        money: -50
+        karma: 2
+        reviews: 2
+- id: 'takeout'
+  text: '`$June from Yang''s turns up with a takeout order {dFirst} placed the morning {dHe} died. It''s already paid for.'
+  picture: 'chinese_takeout'
+  options:
+    - label: 'Eat It'
+      text: '`$General Tso''s, still warm. June watches you eat it and says nothing, which is worse.'
+      effects:
+        luck: 3
+        karma: -1
+    - label: 'Put It in the Casket'
+      text: '`$Fried rice for the afterlife. Mr. Yang hears about it and tells every customer for a week.'
+      effects:
+        karma: 1
+        reviews: 2
+    - label: 'Give It to the Family'
+      text: '`$They eat it at the wake, crying into the lo mein. It''s the best part of the day.'
+      effects:
+        karma: 2
+- id: 'mayor-photo'
+  text: '`$The Mayor wants a photo next to {dFirst}''s casket for his re-election flyer: TOUGH ON DEATH.'
+  options:
+    - label: 'Allow It'
+      text: '`$He shakes your hand and leaves an envelope on the casket. Campaign contribution, in reverse.'
+      effects:
+        money: 200
+        karma: -1
+    - label: 'Charge Double'
+      text: '`$Two envelopes. The Mayor understands business.'
+      effects:
+        money: 400
+        karma: -2
+      risk:
+        weight: 0.85
+        failText: '`$The flyer comes out with the family in the background, mid-sob. They see it on every lamp post.'
+        failEffects:
+          reviews: -3
+          karma: -1
+      evil: true
+    - label: 'Refuse'
+      text: '`$The Mayor calls you unpatriotic and gets your parking spaces repainted as loading zones.'
+      effects:
+        karma: 1
+        luck: -1
+- id: 'withers-nap'
+  text: '`$Old Man Withers wanders into the back room "to get a feel for the place" and lies down on your spare table.'
+  picture: 'people/m_old_3'
+  options:
+    - label: 'Let Him Nap'
+      text: '`$He snores like a leaf blower for two hours, then thanks you and tells the whole bingo hall you''re good people.'
+      effects:
+        karma: 1
+        reviews: 1
+    - label: 'Measure Him'
+      text: '`$You''ll need it eventually. He''s been saying so since 1974. He is shorter than he claims.'
+      effects:
+        luck: 3
+        karma: -1
+- id: 'syrup-crate'
+  text: '`$Elijah calls: a crate of embalming fluid "fell off a truck". Half price, cash only, back alley, tonight.'
+  picture: 'people/store_guy'
+  track: 'burial'
+  options:
+    - label: 'Buy the Crate'
+      text: '`$You save a bundle. The fluid looks right. It''s even the right blue.'
+      effects:
+        money: 200
+        karma: -1
+      risk:
+        weight: 0.8
+        failText: '`$The crate is mostly maple syrup. {dFirst} smells like pancakes all through the viewing.'
+        failEffects:
+          money: -100
+          reviews: -2
+      evil: true
+    - label: 'Hang Up'
+      text: '`$Elijah breathes down the line for a while. He doesn''t say goodbye. He never says goodbye.'
+      effects:
+        karma: 1
+- id: 'smyth-hearse'
+  text: '`$Father Smyth asks to borrow your hearse to deliver the church bake sale. It will smell of lemon bars forever.'
+  picture: 'people/churchguy_h'
+  karmaAbove: 70
+  options:
+    - label: 'Lend It'
+      text: '`$The bake sale breaks records. The hearse smells amazing. Mourners keep asking if there''s dessert.'
+      effects:
+        karma: 2
+        reviews: 1
+        luck: -1
+    - label: 'It''s Busy'
+      text: '`$Father Smyth delivers forty dozen lemon bars on a bicycle and blesses you through gritted teeth.'
+      effects:
+        karma: -1
+- id: 'crayon'
+  text: '`${dFirst}''s grandkids drew a picture for the casket: {dFirst} as a very happy stick figure with a halo, a fishing rod and seven fingers.'
+  options:
+    - label: 'Pin It Inside the Lid'
+      text: '`${dFirst} goes into the ground with seven fingers and a halo. Not a bad way to go.'
+      effects:
+        karma: 2
+    - label: 'Bill for the Pinning'
+      text: '`$Pinning fee: fifty dollars. Crayon handling surcharge: included. You are a monster, but an itemized one.'
+      effects:
+        money: 50
+        karma: -2
+      evil: true
+- id: 'eulogy'
+  text: '`$The family asks you to write the eulogy. All you know about {dFirst} is the name and the weight.'
+  options:
+    - label: 'Make It Up'
+      text: '`$War hero, champion yodeler, friend to every orphan in the county. People are in tears.'
+      effects:
+        reviews: 2
+      risk:
+        weight: 0.8
+        failText: '`$You call {dHim} a war hero. The whole {surname} family are famous for refusing to fight in anything.'
+        failEffects:
+          reviews: -3
+    - label: 'Keep It Short'
+      text: '`$"{dFirst} was here. Now {dHe} isn''t. Snacks are in the lobby." Nobody has ever loved a eulogy more.'
+      effects:
+        karma: 1
+- id: 'potato-salad'
+  text: '`$The potato salad for {dFirst}''s wake has been sitting in the sun since noon. It has started to sweat.'
+  options:
+    - label: 'Serve It'
+      text: '`$Nobody gets sick. Nobody gets sick yet.'
+      effects:
+        money: 100
+        karma: -1
+      risk:
+        weight: 0.7
+        failText: '`$Half the mourners are back by Thursday. On the bright side, some of them are back as customers.'
+        failEffects:
+          karma: -2
+          reviews: -3
+    - label: 'Throw It Out'
+      text: '`$You buy fresh from the Pale Horse Cafe. It''s worse, but it won''t kill anyone.'
+      effects:
+        money: -100
+        karma: 1
+        reviews: 1
+- id: 'anatomy-lab'
+  text: '`$Spirit University''s anatomy lab will pay well for an intact brain, and {dFirst}''s family chose a closed casket.'
+  karmaBelow: 30
+  options:
+    - label: 'Sell the Brain'
+      text: '`$The professor pays cash and says {dFirst} will be very useful to science, eventually, in a jar.'
+      effects:
+        money: 400
+        karma: -3
+      evil: true
+    - label: 'Bury {dHim} Whole'
+      text: '`${dFirst} goes down with everything {dHe} came in with, including the brain {dHe} rarely used.'
+      effects:
+        karma: 1
+- id: 'donation'
+  text: '`${dFirst}''s will asks for {dHis} skeleton to go to Spirit University. Morty, in the corner, looks lonely.'
+  picture: 'people/morty'
+  track: 'burial'
+  karmaBelow: 40
+  options:
+    - label: 'Donate It'
+      text: '`$The university sends a lovely certificate. Morty sulks for a week.'
+      effects:
+        karma: 2
+    - label: 'Give Morty a Friend'
+      text: '`$Morty and the new guy sit together by the window. You are not sure which one moved the chair.'
+      effects:
+        luck: 5
+        karma: -3
+      evil: true
+- id: 'twins-box'
+  text: '`$The Twins knock on the back door at the same time. "We''ll take that empty casket crate off your hands," they say together. "For kindling."'
+  picture: 'places/fire'
+  karmaBelow: 30
+  options:
+    - label: 'Sell Them the Crate'
+      text: '`$They pay in matches. Then in cash. You don''t ask what they''re kindling.'
+      effects:
+        money: 100
+        karma: -2
+      evil: true
+    - label: 'Recycle It'
+      text: '`$The Twins watch you put it in the dumpster without blinking. Both of them. In sync.'
+      effects:
+        karma: 1
+        luck: -1
+- id: 'ballot'
+  text: '`${dFirst} is still registered to vote, and the Mayor''s election is tomorrow.'
+  karmaBelow: 40
+  options:
+    - label: 'Cast {dHis} Ballot'
+      text: '`$The Mayor wins by one vote. A fruit basket arrives with a card that just says ;)'
+      effects:
+        luck: 3
+        karma: -2
+      evil: true
+    - label: 'Let {dHim} Rest'
+      text: '`${dFirst} abstains, as {dHe} did in life.'
+      effects:
+        karma: 1
+- id: 'hospital-bracelet'
+  text: '`$The hospital bracelet says {dFirst} was admitted for a sprained ankle.'
+  picture: 'places/hospital_room'
+  options:
+    - label: 'Call the Nurse'
+      text: '`$The Nurse laughs for a long time, then says "oh, honey, don''t look at the chart" and hangs up.'
+      effects:
+        karma: 1
+    - label: 'Keep Quiet'
+      text: '`$A fruit basket arrives from the hospital: "Thanks for your discretion." There''s an envelope under the pears.'
+      effects:
+        money: 150
+        karma: -1
+      evil: true
+- id: 'obituary'
+  text: '`$The Deathville Enquirer ran {dFirst}''s obituary under the headline LOCAL LEGEND FINALLY QUIET.'
+  options:
+    - label: 'Demand a Correction'
+      text: '`$They print one the next day: LOCAL LEGEND FINALLY QUIET, SAYS FAMILY.'
+      effects:
+        karma: 1
+        reviews: 1
+    - label: 'Frame It for the Lobby'
+      text: '`$Customers love it. The {surname} family does not.'
+      effects:
+        luck: 2
+        reviews: -1
+- id: 'choir-practice'
+  text: '`$The church choir asks to rehearse in your viewing room tonight, with {dFirst} still lying in state.'
+  picture: 'background/background_church'
+  options:
+    - label: 'Let Them Sing'
+      text: '`$They sing until midnight. By morning {dFirst} looks more peaceful than any embalming could manage.'
+      effects:
+        karma: 1
+        luck: 1
+    - label: 'Charge Them Rent'
+      text: '`$Twenty dollars a soprano. The basses get a group rate.'
+      effects:
+        money: 100
+        karma: -1
+      evil: true
+- id: 'selfie'
+  text: '`$A teenager at {dFirst}''s viewing asks if it''s okay to take a selfie with the casket.'
+  options:
+    - label: 'Say No, Kindly'
+      text: '`$You explain that some moments are private. The teenager rolls their eyes but puts the phone away.'
+      effects:
+        karma: 1
+    - label: 'Charge Five Bucks'
+      text: '`$You put up a little sign: PHOTOS WITH {dFirst} $5. Business is brisk.'
+      effects:
+        money: 50
+        karma: -1
+      risk:
+        weight: 0.85
+        failText: '`$The photo goes around the whole school with your price sign in it. The {surname} family sees it by dinner.'
+        failEffects:
+          reviews: -3
+      evil: true
+    - label: 'Hold the Phone for Them'
+      text: '`$You even find the good light. The teenager says it''s the nicest thing an adult has done all year.'
+      effects:
+        reviews: 1

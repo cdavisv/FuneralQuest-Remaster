@@ -1,0 +1,9 @@
+# The town's own people (ExpandedTownContent.cast), filled into text as {mayor}, {owner}, {nurse}.
+# The Mayor is the NPC until a player wins the election; the Teller is the Prudence Ledbetter of
+# the specials. Lines elsewhere name them literally, so rename them everywhere at once.
+
+mayor: 'Mayor Hollis Grubb'
+clubOwner: 'Lucius Vane'
+nurse: 'Nurse Gertie'
+inspector: 'Inspector Mudge'
+teller: 'Prudence Ledbetter'

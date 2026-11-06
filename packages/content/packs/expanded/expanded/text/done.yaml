@@ -1,0 +1,17 @@
+success: "`w`$The service is a success! Total bill is ${price}.\n\n{extra}You earn `w{bp}`$ Bury Points and a {casket} sales tag."
+perfect: "`wPERFECT! `$The bill is exactly what {cHe} could pay: `w+{bonus}`$ BP (half the sale again, plus a little extra).\n\n"
+great: "`wGREAT! `$Within {percent}% of what {cHe} could pay: `w+{bonus}`$ BP.\n\n"
+nice: "`wNICE! `$Within {percent}% of what {cHe} could pay: `w+{bonus}`$ BP.\n\n"
+missed: "`8You left about ${left} on the table. A bill within {nice}% of what they can pay earns a bonus.`$\n\n"
+underdog: "`wUNDERDOG! `$The town roots for the little guy: `w+{bonus}`$ BP.\n\n"
+insurance: "`8Peace Pledge insurance: -{tax} BP.`$\n\n"
+money: 'The parlor takes in `w${money}`$.'
+fromStock: ' ({tier} casket from stock)'
+rushOrder: ' (rush order {tier} casket from Di-Mart: ${cost})'
+happy: "\n\n`2The family leaves happy and will tell their friends.`$"
+sour: "\n\n`4The family leaves grumbling. Word gets around.`$"
+specialTv: '"{name} just handled the {special}," a reporter says.'
+prepButton: 'Prepare the Body'
+fainted: "\n`wYou fainted while dealing with a customer.`$\n\nYou vaguely remember riding in an ambulance.\n\n"
+future: "\n\n`$They will settle the rest when the time comes (in about {days} days)."
+cremated: 'wood (cremation)'

@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [master, remaster]
+  pull_request:
+
+# One run per branch or pull request: a newer push cancels the older run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, typecheck, unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          # The floor, not the latest. Node 24 is needed because the solo and simulator tests
+          # start TypeScript worker threads, which fail to load on Node 22. Raise this together
+          # with "engines".
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  client-build:
+    name: Client build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Derives the Classic UI art, typechecks, bundles the app, the Solo worker, the service
+      # worker and the pictures into apps/client/dist-build.
+      - run: pnpm --filter @fq/client build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: client-dist
+          path: apps/client/dist-build
+          retention-days: 7
+
+  e2e:
+    name: Playwright (online and solo)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install the browser
+        run: pnpm --filter @fq/client exec playwright install --with-deps chromium
+      # Builds the client, starts the real server on a temporary database (online suite) and a
+      # plain file host with no server (solo suite), and drives both with Chromium.
+      - run: pnpm --filter @fq/client e2e
+      - name: Upload traces and screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: |
+            apps/client/e2e/results
+            apps/client/playwright-report
+          if-no-files-found: ignore
+          retention-days: 14

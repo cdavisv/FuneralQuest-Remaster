@@ -1,0 +1,99 @@
+title: 'Town Graveyard'
+note: 'A dense fog covers the many mounds and headstones that make up the town graveyard. You see other morticians dancing through the memorials as they clean, adjust and make room for new occupants.'
+intro: '`$Nothing relaxes you like a visit to the town grave site.
+
+
+  Your parlor has `w{plots}`$ plots out here. Your row is marked by `w{monument}`$.
+
+  `$You have time for `w{duels}`$ more duel today.'
+noMonument: 'a wooden stake with your name on it in crayon'
+buttons:
+  monuments: 'Monuments'
+  tend: 'Tend the Graves'
+  rob: 'Rob a Fresh Grave'
+  duel: 'Challenge a Rival'
+  look: 'Look Around'
+  leave: 'Leave'
+  back: 'Back'
+  swing: 'Swing'
+  shove: 'Shove'
+  yield: 'Yield'
+  continue: 'Continue'
+monumentsIntro: '`wNed the stonecutter lights a cigarette off a memorial candle: `$"Your row''s got {current}. People judge a parlor by its dead. Bigger stone, bigger reputation. Bigger invoice, too."
+
+
+  '
+monumentLine: '`$Next up: `w{name}`$ for `w${price}`$. The town will talk about it for days (`5+{bp} BP`$, and a better rating while it stands).
+
+  '
+monumentBought: '`$Ned unveils `w{name}`$ with a flourish and a cough. A small crowd gathers to look at it, then at you. `5(+{bp} BP)`$'
+allBuilt: '`$You already own the biggest thing in the graveyard. Ned suggests a moat. You say you''ll think about it.
+
+  '
+tended:
+  - '`$You pull weeds, straighten flowers and apologize to a few headstones. You feel lucky. `5(+{luck} luck)`$'
+  - '`$You rake the paths and wipe the bird mess off old Mrs. Hubble. Mourners nod at you. `5(+{luck} luck)`$'
+  - '`$You swap the plastic flowers on a forgotten grave for slightly better plastic flowers. `5(+{luck} luck)`$'
+  - '`$You straighten a leaning headstone. It leans back the moment you turn around, but the thought counts. `5(+{luck} luck)`$'
+  - '`$You scrub the moss off a row of old soldiers. One was a general. Now he looks like one again. `5(+{luck} luck)`$'
+  - '`$Deacon the graveyard dog follows you down the row and doesn''t bite you once. That has to be a sign. `5(+{luck} luck)`$'
+  - '`$You fill in a hole somebody left open overnight, and decide not to wonder what came out of it. `5(+{luck} luck)`$'
+  - '`$You polish the plaque on a grave nobody visits. A cold hand touches your shoulder, but in a nice way. `5(+{luck} luck)`$'
+  - '`$You read every name in Row B out loud. A widow sees you and decides you are either a saint or a weirdo. `5(+{luck} luck)`$'
+tendedLead: '`$A widow watering a grave asks for your card. Her husband "isn''t looking well, and he''s started making that noise." `5(a customer lead)`$'
+tendedAssociate: '`$Father Smyth sees you at work and mentions you in Sunday''s sermon, favourably for once. `5(extra reputation)`$'
+robFound:
+  - '`$You dig up a fresh one and relieve the deceased of `w${money}`$ in jewelry. He won''t miss it. He won''t miss anything.'
+  - '`$Gold fillings, a pocket watch and a ring come to `w${money}`$. You fill the hole back in. Mostly.'
+  - '`$She was buried with her purse. Inside: `w${money}`$, a lipstick and a note that says I KNEW IT. You leave the note.'
+  - '`$Cufflinks and a tie pin, `w${money}`$ at the pawn shop. The tie itself is hideous. You let him keep it.'
+  - '`$A fresh plot and a fat wallet: `w${money}`$. His family meant it for the ferryman. You tip yourself instead.'
+  - '`$You pry `w${money}`$ worth of gold off a set of teeth. They are not his teeth. You don''t ask whose.'
+  - '`$A velvet pouch tucked by the pillow holds `w${money}`$ in old coins. He didn''t trust banks either.'
+  - '`$A wedding ring and a medal for bravery fetch `w${money}`$. The medal makes you feel bad for nearly a block.'
+robSilver: '`$You find a silver casket tag still wired to the handle. Nobody tags a casket this nice for nothing. `w+1 silver tag`$.'
+robCaught: '`4The groundskeeper catches you elbow-deep in Mr. Abernathy. Deacon catches the rest of you. You pay a `w${fine}`4 fine and the whole town hears about it.`$'
+look:
+  - '`$Two morticians argue over who gets the plot by the oak tree. The oak tree has seen this before.'
+  - '`$A fresh grave has been dug and filled three times today. Somebody can''t make up their mind.'
+  - '`$A raven lands on a headstone, looks at you, and leaves without a word. Rude.'
+  - '`$Old Man Withers is walking the rows with a tape measure, pricing the good spots. He waves the tape at you.'
+  - '`$Somebody has left flowers on the Mayor''s family plot. The Mayor''s family is still alive. The card says SOON.'
+  - '`$Ned the stonecutter is carving a headstone with a date that hasn''t happened yet. He covers it when you look.'
+  - '`$Deacon is digging with great enthusiasm in Row D. The groundskeeper calls him off, then calls the police.'
+  - '`$A mourner in black is weeping at a grave. You walk closer. It''s one of your rivals, practising.'
+  - '`$The Twins are on a bench eating sandwiches. They stop chewing when you pass, at exactly the same time.'
+  - '`$Father Smyth is blessing graves at a brisk walk, one every three seconds, like a man feeding parking meters.'
+lookRows: '`$The biggest rows of headstones belong to: `w{list}`$.'
+duel:
+  prompt: 'Who do you want to meet among the headstones?'
+  youFirst: '`$You meet `w{name}`$ between the rows. You have more dead out here than they do, so you know the ground. You strike first.'
+  theyFirst: '`$You meet `w{name}`$ between the rows. They know this ground better than you do, and they swing before you''ve finished your speech.'
+  youHit: '`$You whack `w{name}`$ with a chunk of headstone for `4{damage}`$ damage. The name on it was spelled wrong anyway.'
+  youMiss: '`$You swing at `w{name}`$ and hit a marble cherub instead. It does not flinch. It never flinches.'
+  theyHit: '`w{name}`$ cracks you across the back with a shovel for `4{damage}`$ damage.'
+  theyMiss: '`w{name}`$ swings, misses, and kicks over a vase of lilies. A nearby widow gasps.'
+  shoveIn: '`$You shove `w{name}`$ into an open grave! `4{damage}`$ damage. You swing while they climb out, and they lose their next move doing it.'
+  shoveFail: '`$You lunge to shove `w{name}`$, miss, and land face first on a footstone. They take advantage.'
+  theyShove: '`w{name}`$ shoves you into an open grave! `4{damage}`$ damage. They swing, then get a free swing while you claw your way out, and you lose your next move.'
+  theyShoveFail: '`w{name}`$ tries to shove you into a grave and trips over a wreath. Free swing for you.'
+  shoveDetail: '{chance}% chance'
+  won: '`$`w{name}`$ goes down among the dead and stays there a while. You win `5{bp} BP`$ and polite applause from a funeral nearby.'
+  lost: '`4You wake up face down on somebody''s grave. `w{name}`4 wins. You lose `5{bp} BP`4.`$'
+  yielded: '`$You throw down your shovel. `w{name}`$ accepts your surrender with a smirk. You lose `5{bp} BP`$, but nothing is broken.'
+  wonMail: '`w{name}`$ challenged you in the graveyard and lost, badly, in front of a funeral. You win `5{bp} BP`$.'
+  lostMail: '`w{name}`$ beat you senseless in the graveyard. The mourners at the next plot got their money''s worth. You lose `5{bp} BP`$.'
+  yieldMail: '`w{name}`$ challenged you in the graveyard, then lost their nerve and threw down their shovel. `5+{bp} BP`$.'
+  crime: '`7GRAVEYARD BRAWL
+
+    `^{winner} beat {loser} among the headstones last night. Several of the dead were disturbed, and one has filed a complaint.
+
+
+    '
+  selfPeaceful: 'You took the Peace Pledge. No duels for you'
+  targetPeaceful: '`${name} took the Peace Pledge. The groundskeeper won''t allow it.'
+  chainMate: '`${name} is in your chain. Brawling with family is bad for business.'
+  rivalTired: '`${name} has been beaten in the graveyard enough for one day.'
+  sheltered: '`${name}''s chain has taken enough beatings today. Their friends are watching the gate.'
+  self: '`$You can''t duel yourself. You''ve tried. It was in the paper.'
+  nobody: '`$There''s nobody here to fight but the dead, and they always win eventually.'

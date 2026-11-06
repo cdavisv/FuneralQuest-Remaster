@@ -1,0 +1,915 @@
+# Front-page stories that change the day's rules (22.1). Not filled in: name people literally.
+# `effect` is the one line on the desk; keep it true to the modifiers. Keys read at midnight
+# (bank rates, the bingo cut) need days: 2 to reach the night that pays out.
+
+- id: 'small-quake'
+  title: 'SHAKEUP IN DEATHVILLE'
+  message: 'A small earthquake rattled the town at dawn. Some casualties. "I barely felt it, actually," said the Mayor, from under his desk, where he has been since Tuesday for unrelated reasons.'
+  effect: '+1 turn today, more customers, fewer distractions'
+  weight: 1.5
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'wait.eventOdds'
+      op: 'mul'
+      value: 0.5
+- id: 'big-quake'
+  title: 'MORTUARIES DO ROCKIN'' BUSINESS'
+  message: 'The big one hit downtown. "I''m glad we have so many funeral parlors in this town. We''re gonna need ''em today," said a man pinned under the Di-Mart sign, who then asked for a price list. Di-Mart has marked everything up "for structural reasons".'
+  effect: '+2 turns today, families spend 10% more, Di-Mart caskets 10% dearer'
+  weight: 0.5
+  minDay: 5
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 2
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.1
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.1
+- id: 'dimart-sale'
+  title: 'DEATH WITH DIGNITY, NOW 20 PERCENT OFF'
+  message: '"For a comfortable eternal lay, come see us today!" says the Di-Mart flyer. Elijah will be at the register. Elijah was at the register when they built the store around him.'
+  effect: 'Di-Mart caskets 20% off today'
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 0.8
+- id: 'burger'
+  title: 'BILL''S BIG BURGER: NOW WITH E. COLI'
+  message: 'An outbreak at Bill''s Big Burger has left many dead and many more just puking a lot. "We stand by the meat," said Bill, who has never eaten there. The ones still puking are in a mood.'
+  effect: '+1 turn today, customers arrive crankier'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.5
+- id: 'speed-limit'
+  title: 'SPEED LIMIT RAISED, PEDESTRIANS LOWERED'
+  message: 'Elm Street is now a 65 zone. "We should have known people can''t dodge cars," admits the Department of Transportation, whose own van was hit twice before lunch. Families are arriving in a hurry and in pieces.'
+  effect: '+1 turn today, customers 1 patience shorter'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'customer.patience'
+      op: 'add'
+      value: -1
+- id: 'zoo'
+  title: 'ZOO EMPTIES OVERNIGHT; DIRECTOR BLAMES ''OPEN-DOOR POLICY'''
+  message: 'Everything at Deathville Zoo got out, led by the "mostly tame" tiger. "Now their rage is out of the cage," says director Hank Pruitt, from a tree. The animals are seeking revenge on humans and cotton candy.'
+  effect: 'twice the unusual customers today'
+  modifiers:
+    - key: 'customer.specialChance'
+      op: 'mul'
+      value: 2
+- id: 'pizza'
+  title: 'THIRTY MINUTES OR YOUR LIFE'
+  message: 'Bad cheese at Crusty Carl''s Pizza. "If they didn''t eat it in under thirty minutes they would die, and if they did, they also died," reports some dude. Guilty families are paying for nice funerals.'
+  effect: 'families spend 10% more today'
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.1
+- id: 'crash'
+  title: 'MARKET CRASH: BANKERS JUMP, DON''T TIP'
+  message: 'Stocks fell forty percent overnight, and so did several investors, from the roof of Deathville Savings. Teller Prudence Ledbetter says she "saw it coming" and "didn''t think it was her place." Di-Mart is dumping inventory.'
+  effect: 'poorer customers, Di-Mart caskets 10% off'
+  minDay: 3
+  modifiers:
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -10
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 0.9
+- id: 'lottery'
+  title: 'LOCAL MAN WINS LOTTERY, DIES OF EXCITEMENT'
+  message: 'His family is rich now, and so are their friends, who all seem to be dropping dead in sympathy. The lottery office now asks winners to sit down, and to pre-plan, before checking their numbers.'
+  effect: 'richer customers today'
+  modifiers:
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: 10
+- id: 'police-strike'
+  title: 'POLICE ON STRIKE'
+  message: '"We want dental," says the Police Commissioner. Crime is up. Morticians are settling old scores, and the graveyard keeper has locked himself in the tool shed with Deacon and a ham.'
+  effect: 'fights pay 20% more, grave robbers +10 luck'
+  minDay: 3
+  modifiers:
+    - key: 'pvp.gainMult'
+      op: 'mul'
+      value: 1.2
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: 10
+- id: 'heatwave'
+  title: 'HEAT WAVE: THE DEAD WON''T KEEP'
+  message: '"Get them in the ground by lunch or you''ll smell them by dinner," warns the county coroner, who has moved his office into the Di-Mart freezer aisle, next to the fish sticks.'
+  effect: 'more bodies to prepare, customers 1 patience shorter'
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.5
+    - key: 'customer.patience'
+      op: 'add'
+      value: -1
+- id: 'bingo-feast'
+  title: 'ST. MORTIMER''S BINGO GOES CUT-FREE FOR SAINT''S DAY'
+  message: 'Father Smyth has waived the church''s cut for one night "in honour of a saint I am fairly sure exists." Old Man Withers has been camped on the steps since four with a folding chair and eleven daubers.'
+  effect: 'tonight''s bingo pays the whole pot'
+  days: 2
+  modifiers:
+    - key: 'church.bingoCut'
+      op: 'mul'
+      value: 0
+- id: 'bingo-cancelled'
+  title: 'BINGO CANCELLED AFTER WITHERS CALLS IT TWICE'
+  message: 'Old Man Withers shouted BINGO on the third number, again on the fourth, then fell asleep on the cards. Father Smyth has cancelled tonight "to pray, and to look at smaller halls." The town is oddly relaxed.'
+  effect: 'no bingo tonight, customers a little calmer'
+  modifiers:
+    - key: 'church.bingo'
+      op: 'mul'
+      value: 0
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'hospital-sale'
+  title: 'HOSPITAL CLEARANCE: ''EVERYTHING MUST GO'''
+  message: 'Nurse Gertie says the hospital is "clearing old stock" and will set any bone in town at half price. "Bring a friend, prince. Bring two. Bring whatever''s left of them."'
+  effect: 'hospital treatment half price today'
+  modifiers:
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.5
+- id: 'orderly-strike'
+  title: 'ORDERLIES WALK OUT; NURSE RUNS HOSPITAL WITH A STAPLER'
+  message: '"Nobody leaves until they''re fixed or finished," says Nurse Gertie. So far it is mostly finished. The billing department, which did not strike, has raised its prices to cover the stapler.'
+  effect: 'hospital 50% dearer, more bodies to prepare'
+  minDay: 3
+  modifiers:
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 1.5
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.3
+- id: 'bank-rates'
+  title: 'DEATHVILLE SAVINGS RAISES RATES, TELLER RAISES ONE EYEBROW'
+  message: '"We are rewarding thrift," said the bank''s spokesman, Prudence Ledbetter, who is also its teller, its guard and its Employee of the Month. She then said "don''t get excited" and closed the window.'
+  effect: 'savings +0.2% tonight, loans 1% a day dearer'
+  days: 2
+  modifiers:
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: 0.002
+    - key: 'bank.loanRate'
+      op: 'add'
+      value: 0.01
+- id: 'loan-week'
+  title: 'BANK DECLARES WAR ON COUSIN SAL''S LENDING'
+  message: 'Deathville Savings has cut its loan rate to compete with Cousin Sal, who lends from the trunk of a station wagon. "Sal doesn''t have a vault," the teller points out. "Sal has a tire iron."'
+  effect: 'loans 1% a day cheaper tonight'
+  days: 2
+  minDay: 3
+  modifiers:
+    - key: 'bank.loanRate'
+      op: 'add'
+      value: -0.01
+- id: 'clerk-awake'
+  title: 'CITY HALL CLERK WAKES UP, APPROVES EVERYTHING'
+  message: 'The permit clerk woke for the first time since spring and stamped every form in the building before anyone could stop him, including a lunch menu and a dog. Permits are half price while he''s conscious.'
+  effect: 'City Hall permits half price today'
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 0.5
+- id: 'contractor-sale'
+  title: 'CONTRACTORS HOLD ''GOING OUT OF BUSINESS'' SALE, AGAIN'
+  message: '"Fourth time this year," says the union rep. "We keep not going out of business. It''s embarrassing." Everything with a hammer is ten percent off, and so is the hammer.'
+  effect: 'parlor upgrades 10% off today'
+  modifiers:
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 0.9
+- id: 'lumber'
+  title: 'LUMBER SHORTAGE: CASKETS NOW ''MORE COMPACT'''
+  message: '"Pine is up, oak is up, and the man who sold us particleboard is in prison," says Di-Mart''s buyer. Elijah has started measuring customers for "something more upright." Contractors charge extra to look at a nail.'
+  effect: 'Di-Mart caskets and parlor upgrades 10% dearer'
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.1
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 1.1
+- id: 'club-raid'
+  title: 'POLICE RAID REAPER CLUB, FIND ONLY MORTICIANS'
+  message: 'Officers searched the Reaper Club top to bottom and found nothing illegal but the music. Lucius Vane is waiving a tag off the cover "for everyone who didn''t talk." Certain services at the back are lying low.'
+  effect: 'Reaper Club cover 1 tag cheaper, hit men 20% dearer'
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: -1
+    - key: 'club.hitPrice'
+      op: 'mul'
+      value: 1.2
+- id: 'muscle-glut'
+  title: 'COUNTY RELEASES SIX MEN WITH TIRE IRONS, SAME DAY'
+  message: 'A paperwork error at the county lock-up let six career kneecappers out on one morning. "Supply and demand," shrugs a man in a trench coat outside the Reaper Club. "Mostly supply."'
+  effect: 'hit men 20% cheaper today'
+  minDay: 4
+  modifiers:
+    - key: 'club.hitPrice'
+      op: 'mul'
+      value: 0.8
+- id: 'deacon-away'
+  title: 'GRAVEYARD DOG ON VACATION'
+  message: 'Deacon, the cemetery''s dog, is visiting his sister in Blaine. The groundskeeper says the graveyard is "as safe as ever," then asked reporters not to print that he is also at his sister''s.'
+  effect: 'grave robbers +15 luck today'
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: 15
+- id: 'resodding'
+  title: 'GRAVEYARD CLOSED FOR RE-SODDING'
+  message: 'The parks department has closed the cemetery to "everything but the deceased" while it lays new turf over the bad patches. Some of the bad patches are moving. A man with a rake is guarding the gate.'
+  effect: 'no graveyard duels today, grave robbers -10 luck'
+  modifiers:
+    - key: 'graveyard.duels'
+      op: 'mul'
+      value: 0
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: -10
+- id: 'tv-show'
+  title: 'LOCAL PARLOR STARS IN ''GRAVE EXPECTATIONS'''
+  message: 'A cable crew filmed one of our parlors for a reality show. It aired at 3 a.m. and everyone watched it anyway. Now every family wants a funeral "like on TV," and they clap at the end.'
+  effect: 'sales earn 10% more BP today'
+  minDay: 4
+  modifiers:
+    - key: 'sale.bpMult'
+      op: 'mul'
+      value: 1.1
+- id: 'expose'
+  title: 'EXPOSED: WHAT YOUR UNDERTAKER ISN''T TELLING YOU'
+  message: 'A Funeral Times investigation finds that local undertakers "charge too much, smile too much and own a suspicious number of shovels." Readers are shopping around today, and reading the small print out loud.'
+  effect: 'customers haggle harder, sales earn 10% less BP'
+  minDay: 3
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.3
+    - key: 'sale.bpMult'
+      op: 'mul'
+      value: 0.9
+- id: 'widows-club'
+  title: 'WIDOWS'' SUPPORT GROUP LEARNS TO CRY ON CUE'
+  message: '"It works at the bank, at the car dealer and at the funeral home," says the group''s leader, dabbing an eye that is completely dry. Undertakers report record sympathy, and record tissue sales.'
+  effect: 'customers haggle less today'
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: -0.3
+- id: 'plot-boom'
+  title: 'CEMETERY PLOT VALUES DOUBLE OVERNIGHT'
+  message: 'A rumour that Blaine is "running out of ground" has sent buyers our way. "It''s the same dirt," says the county assessor, "but the view of Blaine is better from in here."'
+  effect: 'plot income +50% today'
+  modifiers:
+    - key: 'parlor.plotIncome'
+      op: 'mul'
+      value: 1.5
+- id: 'sinkhole'
+  title: 'SINKHOLE SWALLOWS ROW F'
+  message: 'Thirty graves dropped another six feet overnight. "They were six feet down already, so technically they''re fine," says the parks department. Plot buyers are not convinced and have stopped returning calls.'
+  effect: 'plot income halved today'
+  modifiers:
+    - key: 'parlor.plotIncome'
+      op: 'mul'
+      value: 0.5
+- id: 'weather-balloon'
+  title: 'WEATHER BALLOON CRASHES; OFFICIALS: ''WEATHER BALLOON'''
+  message: 'Something with lights came down behind the water tower. Officials say it was a weather balloon, and that the four small grey bodies at the morgue are "also weather balloons." Strange people are about.'
+  effect: 'more strange visitors and risky offers today'
+  modifiers:
+    - key: 'wait.scriptOdds'
+      op: 'mul'
+      value: 1.5
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.3
+- id: 'lake-monster'
+  title: 'LAKE BLEAK MONSTER EATS A SPEEDBOAT'
+  message: '"It was green, it was huge and it was hungry," says the speedboat''s former owner, from the shore. The parks department has closed the lake and opened a gift shop. Lake-house families are in mourning.'
+  effect: 'more bodies to prepare, richer customers'
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.3
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: 5
+- id: 'dead-mans-curve'
+  title: 'DEAD MAN''S CURVE DOES WHAT IT SAYS ON THE SIGN'
+  message: 'The new bypass claimed eleven motorists this week. "It''s performing exactly as named," says the county engineer, who has asked for a raise. The curve mostly takes people who were too cheap for the toll road.'
+  effect: '+1 turn today, poorer customers'
+  minDay: 2
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -5
+- id: 'twins-blowtorch'
+  title: 'THE TWINS BUY A BLOWTORCH, ''FOR CRAFTS'''
+  message: '"We''re making birdhouses," said the Twins, at exactly the same time. Three parlors have bought extra fire extinguishers. The rest have taken out extra insurance on their competitors.'
+  effect: 'more risky offers today'
+  modifiers:
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.5
+- id: 'sal-clinic'
+  title: 'COUSIN SAL OPENS WALK-IN CLINIC IN A WALK-IN FREEZER'
+  message: '"Cheaper than the hospital and closer to the morgue," says Sal, M.D. (University of P.O. Box 411). Patients are walking in. Undertakers are wheeling them out. The hospital has cut prices to compete.'
+  effect: 'more bodies to prepare, hospital 20% cheaper'
+  minDay: 3
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.3
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.8
+- id: 'second-statue'
+  title: 'MAYOR UNVEILS SECOND STATUE OF MAYOR'
+  message: '"The first one was lonely," explains the Mayor. The new statue faces the old one across the square; both are pointing at something important. The money came out of the permit office, which is now charging more.'
+  effect: 'City Hall permits 25% dearer, families spend 5% more (civic pride)'
+  minDay: 4
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 1.25
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'fenwick-rally'
+  title: 'FENWICK PROMISES ''FEWER STATUES, MORE FLOSSING'''
+  message: 'Mayoral hopeful Doris Fenwick, retired dentist, held a rally at the Pale Horse Cafe and handed out free coffee and toothbrushes. The Mayor replied by announcing a third statue. The town is in a pleasant mood.'
+  effect: 'customers a little calmer today'
+  minDay: 2
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.3
+- id: 'morty-citizen'
+  title: 'MORTY THE SKELETON MADE HONORARY CITIZEN'
+  message: '"He has never littered, never complained and never asked for a pothole to be filled," said the Mayor, presenting the key to the city to a box of bones. Suddenly everybody wants to end up like Morty.'
+  effect: 'families spend 5% more today'
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'blaine-discount'
+  title: 'BLAINE OPENS DISCOUNT FUNERAL HOME'
+  message: '"SAME DEATH, HALF THE PRICE," reads Blaine''s new billboard on Route 9, directly under the face of one of our morticians. Our families are reading it too, and they have brought calculators.'
+  effect: 'poorer customers, customers haggle harder'
+  minDay: 4
+  modifiers:
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -5
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.2
+- id: 'blaine-boxes'
+  title: 'BLAINE FUNERAL HOME CLOSED: ''THEY USED BOXES'''
+  message: '"Cardboard boxes," confirms a Blaine health inspector. "Labeled FRAGILE." Blaine''s grieving families are driving over to us in shame, and in money.'
+  effect: 'richer customers, families spend 5% more'
+  minDay: 6
+  modifiers:
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: 5
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'meteor'
+  title: 'OBSERVATORY: METEOR ''PROBABLY FINE'''
+  message: '"It is getting bigger, but so is our telescope budget," says the county observatory. The town is getting its affairs in order, mostly by buying very nice funerals for each other in advance.'
+  effect: 'families spend 10% more today'
+  minDay: 22
+  weight: 2
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.1
+- id: 'long-sermon'
+  title: 'FOUR-HOUR SERMON: NINE DIE OF OLD AGE IN PEWS'
+  message: '"I had a lot to get off my chest," said Father Smyth. The pews were cleared by stretcher. Mourners are calmer than usual today, having done most of their grieving during the second hour.'
+  effect: '+1 turn today, customers a little calmer'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.3
+- id: 'fortune-jam'
+  title: 'YANG''S FORTUNE PRINTER JAMS ON ''YOU WILL DIE'''
+  message: 'Every cookie at Yang''s last night said the same thing. June says the printer is fixed and that she "doesn''t see the problem, it''s accurate." Superstitious families are spending big, just in case.'
+  effect: 'families spend 5% more, customers haggle less'
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: -0.2
+- id: 'slow-limit'
+  title: 'MAYOR LOWERS SPEED LIMIT TO 15 AFTER HEARSE PASSES HIM'
+  message: '"It was going so fast the deceased was waving," complained the Mayor. Processions are crawling, and so is everybody else. Families waiting at the parlor have nowhere better to be.'
+  effect: '-1 turn today, customers 1 patience longer'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: -1
+    - key: 'customer.patience'
+      op: 'add'
+      value: 1
+- id: 'elijah-blinks'
+  title: 'DI-MART CLERK BLINKS; STORE RAISES PRICES IN PANIC'
+  message: 'Shoppers say Elijah blinked at 2:14 p.m. Tuesday, for the first time on record. Di-Mart management has raised prices "until we know what it means." Elijah has not commented, or blinked again.'
+  effect: 'Di-Mart caskets 15% dearer today'
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.15
+- id: 'obits-early'
+  title: 'OBITUARIES PRINTED ONE DAY EARLY'
+  message: 'A printing mix-up put tomorrow''s obituaries in today''s paper. Eight of the people named called to complain. Four have since stopped calling. Undertakers are advised to read ahead and bring a tape measure.'
+  effect: 'more customers, fewer distractions today'
+  modifiers:
+    - key: 'wait.eventOdds'
+      op: 'mul'
+      value: 0.6
+- id: 'flower-strike'
+  title: 'FLORISTS'' STRIKE: MOURNERS BRING WEEDS'
+  message: '"A dandelion is a flower if you love someone enough," says the florists'' union, which is also charging double for dandelions. Families are irritable and holding their wallets closer.'
+  effect: 'customers crankier and haggle harder'
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.3
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.2
+
+# Follow-ups (22.5): each waits for how a story arc ended, or for whether there is a mayor, and
+# starts no earlier than the first day that ending can be recorded (the lint checks).
+- id: 'steeple-tourists'
+  title: 'BELLS BRING BUS TOURS TO ST. MORTIMER''S'
+  message: 'The rebuilt steeple now rings twice for every funeral, and Father Smyth has started charging for the second ring. Out-of-town mourners are booking the full ring package and tipping the ringer, who is Father Smyth''s nephew and a little deaf.'
+  effect: 'families spend 5% more, customers a little calmer'
+  weight: 3
+  minDay: 11
+  when:
+    arcs:
+      - id: 'steeple'
+        endings: [ 'rebuilt' ]
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'garage-hourly'
+  title: 'VANE''S GARAGE CHARGES MOURNERS BY THE HOUR'
+  message: 'Lucius Vane''s garage on the old church lot has opened with a four-dollar minimum and a sign reading ALL SPACES FINAL. Funeral processions now pay by the hour. Father Smyth was seen leaving a hymn book under a windshield wiper.'
+  effect: 'Reaper Club cover 1 tag cheaper, poorer customers'
+  weight: 3
+  minDay: 11
+  when:
+    arcs:
+      - id: 'steeple'
+        endings: [ 'paved' ]
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: -1
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -5
+- id: 'bigtown-parking'
+  title: 'BIGTOWN CHARGES FOR PARKING AT FUNERALS; FAMILIES RETURN'
+  message: 'Families who fled to Bigtown found the meters did not blink and the cough had followed them anyway. Several have come home to Deathville, where parlor parking is free and the cough has moved on to Blaine. They are very polite about it, and very tired.'
+  effect: 'customers haggle less, families spend 5% more'
+  weight: 3
+  minDay: 17
+  when:
+    arcs:
+      - id: 'cough'
+        endings: [ 'fled' ]
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: -0.2
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'cure-cough-drop'
+  title: 'COMMEMORATIVE COUGH DROP SPORTS {mayor}''S FACE'
+  message: 'To mark the cure, {mayor} has issued a cough drop bearing a portrait of {mayor}. Sales are brisk, mostly among people who have since been advised not to chew it. The Mayor''s office says the profits go "to the cause", and the cause is the Mayor''s office.'
+  effect: 'City Hall permits 10% dearer, families spend 5% more'
+  weight: 3
+  minDay: 20
+  when:
+    arcs:
+      - id: 'cough'
+        endings: [ 'credit' ]
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 1.1
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'statue-second-hand'
+  title: 'UNKNOWN UNDERTAKER STATUE GROWS A SECOND HAND'
+  message: 'Overnight someone added a second hand to the statue in the square, also palm up. Experts say pigeons cannot have done it. Mourners leave coins in both palms for luck, and the council collects them at dawn "for upkeep".'
+  effect: 'richer customers, fewer risky offers'
+  weight: 3
+  minDay: 20
+  when:
+    arcs:
+      - id: 'cough'
+        endings: [ 'statue' ]
+  modifiers:
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: 5
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 0.8
+- id: 'morty-badge'
+  title: 'MORTY ISSUED CITY HALL STAFF BADGE, PARKING SPACE'
+  message: 'Morty has held the City Hall door since his concession and has not missed a day. "Best employee we''ve had," says {mayor}. "He has never asked for a day off to bury a relative." Permit clerks, inspired, are working through lunch.'
+  effect: 'City Hall permits 10% off today'
+  weight: 3
+  minDay: 12
+  when:
+    arcs:
+      - id: 'morty'
+        endings: [ 'conceded' ]
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 0.9
+- id: 'morty-ribbon'
+  title: 'HONORARY MAYOR MORTY OPENS BUS SHELTER BY STANDING NEXT TO IT'
+  message: 'The ribbon was cut by {mayor}, who is still allowed the scissors. Morty gave a speech, which was a nod. The town is in an unusually good mood, though the shelter has no roof and Morty has been seen sitting under it anyway.'
+  effect: 'customers a little calmer today'
+  weight: 3
+  minDay: 12
+  when:
+    arcs:
+      - id: 'morty'
+        endings: [ 'honorary' ]
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'raccoon-service'
+  title: 'RACCOON IN HAT SENTENCED TO COMMUNITY SERVICE AT GRAVEYARD'
+  message: 'The county court gave the raccoon two hundred hours tending graves under the supervision of Deacon, who volunteered. Police say a human mastermind remains at large. The raccoon has already tidied Row C and is described as "very good with a trowel".'
+  effect: 'grave robbers 10 luck worse today'
+  weight: 3
+  minDay: 10
+  when:
+    arcs:
+      - id: 'robber'
+        endings: [ 'caught' ]
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: -10
+- id: 'row-c-missing'
+  title: 'FAMILIES FILE 61 ''MISSING GRANDPA'' REPORTS; POLICE FILE UNDER G'
+  message: 'Row C is still empty and the filing cabinet is full. Police say most of the grandpas will "turn up eventually, one way or another". Families are hurrying to book plots they can watch from the window, and buying very good locks.'
+  effect: 'grave robbers +10 luck, families spend 5% more'
+  weight: 3
+  minDay: 12
+  when:
+    arcs:
+      - id: 'robber'
+        endings: [ 'emptied' ]
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: 10
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'elijah-lanyard'
+  title: 'ELIJAH PROMOTED TO ASSISTANT TO THE ASSISTANT MANAGER'
+  message: 'Di-Mart''s employee of the century now has a lanyard, a laminated schedule and a stool. He did not blink during the announcement, and the stool remains unused. The staff discount now covers "all friends of Elijah", a list that includes every undertaker in town.'
+  effect: 'Di-Mart caskets 10% off today'
+  weight: 3
+  minDay: 13
+  when:
+    arcs:
+      - id: 'dimart'
+        endings: [ 'saved' ]
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 0.9
+- id: 'dimart-surcharge'
+  title: 'DI-MART ADDS SURCHARGE TO COVER THE PAPERWORK OF THE PAPERWORK'
+  message: 'Elijah''s holding company has issued a surcharge notice for the cost of issuing surcharge notices. Caskets are up. Elijah is at the register, where the forms are stacked to the ceiling and the ceiling is stacked on Elijah.'
+  effect: 'Di-Mart caskets 15% dearer today'
+  weight: 3
+  minDay: 13
+  when:
+    arcs:
+      - id: 'dimart'
+        endings: [ 'closed' ]
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.15
+- id: 'twins-postcard'
+  title: 'TWINS WRITE FROM BLAINE: ''WEATHER''S NICE, NOTHING ON FIRE'''
+  message: 'The postcard to the fire brigade is signed twice and says the Twins are "taking up pottery". The kiln has worried the Blaine fire brigade, which has asked to borrow our dalmatian. The dalmatian declined and went back to sleep on the hose.'
+  effect: 'fewer risky offers, fewer bodies to prepare'
+  weight: 3
+  minDay: 15
+  when:
+    arcs:
+      - id: 'twins'
+        endings: [ 'doused' ]
+  modifiers:
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 0.8
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 0.9
+- id: 'elm-street-cardboard'
+  title: 'ELM STREET REBUILDS IN ''FIRE-RESISTANT CARDBOARD'''
+  message: 'The Twins'' insurers have funded a rebuild in materials that "should hold in light weather". Contractors have hung a banner reading UNDER NEW MANAGEMENT; the previous management is in Blaine. Hammers are scarce, and so are the walls they are for.'
+  effect: 'parlor upgrades 10% dearer, families spend 5% more'
+  weight: 3
+  minDay: 15
+  when:
+    arcs:
+      - id: 'twins'
+        endings: [ 'blaze' ]
+  modifiers:
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 1.1
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'withers-hearse-laps'
+  title: 'WITHERS'' NEW HEARSE CIRCLES THE REAPER CLUB ''FOR PRACTICE'''
+  message: 'Old Man Withers, winner of his own death pool, drives a lap of the club every hour on the hour. "Dress rehearsal," he says. "Somebody has to know where the brake is." Gamblers have opened a second pool on how long the first one lasts.'
+  effect: 'Reaper Club cover 1 tag dearer, more unusual customers'
+  weight: 3
+  minDay: 17
+  when:
+    arcs:
+      - id: 'withers'
+        endings: [ 'pool' ]
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: 1
+    - key: 'customer.specialChance'
+      op: 'mul'
+      value: 1.3
+- id: 'withers-second-wake'
+  title: 'WITHERS PLANS SECOND WAKE, ''BIGGER, WITH A BAND'''
+  message: 'After the success of the first, Old Man Withers will hold a living wake every Saturday until he really does die, "so everyone''s in practice". Father Smyth has ordered more dry cake. The town is in a generous mood, and so are its wallets.'
+  effect: 'families spend 5% more, customers a little calmer'
+  weight: 3
+  minDay: 17
+  when:
+    arcs:
+      - id: 'withers'
+        endings: [ 'wake' ]
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'die-local-stickers'
+  title: '''DIE LOCAL'' BUMPER STICKERS SELL OUT'
+  message: 'The stickers have sold out twice. A man with very white teeth was seen buying one in Bigtown and pretending it was a gift. Families say they want a parlor with "a real front desk and a real smell".'
+  effect: 'families spend 5% more, customers haggle less'
+  weight: 3
+  minDay: 18
+  when:
+    arcs:
+      - id: 'solemncorp'
+        endings: [ 'repelled' ]
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: -0.2
+- id: 'solemncorp-rent-bus'
+  title: 'PLOT RENTS NOW TRAVEL TO BIGTOWN BY BUS'
+  message: 'Cemetery rents leave for SolemnCorp''s head office on the morning bus and come back, reduced, on the afternoon one. "The delay is for your convenience," says the man with the teeth. The grass has never looked better, and nobody can afford to stand on it.'
+  effect: 'plot income 15% down today'
+  weight: 3
+  minDay: 21
+  when:
+    arcs:
+      - id: 'solemncorp'
+        endings: [ 'takeover' ]
+  modifiers:
+    - key: 'parlor.plotIncome'
+      op: 'mul'
+      value: 0.85
+- id: 'solemncorp-hold-music'
+  title: 'SOLEMNCORP HOLD MUSIC REQUESTED AT TWO WEDDINGS'
+  message: 'The Bigtown call center is still answering, and its slow organ hold music has become a minor hit. The man with the teeth was seen waiting in the queue himself. "We are very sorry," says the voice on the line. "Your call is important to the deceased."'
+  effect: 'customers a little calmer today'
+  weight: 3
+  minDay: 21
+  when:
+    arcs:
+      - id: 'solemncorp'
+        endings: [ 'bust' ]
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'gertie-cruise-sinks'
+  title: 'GERTIE''S CANCELLED CRUISE SINKS AT THE DOCK'
+  message: 'The ship Nurse Gertie was meant to board went down before leaving the harbor. Everyone got off, apart from the buffet. "I''d have been in the good lifeboat, prince," she says. Cousin Sal is selling lifeboats, which are cheaper than the hospital and about as sound.'
+  effect: 'hospital treatment 10% cheaper today'
+  weight: 3
+  minDay: 15
+  when:
+    arcs:
+      - id: 'gertie'
+        endings: [ 'stays' ]
+  modifiers:
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.9
+- id: 'sal-napkins'
+  title: 'HEAD NURSE SAL ISSUES HOSPITAL BILLS ON NAPKINS'
+  message: 'Under Sal, bills are written on cafeteria napkins and payable "in kind or in cash, preferably in cash". Discharges keep going out the back door. Gertie is saving every napkin and says they will be "evidence, prince".'
+  effect: 'hospital 20% cheaper, more bodies to prepare'
+  weight: 3
+  minDay: 15
+  when:
+    arcs:
+      - id: 'gertie'
+        endings: [ 'sal' ]
+  modifiers:
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.8
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.2
+- id: 'ferry-museum'
+  title: 'LAKE BLEAK FERRY REOPENS AS MUSEUM, GIFT SHOP'
+  message: 'The old ferry is moored at the shore with a ticket booth staffed by Lucius Vane. "I''m told it''s authentic," he says. "I''m told that about everything." Families of the passengers are at last arranging proper services, and asking about group rates.'
+  effect: 'more bodies to prepare, families spend 5% more'
+  weight: 3
+  minDay: 22
+  when:
+    arcs:
+      - id: 'lake'
+        endings: [ 'hunted' ]
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.2
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'monster-sandwiches'
+  title: 'VISITORS ASKED TO STOP FEEDING LAKE MONSTER SANDWICHES'
+  message: 'County scientists say the creature is shy, prefers carp and has been seen leaving the lake with a picnic basket. A swimmer in an inflatable duck is now described as "a smaller swimmer". The county calls this "a matter for the insurance".'
+  effect: 'families spend 5% more, a few more bodies to prepare'
+  weight: 3
+  minDay: 22
+  when:
+    arcs:
+      - id: 'lake'
+        endings: [ 'studied' ]
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.1
+- id: 'no-confidence-frame'
+  title: '{mayor} FRAMES NO-CONFIDENCE VOTE, HANGS IT BY THE STATUES'
+  message: 'The council''s four-to-one vote now hangs in City Hall between the second and third statues. "It''s an honour to be doubted by so many," said {mayor}. The permit office, still nervous, is keeping its prices down.'
+  effect: 'City Hall permits 15% cheaper today'
+  weight: 3
+  minDay: 20
+  when:
+    arcs:
+      - id: 'confidence'
+        endings: [ 'carried' ]
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 0.85
+- id: 'fenwick-every-office'
+  title: 'FENWICK FILES FOR ''EVERY OFFICE WITH A BALLOT'''
+  message: 'Doris Fenwick was turned down for the Parks Department on the grounds that it is a department. She is handing out toothbrushes outside the library, and a statue of {mayor} has been moved to make room. The town is in a pleasant mood.'
+  effect: 'customers a little calmer today'
+  weight: 3
+  minDay: 20
+  when:
+    arcs:
+      - id: 'confidence'
+        endings: [ 'survived' ]
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'mayor-hearse-meter'
+  title: '{mayor} CUTS RIBBON ON FIRST HEARSE-ONLY PARKING METER'
+  message: 'The meter takes coins and, in a pinch, condolences. {mayor} cut the ribbon with garden shears and a great deal of confidence. Funeral processions park free; everyone else parks wherever the meter is pointing.'
+  effect: 'families spend 5% more today'
+  weight: 1.5
+  minDay: 3
+  when:
+    mayor: true
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'mayor-audit'
+  title: 'AUDIT FINDS {mayor} KEPT ONE PROMISE, BY ACCIDENT'
+  message: 'The Funeral Times counted forty-one campaign promises. {mayor} kept the one about more funerals. The audit was presented at a press conference, and {mayor} thanked the auditors and asked them to leave by the side door.'
+  effect: 'customers 1 patience longer today'
+  weight: 1.5
+  minDay: 3
+  when:
+    mayor: true
+  modifiers:
+    - key: 'customer.patience'
+      op: 'add'
+      value: 1
+- id: 'mayor-ban-mondays'
+  title: '{mayor} BANS MONDAYS, SETTLES FOR LONGER FRIDAY'
+  message: 'The order was withdrawn after a clerk pointed out that Mondays are load-bearing. Business owners are cautiously optimistic and have not been told which Friday. Several parlors have already booked it.'
+  effect: '+1 turn today'
+  weight: 1
+  minDay: 3
+  when:
+    mayor: true
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+- id: 'mayor-sixth-statue'
+  title: '{mayor} NAMES SIXTH STATUE ''THE SECOND-BEST ONE'''
+  message: 'With no rival on the horizon, {mayor} has unveiled another statue of {mayor} and a plinth for the next. The permit office paid for it. Residents now use the statues as landmarks, mostly to say "turn left at him".'
+  effect: 'City Hall permits 15% dearer today'
+  weight: 1.5
+  minDay: 3
+  when:
+    mayor: false
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 1.15
+- id: 'mayor-suggestion'
+  title: '{mayor} ''MORE OF A SUGGESTION THAN A MAYOR,'' SAYS COUNCIL'
+  message: 'Nobody else would run, so {mayor} remains in office and fills potholes with press releases. A suggestion box has been installed outside City Hall. It is currently a very large pothole, and it is full.'
+  effect: 'customers crankier and poorer today'
+  weight: 1.5
+  minDay: 3
+  when:
+    mayor: false
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.2
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -5

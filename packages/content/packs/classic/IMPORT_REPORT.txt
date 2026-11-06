@@ -1,0 +1,10 @@
+Import report for packs/vintage (written by the importer; not read by any loader).
+
+Warnings (2): malformed lines and unresolved references. Reported, never fixed.
+  risks.txt:112: 'start_url_bg' has extra '|' fields that the original drops: 'haha, nice spelling Akiko...'
+  risks.txt:174: unrecognised line ignored by the original: '/ jjohn@taskboy.com'
+
+Parser quirks applied (3):
+  karma.txt: 25 empty slots: 60-64, 66-69, 72-79, 88-89, 92-97
+  ratings.txt: 3 empty slots: 67-69
+  risks.txt:243: risk 8 (block from line 221) omits 'normal_url_bg' and inherits the previous block's value

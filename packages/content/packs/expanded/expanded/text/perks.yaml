@@ -1,0 +1,15 @@
+trusted:
+  name: 'Trusted'
+  description: 'Families arrive calmer and less stingy. Rating +2, or +5 at karma 85.'
+church-associate:
+  name: 'Church Associate'
+  description: 'Bless a customer once to calm them and learn if they loved the deceased. Rivals win half as much from you.'
+grave-robber:
+  name: 'Grave Robber'
+  description: 'Dishonest choices pay double, Di-Mart gives you the back-room price, and you can dig for goodies at your office or rob fresh graves, neither of which costs a turn.'
+necromancer:
+  name: 'Necromancer'
+  description: 'Raise mourners once per customer to scare them out of haggling, one ''accident'' customer a day, and your attacks pay a quarter more.'
+neutral:
+  name: 'Neutral'
+  description: 'Neither trusted nor feared. Families treat you like a vending machine that talks.'

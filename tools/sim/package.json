@@ -1,0 +1,25 @@
+{
+  "name": "@fq/sim",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monte Carlo balance simulator: many towns of AI rivals, a report, and invariant and exploit checks.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "sim": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/bots": "workspace:*",
+    "@fq/content": "workspace:*",
+    "@fq/core": "workspace:*",
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15"
+  }
+}

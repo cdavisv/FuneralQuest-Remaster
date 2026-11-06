@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!legacy",
+      "!docs",
+      "!pnpm-lock.yaml",
+      "!assets",
+      "!packages/content/built",
+      "!apps/client/src/art/packs/classic/ui",
+      "!**/dist",
+      "!**/dist-build",
+      "!**/coverage",
+      "!apps/mobile/android",
+      "!apps/mobile/ios",
+      "!apps/mobile/www",
+      "!apps/desktop/src-tauri",
+      "!apps/desktop/dist"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  }
+}

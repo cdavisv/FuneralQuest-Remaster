@@ -1,0 +1,8 @@
+# Derived by tools/derive-ui-art.mjs from assets/classic/ui (run by dev, build and test).
+# Hand-supplied packs (for example a future Remastered one) keep their own ui/ folder in git.
+src/art/packs/classic/ui/
+# `pnpm play` keeps its database here; Playwright writes results and reports here.
+.data/
+e2e/results/
+playwright-report/
+test-results/

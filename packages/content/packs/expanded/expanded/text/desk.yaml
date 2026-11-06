@@ -1,0 +1,10 @@
+menuParlor: 'Parlor'
+accidents: "\n`$People keep having accidents near your parlor. You don't ask how. `w+{turns}`$ turn."
+banked: "\n`$You carried over `w{turns}`$ unused turns from yesterday."
+hearsePaid: "\n`$Gas and insurance for your {ride}: `w${upkeep}`$."
+hearseUnpaid: "\n`4You can't pay the ${upkeep} for your {ride} today. It stays in the garage: no bonus turns.`$"
+plotIncome: "\n`$Your `w{plots}`$ plots bring in `w${money}`$ in upkeep fees."
+futurePaid: "\n{text} `w+{bp}`$ BP, `w+${money}`$."
+digFound: '`$You dig around the old graves behind the parlor and find `w${money}`$ worth of watches, teeth and one glass eye.'
+digCaught: '`$You dig all afternoon and find nothing but a very angry groundskeeper with a very good memory. People talk.'
+digTag: '`$Your shovel hits a coffin with a sales tag still on it. A `wgold tag`$!'

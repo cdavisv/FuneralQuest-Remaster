@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": ["vite/client", "@testing-library/jest-dom"],
+    "declaration": false,
+    "resolveJsonModule": true,
+    "sourceMap": false
+  },
+  "include": ["src", "test", "e2e", "vite.config.ts", "playwright.config.ts", "tools/*.d.mts"]
+}

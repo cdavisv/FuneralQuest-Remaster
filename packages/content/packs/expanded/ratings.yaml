@@ -1,0 +1,7 @@
+# Expanded pack: rating lines that fill the original's empty slots (67-69). Every other slot is
+# inherited (merge: append), including slots 88-90, where the original repeats the slot 86 line
+# ("top 20 percent"): the original dialog must remain, repeats and all (CLAUDE.md).
+
+'67': 'June brings you extra fortune cookies.'
+'68': 'The Deathville Enquirer spells your name right.'
+'69': 'Families ask for you by name. Mostly the right name.'

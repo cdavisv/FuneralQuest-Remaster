@@ -1,0 +1,12 @@
+labels:
+  money: 'Cash'
+  karma: 'Karma'
+  rating: 'Rating'
+  parlor: 'Parlor'
+  stock: 'Caskets in stock'
+  markup: 'Casket markup'
+  rivalry: 'Rivalry'
+  banked: 'Turns banked'
+  plotIncome: 'Plot income a day'
+  perks: 'Perks'
+  sales: 'Sales / walkouts'
