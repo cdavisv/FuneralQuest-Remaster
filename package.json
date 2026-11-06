@@ -23,7 +23,8 @@
     "desktop:dev": "pnpm --filter @fq/desktop dev",
     "desktop:build": "pnpm --filter @fq/desktop build",
     "mobile:sync": "pnpm --filter @fq/mobile sync",
-    "mobile:android": "pnpm --filter @fq/mobile android"
+    "mobile:android": "pnpm --filter @fq/mobile android",
+    "listen": "node packages/audio/scripts/listen-server.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.5",

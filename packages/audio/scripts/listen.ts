@@ -5,8 +5,9 @@
  * browser's local storage and can be exported as text.
  *
  * The data is written into the page (no fetch), and the players point at the packs with paths
- * relative to the page, so it works opened straight from disk (file://) as well as through a
- * server that serves the repository (the client's dev server serves it under /@fs/<repo path>/).
+ * relative to the page, so it works opened straight from disk (file://) in a web browser, and through
+ * `pnpm listen`, a small local server for places that cannot read files next to the page (a
+ * sandboxed preview, a remote machine).
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -105,7 +106,16 @@ function page(data: string): string {
   .title { font-style: italic; }
   .where { color: #555; font-size: .9em; }
   .pack h4 { margin: 0 0 .2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: #666; }
-  audio { width: 100%; height: 2rem; }
+  audio { width: 100%; display: block; margin-top: .3rem; }
+  .play { font: inherit; font-weight: 600; padding: .45rem .9rem; min-width: 7.5rem; border: 1px solid #7a5a2a; border-radius: .4rem; background: #a38855; color: #1b1205; cursor: pointer; }
+  .play:hover { background: #b89867; }
+  .play.on { background: #3f1d01; color: #ffe0a8; }
+  .play:disabled { opacity: .5; cursor: not-allowed; }
+  .pl { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .time { font-variant-numeric: tabular-nums; color: #444; white-space: nowrap; }
+  .loaderr { color: #a33; font-size: .85em; margin-top: .2rem; }
+  #warn { display: none; margin: .75rem 0; padding: .75rem 1rem; border: 2px solid #a33; background: #fff3f0; max-width: 60rem; }
+  #warn code, noscript code { background: #eee; padding: 0 .3em; }
   .missing { color: #a33; font-size: .9em; }
   .note { font-size: .8em; color: #555; white-space: pre-wrap; max-height: 6.5em; overflow: auto; }
   textarea { width: 100%; min-height: 4.5rem; font: inherit; }
@@ -117,7 +127,7 @@ function page(data: string): string {
 </head>
 <body>
 <h1>Synth and Studio sound packs, side by side</h1>
-<p class="lead">Every track the game plays, the <b>Synth</b> pack (made by the game's own code) next to the <b>Studio</b> pack (generated with ElevenLabs from the prompt shown, then post-processed). Loops repeat between their loop points when "Loop" is ticked. Pick a verdict and write a note for each track; notes stay in this browser. When done, press <b>Export notes</b> and send the text back. Open this file straight from disk, or through the client dev server at <code>/@fs/&lt;path to the repository&gt;/docs/audio/listen.html</code>.</p>
+<p class="lead">Every track the game plays, the <b>Synth</b> pack (made by the game's own code) next to the <b>Studio</b> pack (generated with ElevenLabs from the prompt shown, then post-processed). Loops repeat between their loop points when "Loop" is ticked. Pick a verdict and write a note for each track; notes stay in this browser. When done, press <b>Export notes</b> and send the text back. Press <b>Play</b> on any track. Open this file in a web browser, or run <code>pnpm listen</code> in the repository and open the address it prints.</p>
 <div class="bar">
   <label><input type="checkbox" id="loop" checked> Loop</label>
   <button type="button" id="stop">Stop all</button>
@@ -126,6 +136,8 @@ function page(data: string): string {
   <span id="status"></span>
 </div>
 <textarea id="export" readonly></textarea>
+<noscript><p id="noscript"><b>This page needs JavaScript to build its players.</b> Open it in a web browser, or run <code>pnpm listen</code> in the repository and open the address it prints.</p></noscript>
+<div id="warn"><b>The sound files could not be loaded from here.</b> This happens when the page is shown in a preview that cannot read the files next to it. In the repository, run <code>pnpm listen</code> and open the address it prints (it serves this page and both sound packs), or open this file in a normal web browser window.</div>
 <div id="list"></div>
 <script>
 const TRACKS = ${data};
@@ -157,7 +169,24 @@ function player(base, p, label) {
     if (p.loop && document.getElementById("loop").checked && p.b && a.currentTime >= p.b) a.currentTime = p.a + (a.currentTime - p.b);
   });
   a.addEventListener("ended", () => { if (p.loop && document.getElementById("loop").checked) { a.currentTime = p.a || 0; a.play(); } });
-  players.push(a); wrap.append(a);
+  // A plain, obvious button as well as the browser's own controls, which some previews hide.
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "play"; btn.textContent = "\u25B6 Play";
+  const time = document.createElement("span"); time.className = "time";
+  const fmt = (x) => { const v = Math.max(0, Math.floor(x || 0)); return Math.floor(v / 60) + ":" + String(v % 60).padStart(2, "0"); };
+  const show = () => { time.textContent = fmt(a.currentTime) + " / " + fmt(p.d); };
+  show();
+  const err = document.createElement("div"); err.className = "loaderr"; err.hidden = true;
+  const fail = (why) => { err.hidden = false; err.textContent = "Cannot play this file here (" + why + "). Run pnpm listen in the repository and open the address it prints."; btn.classList.remove("on"); btn.textContent = "\u25B6 Play"; };
+  btn.addEventListener("click", () => {
+    if (a.paused) { err.hidden = true; const r = a.play(); if (r && r.catch) r.catch((e) => fail(e && e.name ? e.name : "blocked")); }
+    else a.pause();
+  });
+  a.addEventListener("play", () => { btn.classList.add("on"); btn.textContent = "\u25A0 Stop"; });
+  a.addEventListener("pause", () => { btn.classList.remove("on"); btn.textContent = "\u25B6 Play"; });
+  a.addEventListener("timeupdate", show);
+  m4a.addEventListener("error", () => fail("file not found or not readable"), { once: true });
+  const line = document.createElement("div"); line.className = "pl"; line.append(btn, time);
+  players.push(a); wrap.append(line, a, err);
   return wrap;
 }
 function cell(name, base, t, extra) {
@@ -193,6 +222,8 @@ for (const t of TRACKS) {
   list.append(row);
 }
 status();
+// If no file can be read at all (a sandboxed preview, a moved page), say so plainly.
+setTimeout(() => { if (total > 0 && loaded === 0) document.getElementById("warn").style.display = "block"; }, 4000);
 document.getElementById("stop").addEventListener("click", () => { for (const a of players) a.pause(); });
 document.getElementById("exportBtn").addEventListener("click", () => {
   const lines = ["Funeral Quest audio notes (" + new Date().toISOString().slice(0, 10) + ")", ""];
