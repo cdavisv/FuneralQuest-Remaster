@@ -1,0 +1,11 @@
+# City Hall permits by permit id (rules.town.cityHall.permits): name and the clerk's description.
+
+signage:
+  name: 'Signage Permit (Form 9-B)'
+  description: 'Authorises one (1) likeness of the applicant above Route 9. The words YOU''RE NEXT are not on the list of prohibited phrases. We checked.'
+zoning:
+  name: 'Zoning Variance'
+  description: 'Reclassifies the lot behind your parlor from Former Landfill to Garden. Any humming from the soil after dark is the property owner''s concern.'
+crematory:
+  name: 'Crematory Emissions Permit'
+  description: 'Certifies your smoke as mostly wood. Complaints from Blaine are filed in the round cabinet under the desk.'

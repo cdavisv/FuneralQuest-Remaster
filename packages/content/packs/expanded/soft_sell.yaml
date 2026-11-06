@@ -1,0 +1,324 @@
+# Appended to Classic's soft_sell table (merge: append). Derived from expanded/softSell.yaml:
+# every new item with no track that costs $600 or less, in the same order. Do not edit by hand;
+# edit expanded/softSell.yaml and rerun the derivation (a test checks the two agree).
+- article: 'a'
+  name: 'Bagpiper Who Knows Two Songs'
+  price: 600
+- article: 'a'
+  name: 'Buffet Lunch'
+  price: 500
+- article: 'a'
+  name: 'Dove Release'
+  price: 350
+- article: 'a'
+  name: 'Candlelight Vigil'
+  price: 150
+- article: 'a'
+  name: 'Rosary Placed in the Hands'
+  price: 100
+- article: 'a'
+  name: 'Hymn Sung Off-Key by Father Smyth'
+  price: 200
+- article: 'a'
+  name: 'Lock of Hair in a Locket'
+  price: 250
+- article: 'a'
+  name: 'Fingerprint Keepsake Charm'
+  price: 300
+- article: 'a'
+  name: 'Cardboard Cutout of the Deceased'
+  price: 150
+- article: 'a'
+  name: 'Video Tribute Set to Soft Rock'
+  price: 350
+- article: 'some'
+  name: 'Commemorative Coffee Mugs'
+  price: 100
+- article: 'a'
+  name: 'Balloon Arch (Black)'
+  price: 250
+- article: 'an'
+  name: 'Organic Burial Shroud'
+  price: 300
+- article: 'a'
+  name: 'Tree Planted in the Name of the Deceased'
+  price: 200
+- article: 'a'
+  name: 'Guest Book (Leather-ish)'
+  price: 50
+- article: 'a'
+  name: 'Fruit Basket (Mostly Pears)'
+  price: 50
+- article: 'some'
+  name: 'Mints Shaped Like Tiny Coffins'
+  price: 50
+- article: 'a'
+  name: 'Name Spelled Right in the Program'
+  price: 50
+- article: 'a'
+  name: 'Parking Attendant Who Waves'
+  price: 50
+- article: 'a'
+  name: 'Laminated Obituary'
+  price: 50
+- article: 'a'
+  name: 'Kazoo Rendition of a Favorite Song'
+  price: 50
+- article: 'a'
+  name: 'Name Tag for Every Mourner'
+  price: 50
+- article: 'some'
+  name: 'Day-Old Funeral Lilies'
+  price: 50
+- article: 'a'
+  name: 'Pen That Works, for the Guest Book'
+  price: 100
+- article: 'a'
+  name: 'Cameo by Morty the Skeleton'
+  price: 100
+- article: 'some'
+  name: 'Doilies Under Everything'
+  price: 100
+- article: 'a'
+  name: 'Bowl of Butterscotch From Grandma''s Purse'
+  price: 100
+- article: 'a'
+  name: 'Sympathy Card Signed by the Mayor'
+  price: 100
+- article: 'some'
+  name: 'Waterproof Mascara Handouts'
+  price: 100
+- article: 'some'
+  name: 'Seed Paper Programs'
+  price: 100
+- article: 'a'
+  name: 'Second Opinion From Cousin Sal'
+  price: 100
+- article: 'a'
+  name: 'Sunflower Wreath (Aggressively Cheerful)'
+  price: 100
+- article: 'a'
+  name: 'Casserole Coordination Service'
+  price: 150
+- article: 'some'
+  name: 'Plastic Lilies That Never Die'
+  price: 150
+- article: 'a'
+  name: 'Moment of Silence (Extended Cut)'
+  price: 150
+- article: 'a'
+  name: 'Holy Water Spritz'
+  price: 150
+- article: 'a'
+  name: 'Cushioned Folding Chair Upgrade'
+  price: 150
+- article: 'a'
+  name: 'Photo Booth With Mourning Props'
+  price: 150
+- article: 'a'
+  name: 'Carnation Pin for Every Mourner'
+  price: 150
+- article: 'a'
+  name: 'Weeping Willow Sapling'
+  price: 150
+- article: 'a'
+  name: 'Notary for the Will Reading'
+  price: 150
+- article: 'some'
+  name: 'Monogrammed Handkerchiefs'
+  price: 150
+- article: 'a'
+  name: 'Wind Chime Made From the Deceased''s Keys'
+  price: 150
+- article: 'a'
+  name: 'Live Video Feed for the Relatives in Blaine'
+  price: 150
+- article: 'a'
+  name: 'Choir of Three Retirees'
+  price: 200
+- article: 'some'
+  name: 'Condolence Cupcakes'
+  price: 200
+- article: 'a'
+  name: 'Bouquet of Gas Station Roses'
+  price: 200
+- article: 'a'
+  name: 'Spray-On Tan for the Deceased'
+  price: 200
+- article: 'a'
+  name: 'Weather Guarantee (Void If It Rains)'
+  price: 200
+- article: 'some'
+  name: 'Egg Rolls From Mr. Yang''s'
+  price: 200
+- article: 'a'
+  name: 'Composting Consultation'
+  price: 200
+- article: 'an'
+  name: 'Usher in a Rented Tuxedo'
+  price: 200
+- article: 'an'
+  name: 'Honor Guard of Retired Crossing Guards'
+  price: 250
+- article: 'a'
+  name: 'Calligraphy Program Booklet'
+  price: 250
+- article: 'a'
+  name: 'Bible With the Deceased''s Name Embossed'
+  price: 250
+- article: 'some'
+  name: 'Lilies Flown In From Blaine'
+  price: 250
+- article: 'a'
+  name: 'Hand-Painted Portrait (From a Blurry Photo)'
+  price: 250
+- article: 'a'
+  name: 'Bouncer for the Wake'
+  price: 250
+- article: 'some'
+  name: 'Pallbearers Who Lift With Their Legs'
+  price: 250
+- article: 'a'
+  name: 'Carbon Offset for the Hearse Ride'
+  price: 250
+- article: 'a'
+  name: 'Harpist'
+  price: 300
+- article: 'a'
+  name: 'Ham Buffet'
+  price: 300
+- article: 'a'
+  name: 'Wreath Shaped Like the Deceased''s Car'
+  price: 300
+- article: 'some'
+  name: 'Grief Counseling for the Family Dog'
+  price: 300
+- article: 'a'
+  name: 'Professional Wailer (Soprano)'
+  price: 300
+- article: 'a'
+  name: 'Candle That Smells Like the Deceased'
+  price: 300
+- article: 'a'
+  name: 'Signature Cocktail Named After the Deceased'
+  price: 300
+- article: 'a'
+  name: 'Eulogy Delivered in Latin'
+  price: 300
+- article: 'a'
+  name: 'String Quartet Missing a Member'
+  price: 350
+- article: 'a'
+  name: 'Novena Said by Father Smyth'
+  price: 350
+- article: 'a'
+  name: 'Sheet Cake With the Deceased''s Face'
+  price: 350
+- article: 'a'
+  name: 'Memorial Bench at Lake Bleak'
+  price: 350
+- article: 'a'
+  name: 'Valet for the Procession'
+  price: 350
+- article: 'some'
+  name: 'Locally Sourced Mourners'
+  price: 350
+- article: 'a'
+  name: 'Gospel Soloist'
+  price: 400
+- article: 'an'
+  name: 'Ice Cream Social After the Burial'
+  price: 400
+- article: 'a'
+  name: 'Vintage Hearse Rental for the Photos'
+  price: 400
+- article: 'a'
+  name: 'Family Crest (Recently Invented)'
+  price: 400
+- article: 'a'
+  name: 'Custom Hymn Written for the Deceased'
+  price: 400
+- article: 'a'
+  name: 'Year of Forever Fragrant Refills'
+  price: 400
+- article: 'a'
+  name: 'Petting Zoo for the Grandkids'
+  price: 400
+- article: 'a'
+  name: 'Barbershop Quartet'
+  price: 450
+- article: 'a'
+  name: 'Catered Pot Roast Dinner'
+  price: 450
+- article: 'an'
+  name: 'Orchid Spray'
+  price: 450
+- article: 'a'
+  name: 'Fog Machine for the Viewing'
+  price: 450
+- article: 'a'
+  name: 'Commissioned Biography (40 Pages)'
+  price: 450
+- article: 'a'
+  name: 'Stained Glass Panel of the Deceased'
+  price: 450
+- article: 'a'
+  name: 'Solar-Powered Eternal Flame'
+  price: 450
+- article: 'a'
+  name: 'Will-Reading Referee'
+  price: 450
+- article: 'a'
+  name: 'Brass Band March to the Cemetery'
+  price: 500
+- article: 'a'
+  name: 'Dessert Table With a Chocolate Fountain'
+  price: 500
+- article: 'a'
+  name: 'Raven Release (Trained, Mostly)'
+  price: 500
+- article: 'a'
+  name: 'Reserved Pew With the Deceased''s Name'
+  price: 500
+- article: 'a'
+  name: 'Limousine for the Immediate Family'
+  price: 500
+- article: 'a'
+  name: 'Look-Alike Pallbearer'
+  price: 500
+- article: 'a'
+  name: 'Jazz Trio'
+  price: 550
+- article: 'a'
+  name: 'Midnight Ghost Tour for the Mourners'
+  price: 550
+- article: 'a'
+  name: 'Smoked Brisket Buffet'
+  price: 550
+- article: 'a'
+  name: 'Life-Size Wax Figure of the Deceased'
+  price: 550
+- article: 'a'
+  name: 'Portrait in Oils'
+  price: 550
+- article: 'a'
+  name: 'Rose Petal Aisle'
+  price: 550
+- article: 'a'
+  name: 'Full Choir in Borrowed Robes'
+  price: 600
+- article: 'a'
+  name: 'Seven-Course Wake Banquet'
+  price: 600
+- article: 'a'
+  name: 'Horse-Drawn Carriage (One Horse)'
+  price: 600
+- article: 'a'
+  name: 'Sky-Written Farewell'
+  price: 600
+- article: 'an'
+  name: 'Exorcism, Just in Case'
+  price: 600
+- article: 'a'
+  name: 'Tribute Mural on the Di-Mart Wall'
+  price: 600

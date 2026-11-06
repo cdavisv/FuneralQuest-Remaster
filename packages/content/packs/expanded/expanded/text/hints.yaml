@@ -1,0 +1,8 @@
+notEnoughCash: 'Not enough cash'
+storeroomFull: 'Storeroom full'
+nothingToFill: 'Nothing to fill'
+dugEnough: 'Dug enough today'
+noTurns: 'No turns left'
+current: 'Current'
+needsMoney: 'Needs ${money}'
+costsTurns: '{turns} turn'

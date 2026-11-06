@@ -1,0 +1,26 @@
+{
+  "name": "@fq/legacy-compat",
+  "version": "0.0.0",
+  "private": true,
+  "description": "request.xp bridge: lets the original 2001 Flash client (under Ruffle) play against the @fq/core engine.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "tsx src/dev.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fastify/static": "^10.1.10",
+    "@fq/core": "workspace:*",
+    "@fq/protocol": "workspace:*",
+    "@ruffle-rs/ruffle": "^0.7.1",
+    "fastify": "^5.12.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15"
+  }
+}

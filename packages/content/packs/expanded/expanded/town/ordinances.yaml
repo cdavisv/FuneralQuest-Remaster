@@ -1,0 +1,319 @@
+# City Hall ordinance candidates (18.3), in force for a week when voted in. `text` is the Mayor's
+# office's pitch on the ballot. Every one should help some play styles and cost others.
+
+- id: 'speed-limit'
+  title: 'Raise the Speed Limit to 85'
+  text: '"Get where you''re going faster, or don''t get there at all. The Mayor''s office calculates that the average funeral is now twelve minutes closer." Speeding fines will come out of family budgets.'
+  effect: '+1 turn a day, customers spend 5% less'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 0.95
+- id: 'open-carry'
+  title: 'Open Carry for Morticians'
+  text: '"A shovel is a tool. A tool is a right. The Mayor reminds every mortician to keep their shovel holstered in church and pointed down at funerals."'
+  effect: 'fights pay 25% more, customers arrive edgier'
+  modifiers:
+    - key: 'pvp.gainMult'
+      op: 'mul'
+      value: 1.25
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.2
+- id: 'quiet-hours'
+  title: 'Graveyard Quiet Hours'
+  text: '"Let the dead rest, and let the neighbours sleep. The Mayor''s office has hired a man with a lantern and a very loud whistle."'
+  effect: 'no graveyard duels, grave robbers -15 luck, calmer customers'
+  modifiers:
+    - key: 'graveyard.duels'
+      op: 'mul'
+      value: 0
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: -15
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'tax-holiday'
+  title: 'Small Business Tax Holiday'
+  text: '"The town can''t afford it, so we''re doing it twice as hard. Deathville Savings has kindly agreed to cover the difference out of your interest."'
+  effect: 'upgrades 10% off, permits half price, savings -0.1% a day'
+  modifiers:
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 0.9
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 0.5
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: -0.001
+- id: 'embalming-act'
+  title: 'Mandatory Embalming Act'
+  text: '"Everybody gets the works. It''s the law now. The Mayor''s office would like to thank the Embalmers'' Guild for writing it, and for the fruit basket."'
+  effect: 'families spend 5% more but haggle harder, more bodies to prepare'
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.3
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.3
+- id: 'sin-tax'
+  title: 'Sin Tax on Nightlife'
+  text: '"If you can afford to dance, you can afford to fill a pothole. The proceeds go to the bank, the church, and absolutely nowhere else."'
+  effect: 'Reaper Club cover +2 tags, bingo pays the whole pot, savings +0.2% a day'
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: 2
+    - key: 'church.bingoCut'
+      op: 'mul'
+      value: 0
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: 0.002
+- id: 'curfew'
+  title: 'Downtown Curfew After Dark'
+  text: '"Nothing good happens after nine o''clock, except the Mayor''s poker game, which is exempt." Hired muscle will need to make an appointment.'
+  effect: 'fights pay 25% less, hit men 50% dearer'
+  modifiers:
+    - key: 'pvp.gainMult'
+      op: 'mul'
+      value: 0.75
+    - key: 'club.hitPrice'
+      op: 'mul'
+      value: 1.5
+- id: 'bingo-levy'
+  title: 'Bingo Hall Roof Levy'
+  text: '"The church roof leaks on the faithful and the Lord has asked us to do something. The church will keep a little more of the pot. A dry church is a calm town."'
+  effect: 'the church keeps twice the bingo cut, customers a little calmer'
+  modifiers:
+    - key: 'church.bingoCut'
+      op: 'mul'
+      value: 2
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.2
+- id: 'casket-tariff'
+  title: 'Tariff on Out-of-Town Caskets'
+  text: '"Buy local, die local. Every Deathville casket is now made in Deathville, by Di-Mart, from parts. Proud families will spend accordingly."'
+  effect: 'Di-Mart caskets 10% dearer, families spend 5% more'
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.1
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'plot-tax'
+  title: 'Cemetery Property Tax'
+  text: '"Every plot owner pays a fair share for the roads. The dead don''t use the roads, but their visitors do, and they drive like they''re grieving." The money goes to the contractors.'
+  effect: 'plot income -25%, upgrades 10% off'
+  modifiers:
+    - key: 'parlor.plotIncome'
+      op: 'mul'
+      value: 0.75
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 0.9
+- id: 'rest-subsidy'
+  title: 'Eternal Rest Subsidy'
+  text: '"Land is the future. Also the past, which is where we keep it." The town will top up every plot owner''s rent, and Di-Mart has agreed to pay for it at the casket counter.'
+  effect: 'plot income +25%, Di-Mart caskets 5% dearer'
+  modifiers:
+    - key: 'parlor.plotIncome'
+      op: 'mul'
+      value: 1.25
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.05
+- id: 'police-overtime'
+  title: 'Police Overtime Act'
+  text: '"More officers, more hours, more donuts. The Commissioner has promised to look at the graveyard at least once a night, from the car." Paid for out of your savings interest.'
+  effect: 'grave robbers -10 luck, hit men 30% dearer, savings -0.1% a day'
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: -10
+    - key: 'club.hitPrice'
+      op: 'mul'
+      value: 1.3
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: -0.001
+- id: 'hospital-drive'
+  title: 'Hospital Funding Drive'
+  text: '"A healthy town is a happy town," says the Mayor''s office, which polled the undertakers and has decided to ignore them. Treatment is cheaper. People keep surviving.'
+  effect: 'hospital 40% cheaper, fewer customers (more empty waits)'
+  modifiers:
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.6
+    - key: 'wait.eventOdds'
+      op: 'mul'
+      value: 1.2
+- id: 'usury-cap'
+  title: 'Usury Cap'
+  text: '"No bank in Deathville may charge more than Cousin Sal. Deathville Savings has responded by paying savers less, out of what the teller calls spite and the bank calls policy."'
+  effect: 'loans 1% a day cheaper, savings -0.1% a day'
+  modifiers:
+    - key: 'bank.loanRate'
+      op: 'add'
+      value: -0.01
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: -0.001
+- id: 'sound-money'
+  title: 'Sound Money Act'
+  text: '"A dollar saved is a dollar the Mayor can borrow later. Savers will be rewarded. Borrowers will be looked at, over glasses, for a long time."'
+  effect: 'savings +0.2% a day, loans 1% a day dearer'
+  modifiers:
+    - key: 'bank.savingsRate'
+      op: 'add'
+      value: 0.002
+    - key: 'bank.loanRate'
+      op: 'add'
+      value: 0.01
+- id: 'night-shift'
+  title: 'Graveyard Open All Night'
+  text: '"The dead don''t keep office hours, so why should their visitors? The cemetery gate will stay open around the clock." The groundskeeper will be asleep for some of the clock.'
+  effect: 'grave robbers +10 luck, customers a little edgier'
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: 10
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.2
+- id: 'sunday-closing'
+  title: 'Sunday Closing Law'
+  text: '"One day of rest a week for every working undertaker. Father Smyth insisted. The Mayor insisted harder, since it''s the only day he can get a tee time."'
+  effect: '-1 turn a day, customers calmer and 1 patience longer'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: -1
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.3
+    - key: 'customer.patience'
+      op: 'add'
+      value: 1
+- id: 'billboard-ban'
+  title: 'Billboard Ban on Route 9'
+  text: '"Too many faces over the highway. Drivers are crashing into the competition." No new permits without a hearing. The contractors, now idle, will work for less.'
+  effect: 'permits 50% dearer, upgrades 10% off'
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 1.5
+    - key: 'parlor.upgradePrice'
+      op: 'mul'
+      value: 0.9
+- id: 'honest-games'
+  title: 'Honest Games Act'
+  text: '"The Reaper Club will be inspected for fairness by an inspector of the Mayor''s choosing, who will be paid in chips." The club lowers its cover. The back room raises its prices.'
+  effect: 'Reaper Club cover 1 tag cheaper, hit men 25% dearer'
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: -1
+    - key: 'club.hitPrice'
+      op: 'mul'
+      value: 1.25
+- id: 'dry-county'
+  title: 'Dry County Act'
+  text: '"A sober town is a polite town, and a polite town pays its parking tickets." The Reaper Club will be serving punch. Something will be in the punch.'
+  effect: 'Reaper Club cover +2 tags, calmer customers, hospital 20% cheaper'
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: 2
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.3
+    - key: 'hospital.treatPrice'
+      op: 'mul'
+      value: 0.8
+- id: 'tiger-bond'
+  title: 'Zoo Tiger Enclosure Bond'
+  text: '"A bigger cage for the tiger, and a gift shop. Hank Pruitt says it''s for public safety. The tiger says nothing, which is new." Taxes go up to pay for it.'
+  effect: 'more unusual customers, poorer customers'
+  modifiers:
+    - key: 'customer.specialChance'
+      op: 'mul'
+      value: 1.3
+    - key: 'customer.incomeShift'
+      op: 'add'
+      value: -5
+- id: 'price-transparency'
+  title: 'Funeral Price Transparency Act'
+  text: '"Every price on the wall, in big letters, next to Blaine''s price, in small letters." Families will haggle and spend less, but the town will respect an honest sale.'
+  effect: 'customers haggle harder and spend 5% less, sales earn 10% more BP'
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.3
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 0.95
+    - key: 'sale.bpMult'
+      op: 'mul'
+      value: 1.1
+- id: 'bereavement-leave'
+  title: 'Bereavement Leave Act'
+  text: '"Every grieving family gets three days off work to choose a casket properly." Unpaid. Families will take their time, and take less money with them.'
+  effect: 'customers 1 patience longer, spend 5% less'
+  modifiers:
+    - key: 'customer.patience'
+      op: 'add'
+      value: 1
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 0.95
+- id: 'hearse-lane'
+  title: 'Hearse-Only Fast Lane'
+  text: '"The dead have waited long enough. A lane for hearses only, from the hospital to the cemetery, with a toll booth." The toll will be collected at City Hall and at Di-Mart.'
+  effect: '+1 turn a day, permits 25% dearer, Di-Mart caskets 5% dearer'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 1.25
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 1.05
+- id: 'happy-hour'
+  title: 'Extended Happy Hour'
+  text: '"Happiness is good for business, and so are two-for-one shots." Lucius Vane has donated to the campaign. Mourners may arrive a little tipsy and a little loud.'
+  effect: 'Reaper Club cover 1 tag cheaper, customers arrive crankier'
+  modifiers:
+    - key: 'club.cover'
+      op: 'add'
+      value: -1
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.3
+- id: 'neighborhood-watch'
+  title: 'Neighborhood Watch Grants'
+  text: '"Eyes on every street, paid for by the town." The Twins have volunteered to captain it. Fights and graverobbing are down. Some other things are up.'
+  effect: 'fights pay 20% less, grave robbers -10 luck, more risky offers'
+  modifiers:
+    - key: 'pvp.gainMult'
+      op: 'mul'
+      value: 0.8
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: -10
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.3

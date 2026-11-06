@@ -1,0 +1,892 @@
+{
+  "options": {
+    "days": 30,
+    "towns": 200,
+    "players": 8,
+    "rules": "classic",
+    "seed": 1,
+    "difficulty": "hard"
+  },
+  "towns": 200,
+  "steps": 10894233,
+  "durationMs": 255879,
+  "personalities": [
+    {
+      "key": "shark",
+      "playerDays": 7680,
+      "bpPerDay": 1293.5048177083333,
+      "bpPerTurn": 55.27244756022923,
+      "saleBpPerTurn": 52.59280587547989,
+      "battleBpPerDay": 1.52734375,
+      "turnsPerDay": 23.40234375,
+      "salesPerDay": 22.641145833333333,
+      "walkoutRate": 0.03252656762922161,
+      "perfectRate": 0.009339559706470981,
+      "close50Rate": 0.1896034137700996,
+      "close100Rate": 0.17467967150514135,
+      "bonusShare": 0.23676951242025263,
+      "capture": 0.7882854688043927,
+      "riskTakeRate": 0.7409455517744288,
+      "riskBpPerDay": 63.635677083333334
+    },
+    {
+      "key": "builder",
+      "playerDays": 8370,
+      "bpPerDay": 1255.9194743130226,
+      "bpPerTurn": 53.693978352921945,
+      "saleBpPerTurn": 49.35734023914964,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 23.39032258064516,
+      "salesPerDay": 23.255436081242532,
+      "walkoutRate": 0.005766765248216082,
+      "perfectRate": 0.006673585138300933,
+      "close50Rate": 0.14789260614031483,
+      "close100Rate": 0.13917430438535203,
+      "bonusShare": 0.20124066649060046,
+      "capture": 0.7641664280319814,
+      "riskTakeRate": 0.9052985702270816,
+      "riskBpPerDay": 81.66511350059737
+    },
+    {
+      "key": "scholar",
+      "playerDays": 8250,
+      "bpPerDay": 1082.3178181818182,
+      "bpPerTurn": 72.15452121212121,
+      "saleBpPerTurn": 67.20490505050505,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 15,
+      "salesPerDay": 14.915272727272727,
+      "walkoutRate": 0.005648484848484849,
+      "perfectRate": 0.012962105143395828,
+      "close50Rate": 0.25794182899773266,
+      "close100Rate": 0.24010369684114716,
+      "bonusShare": 0.2607463596632617,
+      "capture": 0.8558801812054212,
+      "riskTakeRate": 0.9093241330502477,
+      "riskBpPerDay": 53.476
+    },
+    {
+      "key": "mourner",
+      "playerDays": 7800,
+      "bpPerDay": 1035.6367948717948,
+      "bpPerTurn": 61.00354181455693,
+      "saleBpPerTurn": 60.85449108127294,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 16.976666666666667,
+      "salesPerDay": 16.941794871794873,
+      "walkoutRate": 0.002054101406153242,
+      "perfectRate": 0.00900519122788431,
+      "close50Rate": 0.20068711879285034,
+      "close100Rate": 0.18816309233726333,
+      "bonusShare": 0.2218632379567225,
+      "capture": 0.8349907880046915,
+      "riskTakeRate": 0,
+      "riskBpPerDay": 11.010641025641025
+    },
+    {
+      "key": "saboteur",
+      "playerDays": 7830,
+      "bpPerDay": 924.0215836526181,
+      "bpPerTurn": 51.92212852990778,
+      "saleBpPerTurn": 24.308636836628512,
+      "battleBpPerDay": 470.2183908045977,
+      "turnsPerDay": 17.796296296296298,
+      "salesPerDay": 17.61455938697318,
+      "walkoutRate": 0.010212063583192795,
+      "perfectRate": 0.000703296065892316,
+      "close50Rate": 0.04459042067255405,
+      "close100Rate": 0.0408709270457215,
+      "bonusShare": 0.11087782050945195,
+      "capture": 0.6279716428549219,
+      "riskTakeRate": 0.6032955075392508,
+      "riskBpPerDay": 32.5272030651341
+    },
+    {
+      "key": "gambler",
+      "playerDays": 8070,
+      "bpPerDay": 746.3482032218092,
+      "bpPerTurn": 34.56089009772025,
+      "saleBpPerTurn": 26.553114940352206,
+      "battleBpPerDay": 128.86741016109045,
+      "turnsPerDay": 21.595167286245353,
+      "salesPerDay": 21.254894671623298,
+      "walkoutRate": 0.015756887182753497,
+      "perfectRate": 0.0013467267543885218,
+      "close50Rate": 0.06459041433710144,
+      "close100Rate": 0.062316719816705245,
+      "bonusShare": 0.1515270370055825,
+      "capture": 0.6579393164902445,
+      "riskTakeRate": 1,
+      "riskBpPerDay": 33.51920693928129
+    }
+  ],
+  "difficulties": [
+    {
+      "key": "hard",
+      "playerDays": 48000,
+      "bpPerDay": 1056.4868958333334,
+      "bpPerTurn": 53.64619329668156,
+      "saleBpPerTurn": 46.022928340736684,
+      "battleBpPerDay": 98.61458333333333,
+      "turnsPerDay": 19.693604166666667,
+      "salesPerDay": 19.441208333333332,
+      "walkoutRate": 0.012816132141039868,
+      "perfectRate": 0.006468219353649571,
+      "close50Rate": 0.14707269138363743,
+      "close100Rate": 0.13738000681542,
+      "bonusShare": 0.21183180787415706,
+      "capture": 0.7511286852623902,
+      "riskTakeRate": 0.7197782567105006,
+      "riskBpPerDay": 46.343895833333335
+    }
+  ],
+  "psych": [
+    {
+      "key": "1",
+      "playerDays": 8012,
+      "bpPerDay": 503.63529705441834,
+      "bpPerTurn": 25.269919401807353,
+      "saleBpPerTurn": 22.867009850890213,
+      "battleBpPerDay": 0.7108087868197703,
+      "turnsPerDay": 19.930229655516726,
+      "salesPerDay": 19.40252121817274,
+      "walkoutRate": 0.026477790093999913,
+      "perfectRate": 0.000598251561565232,
+      "close50Rate": 0.03424186088399709,
+      "close100Rate": 0.03216406244974365,
+      "bonusShare": 0.09034960852291446,
+      "capture": 0.6164002486324233,
+      "riskTakeRate": 0.7056686544656934,
+      "riskBpPerDay": 43.49138791812282
+    },
+    {
+      "key": "2",
+      "playerDays": 1646,
+      "bpPerDay": 457.5407047387606,
+      "bpPerTurn": 26.156988052236734,
+      "saleBpPerTurn": 23.409697138093915,
+      "battleBpPerDay": 16.350546780072904,
+      "turnsPerDay": 17.492102065613608,
+      "salesPerDay": 17.262454434993924,
+      "walkoutRate": 0.013128646846346207,
+      "perfectRate": 0.0005982966143450412,
+      "close50Rate": 0.03737594143731963,
+      "close100Rate": 0.03737594143731963,
+      "bonusShare": 0.09958279674545854,
+      "capture": 0.6188093794981974,
+      "riskTakeRate": 0.6435680058975304,
+      "riskBpPerDay": 30.09842041312272
+    },
+    {
+      "key": "3",
+      "playerDays": 7485,
+      "bpPerDay": 956.8048096192384,
+      "bpPerTurn": 52.87560910782316,
+      "saleBpPerTurn": 24.51560054339801,
+      "battleBpPerDay": 487.59078156312626,
+      "turnsPerDay": 18.095390781563125,
+      "salesPerDay": 17.898997995991984,
+      "walkoutRate": 0.010853193939930894,
+      "perfectRate": 0.0007314852135488976,
+      "close50Rate": 0.04599399883559497,
+      "close100Rate": 0.04229178795885769,
+      "bonusShare": 0.11351333281734538,
+      "capture": 0.6309263961125201,
+      "riskTakeRate": 0.578546823680205,
+      "riskBpPerDay": 35.022177688710755
+    },
+    {
+      "key": "4",
+      "playerDays": 8433,
+      "bpPerDay": 751.2554251156172,
+      "bpPerTurn": 34.54796649543566,
+      "saleBpPerTurn": 26.77671803596942,
+      "battleBpPerDay": 123.27107790821772,
+      "turnsPerDay": 21.745286374955533,
+      "salesPerDay": 21.407921261709948,
+      "walkoutRate": 0.015514401945707773,
+      "perfectRate": 0.0014124841441730874,
+      "close50Rate": 0.06647538123224009,
+      "close100Rate": 0.06381658754909075,
+      "bonusShare": 0.15458648735780034,
+      "capture": 0.6610714452046589,
+      "riskTakeRate": 0.950897634050648,
+      "riskBpPerDay": 36.07767105419187
+    },
+    {
+      "key": "5",
+      "playerDays": 1477,
+      "bpPerDay": 600.5226811103588,
+      "bpPerTurn": 32.784032526335245,
+      "saleBpPerTurn": 30.523156532988356,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 18.317535545023695,
+      "salesPerDay": 18.089370345294515,
+      "walkoutRate": 0.012456107928294215,
+      "perfectRate": 0.0024328168276068567,
+      "close50Rate": 0.09484242832547346,
+      "close100Rate": 0.09622726251964968,
+      "bonusShare": 0.20097383882858402,
+      "capture": 0.704662962438815,
+      "riskTakeRate": 0.525968992248062,
+      "riskBpPerDay": 40.6614759647935
+    },
+    {
+      "key": "6",
+      "playerDays": 1602,
+      "bpPerDay": 731.0093632958801,
+      "bpPerTurn": 39.42754696653424,
+      "saleBpPerTurn": 36.948622988350955,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 18.540574282147315,
+      "salesPerDay": 18.304619225967542,
+      "walkoutRate": 0.0127264157295805,
+      "perfectRate": 0.0032055654071750104,
+      "close50Rate": 0.13299686263811214,
+      "close100Rate": 0.12924566907652435,
+      "bonusShare": 0.2278467863625429,
+      "capture": 0.7523389614576903,
+      "riskTakeRate": 0.5515151515151515,
+      "riskBpPerDay": 43.02746566791511
+    },
+    {
+      "key": "7",
+      "playerDays": 1539,
+      "bpPerDay": 920.7270955165692,
+      "bpPerTurn": 48.19560559164654,
+      "saleBpPerTurn": 45.6329376551818,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 19.103963612735544,
+      "salesPerDay": 18.832358674463936,
+      "walkoutRate": 0.014217203496479711,
+      "perfectRate": 0.006038022288927992,
+      "close50Rate": 0.17244591657178346,
+      "close100Rate": 0.1675119897871166,
+      "bonusShare": 0.24693773506433103,
+      "capture": 0.8004264040827612,
+      "riskTakeRate": 0.5782208588957055,
+      "riskBpPerDay": 44.682261208576996
+    },
+    {
+      "key": "8",
+      "playerDays": 1515,
+      "bpPerDay": 1108.7808580858086,
+      "bpPerTurn": 57.39580414801654,
+      "saleBpPerTurn": 54.24949601940752,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 19.31815181518152,
+      "salesPerDay": 19.044884488448844,
+      "walkoutRate": 0.014145624765093791,
+      "perfectRate": 0.007728832357120577,
+      "close50Rate": 0.22139812151249436,
+      "close100Rate": 0.2077426957335459,
+      "bonusShare": 0.26328949688862013,
+      "capture": 0.842272929116056,
+      "riskTakeRate": 0.6431254695717505,
+      "riskBpPerDay": 51.16435643564356
+    },
+    {
+      "key": "9",
+      "playerDays": 1558,
+      "bpPerDay": 1316.0134788189987,
+      "bpPerTurn": 67.83395090319593,
+      "saleBpPerTurn": 64.46132468735526,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 19.400513478818997,
+      "salesPerDay": 19.13607188703466,
+      "walkoutRate": 0.013630649110037717,
+      "perfectRate": 0.011001542899309049,
+      "close50Rate": 0.26769303012007784,
+      "close100Rate": 0.24941302743677468,
+      "bonusShare": 0.2724455042270407,
+      "capture": 0.8853662960258845,
+      "riskTakeRate": 0.6622109826589595,
+      "riskBpPerDay": 53.74454428754814
+    },
+    {
+      "key": "10",
+      "playerDays": 1632,
+      "bpPerDay": 1508.5962009803923,
+      "bpPerTurn": 77.60288091785917,
+      "saleBpPerTurn": 73.87234444934754,
+      "battleBpPerDay": 0.18321078431372548,
+      "turnsPerDay": 19.439950980392158,
+      "salesPerDay": 19.24142156862745,
+      "walkoutRate": 0.010212444052196937,
+      "perfectRate": 0.013279408954843641,
+      "close50Rate": 0.3002038086746067,
+      "close100Rate": 0.2774027132029807,
+      "bonusShare": 0.2692865987334416,
+      "capture": 0.9187811678801997,
+      "riskTakeRate": 0.6915371329879102,
+      "riskBpPerDay": 58.12132352941177
+    },
+    {
+      "key": "11",
+      "playerDays": 1704,
+      "bpPerDay": 1632.988262910798,
+      "bpPerTurn": 84.01606280193236,
+      "saleBpPerTurn": 80.29441425120773,
+      "battleBpPerDay": 0,
+      "turnsPerDay": 19.43661971830986,
+      "salesPerDay": 19.370892018779344,
+      "walkoutRate": 0.003381642512077295,
+      "perfectRate": 0.015178138633058653,
+      "close50Rate": 0.30450193892389726,
+      "close100Rate": 0.28220431410567137,
+      "bonusShare": 0.25752899861657974,
+      "capture": 0.926818893522546,
+      "riskTakeRate": 0.7087603305785124,
+      "riskBpPerDay": 58.03169014084507
+    },
+    {
+      "key": "12",
+      "playerDays": 11397,
+      "bpPerDay": 1752.7657278231113,
+      "bpPerTurn": 87.80739864879715,
+      "saleBpPerTurn": 84.15304548111877,
+      "battleBpPerDay": 1.0029832412038255,
+      "turnsPerDay": 19.96148109151531,
+      "salesPerDay": 19.89137492322541,
+      "walkoutRate": 0.003512072474406706,
+      "perfectRate": 0.016629760654956728,
+      "close50Rate": 0.29738599571243307,
+      "close100Rate": 0.2747174705119496,
+      "bonusShare": 0.2439607682504721,
+      "capture": 0.9238107975921438,
+      "riskTakeRate": 0.7249363500984772,
+      "riskBpPerDay": 62.06782486619286
+    }
+  ],
+  "exactMatch": {
+    "sales": 933178,
+    "perfect": 6036,
+    "perSale": 0.006468219353649571,
+    "perPlayerDay": 0.12575,
+    "shareOfAllBp": 0.02380531183035852
+  },
+  "tags": {
+    "income": {
+      "sales": 607307.5,
+      "bonus tag": 14661.25,
+      "theft": 17711.25,
+      "smoke detector reward": 279
+    },
+    "spend": {
+      "lockpicks": 4754,
+      "psych": 343706,
+      "hearse": 120184,
+      "stolen": 17711.25,
+      "strength": 29259,
+      "padlock": 3234,
+      "safe": 1560,
+      "arson": 20160,
+      "burned": 1160.75,
+      "smoke": 2080,
+      "hp": 19509
+    },
+    "spendByPersonality": {
+      "saboteur": {
+        "lockpicks": 4754,
+        "psych": 2610,
+        "stolen": 3356,
+        "hearse": 11720,
+        "arson": 20160,
+        "strength": 19575,
+        "hp": 19509,
+        "burned": 215.75
+      },
+      "mourner": {
+        "psych": 78310,
+        "padlock": 1560,
+        "stolen": 1717.25,
+        "safe": 1560,
+        "smoke": 2080,
+        "hearse": 8768,
+        "burned": 3
+      },
+      "gambler": {
+        "psych": 4842,
+        "strength": 9684,
+        "stolen": 2525.25,
+        "burned": 354.5,
+        "hearse": 33356
+      },
+      "scholar": {
+        "psych": 83756,
+        "stolen": 3585.25,
+        "burned": 79.25
+      },
+      "builder": {
+        "hearse": 34596,
+        "stolen": 2705.25,
+        "psych": 89290,
+        "padlock": 1674,
+        "burned": 102.5
+      },
+      "shark": {
+        "hearse": 31744,
+        "stolen": 3822.25,
+        "psych": 84898,
+        "burned": 405.75
+      }
+    }
+  },
+  "pvp": {
+    "visits": 31399,
+    "refused": 218,
+    "steals": 10146,
+    "tagsStolen": 8035,
+    "battles": 18449,
+    "attackerWins": 17126,
+    "attackerLosses": 993,
+    "battleBpWon": 4762868,
+    "battleBpLost": 29368,
+    "arsonHired": 3360,
+    "arsonStopped": 93,
+    "tigers": 15509,
+    "sparrows": 7800,
+    "dragons": 6291,
+    "visitsPerPlayerDay": 0.6541458333333333,
+    "attackerWinRate": 0.9451956509741156,
+    "tagsPerSteal": 0.7919377094421447
+  },
+  "wait": {
+    "counts": {
+      "customer": 945293,
+      "event": 93978,
+      "risk": 86767,
+      "script": 50291,
+      "noTurns": 0
+    },
+    "shares": {
+      "customer": 0.803595762750047,
+      "event": 0.0798909148716048,
+      "risk": 0.07376082711554335,
+      "script": 0.04275249526280488,
+      "noTurns": 0
+    }
+  },
+  "snowball": {
+    "byDay": [
+      {
+        "day": 1,
+        "leader": 495.315,
+        "second": 421.735,
+        "median": 350.54,
+        "leaderOverMedian": 1.427313467822339,
+        "leadOverSecond": 73.58
+      },
+      {
+        "day": 2,
+        "leader": 974.2,
+        "second": 856.965,
+        "median": 736.805,
+        "leaderOverMedian": 1.3293819240372622,
+        "leadOverSecond": 117.235
+      },
+      {
+        "day": 3,
+        "leader": 1486.92,
+        "second": 1320.165,
+        "median": 1143.965,
+        "leaderOverMedian": 1.3052052652498427,
+        "leadOverSecond": 166.755
+      },
+      {
+        "day": 4,
+        "leader": 2053.525,
+        "second": 1837.935,
+        "median": 1602.61,
+        "leaderOverMedian": 1.2860134417619387,
+        "leadOverSecond": 215.59
+      },
+      {
+        "day": 5,
+        "leader": 2618.16,
+        "second": 2383.27,
+        "median": 2093.115,
+        "leaderOverMedian": 1.2553317570328215,
+        "leadOverSecond": 234.89
+      },
+      {
+        "day": 6,
+        "leader": 3218.35,
+        "second": 2937.31,
+        "median": 2601.615,
+        "leaderOverMedian": 1.2410249645707538,
+        "leadOverSecond": 281.04
+      },
+      {
+        "day": 7,
+        "leader": 3869.75,
+        "second": 3558.685,
+        "median": 3162.32,
+        "leaderOverMedian": 1.2274111638079253,
+        "leadOverSecond": 311.065
+      },
+      {
+        "day": 8,
+        "leader": 4571.025,
+        "second": 4209.595,
+        "median": 3775.245,
+        "leaderOverMedian": 1.2139432596704578,
+        "leadOverSecond": 361.43
+      },
+      {
+        "day": 9,
+        "leader": 5304.85,
+        "second": 4895.175,
+        "median": 4387.19,
+        "leaderOverMedian": 1.2123772092840075,
+        "leadOverSecond": 409.675
+      },
+      {
+        "day": 10,
+        "leader": 6104.05,
+        "second": 5620.19,
+        "median": 5024.17,
+        "leaderOverMedian": 1.2179241999198922,
+        "leadOverSecond": 483.86
+      },
+      {
+        "day": 11,
+        "leader": 7051.19,
+        "second": 6399.095,
+        "median": 5715.72,
+        "leaderOverMedian": 1.2370846196924448,
+        "leadOverSecond": 652.095
+      },
+      {
+        "day": 12,
+        "leader": 8067.495,
+        "second": 7255.965,
+        "median": 6480.175,
+        "leaderOverMedian": 1.2485732842952866,
+        "leadOverSecond": 811.53
+      },
+      {
+        "day": 13,
+        "leader": 9151.305,
+        "second": 8170.29,
+        "median": 7254.285,
+        "leaderOverMedian": 1.264310457712743,
+        "leadOverSecond": 981.015
+      },
+      {
+        "day": 14,
+        "leader": 10333.225,
+        "second": 9141.07,
+        "median": 8099.275,
+        "leaderOverMedian": 1.2787214702137495,
+        "leadOverSecond": 1192.155
+      },
+      {
+        "day": 15,
+        "leader": 11559.615,
+        "second": 10226.74,
+        "median": 8990.915,
+        "leaderOverMedian": 1.2889006806137766,
+        "leadOverSecond": 1332.875
+      },
+      {
+        "day": 16,
+        "leader": 12785.915,
+        "second": 11394.25,
+        "median": 10019.335,
+        "leaderOverMedian": 1.2794598454622186,
+        "leadOverSecond": 1391.665
+      },
+      {
+        "day": 17,
+        "leader": 14061.705,
+        "second": 12631.365,
+        "median": 11176,
+        "leaderOverMedian": 1.2615738004176822,
+        "leadOverSecond": 1430.34
+      },
+      {
+        "day": 18,
+        "leader": 15396.345,
+        "second": 14001.995,
+        "median": 12497.47,
+        "leaderOverMedian": 1.2352355175605694,
+        "leadOverSecond": 1394.35
+      },
+      {
+        "day": 19,
+        "leader": 16755.44,
+        "second": 15473.125,
+        "median": 13943.24,
+        "leaderOverMedian": 1.2048817499368083,
+        "leadOverSecond": 1282.315
+      },
+      {
+        "day": 20,
+        "leader": 18207.9,
+        "second": 17066.935,
+        "median": 15525.08,
+        "leaderOverMedian": 1.1753910595736543,
+        "leadOverSecond": 1140.965
+      },
+      {
+        "day": 21,
+        "leader": 19742.5,
+        "second": 18716.54,
+        "median": 17191.285,
+        "leaderOverMedian": 1.1506419482485661,
+        "leadOverSecond": 1025.96
+      },
+      {
+        "day": 22,
+        "leader": 21427.395,
+        "second": 20383.65,
+        "median": 18837.545,
+        "leaderOverMedian": 1.1397958239683332,
+        "leadOverSecond": 1043.745
+      },
+      {
+        "day": 23,
+        "leader": 23259.66,
+        "second": 22174.37,
+        "median": 20494.41,
+        "leaderOverMedian": 1.1370138344363034,
+        "leadOverSecond": 1085.29
+      },
+      {
+        "day": 24,
+        "leader": 25196.95,
+        "second": 23982.87,
+        "median": 22086.68,
+        "leaderOverMedian": 1.142929437000939,
+        "leadOverSecond": 1214.08
+      },
+      {
+        "day": 25,
+        "leader": 27200.245,
+        "second": 25855.095,
+        "median": 23607.315,
+        "leaderOverMedian": 1.1545237331543492,
+        "leadOverSecond": 1345.15
+      },
+      {
+        "day": 26,
+        "leader": 29211.04,
+        "second": 27741.685,
+        "median": 25078.975,
+        "leaderOverMedian": 1.167276163837701,
+        "leadOverSecond": 1469.355
+      },
+      {
+        "day": 27,
+        "leader": 31228.17,
+        "second": 29703.48,
+        "median": 26499.625,
+        "leaderOverMedian": 1.1811469056932316,
+        "leadOverSecond": 1524.69
+      },
+      {
+        "day": 28,
+        "leader": 33221.725,
+        "second": 31666.615,
+        "median": 27912.615,
+        "leaderOverMedian": 1.1930261004612386,
+        "leadOverSecond": 1555.11
+      },
+      {
+        "day": 29,
+        "leader": 35191.075,
+        "second": 33618.135,
+        "median": 29335.295,
+        "leaderOverMedian": 1.202314122304925,
+        "leadOverSecond": 1572.94
+      },
+      {
+        "day": 30,
+        "leader": 37197.42,
+        "second": 35569.175,
+        "median": 30747.47,
+        "leaderOverMedian": 1.2124782535244352,
+        "leadOverSecond": 1628.245
+      }
+    ],
+    "leaderHolds": [
+      {
+        "day": 1,
+        "share": 0.14
+      },
+      {
+        "day": 3,
+        "share": 0.19
+      },
+      {
+        "day": 5,
+        "share": 0.195
+      },
+      {
+        "day": 10,
+        "share": 0.075
+      },
+      {
+        "day": 15,
+        "share": 0.005
+      },
+      {
+        "day": 20,
+        "share": 0.205
+      },
+      {
+        "day": 25,
+        "share": 0.78
+      }
+    ],
+    "finalWinnerOverMedian": 1.2124782535244352,
+    "leaders": [
+      {
+        "day": 1,
+        "counts": {
+          "builder": 56,
+          "shark": 24,
+          "scholar": 34,
+          "gambler": 34,
+          "mourner": 28,
+          "saboteur": 24
+        }
+      },
+      {
+        "day": 5,
+        "counts": {
+          "gambler": 35,
+          "scholar": 37,
+          "builder": 88,
+          "shark": 18,
+          "mourner": 9,
+          "saboteur": 13
+        }
+      },
+      {
+        "day": 10,
+        "counts": {
+          "scholar": 128,
+          "builder": 31,
+          "gambler": 16,
+          "saboteur": 14,
+          "shark": 5,
+          "mourner": 6
+        }
+      },
+      {
+        "day": 15,
+        "counts": {
+          "scholar": 194,
+          "saboteur": 2,
+          "mourner": 2,
+          "builder": 2
+        }
+      },
+      {
+        "day": 20,
+        "counts": {
+          "scholar": 140,
+          "builder": 25,
+          "shark": 27,
+          "mourner": 8
+        }
+      },
+      {
+        "day": 25,
+        "counts": {
+          "builder": 93,
+          "shark": 99,
+          "scholar": 7,
+          "mourner": 1
+        }
+      },
+      {
+        "day": 30,
+        "counts": {
+          "shark": 112,
+          "builder": 88
+        }
+      }
+    ]
+  },
+  "victimBpPerDay": {
+    "shark": 91.16888020833333,
+    "saboteur": 11.20536398467433,
+    "gambler": 20.40470879801735,
+    "scholar": 71.43466666666667,
+    "mourner": 41.74858974358975,
+    "builder": 60.881123058542414
+  },
+  "wins": [
+    {
+      "personality": "shark",
+      "seats": 256,
+      "wins": 112,
+      "winRate": 0.4375,
+      "fairShare": 0.125,
+      "avgFinalBp": 36073.71484375,
+      "avgPlace": 1.8359375
+    },
+    {
+      "personality": "builder",
+      "seats": 279,
+      "wins": 88,
+      "winRate": 0.3154121863799283,
+      "fairShare": 0.125,
+      "avgFinalBp": 35854.65949820788,
+      "avgPlace": 1.96415770609319
+    },
+    {
+      "personality": "gambler",
+      "seats": 269,
+      "wins": 0,
+      "winRate": 0,
+      "fairShare": 0.125,
+      "avgFinalBp": 21843.2156133829,
+      "avgPlace": 7.732342007434944
+    },
+    {
+      "personality": "mourner",
+      "seats": 260,
+      "wins": 0,
+      "winRate": 0,
+      "fairShare": 0.125,
+      "avgFinalBp": 29821.934615384616,
+      "avgPlace": 4.846153846153846
+    },
+    {
+      "personality": "saboteur",
+      "seats": 261,
+      "wins": 0,
+      "winRate": 0,
+      "fairShare": 0.125,
+      "avgFinalBp": 27531.226053639846,
+      "avgPlace": 6.095785440613027
+    },
+    {
+      "personality": "scholar",
+      "seats": 275,
+      "wins": 0,
+      "winRate": 0,
+      "fairShare": 0.125,
+      "avgFinalBp": 30327.20727272727,
+      "avgPlace": 4.549090909090909
+    }
+  ],
+  "winsByDifficulty": [
+    {
+      "personality": "hard",
+      "seats": 1600,
+      "wins": 200,
+      "winRate": 0.125,
+      "fairShare": 0.125,
+      "avgFinalBp": 30245.925625,
+      "avgPlace": 4.5
+    }
+  ],
+  "issues": [],
+  "issueCounts": {},
+  "ok": true
+}

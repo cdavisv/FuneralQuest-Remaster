@@ -1,0 +1,30 @@
+{
+  "name": "@fq/content",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Funeral Quest content packs (Vintage, Classic and Expanded) with importer, schema and loaders.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts",
+    "./vintage.json": "./built/vintage.json",
+    "./classic.json": "./built/classic.json",
+    "./expanded.json": "./built/expanded.json"
+  },
+  "scripts": {
+    "import": "tsx src/cli.ts import",
+    "build": "tsx src/cli.ts build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/core": "workspace:*",
+    "@fq/protocol": "workspace:*",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15"
+  }
+}

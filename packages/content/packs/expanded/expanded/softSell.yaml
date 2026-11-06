@@ -1,0 +1,1075 @@
+# The Expanded soft-sell catalogue (docs/expanded-rules.md section 4): every Classic item a package
+# ladder does not already sell, with tags, then new ones. Prices are on the $50 grid. Tags are what
+# traits' affinities key on. soft_sell.yaml (the Classic-format table) is derived from this file.
+- article: 'some'
+  name: 'Grief Therapy'
+  price: 300
+  tags:
+    - 'sentimental'
+    - 'practical'
+- article: 'a'
+  name: 'Memorial Plaque'
+  price: 100
+  tags:
+    - 'sentimental'
+- article: 'some'
+  name: 'Live Piano Music'
+  price: 450
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'some'
+  name: 'Burial Footwear'
+  price: 150
+  tags:
+    - 'vanity'
+- article: 'a few'
+  name: 'Paid Mourners'
+  price: 350
+  tags:
+    - 'prestige'
+    - 'vanity'
+- article: 'some'
+  name: 'Relaxing Mourning Music'
+  price: 50
+  tags:
+    - 'music'
+- article: 'some'
+  name: 'Punch and Cookies'
+  price: 150
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'DuraRest (tm) Neck Brace'
+  price: 150
+  tags:
+    - 'vanity'
+    - 'practical'
+- article: 'some'
+  name: 'Casket Scrollwork'
+  price: 450
+  tags:
+    - 'prestige'
+  track: 'burial'
+- article: 'a'
+  name: 'Fine Burial Suit'
+  price: 250
+  tags:
+    - 'vanity'
+- article: 'some'
+  name: 'Burial Makeup'
+  price: 100
+  tags:
+    - 'vanity'
+- article: 'a'
+  name: 'Post-Mortem Baptism'
+  price: 300
+  tags:
+    - 'religious'
+- article: 'some'
+  name: 'Burial Jewelry'
+  price: 400
+  tags:
+    - 'prestige'
+    - 'vanity'
+- article: 'a'
+  name: 'Grave Statuary'
+  price: 350
+  tags:
+    - 'prestige'
+  track: 'burial'
+- article: 'a'
+  name: 'Professional Orator'
+  price: 550
+  tags:
+    - 'prestige'
+- article: 'a'
+  name: 'Burial Body Shave'
+  price: 200
+  tags:
+    - 'vanity'
+- article: 'some'
+  name: 'Burial Hairstyling'
+  price: 150
+  tags:
+    - 'vanity'
+- article: 'a'
+  name: 'Tombstone Quotation'
+  price: 250
+  tags:
+    - 'sentimental'
+  track: 'burial'
+- article: 'a'
+  name: 'Shine-Polished Casket'
+  price: 150
+  tags:
+    - 'vanity'
+  track: 'burial'
+- article: 'some'
+  name: 'Debt Counseling'
+  price: 300
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Pet Co-Burial'
+  price: 450
+  tags:
+    - 'sentimental'
+  track: 'burial'
+- article: 'a'
+  name: 'Locked Casket'
+  price: 50
+  tags:
+    - 'practical'
+  track: 'burial'
+- article: 'some'
+  name: 'Grave-Robber Insurance'
+  price: 200
+  tags:
+    - 'practical'
+  track: 'burial'
+- article: 'a'
+  name: 'Hermetically Sealed Casket'
+  price: 150
+  tags:
+    - 'practical'
+  track: 'burial'
+- article: 'a'
+  name: 'Personalized Oiuja Board'
+  price: 100
+  tags:
+    - 'spooky'
+    - 'novelty'
+- article: 'a'
+  name: 'Trance-Medium Seance'
+  price: 300
+  tags:
+    - 'spooky'
+- article: 'a'
+  name: 'Casket Window'
+  price: 100
+  tags:
+    - 'novelty'
+  track: 'burial'
+- article: 'some'
+  name: 'Thank-You Cards'
+  price: 50
+  tags:
+    - 'sentimental'
+    - 'practical'
+- article: 'a'
+  name: 'Framed Death Certificate'
+  price: 150
+  tags:
+    - 'sentimental'
+    - 'novelty'
+- article: 'a'
+  name: 'Casket Air Freshener'
+  price: 100
+  tags:
+    - 'practical'
+  track: 'burial'
+- article: 'a'
+  name: 'Burial Service Canopy'
+  price: 250
+  tags:
+    - 'practical'
+    - 'prestige'
+  track: 'burial'
+- article: 'an'
+  name: 'Eternal Flame'
+  price: 600
+  tags:
+    - 'religious'
+    - 'prestige'
+- article: 'a'
+  name: 'Memorial Collector''s Card'
+  price: 50
+  tags:
+    - 'novelty'
+- article: 'a'
+  name: 'Memorial Action Figure'
+  price: 350
+  tags:
+    - 'novelty'
+    - 'vanity'
+- article: 'an'
+  name: 'Expedited Burial'
+  price: 300
+  tags:
+    - 'practical'
+  track: 'burial'
+- article: 'some'
+  name: 'Coptic Urns'
+  price: 500
+  tags:
+    - 'prestige'
+    - 'spooky'
+- article: 'extra'
+  name: 'Vermin Traps'
+  price: 100
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Life-sized Icon of the Deceased'
+  price: 300
+  tags:
+    - 'vanity'
+    - 'religious'
+- article: 'some'
+  name: 'Custom Arabesque Coffin Detailing'
+  price: 250
+  tags:
+    - 'prestige'
+  track: 'burial'
+- article: 'an'
+  name: 'Annoying Bag Piper'
+  price: 50
+  tags:
+    - 'music'
+- article: 'a'
+  name: 'Sober Clergyman for the service'
+  price: 100
+  tags:
+    - 'religious'
+- article: 'a'
+  name: 'Flock of Nightingales released at the service '
+  price: 300
+  tags:
+    - 'sentimental'
+    - 'music'
+- article: 'several'
+  name: 'Fancy Bees-Wax Candles'
+  price: 250
+  tags:
+    - 'religious'
+    - 'sentimental'
+- article: 'a'
+  name: 'Coffin Cell Phone (in case of premature burial)'
+  price: 150
+  tags:
+    - 'novelty'
+    - 'practical'
+  track: 'burial'
+- article: 'a'
+  name: 'Pack of 10 Remembrance Services'
+  price: 400
+  tags:
+    - 'religious'
+    - 'sentimental'
+- article: 'a'
+  name: 'Ghost-Written Obutuary'
+  price: 250
+  tags:
+    - 'sentimental'
+    - 'vanity'
+- article: 'some'
+  name: 'Funeral Confetti'
+  price: 50
+  tags:
+    - 'novelty'
+- article: 'some'
+  name: 'Memorial Phone Cards'
+  price: 50
+  tags:
+    - 'sentimental'
+    - 'novelty'
+- article: 'two'
+  name: 'Bottles of Keening Soda Water'
+  price: 100
+  tags:
+    - 'food'
+    - 'novelty'
+- article: 'several'
+  name: 'Boxes of Extra-Strength Facial Tissues'
+  price: 50
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Bagpiper Who Knows Two Songs'
+  price: 600
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'a'
+  name: 'Buffet Lunch'
+  price: 500
+  tags:
+    - 'food'
+- article: 'an'
+  name: 'Open Bar'
+  price: 800
+  tags:
+    - 'food'
+    - 'prestige'
+- article: 'a'
+  name: 'Dove Release'
+  price: 350
+  tags:
+    - 'sentimental'
+    - 'prestige'
+- article: 'a'
+  name: 'Candlelight Vigil'
+  price: 150
+  tags:
+    - 'religious'
+    - 'sentimental'
+- article: 'a'
+  name: 'Rosary Placed in the Hands'
+  price: 100
+  tags:
+    - 'religious'
+- article: 'a'
+  name: 'Hymn Sung Off-Key by Father Smyth'
+  price: 200
+  tags:
+    - 'religious'
+    - 'music'
+- article: 'a'
+  name: 'Lock of Hair in a Locket'
+  price: 250
+  tags:
+    - 'sentimental'
+- article: 'a'
+  name: 'Fingerprint Keepsake Charm'
+  price: 300
+  tags:
+    - 'sentimental'
+- article: 'a'
+  name: 'Personalized Casket Pillow'
+  price: 200
+  tags:
+    - 'sentimental'
+    - 'vanity'
+  track: 'burial'
+- article: 'a'
+  name: 'Motorcycle Escort'
+  price: 700
+  tags:
+    - 'prestige'
+    - 'vanity'
+- article: 'an'
+  name: 'Ice Sculpture of the Deceased'
+  price: 900
+  tags:
+    - 'vanity'
+    - 'prestige'
+- article: 'a'
+  name: 'Cardboard Cutout of the Deceased'
+  price: 150
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'a'
+  name: 'Video Tribute Set to Soft Rock'
+  price: 350
+  tags:
+    - 'music'
+    - 'sentimental'
+- article: 'a'
+  name: 'Wedding Band That Only Knows Wedding Songs'
+  price: 750
+  tags:
+    - 'music'
+    - 'novelty'
+- article: 'some'
+  name: 'Commemorative Coffee Mugs'
+  price: 100
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'a'
+  name: 'Balloon Arch (Black)'
+  price: 250
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'an'
+  name: 'Organic Burial Shroud'
+  price: 300
+  tags:
+    - 'green'
+- article: 'a'
+  name: 'Tree Planted in the Name of the Deceased'
+  price: 200
+  tags:
+    - 'green'
+    - 'sentimental'
+- article: 'a'
+  name: 'Keepsake Mini-Urn'
+  price: 250
+  tags:
+    - 'sentimental'
+  track: 'cremation'
+- article: 'some'
+  name: 'Ashes Pressed Into a Vinyl Record'
+  price: 650
+  tags:
+    - 'music'
+    - 'vanity'
+  track: 'cremation'
+- article: 'a'
+  name: 'Fireworks Send-Off'
+  price: 1000
+  tags:
+    - 'vanity'
+    - 'prestige'
+- article: 'a'
+  name: 'Guest Book (Leather-ish)'
+  price: 50
+  tags:
+    - 'sentimental'
+- article: 'a'
+  name: 'Fruit Basket (Mostly Pears)'
+  price: 50
+  tags:
+    - 'food'
+- article: 'some'
+  name: 'Mints Shaped Like Tiny Coffins'
+  price: 50
+  tags:
+    - 'food'
+    - 'novelty'
+- article: 'a'
+  name: 'Name Spelled Right in the Program'
+  price: 50
+  tags:
+    - 'practical'
+    - 'vanity'
+- article: 'a'
+  name: 'Parking Attendant Who Waves'
+  price: 50
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Laminated Obituary'
+  price: 50
+  tags:
+    - 'sentimental'
+    - 'practical'
+- article: 'a'
+  name: 'Kazoo Rendition of a Favorite Song'
+  price: 50
+  tags:
+    - 'music'
+    - 'novelty'
+- article: 'a'
+  name: 'Name Tag for Every Mourner'
+  price: 50
+  tags:
+    - 'practical'
+- article: 'some'
+  name: 'Day-Old Funeral Lilies'
+  price: 50
+  tags:
+    - 'flowers'
+- article: 'a'
+  name: 'Pen That Works, for the Guest Book'
+  price: 100
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Cameo by Morty the Skeleton'
+  price: 100
+  tags:
+    - 'spooky'
+    - 'novelty'
+- article: 'some'
+  name: 'Doilies Under Everything'
+  price: 100
+  tags:
+    - 'vanity'
+    - 'sentimental'
+- article: 'a'
+  name: 'Bowl of Butterscotch From Grandma''s Purse'
+  price: 100
+  tags:
+    - 'food'
+    - 'sentimental'
+- article: 'a'
+  name: 'Sympathy Card Signed by the Mayor'
+  price: 100
+  tags:
+    - 'prestige'
+- article: 'some'
+  name: 'Waterproof Mascara Handouts'
+  price: 100
+  tags:
+    - 'practical'
+    - 'vanity'
+- article: 'some'
+  name: 'Seed Paper Programs'
+  price: 100
+  tags:
+    - 'green'
+    - 'sentimental'
+- article: 'a'
+  name: 'Second Opinion From Cousin Sal'
+  price: 100
+  tags:
+    - 'practical'
+    - 'novelty'
+- article: 'a'
+  name: 'Sunflower Wreath (Aggressively Cheerful)'
+  price: 100
+  tags:
+    - 'flowers'
+- article: 'a'
+  name: 'Casserole Coordination Service'
+  price: 150
+  tags:
+    - 'food'
+    - 'practical'
+- article: 'some'
+  name: 'Plastic Lilies That Never Die'
+  price: 150
+  tags:
+    - 'flowers'
+    - 'practical'
+- article: 'a'
+  name: 'Moment of Silence (Extended Cut)'
+  price: 150
+  tags:
+    - 'religious'
+- article: 'a'
+  name: 'Holy Water Spritz'
+  price: 150
+  tags:
+    - 'religious'
+- article: 'a'
+  name: 'Cushioned Folding Chair Upgrade'
+  price: 150
+  tags:
+    - 'practical'
+    - 'vanity'
+- article: 'a'
+  name: 'Photo Booth With Mourning Props'
+  price: 150
+  tags:
+    - 'novelty'
+    - 'vanity'
+- article: 'a'
+  name: 'Carnation Pin for Every Mourner'
+  price: 150
+  tags:
+    - 'flowers'
+- article: 'a'
+  name: 'Weeping Willow Sapling'
+  price: 150
+  tags:
+    - 'green'
+    - 'sentimental'
+- article: 'a'
+  name: 'Notary for the Will Reading'
+  price: 150
+  tags:
+    - 'practical'
+- article: 'some'
+  name: 'Monogrammed Handkerchiefs'
+  price: 150
+  tags:
+    - 'sentimental'
+    - 'vanity'
+- article: 'a'
+  name: 'Wind Chime Made From the Deceased''s Keys'
+  price: 150
+  tags:
+    - 'sentimental'
+    - 'green'
+- article: 'a'
+  name: 'Live Video Feed for the Relatives in Blaine'
+  price: 150
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Choir of Three Retirees'
+  price: 200
+  tags:
+    - 'music'
+    - 'religious'
+- article: 'some'
+  name: 'Condolence Cupcakes'
+  price: 200
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'Bouquet of Gas Station Roses'
+  price: 200
+  tags:
+    - 'flowers'
+- article: 'a'
+  name: 'Spray-On Tan for the Deceased'
+  price: 200
+  tags:
+    - 'vanity'
+- article: 'a'
+  name: 'Weather Guarantee (Void If It Rains)'
+  price: 200
+  tags:
+    - 'practical'
+    - 'novelty'
+- article: 'some'
+  name: 'Egg Rolls From Mr. Yang''s'
+  price: 200
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'Composting Consultation'
+  price: 200
+  tags:
+    - 'green'
+    - 'practical'
+- article: 'an'
+  name: 'Usher in a Rented Tuxedo'
+  price: 200
+  tags:
+    - 'prestige'
+- article: 'an'
+  name: 'Honor Guard of Retired Crossing Guards'
+  price: 250
+  tags:
+    - 'prestige'
+- article: 'a'
+  name: 'Calligraphy Program Booklet'
+  price: 250
+  tags:
+    - 'sentimental'
+    - 'prestige'
+- article: 'a'
+  name: 'Bible With the Deceased''s Name Embossed'
+  price: 250
+  tags:
+    - 'religious'
+    - 'sentimental'
+- article: 'some'
+  name: 'Lilies Flown In From Blaine'
+  price: 250
+  tags:
+    - 'flowers'
+    - 'prestige'
+- article: 'a'
+  name: 'Hand-Painted Portrait (From a Blurry Photo)'
+  price: 250
+  tags:
+    - 'sentimental'
+    - 'vanity'
+- article: 'a'
+  name: 'Bouncer for the Wake'
+  price: 250
+  tags:
+    - 'practical'
+- article: 'some'
+  name: 'Pallbearers Who Lift With Their Legs'
+  price: 250
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Carbon Offset for the Hearse Ride'
+  price: 250
+  tags:
+    - 'green'
+- article: 'a'
+  name: 'Harpist'
+  price: 300
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'a'
+  name: 'Ham Buffet'
+  price: 300
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'Wreath Shaped Like the Deceased''s Car'
+  price: 300
+  tags:
+    - 'flowers'
+    - 'vanity'
+    - 'novelty'
+- article: 'some'
+  name: 'Grief Counseling for the Family Dog'
+  price: 300
+  tags:
+    - 'sentimental'
+    - 'novelty'
+- article: 'a'
+  name: 'Professional Wailer (Soprano)'
+  price: 300
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'a'
+  name: 'Candle That Smells Like the Deceased'
+  price: 300
+  tags:
+    - 'sentimental'
+    - 'spooky'
+- article: 'a'
+  name: 'Signature Cocktail Named After the Deceased'
+  price: 300
+  tags:
+    - 'food'
+    - 'vanity'
+- article: 'a'
+  name: 'Eulogy Delivered in Latin'
+  price: 300
+  tags:
+    - 'religious'
+    - 'prestige'
+- article: 'a'
+  name: 'String Quartet Missing a Member'
+  price: 350
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'a'
+  name: 'Novena Said by Father Smyth'
+  price: 350
+  tags:
+    - 'religious'
+- article: 'a'
+  name: 'Sheet Cake With the Deceased''s Face'
+  price: 350
+  tags:
+    - 'food'
+    - 'vanity'
+- article: 'a'
+  name: 'Memorial Bench at Lake Bleak'
+  price: 350
+  tags:
+    - 'sentimental'
+    - 'green'
+- article: 'a'
+  name: 'Gravesite Webcam'
+  price: 350
+  tags:
+    - 'novelty'
+    - 'spooky'
+  track: 'burial'
+- article: 'a'
+  name: 'Valet for the Procession'
+  price: 350
+  tags:
+    - 'prestige'
+    - 'practical'
+- article: 'some'
+  name: 'Locally Sourced Mourners'
+  price: 350
+  tags:
+    - 'green'
+    - 'prestige'
+- article: 'a'
+  name: 'Gospel Soloist'
+  price: 400
+  tags:
+    - 'music'
+    - 'religious'
+- article: 'an'
+  name: 'Ice Cream Social After the Burial'
+  price: 400
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'Vintage Hearse Rental for the Photos'
+  price: 400
+  tags:
+    - 'vanity'
+    - 'prestige'
+- article: 'a'
+  name: 'Family Crest (Recently Invented)'
+  price: 400
+  tags:
+    - 'prestige'
+    - 'vanity'
+- article: 'a'
+  name: 'Custom Hymn Written for the Deceased'
+  price: 400
+  tags:
+    - 'religious'
+    - 'music'
+    - 'sentimental'
+- article: 'a'
+  name: 'Year of Forever Fragrant Refills'
+  price: 400
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Petting Zoo for the Grandkids'
+  price: 400
+  tags:
+    - 'novelty'
+- article: 'a'
+  name: 'Barbershop Quartet'
+  price: 450
+  tags:
+    - 'music'
+- article: 'a'
+  name: 'Catered Pot Roast Dinner'
+  price: 450
+  tags:
+    - 'food'
+- article: 'an'
+  name: 'Orchid Spray'
+  price: 450
+  tags:
+    - 'flowers'
+    - 'prestige'
+- article: 'a'
+  name: 'Fog Machine for the Viewing'
+  price: 450
+  tags:
+    - 'spooky'
+    - 'novelty'
+- article: 'a'
+  name: 'Commissioned Biography (40 Pages)'
+  price: 450
+  tags:
+    - 'sentimental'
+    - 'vanity'
+- article: 'a'
+  name: 'Stained Glass Panel of the Deceased'
+  price: 450
+  tags:
+    - 'religious'
+    - 'vanity'
+- article: 'a'
+  name: 'Solar-Powered Eternal Flame'
+  price: 450
+  tags:
+    - 'green'
+    - 'religious'
+- article: 'a'
+  name: 'Will-Reading Referee'
+  price: 450
+  tags:
+    - 'practical'
+- article: 'a'
+  name: 'Brass Band March to the Cemetery'
+  price: 500
+  tags:
+    - 'music'
+    - 'prestige'
+- article: 'a'
+  name: 'Dessert Table With a Chocolate Fountain'
+  price: 500
+  tags:
+    - 'food'
+    - 'prestige'
+- article: 'a'
+  name: 'Raven Release (Trained, Mostly)'
+  price: 500
+  tags:
+    - 'spooky'
+- article: 'a'
+  name: 'Reserved Pew With the Deceased''s Name'
+  price: 500
+  tags:
+    - 'religious'
+    - 'prestige'
+- article: 'a'
+  name: 'Limousine for the Immediate Family'
+  price: 500
+  tags:
+    - 'prestige'
+- article: 'a'
+  name: 'Look-Alike Pallbearer'
+  price: 500
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'a'
+  name: 'Jazz Trio'
+  price: 550
+  tags:
+    - 'music'
+- article: 'a'
+  name: 'Midnight Ghost Tour for the Mourners'
+  price: 550
+  tags:
+    - 'spooky'
+    - 'novelty'
+- article: 'a'
+  name: 'Smoked Brisket Buffet'
+  price: 550
+  tags:
+    - 'food'
+- article: 'a'
+  name: 'Life-Size Wax Figure of the Deceased'
+  price: 550
+  tags:
+    - 'vanity'
+    - 'spooky'
+- article: 'a'
+  name: 'Portrait in Oils'
+  price: 550
+  tags:
+    - 'sentimental'
+    - 'prestige'
+- article: 'a'
+  name: 'Rose Petal Aisle'
+  price: 550
+  tags:
+    - 'flowers'
+    - 'prestige'
+- article: 'a'
+  name: 'Full Choir in Borrowed Robes'
+  price: 600
+  tags:
+    - 'music'
+    - 'religious'
+- article: 'a'
+  name: 'Seven-Course Wake Banquet'
+  price: 600
+  tags:
+    - 'food'
+    - 'prestige'
+- article: 'a'
+  name: 'Horse-Drawn Carriage (One Horse)'
+  price: 600
+  tags:
+    - 'prestige'
+- article: 'a'
+  name: 'Sky-Written Farewell'
+  price: 600
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'an'
+  name: 'Exorcism, Just in Case'
+  price: 600
+  tags:
+    - 'religious'
+    - 'spooky'
+- article: 'a'
+  name: 'Tribute Mural on the Di-Mart Wall'
+  price: 600
+  tags:
+    - 'vanity'
+    - 'novelty'
+- article: 'a'
+  name: 'Parade Down Main Street'
+  price: 950
+  tags:
+    - 'prestige'
+    - 'vanity'
+- article: 'a'
+  name: 'Twenty-One Leaf-Blower Salute'
+  price: 700
+  tags:
+    - 'novelty'
+    - 'prestige'
+- article: 'a'
+  name: 'Beehive at the Graveside'
+  price: 400
+  tags:
+    - 'green'
+  track: 'burial'
+- article: 'a'
+  name: 'Memory Foam Casket Mattress'
+  price: 300
+  tags:
+    - 'practical'
+    - 'vanity'
+  track: 'burial'
+- article: 'a'
+  name: 'Glow-in-the-Dark Casket Lining'
+  price: 200
+  tags:
+    - 'novelty'
+    - 'spooky'
+  track: 'burial'
+- article: 'some'
+  name: 'Racing Stripes on the Casket'
+  price: 150
+  tags:
+    - 'vanity'
+    - 'novelty'
+  track: 'burial'
+- article: 'a'
+  name: 'Casket Doorbell'
+  price: 100
+  tags:
+    - 'novelty'
+    - 'spooky'
+  track: 'burial'
+- article: 'a'
+  name: 'Snack Drawer in the Casket'
+  price: 250
+  tags:
+    - 'food'
+    - 'novelty'
+  track: 'burial'
+- article: 'a'
+  name: 'Hand-Engraved Lid Inscription'
+  price: 400
+  tags:
+    - 'sentimental'
+    - 'prestige'
+  track: 'burial'
+- article: 'some'
+  name: 'Monogrammed Satin Casket Lining'
+  price: 350
+  tags:
+    - 'prestige'
+    - 'vanity'
+  track: 'burial'
+- article: 'some'
+  name: 'Bronze Casket Handles'
+  price: 500
+  tags:
+    - 'prestige'
+  track: 'burial'
+- article: 'some'
+  name: 'Glitter Mixed Into the Ashes'
+  price: 150
+  tags:
+    - 'vanity'
+    - 'novelty'
+  track: 'cremation'
+- article: 'a'
+  name: 'Scattering Trip to Lake Bleak'
+  price: 300
+  tags:
+    - 'green'
+    - 'sentimental'
+  track: 'cremation'
+- article: 'an'
+  name: 'Ash-Filled Snow Globe'
+  price: 200
+  tags:
+    - 'novelty'
+    - 'sentimental'
+  track: 'cremation'
+- article: 'a'
+  name: 'Matching Urn for the Cat'
+  price: 250
+  tags:
+    - 'sentimental'
+  track: 'cremation'
+- article: 'an'
+  name: 'Hourglass Filled With the Deceased'
+  price: 450
+  tags:
+    - 'spooky'
+    - 'novelty'
+  track: 'cremation'
+- article: 'a'
+  name: 'Viewing Window on the Furnace'
+  price: 100
+  tags:
+    - 'spooky'
+  track: 'cremation'
+- article: 'an'
+  name: 'Ashes-to-Diamond Pressing (Tiny Diamond)'
+  price: 950
+  tags:
+    - 'prestige'
+    - 'vanity'
+  track: 'cremation'
+- article: 'a'
+  name: 'Scoop of Ashes for Each Relative'
+  price: 200
+  tags:
+    - 'sentimental'
+    - 'practical'
+  track: 'cremation'

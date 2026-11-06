@@ -1,0 +1,318 @@
+# Package ladders (docs/expanded-rules.md section 5.1). Tier 0 is free and included; each tier
+# is dearer than the last; a tier may need a parlor upgrade (put those at the top: the ladder is
+# climbed one tier at a time) and may pay plot income. Pitches: {upgrade} {article} {price} {last}.
+- id: 'embalming'
+  label: 'Embalming'
+  track: 'any'
+  tiers:
+    - article: ''
+      name: 'No Embalming'
+      price: 0
+      tags: []
+    - article: 'a'
+      name: 'Basic Embalming'
+      price: 400
+      tags:
+        - 'embalming'
+    - article: 'a'
+      name: 'Full Reconstruction'
+      price: 900
+      tags:
+        - 'embalming'
+        - 'vanity'
+    - article: 'an'
+      name: 'Air-Brushed Embalming'
+      price: 1500
+      tags:
+        - 'embalming'
+        - 'vanity'
+        - 'prestige'
+      requires: 'embalming-lab'
+    - article: 'a'
+      name: 'Museum-Grade Preservation'
+      price: 2500
+      tags:
+        - 'embalming'
+        - 'prestige'
+      requires: 'embalming-lab'
+  pitch:
+    - "`w{player}: `$\"Embalming is, uh, required by the state for, uh, disease reasons. Yeah. Required. {upgrade} is only ${price}.\"\n\n"
+    - "`w{player}: `$\"You want people to remember {dHim} looking peaceful, not looking like {aFridge} fell on {dHim}. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last}? For your {dRelation}? Let's talk about {upgrade}. ${price} and {dHe}'ll look better than at the wedding.\"\n\n"
+    - "`w{player}: `$\"Without embalming, the viewing has a, let's say, countdown. {upgrade} stops the clock. ${price}.\"\n\n"
+    - "`w{player}: `$\"I can make {dFirst} look ten years younger. Fifteen with {upgrade}. ${price}, and nobody has to know about the {dFridge}.\"\n\n"
+    - "`w{player}: `$\"{upgrade}: ${price}. Think of it as a spa day {dHe} never got around to.\"\n\n"
+    - "`w{player}: `$\"The {last} works fine in winter, {cSir}. It is not winter.\"\n\n"
+    - "`w{player}: `$\"We use only the finest fluids. The {last} uses whatever's in the jug. {upgrade} is ${price}.\"\n\n"
+    - "`w{player}: `$\"Picture the open casket. Now picture it with {upgrade}. Now stop picturing it without. ${price}.\"\n\n"
+    - "`w{player}: `$\"Your {dRelation} survived a lot of things, {cSir}. Gravity was not one of them. {upgrade} fixes the face. ${price}.\"\n\n"
+    - "`w{player}: `$\"Some families skip embalming and regret it about an hour into the viewing. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"For ${price}, {upgrade} means {dFirst} looks asleep instead of, you know. The other thing.\"\n\n"
+    - "`w{player}: `$\"I've had relatives faint at a {last}. One sued. {upgrade} is ${price} and nobody faints.\"\n\n"
+- id: 'flowers'
+  label: 'Flowers'
+  track: 'any'
+  tiers:
+    - article: 'a'
+      name: 'Single Carnation'
+      price: 0
+      tags: []
+    - article: 'a'
+      name: 'Floral Arrangement'
+      price: 250
+      tags:
+        - 'flowers'
+    - article: 'a'
+      name: 'Casket Spray'
+      price: 500
+      tags:
+        - 'flowers'
+        - 'sentimental'
+    - article: 'a'
+      name: 'Wall of Lilies'
+      price: 800
+      tags:
+        - 'flowers'
+        - 'prestige'
+      requires: 'florist-cooler'
+    - article: 'a'
+      name: 'Blanket of Black Roses'
+      price: 1200
+      tags:
+        - 'flowers'
+        - 'prestige'
+        - 'sentimental'
+      requires: 'florist-cooler'
+    - article: 'a'
+      name: 'Floral Replica of the Deceased'
+      price: 2000
+      tags:
+        - 'flowers'
+        - 'vanity'
+        - 'prestige'
+      requires: 'florist-cooler'
+  pitch:
+    - "`w{player}: `$\"Nothing says 'we tried' like {article} {upgrade}. Only ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last} is... a choice. A brave one. Most families go with {article} {upgrade} for ${price}.\"\n\n"
+    - "`w{player}: `$\"Flowers hide a multitude of smells. {upgrade}, ${price}. Trust me on the smells.\"\n\n"
+    - "`w{player}: `$\"One {last}. On a whole casket. People will think you picked it up off the floor of the hospital. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"{dFirst} loved flowers. I assume. Everybody loves flowers. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"The other mourners will bring flowers, {cSir}. Do you want theirs to be bigger? {upgrade} is ${price}.\"\n\n"
+    - "`w{player}: `$\"I can do {article} {upgrade} for ${price}. Fresh from the cooler, not from the cemetery next door.\"\n\n"
+    - "`w{player}: `$\"Lilies are the flower of death, which in my line of work makes them the flower of business. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"If you squint, {article} {upgrade} looks like love. ${price}.\"\n\n"
+    - "`w{player}: `$\"The {last} came free. You can tell, can't you? Everyone can tell. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last} wilts by the eulogy. {upgrade} lasts until the will reading. ${price}.\"\n\n"
+    - "`w{player}: `$\"Father Smyth is allergic to {upgrade}, which is one more reason to get it. ${price}.\"\n\n"
+- id: 'plot'
+  label: 'Plot'
+  track: 'burial'
+  noPet: true
+  tiers:
+    - article: 'a'
+      name: 'Standard Plot'
+      price: 0
+      tags: []
+    - article: 'a'
+      name: 'Hillside Plot'
+      price: 800
+      tags:
+        - 'green'
+      plotIncome: 5
+    - article: 'an'
+      name: 'Evergreen Lawn Plot'
+      price: 1500
+      tags:
+        - 'prestige'
+      plotIncome: 10
+    - article: 'a'
+      name: 'Memorial Park Plot'
+      price: 3000
+      tags:
+        - 'prestige'
+        - 'sentimental'
+      plotIncome: 25
+    - article: 'a'
+      name: 'Crypt (Lower Bunk)'
+      price: 5000
+      tags:
+        - 'prestige'
+        - 'vanity'
+      requires: 'mausoleum'
+      plotIncome: 60
+    - article: 'a'
+      name: 'Crypt (Penthouse)'
+      price: 8000
+      tags:
+        - 'prestige'
+        - 'vanity'
+      requires: 'mausoleum'
+      plotIncome: 100
+  pitch:
+    - "`w{player}: `$\"The {last} is right next to the drainage ditch. {upgrade} has a view. Of other graves, but still. ${price}.\"\n\n"
+    - "`w{player}: `$\"Location, location, location. {upgrade}, ${price}. The neighbors are very quiet.\"\n\n"
+    - "`w{player}: `$\"You wouldn't put {dHim} in a {last} forever, would you? {upgrade} is only ${price}.\"\n\n"
+    - "`w{player}: `$\"The {last} floods every spring. {dFirst} would be the first to float past the church. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"Real estate never loses value, {cSir}. Except in Blaine. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"{upgrade} comes with perpetual care. Perpetual is a long time. ${price} is a short price.\"\n\n"
+    - "`w{player}: `$\"You'll want somewhere nice to visit. Or somewhere nice to not visit and feel bad about. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"Our {last} section backs onto the Bill's Big Burger dumpsters. {upgrade} does not. ${price}.\"\n\n"
+    - "`w{player}: `$\"The Mayor has his eye on that {upgrade}. Let's beat him to it. ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last} is fine if you like being stepped on. {upgrade}, ${price}, nobody steps on {dHim} there.\"\n\n"
+    - "`w{player}: `$\"Think of {upgrade} as a retirement home where {dHe} finally doesn't complain. ${price}.\"\n\n"
+    - "`w{player}: `$\"Old Man Withers has been eyeing {upgrade} since 1974. Get it before he finally needs it. ${price}.\"\n\n"
+- id: 'headstone'
+  label: 'Headstone'
+  track: 'burial'
+  noPet: true
+  tiers:
+    - article: 'a'
+      name: 'Wooden Cross'
+      price: 0
+      tags: []
+    - article: 'a'
+      name: 'Flat Marker'
+      price: 300
+      tags:
+        - 'practical'
+    - article: 'a'
+      name: 'Granite Headstone'
+      price: 700
+      tags:
+        - 'sentimental'
+    - article: 'an'
+      name: 'Upright Marble Headstone'
+      price: 1500
+      tags:
+        - 'prestige'
+        - 'sentimental'
+    - article: 'a'
+      name: 'Giant Headstone'
+      price: 2550
+      tags:
+        - 'prestige'
+        - 'vanity'
+    - article: 'a'
+      name: 'Life-Size Bronze Statue (Heroic Pose)'
+      price: 4000
+      tags:
+        - 'vanity'
+        - 'prestige'
+  pitch:
+    - "`w{player}: `$\"Termites love a {last}. {article} {upgrade}, on the other hand, lasts until the sun explodes. ${price}.\"\n\n"
+    - "`w{player}: `$\"People will walk past {dHim} for a hundred years. Give them something to look at: {article} {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"Our most popular model with families who loved the deceased? {article} {upgrade}. ${price}. Just saying.\"\n\n"
+    - "`w{player}: `$\"A {last} says 'here lies somebody'. {article} {upgrade} says 'here lies {dFirst} {surname}, and we paid for it'. ${price}.\"\n\n"
+    - "`w{player}: `$\"The groundskeeper mows right over a {last}. He's mowed over three this month. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"You get one sentence on a {last}. On {article} {upgrade} you get a paragraph and a little picture. ${price}.\"\n\n"
+    - "`w{player}: `$\"Every grave around {dHim} will be taller than a {last}. Don't let {dHim} get looked down on forever. ${price} for {article} {upgrade}.\"\n\n"
+    - "`w{player}: `$\"Pigeons respect {article} {upgrade}. Pigeons do not respect a {last}. ${price}.\"\n\n"
+    - "`w{player}: `$\"The kids from Spirit University use the {last}s for kindling. Nobody burns {article} {upgrade}. ${price}.\"\n\n"
+    - "`w{player}: `$\"A headstone is a business card for eternity, {cSir}. Make it {article} {upgrade}. ${price}.\"\n\n"
+    - "`w{player}: `$\"I'd go {upgrade}. ${price}. The engraver is very good. He only misspelled two names last year.\"\n\n"
+    - "`w{player}: `$\"Picture the family photos at {article} {upgrade}. Now picture them crouching next to a {last}. ${price}.\"\n\n"
+- id: 'urn'
+  label: 'Urn'
+  track: 'cremation'
+  tiers:
+    - article: 'a'
+      name: 'Cardboard Box'
+      price: 0
+      tags: []
+    - article: 'a'
+      name: 'Memorial Urn'
+      price: 400
+      tags:
+        - 'sentimental'
+    - article: 'a'
+      name: 'Marble Urn'
+      price: 800
+      tags:
+        - 'prestige'
+        - 'sentimental'
+    - article: 'a'
+      name: 'Gold-Plated Urn'
+      price: 1200
+      tags:
+        - 'prestige'
+        - 'vanity'
+    - article: 'the'
+      name: 'Ashes Fired From a Cannon'
+      price: 2500
+      tags:
+        - 'vanity'
+        - 'prestige'
+        - 'novelty'
+    - article: 'the'
+      name: 'Ashes Launched Into Low Orbit'
+      price: 4000
+      tags:
+        - 'vanity'
+        - 'novelty'
+  pitch:
+    - "`w{player}: `$\"A {last}. For your {dRelation}. On your mantel. Next to the good china. Or, {article} {upgrade} for ${price}.\"\n\n"
+    - "`w{player}: `$\"{upgrade}, ${price}. Because 'shake and bake' doesn't have to mean 'cheap'.\"\n\n"
+    - "`w{player}: `$\"What would {dFirst} want? I think {dFirst} would want {upgrade}. ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last} says 'return to sender'. {upgrade} says 'rest in peace'. ${price}.\"\n\n"
+    - "`w{player}: `$\"I once saw a {last} get mistaken for recycling. Twice. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"Guests will ask where {dFirst} is. Point at {article} {upgrade} with pride, not at a {last} with a shrug. ${price}.\"\n\n"
+    - "`w{player}: `$\"{upgrade}: ${price}. The lid screws on. The {last} has a flap.\"\n\n"
+    - "`w{player}: `$\"The cat will knock over a {last}, {cSir}. The cat respects {upgrade}. ${price}.\"\n\n"
+    - "`w{player}: `$\"You'll carry {dHim} around for years. Might as well be something with handles. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"A {last} is fine for a hamster. Even the hamsters we do get {upgrade}. ${price}.\"\n\n"
+    - "`w{player}: `$\"{dFirst} {surname} in a {last}? On the bus home? {upgrade}, ${price}, and the bus driver salutes.\"\n\n"
+    - "`w{player}: `$\"Upgrade to {upgrade} for ${price}. It's the last time {dHe}'ll ever move house.\"\n\n"
+- id: 'service'
+  label: 'Service'
+  track: 'any'
+  tiers:
+    - article: ''
+      name: 'Ten Minutes of Silence'
+      price: 0
+      tags: []
+    - article: 'an'
+      name: 'Organist'
+      price: 300
+      tags:
+        - 'music'
+        - 'religious'
+    - article: 'a'
+      name: 'Eulogy by Father Smyth'
+      price: 600
+      tags:
+        - 'religious'
+    - article: 'a'
+      name: 'Gospel Choir'
+      price: 900
+      tags:
+        - 'music'
+        - 'religious'
+        - 'prestige'
+    - article: 'a'
+      name: 'Celebrity Impersonator Eulogy'
+      price: 1800
+      tags:
+        - 'vanity'
+        - 'music'
+        - 'novelty'
+    - article: 'a'
+      name: 'Chapel Memorial With a Full Orchestra'
+      price: 2500
+      tags:
+        - 'music'
+        - 'religious'
+        - 'prestige'
+      requires: 'chapel'
+  pitch:
+    - "`w{player}: `$\"{last} is lovely, if you like hearing people's stomachs growl. {article} {upgrade} is ${price}.\"\n\n"
+    - "`w{player}: `$\"Picture it: {article} {upgrade}, not a dry eye in the house. ${price}.\"\n\n"
+    - "`w{player}: `$\"For ${price}, {article} {upgrade} will make sure nobody remembers what {aFridge} did to {dHim}.\"\n\n"
+    - "`w{player}: `$\"{last} is our default. Our default is very, very quiet. {upgrade} is ${price}.\"\n\n"
+    - "`w{player}: `$\"Last time we did {last}, somebody's phone rang for nine of the ten minutes. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"{article} {upgrade} for ${price}. Something to drown out the cousins arguing about the house.\"\n\n"
+    - "`w{player}: `$\"You'll want the service to be talked about. In a good way. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"Father Smyth needs the money for the church roof, {cSir}, and you need {upgrade}. Everybody wins. ${price}.\"\n\n"
+    - "`w{player}: `$\"{dFirst} deserves a send-off, not a sit-in. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"With {last}, people just stare at the casket. With {article} {upgrade} they stare at something else. ${price}.\"\n\n"
+    - "`w{player}: `$\"Nobody ever left a funeral saying 'I wish there had been less music'. {upgrade}, ${price}.\"\n\n"
+    - "`w{player}: `$\"The people in Blaine all get {upgrade} now. You're not going to let Blaine win, are you? ${price}.\"\n\n"

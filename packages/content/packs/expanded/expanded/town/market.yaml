@@ -1,0 +1,148 @@
+# The Reaper Club's black market (20.3): three a day by weight. No BP or money rewards and no karma
+# gains (money must not buy the Trusted perk); the lint enforces the ranges.
+
+- id: 'rabbit-foot'
+  name: 'Rabbit''s Foot (Still Twitching)'
+  text: 'Lucky for you. Less lucky for the rabbit, who is around here somewhere on three legs, looking for you.'
+  price: 2000
+  reward:
+    luck: 5
+- id: 'vest'
+  name: 'Bulletproof Vest, One Small Hole'
+  text: 'Stops the next injury. The previous owner swears it works. You can ask him at the cemetery.'
+  price: 3000
+  reward: {}
+  grant: 'armor'
+- id: 'hot-casket'
+  name: 'Gold Casket That Fell Off a Truck'
+  text: 'Half Di-Mart''s price. Don''t ask whose truck. It goes in your storeroom and you never saw the man.'
+  price: 2000
+  reward:
+    karma: -1
+  grant: 'gold-casket'
+- id: 'coroner-list'
+  name: 'The Coroner''s Morning List'
+  text: 'Names, addresses, time of death. One sure customer, if you knock first and wipe your feet.'
+  price: 1500
+  reward:
+    karma: -1
+  grant: 'lead'
+- id: 'forged-permit'
+  name: 'Forged Permit'
+  text: 'The cheapest City Hall permit you don''t have, signed by a mayor who may not exist.'
+  price: 1500
+  reward:
+    karma: -3
+  grant: 'permit'
+  weight: 0.7
+- id: 'filed-tag'
+  name: 'A Gold Tag, Numbers Filed Off'
+  text: 'One gold casket tag. It came off somebody''s casket. Possibly with them still in it.'
+  price: 5000
+  reward:
+    gold: 1
+    karma: -1
+  weight: 0.7
+- id: 'tap-water'
+  name: 'Holy Water (Tap)'
+  text: 'One bottle, filled at the club''s sink. It''s as holy as you believe it is. Bless a customer with it.'
+  price: 400
+  reward: {}
+  grant: 'holy-water'
+- id: 'tiny'
+  name: 'A Large Man Named Tiny'
+  text: 'Sleeps on your porch tonight. Nobody gets past Tiny. Tiny gets past everybody, including the porch.'
+  price: 2500
+  reward: {}
+  grant: 'bodyguard'
+- id: 'morty-rib'
+  name: 'Morty''s Spare Rib'
+  text: 'Sold as lucky. The man swears it''s Morty''s. You count Morty''s ribs when you get home. He''s short two.'
+  price: 1000
+  reward:
+    luck: 3
+- id: 'cop-day-off'
+  name: 'A Policeman''s Day Off'
+  text: 'Officer Dunn parks outside your parlor all night and arrests anyone who tries the door. He''s on vacation.'
+  price: 3000
+  reward:
+    karma: -2
+    protection: true
+  weight: 0.5
+- id: 'testimonials'
+  name: 'Five-Star Testimonials, Handwritten'
+  text: 'Glowing reviews from very satisfied customers, in a very shaky hand. The customers can''t object.'
+  price: 1500
+  reward:
+    reviews: 2
+    karma: -2
+- id: 'clover'
+  name: 'Four-Leaf Clover From a Fresh Grave'
+  text: 'It grew out of somebody. That''s what makes it lucky. That''s also what makes it smell.'
+  price: 800
+  reward:
+    luck: 3
+    karma: -1
+- id: 'real-water'
+  name: 'Holy Water (The Real Stuff)'
+  text: 'Taken from St. Mortimer''s font by a man who crossed himself the whole time. It''s genuine. That''s the problem.'
+  price: 900
+  reward:
+    luck: 2
+    karma: -1
+  grant: 'holy-water'
+  weight: 0.8
+- id: 'sal-pad'
+  name: 'Cousin Sal''s Prescription Pad'
+  text: 'Sal writes one patient a prescription. Two days later they need you. Sal calls it a referral network.'
+  price: 1200
+  reward:
+    karma: -2
+  grant: 'lead'
+  weight: 0.8
+- id: 'used-wreaths'
+  name: 'A Hearse-Full of Wreaths (Used Once)'
+  text: 'Lifted off yesterday''s graves before the mourners reached their cars. Families will say you went all out.'
+  price: 2000
+  reward:
+    reviews: 2
+    karma: -1
+- id: 'riot-shield'
+  name: 'Riot Shield From the Police Strike'
+  text: 'It says POLICE on it. Stops the next injury. Nobody has asked for it back and nobody will.'
+  price: 2500
+  reward: {}
+  grant: 'armor'
+  weight: 0.6
+- id: 'bruno'
+  name: 'The Twins'' Cousin, Bruno'
+  text: 'Sleeps in your hearse tonight with a crowbar and a hip flask. He''s related to the Twins by nothing you can prove.'
+  price: 2000
+  reward:
+    karma: -1
+  grant: 'bodyguard'
+  weight: 0.7
+- id: 'haunted-casket'
+  name: 'A Gold Casket, Lightly Haunted'
+  text: 'Cheaper than the one off the truck because it comes with a previous owner. He''s quiet. Mostly. At night, no.'
+  price: 1500
+  reward:
+    karma: -2
+    luck: -2
+  grant: 'gold-casket'
+  weight: 0.6
+- id: 'mayor-key'
+  name: 'The Mayor''s Spare Key'
+  text: 'Opens the permit cabinet at City Hall. Take the next permit you need and stamp it. The stamp says GRUBB.'
+  price: 2000
+  reward:
+    karma: -2
+  grant: 'permit'
+  weight: 0.6
+- id: 'monster-scale'
+  name: 'Lake Bleak Monster Scale'
+  text: 'Green, the size of a dinner plate, sold as proof. Rub it for luck. Do not rub it anywhere near the lake.'
+  price: 1500
+  reward:
+    luck: 4
+  weight: 0.8

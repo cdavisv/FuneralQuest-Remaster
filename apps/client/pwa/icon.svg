@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Funeral Quest">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2234"/>
+      <stop offset="1" stop-color="#070b12"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6dc8c"/>
+      <stop offset="0.5" stop-color="#c99a2c"/>
+      <stop offset="1" stop-color="#7d5409"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.35" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#fffbe6"/>
+      <stop offset="1" stop-color="#d8cfa2"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <circle cx="380" cy="130" r="48" fill="url(#moon)" opacity="0.92"/>
+  <path d="M0 440 Q80 400 150 430 T300 425 T512 430 V512 H0Z" fill="#101725"/>
+  <g transform="translate(256 276)">
+    <path d="M-92 -150 H92 L132 -70 L84 150 H-84 L-132 -70 Z" fill="#3f1d01" stroke="#1a0b00" stroke-width="10" stroke-linejoin="round" transform="translate(10 12)" opacity="0.55"/>
+    <path d="M-92 -150 H92 L132 -70 L84 150 H-84 L-132 -70 Z" fill="url(#gold)" stroke="#2b1405" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M-60 -118 H60 L92 -62 L56 118 H-56 L-92 -62 Z" fill="none" stroke="#7d5409" stroke-width="6" stroke-linejoin="round" opacity="0.7"/>
+    <path d="M0 -92 V86 M-46 -34 H46" stroke="#2b1405" stroke-width="22" stroke-linecap="round"/>
+    <path d="M0 -92 V86 M-46 -34 H46" stroke="#f6dc8c" stroke-width="8" stroke-linecap="round" opacity="0.55"/>
+  </g>
+</svg>

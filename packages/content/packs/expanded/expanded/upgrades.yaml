@@ -1,0 +1,47 @@
+# Names and descriptions of the parlor upgrades in ExpandedRules.upgrades, by id. The
+# descriptions show at the office: say what the upgrade does.
+paint:
+  name: 'Fresh Paint'
+  description: 'Covers the graffiti and most of the smell. Your first step out of the shack.'
+'coffee-machine':
+  name: 'Coffee Machine'
+  description: 'Real coffee instead of the jar of brown dust. Offer Coffee calms customers half again as much.'
+'guard-dog':
+  name: 'Guard Dog'
+  description: 'Security level 1: rivals sometimes get chased off at the door, and you hit harder in a fight at home. Eats like three dogs.'
+'florist-cooler':
+  name: 'Florist Cooler'
+  description: 'Unlocks the top flower tiers (Wall of Lilies and up). Also keeps the lemonade cold.'
+storeroom:
+  name: 'Storeroom'
+  description: 'Room for 18 caskets instead of 6. Elijah''s 64-year-old boy hates you already.'
+'embalming-lab':
+  name: 'Embalming Lab'
+  description: 'Unlocks Air-Brushed Embalming and Museum-Grade Preservation. The fumes are only mildly illegal.'
+alarm:
+  name: 'Alarm System'
+  description: 'Security level 2. Needs the Guard Dog, who howls along every time it goes off.'
+'viewing-room':
+  name: 'Viewing Room'
+  description: 'Somewhere to sit that isn''t a casket. Customers have 2 more patience. Needs Fresh Paint.'
+incinerator:
+  name: 'Incinerator'
+  description: 'Unlocks the cremation track: offer to cremate instead of bury, then sell urns. Do not use it for the leaves.'
+'night-watchman':
+  name: 'Night Watchman'
+  description: 'Security level 3. He is mostly asleep, but loudly. Needs the Alarm System.'
+chapel:
+  name: 'Chapel'
+  description: 'A real chapel. Richer families come to you, and the full-orchestra service opens up. Needs the Viewing Room.'
+mausoleum:
+  name: 'Mausoleum'
+  description: 'Marble everything. Unlocks the crypt plots, which pay well every day. Needs the Chapel.'
+billboard:
+  name: 'Billboard on Route 9'
+  description: 'Your face, forty feet wide, next to the words YOU''RE NEXT. Richer families notice you. Needs a signage permit from City Hall.'
+'memorial-garden':
+  name: 'Memorial Garden'
+  description: 'Roses, a fountain, a bench nobody sits on. Customers have 1 more patience. Needs a zoning permit from City Hall.'
+crematorium:
+  name: 'Crematorium'
+  description: 'A real crematorium with a chimney you can see from Blaine. Richer families notice you. Needs the Incinerator and a crematory permit from City Hall.'

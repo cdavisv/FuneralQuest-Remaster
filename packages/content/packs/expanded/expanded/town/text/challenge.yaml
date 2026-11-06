@@ -1,0 +1,4 @@
+title: 'Daily Challenge'
+intro: '`$Daily Challenge `w{id}`$. Every parlor in the world gets this same day: the same families, in the same order, with the same bad attitudes. You have `w{turns}`$ turns. Make them count, and make them pay.'
+finished: '`$The day is done. You earned `5{score} BP`$ from `w{sales}`$ sales and finished `w${money}`$ up. Your score is on the board, where everyone can judge it.'
+leave: 'Finish'

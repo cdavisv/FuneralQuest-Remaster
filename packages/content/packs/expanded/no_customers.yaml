@@ -1,0 +1,35 @@
+# Expanded pack: 'no customers' waiting lines, added to Classic's (merge: append).
+# Unused by the Classic engine (the original's call is commented out); kept for packs and rulesets that show them.
+
+ranges:
+  - low: -229999999
+    high: 299999999
+    entries:
+      - message: 'You alphabetize the caskets. Then you sort them by color. Then by smell.'
+      - message: 'You practice your sympathetic handshake on Morty. Limp, but honest.'
+      - message: 'The phone rings. Wrong number. You try to sell them a plot anyway.'
+      - message: 'You read the obituaries for leads. Everybody in there already has an undertaker.'
+      - message: 'A hearse drives past on its way to someone else''s parlor. You wave. It doesn''t wave back.'
+      - message: 'You count your money. It doesn''t take long.'
+      - message: 'You polish the casket handles until you can see your own disappointment in them.'
+      - message: 'A man asks for directions to the hospital and leaves. You give him your card, for later.'
+      - message: 'You lie down in every casket to test them for comfort. The silver one is a firm favorite.'
+      - message: 'The clock ticks. Somewhere in town, people are being careless. Just not near you.'
+      - message: 'You arrange the sympathy cards by how sympathetic they are.'
+      - message: 'You practice "I''m so sorry for your loss" in nine tones. The seventh one sounds like a threat.'
+      - message: 'Nobody comes. You eat a sandwich in the embalming room, which you swore you''d stop doing.'
+      - message: 'You flip through the Di-Mart catalog and circle a gold casket you can''t afford.'
+      - message: 'You watch a man jaywalk across Main Street. You hold your breath. He makes it. Damn.'
+      - message: 'A fly lands on the counter. It''s the most life you''ve seen all day.'
+      - message: 'You rearrange the flowers. They''re plastic, so they don''t mind.'
+      - message: 'You try to teach Morty to play poker. He folds.'
+      - message: 'The chapel organ plays one low note all by itself. You decide not to investigate.'
+      - message: 'You answer your own phone in a fake voice to sound busy. You are not fooled.'
+      - message: 'You stare out the window at the hospital. The hospital stares back.'
+      - message: 'You dust the urns. Some of the dust was a customer. You put him back as best you can.'
+      - message: 'You write your own eulogy to keep your hand in. It''s very moving. You tear up a little.'
+      - message: 'A cat wanders in, sniffs the air and leaves in a hurry. Even cats have standards.'
+      - message: 'You redo the price list in a fancier font. The numbers are still the numbers.'
+      - message: 'Somebody sneezes outside. You run to the door with a brochure. False alarm.'
+      - message: 'You hum the funeral march, a little faster than usual, for business reasons.'
+      - message: 'You read the fine print on your hearse insurance. You should never read the fine print.'

@@ -1,0 +1,215 @@
+# Additions to the Classic text (merge: append in pack.yaml): every list here is added to the end of
+# Classic's list of the same name. These lines are also used by the Classic ruleset, so they use only
+# the Classic placeholders ({customer}, {dRelation}, {dHe}, {dHim}, {dSmashed}, {dFridge}, {limit}, ...),
+# never {dFirst}, {dHis} or {aFridge}. negotiation.softAccept is indexed by mood band: never add to it.
+
+negotiation:
+  softRefuse:
+    - '{customer}"My {dRelation} would come back and haunt me for that."'
+    - '{customer}"That''s a hard no."'
+    - loved: '{customer}"{dHeCap} would have hated the fuss. {dHeCap} hated fuss. I loved that about {dHim}."'
+      notLoved: '{customer}"${price} so a {dRelation} I never liked can have nicer things than me? No."'
+    - '{customer}"I''m not buying that. I''m not even sure what that is."'
+    - '{customer}"Do people actually buy that? Don''t answer."'
+    - '{customer}"My {dRelation} was {dSmashed} a {dFridge}. I think {dHe}''s had enough surprises."'
+    - loved: '{customer}"Please. I came here to say goodbye, not to go shopping."'
+      notLoved: '{customer}"For ${price} I could get the {dFridge} fixed. Pass."'
+    - '{customer}"No, thank you. I''ll pick some flowers from the yard."'
+    - '{customer}"Not today. Not ever, probably."'
+    - '{customer}"I''m grieving, not stupid."'
+    - loved: '{customer}"That''s not {dHim}. You didn''t know {dHim}. That''s not {dHim} at all."'
+      notLoved: '{customer}"Waste ${price} on {dHim}? {dHeCap} never wasted a dime on me."'
+    - '{customer}"Ha. No."'
+    - '{customer}"I thought about it. I''ve finished thinking about it. No."'
+    - '{customer}"I saw that exact thing in the Di-Mart clearance bin. With a sticker that said FINAL SALE."'
+    - '{customer}"Is there a version of this that costs nothing? I''ll take that one."'
+    - loved: '{customer}"Sorry. I can''t think about extras right now. I can barely think."'
+      notLoved: '{customer}"Nope. My {dRelation} gets the basics. That''s more than {dHe} ever gave me."'
+    - '{customer}"My sister would kill me. Then you''d have two funerals."'
+    - '{customer}"I''m going to pretend you didn''t say that."'
+    - '{customer}"What do you take me for, a millionaire?"'
+    - '{customer}"I''ve got bills at home scarier than you. No."'
+  hardRefuse:
+    - '{customer}"A casket is for lying in. Not for showing off."'
+    - '{customer}"{tier}? Let''s not get carried away."'
+    - loved: '{customer}"{dHeCap} wasn''t a {tier} sort of person. {dHeCap} was better than that."'
+      notLoved: '{customer}"{tier} is for people you''d miss."'
+    - '{customer}"No upgrades. I don''t trust anything that shines."'
+    - '{customer}"The worms won''t care, and neither do I."'
+    - '{customer}"I''m sure it''s lovely. I''m sure it''s lovely for somebody else."'
+    - '{customer}"I didn''t come in for the showroom tour."'
+    - loved: '{customer}"My {dRelation} would roll over if I spent that. And I''d hear it."'
+      notLoved: '{customer}"My {dRelation} never spent {tier} money on me. Not once."'
+    - '{customer}"You can stop. I''ve seen a casket. They''re all boxes."'
+    - '{customer}"That''s more than my car is worth, and the car still runs."'
+    - '{customer}"Let''s stick with what I asked for, thank you."'
+    - '{customer}"{tier}? What is this, a jewelry store?"'
+    - '{customer}"I''m not paying extra so {dHe} can rot in style."'
+    - loved: '{customer}"Please don''t try to sell me anything right now. I can''t."'
+      notLoved: '{customer}"Not for {dHim}. Maybe for me someday. Not for {dHim}."'
+    - '{customer}"My budget is my budget."'
+    - '{customer}"Nice try. I know what a markup is."'
+    - '{customer}"It goes in the ground. Nobody sees it in the ground."'
+    - '{customer}"Is it bulletproof? No? Then why would I pay more?"'
+    - '{customer}"Pass. Show me what I asked for."'
+    - '{customer}"My neighbor warned me about you. I''m not falling for it."'
+  hardAccept:
+    - '{customer}"Fine. {dHeCap} deserves a little shine."'
+    - '{customer}"Okay. Do the better one."'
+    - '{customer}"You know what, yes. Do it right."'
+    - '{customer}"Oh, alright. If it keeps the worms out."'
+    - '{customer}"Yes. I don''t want to see anyone''s face when they see a cheap one at the viewing."'
+    - '{customer}"I''ll take it. Don''t make me regret it."'
+    - '{customer}"Alright. {dHeCap} would have wanted the nice one. {dHeCap} always wanted the nice one."'
+    - '{customer}"Upgrade it. I''m too tired to argue."'
+    - '{customer}"Okay, okay. You''ve convinced me."'
+    - '{customer}"Fine. Better box. Done."'
+    - '{customer}"It is pretty. Okay."'
+    - '{customer}"Sure. My {dRelation} is worth it."'
+    - '{customer}"Alright. But it had better have a pillow."'
+    - '{customer}"Deal. Now stop saying "eternity"."'
+    - '{customer}"Fine. Upgrade. I''ll eat noodles for a month."'
+    - '{customer}"Yes. I want people to be jealous at the funeral."'
+    - '{customer}"I suppose you only do this once."'
+    - '{customer}"That shiny one? Yes. That one."'
+    - '{customer}"Okay. For {dHim}. Not for you."'
+    - '{customer}"Wrap it up. The casket. Not literally."'
+    - '{customer}"Alright, alright. Put it on my tab."'
+    - '{customer}"I wasn''t going to, but... yes."'
+    - '{customer}"Sold. You''re good at this, and I hate it."'
+  guiltLoved:
+    - '{customer}"How DARE you. I loved {dHim} more than anything."'
+    - '{customer}"Don''t you tell me what I owe my {dRelation}. You never even met {dHim}."'
+    - '{customer}"I''m sorry, did you just call me cheap? At my {dRelation}''s funeral?"'
+    - '{customer}"I was there every day. EVERY day. Where were you?"'
+    - '{customer}"You think money is how I loved {dHim}? You''re sick."'
+    - '{customer}"That''s a horrible thing to say to someone in my position."'
+    - '{customer}"I can''t believe I''m hearing this. I need a minute. And maybe a different funeral home."'
+    - '{customer}"Shame on you. Shame on your parlor. Shame on your little coffee machine."'
+    - '{customer}"My {dRelation} was {dSmashed} a {dFridge} and you''re guilt-tripping ME?"'
+    - '{customer}"I don''t need you to make me feel worse. I''m doing fine at that on my own."'
+    - '{customer}"You don''t get to use {dHim} against me."'
+    - '{customer}"Is that what you say to everyone? You should be ashamed."'
+    - '{customer}"I loved {dHim}. I don''t have to prove it with a price tag."'
+    - '{customer}"Say that again and I walk out of here."'
+    - '{customer}"Wow. Just... wow."'
+    - '{customer}"I''m going to tell everyone at the service what you just said."'
+    - '{customer}"That was cruel. I hope you know that was cruel."'
+    - '{customer}"You have no idea what {dHe} meant to me."'
+    - '{customer}"I''d give everything I own to have {dHim} back. Everything. And you''re talking to me about handles?"'
+    - '{customer}"Don''t. Just don''t."'
+    - '{customer}"You''re lucky I''m too sad to hit you."'
+    - '{customer}"My {dRelation} would have thrown you out of the room for that."'
+    - '{customer}"That''s low. Even for a funeral director."'
+  guiltNotLoved:
+    - '{customer}"Okay, okay. Maybe I can do a little better."'
+    - '{customer}"Ugh. You''re right. People will talk."'
+    - '{customer}"Fine. I don''t want to look cheap in front of the cousins."'
+    - '{customer}"When you put it like that, I do feel a little bad."'
+    - '{customer}"Alright. I''ll spend a little more. Not a lot more. A little."'
+    - '{customer}"Huh. I guess I could loosen the purse strings. Slightly."'
+    - '{customer}"Damn it. You''re good."'
+    - '{customer}"Fine, fine. I don''t need the whole town calling me a tightwad."'
+    - '{customer}"Okay, point taken. I''ll stretch it, up to ${limit}."'
+    - '{customer}"You know, I did get the house. I suppose I can spare something."'
+    - '{customer}"That''s a low blow. It worked, but it''s a low blow."'
+    - '{customer}"I hate that you''re right."'
+    - '{customer}"Alright. I''ll be generous. Tell everyone I was generous."'
+    - '{customer}"My mother would be appalled if she saw me haggling. Fine."'
+    - '{customer}"Guilt. My old friend. Okay, what else have you got?"'
+    - '{customer}"Fine. What''s a few dollars between me and a dead {dRelation}?"'
+    - '{customer}"I suppose I owe {dHim} that much. Probably less. But that much."'
+    - '{customer}"You''re making me feel like a bad person. Let''s make me feel like a better one."'
+    - '{customer}"Okay, I''ll open my wallet a little. Don''t look in it."'
+    - '{customer}"Alright, alright. I''m not a monster. Mostly."'
+    - '{customer}"Fine. But I''m telling Father Smyth you guilted me."'
+    - '{customer}"I''ll go higher. Only because the neighbors are coming."'
+  sympathyLoved:
+    - '{customer}"Thank you. Nobody''s asked me how I''m doing."'
+    - '{customer}"{dHeCap} used to sing in the shower. Badly. I''d give anything to hear it again."'
+    - '{customer}"I keep picking up the phone to call {dHim}."'
+    - '{customer}"We had plans. So many plans."'
+    - '{customer}"Thank you for being kind. It''s been a terrible week."'
+    - '{customer}"It doesn''t feel real yet. I keep waiting for {dHim} to walk in."'
+    - '{customer}"{dHeCap} was the best {dRelation} anyone could ask for."'
+    - '{customer}"Sorry. I didn''t think I''d cry in front of a stranger."'
+    - '{customer}"Everyone says it gets easier. I don''t believe them."'
+    - '{customer}"It was so sudden. One minute fine, and then a {dFridge}."'
+    - '{customer}"I just want to do right by {dHim}."'
+    - '{customer}"You''re very kind. I thought this would be worse."'
+    - '{customer}"I can still hear {dHim} laughing at the TV."'
+    - '{customer}"{dHeCap} always knew what to say. Now I don''t know what to say."'
+    - '{customer}"That helps. Thank you. It really helps."'
+    - '{customer}"I don''t know how I''m going to manage without {dHim}."'
+    - '{customer}"I keep thinking about the last thing I said to {dHim}. It was "pick up milk"."'
+    - '{customer}"Thank you. I''ll do whatever you think is best."'
+    - '{customer}"You''re a good person. In a strange job, but a good person."'
+    - '{customer}"I''m sorry. Can I have a tissue? Can I have the box?"'
+    - '{customer}"{dHeCap} would have liked you. {dHeCap} liked gentle people."'
+    - '{customer}"Everything reminds me of {dHim}. The {dFridge} most of all, sadly."'
+  sympathyNotLoved:
+    - '{customer}"Save it. I''m fine."'
+    - '{customer}"Please don''t touch my shoulder."'
+    - '{customer}"We weren''t close. You can drop the soft voice."'
+    - '{customer}"I''m not here for a hug. I''m here for a hole."'
+    - '{customer}"Look, I''ve got other things to do today. Let''s not make this a whole thing."'
+    - '{customer}"I don''t need sympathy. I need a receipt."'
+    - '{customer}"Is this the part where I''m supposed to cry? Pass."'
+    - '{customer}"Feelings? No. Prices? Yes."'
+    - '{customer}"Honestly, I''ve cried more at commercials."'
+    - '{customer}"You can put the tissues away. I brought my own. Unused."'
+    - '{customer}"My {dRelation} and I had an understanding. We didn''t talk."'
+    - '{customer}"Don''t do the sad eyes. It''s creepy enough in here already."'
+    - '{customer}"Mm-hm. Sure. So, about the price."'
+    - '{customer}"I''m handling it great. Can''t you tell?"'
+    - '{customer}"You''re laying it on thick, pal."'
+    - '{customer}"Thanks, but no thanks. I''m not the weepy type."'
+    - '{customer}"Let''s keep this professional. You sell, I buy, nobody cries."'
+    - '{customer}"I''m not sad. I''m busy. There''s a difference."'
+    - '{customer}"Spare me. I''ve seen this act at three funerals this year."'
+    - '{customer}"Okay, therapist. Can we get to the casket?"'
+    - '{customer}"Sympathy''s nice. Where''s the brochure?"'
+    - '{customer}"I didn''t come here to talk about my feelings. I came here to avoid them."'
+    - '{customer}"You don''t have to pretend {dHe} was special. I won''t."'
+  upgradeRefuse:
+    - loved: '{customer}"Please, no more. I want this to be simple and right."'
+      notLoved: '{customer}"Another upgrade? For {dHim}? You''re adorable."'
+    - '{customer}"I''ve bought enough. Stop."'
+    - '{customer}"Nope. My {dRelation} wasn''t a big spender, and I''m not either."'
+    - '{customer}"I''m drawing the line. Right here. This is the line."'
+    - loved: '{customer}"That''s lovely, but {dHe} would scold me for spending it."'
+      notLoved: '{customer}"Not on your life. Or on {dHim}, which is rather the point."'
+    - '{customer}"I can feel my wallet getting lighter just listening to you."'
+  upgradeAccept:
+    - '{customer}"Alright. Add it."'
+    - '{customer}"Okay, yes. Why not."'
+    - '{customer}"Fine. It''s for {dHim}."'
+    - '{customer}"You talked me into it. Again."'
+    - '{customer}"Sure. Go on. I''m in this deep already."'
+  upgradePitch:
+    - "`w{player}: `$\"The {last} was a fine start. Now, the {upgrade}. Only ${price} more.\"\n\n"
+    - "`w{player}: `$\"If you liked the {last}, you'll love the {upgrade}. ${price} additional.\"\n\n"
+    - "`w{player}: `$\"People who buy the {last} usually go on to the {upgrade}. It's ${price}. It's only natural.\"\n\n"
+    - "`w{player}: `$\"One more thing, {cSir}: the {upgrade}. ${price}. Then I'll stop. I won't stop.\"\n\n"
+    - "`w{player}: `$\"I saved the best for last: the {upgrade}, a mere ${price}.\"\n\n"
+  leavePissed:
+    - "{customer}\"I've had better service at the DMV. Goodbye.\"\n"
+    - "{customer}\"I'm taking my {dRelation} somewhere with manners.\"\n"
+    - "{customer}\"You're a vulture in a cheap suit. Bye.\"\n"
+    - "{customer}\"Forget it. I'll bury {dHim} myself.\"\n"
+    - "{customer}\"That's it. I'm going across the street.\"\n"
+    - "{customer}\"I came in sad and I'm leaving furious. Congratulations.\"\n"
+    - "{customer}\"You should be ashamed of yourself. I'm leaving.\"\n"
+    - "{customer}\"No. No more. I'm out.\"\n"
+    - "{customer}\"I'd rather deal with Elijah at Di-Mart. And he's terrifying.\"\n"
+  pissedOverLimit:
+    - "{customer}\"I told you I only had ${limit}. Were you even listening? Bye.\"\n"
+    - "{customer}\"That's way past what I can spend. I'm leaving.\"\n"
+    - "{customer}\"${limit}. That's all I've got. You knew that. Goodbye.\"\n"
+    - "{customer}\"I can't afford this place. I'll try somewhere cheaper.\"\n"
+    - "{customer}\"Over my budget again? I'm done.\"\n"
+    - "{customer}\"You keep trying to spend money I don't have. Bye.\"\n"
+    - "{customer}\"I said ${limit} tops. I'm going somewhere that can count.\"\n"
+    - "{customer}\"That would bankrupt me. I'm leaving before you sell me a second one.\"\n"
+    - "{customer}\"Nope. Too rich for my blood. Goodbye.\"\n"
+    - "{customer}\"My bank card would laugh at that. I'm going.\"\n"

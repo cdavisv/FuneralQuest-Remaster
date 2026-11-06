@@ -1,0 +1,24 @@
+{
+  "name": "@fq/audio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Funeral Quest Remastered audio: a small synthesiser and sequencer, the score, the effects, the cue map and the build that renders them.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalog": "./src/catalog.ts"
+  },
+  "scripts": {
+    "render": "tsx scripts/render.ts",
+    "analyse": "tsx scripts/analyse.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15"
+  }
+}

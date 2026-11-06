@@ -1,0 +1,526 @@
+- id: 'mob-boss'
+  label: 'Mob Boss'
+  weight: 1
+  minDay: 3
+  person:
+    first: 'Vincent'
+    surname: 'Morticelli'
+    male: true
+  portrait: 'people/m_old_4'
+  intro: '`$Two large men in sunglasses check your closets before an old man in a camel coat sits down.
+
+
+    {customer}"My associate {dFirst} had an accident. With {aFridge}. Several times. I want a funeral people will remember, and a casket that does not open from the inside."'
+  incomeAtLeast: 3
+  effects:
+    limitMult: 1.5
+    guilt: 0
+    cheapness: -1
+  noWalkout: true
+  onHappy:
+    gold: 2
+    karma: -2
+    protection: true
+  onDone:
+    karma: -1
+  onWalkout:
+    bp: -25
+    karma: -1
+  lines:
+    happy: '{customer}"You did right by {dFirst}. Nobody will bother you tonight. Nobody."'
+    threat: '{customer}"You disappoint me." The large men walk you out to the alley and explain your disappointment to your ribs.'
+- id: 'celebrity'
+  label: 'Celebrity'
+  weight: 1
+  person:
+    first: 'Crystal'
+    surname: 'Vance'
+    male: false
+  portrait: 'people/f_sexy'
+  intro: '`$Flashbulbs go off outside your window. Crystal Vance, star of the reality show "Tanning Moms", sweeps in behind giant sunglasses.
+
+
+    {customer}"My {dRelation} {dFirst} is dead and the cameras are rolling. Make it TRAGIC. Make it TRENDING."'
+  incomeAtLeast: 2
+  traits:
+    - 'showoff'
+  tvAlways: true
+  onHappy:
+    rating: 3
+    reviews: 3
+  onWalkout:
+    rating: -3
+    reviews: -5
+  lines:
+    happy: '{customer}"Oh my god, the crying shots are going to be AMAZING."'
+    walkout: '`$Crystal storms out to her limo. By dinner the whole town has seen the clip of her calling your parlor "a Di-Mart for corpses".'
+- id: 'pet'
+  label: 'Pet Funeral'
+  weight: 2
+  pet:
+    - 'cat'
+    - 'dog'
+    - 'hamster'
+    - 'iguana'
+    - 'parakeet'
+    - 'goldfish'
+    - 'ferret'
+    - 'pot-bellied pig'
+  intro: '`${customerName} sets a shoebox on your desk. Something inside it is not moving.
+
+
+    {customer}"This is {dFirst}. {dFirst} was a good {pet}. The best {pet}. The vet said you do pets?"'
+  casketPriceMult: 0.25
+  effects:
+    loved: true
+    sympathy: 1.5
+    guilt: 2
+    cheapness: -1
+  onHappy:
+    karma: 1
+    reviews: 1
+  lines:
+    happy: '{customer}"{dFirst} would have loved this. {dFirst} loved everything. Except the mailman."'
+- id: 'pre-need'
+  label: 'Pre-Need Planner'
+  weight: 2
+  selfFuneral: true
+  intro: '`${customerName} sits down with a clipboard and a highlighter.
+
+
+    {customer}"Nobody''s dead yet. Me, eventually. I want to pick out my own {casket} casket now, before my kids pick something tacky."'
+  effects:
+    cheapness: 1
+    patience: 3
+    sympathy: 0.5
+    guilt: 0.5
+  future:
+    minDays: 2
+    maxDays: 6
+    bpShare: 0.5
+    text: '`${name} finally used the funeral {he} planned with you. The family pays the balance.'
+- id: 'black-widow'
+  label: 'The Widow Black'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'Vivian'
+    surname: 'Black'
+    male: false
+  portrait: 'people/f_sexy2'
+  intro: '`$Vivian Black glides in, all in black, as usual.
+
+
+    {customer}"Husband number five, darling. Same as last time, but bigger. You know I like things bigger."'
+  incomeAtLeast: 3
+  effects:
+    loved: false
+    guilt: 0
+    limitMult: 1.3
+    patience: 2
+  onHappy:
+    reviews: 2
+  lines:
+    happy: '{customer}"Lovely. Keep my file handy, darling. Number six has a weak heart."'
+- id: 'county-contract'
+  label: 'County Contract'
+  weight: 1
+  intro: '`$A clerk from the county drops off a toe-tagged John Doe and a form in triplicate.
+
+
+    `wClerk: `$"Unclaimed, no family. County pays the flat rate: a pine box and a hole. Take it or leave it, I''ve got six more in the van."'
+  offer:
+    accept:
+      label: 'Take the Body'
+      text: '`$You bury John Doe with as much dignity as the county rate allows, which is not much. Father Smyth says a few words. Some of them are "who?"'
+      effects:
+        bp: 8
+        money: 300
+        karma: 2
+    decline:
+      label: 'Turn It Down'
+      text: '`$The clerk shrugs and wheels John Doe across the street to a rival. You hear the word "cheapskate" through the window.'
+      effects:
+        karma: -1
+- id: 'cousin-sal'
+  label: 'Cousin Sal'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'Cousin'
+    surname: 'Sal'
+    male: true
+  portrait: 'people/m_doctor'
+  intro: '`$Cousin Sal, M.D. (University of P.O. Box 411), backs a station wagon up to your door.
+
+
+    `wCousin Sal: `$"Got a body for you. Paperwork''s, uh, still being printed. Cash only, no questions, no autopsy, especially no autopsy."'
+  offer:
+    accept:
+      label: 'Take the Cash'
+      text: '`$You bury the mystery guest under a fake name. Sal pays in damp twenties. You sleep fine. Mostly.'
+      effects:
+        money: 2500
+        bp: 5
+        karma: -4
+    decline:
+      label: 'Call the Police'
+      text: '`$Sal is gone before the squad car arrives. The officer thanks you and tells the whole precinct you''re one of the good ones.'
+      effects:
+        karma: 3
+        reviews: 2
+- id: 'old-man-withers'
+  label: 'Old Man Withers'
+  weight: 1
+  person:
+    first: 'Old Man'
+    surname: 'Withers'
+    male: true
+  portrait: 'people/m_old_3'
+  selfFuneral: true
+  intro: '`$Old Man Withers, who has been "about to die any day now" since 1974, shuffles in to price-check his funeral again.
+
+
+    {customer}"Just looking. Show me your cheapest {casket}. I''ll know if you''re lying, I invented lying."'
+  effects:
+    cheapness: 3
+    patience: 6
+    limitMult: 0.6
+  onHappy:
+    reviews: 4
+    rating: 1
+  lines:
+    happy: '{customer}"Not bad, sonny. I''ll tell everyone at bingo. Don''t get excited, I''m not dying this week."'
+- id: 'father-smyth'
+  label: 'Father Smyth'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'Father'
+    surname: 'Smyth'
+    male: true
+  portrait: 'people/churchguy_h'
+  intro: '`$Father Smyth hurries in, wiping lemon-bar crumbs off his collar.
+
+
+    {customer}"Old {dFirst}, one of my flock, has gone to glory. The family left it to the parish, and the parish is broke. A {casket} casket, please, and try not to make me sin in your office."'
+  traits:
+    - 'devout'
+  effects:
+    cheapness: 1
+    limitMult: 0.8
+    guilt: 0
+  onHappy:
+    karma: 2
+    reviews: 2
+  onWalkout:
+    karma: -1
+    reviews: -3
+  lines:
+    happy: '{customer}"Bless you. I''ll mention you from the pulpit on Sunday. Between the bingo results and the bake sale, but I''ll mention you."'
+    walkout: '`$Father Smyth leaves shaking his head. On Sunday the sermon is about the money changers in the temple. Everyone looks at your pew.'
+- id: 'the-mayor'
+  label: 'The Mayor'
+  weight: 1
+  minDay: 4
+  person:
+    first: 'The'
+    surname: 'Mayor'
+    male: true
+  portrait: 'people/m_adult_4'
+  intro: '`$A news van parks outside. The Mayor strides in, shaking hands with your coat rack on the way.
+
+
+    {customer}"Terrible loss. My former deputy, {dFirst}, was {dSmashed} {aFridge}. The cameras will be there, so I need a {casket} casket that says ''I cared'' and photographs from my good side."'
+  incomeAtLeast: 2
+  traits:
+    - 'showoff'
+  tvAlways: true
+  effects:
+    patience: -2
+    guilt: 1.4
+  onHappy:
+    rating: 2
+    reviews: 2
+  onWalkout:
+    rating: -2
+    reviews: -3
+  lines:
+    happy: '{customer}"Wonderful. I''ll say a few words at the service. Mostly about my re-election, but a few about {dFirst}."'
+    walkout: '`$That evening the Mayor holds a press conference on the steps of City Hall about "unscrupulous death merchants". He does not say your name. He points at your parlor on the map.'
+- id: 'the-twins'
+  label: 'The Twins'
+  weight: 1
+  minDay: 5
+  person:
+    first: 'The'
+    surname: 'Twins'
+    male: true
+  portrait: 'people/m_adult_u'
+  intro: '`$Two identical men in identical smoky jackets carry in something wrapped in a scorched carpet.
+
+
+    `wThe Twins: `y"We found this in a barn. The barn was on fire. We didn''t start that fire. We started a different fire. Bury it quiet and we''ll pay cash."'
+  offer:
+    accept:
+      label: 'Bury It Quiet'
+      text: '`$You bury the carpet and its contents behind the parlor before lunch. The Twins pay in slightly singed bills and wink in perfect unison.'
+      effects:
+        money: 900
+        bp: 4
+        karma: -3
+    decline:
+      label: 'Show Them Out'
+      text: '`$The Twins look at each other, then at your curtains. "Nice curtains," they say together. "Very dry." They leave. You buy a fire extinguisher.'
+      effects:
+        karma: 2
+        money: -100
+- id: 'elijah'
+  label: 'Elijah from Di-Mart'
+  weight: 1
+  minDay: 3
+  person:
+    first: 'Elijah'
+    surname: 'Crane'
+    male: true
+  portrait: 'people/store_guy'
+  intro: '`$Elijah from Di-Mart sits down without being asked. He does not blink. He has never blinked.
+
+
+    {customer}"My {dRelation}. {dFirst}. Passed some time ago. I only noticed this morning. {dHeCap} was very quiet, even before. A {casket} casket. I''ll want the employee discount."'
+  traits:
+    - 'haggler'
+  effects:
+    cheapness: 1.5
+    patience: 4
+    moodMult: 0.8
+  onHappy:
+    reviews: 1
+    luck: 3
+  onWalkout:
+    reviews: -1
+  lines:
+    happy: '{customer}"Acceptable. Come by the store. I''ll show you the back room. Not that back room. The other one."'
+    walkout: '`$Elijah stands, straightens his tie and leaves without a word. For a week, every casket you buy at Di-Mart has a faint fingerprint smudge on the lid, exactly where your hand goes.'
+- id: 'nurse-referral'
+  label: 'The Nurse'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'The'
+    surname: 'Nurse'
+    male: false
+  portrait: 'people/f_adult_2'
+  intro: '`$The Nurse from the city hospital pops in, still in scrubs, smiling as always.
+
+
+    {customer}"Hi, prince! Quick one. The night shift wants a Christmas party and the hospital won''t pay. Chip in, and I''ll make sure our discharged-permanently patients get your card first."'
+  offer:
+    accept:
+      label: 'Sponsor the Party'
+      text: '`$You hand over an envelope. Within the hour three orderlies have your business card taped inside the morgue drawers. The Nurse blows you a kiss from the door.'
+      effects:
+        money: -500
+        reviews: 3
+        bp: 5
+    decline:
+      label: 'Too Expensive'
+      text: '`$"No problem, prince!" She is still smiling. By evening the morgue drawers have a different parlor''s card in them.'
+      effects:
+        reviews: -1
+- id: 'teller'
+  label: 'The Bank Teller'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'Prudence'
+    surname: 'Ledbetter'
+    male: false
+  portrait: 'people/f_adult'
+  intro: '`$The teller from the bank sits down, adjusts her glasses and lays a deposit slip on your desk like an accusation.
+
+
+    {customer}"My {dRelation}, {dFirst}, has closed {dHis} account, so to speak. A {casket} casket. I will be checking your arithmetic. I check everyone''s arithmetic."'
+  incomeAtLeast: 1
+  traits:
+    - 'accountant'
+  effects:
+    patience: 2
+    discount: 0.5
+    limitMult: 1.2
+  onHappy:
+    reviews: 2
+    gold: 1
+  onWalkout:
+    reviews: -2
+  lines:
+    happy: '{customer}"Your figures are correct. I''m almost disappointed. Here, a gold tag. Don''t spend it all on something silly."'
+    walkout: '{customer}"I''ve seen your balance, you know. I''ll be thinking about it every time you come to my window."'
+- id: 'clown-family'
+  label: 'The Clown Family'
+  weight: 1
+  intro: '`$A tiny car parks outside and nine mourners in full face paint climb out of it.
+
+
+    {customer}"Our {dRelation}, {dFirst}, was the best clown in three counties. {dHeCap} died doing the thing with the {dFridge}. We want a {casket} casket, and we want it to honk."'
+  traits:
+    - 'collector'
+  effects:
+    mood: -0.5
+    limitMult: 0.9
+    sympathy: 1.3
+  onHappy:
+    reviews: 3
+  onWalkout:
+    reviews: -2
+  lines:
+    happy: '{customer}"It''s perfect. {dFirst} would have laughed. Then fallen down. Then laughed again." A horn honks somewhere in the room.'
+    walkout: '`$The clowns leave single file, all nine back into the tiny car. It takes twenty minutes. Nobody laughs.'
+- id: 'fake-death'
+  label: 'The Fake Death'
+  weight: 1
+  minDay: 4
+  intro: '`${customerName} closes the blinds before {cHe} sits down and speaks very quietly.
+
+
+    {customer}"Nobody''s dead. That''s the problem. I need a funeral for me, with an empty casket, a death certificate and a lot of crying, by Friday. The insurance company pays, we split it. You in?"'
+  offer:
+    accept:
+      label: 'Fake the Funeral'
+      text: '`$You bury a casket full of sandbags with full honors. Cousin Sal signs the death certificate without reading it. Your share arrives in a gym bag.'
+      effects:
+        money: 1800
+        bp: 3
+        karma: -4
+    decline:
+      label: 'No Thanks'
+      text: '`${customerName} sighs. "Fine. I''ll ask Blaine." A week later the Blaine paper reports a miraculous resurrection, and an arrest.'
+      effects:
+        karma: 2
+        reviews: 1
+- id: 'the-count'
+  label: 'The Count'
+  weight: 1
+  minDay: 6
+  person:
+    first: 'Count'
+    surname: 'Mortimer'
+    male: true
+  portrait: 'people/m_old_6'
+  selfFuneral: true
+  intro: '`$It is the middle of the day, but your office somehow gets darker. A tall old man in a cape steps out of the corner you were sure was empty.
+
+
+    {customer}"I require a casket. For myself. For sleeping. A {casket} one, lined in something dark. I am a light sleeper. Very light. Nearly dead, you might say."'
+  incomeAtLeast: 2
+  traits:
+    - 'death-fan'
+  effects:
+    patience: 4
+    cheapness: -0.5
+    guilt: 0
+  onHappy:
+    luck: 5
+    reviews: 1
+  onWalkout:
+    luck: -5
+  lines:
+    happy: '{customer}"Excellent. I shall recommend you to my friends. They are very old friends. Some of them are still in the ground."'
+    walkout: '`$The Count turns into something small and leathery and flaps out through your mail slot. You lie awake all night listening to the gutters.'
+- id: 'blaine-director'
+  label: 'Rival From Blaine'
+  weight: 1
+  minDay: 3
+  intro: '`${customerName} walks in wearing a lapel pin from a Blaine funeral home and looks around like {cHe}''s pricing the furniture.
+
+
+    {customer}"My {dRelation} {dFirst} died here, in Deathville, which is typical. I could do it myself back in Blaine, but our caskets cost more. A {casket} one. Don''t try anything, I know every trick in the book. I wrote two of them."'
+  incomeAtLeast: 1
+  traits:
+    - 'skeptic'
+    - 'been-here'
+  effects:
+    cheapness: 1
+  onHappy:
+    rating: 2
+    reviews: 2
+  onWalkout:
+    rating: -1
+    reviews: -2
+  lines:
+    happy: '{customer}"Hm. Not bad for a Deathville outfit. Don''t tell anyone in Blaine I said so."'
+    walkout: '{customer}"Amateurs. I''ll tell everyone in Blaine. They already think you people bury folks in shopping carts."'
+- id: 'jackpot'
+  label: 'The Jackpot Heirs'
+  weight: 1
+  minDay: 2
+  intro: '`${customerName} and four relatives are all talking at once. Two are holding the same lottery ticket.
+
+
+    {customer}"{dFirst} won the state lottery Tuesday and got {dSmashed} {aFridge} Wednesday. We want a {casket} casket, the best of everything, and somebody to stand between my cousins at the service."'
+  incomeAtLeast: 2
+  traits:
+    - 'heir'
+  effects:
+    limitMult: 1.4
+    cheapness: -1
+    patience: -2
+    moodMult: 1.2
+  onHappy:
+    reviews: 2
+    money: 300
+  onWalkout:
+    reviews: -3
+  lines:
+    happy: '{customer}"Great, done, we''ll split the bill. Five ways. Don''t argue, there are lawyers outside." Someone tips you a hundred on the way out.'
+    walkout: '`$The heirs leave in five separate cars. That night two of them are on the TV news fighting over the ticket in a parking lot.'
+- id: 'zookeeper'
+  label: 'The Zookeeper'
+  weight: 1
+  minDay: 3
+  pet:
+    - 'elephant'
+    - 'giraffe'
+    - 'hippo'
+    - 'python'
+    - 'walrus'
+    - 'llama'
+    - 'ostrich'
+  intro: '`$The keeper from the Deathville Zoo backs a flatbed truck up to your door. There is a very large tarp on it.
+
+
+    {customer}"This is {dFirst}. {dFirst} was a {pet}. The kids loved {dFirst}. The zoo budget doesn''t. Have you got a {casket} casket in, uh, extra large?"'
+  casketPriceMult: 1.5
+  effects:
+    loved: true
+    sympathy: 1.4
+    limitMult: 1.2
+  onHappy:
+    reviews: 3
+    karma: 1
+  onWalkout:
+    reviews: -2
+  lines:
+    happy: '{customer}"The kids are going to love the headstone. We''re putting it next to the snack bar."'
+    walkout: '`$The keeper drives off with {dFirst}. Rumor has it the {pet} ends up in the quarry. The whole town can smell the rumor for a week.'
+- id: 'ghost-crew'
+  label: 'Ghost Hunters'
+  weight: 1
+  minDay: 5
+  intro: '`$Three people in matching black T-shirts set up a camera on your desk without asking.
+
+
+    {customer}"We''re Ghost Patrol Deathville. Cable access, Thursdays at two a.m. We want to spend the night in your parlor and film the dead. We''ll pay. Is your skeleton available for an interview?"'
+  offer:
+    accept:
+      label: 'Let Them Film'
+      text: '`$They film all night. The episode shows four minutes of Morty in different lighting and one very clear shot of you eating cold noodles in the embalming room at 3 a.m.'
+      effects:
+        money: 600
+        rating: -1
+        luck: 3
+    decline:
+      label: 'Respect the Dead'
+      text: '`$You show them out. On the way to their van one of them swears Morty waved. Morty did not wave. Probably.'
+      effects:
+        karma: 1

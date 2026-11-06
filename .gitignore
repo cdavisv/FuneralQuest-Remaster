@@ -1,0 +1,40 @@
+node_modules/
+dist-build/
+coverage/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+
+# Desktop (Tauri) and mobile (Capacitor) build output
+apps/desktop/dist/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
+apps/mobile/www/
+apps/mobile/android/local.properties
+apps/mobile/android/.gradle/
+apps/mobile/android/build/
+apps/mobile/android/app/build/
+apps/mobile/android/capacitor-cordova-android-plugins/
+apps/mobile/android/app/src/main/assets/public/
+apps/mobile/android/app/src/main/assets/capacitor.config.json
+apps/mobile/android/app/src/main/assets/capacitor.plugins.json
+apps/mobile/android/app/src/main/res/xml/config.xml
+apps/mobile/android/.idea/
+apps/mobile/android/*.keystore
+apps/mobile/android/*.jks
+apps/mobile/ios/App/Pods/
+apps/mobile/ios/App/build/
+apps/mobile/ios/App/App/public/
+apps/mobile/ios/App/App/capacitor.config.json
+apps/mobile/ios/App/App/config.xml
+apps/mobile/ios/DerivedData/
+apps/mobile/ios/capacitor-cordova-ios-plugins/
+apps/mobile/ios/**/xcuserdata/
+*.apk
+*.aab
+*.AppImage
+
+# Animation frames exported from the original Flash files (about 31 MB).
+# Regenerate with: pnpm --filter @fq/extract run export
+assets/classic/**/*.frames/

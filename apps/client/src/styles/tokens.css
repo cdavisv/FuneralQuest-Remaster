@@ -1,0 +1,154 @@
+/*
+ * Design tokens. Colours come from the original game's palette; fonts are bundled OFL fonts.
+ * Every TextColor in @fq/protocol maps to a --fq-c-* token below, once for dark surfaces
+ * (the recessed text panel, dialogs) and once for light ones (parchment, newspaper).
+ */
+:root {
+  /* Walnut, rim to face */
+  --fq-wood-rim: #301501;
+  --fq-wood-dark: #3f1d01;
+  --fq-wood-body: #70501f;
+  --fq-wood-light: #b78f5e;
+  --fq-frame-dark: #281100;
+  --fq-frame-light: #401f02;
+
+  /* Parchment, plaque, text well, gold, copper */
+  --fq-parchment-1: #b89867;
+  --fq-parchment-2: #c0b07f;
+  --fq-parchment-ink: #2a1a08;
+  --fq-plaque-face: #a38855;
+  --fq-plaque-rim: #947845;
+  --fq-plaque-ink: #120900;
+  /* Kept for a pack that wants a wash over the plaque art; the plaques are lifted by a filter (contrast.css). */
+  --fq-plaque-lift: transparent;
+  --fq-well-top: #6a4f29;
+  --fq-well-bottom: #3f2710;
+  --fq-well-rim-top: #937847;
+  --fq-well-rim-bottom: #56391b;
+  --fq-gold: #bb8710;
+  --fq-gold-light: #e8c35a;
+  --fq-copper: #c8601f;
+  --fq-copper-dark: #6b2a06;
+  --fq-olive: #5d5c32;
+  --fq-olive-light: #8d8c52;
+  --fq-olive-dark: #3b3a1c;
+
+  /* Text roles */
+  --fq-text-body: #ffff33; /* body text on dark surfaces */
+  --fq-text-name: #ffffff; /* speaker names */
+  --fq-text-number: #cc66cc; /* the original magenta, kept for decoration */
+  --fq-luck-low: #913a01;
+  --fq-luck-high: #c38d3c;
+  --fq-focus: #ffe566;
+  --fq-focus-halo: #000000;
+
+  /* Fonts */
+  --fq-font-script: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --fq-font-ui: "Atkinson Hyperlegible", Verdana, "DejaVu Sans", system-ui, sans-serif;
+  --fq-font-blackletter: "Pirata One", "UnifrakturMaguntia", "Old English Text MT", serif;
+  --fq-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --fq-font-scale: 1;
+
+  /* Text colours on dark surfaces. Lightened from the 2001 values to read on the brown well. */
+  --fq-c-blue: #93b8ff;
+  --fq-c-green: #8ee08e;
+  --fq-c-teal: #5fd8cc;
+  --fq-c-red: #ff8272;
+  --fq-c-purple: #f0aaf0; /* numbers and stats; the original #cc66cc is too dim on brown */
+  --fq-c-brown: #e3b17a;
+  --fq-c-grey: #d2d2d2;
+  --fq-c-darkGrey: #b4b0a8;
+  --fq-c-lightBlue: #b4e0ff;
+  --fq-c-lightGreen: #c2f7a8;
+  --fq-c-cyan: #86f5ff;
+  --fq-c-lightRed: #ffaaaa;
+  --fq-c-pink: #ffb8d8;
+  --fq-c-yellow: #ffff33;
+  --fq-c-white: #ffffff;
+  --fq-c-black: #1c0e00;
+  --fq-c-default: var(--fq-text-body);
+}
+
+/* Light surfaces: parchment, notices and the newspaper. */
+.fq-surface-light {
+  /* Dark enough to read (4.5 and over) on the darkest part of the parchment. */
+  --fq-c-blue: #12308c;
+  --fq-c-green: #11500f;
+  --fq-c-teal: #08504c;
+  --fq-c-red: #8c1208;
+  --fq-c-purple: #5c1f64;
+  --fq-c-brown: #5a310b;
+  --fq-c-grey: #3a3a3a;
+  --fq-c-darkGrey: #444444;
+  --fq-c-lightBlue: #1d4880;
+  --fq-c-lightGreen: #215a10;
+  --fq-c-cyan: #064e5a;
+  --fq-c-lightRed: #85240f;
+  --fq-c-pink: #7d1d48;
+  --fq-c-yellow: #4d3900;
+  --fq-c-white: #1a1000; /* a speaker name in "white" must not vanish on pale paper */
+  --fq-c-black: #000000;
+  --fq-c-default: var(--fq-parchment-ink);
+}
+
+.fq-surface-dark {
+  --fq-c-default: var(--fq-text-body);
+}
+
+.fq-tc-blue {
+  color: var(--fq-c-blue);
+}
+.fq-tc-green {
+  color: var(--fq-c-green);
+}
+.fq-tc-teal {
+  color: var(--fq-c-teal);
+}
+.fq-tc-red {
+  color: var(--fq-c-red);
+}
+.fq-tc-purple {
+  color: var(--fq-c-purple);
+}
+.fq-tc-brown {
+  color: var(--fq-c-brown);
+}
+.fq-tc-grey {
+  color: var(--fq-c-grey);
+}
+.fq-tc-darkGrey {
+  color: var(--fq-c-darkGrey);
+}
+.fq-tc-lightBlue {
+  color: var(--fq-c-lightBlue);
+}
+.fq-tc-lightGreen {
+  color: var(--fq-c-lightGreen);
+}
+.fq-tc-cyan {
+  color: var(--fq-c-cyan);
+}
+.fq-tc-lightRed {
+  color: var(--fq-c-lightRed);
+}
+.fq-tc-pink {
+  color: var(--fq-c-pink);
+}
+.fq-tc-yellow {
+  color: var(--fq-c-yellow);
+}
+.fq-tc-white {
+  color: var(--fq-c-white);
+  font-weight: 700;
+}
+.fq-tc-black {
+  color: var(--fq-c-black);
+}
+
+/* "black" on a dark surface would vanish; give it a pale halo. */
+.fq-surface-dark .fq-tc-black {
+  text-shadow:
+    0 0 3px #f0dcae,
+    0 0 1px #f0dcae;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@fq/bots",
+  "version": "0.0.0",
+  "private": true,
+  "description": "AI rival parlors: policies that play Funeral Quest from its Views alone, and a runner for a bot's whole day.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./oracle": "./src/oracle.ts",
+    "./personalities": "./src/personalities.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/core": "workspace:*",
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@fq/content": "workspace:*",
+    "@types/node": "^26.6.6"
+  }
+}

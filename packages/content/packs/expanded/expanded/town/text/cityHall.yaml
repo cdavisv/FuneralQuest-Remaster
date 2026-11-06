@@ -1,0 +1,86 @@
+title: 'City Hall'
+note: 'City Hall smells of floor wax and broken promises. A clerk is asleep behind a sign that says ALL DEPARTMENTS.'
+greeting: '`w{mayor}: `y"{player}! A taxpayer, in my building! Ask not what your town can do for you. Ask what you can do for the statue fund."'
+buttons:
+  permits: 'Permits'
+  inspection: 'Health Inspection'
+  ordinance: 'Ordinance Vote'
+  election: 'Mayoral Election'
+  chains: 'Parlor Chains'
+  leave: 'Leave'
+  back: 'Back'
+  certify: 'Request a Certificate'
+  bribe: 'Slip the Inspector an Envelope'
+  lobby: 'Lobby for It'
+  file: 'Run for Mayor'
+  ads: 'Buy Campaign Ads'
+permitsIntro: '`$The clerk wakes up just long enough to slide a form across the desk. It is in triplicate; the third copy is for his lunch. Some of the contractor''s bigger jobs need a permit first.
+
+
+  '
+permitLine: '`w{name}`$, `w${price}`$: {description}
+
+  '
+permitBought: '`$The clerk stamps your `w{name}`$ eleven times, initials it twice and goes back to sleep on it.'
+inspectionIntro: '`$Inspector Mudge calls on one parlor in town each night, and he finds something every time unless your rating and your karma are good, or he''s been looked after. A failed inspection costs a fine and your reputation.'
+certifiedUntil: '`$You''re certified clean through day `w{until}`$. Inspector Mudge will wave at your door and keep walking.'
+certified: '`$Inspector Mudge walks through your parlor in four minutes, sniffs twice and signs. Clean for `w{days}`$ days, and a nice write-up in the paper.'
+bribed: '`$Inspector Mudge counts the envelope without looking at it. "I''m sure everything is up to code. I''m sure of it right now." `5(-2 karma)`$'
+inspectPassMail: '`$Inspector Mudge came by last night, ran a finger along your counter, looked at the finger for a long time and left without writing anything down.'
+inspectFailMail: '`4Inspector Mudge came by last night. He found a finger in the coffee maker, and it wasn''t his. You were fined `w${fine}`4.`$'
+inspectFailNews: '`7HEALTH CODE VIOLATION
+
+  `^Inspectors found unspeakable things at {parlor}. {name} says the finger was there when they bought the place.
+
+
+  '
+ordinanceIntro: '{current}
+
+  `$This week''s ballot closes at the end of day `w{closes}`$. One vote each; the Mayor''s counts double; lobbying buys more. The Mayor''s office has kindly written a short, fair summary of each measure.'
+noOrdinance: '`$No ordinance is in force. The town runs on habit, spite and the honour system.'
+currentOrdinance: '`$In force through day `w{until}`$: `w{title}`$ ({effect}).'
+noBallot: '`$There''s no ballot open right now. The clerk says come back on the first day of next week, and bring a pen. His is chewed.'
+voted: '`$You vote for `w{title}`$. The clerk puts your ballot in a box marked BALLOTS AND LUNCH.'
+lobbied: '`$You take a councilman to lunch on behalf of `w{title}`$. He orders the lobster, and a second lobster for later.'
+ordinanceNews: '`7NEW ORDINANCE: {title}
+
+  `^{text} Passed with {votes} votes. In force all week: {effect}.
+
+
+  '
+noVotesNews: '`7COUNCIL DEADLOCKED
+
+  `^Nobody voted on this week''s ordinances. The council took the week off to recover from not being asked.
+
+
+  '
+electionFiling: '`$The season''s mayoral race is open for candidates until the end of day `w{until}`$. Filing costs `w${fee}`$. The Mayor gets a better parlor rating (+{rating}) from all the ribbon cuttings and a double vote on ordinances. The chauffeur is not included. Statues are optional.
+
+
+  Candidates so far: `w{candidates}`$.'
+electionVoting: '`$Voting is open until the end of day `w{until}`$. One vote each; candidates can buy ads. The ballot box has been checked for a false bottom, by the Mayor.
+
+
+  Candidates: `w{candidates}`$.'
+electionDone: '`$The town''s mayor this season is `w{name}`$. The portrait in the lobby is already crooked.'
+noCandidates: 'nobody yet'
+filed: '`$You''re on the ballot. A photographer takes your picture for the posters. You blink. He says it''s fine. It isn''t.'
+electionVoted: '`$You vote for `w{name}`$. Democracy happens, briefly, behind a curtain.'
+adsBought: '`$Your face appears on every bus bench in town. Several pigeons are offended and say so.'
+electedNews: '`7NEW MAYOR ELECTED
+
+  `^{name} wins the mayor''s race with {votes} votes and promises to keep the town''s dead in an orderly fashion, and the living in roughly the same.
+
+
+  '
+electedMail: '`$You won the election! The ribbon cuttings will do your rating good and your vote on ordinances counts double. The statue fund is yours now. Spend it wisely, or on a statue.'
+noElectionNews: '`7ELECTION CANCELLED
+
+  `^Nobody ran for mayor. Mayor Hollis Grubb stays on, and has commissioned a statue to mark the occasion.
+
+
+  '
+mayorMorning: '
+
+  `$Your mayoral chauffeur whisks you all over town, running two red lights in your honour. `w+{turns}`$ turn.'
+votesDetail: '{votes} votes'

@@ -1,0 +1,21 @@
+speaker: '`wClerk: `$'
+pages:
+  - "`wClerk: `$\"Welcome to Deathville, {name}! I'm from the Funeral Director's Guild. Congratulations on {parlor}. It's... a building. It has a door and most of its windows.\n\nI'll walk you through your first day. Two minutes. Or press Skip and learn the hard way, like the last fellow. We buried him Tuesday.\""
+  - "`wClerk: `$\"Every day you get turns. Each customer you meet costs one. Unused turns carry over to tomorrow, but only up to one day's worth, so sleeping in all week won't make you rich.\n\nEvery funeral earns Bury Points. Whoever has the most at the end of the season wins, and gets to be smug at the Guild picnic.\""
+  - "`wClerk: `$\"Every customer has a limit: the most they'll spend. You never see it. You see an estimate, a range, and the real number is somewhere inside it. Not necessarily the middle. Psychology classes at Spirit University narrow it down.\n\nNothing you sell can push the bill past their limit. They'll just say no.\""
+  - "`wClerk: `$\"Here's the trick. Land the bill within 8% of their limit and you get a bonus. Within 3%, a bigger one. Hit it to the dollar and the whole town reads about it in the paper.\n\nEvery price in this business is a multiple of fifty dollars, so the exact number can always be reached. In theory. In practice, people cry on the calculator.\""
+  - "`wClerk: `$\"Watch their mood and their patience. Every pitch uses up a little patience. When it runs out, everything you do annoys them, and if they get angry enough they walk out and a rival gets the body.\n\nWhat a customer says is true. Someone clutching a photo loved the deceased: use Sympathy. Someone watching the clock didn't: Guilt works. Listen costs two patience and teaches you something new.\""
+  - "`wClerk: `$\"Soft Sell deals you a hand of three extras; pick one that fits under the top of the estimate. Packages upgrade the embalming, flowers, plot, headstone and service, one step at a time. Hard Sell moves them up a casket.\n\nCoffee calms someone down, once per customer. A Discount takes a little off the bill and cheers them up, twice at most. Press Done when the bill is where you want it.\""
+  - "`wClerk: `$\"After some funerals you'll prepare the body yourself, and there'll be a choice. A ring left on a finger. A fat wallet. Take it, or leave it.\n\nThat's karma. Be good and the town trusts you: calmer, richer customers. Be bad and the money's nice, the hours are flexible, and the Guild pretends it doesn't know you.\""
+  - "`wClerk: `$\"Cash is for the business. Di-Mart sells caskets wholesale; ask for Elijah, and don't let him touch your hair. Selling from stock pays better than a rush order. Your office has upgrades: paint, a coffee machine, one day a chapel.\n\nThat's it! Your first customer is waiting. I'll be watching. Taking notes. Don't mind me.\""
+next: 'Next'
+skip: 'Skip Tour'
+start: 'Meet Your Customer'
+hints:
+  arrival: 'Clerk: Read the mood word and what they say. Then open Soft Sell and pick something under the top of the estimate.'
+  hand: 'Clerk: Pick the card that brings the bill closest to their limit without going over.'
+  packages: 'Clerk: Each card upgrades one part of the funeral by one step. Mind the price.'
+  afterPitch: 'Clerk: Watch the mood and the patience. When the bill is near the top of the estimate, press Done.'
+  impatient: 'Clerk: They''re out of patience! Everything you do now makes them angrier. Wrap it up.'
+  done: 'Clerk: Not bad at all. Press Continue. I''m writing ''not bad at all'' in my little book.'
+finish: '`wClerk: `$"Not bad for a first day! Wait for customers until your turns run out, then see the town: Di-Mart for caskets, your office for upgrades, Spirit University if you''d like to read minds. Good luck. Try not to get stabbed."'

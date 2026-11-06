@@ -1,0 +1,40 @@
+# One-command self-hosting of the game and its web client, on one port:
+#   cp .env.example .env      # then set FQ_ADMIN_TOKEN (and anything else you want)
+#   docker compose up -d --build
+#   open http://localhost:8080
+# The game state lives in the named volume "fq-data" and survives rebuilds and restarts.
+#
+# Museum mode (the original 2001 client at /museum): set FQ_INCLUDE_MUSEUM=1 for the build and
+# FQ_LEGACY_CLIENT=1 in .env. See the README before doing so: the original sounds are in those files.
+services:
+  fq:
+    build:
+      context: ../..
+      dockerfile: apps/server/Dockerfile
+      args:
+        INCLUDE_MUSEUM: ${FQ_INCLUDE_MUSEUM:-0}
+    image: funeral-quest
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 20s
+    ports:
+      - "${FQ_PUBLISH_PORT:-8080}:8080"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      FQ_DB_PATH: /data/fq.sqlite
+      FQ_TOWNS_FILE: ${FQ_TOWNS_FILE:-}
+    volumes:
+      - fq-data:/data
+      # To create towns from a file, copy towns.example.json to towns.json, then uncomment these
+      # and set FQ_TOWNS_FILE=/config/towns.json in .env:
+      # - ./towns.json:/config/towns.json:ro
+      # To use custom content packs, put one directory per pack under ./packs, uncomment this and
+      # set FQ_PACKS_DIR=/packs in .env (see README, "Custom content packs"):
+      # - ./packs:/packs:ro
+      # The strict word list (never commit it): put it at ./blocklist.txt (see README, "The strict
+      # word list"), uncomment this and set FQ_BLOCKLIST_FILE=/config/blocklist.txt in .env:
+      # - ./blocklist.txt:/config/blocklist.txt:ro
+volumes:
+  fq-data:

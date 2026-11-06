@@ -1,0 +1,848 @@
+# Story arcs (22.3). Headlines take no placeholders (the desk strip shows them with nothing filled
+# in); stories may use {mayor} and {top} (the biggest giver, or 'nobody'). Every path from the
+# start beat to an ending is 5 to 12 days of `after`.
+
+- id: 'steeple'
+  title: 'The Steeple of St. Mortimer''s'
+  earliest: 4
+  latest: 12
+  start: 'crack'
+  beats:
+    - id: 'crack'
+      headline: 'LIGHTNING SPLITS ST. MORTIMER''S STEEPLE'
+      story: 'Father Smyth blames the lightning; the lightning has no comment. The church needs money for repairs. Reaper Club owner Lucius Vane has offered to buy the lot for a parking garage. "People die in parking garages all the time," said Vane. "Everybody wins." Give at the church or at the club. The bigger pile decides within the week.'
+      appeals:
+        - place: 'church'
+          side: 'good'
+          label: 'Give to the Steeple Fund'
+          thanks: '`$Father Smyth counts your `w${money}`$ twice and blesses you once. The second count was the blessing.'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Chip In for the Bulldozer'
+          thanks: '`$Lucius Vane pockets your `w${money}`$ and calls you "partner." Nobody has ever called you partner before.'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'bids'
+    - id: 'bids'
+      headline: 'VANE DOUBLES BID; SMYTH DOUBLES SERMON'
+      story: 'Vane has doubled his offer and thrown in free parking for the funerals of anyone who sells to him. Father Smyth preached for ninety minutes on the money changers in the temple, then passed the plate twice. Old Man Withers has chained himself to the font, though he says he only sat down and got stuck.'
+      appeals:
+        - place: 'church'
+          side: 'good'
+          label: 'Pass the Plate Again'
+          thanks: '`$The plate comes round a second time. Your `w${money}`$ lands with a thud and Father Smyth winks at the ceiling.'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Buy Vane a Bigger Bulldozer'
+          thanks: '`$Vane folds your `w${money}`$ into his breast pocket. "Bigger blade, smaller church. That''s arithmetic."'
+          amount: 1000
+          karma: -1
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'rebuilt'
+        ifFalse: 'paved'
+    - id: 'rebuilt'
+      headline: 'BELLS RING AGAIN OVER DEATHVILLE'
+      story: 'The steeple is back, a foot taller than before out of spite. The town is calmer for it, and the bells now ring twice for every funeral. {top} gave the most and gets a brass plaque by the door that nobody will read.'
+      modifiers:
+        - key: 'customer.mood'
+          op: 'add'
+          value: -0.3
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+            karma: 1
+        - to: 'top'
+          reward:
+            bp: 50
+      ending: 'rebuilt'
+    - id: 'paved'
+      headline: 'ST. MORTIMER''S IS NOW LEVEL 2, ROW C'
+      story: 'The bulldozers came at dawn. Bingo is cancelled until somebody finds the cards under the rubble. The Reaper Club is celebrating with cheap cover. Father Smyth is holding services in Space 14 and says the acoustics are "honestly better."'
+      modifiers:
+        - key: 'church.bingo'
+          op: 'mul'
+          value: 0
+        - key: 'club.cover'
+          op: 'add'
+          value: -1
+        - key: 'prep.chance'
+          op: 'mul'
+          value: 1.3
+      days: 5
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+        - to: 'top'
+          reward:
+            bp: 50
+      ending: 'paved'
+- id: 'cough'
+  title: 'The Grey Cough'
+  earliest: 10
+  latest: 20
+  start: 'outbreak'
+  beats:
+    - id: 'outbreak'
+      headline: 'MYSTERY COUGH SWEEPS DEATHVILLE'
+      story: 'The coroner calls it "a cough with ambitions." Business is booming and the families are frantic. If too many of them storm out of our parlors, the papers say, they''ll take their dead to Bigtown. A clinic fund is open at City Hall.'
+      modifiers:
+        - key: 'turns.daily'
+          op: 'add'
+          value: 1
+        - key: 'customer.mood'
+          op: 'add'
+          value: 0.4
+      days: 3
+      appeals: &a1
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Fund the Cough Clinic'
+          thanks: '`$The Mayor''s office takes your `w${money}`$. A clinic will be built, or at the very least discussed at length.'
+          amount: 1000
+          karma: 1
+        - place: 'church'
+          side: 'good'
+          label: 'Light a Candle for the Sick'
+          thanks: '`$You buy a candle for `w${money}`$. It is a very expensive candle. Father Smyth says the money goes to the clinic.'
+          amount: 500
+          karma: 1
+      after: 3
+      next: 'quarantine'
+    - id: 'quarantine'
+      headline: 'COUGH WARD FULL; NURSE ''RUNNING ON COFFEE AND SPITE'''
+      story: '"Keep your hands washed and your parlors open," says Nurse Gertie, who has slept four hours this week. Families with a cough and a body are lining up at every door in town. The Bigtown parlors have started advertising on our radio station.'
+      modifiers:
+        - key: 'turns.daily'
+          op: 'add'
+          value: 1
+        - key: 'customer.mood'
+          op: 'add'
+          value: 0.4
+      days: 3
+      appeals: *a1
+      after: 3
+      next:
+        test:
+          kind: 'walkouts'
+          perPlayer: 4
+        ifTrue: 'flee'
+        ifFalse: 'hailed'
+    - id: 'flee'
+      headline: 'FAMILIES FLEE TO BIGTOWN FOR FUNERALS'
+      story: '"At least in Bigtown the undertakers don''t throw you out," said one mourner, loading grandma into a station wagon. Deathville''s morticians will be poorer for a week, and Bigtown has sent a thank-you card.'
+      modifiers:
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: -8
+      days: 5
+      ending: 'fled'
+    - id: 'hailed'
+      headline: 'DEATHVILLE''S MORTICIANS HAILED AS HEROES'
+      story: 'Not one grieving family turned away, or not many. The cough is passing, and families are paying a little extra out of gratitude. The clinic''s donors will be mentioned at every funeral this week, briefly.'
+      modifiers:
+        - key: 'customer.limitMult'
+          op: 'mul'
+          value: 1.1
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+      after: 3
+      next:
+        test:
+          kind: 'hasMayor'
+        ifTrue: 'credit'
+        ifFalse: 'statue'
+    - id: 'credit'
+      headline: 'MAYOR TAKES CREDIT FOR CURE'
+      story: 'At a press conference {mayor} thanked "the brave morticians, and also me, mostly me." Every parlor in town got a certificate. {mayor} got a parade, and rode in it twice.'
+      rewards:
+        - to: 'mayor'
+          reward:
+            bp: 100
+        - to: 'all'
+          reward:
+            bp: 10
+      ending: 'credit'
+    - id: 'statue'
+      headline: 'TOWN ERECTS STATUE OF THE UNKNOWN UNDERTAKER'
+      story: 'With nobody elected to take the credit, the town gave it to all of you: a statue in the square of a man in a black suit holding out his hand, palm up. It stands next to the Mayor''s statues, which it outranks.'
+      rewards:
+        - to: 'all'
+          reward:
+            bp: 30
+      ending: 'statue'
+- id: 'morty'
+  title: 'Morty for Mayor'
+  earliest: 5
+  latest: 6
+  weight: 1.5
+  start: 'filing'
+  beats:
+    - id: 'filing'
+      headline: 'MORTY THE SKELETON FILES AS WRITE-IN CANDIDATE'
+      story: 'A petition with 212 signatures, most of them from the cemetery, has put Morty on the ballot. His platform is "Bones." His campaign manager, who gave his name only as Cousin Sal, promises to "cut taxes to the bone." Volunteers sign up at City Hall. The smart money at the Reaper Club is against him.'
+      appeals: &a2
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Volunteer for Morty''s Campaign'
+          thanks: '`$A volunteer staples a MORTY: HE''LL NEVER LEAVE YOU sign to your hearse. Your `w${money}`$ buys a great many staples.'
+          amount: 500
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Bet Against the Skeleton'
+          thanks: '`$Lucius Vane writes your `w${money}`$ in a little black book. "Skeletons never win. They don''t have the stomach for it."'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'debate'
+    - id: 'debate'
+      headline: 'MORTY SAYS NOTHING FOR NINETY MINUTES, WINS DEBATE'
+      story: 'At the candidates'' forum Morty said nothing at all, which voters called "refreshing" and "the best speech in years." A heckler threw a tomato. It went straight through him. The count is days away.'
+      appeals: *a2
+      after: 3
+      next:
+        test:
+          kind: 'hasMayor'
+        ifTrue: 'concede'
+        ifFalse: 'honorary'
+    - id: 'concede'
+      headline: 'MORTY CONCEDES: ''I HAD NO BODY BEHIND ME'''
+      story: '{mayor} won the count fair and square, or close enough. Morty conceded with dignity, mostly by falling over. The new mayor has given him a job in the City Hall lobby, holding the door, which he does very well.'
+      rewards:
+        - to: 'mayor'
+          reward:
+            bp: 30
+        - to: 'good'
+          reward:
+            luck: 2
+      ending: 'conceded'
+    - id: 'honorary'
+      headline: 'NOBODY RAN, SO MORTY WON'
+      story: 'With no living candidate on the ballot, Morty was declared Honorary Mayor. He will cut ribbons and stand in the corner of the council chamber. {mayor} stays in charge of anything that matters and says he is "honestly relieved." The town is in an unusually good mood.'
+      modifiers:
+        - key: 'customer.mood'
+          op: 'add'
+          value: -0.2
+      days: 5
+      rewards:
+        - to: 'all'
+          reward:
+            bp: 15
+        - to: 'good'
+          reward:
+            reviews: 2
+      ending: 'honorary'
+- id: 'robber'
+  title: 'The Grave Robber of Row C'
+  earliest: 3
+  latest: 10
+  start: 'dug'
+  beats:
+    - id: 'dug'
+      headline: 'SOMEBODY IS DIGGING UP ROW C'
+      story: 'Eleven graves were opened this week, and every one lost its jewelry and its dignity. The groundskeeper blames raccoons. The raccoons blame each other. Father Smyth is raising money for a night watchman. The Reaper Club is selling maps.'
+      modifiers:
+        - key: 'graveyard.robLuck'
+          op: 'add'
+          value: 10
+      days: 3
+      appeals: &a3
+        - place: 'church'
+          side: 'good'
+          label: 'Pay for a Night Watchman'
+          thanks: '`$Father Smyth takes your `w${money}`$ for the watchman. "A good man, with a lantern and a very short temper."'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Buy a Map of Row C'
+          thanks: '`$A man in a trench coat swaps your `w${money}`$ for a map drawn on a napkin. The X is in ketchup.'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'deacon'
+    - id: 'deacon'
+      headline: 'GRAVEYARD DOG FOUND WEARING A DEAD WOMAN''S RING'
+      story: 'The ring belonged to Mrs. Hubble, Row C, Plot 9. Deacon will not say where he got it, and the groundskeeper will not say where Deacon has been sleeping. Nobody has been arrested. Several people have been sniffed.'
+      appeals: *a3
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'caught'
+        ifFalse: 'emptied'
+    - id: 'caught'
+      headline: 'GRAVE ROBBER CAUGHT: IT WAS A RACCOON IN A HAT'
+      story: 'The church''s night watchman caught the culprit red-handed: a raccoon in a tiny hat, with a tiny shovel. Police suspect "a human mastermind." {top} paid for most of the watchman and gets a bench with their name on it. The raccoon sleeps on it.'
+      modifiers:
+        - key: 'graveyard.robLuck'
+          op: 'add'
+          value: -15
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            karma: 1
+            reviews: 1
+        - to: 'top'
+          reward:
+            bp: 40
+      ending: 'caught'
+    - id: 'emptied'
+      headline: 'ROW C EMPTIED; MOURNERS ASK ''WHERE IS GRANDPA?'''
+      story: 'By Friday there was nothing in Row C but holes and a raccoon in a hat. Families are visiting the Reaper Club to ask who sold the maps. Lucius Vane says he has never seen a map, and that the ketchup is not his.'
+      modifiers:
+        - key: 'graveyard.robLuck'
+          op: 'add'
+          value: 15
+        - key: 'customer.mood'
+          op: 'add'
+          value: 0.3
+      days: 4
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+      ending: 'emptied'
+- id: 'dimart'
+  title: 'The Di-Mart Clearance'
+  earliest: 6
+  latest: 16
+  start: 'clearance'
+  beats:
+    - id: 'clearance'
+      headline: 'DI-MART ANNOUNCES ITS NINTH ''FINAL CLEARANCE'''
+      story: 'Head office will close the Deathville store for good unless it moves more merchandise this week. Elijah, asked how he feels, stared at our reporter until he left. Caskets are ten percent off. If the town''s undertakers sell enough funerals this week, they will save Elijah''s job, whether they wanted to or not.'
+      modifiers:
+        - key: 'store.stockPrice'
+          op: 'mul'
+          value: 0.9
+      days: 3
+      appeals: &a4
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Sign the Save Elijah Petition'
+          thanks: '`$You sign, and your `w${money}`$ goes to the Friends of Elijah. The Friends of Elijah is one woman with a clipboard.'
+          amount: 500
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Bet on Di-Mart Closing'
+          thanks: '`$Vane takes your `w${money}`$ at four to one. "Nothing lasts forever," he says. "Except that clerk."'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'clipboard'
+    - id: 'clipboard'
+      headline: 'DI-MART HEAD OFFICE SENDS A MAN WITH A CLIPBOARD'
+      story: 'The man with the clipboard counted every casket in the store, then counted them again, then asked Elijah how long he had worked there. Elijah answered "yes." The clipboard man has extended the sale and is watching the town''s sales figures very closely.'
+      modifiers:
+        - key: 'store.stockPrice'
+          op: 'mul'
+          value: 0.9
+      days: 3
+      appeals: *a4
+      after: 3
+      next:
+        test:
+          kind: 'sales'
+          perPlayer: 70
+        ifTrue: 'saved'
+        ifFalse: 'closed'
+    - id: 'saved'
+      headline: 'DI-MART SAVED; ELIJAH NAMED EMPLOYEE OF THE CENTURY'
+      story: 'The town''s undertakers sold enough funerals to keep the store open. Head office gave Elijah a plaque, a pin and a staff discount, which he has passed on to "my friends, the undertakers." He did not blink once during the ceremony.'
+      modifiers:
+        - key: 'store.stockPrice'
+          op: 'mul'
+          value: 0.9
+      days: 5
+      rewards:
+        - to: 'all'
+          reward:
+            bp: 15
+        - to: 'good'
+          reward:
+            reviews: 1
+      ending: 'saved'
+    - id: 'closed'
+      headline: 'DI-MART CLOSES FOREVER, REOPENS AN HOUR LATER'
+      story: 'Head office shut the store at nine and sold it at ten, to a holding company whose only employee is Elijah. Prices are up "to cover the paperwork." Elijah was at the register when the doors reopened. Nobody saw him leave.'
+      modifiers:
+        - key: 'store.stockPrice'
+          op: 'mul'
+          value: 1.15
+      days: 5
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+      ending: 'closed'
+- id: 'twins'
+  title: 'The Twins'' Fire Season'
+  earliest: 8
+  latest: 18
+  start: 'fluid'
+  beats:
+    - id: 'fluid'
+      headline: 'THE TWINS BUY ALL THE LIGHTER FLUID IN THE COUNTY'
+      story: 'Hardware stores in three towns say the Twins bought every can, paid in singed bills and asked whether it came in "extra." The volunteer fire brigade has one truck, no hose and a dalmatian named Captain. A hose fund is open at the church. The Twins drink at the Reaper Club, where people are buying them rounds.'
+      modifiers:
+        - key: 'wait.riskOdds'
+          op: 'mul'
+          value: 1.3
+      days: 3
+      appeals: &a5
+        - place: 'church'
+          side: 'good'
+          label: 'Buy the Fire Brigade a Hose'
+          thanks: '`$Your `w${money}`$ goes in a coffee can marked HOSE. The brigade''s dalmatian licks your hand in thanks, then your face.'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Buy the Twins a Round'
+          thanks: '`$The Twins raise their glasses at the same moment. "To warmth," they say. Your `w${money}`$ was spent on something flammable.'
+          amount: 500
+          karma: -1
+      after: 3
+      next: 'birdhouses'
+    - id: 'birdhouses'
+      headline: 'TWINS ANNOUNCE ''BIRDHOUSE FESTIVAL'' ON ELM STREET'
+      story: 'Every house on Elm Street will get a free birdhouse, hand-made by the Twins and filled, they say, "with a surprise." The fire brigade has asked residents not to open the surprise. Asked what the surprise is, the Twins answered at exactly the same time: "Warmth."'
+      modifiers:
+        - key: 'wait.riskOdds'
+          op: 'mul'
+          value: 1.3
+      days: 3
+      appeals: *a5
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'doused'
+        ifFalse: 'blaze'
+    - id: 'doused'
+      headline: 'FIRE BRIGADE GETS A HOSE; TWINS GET BORED'
+      story: 'With a new hose and the dalmatian on alert, the Birdhouse Festival fizzled. The Twins left for Blaine "for a change of scenery." Elm Street is quiet, safe and slightly damp. {top} paid for most of the hose and is now an honorary firefighter, with a hat.'
+      modifiers:
+        - key: 'wait.riskOdds'
+          op: 'mul'
+          value: 0.7
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+            karma: 1
+        - to: 'top'
+          reward:
+            bp: 40
+      ending: 'doused'
+    - id: 'blaze'
+      headline: 'ELM STREET BIRDHOUSE FESTIVAL ENDS AS YOU''D EXPECT'
+      story: 'The surprise was warmth. Elm Street burned end to end while the brigade looked for a hose it never got. Nobody was badly hurt except, it turns out, quite a few people, all of them well insured. The Twins have sent every parlor in town a thank-you card.'
+      modifiers:
+        - key: 'prep.chance'
+          op: 'mul'
+          value: 1.4
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: 5
+      days: 4
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+      ending: 'blaze'
+- id: 'withers'
+  title: 'Old Man Withers Picks a Day'
+  earliest: 9
+  latest: 19
+  start: 'announce'
+  beats:
+    - id: 'announce'
+      headline: 'OLD MAN WITHERS ANNOUNCES DEATH FOR SATURDAY'
+      story: '"I''ve decided," said Withers, 83, at bingo. "Saturday, after lunch." He has asked every parlor in town for a quote and the church to plan a wake. The Reaper Club has opened a pool on the hour. Withers has bought a ticket in the pool.'
+      appeals: &a6
+        - place: 'church'
+          side: 'good'
+          label: 'Chip In for Withers'' Wake'
+          thanks: '`$Father Smyth puts your `w${money}`$ toward the wake. "Ham, potato salad, and a cake shaped like Withers. He asked for the cake."'
+          amount: 500
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Bet on the Hour He Goes'
+          thanks: '`$You put `w${money}`$ on Saturday at 3 p.m. The board behind the bar is full. Somebody has bet on 2047.'
+          amount: 1000
+          karma: -1
+      after: 4
+      next: 'saturday'
+    - id: 'saturday'
+      headline: 'WITHERS UPDATE: STILL ALIVE, ORDERS SECONDS'
+      story: 'Saturday came. Withers ate lunch, then another lunch, then fell asleep in the bingo hall and woke shouting BINGO. Doctors say he has "the heart of a man half his age and the liver of a much braver man." The pool at the Reaper Club is now very large.'
+      appeals: *a6
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'evil'
+        ifTrue: 'pool'
+        ifFalse: 'wake'
+    - id: 'pool'
+      headline: 'WITHERS WINS OWN DEATH POOL BY NOT DYING'
+      story: 'House rules said the pool goes to "whoever is closest," and Withers argued, successfully, that he was closest to himself. He collected every dollar, bought a new hearse and parks it outside the Reaper Club "so nobody has to call anyone later." Everyone who bet feels a little cursed.'
+      modifiers:
+        - key: 'customer.specialChance'
+          op: 'mul'
+          value: 1.3
+      days: 4
+      rewards:
+        - to: 'evil'
+          reward:
+            luck: -3
+      ending: 'pool'
+    - id: 'wake'
+      headline: 'WITHERS'' LIVING WAKE IS THE PARTY OF THE YEAR'
+      story: 'The church held the wake anyway, with Withers in the front row criticizing the catering. He gave his own eulogy, which ran long, and heckled it. The whole town came, and left in a generous mood. Withers says the cake was "dry, but I''ll allow it."'
+      modifiers:
+        - key: 'customer.mood'
+          op: 'add'
+          value: -0.3
+        - key: 'customer.limitMult'
+          op: 'mul'
+          value: 1.05
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+      ending: 'wake'
+- id: 'solemncorp'
+  title: 'SolemnCorp Comes to Town'
+  earliest: 12
+  latest: 20
+  start: 'scouts'
+  beats:
+    - id: 'scouts'
+      headline: 'SOLEMNCORP EYES DEATHVILLE: ''A MARKET RIPE FOR DYING'''
+      story: 'The Bigtown funeral chain SolemnCorp, which runs 400 parlors from one call center, wants to open on Elm Street. "We bring big-city grief to small towns," says a regional manager with very white teeth. A Buy Local, Die Local fund is collecting at City Hall. SolemnCorp is quietly buying mailing lists at the Reaper Club.'
+      appeals: &a7
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Fund Buy Local, Die Local'
+          thanks: '`$Your `w${money}`$ prints a thousand bumper stickers: DIE LOCAL. Some people are taking it as an instruction.'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Sell SolemnCorp a Mailing List'
+          thanks: '`$A man with very white teeth takes your list and a `w${money}`$ "processing fee," and calls it synergy. You feel processed.'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'meeting'
+    - id: 'meeting'
+      headline: 'TOWN MEETING ON SOLEMNCORP ENDS IN SHOUTING, SANDWICHES'
+      story: 'Two hundred residents packed City Hall. The SolemnCorp man gave a slide show called Grief, Simplified. Father Smyth called it "the work of the devil, but with charts." The council decides in two days.'
+      appeals: *a7
+      after: 2
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'repelled'
+        ifFalse: 'opens'
+    - id: 'repelled'
+      headline: 'SOLEMNCORP PULLS OUT: ''TOO MUCH LOCAL CHARACTER'''
+      story: 'The council turned SolemnCorp down flat, and the man with the teeth drove back to Bigtown with his slide show. {top}''s face is on the DIE LOCAL poster in the City Hall window. Families are proud to bury their own this week.'
+      modifiers:
+        - key: 'customer.limitMult'
+          op: 'mul'
+          value: 1.05
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+        - to: 'top'
+          reward:
+            bp: 40
+      ending: 'repelled'
+    - id: 'opens'
+      headline: 'SOLEMNCORP OPENS ON ELM STREET; FREE BALLOONS'
+      story: 'The new branch has a drive-through, a loyalty card and balloons that say SORRY. Families are trying it, and coming back to haggle with what they learned. "If Deathville''s families keep walking out on local parlors," says the man with the teeth, "we''ll be here to catch them."'
+      modifiers:
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: -8
+        - key: 'customer.cheapness'
+          op: 'add'
+          value: 0.2
+      days: 3
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 40
+      after: 3
+      next:
+        test:
+          kind: 'walkouts'
+          perPlayer: 3
+        ifTrue: 'takeover'
+        ifFalse: 'bust'
+    - id: 'takeover'
+      headline: 'SOLEMNCORP BUYS THE CEMETERY'
+      story: '"Deathville''s families kept walking out of their parlors, so we gave them somewhere to walk to," says the man with the teeth, who has also bought the cemetery''s mowing contract, and then the cemetery. Plot rents now go to Bigtown first.'
+      modifiers:
+        - key: 'parlor.plotIncome'
+          op: 'mul'
+          value: 0.75
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: -5
+      days: 5
+      ending: 'takeover'
+    - id: 'bust'
+      headline: 'SOLEMNCORP GOES BUST; CALL CENTER STILL RINGING'
+      story: 'Hardly a family walked out of a local parlor, so SolemnCorp had nobody to sign. The Elm Street branch closed with the balloons still up. The call center in Bigtown is still answering the phone, and is still very sorry for your loss.'
+      modifiers:
+        - key: 'customer.limitMult'
+          op: 'mul'
+          value: 1.05
+      days: 5
+      rewards:
+        - to: 'all'
+          reward:
+            bp: 20
+      ending: 'bust'
+- id: 'gertie'
+  title: 'The Nurse Retires (Maybe)'
+  earliest: 8
+  latest: 20
+  start: 'notice'
+  beats:
+    - id: 'notice'
+      headline: 'NURSE GERTIE TO RETIRE; COUSIN SAL APPLIES'
+      story: '"Thirty-one years, prince, and they still won''t let me smoke in the morgue," said Nurse Gertie, giving notice. The hospital board picks her replacement this week. The only applicant is Cousin Sal, M.D. (University of P.O. Box 411). A fund to keep Gertie is open at City Hall. Sal''s campaign runs from a booth at the Reaper Club.'
+      appeals: &a8
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Fund the Nurse''s Raise'
+          thanks: '`$The hospital board takes your `w${money}`$. Nurse Gertie hears about it by lunch. "You''re a prince, prince."'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Buy Cousin Sal a Stethoscope'
+          thanks: '`$Sal tries the stethoscope on your `w${money}`$ and says it has a strong pulse. He puts the money in his sock.'
+          amount: 500
+          karma: -1
+      after: 3
+      next: 'interview'
+    - id: 'interview'
+      headline: 'SAL''S INTERVIEW: ''WHERE DO YOU KEEP THE GOOD STUFF?'''
+      story: 'Board members describe Cousin Sal''s interview as "short" and "mostly questions from him." His references are all in the same handwriting. Gertie has been seen at the travel agent, asking about cruises "with a good infirmary."'
+      appeals: *a8
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'stays'
+        ifFalse: 'sal'
+    - id: 'stays'
+      headline: 'GERTIE STAYS ON: ''SOMEBODY HAS TO KEEP SAL OUT'''
+      story: 'Nurse Gertie cancelled the cruise and framed her raise, which she says is "smaller than the frame." Treatment is cheaper this week "because I''m in a mood, prince." {top} gave the most and gets a free tetanus shot, whether they want it or not.'
+      modifiers:
+        - key: 'hospital.treatPrice'
+          op: 'mul'
+          value: 0.8
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            karma: 1
+        - to: 'top'
+          reward:
+            bp: 40
+      ending: 'stays'
+    - id: 'sal'
+      headline: 'COUSIN SAL NAMED HEAD NURSE'
+      story: '"Prices are down, patients are down, everything''s down," said Sal, in a white coat with somebody else''s name on it. Discharges are up three hundred percent, mostly through the back door. Gertie is working nights anyway, "to count them."'
+      modifiers:
+        - key: 'hospital.treatPrice'
+          op: 'mul'
+          value: 0.7
+        - key: 'prep.chance'
+          op: 'mul'
+          value: 1.4
+        - key: 'customer.mood'
+          op: 'add'
+          value: 0.2
+      days: 5
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+      ending: 'sal'
+- id: 'lake'
+  title: 'The Lake Bleak Monster'
+  earliest: 15
+  latest: 23
+  start: 'sighting'
+  beats:
+    - id: 'sighting'
+      headline: 'LAKE BLEAK MONSTER SPOTTED FROM TOWN BEACH'
+      story: 'Forty bathers watched a long green shape cross the lake at lunchtime and burp. County scientists want a grant to study it "gently." Lucius Vane is outfitting a hunting party with harpoons, a rowboat and a cooler. Science collects at City Hall; the hunt collects at the Reaper Club.'
+      appeals: &a9
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Fund the Monster Study'
+          thanks: '`$Your `w${money}`$ buys the county scientists a canoe and a notebook. "We''ll be very gentle," they promise. The canoe is not very gentle.'
+          amount: 1000
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Buy a Harpoon for Vane''s Hunt'
+          thanks: '`$Vane hands you a harpoon with your name on it for `w${money}`$. "You don''t have to come," he says. "It''s more of a donation with a point."'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'fishermen'
+    - id: 'fishermen'
+      headline: 'TWO FISHERMEN MISSING; MONSTER ''NOT HUNGRY ANYMORE'''
+      story: 'Their boat came back without them, and with a burp. The parks department has put up a sign that says PLEASE DO NOT FEED THE LAKE. Lake-house families are calling the parlors, and the scientists and the hunters are both asking for more money.'
+      modifiers:
+        - key: 'prep.chance'
+          op: 'mul'
+          value: 1.3
+      days: 3
+      appeals: *a9
+      after: 3
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'evil'
+        ifTrue: 'hunted'
+        ifFalse: 'studied'
+    - id: 'hunted'
+      headline: 'HUNTERS HARPOON LAKE MONSTER; IT WAS THE OLD FERRY'
+      story: 'Vane''s party rowed out at dawn, harpooned a long green shape in the reeds and towed it in to cheers. It was the Lake Bleak ferry, missing since 1974, and the passengers were all still aboard. Every parlor in town is busy, and Vane is calling it a success.'
+      modifiers:
+        - key: 'prep.chance'
+          op: 'mul'
+          value: 1.3
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: 5
+      days: 4
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 40
+      ending: 'hunted'
+    - id: 'studied'
+      headline: 'SCIENTISTS: MONSTER IS ''SHY, LONELY, AND ABOUT FORTY FEET'''
+      story: 'The county study found the creature eats mostly carp, the odd speedboat and, once, a tax assessor, which nobody is pursuing. Tourists are arriving by the busload, some of them in swimsuits, all of them with money.'
+      modifiers:
+        - key: 'customer.specialChance'
+          op: 'mul'
+          value: 1.3
+        - key: 'customer.incomeShift'
+          op: 'add'
+          value: 5
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 2
+      ending: 'studied'
+- id: 'confidence'
+  title: 'No Confidence'
+  earliest: 14
+  latest: 22
+  start: 'motion'
+  beats:
+    - id: 'motion'
+      headline: 'FENWICK DEMANDS NO-CONFIDENCE VOTE AT CITY HALL'
+      story: 'Doris Fenwick, retired dentist, has filed a motion of no confidence in {mayor}, citing "the statues, the potholes, and the statues." Signatures are being taken at City Hall. The Mayor''s defense fund has a booth at the Reaper Club "for supporters with discretion."'
+      appeals: &a10
+        - place: 'city-hall'
+          side: 'good'
+          label: 'Sign Fenwick''s Petition'
+          thanks: '`$Doris Fenwick shakes your hand, takes your `w${money}`$ and checks your gums. "Floss more," she says. "And vote."'
+          amount: 500
+          karma: 1
+        - place: 'reaper-club'
+          side: 'evil'
+          label: 'Donate to the Mayor''s Legal Fund'
+          thanks: '`$A man from the Mayor''s office takes your `w${money}`$ in a paper bag. He gives you a lapel pin of a statue.'
+          amount: 1000
+          karma: -1
+      after: 3
+      next: 'hearing'
+    - id: 'hearing'
+      headline: 'NO-CONFIDENCE HEARING: MAYOR''S OFFICE ENTERS STATUE AS EVIDENCE'
+      story: '{mayor} told the council that "confidence is a feeling, and feelings are not in the town charter." Fenwick brought charts. The council votes in two days, after a great many free lunches.'
+      appeals: *a10
+      after: 2
+      next:
+        test:
+          kind: 'sideLeads'
+          side: 'good'
+        ifTrue: 'carried'
+        ifFalse: 'survived'
+    - id: 'carried'
+      headline: 'COUNCIL VOTES NO CONFIDENCE; NOTHING HAPPENS'
+      story: 'By four votes to one the council declared it has no confidence in {mayor}. The vote is symbolic, so {mayor} stays in office without any, which the Mayor''s office says is "how most people live." As a consolation the permit office is to be audited, which has frightened it into lowering prices.'
+      modifiers:
+        - key: 'city.permitPrice'
+          op: 'mul'
+          value: 0.8
+      days: 5
+      rewards:
+        - to: 'good'
+          reward:
+            reviews: 1
+        - to: 'mayor'
+          reward:
+            bp: -20
+      ending: 'carried'
+    - id: 'survived'
+      headline: 'MAYOR SURVIVES NO-CONFIDENCE VOTE, UNVEILS STATUE OF SURVIVAL'
+      story: 'The motion failed four votes to one; Fenwick''s was the one. {mayor} celebrated with a fourth statue, paid for by "a small increase in permit fees and a large one in morale." Fenwick has announced she will run again, for everything.'
+      modifiers:
+        - key: 'city.permitPrice'
+          op: 'mul'
+          value: 1.2
+        - key: 'customer.mood'
+          op: 'add'
+          value: 0.2
+      days: 5
+      rewards:
+        - to: 'evil'
+          reward:
+            bp: 30
+        - to: 'mayor'
+          reward:
+            bp: 40
+      ending: 'survived'

@@ -1,0 +1,84 @@
+# The cremation track (docs/expanded-rules.md section 5.2). Pitches: {price} is the fee.
+name: 'Cremation'
+fee: 1500
+tags:
+  - 'cremation'
+pitch:
+  - "`w{player}: `$\"Have you considered cremation? No casket, no plot, no worms. Just a flat ${price}.\"\n\n"
+  - "`w{player}: `$\"Some families go with cremation. It's clean, it's quick, and {dHe} can stay on your bookshelf.\"\n\n"
+  - "`w{player}: `$\"Our new incinerator is very efficient. I could do {dHim} at lunch.\"\n\n"
+  - "`w{player}: `$\"Cremation, ${price}. Think of all the land you're saving. For other dead people, mostly.\"\n\n"
+  - "`w{player}: `$\"No casket, no plot, no headstone, no groundskeeper. Just you, {dFirst} and a nice jar. ${price}.\"\n\n"
+  - "`w{player}: `$\"Cremation is very modern, {cSir}. Everybody in Blaine is doing it. ${price}.\"\n\n"
+  - "`w{player}: `$\"If {dFirst} hated being cold, cremation is a real kindness. ${price}.\"\n\n"
+  - "`w{player}: `$\"Burial is forever. Cremation is about ninety minutes. ${price}, and you're home by dinner.\"\n\n"
+  - "`w{player}: `$\"After the {dFridge}, cremation might be the... tidier option. ${price}.\"\n\n"
+  - "`w{player}: `$\"You can scatter {dHim} anywhere {dHe} loved. Within reason. Not the Pale Horse Cafe again. ${price}.\"\n\n"
+  - "`w{player}: `$\"Ashes travel well. Have you ever tried to take a casket on vacation? ${price}.\"\n\n"
+  - "`w{player}: `$\"I'll be honest, the incinerator needs warming up anyway. Flat ${price}.\"\n\n"
+  - "`w{player}: `$\"The soil in Deathville is mostly clay and regret. Cremation skips both. ${price}.\"\n\n"
+  - "`w{player}: `$\"Cremation, ${price}. {dFirst} goes up the chimney like Santa in reverse.\"\n\n"
+  - "`w{player}: `$\"A casket is a big box you'll never see again. An urn is a small one you'll see every day. ${price} to switch.\"\n\n"
+  - "`w{player}: `$\"Ever priced a plot lately? Cremation, ${price}, and the whole thing fits in your glovebox.\"\n\n"
+  - "`w{player}: `$\"No embalming fluid, no fuss, no viewing where Aunt Whoever faints. Just ${price}.\"\n\n"
+  - "`w{player}: `$\"We fire it up at dawn. It's very spiritual. Also the electricity is cheaper. ${price}.\"\n\n"
+  - "`w{player}: `$\"Fire is the oldest funeral there is, {cSir}. Vikings did it. Vikings never got haggled. ${price}.\"\n\n"
+  - "`w{player}: `$\"Grief is heavy. Ashes are about six pounds. Something to think about. ${price}.\"\n\n"
+  - "`w{player}: `$\"Cremation is the eco choice. Well, the smoke isn't. But the rest is. ${price}.\"\n\n"
+  - "`w{player}: `$\"Do you really want {dHim} down there with the worms after everything the {dFridge} already did? ${price}.\"\n\n"
+  - "`w{player}: `$\"Keep {dHim} close. On the mantel. In a locket. In a snow globe, if that's your thing. ${price}.\"\n\n"
+  - "`w{player}: `$\"I won't pressure you. I'll just mention the casket is the most expensive part, and cremation skips it. ${price}.\"\n\n"
+  - "`w{player}: `$\"For ${price} we can make {dFirst} portable. People love portable.\"\n\n"
+  - "`w{player}: `$\"My own mother was cremated. She's in the office. Say hi. ${price}.\"\n\n"
+accept:
+  - '{customer}"Thank god, I didn''t want to buy a box {dHe}''d just lie in."'
+  - '{customer}"Cremation. Yes. {dHeCap} always ran hot anyway."'
+  - '{customer}"Fine. Smaller to carry around."'
+  - '{customer}"Do it. {dHeCap} hated the cold more than {dHe} hated me."'
+  - '{customer}"Ashes it is. I''ll keep {dHim} next to the bowling trophies."'
+  - '{customer}"Cheaper than a casket? I''m listening. I''m done listening. Yes."'
+  - '{customer}"After the {dFridge}, there''s honestly not a lot left to bury."'
+  - '{customer}"Burn it. I mean {dHim}. Burn {dHim}. Respectfully."'
+  - '{customer}"Okay. {dHeCap} always said {dHe} wanted to go out in a blaze of glory."'
+  - '{customer}"Yes. I don''t want to visit a grave. I barely visited the hospital."'
+  - '{customer}"Fine. No plot means no plot fees, right? Right?"'
+  - '{customer}"Cremation. Can I watch? No? Fine. Yes to the cremation."'
+  - '{customer}"Do it. I''ve already got the perfect shelf."'
+  - '{customer}"{dFirst} always wanted to see Lake Bleak from the air. Close enough."'
+  - '{customer}"Sure. Less for the worms, more for me."'
+  - '{customer}"Yes. And put a little extra heat on it, {dHe} was stubborn."'
+  - '{customer}"Honestly? Easier to fit in the car."'
+  - '{customer}"Do it before I change my mind. Or before my sister changes it for me."'
+  - '{customer}"That''s very modern. {dHeCap} hated modern. Do it."'
+  - '{customer}"Ashes. Fine. I''ll split {dHim} with my brother."'
+  - '{customer}"Why not. {dHeCap} smoked like a chimney anyway."'
+  - '{customer}"Yes. I''m not paying rent on a hole."'
+  - '{customer}"Cremation. That''s what {dHe} wanted. Probably. {dHeCap} said a lot of things."'
+  - '{customer}"Okay, but you put {dHim} in a nice box after. Not a shoebox."'
+  - '{customer}"Fine. No casket means nobody fights over the casket."'
+refuse:
+  - '{customer}"You are NOT setting my {dRelation} on fire."'
+  - '{customer}"{dHeCap} wanted to be buried. In the ground. Like a normal person."'
+  - '{customer}"Bake and shake? Over my dead body. Well. Over {dHis}."'
+  - '{customer}"No. {dHeCap} was scared of the stove. I''m not doing that to {dHim}."'
+  - '{customer}"Absolutely not. Father Smyth would never speak to me again."'
+  - '{customer}"I want somewhere to visit. A jar is not somewhere."'
+  - '{customer}"Cremation? So you can save on a casket? I see what you''re doing."'
+  - '{customer}"No fire. The family has a history with fire. Ask the Twins."'
+  - '{customer}"{dHeCap} paid into the family plot for forty years. {dHeCap}''s using it."'
+  - '{customer}"I''m not keeping my {dRelation} in a cookie tin."'
+  - '{customer}"No. Just no. What is wrong with you?"'
+  - '{customer}"We bury our dead. We''ve always buried our dead. Even the dog."'
+  - '{customer}"You want to WHAT? I came in for a casket!"'
+  - '{customer}"The smell would follow me. I know it would."'
+  - '{customer}"I''d spend the rest of my life wondering if it''s really {dHim} in there."'
+  - '{customer}"No ashes. My cat would get into it. My cat gets into everything."'
+  - '{customer}"{dHeCap} survived {aFridge}, almost. {dHeCap} is not getting cooked."'
+  - '{customer}"Burial. In a box. With a lid. I''m not discussing it."'
+  - '{customer}"Over a thousand dollars to set {dHim} on fire? I could do that at home."'
+  - '{customer}"No. The whole family''s in the same cemetery. {dHeCap} isn''t missing the reunion."'
+  - '{customer}"What if {dHe}''s not really dead? Did you check? Check again."'
+  - '{customer}"I''m not carrying {dHim} home on the bus in a jar."'
+  - '{customer}"No thank you. I''ve seen what''s left after a barbecue."'
+  - '{customer}"Cremation is for people who don''t care. I care. Medium amounts."'
+  - '{customer}"Nope. {dHeCap}''s going in the ground where I can keep an eye on {dHim}."'

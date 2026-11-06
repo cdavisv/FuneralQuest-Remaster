@@ -1,0 +1,59 @@
+/*
+ * Gamepad hints and focus. `<html data-input="pad">` is set by src/input/PadProvider.tsx after the
+ * player last used a pad, and "pointer" after the mouse, keys or touch.
+ */
+
+/* A control the pad moved the focus to always shows the ring (a script-moved focus does not
+   always match :focus-visible). Same ring as `:focus-visible` in app.css. */
+html[data-input="pad"] :focus {
+  outline: 3px solid var(--fq-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--fq-focus-halo);
+}
+
+.fq-padhints {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: max(6px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: none;
+  gap: 4px 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: calc(100vw - 16px);
+  margin: 0;
+  padding: 4px 12px;
+  list-style: none;
+  border: 1px solid #b78f5e;
+  border-radius: 999px;
+  background: rgba(20, 10, 2, 0.88);
+  color: #f3e6c4;
+  font: 600 13px / 1.2 var(--fq-font-ui, system-ui, sans-serif);
+  pointer-events: none;
+}
+
+html[data-input="pad"] .fq-padhints {
+  display: flex;
+}
+
+.fq-padhints li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fq-padkey {
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1.5px solid #f6dc8c;
+  background: #3d2710;
+  color: #f6dc8c;
+  font: 700 12px / 1.3 var(--fq-font-ui, system-ui, sans-serif);
+  text-align: center;
+}
+
+.fq-padhints[data-family="playstation"] .fq-padkey {
+  letter-spacing: 0.02em;
+}

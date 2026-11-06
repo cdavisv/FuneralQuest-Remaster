@@ -1,0 +1,35 @@
+title: 'Your Office'
+summary: "`w{parlor}`$ ({level})\n\nRating: `w{rating}`$ ({ratingTitle})\nKarma: `w{karma}`$ ({karmaTitle})\nCash: `w${money}`$\nCaskets in stock: {stock}\nMarkup: `w{markup}%`$   Rivalry: `w{rivalry}`$\n{perks}"
+buttons:
+  upgrades: 'Upgrades'
+  markup: 'Markup'
+  rivalry: 'Rivalry'
+  dig: 'Dig for Goodies'
+  back: 'Back'
+  buy: 'Buy'
+upgradesIntro: "`$A contractor with a pencil behind one ear and half a sandwich behind the other waits for you to point at something.\n\n"
+upgradeLine: "`w{name}`$ (${price}): {description}\n"
+bought: '`$The contractor gets to work. `w{name}`$ is done by lunch, mostly.'
+cantAfford: '`$The contractor looks at your bank statement, then at you, and laughs until he has to sit down.'
+needs: 'Needs {name}'
+owned: 'Owned'
+markupIntro: '`$How much do you mark up your caskets? A higher markup means bigger bills but harder sells and a worse reputation.'
+markupSet: '`$Casket markup set to `w{markup}%`$.'
+rivalryIntro: "`$How rough do you play? You can change this once every 3 days.\n\n`wPeace Pledge:`$ nobody can visit or burn you, you can't visit anyone, and {tax}% of every sale goes to insurance.\n`wStandard:`$ the usual.\n`wCutthroat:`$ one extra visit a day, and fights with other cutthroat parlors pay a quarter more."
+rivalryNames:
+  peaceful: 'Peace Pledge'
+  standard: 'Standard'
+  cutthroat: 'Cutthroat'
+rivalryHints:
+  peaceful: 'Safe from rivals, {tax}% insurance on sales'
+  standard: 'The usual'
+  cutthroat: 'Extra visit; bigger fights'
+rivalrySet: '`$You are now `w{rivalry}`$.'
+rivalryWait: 'Wait {days} more days'
+levelNames:
+  - 'Shack'
+  - 'Fixer-Upper'
+  - 'Respectable'
+  - 'Chapel House'
+  - 'Colonial Mansion'
+noPerks: 'No karma perks yet.'

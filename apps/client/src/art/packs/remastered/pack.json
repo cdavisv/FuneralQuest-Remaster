@@ -1,0 +1,6 @@
+{
+  "id": "remastered",
+  "name": "Remastered",
+  "description": "The original 2001 artwork with new drawings in its style: the photo backdrops redrawn, and the Expanded places, people and icons drawn for the first time. Anything not redrawn is the Classic art.",
+  "extends": "classic"
+}

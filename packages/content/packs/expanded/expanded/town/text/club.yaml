@@ -1,0 +1,95 @@
+title: 'The Reaper Club'
+note: 'You shiver as you approach the Reaper, a rave club frequented by the underbelly of society (mostly funeral directors).'
+door: '`$The bouncer, a man with a neck like a tree stump, holds out a hand. You count six fingers. "Cover''s `w{cover} wooden tags`$." Behind him {owner} waves from the VIP booth.'
+necroFree: '`$The bouncer sees the grave dirt under your nails, nods with respect and waves you straight through.'
+inside:
+  - '`$You can barely hear yourself think. Somebody is dancing with a skeleton, and the skeleton is leading.'
+  - '`$The DJ is playing organ music with a dance beat. Three morticians are doing the conga around a casket.'
+  - '`$The bartender pours you something green. It''s either absinthe or embalming fluid. Here, there''s no difference.'
+  - '`$A fog machine hisses in the corner. Through the fog you make out three morticians, a priest and Cousin Sal sharing a hookah.'
+  - '`$The dance floor is an old embalming table lit from underneath. Nobody asks where they got it. You know where they got it.'
+  - '`$Lucius Vane holds court in the VIP booth, which is a hearse with the back taken off. He raises a glass of something red at you.'
+  - '`$Somebody spiked the punch bowl with formaldehyde. The punch is now technically preserved, and so is the guy face down in it.'
+  - '`$A mortician in a cape screams "ASHES TO ASHES" into the microphone. The whole room screams back "DUST TO DUST."'
+  - '`$The Twins are at the bar, drinking one drink through two straws, staring at you without blinking.'
+buttons:
+  pay: 'Pay the Cover'
+  games: 'The Back Tables'
+  market: 'Black Market'
+  hit: 'Hire a Hit Man'
+  bodyguard: 'Hire a Bodyguard'
+  seance: 'Seance in the Back Room'
+  draw: 'Draw'
+  slots: 'Slots'
+  shots: 'Shots'
+  leave: 'Leave'
+  back: 'Back'
+gamesIntro: '`$The house games, as honest as anything else in this town, so hold on to your wallet. You''ve staked `w${staked}`$ tonight; the house stops you at `w${max}`$. Over a night the house always comes out ahead. That''s what makes it the house.
+
+  `wDead Man''s Draw`$: you and the Reaper each draw a card; high card wins even money, a tie and the Reaper keeps half.
+
+  `wThe One-Armed Undertaker`$: three skulls pay 500 to one, three coffins 100, three bones 30, three roses 12, three worms 4; a skull on the first reel gets your stake back.'
+stakeLabel: '${stake}'
+drawWin: '`$You draw the `w{you}`$, the Reaper draws the `w{dealer}`$. You win `w${won}`$! The Reaper shuffles slowly, like he''ll remember this.'
+drawLose: '`$You draw the `w{you}`$, the Reaper draws the `w{dealer}`$. A bony hand rakes in your `w${won}`$. You can hear him smiling.'
+drawTie: '`$You both draw the `w{you}`$. The Reaper keeps `w${won}`$ for his trouble. He calls it a handling fee.'
+cards:
+  - 'Two'
+  - 'Three'
+  - 'Four'
+  - 'Five'
+  - 'Six'
+  - 'Seven'
+  - 'Eight'
+  - 'Nine'
+  - 'Ten'
+  - 'Jack'
+  - 'Queen'
+  - 'King'
+  - 'Ace'
+slotsSpin: '`$The One-Armed Undertaker clanks and groans: `w{reels}`$. '
+slotsWin: '`$It coughs up `w${won}`$! A small crowd gathers to watch you count it, then to ask for a loan.'
+slotsLose: '`$Nothing. The machine burps, and the skull on the front laughs at you.'
+symbols:
+  skull: 'SKULL'
+  coffin: 'COFFIN'
+  bone: 'BONE'
+  rose: 'ROSE'
+  worm: 'WORM'
+shotsIntro: '`wFormaldehyde Roulette`$: six shot glasses, and one of them isn''t vodka. Drink one and live, and the house pays a little under a fifth of your stake. Pick wrong and you lose it, and your liver files a complaint.'
+shotsWin: '`$You slam it back. Vodka! The crowd cheers and the house pays `w${won}`$. Your hands are shaking. That''s normal.'
+shotsLose: '`4That was not vodka. You lose your stake, a good deal of your dignity and one eyebrow.`$'
+marketIntro: '`$A man in a trench coat opens it. The inside is lined with merchandise. "Today''s specials. Cash only. No receipts, no faces, no refunds."
+
+
+  '
+marketLine: '`w{name}`$, `w${price}`$: {text}
+
+  '
+marketBought: '`$You buy `w{name}`$. When you look up, the man in the trench coat is gone, and so is your pen.'
+hitPrompt: 'Whose knees need a talking-to? (from ${price}, more for bigger parlors)'
+hitBooked: '`$Lucius Vane takes the envelope and doesn''t count it, which is worse. "Tonight. {name} won''t know what hit them. Well. They''ll know it was a tire iron." `5(-5 karma)`$'
+hitSelf: '`$Vane looks at you for a long time. "Get help, pal. Real help. Not the kind I sell."'
+hitPeaceful: '`${name} took the Peace Pledge. Even Vane has rules, and that''s one of the two.'
+hitTaken: '`$Somebody already paid for {name} tonight. Vane doesn''t double-book. It''s bad for the knees.'
+hitChain: '`${name} is in your chain. Vane doesn''t do family. He has a mother.'
+hitNews: '`7MORTICIAN ROUGHED UP
+
+  `^{name} was found in a dumpster behind Bill''s Big Burger last night, alive, with a very clear memory of a tire iron. Police have no leads and no interest.
+
+
+  '
+hitMail: '`4Two men visited you last night and had a frank talk with you, using a tire iron for emphasis. You lose `5{bp} BP`4.`$'
+hitFoiledMail: '`$Two men with a tire iron came to your parlor last night, took one look and left. You''ll never know why. Maybe it was the dog.'
+hitFoiledHirer: '`$Vane sends word: the job on `w{name}`$ didn''t come off. No refunds. He sends a mint, though.'
+hitSnitchMail: '`$The thug who came for you last night was picked up by the police and sang like a choir. `w{name}`$ paid him.'
+hitSnitchNews: '`7HIT MAN SINGS
+
+  `^A hired thug arrested outside {target}''s parlor told police that {name} paid for the job, then asked for a lawyer and a sandwich. {name} has been fined, and Father Smyth has been told.
+
+
+  '
+hitRumour: '`$Word at the Reaper Club is that somebody paid for your knees tonight. You might want a bodyguard, or a vest, or a long weekend in Blaine.'
+bodyguardBought: '`$A man the size of a hearse will sleep on your porch tonight. He brought his own blanket and a teddy bear named Knuckles.'
+seanceWin: '`$The candles gutter and the curtains stir. The dead whisper two names and two addresses, and that both will be needing you soon. `5(+2 customer leads)`$'
+seanceFail: '`4The dead have nothing to say to you, and one of them is rude about it, at length. `5(-3 luck)`4`$'

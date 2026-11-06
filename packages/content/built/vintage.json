@@ -1,0 +1,1978 @@
+{
+  "id": "vintage",
+  "events": {
+    "ranges": [
+      {
+        "low": -229999999,
+        "high": 299999999,
+        "entries": [
+          {
+            "message": "You find some embalming chemicals you had misplaced!",
+            "modBp": [
+              3,
+              6
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "places/embalming-room"
+          },
+          {
+            "message": "This time you notice the spilled blood BEFORE you slip.",
+            "modBp": [
+              3,
+              6
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Your FuneralManager (TM) software upgrade comes in the mail!",
+            "modBp": [
+              3,
+              6
+            ],
+            "modLuck": [
+              2,
+              4
+            ]
+          },
+          {
+            "message": "You put headphones on a body and take a picture, you're a riot.",
+            "modBp": [
+              10,
+              10
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Some kids come by and want to see a body, you charge 'em.",
+            "modBp": [
+              4,
+              4
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "`4You trip over an arm.",
+            "modLuck": [
+              -3,
+              -1
+            ]
+          },
+          {
+            "message": "You perform a body puppet show to pass the time and crack yourself up. ",
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "You win your computer game, Teenage Lawnmower!",
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "`4Yikes! You forgot to pay taxes last month!",
+            "modLuck": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "message": "At your high school reunion, you find you now make more money than the former captain of the football team!",
+            "modBp": [
+              1,
+              5
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "stuff/money_bag_2"
+          },
+          {
+            "message": "You find out that your old high school sweetheart has married the captain of the football team.",
+            "modLuck": [
+              -2,
+              -1
+            ],
+            "picture": "people/f_sexy2"
+          },
+          {
+            "message": "An old mortuary science professor bequeaths you his favorite skeleton, \"Morty\".",
+            "modBp": [
+              4,
+              8
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "stuff/battle_lose"
+          },
+          {
+            "message": "`$Ever get the feeling you're being `4watched`$?",
+            "modLuck": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "message": "Some kids dig through your garbage and find your \"gag\" photographs.",
+            "modBp": [
+              -10,
+              -5
+            ],
+            "modLuck": [
+              -1,
+              -1
+            ]
+          },
+          {
+            "message": "Oh no! One of Deathville Zoo's pythons has escaped. I guess business will be picking up soon.",
+            "modBp": [
+              4,
+              8
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "animals/rattler"
+          },
+          {
+            "message": "A new shipment of `5Forever Fragrant`$, America's top-selling brand of coffin air fresheners, has arrived. Joy!",
+            "modBp": [
+              5,
+              10
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "stuff/red_rose"
+          },
+          {
+            "message": "Local college frat boys rent some of your inventory for pledge week.",
+            "modBp": [
+              10,
+              15
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "people/m_teen"
+          },
+          {
+            "message": "Local college frat pledges break into your parlor and steals some inventory.",
+            "modBp": [
+              -15,
+              -10
+            ],
+            "modLuck": [
+              -2,
+              -1
+            ],
+            "picture": "people/m_teen"
+          },
+          {
+            "message": "You find a new place to dump embalming fluid.",
+            "modBp": [
+              10,
+              15
+            ],
+            "picture": "stuff/toilet"
+          },
+          {
+            "message": "You get `4fined `$for improper disposal of embalming fluid.",
+            "modBp": [
+              -15,
+              -10
+            ],
+            "picture": "stuff/toilet"
+          },
+          {
+            "message": "Cousin Sal, the idiot no one thought would get a job, gets his medical degree from the University of POBox 411 and moves into Deathsville. Nepotism is, for lack of a better word, good. ",
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "people/m_doctor"
+          },
+          {
+            "message": "A major duststorm shuts down Deathsville for awhile. Apparently, even death can take a holiday.",
+            "modBp": [
+              -10,
+              -5
+            ],
+            "picture": "wait"
+          },
+          {
+            "message": "The local bar introduces new 80-proof barley wine. Locals mistake it for regular beer. DWI incidents skyrocket.  ",
+            "modBp": [
+              10,
+              15
+            ],
+            "picture": "bar"
+          }
+        ]
+      }
+    ]
+  },
+  "newsBlurbs": {
+    "ranges": [
+      {
+        "low": -229999999,
+        "high": 299999999,
+        "entries": [
+          {
+            "title": "DEATH WITH DIGNITY",
+            "message": "20 percent off Gold Coffins at Di-Mart! For a comfortable eternal lay, come see us today!"
+          },
+          {
+            "title": "NEW SPEED LIMIT SPEEDS DEATH",
+            "message": "Maybe 55 in a residential is bad. \"We should've known people can't dodge cars,\" admits the Department of Transportion.",
+            "giveRandom": "`wThe phone rings - It's the DMV.\\n\\n`$\"We heard you give bulk discounts...\"",
+            "modBp": [
+              20,
+              50
+            ],
+            "modLuck": [
+              1,
+              5
+            ],
+            "addLog": "`7DEATH CARE PROVIDER CHOSEN\\n`^The Department of Transportation has issued a statement declaring *HOME* the official location for today's services. *NAME* will be on hand for counseling."
+          },
+          {
+            "title": "MIXED UP VIAGRA MEDICATION IN RETIREMENT HOME",
+            "message": "\"It's like a stabbing ... but different,\" comments the coroner's office.",
+            "giveRandom": "`wThe phone rings - It's Golden Oaks Retirement Home.\\n\\n`$\"We've got some bodies for you...\"",
+            "modBp": [
+              40,
+              90
+            ],
+            "modLuck": [
+              1,
+              5
+            ],
+            "addLog": "`7FUNERAL HOME CHOSEN\\n`^Golden Oaks Retirement Home has announced that *NAME* from *HOME* will be hosting services for the recently departed."
+          },
+          {
+            "title": "A BURGER TO DIE FOR",
+            "message": "Ecoli outbreak hits Bill's Big Burger leaving many dead or just puking a lot.",
+            "giveRandom": "`wThe president of Bill's Big Burger walks in.\\n\\n`$\"Let's make a deal...\"",
+            "modBp": [
+              40,
+              90
+            ],
+            "modLuck": [
+              1,
+              5
+            ],
+            "addLog": "`7BURGER CONTRACT SIGNED\\n`^*NAME* from *HOME* has been signed exclusive rights to the Bill's Big Burger  related deaths.  There will be a buffet."
+          },
+          {
+            "title": "ENTIRE SOCCER TEAM KICKS COLLECTIVE BUCKET",
+            "message": "Plane crash kills 15 people.  Some funeral parlor is going to be in for some big business.",
+            "giveRandom": "`wA soccer coach brings in 15 dead people - and he wants them all embalmed!",
+            "modBp": [
+              80,
+              150
+            ],
+            "modLuck": [
+              1,
+              10
+            ],
+            "addLog": "`7LOCAL PARLOR SCORES\\n`^*NAME* from *HOME* will host the funeral and memorial service of the brave 15 soccer players who ended life so tragicially. "
+          },
+          {
+            "title": "ZOO ANIMALS ESCAPE, SEEK REVENGE ON HUMANS AND COTTON CANDY",
+            "message": "\"Now their rage is out of the cage,\" says local australian zookeeper.",
+            "giveRandom": "`wThe chairman of your local zoo walks in with a black garbage bag.\\n\\n`$\"Please bury this.  ASAP.\"",
+            "modBp": [
+              30,
+              55
+            ],
+            "modLuck": [
+              1,
+              5
+            ],
+            "addLog": "`7AUSTRALIAN ZOOKEEPER MAULED\\n`^*NAME* from *HOME* will be hosting services today."
+          },
+          {
+            "title": "THE BIG ONE HITS",
+            "message": "An earthquake measuring 8.6 on the Richter scale shook things up today.  Families have banded together to locate a death care facility that will offer a package deal.",
+            "giveRandom": "`wA large truck parks out front and a group of people come inside.\\n\\n`$\"What we really want is one really large grave...\"",
+            "modBp": [
+              80,
+              125
+            ],
+            "modLuck": [
+              1,
+              5
+            ],
+            "addLog": "`7EARTHQUAKE TRAGEDY HAS BRIGHT SIDE\\n`^*NAME* from *HOME* has allowed the victims to purchase one rather large grave together for a discounted per person price."
+          },
+          {
+            "title": "COMPETITION IS FIERCE IN FUNERAL INDUSTRY",
+            "message": "\"There just aren't enough bodies to go around.  Some of these places will die off,\" admits Mayor."
+          },
+          {
+            "title": "MANY DEAD AFTER PLAYING THEIR ONLINE GAMES TOO LONG",
+            "message": "\"All they wanted was another level, what they got was death,\" comments Police Commissioner."
+          },
+          {
+            "title": "LOCAL PIZZA COMPANY SCREWS UP BIGTIME",
+            "message": "\"If they didn't eat the pizza in under 30 minutes they would die.  Bad cheese indeed,\" reports some dude."
+          },
+          {
+            "title": "MAN KILLED BY NEW LASER PRINTER",
+            "message": "\"He thought it was a xerox machine and was trying to photocopy his ass,\" explains his manager."
+          },
+          {
+            "title": "SNAKEHEAD FISH MENACE STRIKES DEATHSVILLE",
+            "message": "\"At long last, our quiet community has been distrupted by these air-breathing, sword-wielding ninja fish. God help us all,\" said the mayor at a recent press conference.",
+            "giveRandom": "`wThe phone rings - It's the Hospital.\\n\\n`$\"More fish fatalities for you, *NAME*.\"",
+            "modBp": [
+              20,
+              40
+            ],
+            "modLuck": [
+              1,
+              2
+            ],
+            "addLog": "`7*HOME*'S SUCCESS LINKED TO SNAKEHEAD FISH\\n`^*NAME* says \"God bless those carniverous Asian fish.\""
+          },
+          {
+            "title": "AREA YOUTH AVOID SUN, FRESH AIR",
+            "message": "Many of Deathsville's young aren't playing baseball or street hockey these days. Instead, they rush home from school on to their computers to get their daily fix of FUNERAL QUEST. When will the madness end?"
+          },
+          {
+            "title": "LEGISLATOR PASSES TAX BREAK FOR MORTICIANS",
+            "message": "Deathsville's funeral parlors are filled with glee today at the news of the tax break. Said one owner, \"They said I was a freak for becoming a mortician. Who's laughing now?\""
+          },
+          {
+            "title": "DEAD MAN'S LAST WORDS: \"I CAN'T BELIEVE IT WASN'T BUTTER\"",
+            "message": "A mixup at the diary processing plant led to a lethal dose of cleaning fluids entering the butter production unit. Plant Manager George Toole offered his apologies to Deathsville's many affected families. \"Come down to the factory and we'll give you new butter.\""
+          },
+          {
+            "title": "GREEN METEOR SHOWER BRINGS RECORD CROWDS",
+            "message": "Last night's highly distinctive eerie green meteor shower dazzled area spectators last night. \"It was the prettiest thing I ever done seen,\" said Emma Lou Harrison who awoke this morning totally blind. "
+          },
+          {
+            "title": "FREAKY KID SEES \"DEAD PEOPLE\"",
+            "message": "Area nerd claims to see \"dead people\" all around him during his daily routines. \"Of course he does, \" said his mother. \"We run a funeral parlor.\""
+          },
+          {
+            "title": "AREA POETS, SENSITIVES LANGUOR IN DELIRIUM",
+            "message": "Medical experts are dumbfounded at the record number of area residents who have taken ill this Hallowmas. Most of those afflicted are artists of some sort. One man, a young poet, has sculped a blasphemous, basalt figurine with a tentacled head and a bloated, rugose body backed with bat-like wings. When questioned, Father Smyth said \"this can't be good.\""
+          },
+          {
+            "title": "THEATRE FIRE KILLS DOZENS",
+            "message": "The popular theatrical adaptation of the movie \"BackDraft\" came to deadly conclusion last night in neighboring town Blaine when the special effects got out of control."
+          },
+          {
+            "title": "AREA TEENAGERS UNMASK \"ZOMBIE SCARECROW\"",
+            "message": "Before a disbelieving sheriff, four area youths removed the mask of the so-called \"Zombie Scarecrow,\" who turned out to be none other than Old Man Withers. According to one of the young sleuths, Withers \"like wanted to frighten the farmers away from the corn field so he could make off with the buried treasure.\"  "
+          },
+          {
+            "title": "SOME OF AREA DEAD EVIL, MENACING",
+            "message": "A local professor's cabin, located in a remote wooded area, was the scene of hair-whitening terror last night as the recording of demon-resurrection passages were unwittingly played aloud by a curious area youth. It was later learned that the professor and his wife had been overcome already by the resuscitated evil when the recordings were  first made. Emergency personnel were unable to reach the cabin, due to a bizzare bridge accident.    ",
+            "giveRandom": "`wYour answering machine has the message:\\n\\n`$Bring the SUV hearse up to the haunted cabin. We got bodies.",
+            "modBp": [
+              50,
+              80
+            ],
+            "addLog": "*HOME* discreetly removes the bodies from the haunted cabin, woodshed."
+          }
+        ]
+      }
+    ]
+  },
+  "noCustomers": {
+    "ranges": [
+      {
+        "low": -229999999,
+        "high": 299999999,
+        "entries": [
+          {
+            "message": "Time passes slowly.  Your door remains unshadowed."
+          },
+          {
+            "message": "You wait for a while.  Nothing happens."
+          },
+          {
+            "message": "You stare at the door as if commanding it to open.  It doesn't."
+          },
+          {
+            "message": "The clock's ticking quietly mocks you.  People walk by, they just don't walk in."
+          },
+          {
+            "message": "Nothing's happening today, you wonder what's on FOX."
+          },
+          {
+            "message": "The seconds tick away.  If only you knew how to play solitaire."
+          },
+          {
+            "message": "The only thing dead around here is your business."
+          },
+          {
+            "message": "Yet another Nancy Drew book passes through your hands."
+          },
+          {
+            "message": "If only you could bend space and time, you wouldn't have this headache."
+          },
+          {
+            "message": "You kill some time listening to MP3's.  Too bad about Napster..."
+          },
+          {
+            "message": "You're getting quite good at rolling a quarter over your knuckles."
+          },
+          {
+            "message": "No one comes in, maybe you can start drinking on the job."
+          },
+          {
+            "message": "You awake with a start, you must have dozed off."
+          },
+          {
+            "message": "You wait a while but nothing happens.  When will someone die already?"
+          },
+          {
+            "message": "Someone is coming..wait, no, he went into a different parlor."
+          },
+          {
+            "message": "No one appears.  You spend the time sweeping up and dusting caskets."
+          }
+        ]
+      }
+    ]
+  },
+  "fortunes": {
+    "ranges": [
+      {
+        "low": -229999999,
+        "high": 299999999,
+        "entries": [
+          {
+            "message": "Watch out for large rocks."
+          },
+          {
+            "message": "The secret sauce will surprise you."
+          },
+          {
+            "message": "You will soon cross the great waters... and we don't mean by jet."
+          },
+          {
+            "message": "Your financial investments will sour."
+          },
+          {
+            "message": "Man who drop watch in toilet bound to have crappy time."
+          },
+          {
+            "message": "Your favorite tv show will be canceled soon."
+          },
+          {
+            "message": "You may experience chest pains."
+          },
+          {
+            "message": "Someone in town wants you dead."
+          },
+          {
+            "message": "Stay away from fire."
+          },
+          {
+            "message": "Stay away from large ocean liners."
+          },
+          {
+            "message": "Man who stand on toilet is high on pot."
+          },
+          {
+            "message": "Buy life insurance.  Soon."
+          },
+          {
+            "message": "Your lucky lotto numbers are 6,6,6,6,6,6."
+          },
+          {
+            "message": "The paper is blank!"
+          },
+          {
+            "message": "The pork wasn't really pork."
+          },
+          {
+            "message": "Beware video tapes you thought you erased."
+          },
+          {
+            "message": "Baseball wrong.  Man with four balls no walk."
+          },
+          {
+            "message": "Do unto others, then run."
+          },
+          {
+            "message": "Man who run behind car get exhausted."
+          },
+          {
+            "message": "Chef without utensils can still find ways to stir soup."
+          },
+          {
+            "message": "Always remember to pillage before you burn."
+          },
+          {
+            "message": "Now is a good time for automobile servicing."
+          },
+          {
+            "message": "You will become a great bore in your later years."
+          },
+          {
+            "message": "You regard free speech not as a right but as a never-ending obligation.  "
+          },
+          {
+            "message": "They say you are a true miracle worker - if you work, it is a miracle.  "
+          },
+          {
+            "message": "Act natural. Don't turn around.  "
+          },
+          {
+            "message": "When it comes to helping others, you'll stop at nothing. "
+          },
+          {
+            "message": "Are you wearing that shirt just to be funny? "
+          },
+          {
+            "message": "I'm watching you."
+          },
+          {
+            "message": "Stay off the back roads."
+          },
+          {
+            "message": "Help! I am being held prisoner in a Chinese bakery."
+          },
+          {
+            "message": "Changes for the better are being made against you. (huh?!)"
+          },
+          {
+            "message": "The lottery is a special tax for those not good at math."
+          },
+          {
+            "message": "I'm watching you. - Your personal Stalker"
+          },
+          {
+            "message": "Fortune Not Found: Abort, Retry, Ignore? "
+          }
+        ]
+      }
+    ]
+  },
+  "niceFortunes": {
+    "ranges": [
+      {
+        "low": -229999999,
+        "high": 299999999,
+        "entries": [
+          {
+            "message": "Hi, I'm a secret message from your teeth"
+          },
+          {
+            "message": "Advance to boardwalk"
+          },
+          {
+            "message": "You have reading skills"
+          },
+          {
+            "message": "Your real parents were rich and famous"
+          },
+          {
+            "message": "MSG and fat are actually good for you it turns out"
+          }
+        ]
+      }
+    ]
+  },
+  "risks": [
+    {
+      "startMessage": "`$A woman walks into the store.\\n\\n`wWoman: `$\"Hello *SIR*, a few days ago you buried my daughter.   She was wearing a giant ruby ring, you didn't happen to take it off and save it for me, did you?\"\\n\\nThe ring is on  your desk, it doesn't look like she saw it.",
+      "startPicture": "mother/normal",
+      "startBackground": "background/background_2",
+      "normalLabel": "  Give ring",
+      "riskLabel": "      Lie",
+      "normalMessage": "`w*NAME*: `$\"Ah yes, the ring.  I was about to phone you.. here it is.\"\\n\\n`wWoman: `$\"Thank you so much!  This ring meant so much to me.\"",
+      "normalPicture": "mother/happy",
+      "failMessage": "`w*NAME*: `$\"I'm so sorry my dear woman, it's buried forever.\"\\n\\n`wWoman: `$\"Alright, thanks anyway...WHAT THE?? THAT'S HER RING RIGHT THERE!  How 'bout putting it on this finger?\"",
+      "failPicture": "mother/finger",
+      "successMessage": "`w*NAME*: `$\"I'm so sorry my dear woman, it's buried forever.\"\\n\\n`$The woman leaves in tears, the ring is yours!",
+      "successPicture": "ring/ring"
+    },
+    {
+      "startMessage": "`$You notice a finger poking through the dirt on one of your fresh graves.\\n\\nIf you re-bury it correctly to the full six feet it will take some time.  Of course, you could just kick some dirt over the top...who would notice?",
+      "startPicture": "stuff/question",
+      "normalLabel": "  Re-Bury",
+      "riskLabel": "   Kick Dirt",
+      "normalMessage": "`$You figure better safe than sorry.  You get the power digger from the garage and things actually go faster than you thought they would.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You just kick some dirt over the shallow spots.\\n\\nYou wait and watch through the window awhile.. Uh oh, what is that dog doing... people coming over.. great, now kids are screaming.",
+      "failPicture": "animals/dog-dragging-hand",
+      "successMessage": "`$You just kick some dirt over the shallow spots.\\n\\nYou wait and watch through the window awhile.. nobody seems to notice!",
+      "successPicture": "stuff/money_bag_2"
+    },
+    {
+      "startMessage": "`$As you are moving a body downstairs you notice an unused lottery ticket falls out of the corpse's pocket.\\n\\nThe viewing is in a few minutes, but playing the ticket would only take a second...",
+      "startPicture": "stuff/lotteryticket",
+      "normalLabel": "Put it back",
+      "riskLabel": " Scratch It",
+      "normalMessage": "`$You carefully put the ticket back in, now is not the time to gamble.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You lean the body against the wall and play the ticket... (scroll down)\\n\\n\\n\\n\\n\\n\\nIt lost.  You kick the body in anger...\\n\\n`4THE CORPSE FALLS DOWN THE STAIRS!  It bounces into the slumber room to the surprise of the family.",
+      "failPicture": "stuff/lottery_lose",
+      "successMessage": "`$You lean the body against the wall and play the ticket... (scroll down)\\n\\n\\n\\n\\n\\n\\nIt's a winner!\\n\\nYou put the ticket in your own pocket to cash later.",
+      "successPicture": "stuff/lottery_win"
+    },
+    {
+      "startMessage": "`$As you are preparing the floral arrangement for a service you notice the flowers are red instead of the requested white..\\n\\nYou know you should order new ones but you also see a bucket of white paint nearby...",
+      "startPicture": "stuff/red_rose",
+      "startBackground": "background/background_celemony",
+      "normalLabel": "Order New",
+      "riskLabel": "Paint them",
+      "normalMessage": "`$You order replacement flowers.  Taking shortcuts is not how you want to build your reputation.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You paint the flowers.\\n\\nAt the service an old woman smells them and unknowingly leaves a `4bright white mark on her nose`$.  You try to stifle a giggle but fail, everybody starts laughing at woman who is now in tears.",
+      "failPicture": "stuff/money_bag",
+      "successMessage": "`$You paint the flowers.\\n\\nAt the service an old woman tries to smell one but you shove her away, great work!",
+      "successPicture": "places/funeral-ceremony"
+    },
+    {
+      "startMessage": "`$In the middle of an embalming you must visit the restroom.\\n\\nYou're really in a rush to eat so you can get back to work and finish early.. yet washing your hands is the law, albeit a time-waster.  What do you do?",
+      "startPicture": "blank",
+      "startBackground": "stuff/toilet",
+      "normalLabel": "Wash Hands",
+      "riskLabel": "Eat Quick",
+      "normalMessage": "`$You carefully wash your hands with disinfectant.  Cleanliness is godliness.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You skip the washing part.\\n\\nAfter eating you get back to the embalming.  You barely finish removing the small intestines before you `4start feeling really sick`$.. something you ate maybe?",
+      "failPicture": "stuff/money_bag",
+      "failBackground": "places/embalming-room",
+      "successMessage": "`$You skip the washing part.\\n\\nAfter eating you finish the embalming with time to spare!. You break out your Atari 2600 and play games in the basement for awhile.",
+      "successPicture": "stuff/money_bag_2",
+      "successBackground": "places/embalming-room"
+    },
+    {
+      "startMessage": "`$It's true that the good die young. In fact some of your inventory looks so good, it's a right shame to let them go to waste.\\n\\nWould it really be so wrong to take a few pictures?",
+      "startPicture": "places/embalming-woman",
+      "startBackground": "places/embalming-room",
+      "normalLabel": "Forget it",
+      "riskLabel": "Take photos",
+      "normalMessage": "`$After thinking more on the matter, you decide to leave pornography to professional perverts.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$As you position the models, `4the corpses begin to fall apart. `$Just as you finish reassembling the bodies, you are discovered by the cleaning lady.\\n\\nBoy, is this going to hurt business!",
+      "failPicture": "blank",
+      "failBackground": "places/embalming-room",
+      "successMessage": "`$Throwing caution to the wind, you power up your Nikon camera and get busy.\\n\\nHey, at least you don't have to deal with `4prima-donna back-sassing `$from the models!",
+      "successPicture": "blank",
+      "successBackground": "places/embalming-room"
+    },
+    {
+      "startMessage": "`$You see a competitor's shiny new hearse parked near your parlor.  No one is looking.",
+      "startPicture": "hearse/hearse4",
+      "startBackground": "blank",
+      "normalLabel": "Gnash teeth",
+      "riskLabel": "Key hearse",
+      "normalMessage": "`$Revenge is a dish best served cold. You will await the passing of years until the most perfect opportunity arises. Then you will feed off the bitter tears of your competitor's sorrow. ",
+      "normalPicture": "people/jesus_happy",
+      "normalBackground": "blank",
+      "failMessage": "`$Someone spotted you. \\n\\n`4You have to pay reparations.",
+      "failPicture": "stuff/money_bag",
+      "failBackground": "blank",
+      "successMessage": "`$You key the hearse.\\n\\n`4Pay back's a bitch!",
+      "successPicture": "animals/dog-dragging-hand",
+      "successBackground": "blank"
+    },
+    {
+      "startMessage": "`$You happen upon an `5ancient scroll `$in the suit pocket of your most recent client. Its black words instruct you on how to raise the dead.",
+      "startPicture": "stuff/question",
+      "startBackground": "background/background_1",
+      "normalLabel": "Burn scroll",
+      "riskLabel": "Cast spell",
+      "normalMessage": "`$As the scroll disappears into thick, viscous smoke, you feel pride in your victory over the forces of darkness.\\n\\nThen you realize that there are more scrolls out there... ",
+      "normalPicture": "people/jesus_happy",
+      "normalBackground": "blank",
+      "failMessage": "`4You raised something all right!",
+      "failPicture": "animals/dog-dragging-hand",
+      "successMessage": "`$After completing an incantation better suited for inhuman tongues, the ground trembles and cracks! `4The dead walk again!\\n\\n`$Coolio! ",
+      "successPicture": "stuff/battle_lose",
+      "successBackground": "background/background_1"
+    },
+    {
+      "startMessage": "`$A vaguely familar woman walks in.\\n\\n`wWoman: `$\"Hello *SIR*. I've been watching your parlor carefully and I've seen the blasphemous things you do to save money. You're a horrible, horrible person! I really should report what I've seen to the police, but I may be pursuaded to look the other way ... for a fee.\"",
+      "startPicture": "mother/normal",
+      "startBackground": "background/background_1",
+      "normalLabel": " Pay Bribe",
+      "riskLabel": "    Bluff",
+      "normalMessage": "`$A little hush money never hurt anybody (much). Perhaps it's time to paint the windows black in your funeral home. ",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`wWoman: `$\"Skinflint! You'll regret this!\"\\n\\nYou have a feeling the Deathville PD may be dropping by for a chat.\\n\\nRats! ",
+      "failPicture": "places/funeral_enemy_police",
+      "successMessage": "`w*NAME*: `$\"What?! How dare you threaten to ruin my good name with pernacious lies and half-truths! Get out!\"\\n\\nThe woman blanches and runs out of your parlor. I guess you can't kid a kidder.",
+      "successPicture": "blank"
+    },
+    {
+      "startMessage": "`$As you look at the lonely cemetery that lies in back of your parlor, you think about all the money that's been wasted on headstones no one ever comes to visit. A person could make a tidy sum by recycling some of those headstones. Go for it?  ",
+      "startPicture": "blank",
+      "startBackground": "background/background_7",
+      "normalLabel": "Forget it",
+      "riskLabel": "  Recycle ",
+      "normalMessage": "`$Fie on those old mangy headstones. It would be more trouble to move them than they're worth.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$Just as you deracinate the last headstone, you hear a withered, scratchy shriek from behind you. Uh oh.\\n\\n`4You were caught in the act of cementary vandalism!",
+      "failPicture": "stuff/money_bag",
+      "successMessage": "`$Recycling. It's good for the economy and Mother Earth.\\n\\nNice going, Slick. ",
+      "successPicture": "stuff/money_bag_2"
+    }
+  ],
+  "softSell": [
+    {
+      "article": "a",
+      "name": "Floral Arrangement",
+      "price": 150
+    },
+    {
+      "article": "some",
+      "name": "Grief Therapy",
+      "price": 300
+    },
+    {
+      "article": "a",
+      "name": "Memorial Plaque",
+      "price": 100
+    },
+    {
+      "article": "some",
+      "name": "Live Piano Music",
+      "price": 450
+    },
+    {
+      "article": "a",
+      "name": "Full Reconstruction",
+      "price": 600
+    },
+    {
+      "article": "some",
+      "name": "Air Brushed Embalming",
+      "price": 400
+    },
+    {
+      "article": "some",
+      "name": "Burial Footwear",
+      "price": 150
+    },
+    {
+      "article": "a few",
+      "name": "Paid Mourners",
+      "price": 350
+    },
+    {
+      "article": "some",
+      "name": "Relaxing Mourning Music",
+      "price": 50
+    },
+    {
+      "article": "some",
+      "name": "Punch and Cookies",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "DuraRest (tm) Neck Brace",
+      "price": 150
+    },
+    {
+      "article": "some",
+      "name": "Casket Scrollwork",
+      "price": 450
+    },
+    {
+      "article": "a",
+      "name": "Fine Burial Suit",
+      "price": 250
+    },
+    {
+      "article": "some",
+      "name": "Burial Makeup",
+      "price": 100
+    },
+    {
+      "article": "a",
+      "name": "Post-Mortem Baptism",
+      "price": 300
+    },
+    {
+      "article": "some",
+      "name": "Burial Jewelry",
+      "price": 400
+    },
+    {
+      "article": "a",
+      "name": "Grave Statuary",
+      "price": 350
+    },
+    {
+      "article": "a",
+      "name": "Professional Orator",
+      "price": 550
+    },
+    {
+      "article": "a",
+      "name": "Burial Body Shave",
+      "price": 200
+    },
+    {
+      "article": "some",
+      "name": "Burial Hairstyling",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "Tombstone Quotation",
+      "price": 250
+    },
+    {
+      "article": "a",
+      "name": "Shine-Polished Casket",
+      "price": 150
+    },
+    {
+      "article": "some",
+      "name": "Debt Counseling",
+      "price": 300
+    },
+    {
+      "article": "a",
+      "name": "Tree-Shaded Plot",
+      "price": 500
+    },
+    {
+      "article": "a",
+      "name": "Pet Co-Burial",
+      "price": 450
+    },
+    {
+      "article": "a",
+      "name": "Locked Casket",
+      "price": 50
+    },
+    {
+      "article": "some",
+      "name": "Grave-Robber Insurance",
+      "price": 200
+    },
+    {
+      "article": "a",
+      "name": "Hermetically Sealed Casket",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "Personalized Oiuja Board",
+      "price": 100
+    },
+    {
+      "article": "a",
+      "name": "Trance-Medium Seance",
+      "price": 300
+    },
+    {
+      "article": "a",
+      "name": "Casket Window",
+      "price": 100
+    },
+    {
+      "article": "some",
+      "name": "Thank-You Cards",
+      "price": 50
+    },
+    {
+      "article": "a",
+      "name": "Framed Death Certificate",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "Casket Air Freshener",
+      "price": 100
+    },
+    {
+      "article": "a",
+      "name": "Burial Service Canopy",
+      "price": 250
+    },
+    {
+      "article": "an",
+      "name": "Eternal Flame",
+      "price": 600
+    },
+    {
+      "article": "a",
+      "name": "Memorial Collector's Card",
+      "price": 50
+    },
+    {
+      "article": "a",
+      "name": "Memorial Action Figure",
+      "price": 350
+    },
+    {
+      "article": "an",
+      "name": "Expedited Burial",
+      "price": 300
+    },
+    {
+      "article": "some",
+      "name": "Coptic Urns",
+      "price": 500
+    },
+    {
+      "article": "extra",
+      "name": "Vermin Traps",
+      "price": 100
+    },
+    {
+      "article": "a",
+      "name": "Life-sized Icon of the Deceased",
+      "price": 300
+    },
+    {
+      "article": "some",
+      "name": "Custom Arabesque Coffin Detailing",
+      "price": 250
+    },
+    {
+      "article": "an",
+      "name": "Annoying Bag Piper",
+      "price": 50
+    },
+    {
+      "article": "a",
+      "name": "Sober Clergyman for the service",
+      "price": 100
+    },
+    {
+      "article": "a",
+      "name": "Flock of Nightingales released at the service ",
+      "price": 300
+    },
+    {
+      "article": "several",
+      "name": "Fancy Bees-Wax Candles",
+      "price": 250
+    },
+    {
+      "article": "a",
+      "name": "Recycled Headstone",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "Coffin Cell Phone (in case of premature burial)",
+      "price": 150
+    },
+    {
+      "article": "a",
+      "name": "Pack of 10 Remembrance Services",
+      "price": 400
+    },
+    {
+      "article": "a",
+      "name": "Ghost-Written Obutuary",
+      "price": 250
+    },
+    {
+      "article": "some",
+      "name": "Funeral Confetti",
+      "price": 60
+    },
+    {
+      "article": "some",
+      "name": "Memorial Phone Cards",
+      "price": 50
+    },
+    {
+      "article": "two",
+      "name": "Bottles of Keening Soda Water",
+      "price": 100
+    },
+    {
+      "article": "several",
+      "name": "Boxes of Extra-Strength Facial Tissues",
+      "price": 50
+    }
+  ],
+  "hardSell": [
+    {
+      "article": "a",
+      "name": "Forest Lawn Premier Double Plot",
+      "price": 2250
+    },
+    {
+      "article": "a",
+      "name": "Giant Headstone",
+      "price": 2560
+    },
+    {
+      "article": "a",
+      "name": "Crypt with Lower Bunk",
+      "price": 3100
+    },
+    {
+      "article": "a",
+      "name": "Titanium (bullet-proof) Coffin Exterior",
+      "price": 3400
+    },
+    {
+      "article": "a",
+      "name": "Vegas-style Celebrity Roast for the deceased",
+      "price": 3000
+    },
+    {
+      "article": "a",
+      "name": "New Orleans Dixieland Send-Off",
+      "price": 2500
+    },
+    {
+      "article": "a",
+      "name": "Posthumous Vanity Web Site",
+      "price": 2100
+    },
+    {
+      "article": "an",
+      "name": "Egyptian Death Shroud",
+      "price": 1750
+    },
+    {
+      "article": "a",
+      "name": "plot next to Elvis",
+      "price": 2400
+    },
+    {
+      "article": "a",
+      "name": "Private Gold Plated Crypt",
+      "price": 2600
+    }
+  ],
+  "ratings": [
+    "You are running the crappiest parlor in the city!",
+    "You've had several arson attempts.",
+    "You've been petitioned to be shut down.",
+    "Your home has literally been pissed on.",
+    "You and your home are despised.",
+    "You are pretty much hated by the town.",
+    "You are now being picketted by locals.",
+    "You are now being boycotted by locals.",
+    "You are really unpopular.",
+    "Your home is unpopular.",
+    "You run a hole in the wall.",
+    "Not used much.",
+    "Not well liked.",
+    "Unheard of.",
+    "Ignored.",
+    "\"What's this place?\"",
+    "Neighbors hate you.",
+    "Locals have asked you to clean up the place.",
+    "Trailer park people use you.",
+    "You're known as a discount parlor.",
+    "Crappy and Humble.",
+    "Things will get better?",
+    "Robbed regularly.",
+    "Graffiti'd often.",
+    "Bad Ghosts haunt the place.",
+    "Black Cats always nearby.",
+    "A bit of a spider web problem.",
+    "Smells odd.",
+    "Most bodies here are legitimately dead.",
+    "Not too many maggots get into the bodies here.",
+    "Even dead people won't use the bathroom here.",
+    "Some middle class people are buried here.",
+    "Buffet food is poor and word is getting out.",
+    "Recieving pizza for 'i.c. weiner' and 'i.p. freely'.",
+    "Peoples sometimes confuse the place with an Adult Store.",
+    "Muggings in the area.",
+    "Graffiti is a problem.",
+    "Smell in the back alley is noticable.",
+    "The preppy kids bury friends here.",
+    "Fairly popular for white trash funerals.",
+    "Need mafia help.",
+    "Phone soliciters calling often.",
+    "Undead attacks common.",
+    "Need airfreshers badly.",
+    "Rumors of hauntings a problem.",
+    "You get dirty looks at grocery stores.",
+    "People are not sure about your parlor.",
+    "Able to offer free coffee and tea to customers.",
+    "Grounds nicely mowed.",
+    "Coupons are helping business. You finally made the top 50 percent.",
+    "You're officially a 'so-so' parlor.",
+    "Cadillacs parked out front.",
+    "People are dead -before- they come in.",
+    "Family Jewelery no longer 'misplaced' much.",
+    "A cleaning lady comes by regularly.",
+    "Your casket showroom is being remodeled.",
+    "Your parlor has a somewhat decent reputation now.",
+    "People seem to like the building paintjob.",
+    "Your parlor is in the top 40 percent.",
+    "Most people consider your parlor a nice place.",
+    "Buffet Days go well.",
+    "Real Medical license aquired.",
+    "Regular mailings to retirement homes.",
+    "Pre-need sales doing ok.",
+    "You have gotten some decent press lately.",
+    "Mr Yang even remembers your name.",
+    "",
+    "",
+    "",
+    "Golf Course people buried here.",
+    "People think of your joint as one of the better ones around.",
+    "Nice Ghosts haunt the place.",
+    "The community accepts you.",
+    "Most ugly rumors have been squelched, doing very well.",
+    "Local churches recommend you.",
+    "The purchase of white doves to fly around has helped.",
+    "As far as parlors in the area you're considered well above average.",
+    "You wear a rolex.",
+    "Mob members are buried here.",
+    "Your caskets are made of solid oak.",
+    "You are praised by men of the cloth.",
+    "Donates to charity.",
+    "Shook hands with the president.",
+    "Aquired a date with June.",
+    "You listen to Milli Vanilli",
+    "Your parlor is in the top 20 percent.",
+    "Even your relatives use you now!",
+    "Your parlor is in the top 20 percent.",
+    "Your parlor is in the top 20 percent.",
+    "Your parlor is in the top 20 percent.",
+    "Daisys grow where the dead lay.",
+    "2Pac is buried here.",
+    "Elvis is buried here.",
+    "Your internet webpage is making lots of sales.",
+    "Choosey customers choose you.",
+    "You are able to charge the big money these days.",
+    "T-Shirts with your logo sold at giftshop.",
+    "You run a first class establishment.",
+    "Your parlor is tops..almost the best in town.",
+    "Your parlor is known as the absolute best in town."
+  ],
+  "karma": [
+    "Demon Like (really evil karma is in red)",
+    "Satan Himself",
+    "Paul Crouch",
+    "Sony Executive",
+    "Tobbaco lawyer",
+    "Eats Children",
+    "Producer",
+    "Porn director",
+    "Will bury anything for $$",
+    "Horse Lover",
+    "Might 'help' people get to your place",
+    "Drug dealer",
+    "Mobster",
+    "AOL user",
+    "WebTV user",
+    "Laughs at greeting cards",
+    "Enjoys Jay Leno",
+    "Beats kids",
+    "Gives 'candy' to kids",
+    "Cheap Porn star",
+    "Bootlegs PlayStation CDs",
+    "Bootlegs Id games",
+    "Enjoys Coors light",
+    "Eats at KFC",
+    "Bootlegs Dreamcast CDs",
+    "Entertained by TNN",
+    "Likes Hunting Games",
+    "Plays UNO",
+    "Knows all the Pokemon's names",
+    "Porn star",
+    "Bootlegs Epic games",
+    "Level 50+ in EQ",
+    "Has 500+ NES roms",
+    "Nice guy, but evil",
+    "Pops children's balloons",
+    "Pets run from you",
+    "Enjoyed 'Mission to Mars'",
+    "Has a cable \"black box\"",
+    "Starves goldfish",
+    "Hits on nuns",
+    "Killed his tamagotchi",
+    "Takes illegal tax deductions",
+    "Takes recreational drugs",
+    "Doesn't say 'bitch' to women anymore",
+    "Closes the door while using the bathroom",
+    "Stopped using the word 'anus' in common conversation",
+    "Gets paid to surf",
+    "\"Stops short\"",
+    "Smells questionable",
+    "Normal ",
+    "Average",
+    "Self Improver",
+    "Optimistic",
+    "Sees a future in this",
+    "Humble but growing",
+    "Prideful",
+    "Finally got rid of his real-doll",
+    "Good tipper",
+    "Stops posting naked pictures of corpses on their website",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Can get dates",
+    "",
+    "",
+    "",
+    "",
+    "Family Preferred",
+    "Feel good about job",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Smiling service",
+    "Making Death Better",
+    "Playa",
+    "Enjoy helping death along",
+    "Senior citizens don't shunn you",
+    "Respected citizen",
+    "Black suits look good on you",
+    "Trusted with girlscouts",
+    "",
+    "",
+    "Children and Kittens trust you",
+    "White Doves are known to land on you randomly",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Pap like",
+    "Seth Like",
+    "Angelic "
+  ],
+  "swearWords": [
+    {
+      "bad": "fuck",
+      "good": "fudge"
+    },
+    {
+      "bad": "shit",
+      "good": "shoot"
+    },
+    {
+      "bad": "dick",
+      "good": "richard"
+    },
+    {
+      "bad": "prick",
+      "good": "thorn"
+    },
+    {
+      "bad": "pussy",
+      "good": "kitty"
+    },
+    {
+      "bad": "cunt",
+      "good": "meany"
+    },
+    {
+      "bad": "bitch",
+      "good": "she dog"
+    },
+    {
+      "bad": "phuck",
+      "good": "bless"
+    },
+    {
+      "bad": "cock",
+      "good": "pencil"
+    },
+    {
+      "bad": "vagina",
+      "good": "wet place"
+    },
+    {
+      "bad": "penis",
+      "good": "rod"
+    }
+  ],
+  "text": {
+    "newPlayer": {
+      "townFull": "The town is full.  (this server allows {max} players max)  Come back later!",
+      "nameShort": "`wYour `wname is too short.  Try a longer one.",
+      "nameLong": "`wYour name is too long.  Try a shorter one.",
+      "nameTaken": "`wSomeone is already using the name {name}. Please try another.",
+      "logonShort": "`wYour logon name is too short.  Try a longer one.",
+      "logonLong": "`wYour logon name is too long.  Try a shorter one.",
+      "logonTaken": "`wSomeone is already using the logon name of {logon}. Please try another.",
+      "parlorShort": "`wYour funeral parlor name is too short.  Try a longer one.",
+      "parlorLong": "`wYour funeral parlor name is too long.  Try a shorter one.",
+      "passwordLong": "`wYour password is too long.  Try a shorter one.",
+      "passwordShort": "`wYour password is too short.  Try a longer one.",
+      "passwordMismatch": "`wYour passwords don't match!  Try again, genius.",
+      "emailShort": "`wEmail address required.  (Only used for game purposes)",
+      "emailLong": "`wEmail address is too big.  Try a smaller one.",
+      "movedIn": "{name} has just moved into town!",
+      "newsOpened": "`5A new parlor ({parlor}) run by {name} has been opened!\r\n\r\n"
+    },
+    "session": {
+      "loggedOn": "{name} logged on.",
+      "loggedOff": "{name} logged off."
+    },
+    "desk": {
+      "title": "At Home",
+      "welcomeBack": "`$Welcome back, `w{name}`$.  Unfinished business?\n",
+      "sitting": "`$You are sitting at your desk.\n",
+      "sittingPolice": "`$You are sitting at your desk.  Police are outside, you feel safe.\n",
+      "newDayFirst": "`wWelcome to Funeral Quest, {name}.  Good luck.`^\n\n`$You unlock the front door and enter your beloved {parlor} Funeral Parlor.  Ah, it's great to be alive.\n\n{bonus}",
+      "newDayBack": "`wWelcome back, {name}!`^\n\n`$You unlock the front door and enter your beloved {parlor} Funeral Parlor.  Ah, it's great to be alive.\n\n{bonus}",
+      "newDayAtDesk": "`wYou're eyes grow heavy.  You wake up the next morning, still at your desk.\n\n`$You quickly freshen up.. who knows what great things await {parlor} Funeral Parlor today?\n\n{bonus}",
+      "hearseBonus": "Your {ride} gives you time for `w{turns}`$ extra customers. ",
+      "policeBonus": "There are police patrolling your parlor.",
+      "mailLine": "`w{text}\n",
+      "menu": {
+        "wait": "Wait for Customer",
+        "map": "Town Map",
+        "news": "Read Paper",
+        "stats": "Stats",
+        "rankings": "Rankings",
+        "quit": "Exit"
+      },
+      "continueLabel": "Continue",
+      "replyLabel": "Reply"
+    },
+    "wait": {
+      "noTurns": [
+        "You are out of turns for the day, come back tomorrow!",
+        "It's closing time, you'll have to wait until tomorrow.",
+        "You look at your watch - it's late.  Maybe tomorrow."
+      ],
+      "eventHeader": "`wSPECIAL EVENT\n\n",
+      "rewardFirstGain": "\n\n`$You earn `w{amount}`$ {what}",
+      "rewardFirstLoss": "\n\n`4You lose `w{amount}`4 {what}",
+      "rewardNextGain": " and `w{amount}`$ {what}",
+      "rewardNextLoss": " and `w{amount}`4 {what}",
+      "rewardEnd": ".",
+      "words": {
+        "bp": "Bury Point",
+        "bps": "Bury Points",
+        "luck": "luck",
+        "turn": "turn",
+        "turns": "turns"
+      },
+      "noMessage": "No message."
+    },
+    "risk": {
+      "earnedOne": "`$You earned one Bury Point, not bad.\n",
+      "earned": "`$You earned `w{amount}`$ Bury Points.\n",
+      "lost": "`$You lose `#{amount}`$ Bury Points.",
+      "won": "`$You earned `w{amount}`$ Bury Points!"
+    },
+    "negotiation": {
+      "arrivalRequest": "`w{cYoungMan}: `$\"Please, I need a funeral service for my {dRelation}. ",
+      "arrivalNeed": "I would need a plot and a {casket} casket for {dHim}.\"",
+      "psych": {
+        "resistance": "`wYou successfully analyze {cHis} resistance.`$",
+        "heartbroken": "`w{cHeCap} seems heartbroken.`$",
+        "guilty": "`w{cHeCap} seems guilty.`$",
+        "doubled": "`wSpending limit doubled.`$",
+        "estimate": "`wYou estimate {cHe} is worth about ${limit}.`$",
+        "halvedResistance": "`wResistance cut in half.`$",
+        "halvedMood": "`wMood cut in half.`$",
+        "nothing": "\n\n`$You are unable to analyze anything extra about {cHim}."
+      },
+      "total": "\n\nTotal: ${price}",
+      "resistance": " `5(Resistance: `#{percent}%`5)",
+      "buttons": {
+        "guilt": "Guilt",
+        "sympathy": "Sympathy",
+        "hard": "Hard Sell",
+        "soft": "Soft Sell",
+        "done": "Done"
+      },
+      "softPitch": [
+        "`w{player}: `$\"You know, your neighbor was in here recently.. he bought {article} {item} for only ${price}. Impeccable taste.\"\n\n",
+        "`w{player}: `$\"I can tell by the fine clothes you're wearing that you appreciate the finer things. How about {article} {item} for ${price}?\"\n\n",
+        "`w{player}: `$\"I don't mean to rush you, but this isn't really something you can wait a week thinking about. We do have {article} {item} for ${price}...\"\n\n",
+        "`w{player}: `$\"You know..  I bet your {dRelation}'s social security death benefits would probably cover {article} {item} for ${price}?\"\n\n"
+      ],
+      "softRefuse": [
+        "{customer}\"I really don't think my {dRelation} needs that.\"",
+        "{customer}\"Actually, my {dRelation} wanted a very simple funeral.\"",
+        "{customer}\"Um, no.\"",
+        {
+          "loved": "{customer}\"When my {dRelation} was alive {dHe} asked me not to buy that.  I'm sorry.\"",
+          "notLoved": "{customer}\"I'm not gonna pay another ${price} for an 'effing {dRelation} I barely knew!\""
+        },
+        "{customer}\"You've got to be kidding.\"",
+        "{customer}\"I'm not saying I can't afford that, but I don't think I really need it.\""
+      ],
+      "softAccept": [
+        "{customer}\"Thank you, I'll take it.\"",
+        "{customer}\"You don't say? {item} is something I want then.\"",
+        "{customer}\"Fine, I'll take it.\"",
+        "{customer}\"I think I'm getting ripped off here but I'll take it.\"",
+        "{customer}\"WHATEVER!! Just give it to me I guess.\""
+      ],
+      "softOverLimit": "{customer}\"That would put me over my limit.. how about something cheaper?\"",
+      "hardPitchWood": [
+        "`w{player}: `$\"Well, I suppose you COULD go with a wood casket.. except it really doesn't offer much protection from worms and the like.  How about a Silver Casket for only ${price} additional?\"\n\n",
+        "`w{player}: `$\"Wouldn't your {dRelation} prefer our traditional Silver Casket for only ${price} more?\"\n\n"
+      ],
+      "hardPitchSilver": [
+        "`w{player}: `$\"Just think of the beautiful memory picture you would have of your {dRelation} in a Gold Casket - a bargain for only ${price} more!\"\n\n",
+        "`w{player}: `$\"A Gold Casket (only ${price} additional) reflects character and station in life.. its suberb styling reflects a successful living.\"\n\n"
+      ],
+      "hardRefuse": [
+        "{customer}\"I really don't think my {dRelation} needs that.\"",
+        "{customer}\"Actually, my {dRelation} wanted a very simple funeral.\"",
+        "{customer}\"A casket is a casket, right?\"",
+        {
+          "loved": "{customer}\"No way, for that much it should have AC and a stereo!\"",
+          "notLoved": "{customer}\"My {dRelation} doesn't deserve {tier}.\""
+        },
+        "{customer}\"I don't want to spend that much.\"",
+        "{customer}\"I've got the dough, but I would rather give to charity.\""
+      ],
+      "hardAccept": [
+        "{customer}\"Alright, I'll take it.\"",
+        "{customer}\"Ok, I'll do the upgrade.\"",
+        "{customer}\"Well, since you put it that way, ok.\""
+      ],
+      "hardAcceptAngry": "{customer}\"Fine, I'll take the damn {tier} casket, ok?\"",
+      "hardOverLimit": "{customer}\"That casket would put me over my limit.. how about something cheaper?\"",
+      "upgradePitch": [
+        "`w{player}: `$\"A simple {last} may be enough for some.  But tell me, don't the words '{upgrade}' (only ${price} additional) give you goosebumps?\"\n\n",
+        "`w{player}: `$\"I would feel guilty if I didn't mention we do offer a {upgrade} for a small fee of ${price}.\"\n\n",
+        "`w{player}: `$\"{upgrade}'s are a great idea for an enternal slumber. A fee of ${price} will be charged, alright?\"\n\n"
+      ],
+      "upgradeRefuse": [
+        "{customer}\"No.\"",
+        "{customer}\"Actually I want a simple funeral for my {dRelation}.\"",
+        "{customer}\"I would rather spend money getting drunk after this.\"",
+        {
+          "loved": "{customer}\"God, can't you see this is hurting me talking about this now?\"",
+          "notLoved": "{customer}\"In case you haven't noticed, I wasn't overly fond of my {dRelation}.  Forget it.\""
+        },
+        "{customer}\"You just said ${rawPrice} right? I hope you're kidding.\"",
+        "{customer}\"I've got the dough, but I would rather spend it on something that matters.\""
+      ],
+      "upgradeAccept": [
+        "{customer}\"Alright, I'll take it.\"",
+        "{customer}\"Ok.\"",
+        "{customer}\"Maybe you're right.  Ok.\""
+      ],
+      "upgradeAcceptAngry": "{customer}\"Fine, whatever, ok?\"",
+      "upgradeOverLimit": "{customer}\"That would put me over my limit.. how about something cheaper?\"",
+      "upgradeNothingLeft": "`yThis {cMan} has already bought everything big you can think of.  It's a great feeling.",
+      "upgradeFirstLast": "Gold Casket",
+      "guiltPitch": [
+        "`w{player}: `$\"The funeral is not occasion for a display of cheapness, {cSir}.\"\n\n",
+        "`w{player}: `$\"{cSirCap},  let me ask you one simple thing.  Did you hate {dHim}?  Why else wouldn't you make this funeral something to be proud of?\"\n\n",
+        "`w{player}: `$\"Some believe an expensive funeral absolves the purchaser from any sin.  I happen to believe this, my friend.\"\n\n",
+        "`w{player}: `$\"I would stay away from cremation.  Your loved one deserves better than 'bake and shake' - people would talk.\"\n\n",
+        "`w{player}: `$\"Resistance to a 'proper' funeral will send the wrong message, wouldn't you agree?\"\n\n"
+      ],
+      "guiltLoved": [
+        "{customer}\"I LOVED {dHim}! Don't you get it? None of that stuff matters to me!\"",
+        "{customer}\"My {dRelation} was {dSmashed} a {dFridge} for god-sake! How can you say something like that?\"",
+        "{customer}\"If you want to keep my business you're going to stop saying stuff like that.\""
+      ],
+      "guiltNotLoved": [
+        "{customer}\"You're right. I should be a little looser with my money.\"",
+        "{customer}\"Good call.  I guess it would be appropriate to spend more on my {dRelation}.\"",
+        "{customer}\"You've got a point there.. It makes me mad but you're right.\"",
+        "{customer}\"I agree in principle.. but I only want to spend ${limit} on this.\""
+      ],
+      "sympathyPitch": [
+        "`w{player}: `$\"{cSirCap}, I understand you've been through a lot, please tell me what happened.\"\n\n",
+        "`w{player}: `$\"I know how you feel.  I know someone who lost a {dRelation} once.\"\n\n",
+        "`w{player}: `$\"So you two were close?  {dHeCap} sounds very special.\"\n\n",
+        "`w{player}: `$\"I'm not a licensed therapist.. but keep talking, get the pain out.\"\n\n",
+        "`w{player}: `$\"Any time a {dFridge} is involved in an accident it's going to be traumatic.\"\n\n"
+      ],
+      "sympathyNotLoved": [
+        "{customer}\"Sorry, I don't read ya, pard.\"",
+        "{customer}\"I don't go for all this touchy feeling crap, ok?  Don't hug me.\"",
+        "{customer}\"Um yeah.. except I actually have another {dRelation}, so it ain't so bad.  No more wasting my time, ok?\""
+      ],
+      "sympathyLoved": [
+        "{customer}\"It's just.. I feel like {dHe} is just in another room, you know?\"",
+        "{customer}\"I still have dreams.. of {dHim} getting {dSmashed} a {dFridge} over and over.\"",
+        "{customer}\"I mean, usually someone's {dRelation} is close.. but we were REALLY close if you know what I mean.\"",
+        "{customer}\"I appreciate what you're trying to do but I need to get this over with..for ${limit} or less..\""
+      ],
+      "interrupted": "`$You are interrupted!\n\n",
+      "leavePissed": [
+        "{customer}\"You know what? I really don't like the way you work. Bye.\"\n",
+        "{customer}\"Enough is enough.  I'm sick of you.\"\n",
+        "{customer}\"I just realized that you disgust me.  Sayoonara.\"\n",
+        "{customer}\"Can we cut the crap for a second here?  I guess not, bye.\"\n"
+      ],
+      "pissedOverLimit": [
+        "{customer}\"That would put me over my limit.. I don't have time for this, bye.\"\n",
+        "{customer}\"Damn, you see, I can only spend ${limit}.  I'm leaving.\"\n",
+        "{customer}\"My visa only goes to ${limit}... I'll try next-door.\"\n"
+      ],
+      "walkoutTv": "\"A {income} {young} {man} just left {parlor} looking pissed,\" a reporter says.",
+      "rivalWatch": "\n`$You watch {cHim} through the window after {cHe} leaves.  You see {cHim} go into {rivalParlor} to see {rivalName}!",
+      "rivalMail": "\n`${cAYoung} {cMan} walks in with a dead body. \"Hello {rivalSir}, I would like you to know I got treated like crap by {name} of {parlor}. I know you'll do a better job!\"\n\nYou earn `w{points}`$ Bury Points for stealing this sale!\n",
+      "done": {
+        "perfect": "`wEXCELLENT! `$For making this funeral cost the max {cHe} could pay you receive a `w{bonus}`$ BP bonus!\n\n",
+        "great": "`wGREAT! `$For getting within {range} of this customers limit you receive a `w{bonus}`$ BP bonus!\n\n",
+        "nice": "`wNICE! `$For getting within {range} of this customers limit you receive a `w{bonus}`$ BP bonus!\n\n",
+        "success": "`w`$The service is a success!  Total bill is ${price}.\n\n{extra}You earn `w{bp}`$ Bury Points and a {casket} sales tag.",
+        "bigSaleTv": "\"It appears {name} just made a {bp} BP sale,\" a guy reports.",
+        "faintedTv": "\"{name} has fainted in {his} parlor.  Working too hard maybe?\" a guy reports.",
+        "faintedMail": "\n`wYou fainted while dealing with a customer.`$\n\nYou vaguely remember riding in an ambulance.\n\n`$When you get home you find `w{bp} `$Bury Points and a {casket} tag on the desk!"
+      }
+    },
+    "news": {
+      "nothingToday": "Nothing has happened today.",
+      "topToday": "{name} from {parlor} with {bp} Bury Points.",
+      "noTopToday": "Sadly, no one has managed to sell anything yet today.",
+      "topYesterday": "{name} from {parlor} with {bp} Bury Points.\n\n",
+      "noTopYesterday": "No one died yesterday.",
+      "universeTop": "Top seller of the universe is {name}.",
+      "finalDay": "`5Today is the final day of the tournament - a winner will be declared at midnight!\n\n",
+      "lastDayTomorrow": "`5Tomorrow is the last day of the tournament.\n\n",
+      "daysLeft": "`5Only {days} days left before a tournament winner shall be declared!\n\n",
+      "perfectSale": "`7{name} makes a perfect sale, the industry is in awe.\r\n\r\n",
+      "winnerHeadline": "`7TOURNAMENT WINNER HAS BEEN DECLARED!\r\n",
+      "winnerBody": "`^With {bp} Bury Points and {plots} plots, {name} has been declared the victor.\r\n\r\n",
+      "meteorHeadline": "`7GIANT METEOR TO DESTROY THE WORLD AT MIDNIGHT!\r\n",
+      "meteorBody": "`^\"This is a real bummer, but at least we have time to read our mail and stuff.  But who will bury us?,\" comments a local astronomer.\r\n\r\n",
+      "deed": "{name} won the 'Best Funeral Directory In The Universe' award."
+    },
+    "maintenance": {
+      "topSeller": "`wCongratulations!\n`$You were the top seller for yesterday.  You earn `w{luck}`$ luck and `w{bp}`$ Bury Points.\n",
+      "topParlor": "`wCongratulations!\n`$You ran the top parlor in town yesterday.  You earn `w{luck}`$ luck and `w{bp}`$ Bury Points.\n",
+      "secondParlor": "`wCongratulations!\n`$You were the second highest parlor in town yesterday. You earn `w{luck}`$ luck and `w{bp}`$ Bury Points.\n",
+      "thirdParlor": "`wCongratulations!\n`$You were the third highest parlor in town yesterday. You earn `w{luck}`$ luck and `w{bp}`$ Bury Points.\n",
+      "closesShop": "{name} closes shop and leaves town.",
+      "closesShopNoSale": "{name} closes shop and leaves town without a single sale."
+    },
+    "stats": {
+      "title": "Stats",
+      "labels": {
+        "turns": "Turns left",
+        "bpTotal": "Total Bury Points",
+        "money": "Money",
+        "wood": "Wood tags",
+        "silver": "Silver tags",
+        "gold": "Gold tags",
+        "plots": "Plots",
+        "bpToday": "Bury Points today",
+        "psych": "Psychology",
+        "rating": "Rating",
+        "yangs": "Yang's deliveries left",
+        "visits": "Visits left",
+        "hpMax": "Max hit points",
+        "strength": "Strength",
+        "lockpicks": "Lockpicks",
+        "ride": "Ride"
+      },
+      "psychLevel": "Level {level}",
+      "rating": "#{rank} - {title}",
+      "noRatingText": "(No text for this rating.  Email Seth some ideas!)"
+    },
+    "rankings": {
+      "title": "Rankings",
+      "protected": "Protected",
+      "inCafe": "in cafe",
+      "onNow": "on now",
+      "logon": "logon"
+    },
+    "map": {
+      "title": "Town Map"
+    },
+    "stub": {
+      "notBuilt": "`${place} is not built yet.  Check back after the next town meeting.",
+      "leaveLabel": "Leave"
+    },
+    "hearseNames": [
+      "Bicycle",
+      "Budget Hearse",
+      "Medalist",
+      "Statesman",
+      "Crown Sovereign"
+    ],
+    "hearseDescriptions": [
+      "(you start with this, you can trade it in for 2)",
+      "The ever humble Budget Hearse can fulfill all your transportation needs.  Children may laugh and point somewhat, but it sure beats a bike.",
+      "The new Medalist very simply is the greatest value available today in the funeral profession. Flowing body lines and a graceful roof make this coach a winner.",
+      "The paradigm of contemporary elegance and styling, the Statesman funeral coach gracefully integrates form and function with dramatic design.",
+      "Beautifully proportioned, this new funeral coach reflects the prestige and styling of lasting beauty, an investment in your business future that is as distinguished and distinctive as the service you provide."
+    ],
+    "places": {
+      "bank": {
+        "location": "Bank",
+        "note": "You are at the city bank.  This facility allows you to exchange casket sales tags and transfer them to other accounts.",
+        "greeting": "`wTeller: `$\"How's business, {player}?\"",
+        "which": "`wTeller: `$\"Which kind tag would you like to exchange?\"",
+        "convertTo": "`wTeller: `$\"What would you like to convert your {from} to?\"",
+        "ratio": "`wTeller: `$\"{fromCount} {from} tag(s) = {toCount} {to} tag(s).  How many {from} tags would you like to exchange?\"",
+        "amusing": "`wTeller: `$\"You are very amusing {sir}.\"",
+        "notEnough": "`wTeller: `$\"You can't exchange what you don't have.  I'm trying to be nice here, but please, think next time.\"",
+        "tooFew": "`wTeller: `$\"You don't understand, do you. You can't trade just {count} for a {to} tag, alright?\"",
+        "done": "`wTeller: `$\"Very good, I have converted {lost} {from} tag(s) to {gained} {to} tag(s). Any other tags you would like to convert?\"",
+        "allToWood": "`wA teller converts all your tags to Wood for you.",
+        "allToGold": "`wA teller converts all your tags to Gold for you.",
+        "buttons": {
+          "allToWood": "All to wood",
+          "allToGold": "All to gold",
+          "exchange": "Exchange",
+          "leave": "Leave",
+          "gold": "Gold",
+          "silver": "Silver",
+          "wood": "Wood",
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "store": {
+        "location": "Store",
+        "note": "Di-Mart is not only an official DuraRest (tm) reseller but also carries many other useful supplies for the death care industry.\n\nA really creepy looking guy in a suit smiles at you.",
+        "greeting": "`wElijah: `$\"What can I get for you today, {player}?\"",
+        "hearseIntro": "`wElijah: `$\"We carry nothing but the best in funeral transportation.\"\n\n",
+        "hearseLine": "`w{n}`$ - {name} - Cost: `w{price}`$ gold tags.\n",
+        "look": "`wThe {name}`$ - {description}\n\nEffect: `w{bonus}`$ extra turns per day.\n\n{trade}",
+        "lookTrade": "After trading in your {current} for `w{credit}`$ gold tags, the cost will be `w{cost}`$ gold tags.",
+        "lookNoUpgrade": "You already drive a {current}.  The {name} would be no improvement, and Di-Mart does not pay gold for a downgrade.",
+        "cannotAfford": "`wElijah: `$\"I'm sorry, I really don't have time to waste.  You obviously cannot afford a luxury sedan such as the {name}.\"",
+        "noUpgrade": "`wElijah: `$\"You already drive a {current}.  I can't sell you a {name} on top of that, friend.\"",
+        "bought": "You trade in your {old} for a brand new {new}!\n\nYou have time for an extra `w{bonus}`$ customers today.",
+        "buttons": {
+          "security": "Security",
+          "supplies": "Supplies",
+          "hearses": "Hearses",
+          "leave": "Leave",
+          "view": "View #{n}",
+          "buyIt": "Buy it",
+          "back": "Back"
+        }
+      },
+      "university": {
+        "location": "Spirit U",
+        "note": "The role of the funeral director is constantly changing, encompassing more and more responsibilities each year. (for a fee, of course)",
+        "status": "Taking classes at SU is a great way to expand your options.",
+        "schedule": "`wClass schedules\n\n`$PSY - Social Psychology (cost: `w{psych}`$ gold tags)\n`$PE - Physical Education (cost: `w{hp}`$ gold tags)\n`$ST - Strength Training (cost: `w{strength}`$ gold tags)",
+        "cantAfford": "You fumble through your pockets in vain - you don't have enough gold tags to pay for the class.",
+        "psychDone": "You study hard for about an hour.  Your psychology level is raised to `w{level}`$!{extra}",
+        "psychSkills": [
+          "\n\n`$You have learned a new skill: `wMood reading",
+          "\n\n`$You have learned a new skill: `wFinancial Estimation",
+          "\n\n`$You have learned a new skill: `wCutting resistance in half",
+          "\n\n`$You have learned a new skill: `wCutting mood in half",
+          "\n\n`$You have learned a new skill: `wDoubling spending limit"
+        ],
+        "hpDone": "You run laps around the gym.  You gain `w{hp}`$ hitpoints!",
+        "strengthDone": "You lift weights for a while.  You gain `w1`$ strength!",
+        "library": "You are in the library.\n\n`$Students are quietly studying here.  You see one nerdy looking kid hogging the lone library computer.\n\n`$The book of deeds is sitting on a pedestal close by.",
+        "paperPrompt": "Which old newspaper would you like to look at?  You can choose between 1 and {max}.",
+        "paperMissing": "You desperately hunt around for anything dealing with a day {day} but fail.",
+        "paperFound": "You find a yellowing paper from day {day}, it looks like it may have been peed on.`$\n\n",
+        "deedsTitle": "The Book Of Deeds`$\n\n",
+        "deedsNone": "No one in Deathville has ever done anything worthing noting.\n\nIt's sad, really.\n",
+        "deedsHope": "\nThere is a glimmer of hope in `w{name}`$, but {he} has a way to go.",
+        "buttons": {
+          "takePsy": "Take PSY",
+          "takePe": "Take PE",
+          "takeSt": "Take ST",
+          "library": "Library",
+          "leave": "Leave",
+          "continue": "Continue",
+          "back": "Back",
+          "oldPapers": "Old Papers",
+          "deeds": "View Deeds"
+        }
+      },
+      "yangs": {
+        "location": "Yang's",
+        "note": "What could be luckier than a box of delectable grilled teriyaki spread over hot rice? Your mouth waters at the very thought of it.",
+        "statusReady": "June waits for you to order.",
+        "statusKicked": "June glances at you nervously.",
+        "kicked": "`w{player}: `$\"Hello? I'd like some service here!\"\n\n`wJune: `$\"Just leave, asshole.\"",
+        "menu": "`wThe Menu\n\n`w#1`$ - Lucky Dragon (adds `w{dragonLuck} `$luck, for here only) Cost: `w{dragonCost}`$ Bury Points\n`w#2`$ - Lucky Sparrow (adds `w{sparrowLuck} `$luck, for delivery only) Cost: `w{sparrowCost}`$ Bury Points\n`w#3`$ - Cursed Tiger (removes `w{tigerLuck}`$ luck, for delivery only) Cost: `w{tigerCost}`$ Bury Points\n",
+        "dragonLater": "`$Maybe later.  You especially like to eat Yang's when you're feeling down on your luck. (like less than {limit} percent for instance)",
+        "dragonBroke": "`$You check your wallet.. shoot, not enough Bury Points!",
+        "dragonDone": "`$You relish every bite of your General Tso's Chicken.\n\nYou gain `w{luck}`$ luck.",
+        "tigerOut": "`w{player}: `$\"I would like a cursed tiger delivered, please.\"\n\n`wJune: `$\"I'm sorry, my dad is out delivering food right now.  How about something for here?\"",
+        "sparrowOut": "`wYou: `$\"I would like a lucky sparrow delivered, please.\"\n\n`wJune: `$\"I'm sorry, my dad is out delivering food right now.  How about something for here?\"",
+        "tigerWho": "`wJune: `$\"Ah.. someone you are not too fond of, I take it.  Who would this unlucky person be?\" ",
+        "sparrowWho": "`wJune: `$\"That's very nice of you.  Who's the lucky person?\"",
+        "fortunePrompt": "`wJune: `$\"If you would like to write a custom fortune, enter it now.\"",
+        "bitchy": "`w{player}: `$\"That's very interesting.  Now get the god damn teriyaki, put it in a box, and deliver it.\"\n\n`wJune: `$\"Please leave now.\"",
+        "selfTarget": "`w{player}: `$\"If you could just deliver that to my parlor, that would be great, m'kay?\"\n\n`wJune: `$\"Why don't you just get food for here?\"\n\n`w{player}: `$\"Ok, fine.\"\n\n",
+        "limit": "`$\"We only allow {perDay} delivery per day,\" Mr Yang tells you apologetically. ",
+        "notHome": "`$Error delivering food, he wasn't home.",
+        "noPoints": "`$You don't have enough Bury Points.  You realize you would just look stupid trying to order now...",
+        "leaves": "`$Mr. Yang leaves to deliver the food.",
+        "tv": "A Yang's commercial comes on. It looks like {parlor} in the background.",
+        "news": [
+          "`7SPOTLIGHT ON OUR TOWN\r\n`^Local mortician {name} is seen buying some Yang's for delivery.\r\n\r\n",
+          "`7YANG'S NOW DELIVERS\r\n`^\"Yes, delivery is very popular.  You see this package from {name}? I'm going deliver it all the way to {parlor}, no extra charge!\" Mr Yang smiles.\r\n\r\n",
+          "`7YANG'S DOING WELL\r\n`^\"Ah, yes.  Business is very good today! People like {name} buying so much delivery,\" Mr Yang comments.\r\n\r\n",
+          "`7YANG'S MAKES A GREAT GIFT\r\n`^Looking for that special gift?  How about food? Today {name} was seen buying some, seems popular.\r\n\r\n"
+        ],
+        "tigerMail": "\n`$Some delicious smelling chinese food has been left on your doorstep.\nYour fortune cookie reads:\n`w\"{fortune}\"\n`$You lose `w{luck}`$ luck!\n",
+        "sparrowMail": "\n`${name} has sent you some chinese food.\nYour fortune cookie reads:\n`w\"{fortune}\"\n`$You gain `w{luck}`$ luck!\n",
+        "logTiger": "{name} sent Yang's to {target}, cookie: {fortune}",
+        "logSparrow": "{name} sent nice Yang's to {target}, cookie: {fortune}",
+        "buttons": {
+          "order1": "Order #1",
+          "order2": "Order #2",
+          "order3": "Order #3",
+          "leave": "Leave",
+          "continue": "Continue",
+          "getBitchy": "Get Bitchy"
+        }
+      },
+      "hospital": {
+        "location": "Hospital",
+        "note": "You are at the city hospital.  A nurse smiles at you.",
+        "greeting": "`wNurse: `$\"Hi {player}.  I don't recall you having a pick-up today.\"",
+        "roomNote": "You are lying on a bed, it doesn't look like your own.",
+        "roomText": "`$Your whole body aches.",
+        "wakeUp": "`wNurse: `$\"I see you finally woke up, {prince}.  Hope you'll be more careful next time.\"",
+        "princeMale": "prince charming",
+        "princeFemale": "sleeping beauty",
+        "leave": "Leave"
+      },
+      "options": {
+        "location": "Change Name",
+        "noChange": "`$This server doesn't allow name changes.  You're stuck with what your parents gave you.",
+        "note": "You stare at yourself in the mirror.\n\nMaybe it's time for a change.",
+        "ask": "`$Announcing your new name in the newspaper will cost `w{cost}`$ gold tag(s).  Do it?",
+        "prompt": "`wEnter your new name.",
+        "noGold": "`$You don't have enough gold tags.  Go exchange your woods or something.",
+        "same": "`$Yeah, {name}.. you like the sound of that... oh wait...",
+        "short": "`$What, are those initials?  Pick a longer name.",
+        "long": "`$Is that a name or a lecture?  Try something shorter.",
+        "taken": "`$Um, don't you think the real {name} would kind of be pissed?  Try something original.",
+        "news": "`5NAME CHANGE: {old} has changed {his} name to {new}.\r\n\r\n",
+        "done": "`$You will now be known as `w{name}`$.",
+        "buttons": {
+          "yes": "Yes",
+          "no": "No",
+          "continue": "Continue"
+        }
+      }
+    },
+    "social": {
+      "visit": {
+        "location": "Parlors",
+        "note": "A dense fog covers the row upon row of funeral homes. You see disturbed, emotionally unstable people trying to choose which parlor to patronize.  You fight the urge to hand out business cards, you have more important things to attend to.",
+        "watchNone": "You look at your watch, you should really get back to your parlor.\n",
+        "watchOne": "You look at your watch, you have time to visit `w1`$ more parlor today.\n",
+        "watchMany": "You look at your watch, you have time to visit `w{visits}`$ more parlors today.\n",
+        "buttons": {
+          "leave": "Leave",
+          "look": "Look",
+          "visit": "Visit",
+          "continue": "Continue",
+          "tryDoor": "Try Door",
+          "pickLock": "Pick Lock",
+          "steal": "Steal",
+          "attack": "Attack"
+        },
+        "noVisitsLeft": "Is today look at everyone's parlor day?  No, it's not.  Maybe tomorrow.",
+        "whoPrompt": "`$Who's funeral home would you like to pay a little visit to?",
+        "frontNote": "You are standing in front of a funeral parlor.  The sign above the door proudly announces the name, \"{parlor}\". ",
+        "self": "This parlor looks strangely familiar.\n\nYou decide to go inside...",
+        "online": "You see {name} through the window talking earnestly to a young couple, perhaps later would be better...",
+        "police": "You park your {ride} a few blocks away from {parlor}.  As you approach you see {name} talking to some cops, maybe you should come back after things cool down.",
+        "locked": "As you take your position behind a bush, you are surprised to see {other} already sitting there.\n\n`w{other}: `$\"Oh, hey {name}.  Tell ya what, {he}'s mine first, ok?\"\n\nYou agree to come back later.",
+        "outside": "The lights are off, the parlor is silent.  {name} must be sleeping inside.\n\nNobody seems to be looking, you could try the door-knob if you like.\n\nYou see a `w{ride}`$ parked nearby.",
+        "insideNote": "You have broken into {parlor}.",
+        "inside": "You quickly slip in and close the door.  You hear {name} softly snoring in the back room.",
+        "safe": "\n\nYou see a large combination `wSafe`$ in the corner.  You won't be able to steal tags.",
+        "hitpoints": "\n\nJudging from the room, you would guess {name} has `w{hp}`$ hitpoints.",
+        "padlockWithPicks": "There is a heavy padlock on the door at `w{strength} percent strength`y. What do you want to do?\n\nYou are holding `w{picks}`y lockpick(s).",
+        "padlock": "There is a heavy padlock on the door at `w{strength} percent strength`y.  What do you want to do?",
+        "noPick": "You attempt to pick the lock with your finger.  No go.  Perhaps if you had a real lockpick...",
+        "lockBroken": "As you are picking the lock the whole thing breaks and falls off!  Too bad your lockpick got stuck inside it.",
+        "lockBrokenMail": "`yYour padlock is `4damaged beyond repair`y by a prowler and falls off!",
+        "lockPicked": "`yYou successfully pick the lock.  Your lockpick breaks as you try to get it out which causes the padlock `w{damage}`y points of damage.",
+        "lockPickedMail": "`yYour padlock is weakened by `4{damage}`y down to `w{strength} percent strength`y by a prowler.",
+        "stealNothing": "You begin wildly opening drawers and things looking for anything of value.",
+        "stealOne": "You look around and find `w1 {type}`$ tag hidden on top of the refrigerator!",
+        "stealMany": "You look around and find `w{count} {type}`$ tags in a drawer!",
+        "stealNone": "You look around but can't find anything of value.",
+        "caught": "\n\nYou are startled by a noise behind you.  It's {name} in {his} {clothes}! You crash through a window and run like hell.",
+        "pajamas": "pajamas",
+        "lingerie": "lingerie",
+        "stealMail": "\n`wYou caught {name} sneaking around inside your parlor!`$\n",
+        "stealMailOne": "You scare {him} off.  You notice `w{count} {type} tag `$is missing.",
+        "stealMailMany": "You scare {him} off.  You notice `w{count} {type} tags `$are missing.",
+        "stealMailNothing": "You scare {him} off before {he} could steal anything.",
+        "tagTypes": [
+          "wooden",
+          "silver",
+          "gold"
+        ]
+      },
+      "battle": {
+        "note": "You are in battle.",
+        "cries": [
+          "Stop stealing my customers!",
+          "I will BURY you!",
+          "Messing with me was a grave mistake, dear {name}.",
+          "{discount}",
+          "I was in this town first!",
+          "You're an amateur! You don't belong here!"
+        ],
+        "discountMale": "Discount this, bastard!",
+        "discountFemale": "Discount this, bitch!",
+        "scream": "`w\"{cry}\" `$you scream as you break into {his} room.\n\n",
+        "firstSwing": "{name} is completely surprised, you get first swing!\n\n",
+        "theyKnew": "{name}'s eyes flick open, {he} knew you were in the house!\n\n",
+        "sidestep": "{name} swings but you sidestep the blow.",
+        "hitsYou": "{name} {verb} you for `4{damage}`$ damage.",
+        "dodges": "{name} dodges your swing.",
+        "soulSmash": "You `wsoul smash`$ {name} for `4{damage}`$ damage!",
+        "youHit": "You {verb} {name} for `4{damage}`$ damage.",
+        "verbsMe": [
+          "slap",
+          "sock",
+          "punch",
+          "kick",
+          "throw",
+          "squeeze",
+          "ninja",
+          "slam"
+        ],
+        "verbsHim": [
+          "slaps",
+          "socks",
+          "punches",
+          "kicks",
+          "throws",
+          "squeezes",
+          "ninja's",
+          "slams"
+        ],
+        "buttons": {
+          "run": "Run",
+          "attack": "Attack",
+          "continue": "Continue",
+          "leave": "Leave"
+        },
+        "attackedMail": "\n`wYou were attacked in your sleep by {name}!`$\n\n",
+        "ranOffMail": "{HeCap} got scared and ran off.\n\n",
+        "run": "You backflip through an open window and take off running.",
+        "injuredMail": "You are badly injured.  You vaguely remember riding in an ambulance.\n\n",
+        "nothingStolen": " Nothing was stolen.",
+        "oneStolen": " `w{count}`$ {type} tag was stolen from your pocket.",
+        "manyStolen": " `w{count}`$ {type} tags were stolen from your pockets.",
+        "hospitalTv": "It looks like {name} was taken to the hospital.",
+        "loseBpMail": "`$You lose `w{bp} `$Bury Points. {stolen}",
+        "pocketsNothing": "You go through {his} pockets but find nothing.",
+        "pocketsOne": "You go through {his} pockets and find `w{count} `${type} tag.",
+        "pocketsMany": "You go through {his} pockets and find `w{count} `${type} tags.",
+        "won": "{name} crumples to the floor. You have won the battle!\n\nYou earn `w{bp} `$Bury Points. {pockets}",
+        "kickedAssMail": "You woke up and kicked {his} ass!\n\n",
+        "earnBpMail": "`$You earn `w{bp} `$Bury Points. (applied to day {day})",
+        "lost": "You fall down, unable to get up.\n\nYou lose `w{bp} `$Bury Points.",
+        "faintedMail": "\n`wYou fainted while fighting {name}.`$\n\nYou vaguely remember riding in an ambulance.\n\n`$You lose `w{bp} `$Bury Points.",
+        "faintedCrime": "`8{winner} assaulted {loser} (who had fainted) in self defense!\r\n\r\n",
+        "yellWinPrompt": "`wYou hear police sirens in the distance... you can yell something as you leave or just hit ENTER to continue.",
+        "crimeWin": "`8{winner} brutally assaulted {loser}!\r\n\r\n",
+        "crimeWinQuote": "`8{winner} brutally assaulted {loser}!`6\r\n\"{quote}\" `8justified {winner}.\r\n\r\n",
+        "winQuoteMail": "`$While recovering you can't get what {name} yelled while escaping out of your head...\n\n`w\"{quote}\"`$",
+        "yellLostPrompt": "`wYou feel yourself being lifted into an ambulance.  Mutter something or just hit ENTER to continue.",
+        "crimeLost": "`8{winner} assaulted {loser} in self defense!\r\n\r\n",
+        "crimeLostQuote": "`8{winner} assaulted {loser} in self defense!`6\r\n\"{quote}\" `8moaned {loser} from the ambulance.\r\n\r\n",
+        "lostQuoteMail": "`$As {name} is leaving you hear {him} moaning from the ambulance...\n\n`w\"{quote}\"`$"
+      },
+      "cafe": {
+        "title": "Pale Horse Cafe",
+        "location": "in cafe",
+        "intro": "`$The `wPale Horse `$has been here since before you can remember.  A great place to gossip or just sip a mochachino and watch tv.\n\nYou always wondered why they had that big glass bottle on the roof.\n\n{names}\nEnter /? for help.\n\n",
+        "onlyOne": "`$You are the only one here.",
+        "othersHere": "`$Other people here:",
+        "saunters": "`5{name} saunters in.",
+        "help": "\n** `$Cafe chat help **`w\n\n`w/yell `$to send a message to everyone\n`w/me`$ to do a custom action\n`w/all `$to see who is online now\n`w/give name tag_type `$to give a tag. Example: `w/give Seth gold\n`w/info `$to show how many BP's, turns and tags you have now.\n`w/tv on (or off) `$to control the cafe tv.\n",
+        "allHeader": "\n`wName                 Status            Last hit",
+        "allRule": "`$-----------------------------------------------",
+        "seconds": "{n} Sec",
+        "minutes": "{n} Min",
+        "hours": "{n} Hour(s)",
+        "tvIsOn": "`5The TV is currently on.",
+        "tvIsOff": "`5The TV is currently off, that stuff will rot your brain.",
+        "tvTurnedOn": "`5You turn the tv on.",
+        "tvTurnedOff": "`5You turn the tv off.",
+        "giveNobody": "`5You look around the room but don't see anyone with `w'{search}'`5 in their name.",
+        "giveBadType": "`5Valid tag types are wood, silver and gold.",
+        "giveEmpty": "`5{name} looks in his pocket for a {casket} tag but comes up empty.",
+        "giveSelf": "`5{name} absently tosses a {casket} tag into the air and catches it.",
+        "giveDisabled": "`5{name} is unable to give `w{target} `5a {casket} tag. (the admin has disabled tag transfer)",
+        "giveLimit": "`5{name} is unable to give `w{target} `5a {casket} tag. (he's already received {count} today)",
+        "gave": "`5{name} gives `w{target} `5a {casket} tag.",
+        "info": "`5You have `w{turns}`5 turns left today and `w{visits}`5 parlor visits.\nToday's BP's: `w{bpToday}`5, total BP's: `w{bp}`5.\nCasket tags: `w{wood}`5 Wood, `w{silver}`5 Silver, `w{gold}`5 Gold.",
+        "me": "`${name} {text}",
+        "yell": "{name} yells: {text}",
+        "say": "`${name}: `w{text}",
+        "unknown": "Unknown command.  Do /? for the list.",
+        "notice": "`w{text}",
+        "leave": "Leave"
+      },
+      "mail": {
+        "writeLabel": "Write Letter",
+        "whoPrompt": "You get your pen and some paper.  Who would you like to mail?",
+        "nameHint": "(enter full or partial name)",
+        "doYouMean": "Do you mean {name}?",
+        "noName": "Sorry, nobody by that name lives around here!",
+        "composePrompt": "Please enter your text.",
+        "noSuchPlayer": "Can't email, player doesn't exist?",
+        "received": "`$You have received a letter from `w{name}`$:\n\n{text}",
+        "replyPrompt": "Reply to this letter?",
+        "waiting": "You have mail waiting for you at your parlor."
+      },
+      "news": {
+        "noCrime": "There has been no crime reported today.",
+        "buttons": {
+          "front": "Front Page",
+          "crime": "Crime",
+          "yesterday": "Yesterday",
+          "today": "Today",
+          "announce": "Make Announcement",
+          "continue": "Continue"
+        },
+        "announcePrompt": "Please enter your text.",
+        "announcementHeader": "`8{name} of {parlor} makes an announcement:`6\r\n"
+      },
+      "lobby": {
+        "tournament": "Game Info: Tournament Mode Active (day {day} of {days}) - {online} of {players} players on now.",
+        "noWinner": "New tournament starting tomorrow, please come back then!",
+        "over": "Game Info: Tournament is OVER, {name} declared winner.  New game starting tomorrow.",
+        "endless": "Game Info: No Reset Mode Active (day {day}) - {online} of {players} players on now.",
+        "dayZero": "A brand new game of FQ will be starting tomorrow! (Server will auto-reset at midnight)",
+        "closedOver": "A new game is starting tomorrow, please come back then!",
+        "closedDayZero": "A new game is starting tomorrow, please come back then! (Or midnight tonight!)"
+      }
+    }
+  }
+}

@@ -1,0 +1,152 @@
+/*
+ * The desk's choices: a few plaques (wait for a customer, leave, end the day) and the capsule
+ * menu of the original, round brass icon buttons for the fixed places (map, paper, stats,
+ * rankings, letter). One row in the 4:3 and 16:9 cabinets; on a phone the icons sit in a row of
+ * five above full-width plaques.
+ */
+
+.fq-deskmenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(var(--u) * 6) calc(var(--u) * 8);
+}
+
+.fq-deskmenu-before,
+.fq-deskmenu-after {
+  display: flex;
+  min-width: 0;
+}
+
+.fq-deskmenu .fq-plaques ul {
+  flex-wrap: nowrap;
+  gap: calc(var(--u) * 8);
+}
+
+.fq-cabinet[data-cab] .fq-deskmenu-before .fq-plaque-item {
+  flex: 0 0 calc(var(--u) * 144);
+}
+
+.fq-cabinet[data-cab] .fq-deskmenu-after .fq-plaque-item {
+  flex: 0 0 calc(var(--u) * 96);
+}
+
+/* The row sits inside the text well, above its bezel. */
+.fq-r-buttons[data-desk] {
+  bottom: calc(var(--u) * (var(--btn-bottom) + 14));
+}
+
+.fq-deskmenu .fq-plaques ul {
+  align-items: flex-end;
+}
+
+.fq-orbs ul {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The button strip lets clicks through (see door.css); the round buttons take their own. */
+.fq-orbs,
+.fq-orbs ul,
+.fq-deskmenu {
+  pointer-events: none;
+}
+
+.fq-orb {
+  pointer-events: auto;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 1px;
+  width: calc(var(--u) * 74);
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fq-gold-light);
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: max(13px, calc(var(--u) * 15));
+  line-height: 1.05;
+  text-align: center;
+  cursor: pointer;
+}
+
+.fq-orb-icon {
+  display: block;
+  width: max(44px, calc(var(--u) * 46));
+  height: max(44px, calc(var(--u) * 46));
+  filter: drop-shadow(0 calc(var(--u) * 2) calc(var(--u) * 2) rgba(0, 0, 0, 0.6));
+  transition: filter 0.12s;
+}
+
+.fq-orb-label {
+  text-shadow: 0 1px 2px #000;
+}
+
+.fq-orb:hover .fq-orb-icon {
+  filter: brightness(1.2) drop-shadow(0 calc(var(--u) * 2) calc(var(--u) * 2) rgba(0, 0, 0, 0.6));
+}
+
+.fq-orb:active .fq-orb-icon {
+  transform: translateY(calc(var(--u) * 1));
+}
+
+.fq-orb[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fq-orb:focus-visible {
+  outline: 3px solid var(--fq-focus);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---------- Phone ---------- */
+
+.fq-cabinet[data-layout="phone"] .fq-deskmenu {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.fq-cabinet[data-layout="phone"] .fq-orbs ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 8px 4px 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.fq-cabinet[data-layout="phone"] .fq-orb {
+  width: 100%;
+  font-size: 14px;
+}
+
+.fq-cabinet[data-layout="phone"] .fq-deskmenu-before,
+.fq-cabinet[data-layout="phone"] .fq-deskmenu-after,
+.fq-cabinet[data-layout="phone"] .fq-deskmenu .fq-plaques,
+.fq-cabinet[data-layout="phone"] .fq-deskmenu .fq-plaques ul {
+  display: grid;
+  width: 100%;
+}
+
+/* A label that would need two lines stays on one, smaller, so the plaque is never clipped. */
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu .fq-plaque-label {
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu .fq-plaque-label[data-len="long"],
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu .fq-plaque-label[data-len="longer"] {
+  font-size: 0.66em;
+  white-space: nowrap;
+}

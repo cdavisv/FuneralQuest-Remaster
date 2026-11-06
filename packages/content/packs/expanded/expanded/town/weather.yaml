@@ -1,0 +1,243 @@
+# The day's weather (22.2): a label, morning lines (one is picked), a small effect.
+
+- id: 'clear'
+  label: 'Clear'
+  morning:
+    - 'A clear, crisp morning. Perfect weather for a funeral, or for causing one.'
+    - 'The sun is out. Somewhere a bird is singing. You find this suspicious.'
+    - 'Not a cloud in the sky. The mourners will have to supply their own gloom.'
+    - 'Blue skies over Deathville. The undertakers squint at it like it owes them money.'
+    - 'A beautiful day. Old Man Withers is out on his porch, outliving people at a steady pace.'
+    - 'Sunshine. The headstones gleam. The groundskeeper polishes the ones that pay.'
+    - 'A perfect morning. Even Morty looks a little less dead in this light.'
+    - 'Clear skies and a light breeze. The kind of day people say they want to be buried on.'
+  effect: 'no effect'
+  weight: 3
+  modifiers: []
+- id: 'overcast'
+  label: 'Overcast'
+  morning:
+    - 'A low grey sky, like the lid of a cheap casket. The town is subdued.'
+    - 'Overcast. Nobody is happy, but nobody is angry either. Ideal.'
+    - 'The clouds sit on the town like a wet blanket. Families arrive quiet and resigned.'
+    - 'Grey all morning. Father Smyth says it''s the Lord''s way of setting the mood.'
+    - 'A sky the colour of embalming fluid. You feel strangely at home.'
+    - 'Flat grey light. Everyone looks a little like a photograph of themselves.'
+    - 'Overcast and still. Even the crows are speaking softly.'
+    - 'A dull, sleepy morning. Customers will sit where you put them.'
+  effect: 'customers a touch calmer'
+  weight: 2
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: -0.1
+- id: 'rain'
+  label: 'Rain'
+  morning:
+    - 'It''s pouring. Rain makes people sad, and sad people buy flowers.'
+    - 'A grey drizzle. The mourners will cry harder and haggle less.'
+    - 'Rain on the windows. Families come in damp and too miserable to argue.'
+    - 'A steady rain. The graves will need topping up again.'
+    - 'It''s raining on every funeral in town. Business is good and soggy.'
+    - 'Rain all day. Someone''s umbrella is already in your umbrella stand. Now it''s yours.'
+    - 'Wet and cold. The tissues are on special and you put them by the door.'
+    - 'Rain hammers the hearse roof. Customers want to get the paperwork done and go home.'
+  effect: 'customers haggle a little less'
+  weight: 2
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: -0.2
+- id: 'fog'
+  label: 'Fog'
+  morning:
+    - 'A dense fog covers the mounds and headstones. A good night to dig where you shouldn''t.'
+    - 'Fog so thick you can''t see your own hearse. The groundskeeper can''t see you either.'
+    - 'The fog rolls in off Lake Bleak. Something in it is humming.'
+    - 'Pea soup out there. Shady men in long coats are suddenly very easy to talk to.'
+    - 'Fog. You hear a shovel somewhere in the graveyard, and then another one answering it.'
+    - 'Thick fog all morning. Deacon the graveyard dog is barking at nothing in particular.'
+    - 'The fog hides everything, which is how the Reaper Club likes it.'
+    - 'You can''t see the end of the street. Somebody down there is selling something.'
+  effect: '+15 luck robbing graves, more risky offers'
+  weight: 1.5
+  modifiers:
+    - key: 'graveyard.robLuck'
+      op: 'add'
+      value: 15
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.3
+- id: 'storm'
+  label: 'Thunderstorm'
+  morning:
+    - 'Thunder. Every customer jumps at each crack and wants to get this over with.'
+    - 'Lightning hit the church again. Father Smyth is taking it personally.'
+    - 'A storm rolls over town. The power flickers and the cooler groans.'
+    - 'Thunder rattles the display caskets. One of them rattles back.'
+    - 'Lightning, then thunder, then a scream from the bingo hall. Business as usual.'
+    - 'The storm knocked over a tree onto the Mayor''s first statue. The second statue saw it all.'
+    - 'Rain sideways and thunder overhead. Customers are short-tempered and soaking.'
+    - 'A wild storm. Somebody''s toupee went past your window at forty miles an hour.'
+  effect: 'customers 1 patience shorter'
+  weight: 1
+  modifiers:
+    - key: 'customer.patience'
+      op: 'add'
+      value: -1
+- id: 'heat'
+  label: 'Scorcher'
+  morning:
+    - 'It''s a hundred and four in the shade, and the shade is in the cooler with the bodies.'
+    - 'A blistering morning. The asphalt is soft and the tempers are short.'
+    - 'Heat haze over the graveyard. The flowers wilted before the funeral started.'
+    - 'The thermometer outside Di-Mart gave up and fell off the wall.'
+    - 'So hot the ice in your lemonade evaporated on the way to your mouth.'
+    - 'A scorcher. The fans are on full and the families are sweating through their black.'
+    - 'Heat like an oven. Your Incinerator feels left out.'
+    - 'Hot enough to fry an egg on the hearse. Somebody is trying, outside.'
+  effect: 'customers arrive a little angrier'
+  weight: 1
+  modifiers:
+    - key: 'customer.mood'
+      op: 'add'
+      value: 0.3
+- id: 'muggy'
+  label: 'Muggy'
+  morning:
+    - 'Damp and sticky. The bodies won''t keep like they ought to.'
+    - 'Humid as a swamp. Every corpse in town needs attention by noon.'
+    - 'The air is soup. Your embalming room smells like a decision you''ll regret.'
+    - 'Muggy and close. Flies are lining up outside the cooler.'
+    - 'Sticky weather. The deceased are getting ahead of themselves.'
+    - 'Wet heat. The formaldehyde is sweating more than you are.'
+    - 'It''s muggy enough that the graveyard is steaming. Nobody wants to know why.'
+    - 'Thick, warm air. A good day to have a strong stomach and a full storeroom of fluid.'
+  effect: 'more bodies to prepare'
+  weight: 1
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 1.2
+- id: 'snow'
+  label: 'Snow'
+  morning:
+    - 'Snow. The ground is too hard to dig, so families are paying extra for the crypt.'
+    - 'Fresh snow over the headstones. The graveyard looks almost respectable.'
+    - 'A white morning. The hearse slides into the lot sideways, which is now its parking style.'
+    - 'Snow falling soft and slow. Families feel sentimental and generous.'
+    - 'Snowed in. Somebody built a snowman with a shovel and a toe tag.'
+    - 'A heavy snowfall. The digging crew charges double and drinks triple.'
+    - 'Snow on everything. It''s hard to haggle when your teeth are chattering.'
+    - 'Snow. The kind of day that makes people want a warm, expensive casket.'
+  effect: 'families spend 5% more'
+  weight: 1
+  modifiers:
+    - key: 'customer.limitMult'
+      op: 'mul'
+      value: 1.05
+- id: 'cold-snap'
+  label: 'Cold Snap'
+  morning:
+    - 'Bitter cold. The bodies keep themselves today. Your embalming table gets a rest.'
+    - 'A cold snap. The cooler is the warmest room in the parlor.'
+    - 'Frost on the inside of the windows. The deceased are well preserved by nature.'
+    - 'Freezing. Morty''s joints creak in sympathy.'
+    - 'So cold the groundskeeper''s dog is wearing the groundskeeper''s coat.'
+    - 'Below zero. Nobody''s going off in a hurry, not even the dead.'
+    - 'An icy morning. The flowers out front are frozen in a very nice arrangement.'
+    - 'Cold enough to keep a body on the porch. Three of your neighbours are doing it.'
+  effect: 'fewer bodies need preparing'
+  weight: 0.8
+  modifiers:
+    - key: 'prep.chance'
+      op: 'mul'
+      value: 0.8
+- id: 'hail'
+  label: 'Hail'
+  morning:
+    - 'Hail the size of golf balls. Di-Mart''s casket delivery is covered in dents.'
+    - 'Hailstorm. Elijah is selling dented caskets at a small discount and a straight face.'
+    - 'Hail bounces off the hearse. It now has a texture, like a golf ball.'
+    - 'Ice from the sky all morning. The Mayor''s statues are both pockmarked.'
+    - 'A short, violent hailstorm. Several umbrellas are dead. You offer a group rate.'
+    - 'Hail on the roof like a drum solo. The storeroom has some new dents.'
+    - 'Hailstones in the gutters. Di-Mart''s loading dock looks like a battlefield.'
+    - 'Hail, then sun, then hail. Di-Mart is calling the dents ''character''.'
+  effect: 'Di-Mart caskets 5% off (dents)'
+  weight: 0.7
+  modifiers:
+    - key: 'store.stockPrice'
+      op: 'mul'
+      value: 0.95
+- id: 'gale'
+  label: 'Gale'
+  morning:
+    - 'High winds. Things blow in through the door that aren''t customers.'
+    - 'A gale off the lake. Your sign is now in Blaine.'
+    - 'Wind howling through the graveyard. The wreaths are migrating south.'
+    - 'A gusty day. Every few minutes something bangs against the parlor and you go look.'
+    - 'The wind took the church''s bingo banner. It is now wrapped around the water tower.'
+    - 'So windy the Funeral Times arrived a page at a time, from three directions.'
+    - 'Gale-force gusts. A trash can rolls past, followed by its owner, followed by a dog.'
+    - 'Wind rattles the windows all day. You keep thinking someone is at the door.'
+  effect: 'more distractions between customers'
+  weight: 0.8
+  modifiers:
+    - key: 'wait.eventOdds'
+      op: 'mul'
+      value: 1.2
+- id: 'black-ice'
+  label: 'Black Ice'
+  morning:
+    - 'Black ice on every road. Families who make it to your parlor are in no rush to leave.'
+    - 'The streets are glass. Your customers will stay for a second cup of coffee, and a third.'
+    - 'Treacherous roads. People take their time over everything, including grief.'
+    - 'Black ice. The hearse goes nowhere fast, and neither does anybody else.'
+    - 'Slick roads all morning. Mourners settle into your chairs like they live there.'
+    - 'Ice everywhere. The salt truck is in a ditch with its lights on.'
+    - 'Black ice. Two hearses slid into each other on Elm Street and the deceased swapped cars.'
+    - 'The roads are a skating rink. Visitors linger, and listen.'
+  effect: 'customers 1 patience longer'
+  weight: 0.6
+  modifiers:
+    - key: 'customer.patience'
+      op: 'add'
+      value: 1
+- id: 'full-moon'
+  label: 'Full Moon'
+  morning:
+    - 'A full moon last night, and it''s still hanging around. So are some very odd people.'
+    - 'The moon was full and red. Everybody who comes in today has a story.'
+    - 'Full moon. Old Man Withers was seen in the cornfield again, in the mask.'
+    - 'A big bright moon. The Reaper Club stayed open until it went down.'
+    - 'Full moon. Strange folk are about, and stranger deals.'
+    - 'The moon is full and Deacon howled at it all night. He says he''s fine.'
+    - 'Full moon last night. Three people swore Morty waved at them.'
+    - 'A fat moon over the graveyard. Unusual customers are rattling your door knob.'
+  effect: 'more unusual customers and risky offers'
+  weight: 0.5
+  modifiers:
+    - key: 'customer.specialChance'
+      op: 'mul'
+      value: 1.5
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.2
+- id: 'smog'
+  label: 'Smog (From Blaine)'
+  morning:
+    - 'Smog drifting over from Blaine. Everyone is coughing and counting their change.'
+    - 'A brown haze from Blaine''s crematorium. People are irritable and stingy.'
+    - 'Smog. The sun is a dim orange coin, and everybody''s holding on to theirs.'
+    - 'Blaine''s chimneys are at it again. Families come in wheezing and suspicious.'
+    - 'The air tastes like Blaine. Nobody is in a generous mood.'
+    - 'A yellow haze over town. Customers squint at your price list like it insulted them.'
+    - 'Smog so thick you could bottle it, and Blaine probably will.'
+    - 'Hazy and sour. The kind of day people ask what the cheapest option is, twice.'
+  effect: 'customers haggle a little harder'
+  weight: 0.8
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.2

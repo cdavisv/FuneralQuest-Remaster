@@ -1,0 +1,1134 @@
+/*
+ * The front door (title screen, log-on plaque, new-user screens), the static pages, notices
+ * (toasts, banners, the mail indicator), the session-ended screen and the stats and rankings
+ * sheets. Same units as app.css: everything is sized from --u.
+ */
+
+/* ---------- Shared small controls ---------- */
+
+.fq-linkbtn {
+  padding: 4px 2px;
+  border: 0;
+  background: none;
+  color: var(--fq-gold-light);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.fq-linkbtn:hover {
+  color: #fff;
+}
+
+.fq-linkbtn[aria-current="page"] {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid var(--fq-gold);
+}
+
+.fq-linkbtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.fq-surface-light .fq-linkbtn {
+  color: #5a3205;
+}
+
+/* ---------- Door: the title screen ---------- */
+
+.fq-door {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #070b12;
+}
+
+/* The title art is wider than the 4:3 stage: show all of it from the top, the rest is night. */
+.fq-door .fq-lobby-bg {
+  object-fit: contain;
+  object-position: center top;
+  filter: brightness(0.85);
+}
+
+.fq-door-clerk {
+  left: calc(var(--u) * 40);
+  bottom: calc(var(--u) * 30);
+  height: calc(var(--u) * 330);
+}
+
+.fq-cabinet[data-layout="wide"] .fq-door-clerk {
+  left: calc(var(--u) * 150);
+}
+
+.fq-door-info {
+  position: absolute;
+  left: calc(var(--u) * 336);
+  top: calc(var(--u) * 118);
+  width: calc(var(--u) * 640);
+  display: grid;
+  gap: calc(var(--u) * 6);
+  padding: calc(var(--u) * 10) calc(var(--u) * 16);
+  border-radius: calc(var(--u) * 8);
+  background: rgba(8, 10, 16, 0.72);
+  border: 1px solid rgba(232, 195, 90, 0.35);
+  font-size: max(13px, calc(var(--u) * 16 * var(--fq-font-scale)));
+  line-height: 1.35;
+  color: #e9e4d6;
+}
+
+.fq-cabinet[data-layout="wide"] .fq-door-info {
+  left: calc(var(--u) * 464);
+}
+
+.fq-door-server {
+  margin: 0;
+  color: var(--fq-gold-light);
+  font-weight: 700;
+}
+
+.fq-door-server[data-state="error"] {
+  color: #ffb4a8;
+}
+
+.fq-door-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px calc(var(--u) * 16);
+}
+
+.fq-door-status-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px calc(var(--u) * 22);
+  margin: 0;
+}
+
+.fq-door-status-list > div {
+  display: flex;
+  gap: 0.4em;
+}
+
+.fq-door-status-list dt {
+  color: #b9b29c;
+}
+
+.fq-door-status-list dt::after {
+  content: ":";
+}
+
+.fq-door-status-list dd {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fq-door-gameinfo {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fq-door-closed {
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(163, 24, 10, 0.35);
+  border: 1px solid #c8601f;
+  color: #ffd2a8;
+}
+
+.fq-door-news {
+  max-height: calc(var(--u) * 78);
+  overflow: auto;
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid rgba(232, 195, 90, 0.25);
+}
+
+.fq-door-news p {
+  margin: 0;
+}
+
+.fq-door-news-title {
+  margin: 0;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 1.15em;
+  color: var(--fq-gold-light);
+}
+
+.fq-towns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fq-town {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 4px 10px;
+  border: 1px solid rgba(232, 195, 90, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.fq-town input {
+  accent-color: var(--fq-gold);
+}
+
+.fq-town[data-checked] {
+  background: rgba(232, 195, 90, 0.2);
+  border-color: var(--fq-gold-light);
+}
+
+.fq-town-count {
+  color: #b9b29c;
+  font-size: 0.9em;
+}
+
+.fq-door-plaque {
+  position: absolute;
+  left: calc(var(--u) * 336);
+  top: calc(var(--u) * 318);
+  width: calc(var(--u) * 640);
+  border: solid transparent;
+  border-width: calc(var(--u) * 34);
+  border-image: var(--art-login-plaque) 26 fill / calc(var(--u) * 34) stretch;
+  filter: drop-shadow(0 calc(var(--u) * 10) calc(var(--u) * 16) rgba(0, 0, 0, 0.6));
+}
+
+.fq-cabinet[data-layout="wide"] .fq-door-plaque {
+  left: calc(var(--u) * 464);
+}
+
+.fq-door-inner {
+  display: block;
+  position: relative;
+  padding: calc(var(--u) * 12) calc(var(--u) * 20) calc(var(--u) * 14);
+  border-radius: calc(var(--u) * 8);
+  background: linear-gradient(180deg, #ecd8a6, #d9c08a);
+  box-shadow:
+    inset 0 0 0 2px rgba(90, 50, 5, 0.4),
+    inset 0 3px 12px rgba(60, 35, 5, 0.35);
+  color: #2a1a08;
+  font-size: max(14px, calc(var(--u) * 17 * var(--fq-font-scale)));
+}
+
+/* Without the art pack the plaque is drawn. */
+.fq-app[data-art="drawn"] .fq-door-plaque {
+  border: 6px solid var(--fq-plaque-rim);
+  border-image: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #b79d6a, var(--fq-plaque-face));
+}
+
+/* New-user screens: the status block makes way, and the plaque centres under the title. */
+.fq-door[data-clerk="desk"] .fq-door-info {
+  display: none;
+}
+
+.fq-door[data-clerk="desk"] .fq-door-plaque {
+  left: calc(var(--u) * 192);
+  top: calc(var(--u) * 104);
+}
+
+.fq-cabinet[data-layout="wide"] .fq-door[data-clerk="desk"] .fq-door-plaque {
+  left: calc(var(--u) * 320);
+}
+
+/* New-user screens: the clerk sits at his desk in the top corner of the plaque. */
+.fq-door[data-clerk="desk"] .fq-door-inner {
+  padding-right: calc(var(--u) * 200);
+}
+
+.fq-door-portrait {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(var(--u) * 168);
+  height: calc(var(--u) * 150);
+  padding: calc(var(--u) * 10) calc(var(--u) * 10) 0;
+  border: solid transparent;
+  border-width: calc(var(--u) * 10);
+  border-image: var(--art-picture-frame) 12 fill / calc(var(--u) * 10) stretch;
+  background: #101820;
+  overflow: hidden;
+}
+
+.fq-door-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.fq-door-form {
+  display: grid;
+  gap: calc(var(--u) * 6);
+  margin: 0;
+}
+
+.fq-door-heading {
+  margin: 0 0 calc(var(--u) * 4);
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: max(18px, calc(var(--u) * 24 * var(--fq-font-scale)));
+  line-height: 1.2;
+  color: #2a1a08;
+}
+
+.fq-door[data-clerk="desk"] .fq-door-heading {
+  font-size: max(15px, calc(var(--u) * 19 * var(--fq-font-scale)));
+  min-height: calc(var(--u) * 108);
+  font-weight: 600;
+}
+
+.fq-door-line {
+  margin: 0;
+}
+
+.fq-field {
+  display: grid;
+  gap: 2px;
+}
+
+.fq-field-label {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.1em;
+  padding: 0;
+}
+
+.fq-field input[type="text"],
+.fq-field input[type="password"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 calc(var(--u) * 14);
+  border: 2px solid #8a6b36;
+  border-radius: calc(var(--u) * 16);
+  background: #fff6d8;
+  color: #1b1004;
+  box-shadow: inset 0 2px 4px rgba(60, 35, 5, 0.35);
+}
+
+.fq-field[data-invalid="true"] input {
+  border-color: #a3180a;
+  background: #ffe9dc;
+}
+
+.fq-field-note {
+  margin: 0;
+  min-height: 1.3em;
+  font-size: 0.82em;
+  line-height: 1.25;
+  color: #4a3512;
+}
+
+.fq-field-error {
+  color: #8c1206;
+  font-weight: 700;
+}
+
+.fq-form-alert {
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #ffe1d2;
+  border: 1px solid #a3180a;
+  color: #7c1005;
+  font-weight: 700;
+}
+
+.fq-door-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 10) calc(var(--u) * 14);
+  margin-top: calc(var(--u) * 4);
+}
+
+.fq-door-or {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.fq-door-btn {
+  min-width: calc(var(--u) * 150);
+}
+
+.fq-door-btn[data-variant="primary"] {
+  min-width: calc(var(--u) * 170);
+}
+
+.fq-door-btn[data-variant="quiet"] {
+  filter: saturate(0.6);
+}
+
+.fq-door-btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.fq-door-guest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.fq-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+}
+
+.fq-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: #6b3d10;
+}
+
+.fq-sex {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fq-sex-skulls {
+  display: flex;
+  gap: calc(var(--u) * 18);
+}
+
+.fq-skull {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 12px 4px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.fq-skull input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+.fq-skull img {
+  height: max(52px, calc(var(--u) * 66));
+  width: auto;
+  filter: grayscale(0.7) brightness(0.8);
+  transition: filter 0.12s;
+}
+
+.fq-skull:hover img {
+  filter: grayscale(0.2);
+}
+
+.fq-skull[data-checked] {
+  border-color: #6b3d10;
+  background: rgba(255, 245, 210, 0.45);
+}
+
+.fq-skull[data-checked] img {
+  filter: none;
+}
+
+.fq-skull:has(input:focus-visible) {
+  outline: 3px solid var(--fq-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--fq-focus-halo);
+}
+
+.fq-skull-label {
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+.fq-skull-fallback {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #cfc6b3;
+  font-weight: 700;
+}
+
+.fq-arrows {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: calc(var(--u) * 6);
+}
+
+.fq-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.05em;
+  color: #2a1a08;
+  cursor: pointer;
+}
+
+.fq-arrow img,
+.fq-arrow > span[aria-hidden] {
+  width: max(34px, calc(var(--u) * 40));
+  height: max(34px, calc(var(--u) * 40));
+}
+
+.fq-arrow-back img,
+.fq-arrow-back > span[aria-hidden] {
+  transform: scaleX(-1);
+}
+
+.fq-arrow:hover {
+  filter: brightness(1.2);
+}
+
+.fq-arrow[aria-disabled="true"],
+.fq-arrow:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+/* ---------- Door: phone ---------- */
+
+.fq-cabinet[data-layout="phone"][data-scene="door"] .fq-cabinet-inner {
+  background: #070b12;
+  border-top: 0;
+  padding: 8px 12px 24px;
+}
+
+.fq-cabinet[data-layout="phone"][data-scene="door"] .fq-chrome {
+  justify-content: flex-end;
+}
+
+.fq-cabinet[data-layout="phone"][data-scene="door"] .fq-brand {
+  display: none;
+}
+
+.fq-cabinet[data-layout="phone"][data-scene="door"] {
+  height: auto;
+  min-height: 100dvh;
+}
+
+.fq-door[data-layout="phone"][data-clerk="desk"] .fq-door-info {
+  display: none;
+}
+
+.fq-door[data-layout="phone"] {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  background: none;
+  overflow: visible;
+  font-size: 16px;
+}
+
+/* On a phone only the graveyard is kept behind the forms; the title is the logo above them. */
+.fq-door[data-layout="phone"] .fq-lobby-bg {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 60vh;
+  z-index: 0;
+  object-fit: cover;
+  object-position: center bottom;
+  clip-path: inset(38% 0 0 0);
+  opacity: 0.55;
+}
+
+.fq-door[data-layout="phone"] > *:not(.fq-lobby-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.fq-door[data-layout="phone"] .fq-door-clerk {
+  display: none;
+}
+
+.fq-door-logo {
+  width: min(100%, 360px);
+  justify-self: center;
+}
+
+.fq-door[data-layout="phone"] .fq-door-info,
+.fq-door[data-layout="phone"] .fq-door-plaque {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: auto;
+  font-size: 15px;
+}
+
+.fq-door[data-layout="phone"] .fq-door-plaque {
+  border-width: 22px;
+  border-image: var(--art-login-plaque) 26 fill / 22px stretch;
+}
+
+.fq-door[data-layout="phone"] .fq-door-inner {
+  font-size: 16px;
+}
+
+.fq-door[data-layout="phone"][data-clerk="desk"] .fq-door-inner {
+  padding-right: 0;
+}
+
+.fq-door[data-layout="phone"] .fq-door-portrait {
+  width: 104px;
+  height: 96px;
+}
+
+.fq-door[data-layout="phone"] .fq-door-heading,
+.fq-door[data-layout="phone"][data-clerk="desk"] .fq-door-heading {
+  min-height: 0;
+  font-size: 18px;
+}
+
+.fq-door[data-layout="phone"][data-clerk="desk"] .fq-door-heading {
+  min-height: 92px;
+  padding-right: 112px;
+  font-size: 16px;
+}
+
+.fq-door[data-layout="phone"] .fq-arrows {
+  flex-wrap: wrap;
+}
+
+.fq-door[data-layout="phone"] .fq-arrow span:not([aria-hidden]) {
+  white-space: nowrap;
+}
+
+.fq-door[data-layout="phone"] .fq-door-news {
+  max-height: none;
+}
+
+.fq-door[data-layout="phone"] .fq-door-btn {
+  flex: 1 1 130px;
+}
+
+/* ---------- Static pages ---------- */
+
+.fq-page {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  background: #070b12;
+  color: #eee;
+}
+
+/* Only the graveyard of the title art, behind the page; the logo is drawn above. */
+.fq-page-bg {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  object-position: center bottom;
+  clip-path: inset(38% 0 0 0);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.fq-page-inner {
+  z-index: 1;
+}
+
+.fq-page-inner {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  width: min(100%, 860px);
+  margin: 0 auto;
+  padding: 14px 14px 40px;
+}
+
+.fq-page-head {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.fq-page-logo {
+  width: min(70%, 360px);
+}
+
+.fq-page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 18px;
+  font-size: 1.05rem;
+}
+
+.fq-page-play {
+  font-weight: 700;
+}
+
+.fq-page-panel {
+  padding: clamp(16px, 3vw, 30px);
+  border: 6px solid;
+  border-color: #947845 #56391b #56391b #947845;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #c9b07a, #b89867);
+  color: var(--fq-parchment-ink);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  line-height: 1.5;
+}
+
+.fq-page-title {
+  margin: 0 0 4px;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 2.1rem;
+  line-height: 1.1;
+}
+
+.fq-page-title:focus,
+.fq-page-title:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.fq-page-lead {
+  margin: 0 0 10px;
+  font-weight: 700;
+  color: #5a3205;
+}
+
+.fq-page-panel h3 {
+  margin: 1.2em 0 0.2em;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.fq-page-panel p {
+  margin: 0.6em 0;
+}
+
+.fq-page-panel ul {
+  margin: 0.4em 0 0.8em;
+  padding-left: 1.3em;
+}
+
+.fq-page-panel li {
+  margin: 0.25em 0;
+}
+
+.fq-page-foot {
+  margin-top: 1.4em;
+}
+
+.fq-page-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fq-page-table th,
+.fq-page-table td {
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(60, 35, 5, 0.3);
+}
+
+.fq-page-table .fq-num-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Notices: banners, toasts, the mail indicator ---------- */
+
+.fq-notices {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 40;
+  pointer-events: none;
+  font-size: 15px;
+}
+
+.fq-banners {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: max(6px, env(safe-area-inset-top)) 10px 0;
+}
+
+.fq-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #4a3512;
+  background: rgba(30, 20, 6, 0.92);
+  color: #f6e7b8;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+}
+
+.fq-banner-conn[data-state="reconnecting"] {
+  border-color: #c8601f;
+  color: #ffd2a8;
+}
+
+.fq-banner-conn[data-state="reconnecting"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f09a50;
+  animation: fq-pulse 1.4s ease-in-out infinite;
+}
+
+.fq-banner-day {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-color: var(--fq-gold);
+  background: linear-gradient(180deg, #4a3208, #281700);
+  color: #ffe9a8;
+}
+
+@keyframes fq-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fq-banner-conn[data-state="reconnecting"]::before {
+    animation: none;
+  }
+}
+
+.fq-toasts {
+  position: absolute;
+  left: 10px;
+  top: max(54px, calc(env(safe-area-inset-top) + 48px));
+  display: grid;
+  gap: 6px;
+  width: min(420px, calc(100vw - 20px));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fq-toast {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(232, 195, 90, 0.5);
+  background: rgba(20, 12, 4, 0.94);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+  line-height: 1.35;
+  pointer-events: auto;
+}
+
+.fq-toast-kind {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(232, 195, 90, 0.2);
+  color: var(--fq-gold-light);
+  font-size: 0.8em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fq-toast-server {
+  border-color: #c8601f;
+}
+
+.fq-toast-server .fq-toast-kind {
+  background: #c8601f;
+  color: #fff;
+}
+
+.fq-toast-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fq-toast-close:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.fq-mail {
+  position: absolute;
+  left: calc(var(--u) * 120);
+  top: calc(var(--u) * 14);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(20, 12, 4, 0.85);
+  border: 1px solid var(--fq-gold);
+  animation: fq-pulse 2.4s ease-in-out 3;
+}
+
+.fq-mail-icon {
+  width: 24px;
+  height: 17px;
+}
+
+.fq-mail-count {
+  font-weight: 700;
+  color: #ffe9a8;
+}
+
+.fq-cabinet[data-layout="phone"] .fq-mail {
+  position: static;
+  margin-left: auto;
+}
+
+/* Ended session */
+
+.fq-ended {
+  display: grid;
+  gap: 12px;
+}
+
+.fq-ended-title {
+  margin: 0;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 1.8rem;
+}
+
+.fq-center.fq-ended .fq-ended-why {
+  margin: 0;
+}
+
+/* ---------- Stats sheet and rankings table ---------- */
+
+.fq-sheet-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--u) * 200), 1fr));
+  gap: calc(var(--u) * 8) calc(var(--u) * 26);
+  margin-top: calc(var(--u) * 6);
+  color: var(--fq-parchment-ink);
+}
+
+.fq-sheet-group {
+  min-width: 0;
+}
+
+.fq-sheet-heading {
+  margin: 0 0 calc(var(--u) * 2);
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(60, 35, 5, 0.45);
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.25em;
+  color: #5a3205;
+}
+
+.fq-sheet-list {
+  display: grid;
+  margin: 0;
+}
+
+.fq-sheet-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 1px 0;
+  border-bottom: 1px dotted rgba(60, 35, 5, 0.3);
+}
+
+.fq-sheet-rating {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 2px 0 4px;
+  border-bottom: 1px solid rgba(60, 35, 5, 0.45);
+  font-weight: 700;
+  color: var(--fq-c-green);
+}
+
+.fq-sheet-rating span {
+  margin-right: 0.6em;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-size: 1.15em;
+  color: #5a3205;
+}
+
+.fq-sheet-row[data-wide] {
+  display: block;
+}
+
+.fq-sheet-row dt {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.fq-sheet-row dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--fq-c-purple);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-sheet-row[data-wide] dd {
+  text-align: left;
+  color: var(--fq-c-green);
+  font-weight: 400;
+}
+
+.fq-sheet-row .fq-coffin {
+  width: 1.6em;
+  height: auto;
+}
+
+.fq-rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--fq-c-default);
+}
+
+.fq-rank-table th {
+  position: sticky;
+  top: 0;
+  padding: 4px 8px;
+  background: #3a1d03;
+  text-align: left;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  color: var(--fq-gold-light);
+}
+
+.fq-rank-table td {
+  padding: 4px 8px;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(232, 195, 90, 0.18);
+}
+
+.fq-rank-place,
+.fq-rank-bp {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.fq-rank-table .fq-rank-bp {
+  color: var(--fq-c-purple);
+  font-weight: 700;
+}
+
+.fq-rank-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.fq-rank-sex {
+  margin-left: 0.4em;
+  font-weight: 400;
+  color: var(--fq-c-darkGrey);
+  font-size: 0.8em;
+}
+
+.fq-rank-parlor {
+  color: var(--fq-c-cyan);
+}
+
+.fq-rank-title {
+  display: block;
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--fq-c-darkGrey);
+}
+
+.fq-rank-chip {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.fq-rank-chip[data-online] {
+  background: rgba(142, 224, 142, 0.25);
+  color: var(--fq-c-green);
+}
+
+tr[data-online] .fq-rank-place {
+  color: var(--fq-c-green);
+}
+
+.fq-cabinet[data-layout="phone"] .fq-rank-status {
+  display: none;
+}
+
+/* A calm line between the title screen's links and sheets on narrow phones. */
+@media (max-width: 420px) {
+  .fq-door-status-list {
+    gap: 2px 14px;
+  }
+}
+
+/* The front door has no Exit button, so Settings takes its corner. */
+.fq-cabinet[data-scene="door"]:not([data-layout="phone"]) .fq-chrome[data-compact] .fq-gear {
+  left: calc(var(--u) * 10);
+}
+
+/*
+ * The plaque row spans the cabinet's whole button strip. In the cafe the message box shares that
+ * strip, so only the plaques themselves take clicks and the rest of the row lets them through.
+ */
+.fq-r-buttons,
+.fq-plaques,
+.fq-plaques ul {
+  pointer-events: none;
+}
+
+.fq-plaque-item {
+  pointer-events: auto;
+}

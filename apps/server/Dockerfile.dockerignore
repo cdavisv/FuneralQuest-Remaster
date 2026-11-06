@@ -1,0 +1,35 @@
+# The build context is the repository root, which holds the huge legacy/ tree and the art.
+# Send only what the image needs: the server, the web client and what they are built from.
+**
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!tsconfig.base.json
+!CREDITS.md
+!apps/server
+!apps/client
+!packages/protocol
+!packages/core
+!packages/content
+!packages/legacy-compat
+# Solo mode: the client bundles the AI rivals and the offline game into a Web Worker.
+!packages/bots
+!packages/solo
+# The Classic art: the client derives its UI pieces from ui/ and bundles the single-frame
+# pictures. The animation frames (about 50 MB) are never used.
+!assets/classic
+assets/classic/**/*.frames
+# Museum mode, only used with --build-arg INCLUDE_MUSEUM=1. They stay out of the image otherwise
+# (a COPY in the museum-1 stage is the only thing that reads them).
+!assets/manifest.json
+!legacy/dist/public
+**/node_modules
+apps/server/dist
+apps/server/data
+apps/server/.env
+apps/client/dist-build
+apps/client/.data
+apps/client/e2e/results
+apps/client/playwright-report
+apps/client/test-results
+apps/client/src/art/packs/classic/ui

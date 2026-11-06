@@ -1,0 +1,954 @@
+/*
+ * Chrome drawn from an art pack's pieces (Classic and any future pack). Everything here is
+ * scoped to `data-art="pieces"` (the pack supplies artwork) or to `[data-cab]` (the current
+ * screen is on a cabinet piece), so the hand-drawn look in app.css is untouched.
+ *
+ * Lengths use `--au`, one art unit at the current layout, and `--u`, one design pixel. The
+ * region variables (--note-x, --text-w, ...) are set per screen from the pack's geometry.
+ */
+
+.fq-cabinet-piece {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- Title, settings, exit ---------- */
+
+.fq-cabinet[data-cab] .fq-brand {
+  display: none;
+}
+
+.fq-cabinet[data-cab] .fq-exit,
+.fq-cabinet[data-cab] .fq-gear {
+  width: max(44px, calc(var(--u) * var(--exit-w)));
+  height: max(44px, calc(var(--u) * var(--exit-w)));
+}
+
+.fq-cabinet[data-cab] .fq-exit {
+  left: calc(var(--u) * var(--exit-x));
+  top: calc(var(--u) * var(--exit-y));
+}
+
+.fq-cabinet[data-cab] .fq-gear {
+  left: calc(var(--u) * var(--gear-x));
+  top: calc(var(--u) * var(--gear-y));
+}
+
+.fq-app[data-art="pieces"] .fq-exit[data-art="piece"] {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.fq-exit-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-app[data-art="pieces"] .fq-exit[data-art="piece"]:hover .fq-exit-img {
+  filter: brightness(1.15);
+}
+
+.fq-app[data-art="pieces"] .fq-gear {
+  border: calc(var(--u) * 2) solid #4a1c02;
+  background: radial-gradient(
+    circle at 35% 28%,
+    #f0a060 0%,
+    var(--fq-copper) 38%,
+    var(--fq-copper-dark) 100%
+  );
+  box-shadow:
+    0 calc(var(--u) * 2) calc(var(--u) * 4) rgba(0, 0, 0, 0.55),
+    inset 0 calc(var(--u) * 2) 0 rgba(255, 220, 170, 0.4);
+  color: #2a0d00;
+}
+
+.fq-app[data-art="pieces"] .fq-gear:hover {
+  color: #000;
+  filter: brightness(1.12);
+}
+
+/* ---------- Parchment ---------- */
+
+.fq-cabinet[data-cab] .fq-r-note {
+  filter: none;
+}
+
+.fq-cabinet[data-cab] .fq-note {
+  display: block;
+  padding: 0;
+  background: none;
+  clip-path: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: max(12px, calc(var(--au) * 13 * var(--fq-font-scale)));
+  color: #000;
+}
+
+.fq-cabinet[data-cab] .fq-note-text {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  line-height: 1.3;
+  font-family: var(--fq-font-ui);
+  color: var(--fq-c-default);
+}
+
+/* Luck meter: the tube is art, the level is live. */
+.fq-luck-art {
+  position: absolute;
+  display: block;
+  flex: none;
+  overflow: hidden;
+  border-radius: calc(var(--au) * 3.5);
+}
+
+.fq-luck-art-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--fq-luck);
+  background: linear-gradient(
+    to top,
+    #771b00 calc(var(--au) * 5),
+    #bf6f00 calc(var(--au) * 31),
+    #ceb079 calc(var(--au) * 54)
+  );
+}
+
+/* Stats numbers sit where the original's text fields were. */
+.fq-stats-art {
+  display: block;
+}
+
+.fq-stats-art .fq-stat:not(.fq-sr),
+.fq-stats-art .fq-stat-tags dd,
+.fq-stats-art .fq-tags {
+  display: contents;
+}
+
+.fq-stats-art .fq-num {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-family: var(--fq-font-ui);
+  font-size: max(18px, calc(var(--au) * 30));
+  color: #000;
+}
+
+.fq-stats-art .fq-num.fq-mid {
+  font-size: max(16px, calc(var(--au) * 25));
+}
+
+.fq-stats-art .fq-num.fq-long {
+  font-size: max(14px, calc(var(--au) * 19));
+}
+
+.fq-stats-art .fq-tags li {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: max(11px, calc(var(--au) * 10.5));
+  color: #000;
+}
+
+/* ---------- Picture ---------- */
+
+.fq-cabinet[data-cab] .fq-frame {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.fq-cabinet[data-cab] .fq-frame-inner {
+  box-shadow: none;
+  background: #000;
+}
+
+.fq-cabinet[data-cab] .fq-overlay-tags {
+  left: calc(var(--au) * 5);
+  bottom: calc(var(--au) * 4);
+  font-weight: 400;
+  font-size: max(13px, calc(var(--au) * 13));
+}
+
+/* ---------- Text well ---------- */
+
+.fq-cabinet[data-cab] .fq-textpanel {
+  padding: calc(var(--u) * var(--text-pad-t)) calc(var(--u) * var(--text-pad-r))
+    calc(var(--au) * (25.9 + 31.5 * (var(--fq-btn-rows) - 1)) + var(--u) * var(--fq-extra, 0))
+    calc(var(--u) * var(--text-pad-l));
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: max(13px, calc(var(--au) * 12 * var(--fq-font-scale)));
+}
+
+.fq-cabinet[data-cab] .fq-textpanel::before {
+  display: none;
+}
+
+.fq-cabinet[data-cab] .fq-capsule {
+  left: calc(var(--u) * var(--cap-x));
+  top: calc(var(--u) * var(--cap-y));
+  width: calc(var(--u) * var(--cap-w));
+  padding: 0;
+  gap: calc(var(--u) * var(--cap-gap));
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fq-cabinet[data-cab] .fq-capsule button {
+  width: 100%;
+  height: calc(var(--u) * var(--cap-h));
+  min-width: 0;
+  aspect-ratio: auto;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+}
+
+.fq-cabinet[data-cab] .fq-capsule button:hover {
+  background: rgba(255, 235, 170, 0.22);
+  filter: none;
+}
+
+.fq-cabinet[data-cab] .fq-capsule .fq-icon {
+  display: none;
+}
+
+/* ---------- Plaque buttons ---------- */
+
+.fq-cabinet[data-cab] .fq-plaques ul {
+  gap: calc(var(--au) * 3) calc(var(--u) * var(--plaque-gap));
+}
+
+.fq-cabinet[data-cab] .fq-plaque-item {
+  flex: 0 0 calc(var(--u) * var(--plaque-w));
+}
+
+.fq-app[data-art="pieces"] .fq-plaques-plaque .fq-plaque {
+  min-height: 0;
+  height: calc(var(--u) * var(--plaque-h, 40));
+  padding: 0 calc(var(--au) * 6);
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
+    var(--art-plaque-button) center / 100% 100% no-repeat;
+  box-shadow: none;
+  color: #120900;
+  font-size: max(15px, calc(var(--au) * 19));
+}
+
+.fq-app[data-art="pieces"] .fq-plaques-plaque .fq-plaque::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+}
+
+.fq-app[data-art="pieces"] .fq-plaques-plaque .fq-plaque:active {
+  transform: translateY(calc(var(--au) * 1));
+  box-shadow: none;
+}
+
+.fq-app[data-art="pieces"] .fq-plaques-plaque .fq-plaque[aria-disabled="true"] {
+  background-image: var(--art-plaque-button);
+  filter: saturate(0.3) brightness(0.8);
+  color: #2a1f0b;
+}
+
+.fq-app[data-art="pieces"] .fq-plaque-label[data-len="long"] {
+  font-size: 0.76em;
+  line-height: 0.95;
+}
+
+.fq-app[data-art="pieces"] .fq-plaque-label[data-len="longer"] {
+  font-size: 0.7em;
+  line-height: 0.95;
+}
+
+.fq-app[data-art="pieces"] .fq-cabinet:not([data-layout="phone"]) .fq-plaque-key {
+  display: none;
+}
+
+/* ---------- Sheets (stats on parchment, rankings on bare wood) ---------- */
+
+.fq-cabinet[data-cab] .fq-textpanel-sheet {
+  padding: calc(var(--u) * var(--text-pad-t)) calc(var(--u) * var(--text-pad-r))
+    calc(var(--u) * var(--text-pad-t)) calc(var(--u) * var(--text-pad-l));
+}
+
+.fq-cabinet[data-cab] .fq-textpanel-sheet .fq-text {
+  font-size: 1.05em;
+}
+
+.fq-cabinet[data-cab="status"] .fq-textpanel {
+  color: var(--fq-parchment-ink);
+}
+
+.fq-cabinet[data-cab="rankings"] .fq-text {
+  color: #fff;
+}
+
+/* ---------- The cafe's chat room ---------- */
+
+.fq-cabinet[data-cab="chat"] .fq-textpanel {
+  padding-bottom: calc(var(--u) * var(--text-pad-b));
+}
+
+.fq-cabinet[data-cab="chat"] .fq-capsule {
+  display: none;
+}
+
+.fq-cabinet[data-cab="chat"] .fq-chatform {
+  position: absolute;
+  left: calc(var(--u) * var(--bar-x));
+  top: calc(var(--u) * var(--bar-y));
+  width: calc(var(--u) * var(--bar-w));
+  height: calc(var(--u) * var(--bar-h));
+  margin: 0;
+  gap: calc(var(--au) * 5);
+}
+
+.fq-cabinet[data-cab="chat"] .fq-chatform input {
+  min-height: 0;
+  height: 100%;
+  padding: 0 calc(var(--au) * 10);
+  border: 1px solid #000;
+  border-radius: calc(var(--au) * 10);
+  background: #d0b880;
+  color: #120900;
+  font-size: max(13px, calc(var(--au) * 11));
+}
+
+.fq-cabinet[data-cab="chat"] .fq-chatform input::placeholder {
+  color: #5a4520;
+}
+
+.fq-cabinet[data-cab="chat"] .fq-chatsend {
+  min-height: 0;
+  height: 100%;
+  min-width: calc(var(--au) * 52);
+  padding: 0 calc(var(--au) * 6);
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
+    var(--art-plaque-button) center / 100% 100% no-repeat;
+  color: #120900;
+  font-size: max(15px, calc(var(--au) * 15));
+}
+
+/* ---------- Map ---------- */
+
+.fq-map-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-hotspot-building {
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+
+.fq-hotspot-building:hover,
+.fq-hotspot-building:focus-visible {
+  background: none;
+  box-shadow: none;
+}
+
+.fq-building {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  transition: filter 120ms ease;
+}
+
+.fq-hotspot-building:hover .fq-building,
+.fq-hotspot-building:focus-visible .fq-building {
+  filter: brightness(1.12) drop-shadow(0 0 calc(var(--u) * 5) rgba(255, 236, 140, 0.95));
+}
+
+.fq-hotspot-pin {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  border-radius: 0;
+}
+
+.fq-app[data-art="pieces"] .fq-hotspot-pin {
+  background:
+    linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
+    var(--art-plaque-button) center / 100% 100% no-repeat;
+}
+
+.fq-app[data-art="pieces"] .fq-hotspot-pin:hover,
+.fq-app[data-art="pieces"] .fq-hotspot-pin:focus-visible {
+  background:
+    linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
+    var(--art-plaque-button) center / 100% 100% no-repeat;
+  box-shadow: none;
+  filter: brightness(1.12);
+}
+
+.fq-hotspot-pin:not([class*="art"]) {
+  background: linear-gradient(180deg, #b79d6a, var(--fq-plaque-face) 55%, #8f7545);
+}
+
+.fq-pin-label {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: max(14px, calc(var(--u) * 18));
+  line-height: 1;
+  color: #120900;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* Defaults for screens that are not on a cabinet piece (the map, the newspaper, phone). */
+.fq-app[data-art="pieces"] {
+  --au: calc(var(--u) * 1.43);
+  --plaque-w: 146;
+  --plaque-h: 41.5;
+}
+
+.fq-app[data-art="pieces"] .fq-map-buttons {
+  left: calc(var(--u) * 440);
+  bottom: calc(var(--u) * 40);
+  width: calc(var(--u) * 170);
+}
+
+.fq-app[data-art="pieces"] .fq-cabinet[data-layout="wide"] .fq-map-buttons {
+  left: calc(var(--u) * 540);
+  bottom: calc(var(--u) * 36);
+}
+
+/* ---------- Wide layout: the walnut side panel (earlier text) ---------- */
+
+.fq-app[data-art="pieces"] .fq-cabinet[data-cab] .fq-sidelog {
+  --b-top: calc(var(--au) * 56);
+  --b-side: calc(var(--au) * 30);
+  --b-bottom: calc(var(--au) * 24);
+  padding: calc(var(--au) * 4) calc(var(--au) * 4) calc(var(--au) * 2);
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--b-top) var(--b-side) var(--b-bottom);
+  border-image:
+    var(--art-cabinet-frame) 56 30 24 fill / var(--b-top) var(--b-side) var(--b-bottom) stretch;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fq-app[data-art="pieces"] .fq-cabinet[data-cab] .fq-sidelog-title {
+  margin: calc(var(--au) * -8) 0 calc(var(--au) * 8);
+  font-size: max(16px, calc(var(--au) * 17));
+  text-align: center;
+  color: #e8c98a;
+  text-shadow: 0 1px 0 #2a1200;
+}
+
+.fq-app[data-art="pieces"] .fq-cabinet[data-cab] .fq-sidelog-scroll {
+  padding: calc(var(--au) * 8);
+  border: calc(var(--au) * 2) solid #2a1700;
+  border-radius: calc(var(--au) * 3);
+  background: linear-gradient(180deg, #7c6445, #4d3520 60%, #3e2913);
+  box-shadow: inset 0 calc(var(--au) * 2) calc(var(--au) * 6) rgba(0, 0, 0, 0.5);
+}
+
+.fq-coffin-art {
+  transform: none;
+  height: auto;
+  filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, 0.35));
+}
+
+/* ---------- Phone: the same pieces, stacked ---------- */
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-brand {
+  flex: 1;
+  height: 44px;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0;
+  background: var(--art-logo) left center / contain no-repeat;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  filter: drop-shadow(0 1px 0 rgba(36, 14, 0, 0.8));
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-frame {
+  padding: 13px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  border-image: var(--art-picture-frame) 12 fill / 13px stretch;
+  box-shadow: none;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-frame-inner {
+  box-shadow: none;
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-strip,
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-note {
+  border: solid transparent;
+  border-width: 12px 12px 22px 14px;
+  border-image: var(--art-parchment-note) 30 30 56 34 fill / 12px 12px 22px 14px stretch;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  clip-path: none;
+  padding: 2px 4px 0;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45));
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-strip .fq-luck-fill {
+  background: linear-gradient(to right, #771b00, #bf6f00 55%, #ceb079);
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-strip .fq-luck-track {
+  background: #000;
+  border: 1px solid #000;
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-plaques-plaque .fq-plaque {
+  width: 100%;
+  height: 52px;
+  padding: 0 18px;
+  background: none;
+  border: solid transparent;
+  border-width: 0 16px;
+  border-image: var(--art-plaque-button) 0 18 0 18 fill / 0 16px 0 16px stretch;
+  font-size: 26px;
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"]
+  .fq-plaques-plaque
+  .fq-plaque[aria-disabled="true"] {
+  background: none;
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-exit,
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-gear {
+  width: 46px;
+  height: 46px;
+}
+
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-exit[data-art="piece"] {
+  padding: 0;
+}
+
+/* ---------- Newspaper ---------- */
+
+.fq-news-art {
+  background: #3a1d17 var(--art-brick-wall) 0 0 / calc(var(--au) * 52) calc(var(--au) * 52);
+}
+
+.fq-news-stage {
+  position: absolute;
+}
+
+.fq-news-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-notice-art {
+  position: absolute;
+  margin: 0;
+  color: #140d02;
+}
+
+.fq-notice-art h2 {
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  padding-bottom: calc(var(--au) * 2);
+  font-family: var(--fq-font-ui);
+  font-weight: 400;
+  font-size: max(14px, calc(var(--au) * 15.5 * min(var(--fq-font-scale), 1.15)));
+  line-height: 1.05;
+}
+
+.fq-notice-art p {
+  margin: 0;
+  overflow-y: auto;
+  font-size: max(12px, calc(var(--au) * 12 * var(--fq-font-scale)));
+  line-height: 1.3;
+  color: var(--fq-c-default);
+}
+
+.fq-paper-art {
+  position: absolute;
+  color: #151515;
+  font-size: max(12px, calc(var(--au) * 12 * var(--fq-font-scale)));
+}
+
+.fq-paper-art .fq-paper-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  margin: 0;
+  padding: 0 calc(var(--au) * 4);
+  border: 0;
+  align-items: center;
+  font-size: max(12px, calc(var(--au) * 12));
+}
+
+.fq-paper-art .fq-paper-bar .fq-section {
+  font-size: 1.1em;
+}
+
+.fq-paper-art .fq-paper-body {
+  overflow-y: auto;
+  padding: 0 calc(var(--au) * 4);
+  scrollbar-width: thin;
+}
+
+.fq-paper-art .fq-paper-buttons {
+  padding: 0;
+}
+
+.fq-paper-art .fq-plaques-link ul {
+  flex-wrap: nowrap;
+  gap: 0 calc(var(--au) * 4);
+}
+
+.fq-paper-art .fq-plaques-link .fq-plaque-item {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.fq-paper-art .fq-plaques-link .fq-plaque {
+  min-height: 0;
+  height: calc(var(--au) * 28);
+  padding: 0 calc(var(--au) * 3);
+  white-space: nowrap;
+  font-size: max(14px, calc(var(--au) * 16));
+}
+
+/* ---------- Dialogs: one olive panel, cut into nine slices to fit any text ---------- */
+
+.fq-app[data-art="pieces"] .fq-dialog,
+.fq-app[data-art="pieces"] .fq-center {
+  border: solid transparent;
+  border-width: 30px;
+  border-image: var(--art-dialog-panel) 26 fill / 30px stretch;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  padding: 2px 6px 0;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.65));
+}
+
+.fq-app[data-art="pieces"] .fq-dialog {
+  width: min(calc(var(--u) * 600), 100%);
+}
+
+.fq-app[data-art="pieces"] .fq-center {
+  padding: 4px 8px;
+}
+
+.fq-app[data-art="pieces"] .fq-dbtn,
+.fq-app[data-art="pieces"] .fq-listbtn {
+  min-height: 46px;
+  padding: 0 4px;
+  border: solid transparent;
+  border-width: 0 16px;
+  border-image: var(--art-plaque-button) 0 18 0 18 fill / 0 16px 0 16px stretch;
+  border-radius: 0;
+  background: none;
+  color: #120900;
+  font-size: max(19px, calc(var(--au) * 15));
+}
+
+.fq-app[data-art="pieces"] .fq-dbtn[aria-disabled="true"] {
+  opacity: 1;
+  filter: saturate(0.3) brightness(0.8);
+}
+
+.fq-app[data-art="pieces"] .fq-listbtn {
+  width: 100%;
+}
+
+/* ---------- The spiral notepad, drawn from the original ---------- */
+
+.fq-notepad-art {
+  --np-w: min(calc(var(--u) * 400), 92vw, calc(88dvh * 258 / 293));
+  --au: calc(var(--np-w) / 258);
+  position: relative;
+  width: var(--np-w);
+  max-width: none;
+  aspect-ratio: 258 / 293;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.65));
+  overflow: visible;
+}
+
+.fq-notepad-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-notepad-art .fq-notepad-form {
+  position: absolute;
+  inset: 0;
+}
+
+.fq-notepad-art .fq-notepad-prompt {
+  position: absolute;
+  left: calc(var(--au) * 17);
+  top: calc(var(--au) * 28);
+  width: calc(var(--au) * 126);
+  height: calc(var(--au) * 28);
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  font-size: max(13px, calc(var(--au) * 13.5));
+  line-height: 1.05;
+}
+
+.fq-notepad-art .fq-notepad-prompt[data-len="long"] {
+  font-size: max(12px, calc(var(--au) * 12.5));
+}
+
+.fq-notepad-art .fq-notepad-lines {
+  position: absolute;
+  left: calc(var(--au) * 17);
+  top: calc(var(--au) * 65);
+  width: calc(var(--au) * 222);
+  height: calc(var(--au) * 180);
+  background: none;
+  border: 0;
+}
+
+.fq-notepad-art .fq-notepad-input {
+  --ln: calc(var(--au) * 20);
+  height: calc(var(--au) * 180);
+  padding: 0 calc(var(--au) * 4);
+  font-family: var(--fq-font-ui);
+  font-style: normal;
+  font-weight: 400;
+  font-size: max(14px, calc(var(--au) * 14));
+  overflow-y: auto;
+}
+
+.fq-notepad-art .fq-notepad-single {
+  height: calc(var(--au) * 20);
+}
+
+.fq-notepad-art .fq-notepad-count {
+  position: absolute;
+  left: calc(var(--au) * 17);
+  top: calc(var(--au) * 247);
+  width: calc(var(--au) * 222);
+  margin: 0;
+  font-size: max(11px, calc(var(--au) * 9));
+  line-height: 1;
+}
+
+.fq-notepad-art .fq-notepad-actions {
+  position: static;
+  margin: 0;
+}
+
+.fq-notepad-art .fq-nbtn {
+  position: absolute;
+  top: calc(var(--au) * 258);
+  height: calc(var(--au) * 26);
+  min-height: 44px;
+  min-width: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 600;
+  font-size: max(18px, calc(var(--au) * 21));
+  color: #000;
+}
+
+.fq-notepad-art .fq-nbtn:first-child {
+  left: calc(var(--au) * 16);
+  width: calc(var(--au) * 64);
+}
+
+.fq-notepad-art .fq-nbtn:last-child {
+  left: calc(var(--au) * 172);
+  width: calc(var(--au) * 70);
+}
+
+/* ---------- Lobby: the logon backdrop, the clerk and the golden plaque ---------- */
+
+.fq-lobby {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #070b12;
+}
+
+.fq-lobby-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-lobby-clerk {
+  position: absolute;
+  left: calc(var(--u) * 46);
+  bottom: calc(var(--u) * 52);
+  height: calc(var(--u) * 340);
+  width: auto;
+  filter: drop-shadow(0 calc(var(--u) * 8) calc(var(--u) * 10) rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+  user-select: none;
+}
+
+.fq-lobby-plaque {
+  position: absolute;
+  left: calc(var(--u) * 336);
+  top: calc(var(--u) * 150);
+  width: calc(var(--u) * 640);
+  max-height: calc(var(--u) * 560);
+  border: solid transparent;
+  border-width: calc(var(--u) * 34);
+  border-image: var(--art-login-plaque) 26 fill / calc(var(--u) * 34) stretch;
+  filter: drop-shadow(0 calc(var(--u) * 10) calc(var(--u) * 16) rgba(0, 0, 0, 0.6));
+}
+
+.fq-lobby-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "note frame"
+    "text frame"
+    "buttons buttons";
+  gap: calc(var(--u) * 10) calc(var(--u) * 18);
+  align-items: start;
+  padding: calc(var(--u) * 2) calc(var(--u) * 6);
+  color: #2a1a08;
+  font-size: max(15px, calc(var(--u) * 19 * var(--fq-font-scale)));
+}
+
+.fq-lobby-inner:not(:has(.fq-lobby-frame)) {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "note"
+    "text"
+    "buttons";
+}
+
+.fq-lobby-frame {
+  grid-area: frame;
+  position: relative;
+  width: calc(var(--u) * 220);
+  height: calc(var(--u) * 164);
+  padding: calc(var(--u) * 12);
+  border: solid transparent;
+  border-width: calc(var(--u) * 12);
+  border-image: var(--art-picture-frame) 12 fill / calc(var(--u) * 12) stretch;
+}
+
+.fq-lobby-frame .fq-layer {
+  inset: calc(var(--u) * 0);
+}
+
+.fq-lobby-note {
+  grid-area: note;
+  margin: 0;
+  line-height: 1.35;
+  font-weight: 700;
+  color: var(--fq-c-default);
+}
+
+.fq-lobby-text {
+  grid-area: text;
+  min-height: calc(var(--u) * 130);
+  max-height: calc(var(--u) * 260);
+  display: flex;
+  flex-direction: column;
+}
+
+.fq-lobby-text .fq-textpanel {
+  flex: 1;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+.fq-lobby-text .fq-textpanel::before,
+.fq-lobby-text .fq-capsule {
+  display: none;
+}
+
+.fq-lobby-buttons {
+  grid-area: buttons;
+  position: relative;
+}
+
+.fq-lobby-buttons .fq-plaques ul {
+  justify-content: center;
+}
+
+.fq-app[data-art="pieces"] .fq-lobby-buttons .fq-plaque-item {
+  flex: 0 0 calc(var(--u) * 168);
+}
+
+/* The wide stage is wider than the logon drawing: keep the title in view and centre the rest. */
+.fq-cabinet[data-layout="wide"] .fq-lobby-bg {
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.fq-cabinet[data-layout="wide"] .fq-lobby-clerk {
+  left: calc(var(--u) * 180);
+}
+
+.fq-cabinet[data-layout="wide"] .fq-lobby-plaque {
+  left: calc(var(--u) * 464);
+}
+
+/* The parchment piece has its own tacks; the drawn ones would sit on the text. */
+.fq-app[data-art="pieces"][data-layout="phone"] .fq-tack {
+  display: none;
+}

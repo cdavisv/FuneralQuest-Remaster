@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Funeral Quest",
+  "version": "0.1.0",
+  "identifier": "org.funeralquest.remaster",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "pnpm --filter @fq/client dev",
+    "beforeBuildCommand": "node scripts/build-client.mjs"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' data: blob:",
+        "font-src": "'self' data:",
+        "media-src": "'self' blob:",
+        "worker-src": "'self' blob:",
+        "connect-src": "'self' blob: ipc: http://ipc.localhost https: wss: http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*",
+        "object-src": "'none'",
+        "frame-src": "'none'",
+        "base-uri": "'none'",
+        "form-action": "'none'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb", "appimage", "nsis", "dmg", "app"],
+    "category": "Game",
+    "publisher": "Funeral Quest Remaster contributors",
+    "copyright": "Copyright 2001 Robinson Technologies. Remaster by its contributors.",
+    "shortDescription": "A daily-turn game about rival funeral parlors.",
+    "longDescription": "Funeral Quest Remastered: run a funeral parlor in Deathville. Play solo against computer rivals with no connection, or join an online town. This product includes software written by Seth A. Robinson (www.rtsoft.com).",
+    "licenseFile": "../../../license.txt",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": { "../../../CREDITS.md": "CREDITS.md", "../../../license.txt": "LICENSE-Proton-SDK.txt" },
+    "linux": {
+      "deb": { "section": "games", "depends": [] }
+    },
+    "macOS": { "minimumSystemVersion": "11.0" },
+    "windows": { "nsis": { "installMode": "currentUser" } }
+  }
+}

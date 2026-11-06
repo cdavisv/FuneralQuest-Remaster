@@ -1,0 +1,17 @@
+{
+  "name": "@fq/extract",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Converts the original Flash 5 art (SWF) to standalone SVG, plus a manifest and reference docs.",
+  "type": "module",
+  "scripts": {
+    "export": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "svgo": "^4.1.0",
+    "tsx": "^4.23.15"
+  }
+}

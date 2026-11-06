@@ -1,0 +1,338 @@
+# Expanded pack: random events on Wait for Customer, added to Classic's (merge: append).
+# Three brackets by the player's total Bury Points; each bracket also gets every Classic event.
+#   early: below 1,000 BP   mid: 1,000 to 4,999   late: 5,000 and up
+
+ranges:
+  - low: -229999999
+    high: 999
+    entries:
+      - message: 'You buy your first hearse at a police auction. It still has the cage in the back.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+        picture: 'hearse/hearse1'
+      - message: 'The landlord says the smell is "either you or the building". It''s both.'
+        modLuck: [ -2, -1 ]
+      - message: 'You teach Morty to wave from the front window. Foot traffic doubles. Foot traffic was one guy.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/morty'
+      - message: 'You can''t afford a real embalming table, so you use the dining table. Dinner parties are cancelled indefinitely.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 2 ]
+        picture: 'places/embalming-room'
+      - message: '`4The power company shuts off your electricity. `$The cooler warms up. So does the smell.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -2, -1 ]
+      - message: 'You find a dead raccoon in the crawlspace and bill the county for "removal of remains". They pay.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Your mortuary science correspondence course arrives. Lesson one: "Which End Is The Head?" You get an A.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: 'You practice your sad face in the mirror for an hour. The mirror looks sadder.'
+        modLuck: [ 1, 3 ]
+      - message: '`4Your hearse''s muffler falls off `$on Main Street during a procession. The mourners pick up the pace.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+        picture: 'hearse/hearse1'
+      - message: 'Elijah at Di-Mart lets you have a dented casket for half price. He doesn''t say what dented it.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/store_guy'
+      - message: 'You mix up two toe tags. Nobody notices. You decide this means you have a gift.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 2 ]
+      - message: '`4A raccoon moves into the display casket. `$It hisses at anyone who asks about financing.'
+        modLuck: [ -2, -1 ]
+      - message: 'You hang a GRAND OPENING banner over the CONDEMNED notice. Classy.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Father Smyth drops by to bless the building. He sprinkles holy water, sniffs, and sprinkles a lot more.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/churchguy_h'
+      - message: 'Your mother calls to ask when you''ll get a real job. You tell her you''re in the people business.'
+        modLuck: [ -1, -1 ]
+      - message: 'You find a quarter in a dead man''s ear. You check the other ear. A dime. Things are looking up.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: '`4The bank repossesses your good chair. `$Customers will now be grieving on a milk crate.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -2, -1 ]
+        picture: 'places/bank'
+      - message: 'You discover embalming fluid makes a passable window cleaner. Also floor cleaner. Also hair gel.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 2 ]
+        picture: 'places/embalming-room'
+      - message: 'Morty falls out of the closet during a viewing. You tell the family he''s staff. They tip him.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/morty'
+      - message: 'You sleep in the display casket to save on rent. Best night''s sleep you''ve had in years.'
+        modLuck: [ 1, 3 ]
+      - message: 'A stray dog adopts the parlor and buries things in the back yard. Some of them were yours.'
+        modLuck: [ -2, -1 ]
+        picture: 'animals/dog-dragging-hand'
+      - message: '`4Your FuneralManager (TM) free trial expires `$and locks every file behind a pop-up asking for money. Relatable.'
+        modBp: [ -10, -5 ]
+      - message: 'Neighborhood kids hold a seance on your lawn. They summon nothing but the police.'
+        modLuck: [ -1, -1 ]
+      - message: 'You win a wheelbarrow of slightly used flowers in the cemetery lost-and-found raffle.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+        picture: 'stuff/red_rose'
+      - message: '`4You buy embalming fluid in bulk from a man in a van. `$Half of it is lemonade.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+      - message: 'The sign painter spells it FUNREAL HOME. You lean into it and add balloons.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: 'The Nurse pins your flyer to the morgue fridge. "Right next to the lunch menu, prince."'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+        picture: 'places/hospital_room'
+      - message: 'You buy a used tuxedo at a client''s estate sale. There''s a lottery ticket in the pocket. It still loses.'
+        modLuck: [ -1, -1 ]
+        picture: 'stuff/lottery_lose'
+      - message: '`4Somebody steals your OPEN sign. `$Business is unaffected, which is the sad part.'
+        modLuck: [ -2, -1 ]
+      - message: 'A pigeon gets into the chapel and keeps landing on the deceased. The family calls it a sign. You call it a pigeon.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Old Man Withers stops in to measure your caskets "for later". He leaves a fingerprint on every one.'
+        modLuck: [ 1, 2 ]
+        picture: 'people/m_old_3'
+      - message: 'Your only suit splits at the seat as you bow at a graveside. The widow laughs for the first time in weeks.'
+        modBp: [ 4, 8 ]
+        modLuck: [ -1, -1 ]
+      - message: 'You sell the gold fillings out of your own mouth to make rent. You smile less now. It suits the job.'
+        modBp: [ 5, 10 ]
+        modLuck: [ -2, -1 ]
+      - message: 'You find the old professor''s notes in Morty''s ribcage. Mostly recipes. One for embalming, two for chili.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/morty'
+      - message: 'A man in a hurry asks if you do drive-through viewings. You do now.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+  - low: 1000
+    high: 4999
+    entries:
+      - message: '`4The Twins are seen loitering by your propane tank, `$holding hands and a box of matches.'
+        modLuck: [ -3, -1 ]
+      - message: '`4Elijah offers you a "loyalty discount" on caskets. `$It turns out the loyalty is to Elijah.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+        picture: 'people/store_guy'
+      - message: 'Father Smyth sends you a grieving widow and a note: "She has money. Be gentle. Lemon bars Sunday."'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/churchguy_h'
+      - message: '`4A rival leaves a flaming bag on your doorstep. `$You stamp it out. It was exactly what you feared.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -2, -1 ]
+        picture: 'places/fire'
+      - message: 'The Deathville Enquirer lists you under People Who Smell Funny. Any press is good press.'
+        modBp: [ 5, 10 ]
+        modLuck: [ -1, 1 ]
+      - message: 'You hire a teenage organist who only knows one song. It is the song from the ice cream truck.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 2 ]
+      - message: 'Morty wins Employee of the Month again. The living staff are talking about a union.'
+        modLuck: [ 1, 3 ]
+        picture: 'people/morty'
+      - message: 'A rival''s hearse tails yours to a pickup. You take the long way. Through a car wash. Twice.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+        picture: 'hearse/hearse2'
+      - message: 'June starts saving you a table at Yang''s. It''s next to the bathroom, but it''s a table.'
+        modLuck: [ 1, 3 ]
+        picture: 'people/yangsgirl'
+      - message: 'Golden Oaks Retirement Home invites you to bingo night. You slip a business card under every card.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/f_old'
+      - message: '`4Your new casket polish turns out to be flammable. `$The Twins send you a thank-you card.'
+        modLuck: [ -3, -1 ]
+      - message: '`4A rival spreads a rumor that you reuse caskets. `$You only did that the one time.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+      - message: 'Cousin Sal drops off a body in a shower curtain with a note: "NATURAL CAUSES (TRUST ME)".'
+        modBp: [ 10, 15 ]
+        modLuck: [ -2, -1 ]
+        picture: 'people/m_doctor'
+      - message: 'A high school class tours your parlor. Three faint. One asks if you''re hiring.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Your hearse gets a ticket outside the hospital. The Nurse tears it up. "Professional courtesy, prince."'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+        picture: 'hearse/hearse3'
+      - message: 'Mr. Yang sends a free Lucky Sparrow "for my most reliable delivery address". You have never felt so seen.'
+        modLuck: [ 2, 4 ]
+        picture: 'chinese_takeout'
+      - message: 'The bank Teller approves your small business loan, then explains the interest rate very slowly, twice.'
+        modBp: [ 5, 10 ]
+        modLuck: [ -1, -1 ]
+        picture: 'places/bank'
+      - message: 'A widow tries to return her husband because the casket "washes him out". You swap the casket. Store credit only.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A parlor in Blaine steals your slogan, "You Kill ''Em, We Chill ''Em." You send them a strongly worded wreath.'
+        modLuck: [ 1, 2 ]
+      - message: '`4The embalming room drain backs up during a viewing. `$The organist plays louder. It doesn''t help.'
+        modBp: [ -15, -10 ]
+        modLuck: [ -2, -1 ]
+        picture: 'places/embalming-room'
+      - message: 'A jogger collapses outside your door. You are first on the scene, with a brochure.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+      - message: 'You buy a used cremation oven from a pizza place in Blaine. Everyone comes out a little crispy and smelling of oregano.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+        picture: 'places/creamation_oven'
+      - message: '`4Your brother-in-law asks for a job. `$You make him a pallbearer. He drops the end with the feet.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+      - message: 'The health inspector finds a mouse in the cold room. You point out it''s dead, which is his department''s problem.'
+        modBp: [ -10, -5 ]
+        modLuck: [ 1, 2 ]
+      - message: 'A rival''s grand reopening is rained out. You stand across the street with an umbrella, smiling.'
+        modLuck: [ 2, 4 ]
+        picture: 'wait'
+      - message: 'Old Man Withers comes in for his monthly price check and haggles over a plot he "won''t need until 2050".'
+        modLuck: [ 1, 2 ]
+        picture: 'people/m_old_3'
+      - message: 'Someone keys GHOUL into your hearse. You add it to the gold lettering. It tests well.'
+        modBp: [ 5, 10 ]
+        modLuck: [ -1, 1 ]
+        picture: 'hearse/hearse2'
+      - message: 'A chain letter says you''ll die in seven days unless you forward it. You forward it to every rival in town.'
+        modLuck: [ 1, 3 ]
+      - message: '`4The church choir rehearses in your chapel. `$Three sopranos hit a note so high a casket lid pops open.'
+        modLuck: [ -2, -1 ]
+        picture: 'background/background_church'
+      - message: '`4A stranger in a trench coat buys every black rose in town. `$You''re out of roses until Thursday.'
+        modBp: [ -10, -5 ]
+        picture: 'stuff/red_rose'
+      - message: 'The Enquirer prints your first five-star review: "Lost my husband, found a great deal."'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'The Garden Club rules your DEAD? CALL US. lawn sign in poor taste. Calls double.'
+        modBp: [ 10, 15 ]
+        modLuck: [ -1, -1 ]
+      - message: 'You start a frequent mourner card. Bury nine relatives, the tenth gets a free carnation.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+        picture: 'stuff/red_rose'
+  - low: 5000
+    high: 299999999
+    entries:
+      - message: 'The Mayor asks you to cut the ribbon at the new cemetery. He keeps the scissors and has you hold the ribbon.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A tax auditor spends a week in your office and finds nothing. The books were in a casket and he wouldn''t open it.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: '`4A second auditor arrives to audit the first audit. `$This one opens caskets.'
+        modBp: [ -15, -10 ]
+        modLuck: [ -2, -1 ]
+      - message: 'A country singer from Blaine dies in the county. His fans fill your lot with pickup trucks and candles.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 4 ]
+      - message: 'You hire a publicist. She calls you "the people''s undertaker" and bills you extra for the word "people".'
+        modBp: [ 5, 10 ]
+        modLuck: [ -1, -1 ]
+      - message: 'Your face goes up on a billboard over the highway. Two accidents that week. You call that synergy.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A widow sues because her husband looked "too happy" in the casket. The jury takes one look and sides with you.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A rival offers to buy you out for a sack of cash and a used hearse. You laugh until security checks on you.'
+        modLuck: [ 2, 4 ]
+        picture: 'stuff/money_bag'
+      - message: 'The Enquirer names you Undertaker of the Year: "Smells Fine Up Close."'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+      - message: 'You put a marble fountain in the lobby. Mourners throw coins in it. You keep the coins.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+        picture: 'stuff/money_bag_2'
+      - message: '`4Your gold-plated name plaque is stolen. `$Then the screws. Then, somehow, the wall.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -2, -1 ]
+      - message: 'Father Smyth asks you to pay for the church roof. You agree, if the bell rings twice for every one of your funerals.'
+        modLuck: [ 1, 3 ]
+        picture: 'people/churchguy_h'
+      - message: '`4The Twins buy a crate of matches `$and give the clerk your name for the receipt.'
+        modLuck: [ -3, -2 ]
+      - message: 'You start wearing sunglasses indoors. Families take it as respect for their grief. It''s for the hangover.'
+        modLuck: [ 1, 2 ]
+      - message: 'A soap actress from Blaine wants her poodle buried in your gold casket. You charge the human rate. She tips.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: '`4Elijah offers you the "executive" price on caskets. `$You pay double and he lets you call him Eli.'
+        modBp: [ -10, -5 ]
+        picture: 'people/store_guy'
+      - message: 'You hire a man to applaud when you enter a room. He also cries at funerals, for a small extra fee.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A rival''s star embalmer defects to your parlor. She brings her own recipes.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+        picture: 'places/embalming-woman'
+      - message: 'The Mayor''s campaign asks for a donation. You give generously and he names a pothole after you.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 2 ]
+      - message: 'You give the commencement speech at Spirit University: "Everybody Dies, So Charge Accordingly." Standing ovation.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+      - message: '`4A funeral chain from Blaine makes a hostile takeover bid. `$Their lawyers wear better suits than your clients.'
+        modLuck: [ -2, -1 ]
+      - message: '`4You buy a yacht and name it The Final Voyage. `$It sinks on its first one.'
+        modBp: [ -15, -10 ]
+        modLuck: [ -1, -1 ]
+      - message: 'Your portrait for the lobby arrives. The painter made you look like one of the clients. People say it''s a good likeness.'
+        modLuck: [ -1, -1 ]
+      - message: 'Morty gets a fan club at the high school. You sell signed photos. He signs with an X.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/morty'
+      - message: 'Dinner at the Mayor''s mansion. He asks how much a hole costs per foot, "for a friend". You quote high.'
+        modBp: [ 10, 15 ]
+        modLuck: [ -2, -1 ]
+      - message: 'The county makes you acting coroner while the real one is on vacation. You rule every death "great for business".'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Your accountant dies. You give him your best funeral and bill the estate for every expense he ever padded.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'A documentary crew films your parlor. They agree not to film the embalming, the basement or your face.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 2 ]
+      - message: '`4Your monogrammed caskets are recalled. `$The monogram was yours.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -1, -1 ]
+      - message: 'A millionaire wants to be buried in his sports car. You dig the hole wider and bill by the cubic foot.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+        picture: 'stuff/money_bag_2'
+      - message: 'The Nurse says the hospital now tells patients they''ll be "in good hands", then says your name. She means it nicely.'
+        modBp: [ 10, 15 ]
+        modLuck: [ 1, 3 ]
+        picture: 'places/hospital_room'
+      - message: '`4Inspectors find your Eternal Flame is a gas leak.'
+        modBp: [ -15, -10 ]
+        modLuck: [ -2, -1 ]
+        picture: 'places/fire'
+      - message: 'A rival undertaker dies. You send flowers to the widow, then a brochure, then an invoice for the flowers.'
+        modBp: [ 5, 10 ]
+        modLuck: [ -1, -1 ]
+        picture: 'stuff/red_rose'
+      - message: 'June says something nice to you at Yang''s. You both pretend it didn''t happen.'
+        modLuck: [ 2, 4 ]
+        picture: 'people/yangsgirl'
+      - message: 'Cousin Sal shows up in a new sports car and wants to "go into business". You do not ask which business.'
+        modLuck: [ -2, -1 ]
+        picture: 'people/m_doctor'

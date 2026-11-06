@@ -1,0 +1,596 @@
+request:
+  - '{customer}"My {dRelation} {dFirst} was {dSmashed} {aFridge}. I need a {casket} casket and a plot. Can you do it?"'
+  - '{customer}"It''s {dFirst}. My {dRelation}. {AFridge} was involved. I was thinking a {casket} casket?"'
+  - '{customer}"I need to bury my {dRelation}. {dFirst} would have wanted {casket}. Or so {dHe} said, loudly, often."'
+  - '{customer}"{dFirst} is gone. {AFridge} was involved, if you can believe it. Something {casket}, please."'
+  - '{customer}"Hi. Um. My {dRelation} died. {AFridge} was involved. I don''t want to talk about the {dFridge}. Just a {casket} casket."'
+  - '{customer}"I''m here about {dFirst}. {dHeCap} was {dSmashed} {aFridge} on Tuesday. What does a {casket} casket run these days?"'
+  - '{customer}"The hospital gave me your card. And {dFirst}''s shoes. I need a {casket} casket and somewhere to put the shoes."'
+  - '{customer}"My {dRelation} {dFirst} has died. I''m told that means I need a {casket} casket and a lot of forms."'
+  - '{customer}"{dFirst} always said, "When I go, put me in {casket}." Then {dHe} was {dSmashed} {aFridge}. So. {casket}."'
+  - '{customer}"Is this the funeral place? Your sign fell off. My {dRelation} needs burying. A {casket} casket, nothing silly."'
+  - '{customer}"It was {aFridge}. Of all the things. I''d like a {casket} casket for {dFirst}, please."'
+  - '{customer}"I''ve never done this before. My {dRelation} {dFirst} died. Do I just say "{casket} casket" and you do the rest?"'
+  - '{customer}"Father Smyth sent me. {dFirst} was {dSmashed} {aFridge}. He said you''d know what a {casket} casket costs. He made a face."'
+  - '{customer}"My {dRelation} is dead and the {dFridge} is fine. Life isn''t fair. I need a {casket} casket."'
+  - '{customer}"We need to bury {dFirst}. The family voted on a {casket} casket. The vote was close. There was shouting."'
+  - '{customer}"{dFirst} {surname}. That''s who. {AFridge}. That''s how. {casket}. That''s the casket."'
+  - '{customer}"I''ll be honest, I don''t know what I''m doing. {dFirst} handled everything. Now I need a {casket} casket for {dHim}."'
+petRequest:
+  - '{customer}"{dFirst} needs a proper send-off. A {casket} casket. A small one. Unless {pet}s come in medium?"'
+  - '{customer}"This is {dFirst}. {dFirst} was a {pet}. Do you do {casket} caskets in a {pet} size?"'
+  - '{customer}"The vet said "try the funeral home." So. {dFirst} the {pet}. Something {casket}. With a little pillow."'
+  - '{customer}"{dFirst} chewed through a lot of things in {dHis} life. A {casket} casket would be the first thing {dHe} couldn''t."'
+  - '{customer}"My {pet} {dFirst} has gone to the big yard in the sky. I want a {casket} casket and I don''t want anyone to laugh."'
+  - '{customer}"I know it''s a {pet}. I know. But {dFirst} was family. {casket}, please. And a little headstone. You don''t do headstones? Fine."'
+  - '{customer}"Please don''t make the shoebox joke. Everyone makes the shoebox joke. {dFirst} deserves a {casket} casket."'
+  - '{customer}"{dFirst} was the best {pet} in Deathville. Ask anyone. Ask the mailman, actually, don''t. A {casket} casket, please."'
+  - '{customer}"The whole family wants a real funeral for {dFirst}. My wallet wants a shoebox. Let''s say {casket} and see who wins."'
+selfRequest:
+  - '{customer}"Put me down for a {casket} casket. I''ll be using it eventually, so don''t skimp."'
+  - '{customer}"I''m not dead. I''m planning ahead. I want a {casket} casket and I want it to say "I told you so" on the lid."'
+  - '{customer}"My doctor gave me six months. That was in 1998. I''d still like to pick my {casket} casket while I can walk to the showroom."'
+  - '{customer}"My family will cheap out, I know them. Lock me in now: a {casket} casket, and I''m paying today."'
+  - '{customer}"Show me a {casket} casket. I''m going to lie in it. Don''t make that face, I need to know if it''s comfortable."'
+  - '{customer}"Last time I let the family plan anything, we ended up at Bill''s Big Burger. I''m picking my own {casket} casket."'
+  - '{customer}"Nobody''s dead. Yet. I''m getting my affairs in order, starting with a {casket} casket and ending with a grudge."'
+  - '{customer}"I''d like to be buried in a {casket} casket, eventually. Can I pay in installments? Can the installments outlive me?"'
+  - '{customer}"I read that planning ahead saves your family stress. I don''t care about their stress. I care about the {casket} casket."'
+repeat:
+  happy:
+    - '{customer}"We came back because of how you handled Grandpa. The whole {surname} family says hello."'
+    - '{customer}"You did such a lovely job last time. We just keep dying, us {surname}s."'
+    - '{customer}"Remember the {surname}s? You buried Uncle Ray. Beautiful job. He looked better than he did at Easter."'
+    - '{customer}"Mom said, "When the time comes, go back to that nice crook." So here we are."'
+    - '{customer}"The {surname} family is back. Don''t look so surprised, we die a lot."'
+    - '{customer}"You did right by us last time. The whole {surname} clan still talks about the punch and cookies."'
+    - '{customer}"We''ve told everyone about you. Well, everyone who''s still alive. That''s fewer people every week."'
+    - '{customer}"Last time you made Aunt Bev cry the good kind of tears. Let''s do that again."'
+  ok:
+    - '{customer}"You buried my other relative. It was fine. I suppose you''ll do."'
+    - '{customer}"The {surname}s again. Last funeral was fine. The coffee was cold. Let''s see if you''ve improved."'
+    - '{customer}"You buried one of ours. Nobody complained. Nobody cheered either."'
+    - '{customer}"We''re back. Not because you were great. Because you were close."'
+    - '{customer}"My cousin said you were "okay, I guess". That''s a strong review from a {surname}."'
+    - '{customer}"You did the {surname} funeral last time. It happened. That''s all I remember about it."'
+    - '{customer}"Back again. Same family, different corpse."'
+    - '{customer}"Your parlor came up at dinner. Someone said "fine". Someone else said "fine, I suppose". So here I am."'
+  sour:
+    - '{customer}"Last time you sold us {aFridge}-proof casket. It wasn''t. We''re watching you."'
+    - '{customer}"The {surname} family remembers last time. We''re only here because the other place is closed."'
+    - '{customer}"Last time you charged us for "casket ventilation". There''s no such thing. I looked it up."'
+    - '{customer}"The {surname}s haven''t forgotten the business with the flowers. Grandma had a white nose for a week."'
+    - '{customer}"I''m only here because everyone in Blaine is booked solid. Behave."'
+    - '{customer}"Last funeral, your hearse got lost. With Grandpa in it. For three hours."'
+    - '{customer}"We still have the bill from last time framed in the hallway. As a warning."'
+    - '{customer}"You''re on thin ice, pal. The {surname}s talk. Mostly about you, lately."'
+  walked:
+    - '{customer}"The {surname}s don''t forget. You treated us like garbage. Convince me otherwise. Fast."'
+    - '{customer}"The last {surname} who came in here walked out with Grandma still unburied. Give me one reason to stay."'
+    - '{customer}"You treated my brother like dirt. He went across the street. They gave him a mint. A MINT."'
+    - '{customer}"We don''t like you. We''re here because every other parlor is closed for the chili cook-off."'
+    - '{customer}"The {surname}s have a list. You''re on it. Top half."'
+    - '{customer}"My mother walked out of here in tears last time. Not the sad kind. The furious kind."'
+    - '{customer}"Every {surname} at Thanksgiving had a story about you. None of them were nice. Start talking."'
+    - '{customer}"I''ll give you exactly one chance, because I promised my aunt. She''s dead, so she won''t check."'
+estimate: '`wYou figure {cHe} can spend between ${low} and ${high}.`$'
+resistance: '`wYou successfully analyze {cHis} resistance.`$'
+psychTell: '`wYou notice something:`$ '
+nothingExtra: '`$You can''t read anything else about {cHim} yet.'
+bonusRule: '`5Bonus if the bill lands within `#{nice}%`5 of what {cHe} can pay, more within `#{great}%`5, and a lot for the exact amount.'
+total: "\n\nTotal: ${price}"
+buttons:
+  coffee: 'Coffee'
+  listen: 'Listen'
+  discount: 'Discount'
+  packages: 'Packages'
+  back: 'Back'
+  cremation: 'Cremation'
+  bless: 'Bless'
+  raise: 'Raise Mourners'
+hints:
+  coffeeUsed: 'Already had coffee'
+  nothingToLearn: 'Nothing more to learn'
+  discountMax: 'No more discounts'
+  discountTooSmall: 'The bill is too small to discount'
+  hardMaxed: 'Already the best casket'
+  cremationTrack: 'Cremation: no casket to upgrade'
+  noPackages: 'Nothing left to upgrade'
+  blessUsed: 'Already blessed'
+  raiseUsed: 'The mourners are already up'
+  handEmpty: 'Nothing left to offer'
+  needsUpgrade: 'Your parlor can''t offer this yet'
+handIntro: '`$Which do you pitch?'
+packagesIntro: '`$Which part of the funeral do you upgrade?'
+softPitch:
+  - "`w{player}: `$\"Most families in your situation go with {article} {item}. ${price}, and it says 'we cared' without saying 'we cared a lot'.\"\n\n"
+  - "`w{player}: `$\"{dFirst} would have loved {article} {item}. I didn't know {dHim}, but I feel it. ${price}.\"\n\n"
+  - "`w{player}: `$\"For just ${price}, {article} {item} will make the other mourners feel cheap. Isn't that what this is about?\"\n\n"
+  - "`w{player}: `$\"We're running a special on {item}. It's ${price}. That's the special price. It's always the special price.\"\n\n"
+  - "`w{player}: `$\"You know what this funeral needs? {item}. ${price}. Don't ask me why, I just feel it.\"\n\n"
+  - "`w{player}: `$\"I shouldn't tell you this, but the mayor's mother had {article} {item}. ${price}.\"\n\n"
+  - "`w{player}: `$\"Grief is a journey, {cSir}, and every journey needs {article} {item}. ${price}.\"\n\n"
+  - "`w{player}: `$\"A lot of people regret not getting {article} {item}. For about a week. Then they forget. ${price}.\"\n\n"
+  - "`w{player}: `$\"I'd hate for you to wake up at 3 a.m. wishing you'd gotten {article} {item}. ${price}.\"\n\n"
+  - "`w{player}: `$\"The {item} is very popular this season. Death has seasons. ${price}.\"\n\n"
+  - "`w{player}: `$\"${price} for {article} {item}. Think of it as an investment in being talked about.\"\n\n"
+  - "`w{player}: `$\"Elijah at Di-Mart sells {article} {item} for half this. Elijah also sells bait. Ours is ${price} and has never touched a worm.\"\n\n"
+  - "`w{player}: `$\"The Blaine Funeral Home doesn't even offer {article} {item}. That's why Blaine is sad. ${price}.\"\n\n"
+  - "`w{player}: `$\"I'm legally required to tell you about {article} {item}. I'm not, but I like telling people. ${price}.\"\n\n"
+  - "`w{player}: `$\"{dFirst} can't take it with {dHim}. But {dHe} can take {article} {item}. ${price}.\"\n\n"
+  - "`w{player}: `$\"Father Smyth calls {article} {item} \"the least you could do\". Father Smyth is a very good customer. ${price}.\"\n\n"
+  - "`w{player}: `$\"Picture the wake. Everyone's talking about {dFirst}. Then someone whispers, \"Is that {article} {item}?\" ${price}.\"\n\n"
+  - "`w{player}: `$\"Our {item} comes with a lifetime guarantee. {dFirst}'s lifetime, so the paperwork is very simple. ${price}.\"\n\n"
+  - "`w{player}: `$\"I'll be honest with you, {cSir}. I'm not always honest. But {article} {item} for ${price} is a fair deal.\"\n\n"
+  - "`w{player}: `$\"Morty, my skeleton, recommends {article} {item}. He doesn't say much. He sort of leans. ${price}.\"\n\n"
+  - "`w{player}: `$\"Everyone at the service will want something to look at that isn't {dFirst}. Give them {article} {item}. ${price}.\"\n\n"
+  - "`w{player}: `$\"The {surname} name deserves {article} {item}. I don't know the {surname} name. It sounds deserving. ${price}.\"\n\n"
+hardPitchWood:
+  - "`w{player}: `$\"Wood is fine, if {dFirst} was a hamster. Silver is only ${price} more.\"\n\n"
+  - "`w{player}: `$\"Our wood caskets are made from genuine leftover pallets. Silver, on the other hand, ${price} more, keeps the raccoons out.\"\n\n"
+  - "`w{player}: `$\"Wood rots, {cSir}. In about a week, in this soil. Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"I could put {dHim} in wood. I could also put {dHim} in a trash bag. Silver is ${price} more and has handles.\"\n\n"
+  - "`w{player}: `$\"The silver model has a pillow. The wood model has splinters. ${price} difference.\"\n\n"
+  - "`w{player}: `$\"Do you want people whispering 'wood' at the viewing? Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Silver. ${price} more. Your {dRelation} survived {aFridge}, well, nearly. {dHeCap} deserves silver.\"\n\n"
+  - "`w{player}: `$\"Wood is what the silver caskets are shipped in. ${price} more and {dFirst} gets the casket instead of the crate.\"\n\n"
+  - "`w{player}: `$\"Termites have a word for a wood casket: lunch. Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Wood is very traditional. So is dysentery. Silver, ${price} more.\"\n\n"
+  - "`w{player}: `$\"I'd go wood myself, but I'm a terrible person. You're not, are you? Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"The wood model is fine if the plan is to dig {dHim} back up for firewood. Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Silver caskets don't creak when the pallbearers lift them. Wood ones say things. Rude things. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Our wood casket was put together by a man named Gary on his lunch break. Silver, ${price} more, was not Gary.\"\n\n"
+  - "`w{player}: `$\"Silver is ${price} more, and it doesn't look like something Elijah sells at Di-Mart next to the lawn furniture.\"\n\n"
+  - "`w{player}: `$\"When the {dFridge} got {dHim}, do you think {dHe} was hoping for wood next? Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Wood floats, {cSir}. Deathville floods. Silver is ${price} more and it stays where you put it.\"\n\n"
+  - "`w{player}: `$\"Silver has a lining. Wood has a smell. ${price} difference.\"\n\n"
+  - "`w{player}: `$\"In the wood one there's a knot that looks exactly like Father Smyth. He's seen it. Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Woodpeckers. That's all I'll say. Silver, ${price} more.\"\n\n"
+  - "`w{player}: `$\"Wood is \"rustic\", which is the word we use for \"cheap\" when the family is in the room. Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Silver comes with a twenty-year warranty against worms. Wood comes with worms. ${price} more.\"\n\n"
+  - "`w{player}: `$\"The Blaine Funeral Home sells a lot of wood caskets. Do you want to be Blaine? Silver is ${price} more.\"\n\n"
+  - "`w{player}: `$\"I put my own mother in wood. I still hear about it. Silver's ${price} more.\"\n\n"
+hardPitchSilver:
+  - "`w{player}: `$\"Silver is nice. Gold is nicer. Gold is ${price} nicer, specifically.\"\n\n"
+  - "`w{player}: `$\"Gold doesn't tarnish, {cSir}. Neither will your reputation. ${price} more.\"\n\n"
+  - "`w{player}: `$\"The gold model is what we bury bank presidents in. And now, for ${price} more, your {dRelation}.\"\n\n"
+  - "`w{player}: `$\"Imagine the lid opening and everyone going 'ooh'. That's gold. Silver gets an 'oh'. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Your neighbors went gold. I'm just saying. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Silver is for people who came in second, {cSir}. Gold is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Gold-plated handles, gold-plated hinges, gold-plated everything. ${price} more and {dHe}'ll shine in the dark.\"\n\n"
+  - "`w{player}: `$\"Silver is what you buy when you love someone a moderate amount. Gold is ${price} more.\"\n\n"
+  - "`w{player}: `$\"Gold is the only casket the Mayor will be photographed next to. And he's at every funeral. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Mr. Yang says gold brings luck. Frankly, {dFirst} could use some. ${price} more.\"\n\n"
+  - "`w{player}: `$\"A gold casket says \"{dFirst} made it.\" A silver casket says \"{dFirst} nearly made it.\" ${price} more.\"\n\n"
+  - "`w{player}: `$\"The gold hinges don't squeak during the eulogy. Silver hinges do a sort of whistle. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Gold holds its value, {cSir}. Not that you'll be reselling it. Probably. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Raccoons can't get into gold. They've tried. We have the footage. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Silver tarnishes in this climate. In five years {dHe}'ll be in a gray box. Gold is ${price} more and gold forever.\"\n\n"
+  - "`w{player}: `$\"Father Smyth blesses the gold ones a little longer. I've timed it. ${price} more.\"\n\n"
+  - "`w{player}: `$\"The velvet in the gold model is so soft people have fallen asleep in it. Living people. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Think of gold as first class. It's a one-way trip, so you might as well. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Gold is what pharaohs got. {dFirst} wasn't a pharaoh, but {dHe} was {dSmashed} {aFridge}, which is nearly as rare. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Let me put it this way: nobody has ever asked to be dug up out of a gold casket. ${price} more.\"\n\n"
+  - "`w{player}: `$\"The gold model has a brass plaque. Engrave anything you like. \"{dFirst}: Worth It.\" ${price} more.\"\n\n"
+  - "`w{player}: `$\"People in Blaine talk about our gold casket. People in Blaine never talk about anything of ours. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Look, you're already at silver. You can see gold from here. It's right there. ${price} more.\"\n\n"
+  - "`w{player}: `$\"Gold doesn't rust, doesn't rot and doesn't judge. Silver judges a little. ${price} more.\"\n\n"
+guiltPitch:
+  - "`w{player}: `$\"{dFirst} would have done anything for you. And you're thinking about saving a few bucks?\"\n\n"
+  - "`w{player}: `$\"I'm sure {dHe} would understand you going cheap. {dHeCap}'s dead, so {dHe} has to understand.\"\n\n"
+  - "`w{player}: `$\"People at the wake will look in that casket, {cSir}, and then they'll look at you.\"\n\n"
+  - "`w{player}: `$\"I'm not saying you're cheap. The other families are saying it. I'm just repeating it.\"\n\n"
+  - "`w{player}: `$\"Some folks spend more on their cars than on their {dRelation}. You're not one of those folks, are you?\"\n\n"
+  - "`w{player}: `$\"{dFirst} is watching from somewhere, {cSir}. Maybe heaven. Maybe the other place. But watching.\"\n\n"
+  - "`w{player}: `$\"What will you tell people? '{dFirst} got the discount box'?\"\n\n"
+  - "`w{player}: `$\"You only bury your {dRelation} once. Usually.\"\n\n"
+  - "`w{player}: `$\"This is the last gift you'll ever give {dHim}. Make it count. Make it expensive.\"\n\n"
+  - "`w{player}: `$\"I had a family in here last week who went cheap. They don't sleep anymore.\"\n\n"
+  - "`w{player}: `$\"You can't take it with you. Neither can {dFirst}, but {dHe} can take it into the ground.\"\n\n"
+  - "`w{player}: `$\"Did {dFirst} ever go cheap on you? Don't answer, I can see it in your face.\"\n\n"
+  - "`w{player}: `$\"The Bible says something about this. I forget what. Something about spending.\"\n\n"
+  - "`w{player}: `$\"Cheap funerals attract ghosts, {cSir}. It's a well-known fact I just made up.\"\n\n"
+  - "`w{player}: `$\"I can see you loved {dHim}. I can also see your shoes. You can afford more.\"\n\n"
+  - "`w{player}: `$\"You know who goes cheap on a funeral? People left out of the will. Were you left out of the will, {cSir}?\"\n\n"
+  - "`w{player}: `$\"I'm just going to write down what you spend. No reason. For the record. For when people ask.\"\n\n"
+  - "`w{player}: `$\"The {surname} family has a reputation in this town. I'd hate for the reputation to be \"thrifty\".\"\n\n"
+  - "`w{player}: `$\"Imagine {dFirst} looking down right now. Now imagine {dHim} seeing the price tag. Now imagine {dHim} seeing YOUR face.\"\n\n"
+  - "`w{player}: `$\"Funny thing about guilt, {cSir}. It doesn't go in the casket. It goes home with you.\"\n\n"
+  - "`w{player}: `$\"In twenty years nobody will remember what you paid. They'll remember what you didn't.\"\n\n"
+  - "`w{player}: `$\"My grandmother used to say you can tell how much someone was loved by the handles. These are not great handles.\"\n\n"
+  - "`w{player}: `$\"The other mourners will be at the reception doing math. Out loud. About you.\"\n\n"
+  - "`w{player}: `$\"I'm not here to judge. Father Smyth is. He's at every service. He takes notes.\"\n\n"
+sympathyPitch:
+  - "`w{player}: `$\"Take all the time you need. The meter isn't running. Well, it is, but slowly.\"\n\n"
+  - "`w{player}: `$\"Tell me about {dFirst}. What was {dHe} like before the {dFridge}?\"\n\n"
+  - "`w{player}: `$\"I lost my {dRelation} once. To {aFridge}, as it happens. Small world.\"\n\n"
+  - "`w{player}: `$\"Here, have a tissue. Have the whole box. It's on the house. The box isn't, but the tissue is.\"\n\n"
+  - "`w{player}: `$\"Grief is just love with nowhere to go, {cSir}. I read that on a mug.\"\n\n"
+  - "`w{player}: `$\"You're doing great. Really. Most people throw things at this point.\"\n\n"
+  - "`w{player}: `$\"{dFirst} sounds like a wonderful {dRelation}. I can tell from the paperwork.\"\n\n"
+  - "`w{player}: `$\"It's okay to cry. Over there, though. Not on the brochures.\"\n\n"
+  - "`w{player}: `$\"I'm here for you. Professionally. Within business hours.\"\n\n"
+  - "`w{player}: `$\"You know, {dHe} isn't really gone. {dHeCap}'s in the back, actually. But spiritually, too.\"\n\n"
+  - "`w{player}: `$\"Let it out. Nobody judges in here. Except the guy across the street. He judges.\"\n\n"
+  - "`w{player}: `$\"What's your favorite memory of {dFirst}? Take your time. Not too much time.\"\n\n"
+  - "`w{player}: `$\"The first week is the hardest. Then it's the second week. Then the paperwork.\"\n\n"
+  - "`w{player}: `$\"You have my deepest sympathies, {cSir}. And my second-deepest, at a discount.\"\n\n"
+  - "`w{player}: `$\"I'm going to put on some soft music. It's the hold music, but it's soft.\"\n\n"
+  - "`w{player}: `$\"I can only imagine. Well, I don't have to imagine, I have the paperwork. But I'm imagining too.\"\n\n"
+  - "`w{player}: `$\"Let's take a moment for {dFirst}. ... There. That was a moment. How do you feel?\"\n\n"
+  - "`w{player}: `$\"When my goldfish died I didn't get out of bed for a week. And that was a fish. This is {dFirst}.\"\n\n"
+  - "`w{player}: `$\"Death is a natural part of life. So, apparently, is {aFridge}. I'm so sorry.\"\n\n"
+  - "`w{player}: `$\"You don't have to be strong in here, {cSir}. The walls are soundproof. We had them done for the embalming.\"\n\n"
+  - "`w{player}: `$\"Here, hold Morty's hand. He's our skeleton. He's a very good listener and he's been through worse.\"\n\n"
+  - "`w{player}: `$\"{dFirst} was lucky to have you. I can tell. You're the kind of person who reads the fine print and still cries.\"\n\n"
+  - "`w{player}: `$\"Tell me something {dFirst} used to say. Anything. Something stupid is fine. Those are the best ones.\"\n\n"
+coffeePitch:
+  - "`w{player}: `$\"Can I get you a coffee? It's fresh. Fresher than most things in this building.\"\n\n"
+  - "`w{player}: `$\"Coffee? Cream? Sugar? Something stronger in a coffee cup?\"\n\n"
+  - "`w{player}: `$\"Let's take a breather. I'll get the pot.\"\n\n"
+  - "`w{player}: `$\"Here, have a cup. Mind the mug, it says 'World's Best Mortician', I bought it myself.\"\n\n"
+  - "`w{player}: `$\"You look like you could use a coffee. Or a nap. I can only offer one of those.\"\n\n"
+  - "`w{player}: `$\"Coffee is on the house. The house is a funeral home, so drink it quick.\"\n\n"
+  - "`w{player}: `$\"Sit, sit. I'll pour. Don't mind the smell, that's not the coffee.\"\n\n"
+  - "`w{player}: `$\"A hot cup of joe makes everything better. Not this, but other things.\"\n\n"
+  - "`w{player}: `$\"Decaf or regular? I'll be honest, they come out of the same pot.\"\n\n"
+  - "`w{player}: `$\"Let me get you something warm. The coffee, I mean. The other warm things are in the back.\"\n\n"
+  - "`w{player}: `$\"Biscotti? I've had these since the last time the Mayor was sober, but they're fine.\"\n\n"
+  - "`w{player}: `$\"Have a coffee and look at the brochures. No pressure. Some pressure.\"\n\n"
+  - "`w{player}: `$\"This coffee is so good people have died for it. Not here. Mostly not here.\"\n\n"
+  - "`w{player}: `$\"Let's pause and have a cup. Grief is a marathon, coffee is the water station.\"\n\n"
+  - "`w{player}: `$\"I'll make a fresh pot. You just sit there and feel your feelings.\"\n\n"
+  - "`w{player}: `$\"Coffee? It's from the Pale Horse Cafe. I take a pot every morning. They know.\"\n\n"
+  - "`w{player}: `$\"Let me get you a cup. The machine makes a noise like a death rattle. It's fine. It's the machine.\"\n\n"
+  - "`w{player}: `$\"I've got coffee, tea, or hot water in a cup. Hot water is the house special.\"\n\n"
+  - "`w{player}: `$\"Milk? It's fresh. Fresh-ish. Smell it first.\"\n\n"
+  - "`w{player}: `$\"How about a cup of coffee before we talk numbers? Numbers go down easier with caffeine.\"\n\n"
+  - "`w{player}: `$\"Here, let me pour. Not that mug, that's Morty's. Morty's my skeleton. He doesn't drink, it's sentimental.\"\n\n"
+  - "`w{player}: `$\"Coffee break! For you. I'll keep talking, but you'll have a cup, which is like a break.\"\n\n"
+  - "`w{player}: `$\"I'll put the pot on. In this business we go through a lot of coffee. Long nights. Quiet company.\"\n\n"
+  - "`w{player}: `$\"Coffee? Father Smyth swears by it. Well, he swears near it. Mostly at the bingo results.\"\n\n"
+  - "`w{player}: `$\"I got this coffee at Di-Mart. Elijah said it was \"for occasions of grief\". It's the regular kind with a black label.\"\n\n"
+  - "`w{player}: `$\"Sugar? We have cubes, packets, and a bowl of something that was sugar before the humidity.\"\n\n"
+coffeeAccept:
+  loved:
+    - '{customer}"Thank you. {dFirst} took it black. Like {dHis} heart, {dHe} used to say. {dHeCap} was joking. I think."'
+    - '{customerName} wraps both hands around the mug and stops shaking a little.'
+    - '{customer}"Thank you. {dFirst} would have asked for three sugars and then complained it was too sweet."'
+    - '{customerName} takes the cup and holds it like it''s the last warm thing in the building.'
+    - '{customer}"Oh. That''s kind. Sorry. Everyone''s being kind today and I keep crying."'
+    - '{customer}"{dFirst} and I had coffee every morning for years. This is the first one I''ve had without {dHim}."'
+    - '{customerName} sips, closes {cHis} eyes, and for a second looks almost okay.'
+    - '{customer}"Yes, please. I haven''t eaten since it happened. Is coffee food? Today it''s food."'
+    - '{customer}"Thank you. Sorry, my hands are shaking. Not the coffee''s fault."'
+    - '{customerName} blows on the coffee for a long time, as if {cHe} doesn''t want it to end.'
+    - '{customer}"That''s... thank you. It''s nice to have someone do something for me today."'
+    - '{customer}"{dFirst} brought me coffee in bed once. On my birthday. It was cold. I miss it so much."'
+    - '{customerName} sets the cup down very carefully, as if everything might break now.'
+    - '{customer}"Thank you. Can I just sit for a minute before we talk about money?"'
+    - '{customerName} takes a sip and laughs at nothing, then apologizes for laughing.'
+    - '{customer}"Oh, this mug has flowers on it. {dFirst} loved flowers. Sorry. Everything reminds me."'
+    - '{customer}"Please. Thank you. I didn''t sleep. I kept thinking I heard {dHim} in the kitchen."'
+    - '{customerName} holds the cup to {cHis} cheek for the warmth.'
+    - '{customer}"Yes. Thank you. You''re nicer than I expected. The sign out front is very frightening."'
+    - '{customer}"Thank you. The last thing {dFirst} ever said to me was "we''re out of coffee." I''m going to buy so much coffee."'
+    - '{customerName} drinks quietly and seems to settle into the chair for the first time.'
+    - '{customer}"That''s thoughtful. {dFirst} would have liked you. {dHeCap} liked anybody who fed {dHim}."'
+    - '{customer}"Thank you so much. Sorry, I''m getting the paperwork wet. Is that okay?"'
+    - '{customerName} stares into the cup as if {dFirst} might be at the bottom of it.'
+    - '{customer}"Thank you. I can do this. I can do this with coffee."'
+    - '{customerName} says thank you three times, which is two more than the coffee deserves.'
+  notLoved:
+    - '{customer}"Sure, free is free."'
+    - '{customerName} drinks it in one gulp and asks if there''s a refill.'
+    - '{customer}"Free? Then yes. Is the cookie free too? Then two cookies."'
+    - '{customerName} takes the cup without looking at it and keeps checking {cHis} watch.'
+    - '{customer}"Fine. Make it quick, I''ve got a thing at four."'
+    - '{customer}"Good coffee. Better than the hospital''s. Honestly, the hospital''s coffee was the worst part of the day."'
+    - '{customer}"Sure. Put it on the bill. Wait, don''t put it on the bill."'
+    - '{customerName} slurps loudly and asks if you have today''s paper.'
+    - '{customer}"Thanks. So when do I get the house? Not from you. In general. Never mind."'
+    - '{customer}"Coffee, great. Does the estate pay for this or do I?"'
+    - '{customerName} pockets two sugar packets and a spoon.'
+    - '{customer}"Yeah, okay. I could use a pick-me-up. Long morning of not crying."'
+    - '{customer}"Thanks. Honestly this is the best part of my week so far, and someone died."'
+    - '{customerName} drinks it while flipping through your brochures for the cheapest page.'
+    - '{customer}"Sure, I''ll have one. {dFirst} hated coffee. More for me."'
+    - '{customer}"Thank you. Can I take the mug? It''s nicer than anything {dFirst} left me."'
+    - '{customerName} dunks a cookie and asks how long {cHe} has to stay, legally.'
+    - '{customer}"Mm. Strong. Do you sell this? I''d buy this. I wouldn''t buy anything else in here."'
+    - '{customerName} drains the cup in one go, burps, and says "sorry for your loss" to you by mistake.'
+    - '{customer}"Coffee, sure. Now let''s talk money. Let''s talk less money."'
+    - '{customerName} takes the coffee and immediately starts telling you about {cHis} new boat.'
+    - '{customer}"Thanks. {dFirst} owed me money. Think of this as a down payment."'
+    - '{customerName} says "{dFirst}" like {cHe}''s still learning how it''s spelled.'
+    - '{customer}"Cream, four sugars. If I have to be here, I''m going to enjoy something."'
+    - '{customer}"Free? Okay, now I like this place. A little. Don''t push it."'
+    - '{customerName} sips and hums a happy tune before remembering where {cHe} is.'
+coffeeRefuse:
+  - '{customer}"Coffee? I don''t have TIME for coffee."'
+  - '{customer}"No coffee. Just get on with it."'
+  - '{customer}"No. No coffee. No small talk. Casket."'
+  - '{customer}"I had coffee in the car. I''ll have coffee in the car after. I''ll have coffee when this is over."'
+  - '{customer}"Do I look like I have time to sip? I''m double parked."'
+  - '{customerName} waves the cup away without breaking stride.'
+  - '{customer}"Coffee is a stalling tactic. I know what you''re doing."'
+  - '{customer}"No thanks, I''m on a schedule. {dFirst} was always late. I am never late."'
+  - '{customer}"If I drink that I''ll need your bathroom, and I am not using your bathroom."'
+  - '{customer}"Not now. Maybe at the wake. Probably not even then."'
+  - '{customer}"My meter has eleven minutes on it. Coffee takes twelve."'
+  - '{customerName} looks at the coffee, looks at the clock, and chooses the clock.'
+  - '{customer}"I don''t drink coffee before noon, after noon, or in funeral homes."'
+  - '{customer}"Pass. Talk faster."'
+  - '{customer}"I''m not here to socialize. I''m here to bury {dFirst} and get to the bank before it closes."'
+  - '{customerName} pushes the cup back across the desk with one finger.'
+  - '{customer}"Coffee. Sure. Meanwhile there''s a ham in my oven. Just tell me the price."'
+  - '{customer}"No time. My phone is ringing. Both my phones are ringing."'
+  - '{customer}"Thanks, but I''m already vibrating. Let''s go."'
+  - '{customer}"I said I was in a hurry, didn''t I? I''m sure I said it. I''m saying it again."'
+  - '{customerName} turns down the coffee and somehow looks even more impatient than before.'
+  - '{customer}"No. I''ll grab something at Bill''s Big Burger on the way out. If I ever get out."'
+  - '{customer}"Don''t pour. If you pour I''ll feel I have to drink it, and then I''m here another ten minutes."'
+  - '{customer}"Skip it. Next."'
+  - '{customer}"Do I get a discount for not drinking it? No? Then I''ll not drink it for free."'
+listenPitch:
+  - "`w{player}: `$\"Tell me about {dHim}. Take your time.\"\n\n"
+  - "`w{player}: `$\"I'd like to know more about {dFirst}. Who was {dHe}, really?\"\n\n"
+  - "`w{player}: `$\"So. How are you holding up?\"\n\n"
+  - "`w{player}: `$\"Walk me through it. From the start. Before the {dFridge}.\"\n\n"
+  - "`w{player}: `$\"What do you think {dFirst} would want?\"\n\n"
+  - "`w{player}: `$\"Talk to me. I'm a good listener. It's in the brochure.\"\n\n"
+  - "`w{player}: `$\"Is there anything you want to get off your chest?\"\n\n"
+  - "`w{player}: `$\"How did the family take it?\"\n\n"
+  - "`w{player}: `$\"What did {dFirst} do for a living? Besides, you know, the dying.\"\n\n"
+  - "`w{player}: `$\"Do you have any plans for the... aftermath? Financially, I mean. Emotionally too.\"\n\n"
+  - "`w{player}: `$\"You can tell me anything. Funeral directors are like priests. Cheaper confessions.\"\n\n"
+  - "`w{player}: `$\"I'm just going to sit here and nod. You talk.\"\n\n"
+  - "`w{player}: `$\"Were you and {dFirst} close?\"\n\n"
+  - "`w{player}: `$\"Tell me a story about {dFirst}. A short one.\"\n\n"
+  - "`w{player}: `$\"Mm-hmm. And how did that make you feel?\"\n\n"
+  - "`w{player}: `$\"Before we get to the brochures, tell me about {dFirst}. Not the {dFridge} part. The other part.\"\n\n"
+  - "`w{player}: `$\"I find it helps to talk. It helps me sell. I mean, it helps. Talk.\"\n\n"
+  - "`w{player}: `$\"What was {dFirst}'s favorite thing? Food, song, television program. Anything.\"\n\n"
+  - "`w{player}: `$\"You seem like you've got something on your mind, {cSir}. Out with it.\"\n\n"
+  - "`w{player}: `$\"How are things at home? Who's taking it hardest?\"\n\n"
+  - "`w{player}: `$\"Let's slow down. No prices for a minute. Just tell me who {dFirst} was.\"\n\n"
+  - "`w{player}: `$\"Did {dFirst} ever say what {dHe} wanted at {dHis} funeral? People usually do. Usually at weddings.\"\n\n"
+  - "`w{player}: `$\"I'm all ears. Morty's all bones, but I'm all ears.\"\n\n"
+  - "`w{player}: `$\"Take your time. Start wherever you want. The beginning is popular.\"\n\n"
+  - "`w{player}: `$\"So what's the family situation? Big? Small? Not speaking?\"\n\n"
+  - "`w{player}: `$\"Tell me what you'll miss. Or what you won't. I'm not here to judge.\"\n\n"
+listenTrait: '`wYou learn something new: `#{trait}`w.`$ '
+listenNothing:
+  - '{customerName} has run out of things to say and is now describing the weather.'
+  - '{customerName} just repeats the story about the {dFridge} again.'
+  - '{customerName} tells you about {cHis} neighbor''s fence. It has nothing to do with anything.'
+  - '{customerName} describes the drive over, including every stop sign.'
+  - '{customerName} repeats what {cHe} said earlier, but slower.'
+  - '{customerName} talks about the weather in Blaine, which is apparently better.'
+  - '{customerName} nods. You nod. Everyone nods. Nothing new comes of it.'
+  - '{customerName} tells a long story about a casserole. You learn nothing, not even about the casserole.'
+  - '{customerName} shrugs. There''s nothing more to get out of {cHim} today.'
+  - '{customerName} asks if you heard about the Bill''s Big Burger thing. You have. Everyone has.'
+  - '{customerName} looks at you blankly. You''ve heard it all already.'
+  - '{customerName} starts reading the plaque on your wall out loud.'
+  - '{customerName} spends a full minute on hospital parking. It costs four dollars. You now know everything.'
+listenLoved:
+  - '{customerName} seems grateful someone asked.'
+  - '{customerName} talks about {dFirst} for a while, smiling and crying at the same time.'
+  - '{customer}"Thank you for asking. Nobody''s asked about {dHim}. They only ask about the arrangements."'
+  - '{customerName} relaxes a little. It''s clearly a relief to talk about {dFirst}.'
+  - '{customer}"Sorry, I''m rambling. It''s just nice to say {dHis} name out loud."'
+  - '{customerName} leans forward, eager to tell you more.'
+  - '{customer}"You''re a good listener. For someone who sells boxes."'
+  - '{customerName}''s shoulders drop an inch. {cHeCap} looks grateful.'
+  - '{customer}"I could talk about {dFirst} all day. Thank you for letting me do it for a minute."'
+  - '{customerName} wipes {cHis} eyes and gives you a small, grateful nod.'
+  - '{customer}"That helped. I didn''t think anything would help today."'
+  - '{customerName} pulls out a photo of {dFirst} to show you, and seems calmer for it.'
+  - '{customer}"You know, I feel a bit better. Isn''t that strange? In a funeral home?"'
+  - '{customerName} laughs at a memory, cries a little, then laughs again. It seems to help.'
+  - '{customer}"Thank you. Everyone keeps telling me to be strong. You just let me talk."'
+  - '{customerName} settles back in the chair, looking at you like an old friend.'
+  - '{customer}"Sorry. I don''t usually tell strangers this much. You have a kind face. For in here."'
+  - '{customerName} stops twisting {cHis} hands in {cHis} lap.'
+  - '{customer}"{dFirst} loved telling stories. I guess I got that from {dHim}. Thank you for hearing one."'
+  - '{customerName} takes a deep breath and seems a little steadier.'
+  - '{customer}"It means a lot that you''d ask. Really."'
+  - '{customerName} keeps talking long after {cHe} needs to, and you let {cHim}. {cHeCap} seems lighter for it.'
+  - '{customerName} smiles for the first time since walking in.'
+  - '{customer}"Nobody at the hospital let me finish a sentence. Thank you for letting me finish."'
+  - '{customerName} hugs the tissue box like a teddy bear and nods at you gratefully.'
+listenNotLoved:
+  - '{customerName} sighs and looks at the clock.'
+  - '{customerName} yawns. Not a small yawn.'
+  - '{customer}"Is this part of the service? Do I get charged for this part?"'
+  - '{customerName} answers in one word and starts reading the price list upside down.'
+  - '{customer}"Look, I don''t need to share. I need a casket and a receipt."'
+  - '{customerName} checks {cHis} watch, then the clock, then {cHis} watch again, to be sure.'
+  - '{customer}"You want to know about {dFirst}? {dHeCap} was tall. Next question."'
+  - '{customerName} sighs so hard the brochures move.'
+  - '{customer}"We weren''t close. That''s the story. That''s the whole story."'
+  - '{customerName} picks at a loose thread on your chair with great interest.'
+  - '{customer}"Are you a therapist? Because I''m not paying therapist rates."'
+  - '{customerName} glances at the door like it owes {cHim} money.'
+  - '{customer}"Okay. This is nice. Can we do the nice thing faster?"'
+  - '{customerName} gives you the short version. Then a shorter one.'
+  - '{customer}"Do we have to do the feelings? I didn''t bring any."'
+  - '{customerName} drums {cHis} fingers on the armrest, out of rhythm, on purpose.'
+  - '{customer}"I hardly knew {dHim}. I know {dHis} lawyer better."'
+  - '{customerName} looks at you the way people look at a slow cashier.'
+  - '{customer}"Sure, {dFirst} was great, one of a kind, whatever. How much is the box?"'
+  - '{customerName} starts answering before you finish asking, to save time.'
+  - '{customer}"Honestly? The hospital only called me because the first number was disconnected."'
+  - '{customerName} stares at the ceiling and counts the tiles under {cHis} breath.'
+  - '{customer}"You ask a lot of questions for someone selling me a box."'
+  - '{customerName}''s foot starts tapping. It does not stop.'
+  - '{customer}"Yes, yes, sad, sad. What''s the cheapest thing that doesn''t look cheap?"'
+discountPitch:
+  - "`w{player}: `$\"Tell you what. I'll knock ${amount} off. Because I like you. Don't tell anyone.\"\n\n"
+  - "`w{player}: `$\"Family discount: ${amount} off. You're family now. Sort of. Legally no.\"\n\n"
+  - "`w{player}: `$\"For you? ${amount} off. My accountant will cry, but my accountant cries anyway.\"\n\n"
+  - "`w{player}: `$\"Let's call it ${amount} off for the trouble with the {dFridge}.\"\n\n"
+  - "`w{player}: `$\"Since {dFirst} was such a valued member of the community, ${amount} off.\"\n\n"
+  - "`w{player}: `$\"I'm running a grief special. ${amount} off. Today only. Every day is today.\"\n\n"
+  - "`w{player}: `$\"I'll take ${amount} off if you promise to stop crying on the leather.\"\n\n"
+  - "`w{player}: `$\"Okay, okay. ${amount} off. You drive a hard bargain for a person in mourning.\"\n\n"
+  - "`w{player}: `$\"${amount} off. Seniors, veterans and the recently bereaved. That last one is you.\"\n\n"
+  - "`w{player}: `$\"You know what, ${amount} off. I'm feeling generous. It'll pass.\"\n\n"
+  - "`w{player}: `$\"Let me see what I can do... ${amount} off. That's my final offer. Probably.\"\n\n"
+  - "`w{player}: `$\"I'll waive the ${amount} body-handling fee. There is no body-handling fee. Now there's a discount.\"\n\n"
+  - "`w{player}: `$\"Loyalty discount, ${amount}. You weren't loyal before, but you will be.\"\n\n"
+  - "`w{player}: `$\"${amount} off, because {dFirst} was {dSmashed} {aFridge} and that's just bad luck.\"\n\n"
+  - "`w{player}: `$\"I never do this. ${amount} off. I do this all the time.\"\n\n"
+  - "`w{player}: `$\"Let's knock ${amount} off. I'll make it up on the flowers. I mean that sincerely.\"\n\n"
+  - "`w{player}: `$\"Bereavement rate: ${amount} off. I made it up just now, but it's real now.\"\n\n"
+  - "`w{player}: `$\"${amount} off, because you remind me of my aunt. Everyone reminds me of my aunt when I'm discounting.\"\n\n"
+  - "`w{player}: `$\"Okay. ${amount} off. Don't tell Elijah. He thinks I'm a hard-liner.\"\n\n"
+  - "`w{player}: `$\"I'll take off ${amount}. Call it the \"{dFridge} discount\". It's very popular this week.\"\n\n"
+  - "`w{player}: `$\"For you, and only for you, and for anyone else who asks, ${amount} off.\"\n\n"
+  - "`w{player}: `$\"${amount} off. Let's see the Blaine Funeral Home match that. They won't. They'd rather die. Poor choice of words.\"\n\n"
+  - "`w{player}: `$\"I'm slashing ${amount}. Slashing! Like a madman. A madman with a very small casket business.\"\n\n"
+  - "`w{player}: `$\"Let's call it ${amount} off and a free bookmark. The bookmark is a picture of a hearse.\"\n\n"
+  - "`w{player}: `$\"Here's ${amount} off. Consider it my condolences, in cash form, as a store credit.\"\n\n"
+  - "`w{player}: `$\"You've been through enough today. ${amount} off. You'll go through more when the invoice comes, but not today.\"\n\n"
+discountAccept:
+  - '{customer}"Well. That''s something, I suppose."'
+  - '{customer}"Oh! Thank you. Really."'
+  - '{customerName} relaxes a little in the chair.'
+  - '{customer}"Oh. Thank you. That actually helps."'
+  - '{customerName} lets out a breath {cHe} seems to have been holding since the hospital.'
+  - '{customer}"Really? That''s kind of you. I didn''t think people like you did kind."'
+  - '{customer}"Thank you. Every little bit helps right now."'
+  - '{customerName}''s face softens a little.'
+  - '{customer}"Oh! Well, that''s very decent."'
+  - '{customer}"I appreciate that. I really do. Money''s been the scariest part."'
+  - '{customerName} nods, grateful, and sits up a little straighter.'
+  - '{customer}"Okay. Okay, that''s better. Thank you."'
+  - '{customer}"You didn''t have to do that. Thank you."'
+  - '{customerName} tucks a tissue away and manages half a smile.'
+  - '{customer}"That''s a relief. {dFirst} loved a bargain."'
+  - '{customer}"Thank you. I was dreading this part."'
+  - '{customerName} looks at the new total and seems to breathe easier.'
+  - '{customer}"Huh. A funeral director with a heart. Who knew."'
+  - '{customer}"That''s very generous. I''ll tell people. Nice things. Mostly."'
+  - '{customerName} unclenches {cHis} jaw for the first time.'
+  - '{customer}"Well, that''s a weight off. A small weight, but I''ll take it."'
+  - '{customer}"Thank you. I''ll put it toward the flowers. Or a sandwich. I haven''t eaten."'
+  - '{customer}"Really? Thanks. Maybe this place isn''t so bad."'
+  - '{customerName} mumbles a thank-you and dabs at {cHis} eyes.'
+  - '{customer}"Bless you. Father Smyth would say bless you. I''m saying it for him."'
+  - '{customer}"That''s thoughtful. More than I expected from someone with a hearse parked out front."'
+discountHaggle:
+  - '{customer}"Now we''re talking. Keep going."'
+  - '{customer}"See? Was that so hard? Do it again."'
+  - '{customer}"That''s a start. A small start. A start a cheaper person would accept."'
+  - '{customer}"Ooh, I felt that. Do it again."'
+  - '{customer}"Ha! I knew there was fat on this bill. There''s always fat."'
+  - '{customer}"Good, good. Now take off the tax. What do you mean, you can''t take off the tax?"'
+  - '{customer}"See? Everybody''s got wiggle room. Wiggle more."'
+  - '{customerName} grins like a shark that has just smelled a bargain.'
+  - '{customer}"That''s better. Now, what''s the cash price?"'
+  - '{customer}"Okay, you''re learning. I like a mortician who learns."'
+  - '{customer}"I''ll accept that as an opening offer."'
+  - '{customerName} rubs {cHis} hands together. {cHeCap} is just getting started.'
+  - '{customer}"My Uncle Lou got thirty percent off his. And he wasn''t even dead yet."'
+  - '{customer}"Lovely. Now throw in the guest book."'
+  - '{customer}"Is that your final discount? Because it shouldn''t be."'
+  - '{customer}"You''re good at this. I''m better. Again."'
+packagePitch:
+  - "`w{player}: `$\"I'd feel terrible if I didn't mention {article} {upgrade}. ${price}.\"\n\n"
+  - "`w{player}: `$\"The {last} is our basic option. Basic. Like a peasant. {upgrade} is ${price}.\"\n\n"
+  - "`w{player}: `$\"Families who really care go with {article} {upgrade}. ${price}. No pressure.\"\n\n"
+  - "`w{player}: `$\"I could do the {last}. Or I could do {article} {upgrade} for ${price} and you could sleep at night.\"\n\n"
+  - "`w{player}: `$\"Upgrade to {article} {upgrade}? ${price}. I see you as a {upgrade} kind of person.\"\n\n"
+  - "`w{player}: `$\"Have you considered {article} {upgrade}? It's ${price} and it doesn't come with the smell.\"\n\n"
+  - "`w{player}: `$\"The {upgrade} is ${price}. The {last} is free, which tells you everything.\"\n\n"
+  - "`w{player}: `$\"{dFirst} survived... well, didn't survive {dFridge}. {dHeCap} deserves {article} {upgrade}. ${price}.\"\n\n"
+  - "`w{player}: `$\"For ${price}, {article} {upgrade} says what words can't. Mostly 'we paid for this'.\"\n\n"
+  - "`w{player}: `$\"Everyone at the wake will notice {article} {upgrade}. Everyone will notice a {last}, too.\"\n\n"
+  - "`w{player}: `$\"I personally recommend {article} {upgrade}. ${price}. I get no commission. I get some commission.\"\n\n"
+  - "`w{player}: `$\"Let's not cut corners on {dFirst}. {upgrade}, ${price}.\"\n\n"
+  - "`w{player}: `$\"A {last}... sure. If you want people to think you hated {dHim}. {upgrade} is ${price}.\"\n\n"
+  - "`w{player}: `$\"{upgrade}. ${price}. Tasteful, timeless, tax-deductible. Probably not tax-deductible.\"\n\n"
+  - "`w{player}: `$\"You only get one funeral, {cSir}. {dFirst} only gets one. {upgrade}, ${price}.\"\n\n"
+  - "`w{player}: `$\"Most people don't think about {article} {upgrade} until the service, and by then it's too late. It's ${price} right now.\"\n\n"
+  - "`w{player}: `$\"You've chosen the {last}. Bold. Unusual. Some would say sad. {upgrade} is ${price}.\"\n\n"
+  - "`w{player}: `$\"Let me show you something special: {article} {upgrade}. ${price}. Just look at it. Don't touch it.\"\n\n"
+  - "`w{player}: `$\"The {last} is included. Included as in \"free\". Free as in \"you get what you pay for\". {upgrade} is ${price}.\"\n\n"
+  - "`w{player}: `$\"For ${price} you get {article} {upgrade}. For free you get the {last} and a lifetime of second thoughts.\"\n\n"
+  - "`w{player}: `$\"Father Smyth says {article} {upgrade} gives the soul a head start. I pay him in lemon bars to say it. ${price}.\"\n\n"
+  - "`w{player}: `$\"What would the Mayor do? The Mayor would get {article} {upgrade}. For ${price}, so can you.\"\n\n"
+  - "`w{player}: `$\"Is {dFirst} really the {last} type? I see {dHim} as more of {article} {upgrade} type. ${price}.\"\n\n"
+  - "`w{player}: `$\"I'm not saying the {last} is bad. I'm saying I wouldn't let my dog near it. {upgrade}, ${price}.\"\n\n"
+  - "`w{player}: `$\"You can have {article} {upgrade} for ${price}, or you can have the {last} and explain it to the relatives.\"\n\n"
+  - "`w{player}: `$\"Upgrade to {article} {upgrade}? It's ${price}, and you'll never have to do this for {dFirst} again.\"\n\n"
+packageAccept:
+  - '{customer}"Fine. Yes. Do that."'
+  - '{customer}"I suppose {dFirst} would want that."'
+  - '{customer}"You had me at ''tax-deductible''."'
+  - '{customer}"Okay. {dFirst} deserves it."'
+  - '{customer}"Fine. Yes. Put it on the bill before I change my mind."'
+  - '{customer}"You know what? Yes. The {upgrade}."'
+  - '{customer}"I''ll take it. Don''t tell my accountant."'
+  - '{customer}"Oh, that''s nice. Okay. Yes."'
+  - '{customer}"Alright. If we''re doing this, we''re doing it properly."'
+  - '{customerName} hesitates, then nods. "Do it."'
+  - '{customer}"Sure. Why not. It''s only money, and {dFirst} only gets buried once."'
+  - '{customer}"Yes. Something nice for {dHim}. Finally."'
+  - '{customer}"Fine. The {last} did look a bit sad."'
+  - '{customer}"Okay, okay. The {upgrade}. You win."'
+  - '{customer}"Yes, please. {dFirst} always wanted to be fancy at least once."'
+  - '{customer}"That''s... actually lovely. Yes."'
+  - '{customer}"Go on then. Add it."'
+packageRefuse:
+  - '{customer}"No. The {last} is fine."'
+  - '{customer}"I''m not paying ${price} for that."'
+  - '{customer}"{dFirst} wouldn''t want a fuss."'
+  - '{customer}"Do I look made of money?"'
+  - '{customer}"The {last} is fine. {dFirst} wasn''t fancy."'
+  - '{customer}"No. I can see what you''re doing. Stop doing it."'
+  - '{customer}"Absolutely not. We''re not those kind of people."'
+  - '{customer}"{dFirst} would hate that. {dHeCap} hated anything with a price tag on it."'
+  - '{customer}"Let''s keep the {last}. It''s what {dHe} would have wanted. Or what I want. Same thing today."'
+  - '{customer}"Upgrade? No. Downgrade, if anything."'
+  - '{customer}"I didn''t come here to buy the deluxe anything."'
+  - '{customer}"No thank you. The {last} is plenty."'
+  - '{customer}"Pass. I''m not made of {upgrade}s."'
+  - '{customer}"Nope. The {last} suits {dFirst}. {dHeCap} was a simple soul. Cheap, but simple."'
+  - '{customer}"You keep saying "upgrade" like it''s a nice word."'
+  - '{customer}"${price}? For that? I could buy a used car. A bad one, but a car."'
+packageOverLimit: '{customer}"That would put me over what I can spend. Something cheaper?"'
+impatient:
+  - '{customerName} checks {cHis} watch, loudly.'
+  - '{customer}"Are we almost done here?"'
+  - '{customerName} drums {cHis} fingers on your desk.'
+  - '{customer}"I''ve been here longer than {dFirst} was in the hospital."'
+  - '{customerName} looks at the door, then at you, then at the door again.'
+  - '{customer}"Is there a part of this that ends?"'
+  - '{customer}"I''ve aged a year since I sat down."'
+  - '{customerName} has started putting {cHis} coat back on.'
+  - '{customer}"You''ve got about one more pitch in you before I leave."'
+  - '{customer}"Are you paid by the hour? It feels like you''re paid by the hour."'
+  - '{customerName} sighs, loudly, in your direction.'
+  - '{customer}"Wrap it up. Please. I''m begging."'
+  - '{customer}"I could have dug the grave myself by now."'
+  - '{customerName} stares at the clock as if willing it to explode.'
+  - '{customer}"Get to the point. Then stop."'
+  - '{customer}"My parking ran out ten minutes ago. I''m paying for this twice."'
+  - '{customerName} taps the desk: one, two, three, done.'
+  - '{customer}"Are you selling me something or reading me your memoirs?"'
+  - '{customerName}''s left eye has developed a twitch.'
+  - '{customer}"I had patience when I came in. I''m out now. You used it all."'
+  - '{customer}"{dFirst} is the dead one, and I''m the one who feels like it."'
+  - '{customerName} picks up {cHis} keys and jingles them meaningfully.'
+  - '{customer}"One more word that isn''t "done" and I''m leaving."'
+  - '{customerName} has stopped listening and started writing a bad review in {cHis} head.'
+  - '{customer}"Faster. Please. Faster."'
+  - '{customer}"How long does this take? {dFirst} went quicker."'
+blessPitch: "`w{player}: `$\"Would you like me to say a little prayer for {dFirst}? Father Smyth taught me. Most of it.\"\n\n"
+blessResult:
+  loved: '{customerName} bows {cHis} head and weeps quietly. {cHeCap} loved {dHim}, that much is clear.'
+  notLoved: '{customerName} bows {cHis} head politely and checks {cHis} phone during the amen. No love lost there.'
+raisePitch: "`$You mutter a few words from the book in your basement. Somewhere in the back room, chairs scrape.\n\n"
+raiseResult: '`$Three pale mourners shuffle in and stand behind {customerName}, moaning softly. {cHeCap} decides not to argue about money any more.'
+threat: '{customer}"You disappoint me." The large men walk you out to the alley and explain your disappointment to your ribs.'

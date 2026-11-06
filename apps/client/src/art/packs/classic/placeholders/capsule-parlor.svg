@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="-23 -23 45 45" data-placeholder="true">
+  <title>Parlor office button (placeholder art)</title>
+  <!-- PLACEHOLDER ART. The original capsule menu has no button for the parlor office. Replace it by
+       adding apps/client/src/art/packs/classic/ui/capsule-parlor.svg (the same name in ui/ wins). -->
+  <defs>
+    <linearGradient id="rim" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#c8b880"/><stop offset=".5" stop-color="#907028"/><stop offset="1" stop-color="#181010"/>
+    </linearGradient>
+    <radialGradient id="face" cx=".35" cy=".3" r=".9">
+      <stop offset="0" stop-color="#d0b888"/><stop offset=".97" stop-color="#402800"/>
+    </radialGradient>
+  </defs>
+  <circle cx="0" cy=".2" r="21.2" fill="url(#rim)"/>
+  <circle cx="0" cy=".2" r="17" fill="url(#face)" stroke="#181010" stroke-width=".5"/>
+  <g fill="#2a1400" stroke="#181010" stroke-width=".6" stroke-linejoin="round" transform="translate(0 1)">
+    <path d="M-10 9 V-2 L0 -8 L10 -2 V9 Z" fill="#f0d894"/>
+    <path d="M-12 -2 L0 -10 L12 -2" fill="none" stroke="#402800" stroke-width="1.4" stroke-linecap="round"/>
+    <rect x="-2.5" y="2" width="5" height="7" fill="#402800"/>
+    <rect x="-8" y="-0.5" width="3.5" height="3.5" fill="#402800"/>
+    <rect x="4.5" y="-0.5" width="3.5" height="3.5" fill="#402800"/>
+  </g>
+</svg>

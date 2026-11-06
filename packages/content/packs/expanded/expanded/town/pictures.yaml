@@ -1,0 +1,40 @@
+# Pictures of the new places: asset ids from assets/manifest.json (Classic art) or
+# assets/remastered/manifest.json (the Remastered pack, docs/art/remastered-notes.md). Ids from the
+# Remastered pack exist only in that pack; the client falls back across packs for the rest.
+
+graveyard:
+  bg: 'places/graveyard'
+church:
+  fg: 'people/churchguy_h'
+  bg: 'background/background_church'
+bingo:
+  bg: 'places/bingo-night'
+cityHall:
+  fg: 'people/mayor-grubb'
+  bg: 'places/mayor-office'
+cityHallOutside:
+  bg: 'places/city-hall'
+inspection:
+  fg: 'people/inspector-mudge'
+  bg: 'places/mayor-office'
+hospital:
+  bg: 'places/sick-room'
+hospitalDesk:
+  fg: 'people/nurse-gertie'
+  bg: 'places/hospital_desk'
+club:
+  fg: 'people/lucius-vane'
+  bg: 'places/reaper-club'
+clubDoor:
+  bg: 'places/reaper-club-door'
+clubTables:
+  bg: 'places/reaper-tables'
+blackMarket:
+  bg: 'places/black-market'
+bank:
+  bg: 'places/bank'
+vault:
+  fg: 'people/teller-prudence'
+  bg: 'places/bank-vault'
+duel:
+  bg: 'places/graveyard-duel'

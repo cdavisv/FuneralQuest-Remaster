@@ -1,0 +1,11 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+  - "tools/*"
+
+# Dependencies whose install scripts may run. esbuild's postinstall only validates its binary;
+# @node-rs/argon2 ships prebuilt binaries as optional packages and needs no script, and is listed
+# so a future version that adds one does not fail `pnpm install --frozen-lockfile`.
+allowBuilds:
+  esbuild: true
+  "@node-rs/argon2": true

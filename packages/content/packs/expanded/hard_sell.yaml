@@ -1,0 +1,69 @@
+# Expanded pack: big upgrades offered (in this order) after Classic's ten, under the Classic
+# ruleset only (Expanded sells packages instead). Prices on the $50 grid, $1,500 to $4,000.
+
+- article: 'a'
+  name: 'Horse-Drawn Glass Carriage (Two Horses)'
+  price: 2800
+- article: 'a'
+  name: 'Mausoleum Timeshare (Weekends Only)'
+  price: 2200
+- article: 'an'
+  name: 'Eternal Flame (Propane Included for a Year)'
+  price: 1800
+- article: 'a'
+  name: 'Lifesize Bronze Statue of the Deceased'
+  price: 3600
+- article: 'a'
+  name: 'Lead-Lined Raccoon-Proof Vault'
+  price: 2450
+- article: 'a'
+  name: 'Full Marching Band Procession'
+  price: 3150
+- article: 'a'
+  name: 'Skywriting Eulogy (Weather Permitting)'
+  price: 2650
+- article: 'a'
+  name: 'Heated Casket with Seat Warmers'
+  price: 1950
+- article: 'a'
+  name: 'Lakeside Plot on Lake Bleak'
+  price: 2950
+- article: 'a'
+  name: 'Mahogany Sarcophagus with Hieroglyphs'
+  price: 3300
+- article: 'a'
+  name: '21-Firecracker Salute'
+  price: 1500
+- article: 'a'
+  name: 'Velvet Rope Line with Bouncer'
+  price: 1650
+- article: 'a'
+  name: 'Custom Stained-Glass Window at the Church'
+  price: 3800
+- article: 'an'
+  name: 'Ice Sculpture Swan Fountain (Punch-Fed)'
+  price: 2050
+- article: 'a'
+  name: 'Mariachi-and-Bagpipe Fusion Ensemble'
+  price: 2350
+- article: 'a'
+  name: 'Two-Story Family Crypt with Doorbell'
+  price: 4000
+- article: 'a'
+  name: 'Solid Gold Casket Handles (Set of Eight)'
+  price: 3500
+- article: 'a'
+  name: 'Hot Air Balloon Ride for the Casket'
+  price: 2750
+- article: 'a'
+  name: 'Wax Figure of the Deceased for the Reception'
+  price: 3050
+- article: 'a'
+  name: 'Glow-in-the-Dark Granite Obelisk'
+  price: 3250
+- article: 'an'
+  name: 'Annual Memorial Parade Down Main Street'
+  price: 3950
+- article: 'a'
+  name: 'Crypt with Upper Bunk (View of the Lower Bunk)'
+  price: 2550

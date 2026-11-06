@@ -1,0 +1,257 @@
+/*
+ * The choice between online and solo, the solo career screens (saved careers, the new-career
+ * form), and the note shown while a night of rival turns runs. Same units as door.css.
+ */
+
+/* ---------- Online or solo ---------- */
+
+.fq-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--u) * 14);
+}
+
+.fq-choice {
+  display: grid;
+  align-content: start;
+  gap: calc(var(--u) * 6);
+  padding: calc(var(--u) * 12) calc(var(--u) * 14) calc(var(--u) * 14);
+  min-height: calc(var(--u) * 112);
+  height: auto;
+  text-align: left;
+}
+
+.fq-choice-title {
+  font-size: max(20px, calc(var(--u) * 27 * var(--fq-font-scale)));
+  line-height: 1.1;
+}
+
+.fq-choice-note {
+  font-family: var(--fq-font-ui);
+  font-style: normal;
+  font-weight: 400;
+  font-size: max(13px, calc(var(--u) * 15 * var(--fq-font-scale)));
+  line-height: 1.3;
+}
+
+.fq-choice[data-unavailable] {
+  filter: saturate(0.5);
+}
+
+.fq-door-note {
+  margin: 0;
+  color: #b9b29c;
+}
+
+.fq-door[data-layout="phone"] .fq-choices {
+  grid-template-columns: 1fr;
+}
+
+/* ---------- Saved careers ---------- */
+
+.fq-saves {
+  display: grid;
+  gap: calc(var(--u) * 8);
+  max-height: calc(var(--u) * 300);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.fq-save {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 6) calc(var(--u) * 14);
+  padding: calc(var(--u) * 8) calc(var(--u) * 12);
+  border: 2px solid rgba(90, 50, 5, 0.45);
+  border-radius: calc(var(--u) * 8);
+  background: rgba(255, 246, 216, 0.55);
+}
+
+.fq-save-text p {
+  margin: 0;
+}
+
+.fq-save-name {
+  font-family: var(--fq-font-script);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.fq-save-progress {
+  font-weight: 700;
+}
+
+.fq-save-detail {
+  font-size: 0.84em;
+  color: #4a3512;
+}
+
+.fq-save-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 8) calc(var(--u) * 14);
+}
+
+.fq-save-ask {
+  font-weight: 700;
+}
+
+.fq-save-actions .fq-door-btn,
+.fq-save-actions .fq-door-btn[data-variant="primary"] {
+  min-width: calc(var(--u) * 100);
+}
+
+.fq-solo-info {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(255, 246, 216, 0.7);
+  border: 1px solid #8a6b36;
+}
+
+.fq-door[data-layout="phone"] .fq-saves {
+  max-height: none;
+}
+
+.fq-door[data-layout="phone"] .fq-save-actions {
+  width: 100%;
+}
+
+/* ---------- The new-career form ---------- */
+
+/* The form needs more room than the log-on plaque: it takes the whole screen below the title. */
+.fq-door[data-variant="setup"] .fq-door-info,
+.fq-door[data-variant="setup"] .fq-door-clerk {
+  display: none;
+}
+
+.fq-door[data-variant="setup"] .fq-door-plaque {
+  left: calc(var(--u) * 112);
+  top: calc(var(--u) * 100);
+  width: calc(var(--u) * 800);
+}
+
+.fq-cabinet[data-layout="wide"] .fq-door[data-variant="setup"] .fq-door-plaque {
+  left: calc(var(--u) * 240);
+}
+
+.fq-solo-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: calc(var(--u) * 6) calc(var(--u) * 26);
+}
+
+.fq-solo-col {
+  display: grid;
+  align-content: start;
+  gap: calc(var(--u) * 4);
+}
+
+.fq-solo-setup .fq-door-heading {
+  min-height: 0;
+}
+
+.fq-chips {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fq-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 5);
+}
+
+.fq-chip {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 calc(var(--u) * 10);
+  border: 2px solid #8a6b36;
+  border-radius: 999px;
+  background: #fff6d8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fq-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.fq-chip[data-checked] {
+  border-color: #6b3d10;
+  background: linear-gradient(180deg, #b79d6a, #a38855 55%, #8f7545);
+  box-shadow: inset 0 2px 3px rgba(60, 35, 5, 0.4);
+  color: #120900;
+}
+
+.fq-chip:has(input:focus-visible) {
+  outline: 3px solid var(--fq-focus);
+  outline-offset: 2px;
+}
+
+.fq-door[data-variant="setup"] .fq-sex-skulls {
+  gap: calc(var(--u) * 10);
+}
+
+.fq-door[data-variant="setup"] .fq-skull img {
+  height: max(44px, calc(var(--u) * 52));
+}
+
+.fq-door[data-layout="phone"] .fq-solo-grid {
+  grid-template-columns: 1fr;
+}
+
+.fq-door[data-layout="phone"][data-variant="setup"] .fq-door-plaque {
+  left: auto;
+  top: auto;
+  width: auto;
+}
+
+/* ---------- While the rivals take their turns ---------- */
+
+.fq-busy-note {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  z-index: 40;
+  transform: translateX(-50%);
+  margin: 0;
+  max-width: min(92vw, 520px);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(8, 10, 16, 0.88);
+  border: 1px solid rgba(232, 195, 90, 0.6);
+  color: var(--fq-gold-light);
+  font-size: 16px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.fq-save-alert {
+  position: fixed;
+  left: 50%;
+  top: 10px;
+  z-index: 60;
+  transform: translateX(-50%);
+  margin: 0;
+  max-width: min(92vw, 560px);
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #ffe1d2;
+  border: 1px solid #a3180a;
+  color: #7c1005;
+  font-weight: 700;
+}
