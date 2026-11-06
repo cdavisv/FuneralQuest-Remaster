@@ -24,70 +24,56 @@ softened, replaced or removed, in any built-in pack or mode. In practice:
   `legacy/dist` and `CLASSIC_TEXT`; Classic and Vintage must equal it exactly) or if a built-in pack
   directory has an overrides file. `test/original.test.ts` proves each check with planted violations.
 
-## Awaiting the owner's decision
+## Flagged Expanded lines: kept as written
 
-Only **newly written Expanded lines** are listed here. They are not original dialog, so the rule does
-not decide them; the content policy does, and their writers flagged them as possibly over the line.
-Eight lines were flagged (the brief said six; eight were named, so all eight are here). None of them
-has been changed. Each has a ready-made milder alternative: to accept it, replace the quoted text at
-the file and key given and run `pnpm --filter @fq/content run build`; to keep the line as written, do
-nothing and delete the entry here. All paths are under `packages/content/packs/expanded/`.
+Eight lines newly written for the Expanded pack were flagged by their writers as possibly over the line. **Decided by the owner on 2026-11-06: keep all eight as written.** They are listed here for the record only; no alternative wording is kept.
 
 ### 1. The guilt backfire: "You're lucky I'm too sad to hit you."
 
 - Where: `text.yaml`, `negotiation.guiltLoved[20]`.
 - Why flagged: any customer can say it, including a 7-year-old, and it jokes about hitting someone.
 - As written: `{customer}"You're lucky I'm too sad to hit you."`
-- Milder: `{customer}"I'm too sad to even argue with you."`
-- Age-gating: **not possible with the types as they are.** `guiltLoved` is a plain `string[]` (`ContentPack.text.negotiation`, `packages/core/src/content/classicText.ts`), and both negotiation modules (`classic/modules/negotiation.ts`, `expanded/negotiation.ts`) pick one line at random with no look at the customer's age or relation. Gating would need an engine change in `packages/core` (for example `guiltLovedYoung`, or lines tagged with an age band). Until then the milder line is the only safe fix.
 
 ### 2. The Twins' fireworks-stand news mail
 
 - Where: `news_blurbs.yaml`, `ranges[2].entries[14]` ("THE TWINS OPEN A FIREWORKS STAND").
 - Why flagged: the mail and the news line make a mass-casualty explosion a punchline.
 - `giveRandom` as written: `The fireworks stand went up. All of it. The Twins are fine. The customers... bring a bucket.` `addLog` as written: `*NAME* of *HOME* buries the Twins' customers. The Twins send a wreath. It is on fire.`
-- Milder `giveRandom`: `"The fireworks stand went up. All of it. The Twins are fine. The Twins' accountant saw the insurance forms and had a heart attack. Bring a ladder."` Milder `addLog`: `` `7FIREWORKS STAND EXPLODES\n`^*NAME* of *HOME* buries the Twins' accountant. The Twins send a wreath. It is on fire. ``
 
 ### 3. The zoo-tiger news thread
 
 - Where: `news_blurbs.yaml`, `ranges[0].entries[1]` ("ZOO ACQUIRES "MOSTLY TAME" TIGER"), `ranges[1].entries[1]` ("ZOO TIGER ESCAPES, RETURNS FOR DINNER") and `ranges[2].entries[4]` ("ZOO CLOSES TIGER EXHIBIT, OPENS TIGER MEMORIAL"). Related but not flagged: `expanded/town/news.yaml` id `zoo`, and the ordinance `tiger-bond`, which only mention the tiger.
 - Why flagged: a keeper and the night watchman are eaten, played for laughs.
-- Milder: first blurb `"has only eaten one keeper, and that was during orientation."` becomes `"has only eaten one keeper's lunch, and that was during orientation."`. Second blurb `message`: `"He came back on his own, and very full," says zoo director Hank Pruitt. A head count of the zoo's parrots is under way.` with `giveRandom` `The zoo director walks in with a shovel and a sad face.\n\n"We found most of the parrot. He was 94 and said some words at the end."` and `addLog` `` `7TIGER TRAGEDY\n`^*NAME* of *HOME* will bury the zoo's oldest parrot, and whatever else turns up in the tiger enclosure. `` Third blurb: `The tiger is fine. The memorial is for the parrot. Zoo director Hank Pruitt will be honored in a separate ceremony, in the reptile house.`
 
 ### 4. The potato-salad prep outcome
 
 - Where: `expanded/prep.yaml`, entry `potato-salad` (index 53), option `Serve It`, `risk.failText`.
 - Why flagged: a mass food poisoning at a wake, with the mourners "back as customers" meaning dead.
 - As written: `Half the mourners are back by Thursday. On the bright side, some of them are back as customers.`
-- Milder: `Half the mourners spend Thursday indisposed and blame you. Nobody is dead, which is bad for business and good for everything else.` (The option's own text, "Nobody gets sick. Nobody gets sick yet.", can stay.)
 
 ### 5. The "Mariachi-and-Bagpipe Fusion Ensemble" upgrade
 
 - Where: `hard_sell.yaml`, entry 14 (`name`). The matching Expanded soft-sell Mariachi item was already renamed (see "Starter text changed before the rule" below).
 - Why flagged: names a national music tradition as the joke.
 - As written: `Mariachi-and-Bagpipe Fusion Ensemble`
-- Milder: `Brass-and-Bagpipe Fusion Ensemble` (article `a` still fits; the price stays $2,350).
 
 ### 6. The Twins' fire arc ending: "Nobody was badly hurt except, it turns out, quite a few people."
 
 - Where: `expanded/town/arcs.yaml`, arc `twins`, beat `blaze` (ending `blaze`), `story`.
 - Why flagged: the line says people were hurt in a fire and makes it a joke about insurance.
 - As written: `The surprise was warmth. Elm Street burned end to end while the brigade looked for a hose it never got. Nobody was badly hurt except, it turns out, quite a few people, all of them well insured. The Twins have sent every parlor in town a thank-you card.`
-- Milder: `The surprise was warmth. Elm Street burned end to end while the brigade looked for a hose it never got. Everyone got out in time, which the Twins describe as a bit of a letdown, and the insurance adjusters are still counting. The Twins have sent every parlor in town a thank-you card.`
 
 ### 7. The kneecappers news story
 
 - Where: `expanded/town/news.yaml`, id `muscle-glut` (index 21), `title` and `message`.
 - Why flagged: celebrates a glut of violent men for hire.
 - Title as written: `COUNTY RELEASES SIX MEN WITH TIRE IRONS, SAME DAY`. Message as written: `A paperwork error at the county lock-up let six career kneecappers out on one morning. "Supply and demand," shrugs a man in a trench coat outside the Reaper Club. "Mostly supply."`
-- Milder title: `COUNTY RELEASES SIX ENFORCERS, SAME DAY`. Milder message: `A paperwork error at the county lock-up let six career enforcers out on one morning. "Supply and demand," shrugs a man in a trench coat outside the Reaper Club. "Mostly supply."` (The effect line, "hit men 20% cheaper today", and the modifier stay.)
 
 ### 8. The Yang's fortune-printer story
 
 - Where: `expanded/town/news.yaml`, id `fortune-jam` (index 41), `title` and `message`.
 - Why flagged: a death-threat fortune delivered to every customer of a family restaurant, with June's "it's accurate" reply.
 - Title as written: `YANG'S FORTUNE PRINTER JAMS ON 'YOU WILL DIE'`. Message as written: `Every cookie at Yang's last night said the same thing. June says the printer is fixed and that she "doesn't see the problem, it's accurate." Superstitious families are spending big, just in case.`
-- Milder title: `YANG'S FORTUNE PRINTER JAMS ON 'SPEND IT NOW'`. Milder message: `Every cookie at Yang's last night said SPEND IT NOW, YOU CAN'T TAKE IT WITH YOU. June says the printer is fixed and that she "doesn't see the problem, it's accurate." Superstitious families are spending big, just in case.`
 
 ## Reverted
 
