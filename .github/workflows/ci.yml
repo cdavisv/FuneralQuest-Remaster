@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm lint
+      - name: rsvg-convert (the art check renders every Remastered SVG with it)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends librsvg2-bin
       - run: node tools/art/check.mjs
       - run: pnpm typecheck
 
