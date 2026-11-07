@@ -460,3 +460,127 @@ export function DeleteAccountDialog({
     </ModDialog>
   );
 }
+
+// -------------------------------------------------- guest to full account
+
+/** Gives a guest a log-on name and a password; the server keeps the parlor and the session. */
+export function UpgradeDialog({
+  onClose,
+  onUpgraded,
+}: {
+  onClose: () => void;
+  /** The account is a full one now: the free-text inputs open up. */
+  onUpgraded: () => void;
+}) {
+  const mod = useModeration();
+  const id = useId();
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [working, setWorking] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
+  const [done, setDone] = useState<string | null>(null);
+  if (!mod) return null;
+
+  const submit = async () => {
+    if (working) return;
+    setWorking(true);
+    setProblem(null);
+    try {
+      const r = await mod.api.upgrade(login.trim(), password);
+      setDone(r.account.login);
+      onUpgraded();
+    } catch (error) {
+      if (error instanceof ApiError && error.code === "login_taken") {
+        setProblem(say("upgrade.taken"));
+      } else if (error instanceof ApiError && error.status === 400) {
+        setProblem(say("upgrade.invalid"));
+      } else if (error instanceof ApiError && error.code === "text_not_allowed") {
+        setProblem(say("upgrade.refused"));
+      } else {
+        setProblem(say("upgrade.failed"));
+      }
+    } finally {
+      setWorking(false);
+    }
+  };
+
+  if (done !== null) {
+    return (
+      <ModDialog labelledBy={id} onClose={onClose}>
+        <h2 id={id} className="fq-mod-title">
+          {say("upgrade.doneTitle")}
+        </h2>
+        <p className="fq-dialog-text" role="status">
+          {say("upgrade.done", { login: done })}
+        </p>
+        <div className="fq-dialog-actions">
+          <button type="button" className="fq-dbtn" data-autofocus onClick={onClose}>
+            {say("upgrade.close")}
+          </button>
+        </div>
+      </ModDialog>
+    );
+  }
+
+  return (
+    <ModDialog labelledBy={id} onClose={onClose}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          void submit();
+        }}
+      >
+        <h2 id={id} className="fq-mod-title">
+          {say("upgrade.title")}
+        </h2>
+        <p className="fq-dialog-text">{say("upgrade.body")}</p>
+        <label className="fq-mod-label" htmlFor={`${id}-login`}>
+          {say("upgrade.login")}
+        </label>
+        <input
+          id={`${id}-login`}
+          className="fq-mod-input"
+          type="text"
+          autoComplete="username"
+          data-autofocus
+          value={login}
+          maxLength={20}
+          aria-describedby={`${id}-login-hint`}
+          onChange={(e) => setLogin(e.target.value)}
+        />
+        <p className="fq-set-note" id={`${id}-login-hint`}>
+          {say("upgrade.loginHint")}
+        </p>
+        <label className="fq-mod-label" htmlFor={`${id}-pw`}>
+          {say("upgrade.password")}
+        </label>
+        <input
+          id={`${id}-pw`}
+          className="fq-mod-input"
+          type="password"
+          autoComplete="new-password"
+          value={password}
+          maxLength={128}
+          aria-describedby={`${id}-pw-hint`}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <p className="fq-set-note" id={`${id}-pw-hint`}>
+          {say("upgrade.passwordHint")}
+        </p>
+        {problem && (
+          <p className="fq-mod-error" role="alert">
+            {problem}
+          </p>
+        )}
+        <div className="fq-dialog-actions">
+          <button type="submit" className="fq-dbtn" aria-disabled={working || undefined}>
+            {working ? say("upgrade.working") : say("upgrade.confirm")}
+          </button>
+          <button type="button" className="fq-dbtn" onClick={onClose}>
+            {say("upgrade.cancel")}
+          </button>
+        </div>
+      </form>
+    </ModDialog>
+  );
+}

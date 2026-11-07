@@ -103,7 +103,7 @@ export class SessionTransport implements LiveTransport {
           this.lastView = error.view;
           return error.view;
         }
-        if (error.code === "muted") {
+        if (error.code === "muted" || error.code === "guest_text") {
           // moderation hook: the moderators' mute refused this. Keep the screen, say why.
           window.dispatchEvent(
             new CustomEvent("fq:muted", { detail: { message: error.message, mute: error.mute } }),

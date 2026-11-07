@@ -53,6 +53,21 @@ const SCOPE_WORDS: Record<MuteScope, string> = {
   fortunes: "fortunes",
 };
 
+/**
+ * What a guest is told when they try to type for others, by what they tried. They need a free
+ * account; the message says how to make one (the client shows the same text with a link).
+ */
+export const GUEST_TEXT_MESSAGE: Record<MuteScope, string> = {
+  chat: guestRefusal("talk in the cafe"),
+  mail: guestRefusal("write letters or battle quotes"),
+  announcements: guestRefusal("post announcements or name chains"),
+  fortunes: guestRefusal("write fortunes"),
+};
+
+function guestRefusal(what: string): string {
+  return `Guests cannot ${what}. It needs a free account: choose Settings, then Make this a full account (your parlor comes with you), or log out and choose New user.`;
+}
+
 export function describeScopes(scopes: readonly MuteScope[]): string {
   const words = scopes.map((s) => SCOPE_WORDS[s]);
   if (words.length <= 1) return words.join("");
@@ -329,10 +344,15 @@ export class ModerationService {
     return this.mutes.active(accountId, this.now()).find((m) => m.scopes.includes(scope)) ?? null;
   }
 
-  /** Throws the refusal for a muted account trying `action`. */
+  /**
+   * Throws the refusal for a muted account trying `action`, and for a guest trying any free text
+   * (owner's decision 7, 2026-11-06: guests play and read; typing needs a free account). Cancelling
+   * a prompt (`text: null`) and choosing a parlor and handle at creation are not free text here.
+   */
   assertMayAct(account: Account, action: Action): void {
     const scope = scopeOfAction(action);
     if (scope === null) return;
+    if (account.guest) throw new SafetyError(403, "guest_text", GUEST_TEXT_MESSAGE[scope]);
     const mute = this.muteFor(account.id, scope);
     if (!mute) return;
     const until = new Date(mute.expiresAt);

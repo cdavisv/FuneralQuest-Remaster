@@ -1,0 +1,3188 @@
+{
+  "note": "Every line a known character speaks in the game's own text (scripts/voiceInventory.ts). Lines are exactly as written; {name} marks a placeholder filled at run time.",
+  "lines": [
+    {
+      "key": "teller-ff1e9e07185159c5",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "How's business, {player}?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.greeting",
+        "expanded.json:text.places.bank.greeting"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-998254a2cb036a44",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "Which kind tag would you like to exchange?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Which kind tag would you like to exchange?",
+        "part": "whole",
+        "key": "teller-998254a2cb036a44"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.which",
+        "expanded.json:text.places.bank.which"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-ba50a7db406725a1",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "What would you like to convert your {from} to?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "from"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.convertTo",
+        "expanded.json:text.places.bank.convertTo"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-d888a104a0daa1de",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "{fromCount} {from} tag(s) = {toCount} {to} tag(s). How many {from} tags would you like to exchange?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "fromCount",
+        "from",
+        "toCount",
+        "to",
+        "from"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.ratio",
+        "expanded.json:text.places.bank.ratio"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-89e493a45802e5fe",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "You are very amusing {sir}.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "sir"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.amusing",
+        "expanded.json:text.places.bank.amusing"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-51dc2777f08c8bc5",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "You can't exchange what you don't have. I'm trying to be nice here, but please, think next time.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You can't exchange what you don't have. I'm trying to be nice here, but please, think next time.",
+        "part": "whole",
+        "key": "teller-51dc2777f08c8bc5"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.notEnough",
+        "expanded.json:text.places.bank.notEnough"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-82eb342849bbf9d2",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "You don't understand, do you. You can't trade just {count} for a {to} tag, alright?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "count",
+        "to"
+      ],
+      "voice": {
+        "text": "You don't understand, do you.",
+        "part": "head",
+        "key": "teller-ef263dda83f3673c"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.tooFew",
+        "expanded.json:text.places.bank.tooFew"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "teller-370a1a7c72fe38ee",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "Very good, I have converted {lost} {from} tag(s) to {gained} {to} tag(s). Any other tags you would like to convert?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "lost",
+        "from",
+        "gained",
+        "to"
+      ],
+      "voice": {
+        "text": "Any other tags you would like to convert?",
+        "part": "tail",
+        "key": "teller-f1fea7143c711bca"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.bank.done",
+        "expanded.json:text.places.bank.done"
+      ],
+      "fallbackOnly": false,
+      "place": "bank"
+    },
+    {
+      "key": "elijah-280813c8bb2f57b6",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "What can I get for you today, {player}?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.store.greeting",
+        "expanded.json:text.places.store.greeting"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-4ccd59ce1d49b684",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "We carry nothing but the best in funeral transportation.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "We carry nothing but the best in funeral transportation.",
+        "part": "whole",
+        "key": "elijah-4ccd59ce1d49b684"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.store.hearseIntro",
+        "expanded.json:text.places.store.hearseIntro"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-c59fdbfe336573f4",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "I'm sorry, I really don't have time to waste. You obviously cannot afford a luxury sedan such as the {name}.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name"
+      ],
+      "voice": {
+        "text": "I'm sorry, I really don't have time to waste.",
+        "part": "head",
+        "key": "elijah-d791a9fc2ed3e42a"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.store.cannotAfford",
+        "expanded.json:text.places.store.cannotAfford"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-21d9d2f201c0d5dc",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "You already drive a {current}. I can't sell you a {name} on top of that, friend.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "current",
+        "name"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.store.noUpgrade",
+        "expanded.json:text.places.store.noUpgrade"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "june-f2ce5f6d01ee52c7",
+      "character": "june",
+      "speaker": "June",
+      "text": "Just leave, asshole.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Just leave, asshole.",
+        "part": "whole",
+        "key": "june-f2ce5f6d01ee52c7"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.kicked",
+        "expanded.json:text.places.yangs.kicked"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-9938048043116ffe",
+      "character": "june",
+      "speaker": "June",
+      "text": "I'm sorry, my dad is out delivering food right now. How about something for here?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "I'm sorry, my dad is out delivering food right now. How about something for here?",
+        "part": "whole",
+        "key": "june-9938048043116ffe"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.tigerOut",
+        "classic.json:text.places.yangs.sparrowOut",
+        "expanded.json:text.places.yangs.tigerOut",
+        "expanded.json:text.places.yangs.sparrowOut"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-c2fd47640d9c6a86",
+      "character": "june",
+      "speaker": "June",
+      "text": "Ah.. someone you are not too fond of, I take it. Who would this unlucky person be?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Ah.. someone you are not too fond of, I take it. Who would this unlucky person be?",
+        "part": "whole",
+        "key": "june-c2fd47640d9c6a86"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.tigerWho",
+        "expanded.json:text.places.yangs.tigerWho"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-16bb2772d065bea4",
+      "character": "june",
+      "speaker": "June",
+      "text": "That's very nice of you. Who's the lucky person?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "That's very nice of you. Who's the lucky person?",
+        "part": "whole",
+        "key": "june-16bb2772d065bea4"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.sparrowWho",
+        "expanded.json:text.places.yangs.sparrowWho"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-c8f2948708645501",
+      "character": "june",
+      "speaker": "June",
+      "text": "If you would like to write a custom fortune, enter it now.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "If you would like to write a custom fortune, enter it now.",
+        "part": "whole",
+        "key": "june-c8f2948708645501"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.fortunePrompt",
+        "expanded.json:text.places.yangs.fortunePrompt"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-1e3d9b04f539a13e",
+      "character": "june",
+      "speaker": "June",
+      "text": "Please leave now.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Please leave now.",
+        "part": "whole",
+        "key": "june-1e3d9b04f539a13e"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.bitchy",
+        "expanded.json:text.places.yangs.bitchy"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "june-d16db5886703331a",
+      "character": "june",
+      "speaker": "June",
+      "text": "Why don't you just get food for here?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Why don't you just get food for here?",
+        "part": "whole",
+        "key": "june-d16db5886703331a"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.yangs.selfTarget",
+        "expanded.json:text.places.yangs.selfTarget"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "yang-cb5dae378f80d3bd",
+      "character": "yang",
+      "speaker": "Mr Yang",
+      "text": "We only allow {perDay} delivery per day,",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "perDay"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "classic.json:text.places.yangs.limit",
+        "expanded.json:text.places.yangs.limit"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "yang-dc4aa90516a184ff",
+      "character": "yang",
+      "speaker": "Mr Yang",
+      "text": "Yes, delivery is very popular. You see this package from {name}? I'm going deliver it all the way to {parlor}, no extra charge!",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name",
+        "parlor"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "classic.json:text.places.yangs.news[1]",
+        "expanded.json:text.places.yangs.news[1]"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's"
+    },
+    {
+      "key": "yang-edd4e1a12c6c2c7b",
+      "character": "yang",
+      "speaker": "Mr Yang",
+      "text": "Ah, yes. Business is very good today! People like {name} buying so much delivery,",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name"
+      ],
+      "voice": null,
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "classic.json:text.places.yangs.news[2]",
+        "expanded.json:text.places.yangs.news[2]"
+      ],
+      "fallbackOnly": false,
+      "place": "Yang's",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "nurse-92b595afd106aff9",
+      "character": "nurse",
+      "speaker": "Nurse",
+      "text": "Hi {player}. I don't recall you having a pick-up today.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "I don't recall you having a pick-up today.",
+        "part": "tail",
+        "key": "nurse-29293a8f59429b49"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.hospital.greeting",
+        "expanded.json:text.places.hospital.greeting"
+      ],
+      "fallbackOnly": false,
+      "place": "hospital"
+    },
+    {
+      "key": "nurse-4bd2cf7c0911c772",
+      "character": "nurse",
+      "speaker": "Nurse",
+      "text": "I see you finally woke up, {prince}. Hope you'll be more careful next time.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "prince"
+      ],
+      "voice": {
+        "text": "Hope you'll be more careful next time.",
+        "part": "tail",
+        "key": "nurse-6a1f8532d1d0ca84"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "classic.json:text.places.hospital.wakeUp",
+        "expanded.json:text.places.hospital.wakeUp"
+      ],
+      "fallbackOnly": false,
+      "place": "hospital"
+    },
+    {
+      "key": "smyth-df3c496a8ce78638",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Why hello there, {name}. Isn't it a wonderfully fantastic day today? Praise the Lord.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name"
+      ],
+      "voice": {
+        "text": "Isn't it a wonderfully fantastic day today? Praise the Lord.",
+        "part": "tail",
+        "key": "smyth-60d7484557c3b50f"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/modules/church.ts:34"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-69dc7315ee0099d3",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Hi there. I already said hi though.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Hi there. I already said hi though.",
+        "part": "whole",
+        "key": "smyth-69dc7315ee0099d3"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/modules/church.ts:42"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "twins-3a5b153554172f2b",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We like to play with fire. We'll discreetly pay a 'visit' to any funeral parlor in town for only {cost} gold tags.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "cost"
+      ],
+      "voice": {
+        "text": "We like to play with fire.",
+        "part": "head",
+        "key": "twins-c92ee2f47d035f06"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/classicScripts.ts:97",
+        "expanded.json:expanded.text.arson.offer",
+        "packages/core/src/expanded/content/starter.ts:1487"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "twins-abdbe6614550b0eb",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "You don't have enough gold tags, fool! We shall come again...",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You don't have enough gold tags, fool! We shall come again...",
+        "part": "whole",
+        "key": "twins-abdbe6614550b0eb"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/classicScripts.ts:115",
+        "packages/core/src/expanded/scripts.ts:48"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "elijah-e51521cfeb987d71",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "This town seems accident prone. Investing in security is a great idea.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "This town seems accident prone. Investing in security is a great idea.",
+        "part": "whole",
+        "key": "elijah-e51521cfeb987d71"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:111"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-b4e4c65f5ce17c8d",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "Wait until the one you have breaks. Sorry, company policy.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Wait until the one you have breaks. Sorry, company policy.",
+        "part": "whole",
+        "key": "elijah-b4e4c65f5ce17c8d"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:137"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-3d061f7153861097",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "I'm sorry, you seem to be lacking in funds. Perhaps another time?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "I'm sorry, you seem to be lacking in funds. Perhaps another time?",
+        "part": "whole",
+        "key": "elijah-3d061f7153861097"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:140",
+        "packages/core/src/classic/scripts/storeScripts.ts:157",
+        "packages/core/src/classic/scripts/storeScripts.ts:172"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-25d71da77e6c4805",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "Your parlor is quite small. You really don't need two of these things.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Your parlor is quite small. You really don't need two of these things.",
+        "part": "whole",
+        "key": "elijah-25d71da77e6c4805"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:154"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-54867630dc89c13a",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "You already own a Safe. You shouldn't need two.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You already own a Safe. You shouldn't need two.",
+        "part": "whole",
+        "key": "elijah-54867630dc89c13a"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:169"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-3aef7f26c8ae4aa8",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "You don't have a single gold tag at the moment? That's too bad. These are great little lockpicks.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You don't have a single gold tag at the moment? That's too bad. These are great little lockpicks.",
+        "part": "whole",
+        "key": "elijah-3aef7f26c8ae4aa8"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:202"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-ae51db10cd12a3fe",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "We carry a wide assortment of useful items.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "We carry a wide assortment of useful items.",
+        "part": "whole",
+        "key": "elijah-ae51db10cd12a3fe"
+      },
+      "origin": "original",
+      "rulesets": [
+        "classic"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/classic/scripts/storeScripts.ts:226"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "smyth-02a49161f01215d3",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "She has money. Be gentle. Lemon bars Sunday.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "She has money. Be gentle. Lemon bars Sunday.",
+        "part": "whole",
+        "key": "smyth-02a49161f01215d3"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:events.ranges[1].entries[25].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded"
+    },
+    {
+      "key": "elijah-40b7e5ad6fefc5ff",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Limit one per family per day,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[0].entries[27].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-d309d46cd06c194a",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "About the lemon bars. Discretion, please. A lot of discretion.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[0].entries[29].giveRandom"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "elijah-308b89d56453cfbb",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "It works perfectly,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[26].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "elijah-8fd8e98cf0271dc2",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "The problem is people keep wearing it while they're alive.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[26].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-cd55bdc7662683cd",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Somebody called bingo on last week's card,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[28].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-8ebf7af9148895e3",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Then somebody threw a folding chair. This can't be good.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[28].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "yang-7c7e47354b3145e7",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "Anywhere in Deathville, thirty minutes,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[39].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "yang-6d23b4c0aa8ca886",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "Tiger, sparrow, it does not matter. My car is very fast and my conscience is very quiet.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[1].entries[39].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "elijah-1691b5142b79e146",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "People want to be ready,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[27].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "elijah-d159fd8f7183bf55",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Also, I raised the prices. Also, I am not blinking. I never blink.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[27].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-b0943d0d6ab145b7",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "This can't be good,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[28].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-cc2efa6d8b37c88b",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "The roof came in during the sermon. I need a parlor with a forgiving price list.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[28].giveRandom"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "yang-8a3a329d49d7ef33",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "This year's winner: You will be buried by someone cheap,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[40].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "yang-eea2e0256290d967",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "Very popular. People keep it in their wallet, for the funeral.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:newsBlurbs.ranges[2].entries[40].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-6c3de27b44569fbd",
+      "character": "smyth",
+      "speaker": "Smyth",
+      "text": "I counted it before I left, my child.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "I counted it before I left, my child.",
+        "part": "whole",
+        "key": "smyth-6c3de27b44569fbd"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[14].failMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "smyth-295466bef0ec9070",
+      "character": "smyth",
+      "speaker": "Smyth",
+      "text": "The Lord provides.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "The Lord provides.",
+        "part": "whole",
+        "key": "smyth-295466bef0ec9070"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[14].successMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "twins-1afa45efa7f9db49",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We could make that new parlor across town have a really warm evening. For you, a discount. Half price. We just like the work.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "We could make that new parlor across town have a really warm evening. For you, a discount. Half price. We just like the work.",
+        "part": "whole",
+        "key": "twins-1afa45efa7f9db49"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[19].startMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "yang-6d3db037a0a511d1",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "You are a good customer,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You are a good customer,",
+        "part": "whole",
+        "key": "yang-6d3db037a0a511d1"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[29].normalMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "yang-fd4265360d460760",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "Too pale. But good.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Too pale. But good.",
+        "part": "whole",
+        "key": "yang-fd4265360d460760"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[29].normalMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "elijah-a901bda9a94f1337",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "No questions about where they came from. And I mean that as a rule, not a suggestion.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "No questions about where they came from. And I mean that as a rule, not a suggestion.",
+        "part": "whole",
+        "key": "elijah-a901bda9a94f1337"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:risks[36].startMessage"
+      ],
+      "fallbackOnly": false,
+      "place": "risks (arson, the Twins)"
+    },
+    {
+      "key": "twins-ae226cdef7129330",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We'll take that empty casket crate off your hands,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "We'll take that empty casket crate off your hands,",
+        "part": "whole",
+        "key": "twins-ae226cdef7129330"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.prep[56].text"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded"
+    },
+    {
+      "key": "clerk-21f47df06f0f6576",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Unclaimed, no family. County pays the flat rate: a pine box and a hole. Take it or leave it, I've got six more in the van.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.specials[5].intro",
+        "packages/core/src/expanded/content/starter.ts:411"
+      ],
+      "fallbackOnly": false,
+      "place": "specials at the desk",
+      "skipReason": "a county clerk at the desk, not the Guild's tutorial clerk"
+    },
+    {
+      "key": "twins-ee739afb9a1b2f79",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We found this in a barn. The barn was on fire. We didn't start that fire. We started a different fire. Bury it quiet and we'll pay cash.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "We found this in a barn. The barn was on fire. We didn't start that fire. We started a different fire. Bury it quiet and we'll pay cash.",
+        "part": "whole",
+        "key": "twins-ee739afb9a1b2f79"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.specials[10].intro"
+      ],
+      "fallbackOnly": false,
+      "place": "specials at the desk"
+    },
+    {
+      "key": "elijah-fdeccdfc384108de",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Caskets at wholesale. Wood ${wood}, silver ${silver}, gold ${gold}. You've got {have} in the back and room for {room} more.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "wood",
+        "silver",
+        "gold",
+        "have",
+        "room"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.store.casketIntro",
+        "packages/core/src/expanded/content/starter.ts:1386"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-6384e144a61f18c2",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "One {tier} casket, ${price}. Want it gift wrapped? I don't gift wrap.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "tier",
+        "price"
+      ],
+      "voice": {
+        "text": "Want it gift wrapped? I don't gift wrap.",
+        "part": "tail",
+        "key": "elijah-7f48e0acf6bcd812"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.store.bought",
+        "packages/core/src/expanded/content/starter.ts:1390"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-633ee558c3ab8676",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "{count} caskets, ${price}. I'll have the boy drop them off. The boy is 64.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "count",
+        "price"
+      ],
+      "voice": {
+        "text": "I'll have the boy drop them off. The boy is 64.",
+        "part": "tail",
+        "key": "elijah-1bb109889f7afe4a"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.store.restocked",
+        "packages/core/src/expanded/content/starter.ts:1392"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-4188aa9744e11ad5",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Your storeroom is full. Sell some dead people first. I'll wait. I don't blink.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Your storeroom is full. Sell some dead people first. I'll wait. I don't blink.",
+        "part": "whole",
+        "key": "elijah-4188aa9744e11ad5"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.store.full"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "elijah-bfceb479dcc22a4f",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Cash up front, friend. I don't do layaway on caskets. I did once. He's still in one.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Cash up front, friend. I don't do layaway on caskets. I did once. He's still in one.",
+        "part": "whole",
+        "key": "elijah-bfceb479dcc22a4f"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.store.cantAfford"
+      ],
+      "fallbackOnly": false,
+      "place": "Di-Mart"
+    },
+    {
+      "key": "clerk-5358656e3e43a8ac",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Welcome to Deathville, {name}! I'm from the Funeral Director's Guild. Congratulations on {parlor}. It's... a building. It has a door and most of its windows. I'll walk you through your first day. Two minutes. Or press Skip and learn the hard way, like the last fellow. We buried him Tuesday.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name",
+        "parlor"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[0]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-d5d0b470b26e0e76",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Every day you get turns. Each customer you meet costs one. Unused turns carry over to tomorrow, but only up to one day's worth, so sleeping in all week won't make you rich. Every funeral earns Bury Points. Whoever has the most at the end of the season wins, and gets to be smug at the Guild picnic.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Every day you get turns. Each customer you meet costs one. Unused turns carry over to tomorrow, but only up to one day's worth, so sleeping in all week won't make you rich. Every funeral earns Bury Points. Whoever has the most at the end of the season wins, and gets to be smug at the Guild picnic.",
+        "part": "whole",
+        "key": "clerk-d5d0b470b26e0e76"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[1]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-e321c7a9632dde83",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Every customer has a limit: the most they'll spend. You never see it. You see an estimate, a range, and the real number is somewhere inside it. Not necessarily the middle. Psychology classes at Spirit University narrow it down. Nothing you sell can push the bill past their limit. They'll just say no.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Every customer has a limit: the most they'll spend. You never see it. You see an estimate, a range, and the real number is somewhere inside it. Not necessarily the middle. Psychology classes at Spirit University narrow it down. Nothing you sell can push the bill past their limit. They'll just say no.",
+        "part": "whole",
+        "key": "clerk-e321c7a9632dde83"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[2]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-0a7515bb2f88f861",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Here's the trick. Land the bill within 8% of their limit and you get a bonus. Within 3%, a bigger one. Hit it to the dollar and the whole town reads about it in the paper. Every price in this business is a multiple of fifty dollars, so the exact number can always be reached. In theory. In practice, people cry on the calculator.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Here's the trick. Land the bill within 8% of their limit and you get a bonus. Within 3%, a bigger one. Hit it to the dollar and the whole town reads about it in the paper. Every price in this business is a multiple of fifty dollars, so the exact number can always be reached. In theory. In practice, people cry on the calculator.",
+        "part": "whole",
+        "key": "clerk-0a7515bb2f88f861"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[3]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-d476baa84093a15e",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Watch their mood and their patience. Every pitch uses up a little patience. When it runs out, everything you do annoys them, and if they get angry enough they walk out and a rival gets the body. What a customer says is true. Someone clutching a photo loved the deceased: use Sympathy. Someone watching the clock didn't: Guilt works. Listen costs two patience and teaches you something new.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Watch their mood and their patience. Every pitch uses up a little patience. When it runs out, everything you do annoys them, and if they get angry enough they walk out and a rival gets the body. What a customer says is true. Someone clutching a photo loved the deceased: use Sympathy. Someone watching the clock didn't: Guilt works. Listen costs two patience and teaches you something new.",
+        "part": "whole",
+        "key": "clerk-d476baa84093a15e"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[4]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-545563d0787540be",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Soft Sell deals you a hand of three extras; pick one that fits under the top of the estimate. Packages upgrade the embalming, flowers, plot, headstone and service, one step at a time. Hard Sell moves them up a casket. Coffee calms someone down, once per customer. A Discount takes a little off the bill and cheers them up, twice at most. Press Done when the bill is where you want it.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Soft Sell deals you a hand of three extras; pick one that fits under the top of the estimate. Packages upgrade the embalming, flowers, plot, headstone and service, one step at a time. Hard Sell moves them up a casket. Coffee calms someone down, once per customer. A Discount takes a little off the bill and cheers them up, twice at most. Press Done when the bill is where you want it.",
+        "part": "whole",
+        "key": "clerk-545563d0787540be"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[5]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-2a3f913d43bd10c3",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "After some funerals you'll prepare the body yourself, and there'll be a choice. A ring left on a finger. A fat wallet. Take it, or leave it. That's karma. Be good and the town trusts you: calmer, richer customers. Be bad and the money's nice, the hours are flexible, and the Guild pretends it doesn't know you.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "After some funerals you'll prepare the body yourself, and there'll be a choice. A ring left on a finger. A fat wallet. Take it, or leave it. That's karma. Be good and the town trusts you: calmer, richer customers. Be bad and the money's nice, the hours are flexible, and the Guild pretends it doesn't know you.",
+        "part": "whole",
+        "key": "clerk-2a3f913d43bd10c3"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[6]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-240963811aec56a7",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Cash is for the business. Di-Mart sells caskets wholesale; ask for Elijah, and don't let him touch your hair. Selling from stock pays better than a rush order. Your office has upgrades: paint, a coffee machine, one day a chapel. That's it! Your first customer is waiting. I'll be watching. Taking notes. Don't mind me.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Cash is for the business. Di-Mart sells caskets wholesale; ask for Elijah, and don't let him touch your hair. Selling from stock pays better than a rush order. Your office has upgrades: paint, a coffee machine, one day a chapel. That's it! Your first customer is waiting. I'll be watching. Taking notes. Don't mind me.",
+        "part": "whole",
+        "key": "clerk-240963811aec56a7"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.pages[7]"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "clerk-061521b410dbf26a",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Not bad for a first day! Wait for customers until your turns run out, then see the town: Di-Mart for caskets, your office for upgrades, Spirit University if you'd like to read minds. Good luck. Try not to get stabbed.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Not bad for a first day! Wait for customers until your turns run out, then see the town: Di-Mart for caskets, your office for upgrades, Spirit University if you'd like to read minds. Good luck. Try not to get stabbed.",
+        "part": "whole",
+        "key": "clerk-061521b410dbf26a"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.text.tutorial.finish"
+      ],
+      "fallbackOnly": false,
+      "place": "tutorial"
+    },
+    {
+      "key": "vane-3dfada11d39f5ac7",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Bigger blade, smaller church. That's arithmetic.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Bigger blade, smaller church. That's arithmetic.",
+        "part": "whole",
+        "key": "vane-3dfada11d39f5ac7"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[0].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "gertie-fb46005081cecc72",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Keep your hands washed and your parlors open,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[1].beats[1].story"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "vane-181a57afa7da7b5d",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Skeletons never win. They don't have the stomach for it.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Skeletons never win. They don't have the stomach for it.",
+        "part": "whole",
+        "key": "vane-181a57afa7da7b5d"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[2].beats[0].appeals[1].thanks",
+        "expanded.json:expanded.town.arcs[2].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "smyth-c7b2ad74afa6bc3e",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "A good man, with a lantern and a very short temper.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "A good man, with a lantern and a very short temper.",
+        "part": "whole",
+        "key": "smyth-c7b2ad74afa6bc3e"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[3].beats[0].appeals[0].thanks",
+        "expanded.json:expanded.town.arcs[3].beats[1].appeals[0].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "vane-ebca209e722d5c28",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Nothing lasts forever,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Nothing lasts forever,",
+        "part": "whole",
+        "key": "vane-ebca209e722d5c28"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[4].beats[0].appeals[1].thanks",
+        "expanded.json:expanded.town.arcs[4].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "vane-a7b00e28391de382",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Except that clerk.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Except that clerk.",
+        "part": "whole",
+        "key": "vane-a7b00e28391de382"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[4].beats[0].appeals[1].thanks",
+        "expanded.json:expanded.town.arcs[4].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "smyth-b8f2152b445c566d",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Ham, potato salad, and a cake shaped like Withers. He asked for the cake.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Ham, potato salad, and a cake shaped like Withers. He asked for the cake.",
+        "part": "whole",
+        "key": "smyth-b8f2152b445c566d"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[6].beats[0].appeals[0].thanks",
+        "expanded.json:expanded.town.arcs[6].beats[1].appeals[0].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "gertie-5ad57a8ecdac1128",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Thirty-one years, prince, and they still won't let me smoke in the morgue,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[8].beats[0].story"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "gertie-fa4426733cd21e91",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "You're a prince, prince.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You're a prince, prince.",
+        "part": "whole",
+        "key": "gertie-fa4426733cd21e91"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[8].beats[0].appeals[0].thanks",
+        "expanded.json:expanded.town.arcs[8].beats[1].appeals[0].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "gertie-d59088445a94b052",
+      "character": "gertie",
+      "speaker": "Gertie",
+      "text": "Prices are down, patients are down, everything's down,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[8].beats[3].story"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "vane-29190437d7a1cad1",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "You don't have to come,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "You don't have to come,",
+        "part": "whole",
+        "key": "vane-29190437d7a1cad1"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[9].beats[0].appeals[1].thanks",
+        "expanded.json:expanded.town.arcs[9].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "vane-3f80edd0c5949bd2",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "It's more of a donation with a point.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "It's more of a donation with a point.",
+        "part": "whole",
+        "key": "vane-3f80edd0c5949bd2"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.arcs[9].beats[0].appeals[1].thanks",
+        "expanded.json:expanded.town.arcs[9].beats[1].appeals[1].thanks"
+      ],
+      "fallbackOnly": false,
+      "place": "town stories"
+    },
+    {
+      "key": "elijah-2e3c1c32d6f42588",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "For a comfortable eternal lay, come see us today!",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[2].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "gertie-f62173c93aa05f87",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Bring a friend, prince. Bring two. Bring whatever's left of them.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[13].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "gertie-3153d3f3e32f49ad",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Nobody leaves until they're fixed or finished,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[14].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "prudence-2c06ab8deb46352b",
+      "character": "prudence",
+      "speaker": "Prudence Ledbetter",
+      "text": "We are rewarding thrift,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[15].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "elijah-cd991849695857bf",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Pine is up, oak is up, and the man who sold us particleboard is in prison,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[19].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-a736499bebc970b1",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "I had a lot to get off my chest,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[40].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "grubb-febbbdfc8e5f6a86",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "Best employee we've had,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[51].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "grubb-3b840e25bff4325f",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "He has never asked for a day off to bury a relative.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[51].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "gertie-bfaeb9936cf5fd4d",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "I'd have been in the good lifeboat, prince,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[64].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "vane-201aec1ff8211a9d",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "I'm told it's authentic,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[66].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "vane-2eb0016816e8b006",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "I'm told that about everything.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[66].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "grubb-261dc8d78dd9bc3d",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "It's an honour to be doubted by so many,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.news[68].message"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "vane-f227c943642b96e5",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Happiness is good for business, and so are two-for-one shots.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.ordinances[24].text"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "twins-91a971364a63e12c",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "Eyes on every street, paid for by the town.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.ordinances[25].text"
+      ],
+      "fallbackOnly": false,
+      "place": "expanded",
+      "skipReason": "reported speech in the newspaper, not said to the player"
+    },
+    {
+      "key": "smyth-db575c984e75fb7e",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Why hello there, {player}. Isn't it a wonderfully fantastic day today? Praise the Lord.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "Isn't it a wonderfully fantastic day today? Praise the Lord.",
+        "part": "tail",
+        "key": "smyth-60d7484557c3b50f"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[0]",
+        "packages/core/src/expanded/content/townStarter.ts:704"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-0c537c24c51ad84e",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "{player}! The Lord loves a cheerful giver, and so do I. Mostly the giving part.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "The Lord loves a cheerful giver, and so do I. Mostly the giving part.",
+        "part": "tail",
+        "key": "smyth-d431cc76ea0f7df8"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[1]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-be3604281207112a",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Ah, {player}. You look like a person with something on their conscience. Or their shoe.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "You look like a person with something on their conscience. Or their shoe.",
+        "part": "tail",
+        "key": "smyth-9fbc0aec114012f2"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[2]",
+        "packages/core/src/expanded/content/townStarter.ts:706"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-149190e36daee365",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "{player}, my child! Mind the bucket. The roof is having one of its days.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "Mind the bucket. The roof is having one of its days.",
+        "part": "tail",
+        "key": "smyth-995ff7e5aaee3c63"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[3]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-7f8dcc68635074e2",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Welcome, {player}. Have a lemon bar. They're from a fresh batch. A fresher batch. A batch.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "Have a lemon bar. They're from a fresh batch. A fresher batch. A batch.",
+        "part": "tail",
+        "key": "smyth-3f5fc9e386d4d861"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[4]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-40e0a2e19207ee43",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "{player}! I prayed for you this morning. Not by name, but you'll know which bit.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "I prayed for you this morning. Not by name, but you'll know which bit.",
+        "part": "tail",
+        "key": "smyth-43f9533b2a3283c5"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[5]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-57ab1534bbc26be6",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Come in, {player}. Old Man Withers is in the back pew, so speak up. Or don't.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "Old Man Withers is in the back pew, so speak up. Or don't.",
+        "part": "tail",
+        "key": "smyth-ab0255a6aa141024"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[6]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-a14b7bdf3eda1335",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "The prodigal undertaker returns! {player}, the collection plate has missed you terribly.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "The prodigal undertaker returns!",
+        "part": "head",
+        "key": "smyth-e36f9aa0e657fa02"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[7]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-ca19baf910f2557b",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "{player}. Sit anywhere except the third pew. Something happened in the third pew.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "Sit anywhere except the third pew. Something happened in the third pew.",
+        "part": "tail",
+        "key": "smyth-9b3726be96da4c4c"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.church.greeting[8]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-0aebe0fae31297b0",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Get your cards, ladies and gentlemen,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Get your cards, ladies and gentlemen,",
+        "part": "whole",
+        "key": "smyth-0aebe0fae31297b0"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.bingoIntro"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-147ce9b3fdca65dd",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "B-4 it's too late!",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "B-4 it's too late!",
+        "part": "whole",
+        "key": "smyth-147ce9b3fdca65dd"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.bingoIntro"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-21de31fbabe51bfd",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Good luck, my child. Luck is a sin, but good luck.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Good luck, my child. Luck is a sin, but good luck.",
+        "part": "whole",
+        "key": "smyth-21de31fbabe51bfd"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.bingoBought",
+        "packages/core/src/expanded/content/townStarter.ts:722"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-c0dc23ca7325db3c",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Say three Hail Marys and never tell me that again.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Say three Hail Marys and never tell me that again.",
+        "part": "whole",
+        "key": "smyth-c0dc23ca7325db3c"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.confessed[1]",
+        "packages/core/src/expanded/content/townStarter.ts:732"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-8168fdeb6dacb059",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Is that all?",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Is that all?",
+        "part": "whole",
+        "key": "smyth-8168fdeb6dacb059"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.confessed[4]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-c99353119c957b67",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Go in peace,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Go in peace,",
+        "part": "whole",
+        "key": "smyth-c99353119c957b67"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.confessed[8]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-23d8e4ccf040af9a",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Quite a lot of peace, actually. You paid for the large.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Quite a lot of peace, actually. You paid for the large.",
+        "part": "whole",
+        "key": "smyth-23d8e4ccf040af9a"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.confessed[8]"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-eff981eea7bd6adc",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "That's as clean as money gets you, my child. The rest you'll have to earn.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "That's as clean as money gets you, my child. The rest you'll have to earn.",
+        "part": "whole",
+        "key": "smyth-eff981eea7bd6adc"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.confessCapped",
+        "packages/core/src/expanded/content/townStarter.ts:735"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "smyth-6e42bdff706bc0d9",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Bless a grieving family with it. Not your fries.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Bless a grieving family with it. Not your fries.",
+        "part": "whole",
+        "key": "smyth-6e42bdff706bc0d9"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.church.holyWaterBought"
+      ],
+      "fallbackOnly": false,
+      "place": "church"
+    },
+    {
+      "key": "grubb-0ede288ca2eb9946",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "{player}! A taxpayer, in my building! Ask not what your town can do for you. Ask what you can do for the statue fund.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "A taxpayer, in my building! Ask not what your town can do for you. Ask what you can do for the statue fund.",
+        "part": "tail",
+        "key": "grubb-863246de762321d8"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.cityHall.greeting"
+      ],
+      "fallbackOnly": false,
+      "place": "City Hall"
+    },
+    {
+      "key": "mudge-e45707657015f267",
+      "character": "mudge",
+      "speaker": "Inspector Mudge",
+      "text": "I'm sure everything is up to code. I'm sure of it right now.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "I'm sure everything is up to code. I'm sure of it right now.",
+        "part": "whole",
+        "key": "mudge-e45707657015f267"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.cityHall.bribed"
+      ],
+      "fallbackOnly": false,
+      "place": "City Hall"
+    },
+    {
+      "key": "vane-534b1072e9ab92a8",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Cover's {cover} wooden tags.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "cover"
+      ],
+      "voice": null,
+      "skipReason": "the placeholder is inside the only sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.club.door",
+        "packages/core/src/expanded/content/townStarter.ts:870"
+      ],
+      "fallbackOnly": false,
+      "place": "Reaper Club"
+    },
+    {
+      "key": "vane-e1bcd69d3fc3107b",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Tonight. {name} won't know what hit them. Well. They'll know it was a tire iron.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.club.hitBooked"
+      ],
+      "fallbackOnly": false,
+      "place": "Reaper Club"
+    },
+    {
+      "key": "vane-7043de59220dacf7",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Get help, pal. Real help. Not the kind I sell.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": {
+        "text": "Get help, pal. Real help. Not the kind I sell.",
+        "part": "whole",
+        "key": "vane-7043de59220dacf7"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "expanded.json:expanded.town.text.club.hitSelf"
+      ],
+      "fallbackOnly": false,
+      "place": "Reaper Club"
+    },
+    {
+      "key": "gertie-b674dab64cb6fa58",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Back again, {player}? What did you break this time, prince? Don't tell me. Show me. No, tell me.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": {
+        "text": "What did you break this time, prince? Don't tell me. Show me. No, tell me.",
+        "part": "tail",
+        "key": "gertie-ae527bd9c093f85b"
+      },
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "expanded.json:expanded.town.text.hospital.greeting"
+      ],
+      "fallbackOnly": false,
+      "place": "hospital"
+    },
+    {
+      "key": "elijah-7ecd987fbef35505",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Your storeroom is full. Sell some dead people first.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1393"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "elijah-e9bcdad46aa26b9a",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Cash up front, friend. I don't do layaway on caskets.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1394"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-2e221ed00f38c946",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Welcome to Deathville, {name}! I'm from the Funeral Director's Guild. Congratulations on {parlor}. It's... a building. Let me show you the ropes before your first customer comes in. It'll take two minutes, or you can skip it.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name",
+        "parlor"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1439"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter"
+    },
+    {
+      "key": "clerk-bec2f3cecde2cc4c",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Every day you get turns. Each customer you meet costs one. Unused turns carry over to tomorrow, up to one day's worth, so don't panic. You score Bury Points for every funeral. The parlor with the most at the end of the season wins.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1440"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-c7b5c3e4914b737e",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Customers have a limit, a most they'll spend. You never see it exactly: you get an estimate, and it gets better as you learn psychology. The closer the bill lands to their limit, the bigger your bonus. Hit it exactly and the whole town hears about it.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1441"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-f4c2397908c12fb3",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Read the customer! Their mood, their traits and the little things they say all mean something. Someone who keeps checking their phone didn't love the deceased: Guilt works on them. Someone clutching a photo did: use Sympathy. If they get too angry, they walk out and a rival gets the body.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1442"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-59ee133beb1d651d",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Soft Sell shows you three extras to pick from: choose ones that fit what they can pay. Packages upgrade the plot, headstone, flowers and so on. Coffee calms people down once. Listen teaches you something but uses up their patience. A Discount cheers them up but lowers the bill. After the funeral you'll sometimes have a choice while preparing the body. Be good and the church sends business your way. Be bad and... well, the money's nice.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1443"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-6ede73622513a678",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "That's it! Your first customer is waiting. I'll be watching. I'll make notes. Don't mind me.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1444"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "clerk-3f6640ddef49a9ff",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Not bad for a first day! Wait for more customers until you run out of turns, then visit the town. Di-Mart sells caskets wholesale, and your Parlor office has upgrades. Good luck. Try not to get stabbed.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/starter.ts:1461"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/starter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "smyth-7d7e93e27e66434c",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "{player}! The Lord loves a cheerful giver, and so do I.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:705"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "smyth-0dca593275b876b4",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Ladies and gentlemen, buy your cards now,",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:720"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "smyth-25d05bd03bb8cb52",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Bless a grieving family with it.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:737"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "grubb-e746358daec040b7",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "{player}! Good to see a taxpayer. What can the town do for you, and what can you do for the town?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:750"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "gertie-61865eb39ac65581",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "Back again, {player}? What did you break this time?",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "player"
+      ],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "tag",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:848"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    },
+    {
+      "key": "vane-c0d4b1ff6d4558a9",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Tonight. {name} won't know what hit them. Well, they'll know it was a tire iron.",
+      "hasPlaceholders": true,
+      "placeholders": [
+        "name"
+      ],
+      "voice": null,
+      "skipReason": "placeholders in more than the first or last sentence",
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:928"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter"
+    },
+    {
+      "key": "vane-904280bd31f6216b",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Get help, pal.",
+      "hasPlaceholders": false,
+      "placeholders": [],
+      "voice": null,
+      "origin": "expanded",
+      "rulesets": [
+        "expanded"
+      ],
+      "how": "narrated",
+      "sources": [
+        "packages/core/src/expanded/content/townStarter.ts:929"
+      ],
+      "fallbackOnly": true,
+      "place": "packages/core/src/expanded/content/townStarter",
+      "skipReason": "starter content only, never shown while the built Expanded pack is loaded"
+    }
+  ]
+}

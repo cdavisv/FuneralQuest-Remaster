@@ -259,6 +259,28 @@ tr:hover .fq-mod-toggle {
   margin-bottom: 4px;
 }
 
+.fq-gate-tick {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 0 calc(var(--u) * 6);
+  font-weight: bold;
+}
+
+.fq-gate-tick input {
+  width: 1.3em;
+  height: 1.3em;
+  flex: none;
+}
+
+.fq-gate-tick label {
+  cursor: pointer;
+}
+
+.fq-chatform[data-guest] input:disabled {
+  cursor: not-allowed;
+}
+
 @media (max-width: 560px) {
   .fq-mod-choices {
     grid-template-columns: minmax(0, 1fr);

@@ -21,7 +21,7 @@ If you choose **Play solo**, your career, settings and save slots are stored on 
 | Data | Why | Notes |
 | --- | --- | --- |
 | **Login name** you choose (or a random `guest-xxxxxxxx` name for guest accounts) | To run your account | |
-| **Password** | To log you in | Stored only as an Argon2id hash. We cannot read it. Guest accounts have no password |
+| **Password** | To log you in | Stored only as an Argon2id hash. We cannot read it. Guest accounts have no password and can use no free text (they cannot chat, write letters or post announcements) |
 | **Session token** | To keep you logged in | Stored on our server only as a SHA-256 hash; stored on your device in local storage; valid for 30 days of inactivity or until you log out |
 | **IP address** | Security, abuse prevention and banning | Saved with your login session (removed when the session ends or expires), saved with administrator actions, and used in memory for rate limits. `[Request logs may also contain addresses - UNVERIFIED, confirm on the live server]` |
 | **Display name and parlor name** (and the gender option you choose) | Gameplay; shown to other players | Public inside the game, in rankings, leaderboards and the hall of fame. Do not use your real name |
@@ -86,13 +86,9 @@ Depending on where you live (UK/EU GDPR, California CCPA/CPRA and similar laws) 
 
 ## 9. Children
 
-`[MINIMUM AGE - OWNER TO FILL IN (13 / 16 / 17+)]`. Options for the owner:
+The game is rated for adults (18+) and online play is for people aged 18 or older (owner's decision 8, 2026-11-06). That is a rating and a self-declaration, **not age verification**: the first time someone starts online play, the game shows its rating and the house rules and asks them to tick "I am 18 or older and accept these rules". We do not ask for, check or store a date of birth, an identity document or an age, and nothing about age is sent to or kept on our server. The tick is remembered on the player's own device only (`localStorage`), so it is asked again on a new device or after the site data is cleared. Solo play, which needs no account and no server, has no such notice.
 
-- **13** is the usual US (COPPA) floor, but some EU states set 14 to 16 for consent, and the game has chat with strangers, crude humour and simulated gambling, so 13 is hard to justify without an age gate and parental tools.
-- **16** matches the GDPR default consent age and the expected PEGI 16 / Apple 16+ rating (see `age-rating-and-content.md`).
-- **17+** (or 18+) matches an ESRB Mature outcome and store "adults only" targeting.
-
-The Service is not directed to children under the minimum age. We do not knowingly collect data from them; if we learn we have, we will delete the account. Before online play the game shows a notice that says the game is for adults, states the minimum age and the house rules, and asks players to accept it; the acceptance is remembered on the device only (not on the account), and there is no date-of-birth check.
+The Service is not directed to children. We do not knowingly collect data from anyone under 18; if we learn we have, we will delete the account.
 
 ## 10. Security
 

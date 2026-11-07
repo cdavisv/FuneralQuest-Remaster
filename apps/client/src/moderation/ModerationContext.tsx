@@ -4,13 +4,20 @@ import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react
 import { createPortal } from "react-dom";
 import type { ModerationApi } from "./api.js";
 import { ModerationContext, type ModerationValue } from "./context.js";
-import { AnnouncementsDialog, BlockDialog, DeleteAccountDialog, ReportDialog } from "./Dialogs.js";
+import {
+  AnnouncementsDialog,
+  BlockDialog,
+  DeleteAccountDialog,
+  ReportDialog,
+  UpgradeDialog,
+} from "./Dialogs.js";
 import { say } from "./text.js";
 
 type Dialog =
   | { kind: "report"; target: SafetyTarget; subject: string }
   | { kind: "block"; target: SafetyTarget; subject: string }
   | { kind: "delete" }
+  | { kind: "upgrade" }
   | { kind: "announcements"; body: RichText };
 
 const WHAT: Record<MuteScope, string> = {
@@ -117,6 +124,7 @@ export function ModerationProvider({
       openBlock: (target, subject) => setDialog({ kind: "block", target, subject }),
       openDelete: () => setDialog({ kind: "delete" }),
       openAnnouncements: (body) => setDialog({ kind: "announcements", body }),
+      openUpgrade: () => setDialog({ kind: "upgrade" }),
     }),
     [api, townId, self],
   );
@@ -139,6 +147,12 @@ export function ModerationProvider({
               guest={self?.guest ?? false}
               onClose={close}
               onDeleted={onAccountDeleted}
+            />
+          )}
+          {dialog?.kind === "upgrade" && (
+            <UpgradeDialog
+              onClose={close}
+              onUpgraded={() => setSelf((x) => (x ? { ...x, guest: false } : x))}
             />
           )}
           {dialog?.kind === "announcements" && (

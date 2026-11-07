@@ -1,0 +1,592 @@
+{
+  "note": "Nothing in this pack has been generated yet: the ElevenLabs connection was removed from the session before the pilot ran. Each entry is ready to generate from the prompt shown (see brief.json for the measurements behind it).",
+  "ledger": [],
+  "spentCredits": 0,
+  "estimatedCreditsRemaining": 4765,
+  "tracks": {
+    "ring-ring": {
+      "originals": [
+        "ring/ring/4.mp3",
+        "ring/ring&hand/5.mp3"
+      ],
+      "tracks": [
+        "glint"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A delicate high wind chime shimmer, a soft glassy sparkle that swells briefly and rings out, quiet and magical.",
+      "params": {
+        "duration_seconds": 2.12,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 47
+    },
+    "animals-dog-dragging-hand": {
+      "originals": [
+        "animals/dog-dragging-hand/2.mp3"
+      ],
+      "tracks": [
+        "growl"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A medium dog growling low and menacing for under two seconds, one continuous throaty growl, close and dry.",
+      "params": {
+        "duration_seconds": 1.74,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 39
+    },
+    "background-background_1": {
+      "originals": [
+        "background/background_1/2.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single low shop doorbell ding, one warm metallic strike that rings out, close and clean.",
+      "params": {
+        "duration_seconds": 1.46,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 32
+    },
+    "background-background_2": {
+      "originals": [
+        "background/background_2/2.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A two-tone ding-dong doorbell chime, bright and clear, ringing out, close and clean.",
+      "params": {
+        "duration_seconds": 1.88,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 42
+    },
+    "background-background_3": {
+      "originals": [
+        "background/background_3/2.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single short bright bell ding, one strike, quick ring-out, close and clean.",
+      "params": {
+        "duration_seconds": 1.01,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 22
+    },
+    "background-background_4": {
+      "originals": [
+        "background/background_4/2.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single bright doorbell ding with a long clear ring-out, close and clean.",
+      "params": {
+        "duration_seconds": 1.93,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 43
+    },
+    "background-background_5": {
+      "originals": [
+        "background/background_5/2.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single bright bell ding, one strike with a short ring-out, close and clean.",
+      "params": {
+        "duration_seconds": 1.29,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 29
+    },
+    "closed": {
+      "originals": [
+        "closed/5.mp3"
+      ],
+      "tracks": [
+        "amb-night"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "Night crickets chirping steadily in a field, high even chirps, quiet and continuous, no other sounds.",
+      "params": {
+        "duration_seconds": 1.23,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 27
+    },
+    "morning_coffee": {
+      "originals": [
+        "morning_coffee/5.mp3"
+      ],
+      "tracks": [
+        "amb-birds"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A few songbirds chirping in the early morning, short bright tweets with gaps between, distant and gentle, quiet garden.",
+      "params": {
+        "duration_seconds": 5.06,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 112
+    },
+    "mother-happy": {
+      "originals": [
+        "mother/happy/5.mp3"
+      ],
+      "tracks": [
+        "harp-good-news"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A short happy plucked harp flourish, two quick bright strums rising, cheerful good-news sting, close and clean.",
+      "params": {
+        "duration_seconds": 1.42,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 32
+    },
+    "music-music_fight": {
+      "originals": [
+        "music/music_fight/1.mp3"
+      ],
+      "tracks": [
+        "battle"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "music-music_sneak": {
+      "originals": [
+        "music/music_sneak/1.mp3"
+      ],
+      "tracks": [
+        "sneak"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental quiet suspense loop at exactly 120 bpm in 4/4, in E: soft timpani and low pizzicato strings tiptoeing with a few eerie high notes, sparse and creeping, a comic sneaking mood, never horror. Two bars repeated with no intro and no ending. Clean modern recording, low level.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "people-jesus_happy": {
+      "originals": [
+        "people/jesus_happy/13.mp3"
+      ],
+      "tracks": [
+        "angelic"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A heavenly choir singing one wordless 'aah' chord that swells and fades, warm and bright, angelic approval.",
+      "params": {
+        "duration_seconds": 2.33,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 52
+    },
+    "places-desk": {
+      "originals": [
+        "places/desk/12.mp3",
+        "places/desk_enemy/8.mp3"
+      ],
+      "tracks": [
+        "amb-clock"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A small mechanical clock ticking, crisp dry clicks close up in a quiet room, steady and even.",
+      "params": {
+        "duration_seconds": 0.99,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 22
+    },
+    "places-embalming-room": {
+      "originals": [
+        "places/embalming-room/3.mp3"
+      ],
+      "tracks": [
+        "amb-bubbles"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "Liquid bubbling and gurgling in a glass container, slow wet bubbles, close and dry, steady.",
+      "params": {
+        "duration_seconds": 2.03,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 45
+    },
+    "places-fire": {
+      "originals": [
+        "places/fire/5.mp3"
+      ],
+      "tracks": [
+        "amb-fire"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A big furnace fire roaring steadily, deep low rumble with soft crackle, heard close, even and continuous.",
+      "params": {
+        "duration_seconds": 2.32,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 52
+    },
+    "places-funeral-ceremony": {
+      "originals": [
+        "places/funeral-ceremony/2.mp3",
+        "places/funeral-ceremony2/6.mp3",
+        "background/background_church/2.mp3"
+      ],
+      "tracks": [
+        "ceremony"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "places-hospital_ambulance": {
+      "originals": [
+        "places/hospital_ambulance/2.mp3"
+      ],
+      "tracks": [
+        "siren"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A police radio crackle: a squelch click, a short burst of muffled unintelligible dispatcher chatter through a tinny radio, then a second squelch.",
+      "params": {
+        "duration_seconds": 2.35,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 52
+    },
+    "places-hospital_desk": {
+      "originals": [
+        "places/hospital_desk/5.mp3"
+      ],
+      "tracks": [
+        "amb-hospital"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "Quiet hospital lobby crowd murmur, indistinct distant chatter of several people, no clear words, soft and steady room tone.",
+      "params": {
+        "duration_seconds": 3.04,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 67
+    },
+    "places-hospital_room": {
+      "originals": [
+        "places/hospital_room/9.mp3"
+      ],
+      "tracks": [
+        "amb-monitor"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A hospital heart monitor giving one clean electronic beep at about one kilohertz followed by quiet room hum, then silence.",
+      "params": {
+        "duration_seconds": 1.59,
+        "prompt_influence": 0.6,
+        "loop": true
+      },
+      "estimateCredits": 35
+    },
+    "places-palors": {
+      "originals": [
+        "places/palors/5.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental mysterious tinkling loop in F-sharp major at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious figure over a soft pad, playful and a little spooky. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "places-psych": {
+      "originals": [
+        "places/psych/7.mp3"
+      ],
+      "tracks": [
+        "psychic"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A low cinematic harp glissando in D major, a mysterious sweeping gesture that rings out, warm and resonant, about three seconds.",
+      "params": {
+        "duration_seconds": 3.29,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 73
+    },
+    "places-yangs": {
+      "originals": [
+        "places/yangs/6.mp3"
+      ],
+      "tracks": [
+        "yangs"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental restaurant loop in F-sharp minor at exactly 120 bpm in 4/4: a plucked zither and pizzicato strings playing a light, flowing pattern over a soft low drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "stuff-battle_lose": {
+      "originals": [
+        "stuff/battle_lose/2.mp3"
+      ],
+      "tracks": [
+        "gong"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single deep large gong struck once, a dark slow bloom and a long shimmering decay, about six seconds.",
+      "params": {
+        "duration_seconds": 6.43,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 143
+    },
+    "stuff-lottery_lose-26": {
+      "originals": [
+        "stuff/lottery_lose/26.mp3"
+      ],
+      "tracks": [
+        "bingo-lose"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A short comic losing sting, a few descending brassy notes ending on a low flat note, about one and a half seconds.",
+      "params": {
+        "duration_seconds": 1.7,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 38
+    },
+    "stuff-lottery_win-19": {
+      "originals": [
+        "stuff/lottery_win/19.mp3",
+        "stuff/lottery_lose/19.mp3"
+      ],
+      "tracks": [
+        "bingo-ball"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "One quick scratch of a coin across a scratch-off lottery ticket, a short dry papery scrape, very close.",
+      "params": {
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 11
+    },
+    "stuff-lottery_win-25": {
+      "originals": [
+        "stuff/lottery_win/25.mp3"
+      ],
+      "tracks": [
+        "bingo-win"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "An old mechanical cash register: quick key clacks, the bright bell ring and the drawer sliding open, close and clean.",
+      "params": {
+        "duration_seconds": 1.33,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 30
+    },
+    "stuff-money_bag": {
+      "originals": [
+        "stuff/money_bag/7.mp3"
+      ],
+      "tracks": [
+        "cash-register"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A short acoustic guitar sting in B major, two plucked strums and a ringing chord, about three seconds, close and clean.",
+      "params": {
+        "duration_seconds": 3.16,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 70
+    },
+    "stuff-money_bag_2": {
+      "originals": [
+        "stuff/money_bag_2/9.mp3"
+      ],
+      "tracks": [
+        "coins"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A quick cash register ka-ching: one bright bell ding and a drawer clunk, under one second, close and clean.",
+      "params": {
+        "duration_seconds": 0.85,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 19
+    },
+    "stuff-toilet": {
+      "originals": [
+        "stuff/toilet/3.mp3"
+      ],
+      "tracks": [
+        "toilet-flush"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A toilet flushing: a strong rushing swirl of water with gurgles draining away, about four seconds, small bathroom.",
+      "params": {
+        "duration_seconds": 4.02,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 89
+    },
+    "wait": {
+      "originals": [
+        "wait/5.mp3"
+      ],
+      "tracks": [
+        "doorbell"
+      ],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A short gust of wind rising and falling away, a single whoosh over about two seconds, outdoors.",
+      "params": {
+        "duration_seconds": 2.18,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 48
+    },
+    "welcome-paper": {
+      "originals": [
+        "welcome/paper.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single page of paper flipped over quickly, a crisp papery flick, very close.",
+      "params": {
+        "duration_seconds": 0.81,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 18
+    },
+    "welcome-map": {
+      "originals": [
+        "welcome/Map.mp3"
+      ],
+      "tracks": [
+        "town"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental cheerful country hoedown loop in C major at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass and light brushed snare, steady and busy, comic small-town feel. Keep the same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 440
+    },
+    "welcome-intro": {
+      "originals": [
+        "welcome/intro.mp3"
+      ],
+      "tracks": [
+        "main"
+      ],
+      "status": "not generated",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
+      "params": {
+        "duration_seconds": 30,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "estimateCredits": 825
+    },
+    "welcome-46": {
+      "originals": [
+        "welcome/46.mp3"
+      ],
+      "tracks": [],
+      "status": "not generated",
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "One tiny soft click, very short and quiet.",
+      "params": {
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "estimateCredits": 11
+    }
+  }
+}

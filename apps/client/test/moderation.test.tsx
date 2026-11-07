@@ -73,6 +73,14 @@ class FakeMod implements ModerationApi {
     this.deleted.push(password);
     if (this.deleteResult) throw this.deleteResult;
   }
+  upgrades: [string, string][] = [];
+  upgradeResult: Error | null = null;
+  async upgrade(login: string, password: string) {
+    this.upgrades.push([login, password]);
+    if (this.upgradeResult) throw this.upgradeResult;
+    this.guest = false;
+    return { account: { id: 1, login, guest: false } };
+  }
   async me(): Promise<MeResponse> {
     return {
       account: { id: 1, login: "bob", guest: this.guest },
@@ -114,6 +122,136 @@ async function play(backend: ModBackend, view: View, user = userEvent.setup()) {
 
 beforeEach(() => {
   window.location.hash = "";
+});
+
+// ------------------------------------------------------- guests (decision 7)
+
+describe("guests and free text", () => {
+  const MAIL_PROMPT: View = viewWith({
+    scene: "desk",
+    title: "Your desk",
+    overlay: {
+      kind: "textInput",
+      id: "mailbox:compose",
+      prompt: "Write your letter",
+      maxLength: 200,
+    },
+  });
+  const QUOTE_PROMPT: View = viewWith({
+    scene: "desk",
+    title: "A fight",
+    overlay: { kind: "textInput", id: "battle:quote", prompt: "Say something", maxLength: 60 },
+    buttons: [{ id: "battle:punch", label: "Punch" }],
+  });
+
+  it("shows the cafe's input as unavailable, with the reason and a way to sign up", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    await play(backend, CAFE);
+    const input = await screen.findByRole("textbox", { name: "Say something" });
+    await waitFor(() => expect(input).toBeDisabled());
+    expect(input).toHaveAttribute("placeholder", "Sign up to chat");
+    expect(screen.getByText(/Guests can read the cafe but not talk in it/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign up free" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Send" })).toBeNull();
+  });
+
+  it("leaves the cafe's input alone for a full account", async () => {
+    const backend = new ModBackend();
+    await play(backend, CAFE);
+    const input = await screen.findByRole("textbox", { name: "Say something" });
+    expect(input).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Send" })).toBeVisible();
+  });
+
+  it("replaces the letter's notepad with the explanation; Never mind cancels the prompt", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    const user = await play(backend, MAIL_PROMPT);
+    const dialog = await screen.findByRole("dialog", { name: "A free account is needed" });
+    expect(within(dialog).getByText(/Guests cannot write letters/)).toBeVisible();
+    expect(within(dialog).getByText(/log out and choose New user/)).toBeVisible();
+    expect(screen.queryByRole("textbox")).toBeNull();
+    await user.click(within(dialog).getByRole("button", { name: "Never mind" }));
+    expect(backend.transports[0]?.sent).toEqual([
+      { type: "submitText", overlayId: "mailbox:compose", text: null },
+    ]);
+  });
+
+  it("skips a battle quote as if cancelled, without a dialog, so the fight goes on", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    await play(backend, QUOTE_PROMPT);
+    // (The scripted server answers with the same prompt every time, so it may be asked again.)
+    await waitFor(() => expect(backend.transports[0]?.sent.length).toBeGreaterThan(0));
+    expect(backend.transports[0]?.sent[0]).toEqual({
+      type: "submitText",
+      overlayId: "battle:quote",
+      text: null,
+    });
+    expect(screen.queryByRole("dialog", { name: "A free account is needed" })).toBeNull();
+  });
+
+  it("makes the guest a full account in place: same parlor, the notepad opens", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    const user = await play(backend, MAIL_PROMPT);
+    const dialog = await screen.findByRole("dialog", { name: "A free account is needed" });
+    await user.click(within(dialog).getByRole("button", { name: "Make a free account" }));
+    const form = await screen.findByRole("dialog", { name: "Make this a full account" });
+    await user.type(within(form).getByLabelText("Log-on name"), "bobby");
+    await user.type(within(form).getByLabelText("Password"), "a long password");
+    await user.click(within(form).getByRole("button", { name: "Make my account" }));
+    expect(backend.mod.upgrades).toEqual([["bobby", "a long password"]]);
+    expect(await screen.findByText(/You can now chat, write letters/)).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Close" }));
+    // The explanation gives way to the notepad itself.
+    expect(await screen.findByRole("textbox")).toBeEnabled();
+    expect(screen.queryByRole("dialog", { name: "A free account is needed" })).toBeNull();
+  });
+
+  it("says plainly when the name is taken, and changes nothing", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    backend.mod.upgradeResult = new ApiError(409, "login_taken", "That login name is taken.");
+    const user = await play(backend, CAFE);
+    await user.click(await screen.findByRole("button", { name: "Sign up free" }));
+    const form = await screen.findByRole("dialog", { name: "Make this a full account" });
+    await user.type(within(form).getByLabelText("Log-on name"), "bobby");
+    await user.type(within(form).getByLabelText("Password"), "a long password");
+    await user.click(within(form).getByRole("button", { name: "Make my account" }));
+    expect(await within(form).findByRole("alert")).toHaveTextContent("That log-on name is taken");
+    expect(screen.getByRole("textbox", { name: "Say something" })).toBeDisabled();
+  });
+
+  it("offers the same from Settings, to guests only", async () => {
+    const backend = new ModBackend();
+    backend.mod.guest = true;
+    const user = await play(backend, CAFE);
+    await user.click(await screen.findByRole("button", { name: "Settings" }));
+    const dialog = await screen.findByRole("dialog", { name: "Settings" });
+    expect(
+      await within(dialog).findByRole("button", { name: "Make this a full account" }),
+    ).toBeVisible();
+  });
+
+  it("does not show the Settings entry to a full account", async () => {
+    const backend = new ModBackend();
+    const user = await play(backend, CAFE);
+    await user.click(await screen.findByRole("button", { name: "Settings" }));
+    const dialog = await screen.findByRole("dialog", { name: "Settings" });
+    await within(dialog).findByText("Nobody is blocked.");
+    expect(within(dialog).queryByRole("button", { name: "Make this a full account" })).toBeNull();
+  });
+
+  it("the transport turns a 403 guest_text into the banner, not an error dialog", async () => {
+    const backend = new ModBackend();
+    await play(backend, CAFE);
+    window.dispatchEvent(
+      new CustomEvent("fq:muted", { detail: { message: "Guests cannot talk in the cafe." } }),
+    );
+    expect(await screen.findByTestId("muted-banner")).toHaveTextContent("Guests cannot talk");
+  });
 });
 
 // ------------------------------------------------------- the menu and its hooks
@@ -701,26 +839,57 @@ describe("the notice before online play", () => {
   const door = () =>
     render(<App backend={new StubBackend()} settings={{ typewriter: "off", layout: "classic" }} />);
 
-  it("is shown first in place of the log-on plaque, with the content, the rules and the age blank", async () => {
+  it("is shown first in place of the log-on plaque: the rating, the rules and a tick box", async () => {
     door();
     const gate = await screen.findByTestId("conduct-gate");
-    expect(gate).toHaveTextContent("It is a comedy about death");
+    expect(gate).toHaveTextContent("Rated 18+, for adults.");
+    expect(gate).toHaveTextContent("mature humour");
     expect(gate).toHaveTextContent("pretend gambling");
     expect(gate).toHaveTextContent(
-      "No harassment or bullying, no hate, no sexual content, no threats, no spam, no cheating",
+      "no harassment or bullying, no hate, no sexual content, no threats, no spam, no cheating",
     );
-    expect(gate).toHaveTextContent("Report a player who breaks the rules and block");
+    expect(gate).toHaveTextContent("Report the player and block them");
     expect(gate).toHaveTextContent("mute, rename or ban");
-    expect(gate).toHaveTextContent("[MINIMUM AGE - OWNER TO FILL IN]");
+    expect(gate).toHaveTextContent("I am 18 or older and accept these rules");
+    // Nothing about the game's own content being moderated, and no age to fill in or verify.
+    expect(gate).not.toHaveTextContent(/2001 originals|toned|censor|OWNER TO FILL IN/);
+    expect(within(gate).queryByLabelText(/birth|date|age\b/i)).toBeNull();
+    expect(within(gate).getAllByRole("checkbox")).toHaveLength(1);
     expect(screen.queryByText("Please enter your name and password")).toBeNull();
   });
 
-  it("is remembered once agreed to, and asks again when the version changes", async () => {
+  it("cannot be passed without ticking the box", async () => {
+    const user = userEvent.setup();
+    door();
+    const gate = await screen.findByTestId("conduct-gate");
+    const tick = within(gate).getByRole("checkbox", {
+      name: "I am 18 or older and accept these rules",
+    });
+    const go = within(gate).getByRole("button", { name: "Continue" });
+    expect(tick).not.toBeChecked();
+    expect(go).toHaveAttribute("aria-disabled", "true");
+    await user.click(go);
+    expect(screen.getByTestId("conduct-gate")).toBeVisible();
+    expect(window.localStorage.getItem(CONDUCT_KEY)).toBeNull();
+    await user.click(tick);
+    expect(go).not.toHaveAttribute("aria-disabled");
+    await user.click(go);
+    expect(await screen.findByText("Please enter your name and password")).toBeVisible();
+  });
+
+  it("is remembered once agreed to, on this device only, and asks again when the version changes", async () => {
     const user = userEvent.setup();
     const { unmount } = door();
-    await user.click(await screen.findByRole("button", { name: "I agree. Open the doors" }));
+    await user.click(
+      await screen.findByRole("checkbox", { name: "I am 18 or older and accept these rules" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Continue" }));
     expect(await screen.findByText("Please enter your name and password")).toBeVisible();
     expect(window.localStorage.getItem(CONDUCT_KEY)).toBe(String(CONDUCT_VERSION));
+    // Nothing else is stored about it: no age, no date.
+    expect(
+      Object.keys(window.localStorage).filter((k) => /age|birth|adult|conduct/i.test(k)),
+    ).toEqual([CONDUCT_KEY]);
     unmount();
 
     door();
@@ -733,6 +902,18 @@ describe("the notice before online play", () => {
     expect(await screen.findAllByTestId("conduct-gate")).not.toHaveLength(0);
   });
 
+  it("sends nothing about age to the server", async () => {
+    const user = userEvent.setup();
+    const backend = new StubBackend();
+    render(<App backend={backend} settings={{ typewriter: "off", layout: "classic" }} />);
+    await user.click(
+      await screen.findByRole("checkbox", { name: "I am 18 or older and accept these rules" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await screen.findByText("Please enter your name and password");
+    expect(backend.calls.filter((c) => /age|adult|accept|conduct/i.test(c))).toEqual([]);
+  });
+
   it("links to the full rules, which are also on the front door's Rules page", async () => {
     const user = userEvent.setup();
     door();
@@ -741,7 +922,7 @@ describe("the notice before online play", () => {
     expect(
       await screen.findByRole("heading", { name: "House rules for online play" }),
     ).toBeVisible();
-    expect(screen.getByText(/At least|at least \[MINIMUM AGE/)).toBeTruthy();
+    expect(screen.getByText(/rated 18\+ and is for people aged 18 or older/)).toBeTruthy();
     expect(
       screen.getByText(/To reach the moderators.*\[CONTACT - OWNER TO FILL IN\]/),
     ).toBeVisible();

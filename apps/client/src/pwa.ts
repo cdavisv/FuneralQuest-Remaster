@@ -1,4 +1,5 @@
 import { scheduleAudioFill } from "./audio/offlineFill.js";
+import { BASE, siteUrl } from "./util/base.js";
 import { inWrapper } from "./wrapper.js";
 
 /**
@@ -10,7 +11,7 @@ import { inWrapper } from "./wrapper.js";
 export function registerServiceWorker(): void {
   if (!("serviceWorker" in navigator) || inWrapper()) return;
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js", { scope: "/" }).then(
+    navigator.serviceWorker.register(siteUrl("sw.js"), { scope: BASE }).then(
       // The sound is fetched ahead of time once the game is usable, never before.
       () => scheduleAudioFill(),
       () => {

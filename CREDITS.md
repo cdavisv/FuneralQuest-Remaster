@@ -11,7 +11,7 @@ Funeral Quest is copyright 2001 Robinson Technologies.
 
 This product includes software written by Seth A. Robinson (www.rtsoft.com).
 
-The original source code and Akiko Robinson's artwork are used under the Proton SDK license (see `license.txt`). The original sounds and music are not covered by that license and are not used by the remaster.
+The original source code and Akiko Robinson's artwork are used under the Proton SDK license (see `license.txt`). The original sounds and music are not covered by that license and are not used by the remaster: neither of its two sound packs (Synth and Studio) contains any of the original audio. The original sounds play only in museum mode, inside the original Flash client, which the server serves from `legacy/` as it is and only when it is switched on.
 
 ## Remaster
 

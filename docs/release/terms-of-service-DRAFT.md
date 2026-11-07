@@ -14,11 +14,11 @@ These terms apply to your use of the official online service for `[FINAL GAME TI
 
 ## 2. Age
 
-You must be at least `[MINIMUM AGE - OWNER TO FILL IN (13 / 16 / 17+)]` to create an account or play online. The game contains crude humour, cartoon violence, mild language and simulated gambling with in-game money. If you are under the age of majority where you live, you confirm that a parent or guardian allows you to play.
+The game is rated 18+ and online play is for people aged **18 or older**. The first time you play online you are asked to tick "I am 18 or older and accept these rules"; we do not check your age or ask for your date of birth, and by ticking you say it is true. The game contains crude humour, cartoon violence, mature humour, language and simulated gambling with in-game money. Solo play on your own device needs no account and has no age notice.
 
 ## 3. Your account
 
-- Choose a login name and a strong password, and keep them to yourself. Guest accounts have no password and are tied to the device; if you lose the device you lose the account.
+- Choose a login name and a strong password, and keep them to yourself. Guest accounts have no password and are tied to the device; if you lose the device you lose the account. A guest can play and read, but chatting, writing letters, posting announcements, writing fortunes, typing battle quotes and naming chains need a free account; a guest can turn their account into one (Settings) and keep their parlor.
 - You are responsible for what happens on your account. Tell us at `[CONTACT EMAIL - OWNER TO FILL IN]` if you think it was taken over.
 - One person, one account; do not buy, sell or trade accounts, and do not use bots or scripts to play unless we say they are allowed (computer rivals in Solo mode are fine).
 - You may delete your account: in the game under Settings, Delete account, or `[ACCOUNT DELETION URL - OWNER TO FILL IN]`. See the Privacy Policy for what remains afterwards.

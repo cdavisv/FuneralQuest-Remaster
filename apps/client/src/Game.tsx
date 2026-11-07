@@ -4,6 +4,7 @@ import { useArt } from "./art/ArtContext.js";
 import { CabinetArtContext, type CabinetArtState } from "./art/CabinetContext.js";
 import { cabinetVars, placeArt } from "./art/geometry.js";
 import { useAudio } from "./audio/AudioContext.js";
+import { useCharacterVoices } from "./audio/voiceHook.js";
 import { CabinetArt } from "./components/CabinetArt.js";
 import { Chrome } from "./components/Chrome.js";
 import { Dialog } from "./components/Dialog.js";
@@ -63,6 +64,8 @@ function isEditable(el: EventTarget | null): boolean {
 
 export interface GameProps {
   transport: LiveTransport;
+  /** A Solo career (character voices default to on, as in Expanded towns). */
+  solo?: boolean;
   /**
    * Back to the front door, after Exit or when the session ended. Without it (the mock and the
    * tests) the game shows its own goodbye screen with a way to reconnect.
@@ -77,7 +80,7 @@ export interface GameProps {
   busyNote?: string;
 }
 
-export function Game({ transport, onLeave, busyNote, ownLobby }: GameProps) {
+export function Game({ transport, onLeave, busyNote, ownLobby, solo }: GameProps) {
   const t = useT();
   const audio = useAudio();
   const { settings } = useSettings();
@@ -113,6 +116,7 @@ export function Game({ transport, onLeave, busyNote, ownLobby }: GameProps) {
   useEffect(() => {
     if (view) audio.cue(view.music, view.sounds, view);
   }, [view, audio]);
+  useCharacterVoices(view, solo === true);
 
   useEffect(() => {
     document.title = view ? `${view.title} - ${t("app.title")}` : t("app.title");

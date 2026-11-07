@@ -2,6 +2,8 @@
 
 First-draft copy in the game's dry, gallows-humour voice. Character counts are stated for each limit (counted with Python `len`; store consoles can count differently for emoji or line breaks, so re-check in the console). Rules followed: no profanity in titles or short descriptions, no real brands or people, no awards claimed, no "free" pricing tricks in titles, no competitor names, no keyword stuffing.
 
+**The first mobile release is solo-only (decision 11):** use the Solo Career lines, leave out the online-towns bullet, and do not mention chat, mail or accounts; the online lines apply when online play is added. The game is rated 18+ (decision 8).
+
 **Hard requirements for every long description:** keep the sentence "This product includes software written by Seth A. Robinson (www.rtsoft.com)." and the not-affiliated line (both are in the text below). Do not use Seth A. Robinson's name in promotional lines (licence clause 3). **Do not publish any of this before the name rights are confirmed** (`licences-and-credits.md`); the title options include fallbacks. `[FINAL GAME TITLE - OWNER TO FILL IN]`
 
 ## Title options
@@ -20,11 +22,11 @@ Limits: Google Play 30, Apple 30, Steam 128, itch.io free text.
 | --- | --- | --- | --- |
 | Google Play short description | 80 | Run a funeral parlor. Upsell the grieving. Sabotage rivals. Mind the books. | 75 |
 | Apple subtitle | 30 | Run a funeral parlor. Mind it. | 30 |
-| Apple promotional text | 170 | Run a funeral parlor. Sell caskets, outwit your rivals and climb the Bury Points ranking. Play solo offline or in an online town. | 129 |
+| Apple promotional text | 170 | Run a funeral parlor. Sell caskets, outwit your rivals and climb the Bury Points ranking. Play solo, offline. | 129 |
 | Apple keywords | 100 | `funeral,undertaker,dark humor,management,turn based,strategy,text,retro,bbs,sim,satire,multiplayer` | 98 |
 | Steam short description | 300 | A daily-turn game about rival funeral parlors in the town of Deathville. Sell caskets to the grieving, sabotage the competition and earn Bury Points. Free and open source. Play offline against computer rivals, or online with other players. | 239 |
 | itch.io tagline | about 100 | Run a funeral parlor. Upsell the grieving. Bury the competition. | 64 |
-| What's new (first release) | 4000 | First release. Two towns, a Solo Career against computer rivals, the Daily Challenge, and a newspaper that prints your announcements whether you like it or not. | 160 |
+| What's new (first release) | 4000 | First release. A Solo Career against computer rivals, the Daily Challenge practice day, and a newspaper that prints your announcements whether you like it or not. | 154 |
 
 Apple keyword note: the title and subtitle words are indexed already, so they are not repeated beyond what is useful; "funeral" is kept because the title may change.
 
@@ -45,8 +47,8 @@ HOW IT WORKS
 
 PLAY IT YOUR WAY
 - Solo Career: a whole town of computer-controlled rivals runs on your own device. No internet, no account, no data leaves your phone. Pick how many rivals, how clever they are, and whether you want a 30-day career or an endless one. Your careers are saved on the device, and you can export them to a file.
-- Online towns: create an account (or play as a guest), join a town and share it with other players. Read the paper, chat in the cafe, send mail and see who is on top of the rankings.
-- Daily Challenge: one fresh run a day, one score on the leaderboard.
+- Online towns (not in the first mobile release, which is solo-only): create a free account (or try it as a guest, who can play and read but not chat or write), join a town and share it with other players. Read the paper, chat in the cafe, send mail and see who is on top of the rankings. Rated 18+.
+- Daily Challenge (the first mobile release has the offline practice day only, no leaderboard): one fresh run a day, one score on the leaderboard.
 - Classic and Expanded rulesets: Classic is the 2001 game, faithfully rebuilt. Expanded keeps the rules you know and adds more places, more customers, a living town and a few things the original left out.
 
 A REMASTER, NOT A REPLACEMENT
@@ -77,8 +79,8 @@ HOW IT WORKS
 
 PLAY IT YOUR WAY
 - Solo Career: a whole town of computer-controlled rivals runs on your own device. No internet, no account, no data leaves your phone. Pick how many rivals, how clever they are, and whether you want a 30-day career or an endless one. Your careers are saved on the device, and you can export them to a file.
-- Online towns: create an account (or play as a guest), join a town and share it with other players. Read the paper, chat in the cafe, send mail and see who is on top of the rankings.
-- Daily Challenge: one fresh run a day, one score on the leaderboard.
+- Online towns (not in the first mobile release, which is solo-only): create a free account (or try it as a guest, who can play and read but not chat or write), join a town and share it with other players. Read the paper, chat in the cafe, send mail and see who is on top of the rankings. Rated 18+.
+- Daily Challenge (the first mobile release has the offline practice day only, no leaderboard): one fresh run a day, one score on the leaderboard.
 - Classic and Expanded rulesets: Classic is the 2001 game, faithfully rebuilt. Expanded keeps the rules you know and adds more places, more customers, a living town and a few things the original left out.
 
 A REMASTER, NOT A REPLACEMENT

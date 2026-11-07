@@ -2,7 +2,6 @@ import type { TownInfo } from "@fq/server/client";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { useAudio } from "../audio/AudioContext.js";
-import { SoundToggle } from "../audio/SoundToggle.js";
 import { RichText } from "../components/RichText.js";
 import { useT } from "../i18n/I18nContext.js";
 import type { LayoutMode } from "../util/useLayout.js";
@@ -274,7 +273,6 @@ export function DoorScene({
               {t("door.switchMode")}
             </button>
           )}
-          <SoundToggle className="fq-linkbtn" />
         </nav>
         {!solo && towns.length > 1 && (
           <fieldset className="fq-towns">

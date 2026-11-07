@@ -49,6 +49,10 @@ export const en = {
   "settings.server": "Online play",
   "settings.server.open": "Server address...",
   "settings.server.note": "Which server online play connects to. Solo mode needs none.",
+  "settings.reminders": "Reminders",
+  "settings.reminders.note":
+    "A morning reminder that your parlor is open. It is a notification this device makes for itself; nothing is sent anywhere.",
+  "settings.reminders.open": "Reminder settings...",
   "settings.help": "Help (opens in a new tab)",
   "settings.volume.master": "Master volume",
   "settings.volume.music": "Music volume",
@@ -59,16 +63,23 @@ export const en = {
   "settings.audio.pack": "Sound pack",
   "settings.audio.pack.synth": "Synth",
   "settings.audio.pack.studio": "Studio",
+  "settings.audio.pack.remaster": "Original, remastered",
   "settings.audio.pack.note":
-    "Synth is made by the game's own code. Studio is recorded-style audio generated with ElevenLabs; anything it lacks plays from Synth.",
+    "Neither pack is the original game's audio. The 2001 sounds and music are licensed for the original game only, so they play only in museum mode, inside the original client. Synth is made by the game's own code. Studio is generated with ElevenLabs; anything it lacks plays from Synth.",
   "settings.audio.note.synth":
-    "You are hearing the Synth pack: every note and noise is synthesised from the game's own source code. Sound starts after your first click.",
+    "You are hearing the Synth pack: every note and noise is synthesised from the game's own source code. These are not the original game's sounds. Sound is on unless you mute it; your browser starts it at your first click or key press.",
   "settings.audio.note.studio":
-    "You are hearing the Studio pack: music and effects generated with ElevenLabs from text prompts written for this game, with Synth filling any gap (and playing everything if this build ships without Studio). Sound starts after your first click.",
+    "You are hearing the Studio pack: music and effects generated with ElevenLabs from text prompts written for this game, with Synth filling any gap (and playing everything if this build ships without Studio). These are not the original game's sounds. Sound is on unless you mute it; your browser starts it at your first click or key press.",
+  "settings.audio.note.remaster":
+    "You are hearing the Original, remastered pack: new audio made with ElevenLabs to resemble the 2001 game's sounds, not the 2001 recordings, with Synth playing every track that had no 2001 counterpart (and everything if this build ships without the pack). Sound is on unless you mute it; your browser starts it at your first click or key press.",
   "settings.audio.nowPlaying": "Now playing: {id}",
+  "settings.audio.voices": "Character voices",
+  "settings.volume.voice": "Voices volume",
+  "settings.audio.voices.note":
+    "The town's characters speak some of their lines aloud, generated with ElevenLabs from the game's own text. On by default in Expanded towns and Solo careers; off by default in Classic towns, because the 2001 game had no recorded voices.",
   "settings.audio.none": "No music playing",
-  "audio.on": "Sound on",
-  "audio.off": "Sound off",
+  "audio.mute": "Mute sound",
+  "audio.unmute": "Unmute sound",
   "settings.reducedMotion": "Your system asks for reduced motion, so animations are off.",
 
   "luck.title": "Luck Meter",
@@ -201,7 +212,8 @@ export const en = {
   "door.logon.go": "Log on",
   "door.newUser": "New user",
   "door.guest": "Play as guest",
-  "door.guest.note": "No password. Your guest parlor lives only in this browser.",
+  "door.guest.note":
+    "No password. Your guest parlor lives only in this browser. Guests can play and read, but chat, letters and announcements need a free account.",
   "door.guest.warning": "You are a guest: this browser is the only key to your parlor.",
   "door.welcomeBack": "Welcome back, {name}.",
   "door.welcomeBack.parlor": "Your parlor is waiting.",

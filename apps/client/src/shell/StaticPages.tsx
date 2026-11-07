@@ -1,7 +1,9 @@
 import type { TownInfo } from "@fq/server/client";
 import { useEffect, useRef } from "react";
 import { useArt } from "../art/ArtContext.js";
+import { SoundToggle } from "../audio/SoundToggle.js";
 import { useT } from "../i18n/I18nContext.js";
+import { CONDUCT_BLOCKS } from "../moderation/conduct.js";
 import type { LobbyState } from "./DoorScene.js";
 import { type Block, PAGES, type PageId } from "./pages.js";
 
@@ -96,11 +98,14 @@ function RankingsPage({ lobby }: { lobby: LobbyState }) {
 export function StaticPage({
   route,
   lobby,
+  online = true,
   onRoute,
   onClose,
 }: {
   route: Route;
   lobby: LobbyState;
+  /** False in the solo-only build: no rankings page, there is no server to ask. */
+  online?: boolean;
   onRoute: (route: Route) => void;
   onClose: () => void;
 }) {
@@ -115,7 +120,9 @@ export function StaticPage({
   }, [route]);
 
   const page = route === "rankings" ? null : PAGES[route];
-  const tabs: Route[] = ["intro", "gameplay", "rules", "credits", "rankings"];
+  const tabs: Route[] = ["intro", "gameplay", "rules", "credits", "rankings"].filter(
+    (r) => online || r !== "rankings",
+  ) as Route[];
 
   return (
     <div className="fq-page" data-route={route}>
@@ -139,6 +146,7 @@ export function StaticPage({
                 {t(`page.${r}`)}
               </button>
             ))}
+            <SoundToggle className="fq-linkbtn" />
             <button type="button" className="fq-linkbtn fq-page-play" onClick={onClose}>
               {t("page.play")}
             </button>
@@ -149,7 +157,14 @@ export function StaticPage({
             {route === "rankings" ? t("page.rankings") : page?.title}
           </h1>
           {page?.lead && <p className="fq-page-lead">{page.lead}</p>}
-          {page ? <Blocks blocks={page.blocks} /> : <RankingsPage lobby={lobby} />}
+          {page ? (
+            // The house rules are about the other players: a solo-only build has none.
+            <Blocks
+              blocks={online ? page.blocks : page.blocks.filter((b) => !CONDUCT_BLOCKS.includes(b))}
+            />
+          ) : (
+            <RankingsPage lobby={lobby} />
+          )}
           <p className="fq-page-foot">
             <button type="button" className="fq-linkbtn" onClick={onClose}>
               {t("page.back")}

@@ -84,6 +84,11 @@ export interface AuthResponse {
   account: AccountInfo;
 }
 
+/** `POST /api/auth/upgrade`: the guest is now a full account (same id, new log-in name; the session carries on). */
+export interface UpgradeResponse {
+  account: AccountInfo;
+}
+
 export interface MeResponse {
   account: AccountInfo;
   parlors: ParlorInfo[];

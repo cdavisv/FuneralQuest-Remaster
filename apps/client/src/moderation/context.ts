@@ -13,6 +13,8 @@ export interface ModerationValue {
   openBlock(target: SafetyTarget, subject: string): void;
   openDelete(): void;
   openAnnouncements(body: RichText): void;
+  /** The dialog that makes a guest a full account. */
+  openUpgrade(): void;
 }
 
 export const ModerationContext = createContext<ModerationValue | null>(null);

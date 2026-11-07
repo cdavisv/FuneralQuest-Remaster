@@ -12,8 +12,8 @@ import { defineConfig, devices, type Project } from "@playwright/test";
  * Several runs may share a machine (two terminals, two agents): everything a run owns is unique
  * to it. The ports are found free at start-up, the test results go to e2e/results/<run>, the
  * bundle is built into a temporary directory of its own, and each server has a temporary
- * database. Set FQ_E2E_PORT, FQ_E2E_STATIC_PORT, FQ_E2E_MUSEUM_PORT and FQ_E2E_EXPANDED_PORT to
- * pin the ports.
+ * database. Set FQ_E2E_PORT, FQ_E2E_STATIC_PORT, FQ_E2E_MUSEUM_PORT, FQ_E2E_EXPANDED_PORT and
+ * FQ_E2E_PAGES_PORT to pin the ports.
  *
  * Environment:
  *   FQ_E2E_BROWSERS=chromium,firefox,webkit   which engines to drive (default: all three)
@@ -57,6 +57,7 @@ if (!process.env.FQ_E2E_SETUP) {
     "FQ_E2E_STATIC_PORT",
     "FQ_E2E_MUSEUM_PORT",
     "FQ_E2E_EXPANDED_PORT",
+    "FQ_E2E_PAGES_PORT",
   ];
   const missing = wanted.filter((name) => !process.env[name]);
   const ports = missing.length ? freePorts(missing.length) : [];
@@ -76,6 +77,8 @@ if (!process.env.FQ_E2E_SETUP) {
   if (!skipBuild) {
     process.env.FQ_E2E_DIST_TMP = join(tmpdir(), `fq-e2e-${process.env.FQ_E2E_RUN}`);
   }
+  // The solo-only GitHub Pages build, served from a sub-path (e2e/pages.spec.ts); always built.
+  process.env.FQ_E2E_PAGES_TMP = join(tmpdir(), `fq-e2e-pages-${process.env.FQ_E2E_RUN}`);
 }
 const run = process.env.FQ_E2E_RUN;
 const port = Number(process.env.FQ_E2E_PORT);
@@ -86,6 +89,10 @@ const museumPort = Number(process.env.FQ_E2E_MUSEUM_PORT);
 // The server again on its own database, for the Expanded towns and the Daily Challenge, so the
 // other specs' town list stays as it was.
 const expandedPort = Number(process.env.FQ_E2E_EXPANDED_PORT);
+// The solo-only Pages build, on a plain file host under a sub-path, like https://<user>.github.io/<repo>/.
+const pagesPort = Number(process.env.FQ_E2E_PAGES_PORT);
+const PAGES_PATH = "/fq-pages/";
+const pagesDir = process.env.FQ_E2E_PAGES_TMP ?? "";
 const dist = process.env.FQ_E2E_DIST_TMP ? join(process.env.FQ_E2E_DIST_TMP, "dist") : null;
 const distArgs = dist ? ` --out ${JSON.stringify(dist)}` : "";
 
@@ -138,7 +145,7 @@ const projects: Project[] = engines.flatMap((engine) => {
     // "online" plays against the real server, which serves the client itself.
     {
       name: `online-${engine}`,
-      testIgnore: /(solo|museum|expanded-server)\.spec\.ts/,
+      testIgnore: /(solo|museum|expanded-server|pages)\.spec\.ts/,
       use: device,
     },
     {
@@ -155,6 +162,12 @@ const projects: Project[] = engines.flatMap((engine) => {
       name: `expanded-${engine}`,
       testMatch: /expanded-server\.spec\.ts/,
       use: { ...device, baseURL: `http://127.0.0.1:${expandedPort}` },
+    },
+    // "pages" plays the solo-only build from a sub-path, the way GitHub Pages serves it.
+    {
+      name: `pages-${engine}`,
+      testMatch: /pages\.spec\.ts/,
+      use: { ...device, baseURL: `http://127.0.0.1:${pagesPort}${PAGES_PATH}` },
     },
     // "solo" plays the same build from a plain file host with no server behind it.
     {
@@ -193,9 +206,14 @@ export default defineConfig({
     // CONDUCT_KEY and CONDUCT_VERSION in src/moderation/conduct.ts.
     storageState: {
       cookies: [],
-      origins: [port, museumPort, expandedPort].map((p) => ({
+      origins: [port, museumPort, expandedPort, staticPort, pagesPort].map((p) => ({
         origin: `http://127.0.0.1:${p}`,
-        localStorage: [{ name: "fq.conduct", value: "1" }],
+        localStorage: [
+          { name: "fq.conduct", value: "2" },
+          // Sound is on by default (decision 16), so a test run starts muted and stays silent;
+          // e2e/audio.spec.ts is the one spec that listens, and starts without this.
+          { name: "fq.settings.v1", value: JSON.stringify({ muted: true }) },
+        ],
       })),
     },
   },
@@ -224,6 +242,12 @@ export default defineConfig({
       timeout: 240_000,
       stdout: "pipe",
       stderr: "pipe",
+    },
+    {
+      command: `node tools/build-pages.mjs --base ${PAGES_PATH} --out ${JSON.stringify(pagesDir)} --after http://127.0.0.1:${port}/health && node e2e/static-host.mjs --port ${pagesPort} --root ${JSON.stringify(pagesDir)} --prefix ${PAGES_PATH}`,
+      url: `http://127.0.0.1:${pagesPort}${PAGES_PATH}index.html`,
+      reuseExistingServer: false,
+      timeout: 240_000,
     },
     {
       command: `node e2e/static-host.mjs --port ${staticPort}${dist ? ` --root ${JSON.stringify(dist)}` : ""} --after http://127.0.0.1:${port}/health`,

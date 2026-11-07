@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { DEFAULT_PACK_ID } from "../art/packs.js";
+import type { VoiceSetting } from "../audio/voiceLines.js";
 
 export type FontSize = "small" | "normal" | "large" | "xlarge";
 export type TypewriterSpeed = "off" | "fast" | "normal";
@@ -21,13 +22,18 @@ export interface Settings {
   typewriter: TypewriterSpeed;
   layout: LayoutChoice;
   /** 0 to 1 each. */
-  volume: { master: number; music: number; ambience: number; effects: number };
+  volume: { master: number; music: number; ambience: number; effects: number; voice: number };
   /** All sound off (the front door's sound button and the settings). */
   muted: boolean;
   /** The "2001 radio" filter: band-limited mono, like the original's 11 kHz sounds. */
   radio: boolean;
-  /** The sound pack: "synth" (the default) or "studio"; see @fq/audio's packs. */
+  /** The sound pack: "synth" (the default), "studio" or "remaster"; see @fq/audio's packs. */
   soundPack: PackId;
+  /**
+   * Character voices: "auto" (on in Expanded towns and Solo careers, off in Classic towns),
+   * or the player's own "on" or "off".
+   */
+  voices: VoiceSetting;
 }
 
 /** Multiplier applied to text inside the cabinet (`--fq-font-scale`). */
@@ -60,10 +66,11 @@ export function defaultSettings(): Settings {
     fontSize: "normal",
     typewriter: prefersReducedMotion() ? "off" : "normal",
     layout: "auto",
-    volume: { master: 0.8, music: 0.6, ambience: 0.6, effects: 0.8 },
+    volume: { master: 0.8, music: 0.6, ambience: 0.6, effects: 0.8, voice: 0.9 },
     muted: false,
     radio: false,
     soundPack: DEFAULT_SOUND_PACK,
+    voices: "auto",
   };
 }
 
@@ -102,10 +109,15 @@ export function loadSettings(storage: Pick<Storage, "getItem"> | undefined): Set
         music: clamp01(vol.music, base.volume.music),
         ambience: clamp01(vol.ambience, base.volume.ambience),
         effects: clamp01(vol.effects, base.volume.effects),
+        voice: clamp01(vol.voice, base.volume.voice),
       },
       muted: typeof data.muted === "boolean" ? data.muted : base.muted,
       radio: typeof data.radio === "boolean" ? data.radio : base.radio,
       soundPack: isPackId(data.soundPack) ? data.soundPack : base.soundPack,
+      voices:
+        data.voices === "on" || data.voices === "off" || data.voices === "auto"
+          ? data.voices
+          : base.voices,
     };
   } catch {
     return base;

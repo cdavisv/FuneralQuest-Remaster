@@ -2,6 +2,16 @@
 
 Policies and sizes are from memory and change. **Verify in App Store Connect and the current App Review Guidelines at submission.** Build, signing, provisioning and Capacitor setup: `BUILDING.md`.
 
+## The first release is solo-only (owner's decision 11, 2026-11-06)
+
+The first mobile release ships with online play **switched off** (`VITE_SOLO_ONLY=1`, built by `apps/mobile/scripts/prepare-web.mjs`): no server address, no log-on, no chat, no Daily Challenge board, no network request. **The iOS app has never been built** (no Mac here); the Android debug APK is the only mobile build made, and it has not been run on a device. For iOS the same flag applies, and `Info.plist` still declares the `funeralquest://` URL scheme, which the solo-only glue ignores; remove it when building the iOS release.
+
+**Still applies:** developer account, trader status, bundle ID (the placeholder must be replaced first), listing (solo-only copy in `store-listing-draft.md`), privacy policy URL, support URL, age rating (the original text as it is; no UGC or messaging), **App Privacy: Data Not Collected**, 4.2 minimum functionality (Solo is a full offline game), 5.3 (simulated gambling), 2.3 metadata, 5.2 name rights (decision 13: nothing is submitted before the name is confirmed in writing), the privacy manifest, export compliance, TestFlight.
+
+**Does not apply to this release:** 1.2 (user-generated content: report, block, filter, contact), 5.1.1(v) account deletion, a demo account or "Play as guest" for reviewers, the moderation contact and response target, the 18+ tick box (no online play to gate), Sign in with Apple (no accounts), server hosting.
+
+**Applies again when online play is added to mobile:** all of 1.2 and 5.1.1(v) in the table below, a demo account for review, App Privacy for an online build, the contact and response time, a moderator, the 18+ tick box on first online play, an age rating that counts UGC and messaging.
+
 ## Account
 
 - [ ] Apple Developer Program `[APPLE DEVELOPER ACCOUNT / TEAM - OWNER TO FILL IN]` (about USD 99 per year). Individual or organisation (organisation needs a D-U-N-S number and legal entity checks)
@@ -37,9 +47,9 @@ Apple's age-rating questionnaire was updated (new categories 4+, 9+, 13+, 16+, 1
 
 ## App Privacy ("nutrition label")
 
-Online build: data linked to the user: user ID, user content, gameplay content; no tracking. Solo-only build: "Data Not Collected". Table in `privacy-labels.md`. No App Tracking Transparency prompt is needed (no tracking SDKs found).
+Solo-only build (the first release): **"Data Not Collected"**. Online build (later): data linked to the user: user ID, user content, gameplay content; no tracking. Table in `privacy-labels.md`. No App Tracking Transparency prompt is needed (no tracking SDKs found).
 
-## Guideline checklist
+## Guideline checklist (the solo-only first release skips 1.2, 5.1.1(v) and the demo account; see above)
 
 | Guideline | What it means here | Status |
 | --- | --- | --- |
@@ -66,7 +76,7 @@ The repo licence is the Proton SDK licence (permissive, BSD-like) and the depend
 
 ## Review notes to include
 
-- Demo login (or "use Play as guest"), what Solo mode is, that online play is optional, link to the moderation contact, how to delete an account, that the sounds are not included
+- Solo-only first release: the app has no accounts and no network access; everything runs on the device. (Online release, later: a demo login, link to the moderation contact, how to delete an account.) Say that the original sounds are not included
 - Statement that the game is a comedy about funeral parlors; mention fictional, cartoon content and the age rating chosen
 
 ## Release

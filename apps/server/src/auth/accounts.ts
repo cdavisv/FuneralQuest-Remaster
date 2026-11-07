@@ -27,7 +27,8 @@ export type AuthFailure =
   | "banned"
   | "ip_banned"
   | "signup_disabled"
-  | "guest_disabled";
+  | "guest_disabled"
+  | "not_guest";
 
 export class AuthError extends Error {
   constructor(readonly code: AuthFailure) {
@@ -140,6 +141,43 @@ export class AccountService {
       }
     }
     throw new Error("could not allocate a guest name");
+  }
+
+  /** A password hash for `upgradeGuest`, made before the town locks are taken (hashing is slow). */
+  hashPassword(password: string): Promise<string> {
+    return this.hasher.hash(password);
+  }
+
+  /**
+   * Turns a guest account into a full one: a new log-in name and a password, the same account row,
+   * so every link to it (parlors, sessions, blocks, reports) stays. Synchronous, so the caller can
+   * rename the engine's players in the same turn. `login_taken` if the name is in use,
+   * `not_guest` if the account is already a full one.
+   */
+  upgradeGuest(accountId: number, login: string, passwordHash: string): Account {
+    try {
+      const r = this.db
+        .prepare(
+          "UPDATE accounts SET login = ?, password_hash = ?, is_guest = 0 WHERE id = ? AND is_guest = 1",
+        )
+        .run(login, passwordHash, accountId);
+      if (Number(r.changes) === 0) throw new AuthError("not_guest");
+    } catch (error) {
+      if (error instanceof Error && /UNIQUE/i.test(error.message)) {
+        throw new AuthError("login_taken");
+      }
+      throw error;
+    }
+    const account = this.getAccount(accountId);
+    if (!account) throw new Error("account vanished");
+    return account;
+  }
+
+  /** Puts a guest back as it was (an upgrade that could not finish). */
+  revertUpgrade(accountId: number, login: string): void {
+    this.db
+      .prepare("UPDATE accounts SET login = ?, password_hash = NULL, is_guest = 1 WHERE id = ?")
+      .run(login, accountId);
   }
 
   /**

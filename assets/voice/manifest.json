@@ -1,0 +1,566 @@
+{
+  "generator": "packages/audio/scripts/voiceBuild.ts from ElevenLabs takes (assets/voice/takes.json)",
+  "license": "See assets/voice/LICENSES.md: generated with ElevenLabs under the owner's account; redistribution terms are for the owner to confirm.",
+  "lufs": -16,
+  "totalBytes": 1692466,
+  "clips": [
+    {
+      "key": "clerk-d5d0b470b26e0e76",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Every day you get turns. Each customer you meet costs one. Unused turns carry over to tomorrow, but only up to one day's worth, so sleeping in all week won't make you rich. Every funeral earns Bury Points. Whoever has the most at the end of the season wins, and gets to be smug at the Guild picnic.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-d5d0b470b26e0e76.ogg",
+        "m4a": "clerk/clerk-d5d0b470b26e0e76.m4a",
+        "bytes": 178894
+      },
+      "duration": 18.78
+    },
+    {
+      "key": "clerk-0a7515bb2f88f861",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Here's the trick. Land the bill within 8% of their limit and you get a bonus. Within 3%, a bigger one. Hit it to the dollar and the whole town reads about it in the paper. Every price in this business is a multiple of fifty dollars, so the exact number can always be reached. In theory. In practice, people cry on the calculator.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-0a7515bb2f88f861.ogg",
+        "m4a": "clerk/clerk-0a7515bb2f88f861.m4a",
+        "bytes": 198023
+      },
+      "duration": 20.94
+    },
+    {
+      "key": "clerk-061521b410dbf26a",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Not bad for a first day! Wait for customers until your turns run out, then see the town: Di-Mart for caskets, your office for upgrades, Spirit University if you'd like to read minds. Good luck. Try not to get stabbed.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-061521b410dbf26a.ogg",
+        "m4a": "clerk/clerk-061521b410dbf26a.m4a",
+        "bytes": 134627
+      },
+      "duration": 14.16
+    },
+    {
+      "key": "elijah-bfceb479dcc22a4f",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Cash up front, friend. I don't do layaway on caskets. I did once. He's still in one.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-bfceb479dcc22a4f.ogg",
+        "m4a": "elijah/elijah-bfceb479dcc22a4f.m4a",
+        "bytes": 58544
+      },
+      "duration": 6.15
+    },
+    {
+      "key": "elijah-3d061f7153861097",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "I'm sorry, you seem to be lacking in funds. Perhaps another time?",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-3d061f7153861097.ogg",
+        "m4a": "elijah/elijah-3d061f7153861097.m4a",
+        "bytes": 44725
+      },
+      "duration": 4.65
+    },
+    {
+      "key": "elijah-ae51db10cd12a3fe",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "We carry a wide assortment of useful items.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-ae51db10cd12a3fe.ogg",
+        "m4a": "elijah/elijah-ae51db10cd12a3fe.m4a",
+        "bytes": 28793
+      },
+      "duration": 2.95
+    },
+    {
+      "key": "elijah-4ccd59ce1d49b684",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "We carry nothing but the best in funeral transportation.",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-4ccd59ce1d49b684.ogg",
+        "m4a": "elijah/elijah-4ccd59ce1d49b684.m4a",
+        "bytes": 32411
+      },
+      "duration": 3.33
+    },
+    {
+      "key": "june-c2fd47640d9c6a86",
+      "character": "june",
+      "speaker": "June",
+      "text": "Ah.. someone you are not too fond of, I take it. Who would this unlucky person be?",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-c2fd47640d9c6a86.ogg",
+        "m4a": "june/june-c2fd47640d9c6a86.m4a",
+        "bytes": 61240
+      },
+      "duration": 6.37
+    },
+    {
+      "key": "june-9938048043116ffe",
+      "character": "june",
+      "speaker": "June",
+      "text": "I'm sorry, my dad is out delivering food right now. How about something for here?",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-9938048043116ffe.ogg",
+        "m4a": "june/june-9938048043116ffe.m4a",
+        "bytes": 48807
+      },
+      "duration": 5.08
+    },
+    {
+      "key": "june-c8f2948708645501",
+      "character": "june",
+      "speaker": "June",
+      "text": "If you would like to write a custom fortune, enter it now.",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-c8f2948708645501.ogg",
+        "m4a": "june/june-c8f2948708645501.m4a",
+        "bytes": 31305
+      },
+      "duration": 3.19
+    },
+    {
+      "key": "june-f2ce5f6d01ee52c7",
+      "character": "june",
+      "speaker": "June",
+      "text": "Just leave, asshole.",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-f2ce5f6d01ee52c7.ogg",
+        "m4a": "june/june-f2ce5f6d01ee52c7.m4a",
+        "bytes": 18208
+      },
+      "duration": 1.75
+    },
+    {
+      "key": "june-1e3d9b04f539a13e",
+      "character": "june",
+      "speaker": "June",
+      "text": "Please leave now.",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-1e3d9b04f539a13e.ogg",
+        "m4a": "june/june-1e3d9b04f539a13e.m4a",
+        "bytes": 12064
+      },
+      "duration": 1.17
+    },
+    {
+      "key": "june-16bb2772d065bea4",
+      "character": "june",
+      "speaker": "June",
+      "text": "That's very nice of you. Who's the lucky person?",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-16bb2772d065bea4.ogg",
+        "m4a": "june/june-16bb2772d065bea4.m4a",
+        "bytes": 33998
+      },
+      "duration": 3.42
+    },
+    {
+      "key": "june-d16db5886703331a",
+      "character": "june",
+      "speaker": "June",
+      "text": "Why don't you just get food for here?",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "june/june-d16db5886703331a.ogg",
+        "m4a": "june/june-d16db5886703331a.m4a",
+        "bytes": 21347
+      },
+      "duration": 2.15
+    },
+    {
+      "key": "nurse-6a1f8532d1d0ca84",
+      "character": "nurse",
+      "speaker": "Nurse",
+      "text": "Hope you'll be more careful next time.",
+      "part": "tail",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "nurse/nurse-6a1f8532d1d0ca84.ogg",
+        "m4a": "nurse/nurse-6a1f8532d1d0ca84.m4a",
+        "bytes": 26413
+      },
+      "duration": 2.57
+    },
+    {
+      "key": "nurse-29293a8f59429b49",
+      "character": "nurse",
+      "speaker": "Nurse",
+      "text": "I don't recall you having a pick-up today.",
+      "part": "tail",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "nurse/nurse-29293a8f59429b49.ogg",
+        "m4a": "nurse/nurse-29293a8f59429b49.m4a",
+        "bytes": 28241
+      },
+      "duration": 2.85
+    },
+    {
+      "key": "smyth-147ce9b3fdca65dd",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "B-4 it's too late!",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-147ce9b3fdca65dd.ogg",
+        "m4a": "smyth/smyth-147ce9b3fdca65dd.m4a",
+        "bytes": 27114
+      },
+      "duration": 2.8
+    },
+    {
+      "key": "smyth-0aebe0fae31297b0",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Get your cards, ladies and gentlemen,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-0aebe0fae31297b0.ogg",
+        "m4a": "smyth/smyth-0aebe0fae31297b0.m4a",
+        "bytes": 26177
+      },
+      "duration": 2.38
+    },
+    {
+      "key": "smyth-21de31fbabe51bfd",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Good luck, my child. Luck is a sin, but good luck.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-21de31fbabe51bfd.ogg",
+        "m4a": "smyth/smyth-21de31fbabe51bfd.m4a",
+        "bytes": 47225
+      },
+      "duration": 4.68
+    },
+    {
+      "key": "smyth-3f5fc9e386d4d861",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Have a lemon bar. They're from a fresh batch. A fresher batch. A batch.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-3f5fc9e386d4d861.ogg",
+        "m4a": "smyth/smyth-3f5fc9e386d4d861.m4a",
+        "bytes": 60921
+      },
+      "duration": 6.26
+    },
+    {
+      "key": "smyth-69dc7315ee0099d3",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Hi there. I already said hi though.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-69dc7315ee0099d3.ogg",
+        "m4a": "smyth/smyth-69dc7315ee0099d3.m4a",
+        "bytes": 30677
+      },
+      "duration": 2.98
+    },
+    {
+      "key": "smyth-43f9533b2a3283c5",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "I prayed for you this morning. Not by name, but you'll know which bit.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-43f9533b2a3283c5.ogg",
+        "m4a": "smyth/smyth-43f9533b2a3283c5.m4a",
+        "bytes": 51054
+      },
+      "duration": 4.7
+    },
+    {
+      "key": "smyth-60d7484557c3b50f",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Isn't it a wonderfully fantastic day today? Praise the Lord.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-60d7484557c3b50f.ogg",
+        "m4a": "smyth/smyth-60d7484557c3b50f.m4a",
+        "bytes": 48390
+      },
+      "duration": 5.08
+    },
+    {
+      "key": "smyth-995ff7e5aaee3c63",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Mind the bucket. The roof is having one of its days.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-995ff7e5aaee3c63.ogg",
+        "m4a": "smyth/smyth-995ff7e5aaee3c63.m4a",
+        "bytes": 39368
+      },
+      "duration": 3.62
+    },
+    {
+      "key": "smyth-ab0255a6aa141024",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Old Man Withers is in the back pew, so speak up. Or don't.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-ab0255a6aa141024.ogg",
+        "m4a": "smyth/smyth-ab0255a6aa141024.m4a",
+        "bytes": 50142
+      },
+      "duration": 4.74
+    },
+    {
+      "key": "smyth-c0dc23ca7325db3c",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Say three Hail Marys and never tell me that again.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-c0dc23ca7325db3c.ogg",
+        "m4a": "smyth/smyth-c0dc23ca7325db3c.m4a",
+        "bytes": 39844
+      },
+      "duration": 3.72
+    },
+    {
+      "key": "smyth-9b3726be96da4c4c",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Sit anywhere except the third pew. Something happened in the third pew.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-9b3726be96da4c4c.ogg",
+        "m4a": "smyth/smyth-9b3726be96da4c4c.m4a",
+        "bytes": 53379
+      },
+      "duration": 5.25
+    },
+    {
+      "key": "smyth-d431cc76ea0f7df8",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "The Lord loves a cheerful giver, and so do I. Mostly the giving part.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-d431cc76ea0f7df8.ogg",
+        "m4a": "smyth/smyth-d431cc76ea0f7df8.m4a",
+        "bytes": 59362
+      },
+      "duration": 5.86
+    },
+    {
+      "key": "smyth-e36f9aa0e657fa02",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "The prodigal undertaker returns!",
+      "part": "head",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-e36f9aa0e657fa02.ogg",
+        "m4a": "smyth/smyth-e36f9aa0e657fa02.m4a",
+        "bytes": 31772
+      },
+      "duration": 2.91
+    },
+    {
+      "key": "smyth-9fbc0aec114012f2",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "You look like a person with something on their conscience. Or their shoe.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-9fbc0aec114012f2.ogg",
+        "m4a": "smyth/smyth-9fbc0aec114012f2.m4a",
+        "bytes": 44508
+      },
+      "duration": 4.67
+    },
+    {
+      "key": "teller-f1fea7143c711bca",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "Any other tags you would like to convert?",
+      "part": "tail",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "teller/teller-f1fea7143c711bca.ogg",
+        "m4a": "teller/teller-f1fea7143c711bca.m4a",
+        "bytes": 20641
+      },
+      "duration": 2.09
+    },
+    {
+      "key": "teller-998254a2cb036a44",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "Which kind tag would you like to exchange?",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "teller/teller-998254a2cb036a44.ogg",
+        "m4a": "teller/teller-998254a2cb036a44.m4a",
+        "bytes": 23121
+      },
+      "duration": 2.33
+    },
+    {
+      "key": "teller-51dc2777f08c8bc5",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "You can't exchange what you don't have. I'm trying to be nice here, but please, think next time.",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "teller/teller-51dc2777f08c8bc5.ogg",
+        "m4a": "teller/teller-51dc2777f08c8bc5.m4a",
+        "bytes": 56899
+      },
+      "duration": 5.97
+    },
+    {
+      "key": "teller-ef263dda83f3673c",
+      "character": "teller",
+      "speaker": "Teller",
+      "text": "You don't understand, do you.",
+      "part": "head",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "teller/teller-ef263dda83f3673c.ogg",
+        "m4a": "teller/teller-ef263dda83f3673c.m4a",
+        "bytes": 24232
+      },
+      "duration": 2.47
+    }
+  ]
+}

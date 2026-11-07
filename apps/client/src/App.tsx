@@ -8,6 +8,7 @@ import { PadProvider } from "./input/PadProvider.js";
 import type { Backend } from "./net/backend.js";
 import { type Settings, SettingsProvider } from "./settings/settings.js";
 import { Shell } from "./shell/Shell.js";
+import { SoloOnlyShell } from "./shell/SoloOnlyShell.js";
 import type { SoloPlatform } from "./solo/platform.js";
 import type { LiveTransport } from "./transport/types.js";
 import { DEFAULT_ASSET_BASE } from "./util/assets.js";
@@ -19,6 +20,11 @@ export interface AppProps {
   onLeave?: () => void;
   /** Or connect to a real server: the front door runs first, then the game. */
   backend?: Backend;
+  /**
+   * The solo-only build (decisions 11 and 14): with `solo`, the front door goes straight to Solo
+   * and nothing online exists. `main.tsx` sets it from `VITE_SOLO_ONLY`.
+   */
+  soloOnly?: boolean;
   /** With `backend`: offer Solo mode (offline play against computer rivals) at the front door. */
   solo?: SoloPlatform;
   /** Picture layers load from `${assetBase}/${assetId}.svg`. */
@@ -34,6 +40,7 @@ export function App({
   onLeave,
   backend,
   solo,
+  soloOnly,
   assetBase = DEFAULT_ASSET_BASE,
   audio,
   locale,
@@ -46,7 +53,9 @@ export function App({
           <AssetBaseContext.Provider value={assetBase}>
             <ArtProvider>
               <PadProvider>
-                {backend ? (
+                {soloOnly && solo ? (
+                  <SoloOnlyShell solo={solo} />
+                ) : backend ? (
                   <Shell backend={backend} {...(solo ? { solo } : {})} />
                 ) : transport ? (
                   <Game transport={transport} {...(onLeave ? { onLeave } : {})} />

@@ -41,7 +41,10 @@ const manifest = (tracks: Record<string, ReturnType<typeof track>>): AudioManife
 
 describe("sound packs", () => {
   it("are Synth and Studio, Synth by default", () => {
-    expect([...PACK_IDS]).toEqual(["synth", "studio"]);
+    expect([...PACK_IDS]).toEqual(["synth", "studio", "remaster"]);
+    expect(PACKS.remaster.dir).toBe("audio-remaster");
+    expect(PACKS.remaster.title).toBe("Original, remastered");
+    expect(PACKS.remaster.description).toMatch(/not the 2001 recordings/);
     expect(DEFAULT_PACK).toBe("synth");
     expect(PACKS.synth.dir).toBe("audio");
     expect(PACKS.studio.dir).toBe("audio-studio");
@@ -145,11 +148,13 @@ describe("the pack manifests", () => {
   };
   const synth = read("audio");
   const studio = read("audio-studio");
+  const remaster = read("audio-remaster");
   const fileIds = [...MUSIC, ...STINGERS, ...AMBIENCE, ...EFFECTS_IDS];
 
   for (const [pack, m, dir] of [
     ["synth", synth, "audio"],
     ["studio", studio, "audio-studio"],
+    ["remaster", remaster, "audio-remaster"],
   ] as const) {
     it(`${pack}: every entry is a known id, with its files, sizes and loop points`, () => {
       if (!m) return;
@@ -255,5 +260,61 @@ describe("the pack manifests", () => {
   it("the brief has a prompt for every id the Studio pack may deliver", () => {
     const briefIds = new Set(BRIEF.map((b) => b.id.replace(/\.layer\d$/, "")));
     for (const id of fileIds) expect(briefIds.has(id), id).toBe(true);
+  });
+});
+
+describe("the Original, remastered pack", () => {
+  const dir = join(repo, "assets", "audio-remaster");
+  const brief = JSON.parse(readFileSync(join(dir, "brief.json"), "utf8")) as {
+    sounds: {
+      file: string;
+      seconds: number;
+      loops: number;
+      measured: { tags: unknown[]; centroidHz: number };
+      remake: {
+        id: string;
+        prompt: string;
+        deliverSeconds: number;
+        loop: boolean;
+        tracks: string[];
+      };
+    }[];
+  };
+  const m = JSON.parse(readFileSync(join(dir, "manifest.json"), "utf8")) as AudioManifest;
+
+  it("describes every original sound from measurements, with a prompt and the original's length", () => {
+    expect(brief.sounds.length).toBe(40);
+    for (const s of brief.sounds) {
+      expect(s.measured.centroidHz, s.file).toBeGreaterThan(0);
+      expect(Array.isArray(s.measured.tags), s.file).toBe(true);
+      expect(s.remake.prompt.length, s.file).toBeGreaterThan(20);
+      expect(s.remake.loop, s.file).toBe(s.loops > 1);
+      expect(Math.abs(s.remake.deliverSeconds - s.seconds), s.file).toBeLessThan(0.01);
+    }
+  });
+
+  it("never names a recording or a file of the original in its manifest", () => {
+    for (const t of [...Object.values(m.tracks), ...Object.values(m.originals ?? {})])
+      for (const f of t.files)
+        expect(
+          f.ogg.startsWith("originals/") ||
+            f.ogg.startsWith("music/") ||
+            f.ogg.startsWith("ambience/") ||
+            f.ogg.startsWith("sfx/"),
+          f.ogg,
+        ).toBe(true);
+    // any original it keys by must be one of the 40 described sounds
+    const files = new Set(brief.sounds.map((s) => s.file));
+    for (const k of Object.keys(m.originals ?? {})) expect(files.has(k), k).toBe(true);
+  });
+
+  it("falls back to Synth for every track it lacks", () => {
+    const synth = JSON.parse(
+      readFileSync(join(repo, "assets", "audio", "manifest.json"), "utf8"),
+    ) as AudioManifest;
+    for (const id of Object.keys(synth.tracks)) {
+      const r = resolveTrack({ synth, remaster: m }, id, "remaster");
+      expect(r?.pack, id).toBe(m.tracks[id] ? "remaster" : "synth");
+    }
   });
 });

@@ -1,6 +1,6 @@
 # @fq/mobile
 
-The Funeral Quest mobile app: [Capacitor 8](https://capacitorjs.com) around the `@fq/client` bundle, for Android and iOS. Solo mode works offline; online play uses a server address the player sets. Build steps, Xcode steps, signing and CI: [docs/release/BUILDING.md](../../docs/release/BUILDING.md).
+The Funeral Quest mobile app: [Capacitor 8](https://capacitorjs.com) around the `@fq/client` bundle, for Android and iOS. **The first release is solo-only** (owner's decision 11): the bundle is built with `VITE_SOLO_ONLY=1`, so there is no server address, log-on, chat or Daily Challenge board, the Content-Security-Policy allows no outside connection, and the Android manifest has no `INTERNET` permission. `FQ_SOLO_ONLY=0` builds the online-capable client for when online play comes to mobile (restore `INTERNET` and the `funeralquest://` link in the manifest). Solo mode works offline. Build steps, Xcode steps, signing and CI: [docs/release/BUILDING.md](../../docs/release/BUILDING.md).
 
 ```sh
 pnpm mobile:sync                          # client build -> www/ -> cap sync (android + ios)
@@ -19,7 +19,7 @@ pnpm --filter @fq/mobile icons            # redraw icons and splash screens (nee
 | `scripts/make-icons.mjs`    | Adaptive and legacy launcher icons, notification icon, splash images, iOS icon and splash                                                                                                          |
 | `android/`, `ios/`          | The native projects, committed. Generated files inside them are git-ignored                                                                                                                        |
 
-Environment: `FQ_DEFAULT_SERVER` (default server address), `FQ_SKIP_CLIENT_BUILD=1` (reuse `apps/client/dist-build`).
+Environment: `FQ_SOLO_ONLY=0` (build the online-capable client; default is solo-only), `FQ_DEFAULT_SERVER` (default server address, online builds only), `FQ_SKIP_CLIENT_BUILD=1` (reuse `apps/client/dist-build`, which must have been built the same way: `build-info.json` is checked).
 
 Plugins: `@capacitor/app` (back button, deep links, lifecycle), `browser`, `filesystem` and `share` (save files), `keyboard`, `local-notifications`, `splash-screen`; the status and gesture bars are Capacitor core's `SystemBars`. No push, no analytics, no Firebase.
 

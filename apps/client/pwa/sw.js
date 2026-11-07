@@ -11,6 +11,10 @@
  * The online game itself still needs its server; this only decides what an offline visit sees.
  */
 const BUILD = "__BUILD_ID__";
+// Where the site lives: the worker's scope, "/" at a site's root or "/repo/" on a project page.
+// Every path below is relative to it.
+const BASE = new URL(self.registration.scope).pathname;
+const at = (relative) => BASE + relative;
 const SHELL = `fq-shell-${BUILD}`;
 const RUNTIME = "fq-runtime-v1";
 // The audio keeps its own cache across builds: the files are big and rarely change.
@@ -35,10 +39,10 @@ self.addEventListener("install", (event) => {
     (async () => {
       const shell = await caches.open(SHELL);
       // All or nothing: a half-kept app would be worse than the old one.
-      await shell.addAll(["/", "/offline.html", ...APP]);
+      await shell.addAll([BASE, at("offline.html"), ...APP.map(at)]);
       const runtime = await caches.open(RUNTIME);
       await Promise.allSettled(
-        [...ART, ...ART_OPTIONAL].map(async (path) => {
+        [...ART, ...ART_OPTIONAL].map(at).map(async (path) => {
           if (await runtime.match(path)) return;
           const response = await fetch(path);
           if (response.ok) await runtime.put(path, response);
@@ -71,7 +75,7 @@ function audioPaths(manifest, format) {
     for (const file of track.files ?? []) {
       const name = file[format];
       if (typeof name === "string" && /^[\w./-]+$/.test(name) && !name.includes("..")) {
-        paths.push(`/audio/${name}`);
+        paths.push(at(`audio/${name}`));
       }
     }
   }
@@ -88,15 +92,16 @@ async function fillAudio(format) {
   filling = true;
   try {
     const cache = await caches.open(AUDIO);
-    const response = await fetch("/audio/manifest.json", { cache: "no-cache" });
+    const manifestPath = at("audio/manifest.json");
+    const response = await fetch(manifestPath, { cache: "no-cache" });
     if (!response.ok) return;
     const text = await response.clone().text();
     const manifest = JSON.parse(text);
-    const kept = await cache.match("/audio/manifest.json");
+    const kept = await cache.match(manifestPath);
     if (kept && (await kept.text()) !== text) {
       for (const key of await cache.keys()) await cache.delete(key);
     }
-    await cache.put("/audio/manifest.json", response);
+    await cache.put(manifestPath, response);
     const queue = audioPaths(manifest, format);
     const worker = async () => {
       for (let path = queue.shift(); path !== undefined; path = queue.shift()) {
@@ -123,11 +128,12 @@ self.addEventListener("message", (event) => {
   }
 });
 
+// `path` is relative to the site's base.
 const isServer = (path) =>
-  path.startsWith("/api") ||
-  path.startsWith("/admin") ||
-  path.startsWith("/health") ||
-  path.startsWith("/museum");
+  path.startsWith("api") ||
+  path.startsWith("admin") ||
+  path.startsWith("health") ||
+  path.startsWith("museum");
 
 function withTimeout(promise, ms) {
   return new Promise((resolve, reject) => {
@@ -150,7 +156,7 @@ async function navigate(request) {
     return await withTimeout(fetch(request), NAVIGATE_TIMEOUT_MS);
   } catch {
     const shell = await caches.open(SHELL);
-    return (await shell.match("/")) ?? (await shell.match("/offline.html")) ?? Response.error();
+    return (await shell.match(BASE)) ?? (await shell.match(at("offline.html"))) ?? Response.error();
   }
 }
 
@@ -158,7 +164,9 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || isServer(url.pathname)) return;
+  if (url.origin !== self.location.origin || !url.pathname.startsWith(BASE)) return;
+  const path = url.pathname.slice(BASE.length);
+  if (isServer(path)) return;
 
   if (request.mode === "navigate") {
     event.respondWith(navigate(request));
@@ -166,7 +174,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Hashed bundle files never change: kept copy first, else the network (and keep that too).
-  if (url.pathname.startsWith("/assets/")) {
+  if (path.startsWith("assets/")) {
     event.respondWith(
       caches.match(request).then(async (hit) => {
         if (hit) return hit;
@@ -182,7 +190,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // The art can be replaced: show what is kept and refresh it behind the scenes.
-  if (url.pathname.startsWith("/classic/")) {
+  if (path.startsWith("classic/")) {
     event.respondWith(
       caches.open(RUNTIME).then(async (cache) => {
         const hit = await cache.match(request);
@@ -199,12 +207,13 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Sound: kept copy first, else the network (and keep that too). The manifest is the exception:
-  // the network when there is one, so a new render is noticed.
-  if (url.pathname.startsWith("/audio/")) {
+  // the network when there is one, so a new render is noticed. Character voices (voice/) are kept
+  // the same way, but only as they are played: they are never part of the install or the fill.
+  if (path.startsWith("audio/") || path.startsWith("voice/")) {
     event.respondWith(
       caches.open(AUDIO).then(async (cache) => {
         const hit = await cache.match(request, { ignoreVary: true });
-        if (url.pathname === "/audio/manifest.json") {
+        if (path === "audio/manifest.json" || path === "voice/manifest.json") {
           try {
             const response = await fetch(request);
             if (response.ok) cache.put(request, response.clone());

@@ -8,6 +8,7 @@ import {
   type SoundId,
   stemGains,
 } from "@fq/audio";
+import { siteUrl } from "../util/base.js";
 import type { AudioBackend, Volumes } from "./AudioManager.js";
 import { AudioLibrary } from "./library.js";
 
@@ -80,7 +81,7 @@ export function pickFormat(): "ogg" | "m4a" {
 
 export function audioBase(): string {
   const env = (import.meta as { env?: Record<string, string | undefined> }).env;
-  return (env?.VITE_AUDIO_BASE ?? "/audio").replace(/\/$/, "");
+  return (env?.VITE_AUDIO_BASE ?? siteUrl("audio")).replace(/\/$/, "");
 }
 
 /** Base URL of the Studio pack: VITE_AUDIO_STUDIO_BASE, else beside the Synth pack. */
@@ -88,6 +89,13 @@ export function studioBase(): string {
   const env = (import.meta as { env?: Record<string, string | undefined> }).env;
   const own = env?.VITE_AUDIO_STUDIO_BASE;
   return (own ?? audioBase().replace(/[^/]*$/, PACKS.studio.dir)).replace(/\/$/, "");
+}
+
+/** Base URL of the "Original, remastered" pack: VITE_AUDIO_REMASTER_BASE, else beside Synth. */
+export function remasterBase(): string {
+  const env = (import.meta as { env?: Record<string, string | undefined> }).env;
+  const own = env?.VITE_AUDIO_REMASTER_BASE;
+  return (own ?? audioBase().replace(/[^/]*$/, PACKS.remaster.dir)).replace(/\/$/, "");
 }
 
 /** Creates the backend, or null where there is no Web Audio (old browsers, tests). */
@@ -113,9 +121,21 @@ export function createWebAudioBackend(): AudioBackend | null {
       return res.arrayBuffer();
     },
     decode: (bytes) => ctx.decodeAudioData(bytes),
-    bases: { studio: studioBase() },
+    bases: { studio: studioBase(), remaster: remasterBase() },
   });
   let pack: PackId = "synth";
+  // Whether the sound should be running (not muted, tab visible). A new context may still be
+  // "suspended" when this is first asked (Firefox starts it a moment after the gesture), and
+  // would then become "running" on its own: so the wish is kept and applied again on every
+  // state change. A browser may refuse (Safari when its audio session is interrupted, any engine
+  // with no audio device: "Failed to start the audio device"): the game goes on without sound,
+  // and the next gesture or tab change asks again.
+  let wantActive = true;
+  const applyActive = () => {
+    if (wantActive && ctx.state === "suspended") ctx.resume().catch(() => undefined);
+    if (!wantActive && ctx.state === "running") ctx.suspend().catch(() => undefined);
+  };
+  ctx.addEventListener("statechange", applyActive);
 
   // --- the graph -------------------------------------------------------------------------
   const out = ctx.destination;
@@ -161,7 +181,9 @@ export function createWebAudioBackend(): AudioBackend | null {
   const duck = ctx.createGain();
   const ambienceBus = ctx.createGain();
   const effectsBus = ctx.createGain();
-  musicBus.connect(duck).connect(master);
+  // Character voices duck the music too, on their own node so they never fight a stinger's duck.
+  const voiceDuck = ctx.createGain();
+  musicBus.connect(duck).connect(voiceDuck).connect(master);
   ambienceBus.connect(master);
   effectsBus.connect(master);
 
@@ -384,6 +406,17 @@ export function createWebAudioBackend(): AudioBackend | null {
         ramp(s.gain.gain, target[i] ?? 1, rampSec);
       });
     },
+    voiceOutput() {
+      return {
+        ctx,
+        destination: master,
+        duck(on: boolean) {
+          // speech over the music: the music drops about 6 dB while someone speaks
+          ramp(voiceDuck.gain, on ? 0.5 : 1, on ? 0.15 : 0.6);
+        },
+        duckLevel: () => voiceDuck.gain.value,
+      };
+    },
     setPack(next) {
       if (next === pack) return;
       pack = next;
@@ -422,11 +455,8 @@ export function createWebAudioBackend(): AudioBackend | null {
       ramp(radio.gain, on ? 1.4 : 0, 0.15);
     },
     setActive(active) {
-      // A browser may refuse (Safari when its audio session is interrupted, any engine with no
-      // audio device: "Failed to start the audio device"): the game goes on without sound, and
-      // the next gesture or tab change asks again.
-      if (active && ctx.state === "suspended") ctx.resume().catch(() => undefined);
-      if (!active && ctx.state === "running") ctx.suspend().catch(() => undefined);
+      wantActive = active;
+      applyActive();
     },
     dispose() {
       stopPlayer(music, 0.1);

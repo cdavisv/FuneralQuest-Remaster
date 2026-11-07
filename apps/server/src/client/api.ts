@@ -24,6 +24,7 @@ import type {
   RequestIssue,
   SafetyTarget,
   TownInfo,
+  UpgradeResponse,
 } from "../wire.js";
 
 function cleanIssues(raw: unknown): RequestIssue[] | undefined {
@@ -133,6 +134,11 @@ export class ApiClient {
 
   async guest(): Promise<AuthResponse> {
     return this.remember(await this.call("POST", "/api/auth/guest", {}));
+  }
+
+  /** Makes a guest a full account with this log-in name and password; the parlor and session carry on. */
+  upgrade(login: string, password: string): Promise<UpgradeResponse> {
+    return this.call("POST", "/api/auth/upgrade", { login, password });
   }
 
   async logOut(): Promise<void> {

@@ -16,6 +16,7 @@ import {
 } from "@fq/audio";
 import type { Action, View } from "@fq/protocol";
 import { type DataMemory, dataSounds } from "./dataCues.js";
+import type { VoiceOutput } from "./voicePlayer.js";
 
 /**
  * The audio seam. The client hands every View to the manager (`cue`), and the player's actions
@@ -51,6 +52,8 @@ export interface AudioBackend {
   setActive(active: boolean): void;
   /** The sound pack to play from (tracks it lacks play from the Synth pack). */
   setPack?(pack: PackId): void;
+  /** Where character voices play (src/audio/voicePlayer.ts), or none. */
+  voiceOutput?(): VoiceOutput | null;
   dispose(): void;
 }
 
@@ -102,6 +105,8 @@ export interface AudioManager {
   readonly currentMusic: string | undefined;
   /** Notifies the UI when the state changes. `state` is a new object after each change. */
   subscribe(listener: () => void): () => void;
+  /** Where character voices play, once sound is unlocked; null without a backend (and in tests). */
+  voiceOutput(): VoiceOutput | null;
   dispose(): void;
 }
 
@@ -288,6 +293,9 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
       return () => {
         listeners.delete(listener);
       };
+    },
+    voiceOutput() {
+      return state.unlocked ? (backend?.voiceOutput?.() ?? null) : null;
     },
     dispose() {
       backend?.dispose();

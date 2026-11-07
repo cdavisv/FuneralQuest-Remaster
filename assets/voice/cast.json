@@ -1,0 +1,92 @@
+{
+  "note": "Who voices whom. Every voice is an ElevenLabs library voice, found with the voice search (gender, age, descriptives, use case) and chosen from its published description; nobody has listened to them yet. Cast for character, not caricature: no accent performance or vocal stereotype was asked for, and direction tags only shape delivery. Two pairs share a voice because the town's own cast file says they are one person (see 'shared').",
+  "model": "eleven_v4",
+  "characters": {
+    "elijah": {
+      "voiceId": "weNdhGmYaizQlfiLlyJq",
+      "voiceName": "Pyle",
+      "direction": "[deadpan]",
+      "why": "Middle-aged American low baritone, measured and unhurried with deliberate pauses and a dry, quiet intensity: a salesman in a suit who never blinks, creepy by being calm rather than by any put-on voice."
+    },
+    "smyth": {
+      "voiceId": "MDLAMJ0jxkpYkjXbmG4t",
+      "voiceName": "Jerry B.",
+      "direction": "[warmly]",
+      "why": "Older American male, warm, cheerful and jolly: the overly warm priest. The warmth is the joke; the lines carry the rest."
+    },
+    "june": {
+      "voiceId": "yX1d4od5qd09pvOQx88H",
+      "voiceName": "Therese",
+      "direction": "[politely] or [curtly], by line",
+      "why": "Young American woman, calm, cool and collected with a little sass: polite at the counter, curt when pushed."
+    },
+    "yang": {
+      "voiceId": "yE92kjHV7JLsMwRaRjeg",
+      "voiceName": "The Doc",
+      "direction": "none",
+      "why": "Older male baritone with a plain, natural delivery for an older restaurant owner. No accent was asked for and none is performed: his lines are spoken exactly as written."
+    },
+    "twins": {
+      "voiceId": "Cx1u6YPIa1SPiAbYj3gJ",
+      "voiceName": "Cavendish",
+      "direction": "[deadpan]",
+      "why": "Dry, flat, quietly exhausted young adult man with minimal pitch movement: arsonists for hire who find the work relaxing. One voice for the pair, as the text gives them one line at a time."
+    },
+    "teller": {
+      "voiceId": "hgnWqggl2GuD6Xmc3ymR",
+      "voiceName": "Nixie",
+      "direction": "[sarcastic] or [flatly], by line",
+      "why": "Middle-aged American woman, sardonic and flat: the snarky bank teller."
+    },
+    "prudence": {
+      "voiceId": "hgnWqggl2GuD6Xmc3ymR",
+      "voiceName": "Nixie",
+      "direction": "[flatly]",
+      "why": "Same voice as the Teller: cast.yaml says the Teller is Prudence Ledbetter."
+    },
+    "nurse": {
+      "voiceId": "YHcCpa6SBWnKDaCPZJQR",
+      "voiceName": "Mora",
+      "direction": "[teasing]",
+      "why": "Older American woman, weathered and raspy: a nurse who has seen everything and teases about it."
+    },
+    "gertie": {
+      "voiceId": "YHcCpa6SBWnKDaCPZJQR",
+      "voiceName": "Mora",
+      "direction": "[teasing]",
+      "why": "Same voice as the Nurse: Nurse Gertie is the Expanded name of the hospital's nurse (the 'prince' of both)."
+    },
+    "clerk": {
+      "voiceId": "dmWfLQZJq7wNPv9WmtiM",
+      "voiceName": "Emma",
+      "direction": "[dryly]",
+      "why": "Young American woman, wry and dry, natural and conversational: easy to follow through the tutorial, and the deadpan jokes land without a performance."
+    },
+    "grubb": {
+      "voiceId": "mKoqwDP2laxTdq1gEgU6",
+      "voiceName": "Countdown Casey",
+      "direction": "[pompously]",
+      "why": "Older American male showman, an old-school radio announcer's voice: a mayor who thinks every sentence is a speech."
+    },
+    "vane": {
+      "voiceId": "M5E055lOUxMi0kJpGyE9",
+      "voiceName": "Gravel Midnight",
+      "direction": "[calmly]",
+      "why": "Deep, rough, low middle-aged British male, slow to medium pace: the club owner whose calm is the threat. The only British voice in town, which also sets him apart."
+    },
+    "mudge": {
+      "voiceId": "mSOmKHC6GZcZbSTGlqHO",
+      "voiceName": "Mister Gruff",
+      "direction": "[gruffly]",
+      "why": "Gritty, grumbling older American man: a bought inspector."
+    }
+  },
+  "shared": [
+    ["teller", "prudence"],
+    ["nurse", "gertie"]
+  ],
+  "unvoiced": {
+    "bartender": "No line of dialogue: the Pale Horse bartender never speaks in quotes in either pack.",
+    "morty": "Morty is a skeleton and has no lines."
+  }
+}

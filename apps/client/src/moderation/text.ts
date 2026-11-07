@@ -99,13 +99,54 @@ export const words = {
   "delete.cancel": "Keep my account",
   "delete.done": "Your account has been deleted.",
 
+  // Guests: typing for others needs a free account (decision 7)
+  "guest.title": "A free account is needed",
+  "guest.chat": "Guests can read the cafe but not talk in it.",
+  "guest.letter": "Guests cannot write letters.",
+  "guest.quote": "Guests cannot type battle quotes. The battle goes on without one.",
+  "guest.announcement": "Guests cannot post announcements.",
+  "guest.chain": "Guests cannot name chains.",
+  "guest.fortune": "Guests cannot write fortunes.",
+  "guest.how":
+    "Make a free account and your parlor comes with you. You can also log out and choose New user.",
+  "guest.make": "Make a free account",
+  "guest.never": "Never mind",
+  "guest.chatPlaceholder": "Sign up to chat",
+  "guest.chatSignUp": "Sign up free",
+  "guest.settingsHeading": "Your account",
+  "guest.settingsNote":
+    "You are a guest. You can play, read the paper, the cafe and your mail, and visit rivals. Chat, letters, announcements, fortunes, battle quotes and chain names need a free account.",
+  "guest.settingsButton": "Make this a full account",
+
+  // Making a guest a full account
+  "upgrade.title": "Make this a full account",
+  "upgrade.body":
+    "Choose a log-on name and a password. Your parlor, money and mail stay exactly as they are.",
+  "upgrade.login": "Log-on name",
+  "upgrade.loginHint": "3 to 20 letters, digits, dots, dashes or underscores.",
+  "upgrade.password": "Password",
+  "upgrade.passwordHint": "8 to 128 characters. It is sent once and never kept on this device.",
+  "upgrade.confirm": "Make my account",
+  "upgrade.working": "Working...",
+  "upgrade.cancel": "Not now",
+  "upgrade.taken": "That log-on name is taken. Try another.",
+  "upgrade.invalid":
+    "Log-on names are 3 to 20 letters, digits, dots, dashes or underscores, and passwords are 8 to 128 characters.",
+  "upgrade.refused": "That name is not allowed here. Please choose another.",
+  "upgrade.failed": "That could not be done. Please try again in a moment.",
+  "upgrade.doneTitle": "You have a full account",
+  "upgrade.done":
+    "You can now chat, write letters, post announcements and write fortunes. Use {login} and your password to log on next time.",
+  "upgrade.close": "Close",
+
   // Mute
   "muted.banner": "You are muted from {what} until {until}. This is temporary.",
   "muted.close": "Dismiss",
 
   // Conduct gate
   "gate.title": "Before you open your doors",
-  "gate.agree": "I agree. Open the doors",
+  "gate.tick": "I am 18 or older and accept these rules",
+  "gate.agree": "Continue",
   "gate.rules": "Read the house rules",
   "gate.back": "Not now",
 } as const;

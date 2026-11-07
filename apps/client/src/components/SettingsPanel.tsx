@@ -3,6 +3,7 @@ import { useId } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { PACKS } from "../art/packs.js";
 import { useCurrentMusic } from "../audio/AudioContext.js";
+import { useVoicesOn } from "../audio/voiceHook.js";
 import { useT } from "../i18n/I18nContext.js";
 import type { MessageKey } from "../i18n/messages.js";
 import { SafetySettings } from "../moderation/SafetySettings.js"; // moderation hook
@@ -13,6 +14,8 @@ import {
   type TypewriterSpeed,
   useSettings,
 } from "../settings/settings.js";
+import { siteUrl } from "../util/base.js";
+import { soloOnly } from "../util/soloOnly.js";
 import { getWrapper, openWrapperSettings } from "../wrapper.js";
 import { Dialog } from "./Dialog.js";
 
@@ -100,6 +103,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const id = useId();
   const { settings, update } = useSettings();
   const music = useCurrentMusic();
+  const voicesOn = useVoicesOn();
   const art = useArt();
   const opts = <T extends string>(prefix: string, values: T[]) =>
     values.map((value) => ({ value, label: t(`${prefix}.${value}` as MessageKey) }));
@@ -184,7 +188,34 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
       <p className="fq-set-note">
         {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
       </p>
-      {getWrapper()?.openSettings && (
+      <Toggle
+        label={t("settings.audio.voices")}
+        checked={voicesOn}
+        onChange={(on) => update({ voices: on ? "on" : "off" })}
+      />
+      <Slider
+        label={t("settings.volume.voice")}
+        value={settings.volume.voice}
+        onChange={(voice) => update({ volume: { voice } })}
+      />
+      <p className="fq-set-note">{t("settings.audio.voices.note")}</p>
+      {soloOnly() && getWrapper()?.openSettings && (
+        <>
+          <h3 className="fq-set-heading">{t("settings.reminders")}</h3>
+          <p className="fq-set-note">{t("settings.reminders.note")}</p>
+          <p>
+            <button
+              type="button"
+              className="fq-dbtn"
+              data-testid="reminder-settings"
+              onClick={() => openWrapperSettings()}
+            >
+              {t("settings.reminders.open")}
+            </button>
+          </p>
+        </>
+      )}
+      {!soloOnly() && getWrapper()?.openSettings && (
         <>
           <h3 className="fq-set-heading">{t("settings.server")}</h3>
           <p className="fq-set-note">{t("settings.server.note")}</p>
@@ -210,7 +241,12 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         {(["intro", "gameplay", "rules", "credits"] as const).map((page, i) => (
           <span key={page}>
             {i > 0 && " | "}
-            <a href={`/#/${page}`} target="_blank" rel="noopener noreferrer" className="fq-linkbtn">
+            <a
+              href={`${siteUrl("")}#/${page}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fq-linkbtn"
+            >
               {t(`page.${page}`)}
             </a>
           </span>

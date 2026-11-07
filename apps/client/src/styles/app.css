@@ -2159,3 +2159,32 @@ textarea.fq-notepad-input {
 .fq-cabinet[data-layout="phone"] .fq-strip {
   order: 2;
 }
+
+/* ---------- The mute control, beside the gear on every game screen ---------- */
+
+/* One gear-and-exit step to the gear's other side: gear is 60 design pixels from exit. */
+.fq-app .fq-cabinet .fq-gear.fq-mute,
+.fq-app .fq-cabinet[data-cab] .fq-gear.fq-mute {
+  left: calc(var(--u) * (2 * var(--gear-x) - var(--exit-x)));
+  top: calc(var(--u) * var(--gear-y));
+}
+
+.fq-gear.fq-mute svg {
+  width: 58%;
+  height: 58%;
+}
+
+.fq-app .fq-cabinet:not([data-layout="phone"]) .fq-chrome[data-compact] .fq-gear.fq-mute {
+  left: calc(var(--u) * 114);
+  top: calc(var(--u) * 8);
+}
+
+.fq-cabinet[data-scene="door"]:not([data-layout="phone"])
+  .fq-chrome[data-compact]
+  .fq-gear.fq-mute {
+  left: calc(var(--u) * 62);
+}
+
+.fq-app .fq-cabinet[data-layout="phone"] .fq-gear.fq-mute {
+  position: static;
+}

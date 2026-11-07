@@ -40,6 +40,7 @@ export type {
   SafetyTarget,
   ServerMessage,
   TownInfo,
+  UpgradeResponse,
 } from "../wire.js";
 export { MUTE_SCOPES, REPORT_CATEGORIES } from "../wire.js";
 export { ApiClient, type ApiClientOptions, ApiError } from "./api.js";

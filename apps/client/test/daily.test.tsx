@@ -35,7 +35,7 @@ async function openDaily(user: ReturnType<typeof userEvent.setup>) {
 beforeEach(() => {
   window.location.hash = "";
   window.localStorage.clear();
-  window.localStorage.setItem("fq.conduct", "1"); // moderation hook: the house rules are agreed
+  window.localStorage.setItem("fq.conduct", "2"); // moderation hook: the house rules are agreed
 });
 
 describe("the Daily Challenge's board name", () => {

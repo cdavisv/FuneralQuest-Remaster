@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import type { FastifyBaseLogger } from "fastify";
-import type { AccountService } from "../auth/accounts.js";
+import type { Account, AccountService } from "../auth/accounts.js";
 import type { Clock } from "../clock.js";
 import type { ServerConfig } from "../config.js";
 import type { ContentSource } from "../content/index.js";
@@ -203,6 +203,34 @@ export class GameHost {
     this.townStore.delete(id);
     this.audit.append({ at: this.clock.now(), townId: null, kind: "town:deleted", data: { id } });
     return true;
+  }
+
+  /**
+   * Turns a guest into a full account and keeps their parlors. The engine's player carries the
+   * account's log-in name, so every town where the guest has a parlor is locked first (in id
+   * order, so two upgrades cannot wait on each other); then, in one turn with no waiting, the
+   * account row and the players' names change together. Nobody sees a half-renamed parlor.
+   */
+  async upgradeGuest(account: Account, login: string, password: string): Promise<Account> {
+    const hash = await this.accounts.hashPassword(password);
+    const held = [...this.towns.values()]
+      .filter((t) => t.parlorPlayerId(account) !== null)
+      .sort((a, b) => a.id.localeCompare(b.id));
+    const finish = async (): Promise<Account> => {
+      const upgraded = this.accounts.upgradeGuest(account.id, login, hash);
+      try {
+        await Promise.all(held.map((t) => t.renameLogon(account.id, account.login, login)));
+      } catch (error) {
+        this.accounts.revertUpgrade(account.id, account.login);
+        throw error;
+      }
+      return upgraded;
+    };
+    const nest = (i: number): Promise<Account> => {
+      const town = held[i];
+      return town ? town.runExclusive(() => nest(i + 1)) : finish();
+    };
+    return nest(0);
   }
 
   get(id: string): TownRuntime | undefined {

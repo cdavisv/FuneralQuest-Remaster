@@ -38,3 +38,8 @@ apps/mobile/ios/**/xcuserdata/
 # Animation frames exported from the original Flash files (about 31 MB).
 # Regenerate with: pnpm --filter @fq/extract run export
 assets/classic/**/*.frames/
+
+# The original 2001 sounds, if anyone extracts them into the tree. They are licensed for the
+# original game only: never commit them. `pnpm listen:originals` writes them outside the
+# repository (~/.cache/fq-audio-original); packages/audio/test/originals.test.ts checks this.
+assets/audio-original/

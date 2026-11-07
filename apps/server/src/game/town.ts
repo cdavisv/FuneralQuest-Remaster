@@ -368,6 +368,31 @@ export class TownRuntime {
     });
   }
 
+  /**
+   * Guest upgrade: gives the account's player here its new log-in name. Called inside
+   * `runExclusive`, in the same turn as the account row changes (the commit does not wait), so the
+   * player and the account never disagree where another request can see them.
+   */
+  async renameLogon(accountId: number, from: string, to: string): Promise<void> {
+    const link = this.deps.parlors.find(accountId, this.row.id);
+    if (!link) return;
+    const player = this.state.players[link.player_id];
+    if (!player?.active || player.logon.toLowerCase() !== from.toLowerCase()) return;
+    const town: TownState = {
+      ...this.state,
+      players: this.state.players.map((p) => (p.id === player.id ? { ...p, logon: to } : p)),
+    };
+    await this.commit({
+      kind: "account:upgrade",
+      town,
+      effects: [],
+      accountId,
+      playerId: player.id,
+      actorId: null,
+      data: { from, to },
+    });
+  }
+
   /** Links an account to a player slot the museum bridge has just created. */
   linkParlor(accountId: number, playerId: number): void {
     this.deps.parlors.link(accountId, this.row.id, playerId, this.deps.clock.now());

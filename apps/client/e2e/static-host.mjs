@@ -6,6 +6,9 @@
  *
  *   node e2e/static-host.mjs --port 18766 [--after http://127.0.0.1:18765/health]
  *
+ * With --prefix /sub/ the site is served under that sub-path and nothing is served outside it, as
+ * on GitHub Pages (https://<user>.github.io/<repo>/).
+ *
  * With --after it waits until that address answers (the test server finishes building the
  * client before it starts), then serves dist-build (or the directory given with --root).
  */
@@ -22,6 +25,7 @@ const option = (name, fallback) => {
 };
 const port = Number(option("port", "18766"));
 const after = option("after", "");
+const prefix = option("prefix", "").replace(/\/+$/, "");
 const root = option("root", "")
   ? resolve(option("root", ""))
   : resolve(dirname(fileURLToPath(import.meta.url)), "../dist-build");
@@ -51,7 +55,16 @@ while (after) {
 
 createServer(async (req, res) => {
   const url = new URL(req.url ?? "/", "http://localhost");
-  let path = normalize(decodeURIComponent(url.pathname));
+  let pathname = decodeURIComponent(url.pathname);
+  if (prefix) {
+    if (pathname !== `${prefix}/` && !pathname.startsWith(`${prefix}/`)) {
+      res.writeHead(404, { "content-type": "text/plain" });
+      res.end("Not found");
+      return;
+    }
+    pathname = pathname.slice(prefix.length);
+  }
+  let path = normalize(pathname);
   if (path.endsWith("/")) path += "index.html";
   const file = join(root, path);
   try {

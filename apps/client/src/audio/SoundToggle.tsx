@@ -1,31 +1,40 @@
 import { useT } from "../i18n/I18nContext.js";
 import { useSettings } from "../settings/settings.js";
-import { useAudio, useAudioState } from "./AudioContext.js";
+import { useAudio } from "./AudioContext.js";
 
 /**
- * The front door's sound button. Browsers start sound only after an interaction, so until then
- * it offers "Sound on"; afterwards it mutes and unmutes (the setting persists).
+ * The mute control, on every screen: the front door's links, the game's top corner and the static
+ * pages. Sound is on by default (decision 16); the browser will not play anything until the
+ * player's first click or key press, and the page starts the audio at that first interaction
+ * wherever it happens (`AudioProvider`). So this button does not mean "start the sound": it
+ * mutes and unmutes, and the choice is saved (a player who turned sound off stays off).
  */
-export function SoundToggle({ className }: { className?: string }) {
+export function SoundToggle({
+  className,
+  iconOnly,
+}: {
+  className?: string;
+  /** Just the speaker, named for assistive technology (the game's corner has no room for words). */
+  iconOnly?: boolean;
+}) {
   const t = useT();
   const audio = useAudio();
-  const state = useAudioState();
   const { settings, update } = useSettings();
-  const on = state.unlocked && !settings.muted;
+  const on = !settings.muted;
+  const label = on ? t("audio.mute") : t("audio.unmute");
   return (
     <button
       type="button"
       className={`fq-sound-toggle${className ? ` ${className}` : ""}`}
       data-sound={on ? "on" : "off"}
-      // this button unlocks the sound itself (the provider's first-gesture unlock skips it, so
-      // the first press turns the sound on rather than unlocking and then muting)
+      data-icon-only={iconOnly || undefined}
+      aria-label={iconOnly ? label : undefined}
+      title={iconOnly ? label : undefined}
+      // Muting needs no sound at all, so this press does not start the audio; unmuting does (a
+      // press is an interaction the browser accepts).
       data-audio-unlock="self"
       onClick={() => {
-        if (!state.unlocked) {
-          audio.unlock();
-          if (settings.muted) update({ muted: false });
-          return;
-        }
+        if (settings.muted) audio.unlock();
         update({ muted: !settings.muted });
       }}
     >
@@ -48,7 +57,7 @@ export function SoundToggle({ className }: { className?: string }) {
           />
         )}
       </svg>
-      <span>{on ? t("audio.off") : t("audio.on")}</span>
+      {!iconOnly && <span>{label}</span>}
     </button>
   );
 }

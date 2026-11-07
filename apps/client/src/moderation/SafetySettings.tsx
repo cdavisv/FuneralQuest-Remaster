@@ -55,6 +55,17 @@ export function SafetySettings() {
 
   return (
     <section aria-labelledby="fq-mod-blocked">
+      {mod.self?.guest === true && (
+        <>
+          <h3 className="fq-set-heading">{say("guest.settingsHeading")}</h3>
+          <p className="fq-set-note">{say("guest.settingsNote")}</p>
+          <p className="fq-mod-row">
+            <button type="button" className="fq-dbtn" onClick={() => mod.openUpgrade()}>
+              {say("guest.settingsButton")}
+            </button>
+          </p>
+        </>
+      )}
       <h3 className="fq-set-heading" id="fq-mod-blocked">
         {say("settings.blocked")}
       </h3>

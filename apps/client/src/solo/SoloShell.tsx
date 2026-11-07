@@ -35,8 +35,8 @@ export interface SoloShellProps {
   platform: SoloPlatform;
   /** A static page (rules, credits...) was asked for. */
   onPage: (route: string) => void;
-  /** Back to the online-or-solo choice. */
-  onBack: () => void;
+  /** Back to the online-or-solo choice; null in the solo-only build, which has no other choice. */
+  onBack: (() => void) | null;
   offline: boolean;
 }
 
@@ -257,7 +257,12 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
   if (screen.kind === "playing") {
     return (
       <>
-        <Game transport={screen.session} onLeave={() => void leave()} busyNote={t("solo.busy")} />
+        <Game
+          transport={screen.session}
+          onLeave={() => void leave()}
+          busyNote={t("solo.busy")}
+          solo
+        />
         {saveProblem && (
           <p className="fq-save-alert" role="alert">
             {t("solo.saveFailed", { reason: saveProblem })}
@@ -280,7 +285,7 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
           onPage={onPage}
           variant={setup ? "setup" : "solo"}
           soloNote={offline ? t("choose.online.offline") : null}
-          onSwitchMode={onBack}
+          {...(onBack ? { onSwitchMode: onBack } : {})}
           focusKey={screen.kind}
         >
           {screen.kind === "opening" ? (

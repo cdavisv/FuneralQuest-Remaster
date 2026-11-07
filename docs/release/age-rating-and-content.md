@@ -17,12 +17,16 @@ One place for every questionnaire. The game ships the **original 2001 text, pict
 | Gambling (simulated) | Expanded pack: a **club with house games** and "Formaldehyde Roulette" (shot glasses) using **in-game money**; lottery-ticket events; bingo night events and flavour. No real money, no purchases, no prizes of real value | Simulated gambling: infrequent to frequent depending on the questionnaire definition; declare it |
 | Horror | Skeletons, ghosts, zombies, rotting; played for laughs | Mild comic horror |
 | Dated and potentially offensive material | The original includes dated fortune-cookie lines written in a stereotyped broken-English voice (`yangs.yaml`), and references to real people and marks (Elvis; one customer portrait wears a shirt with a real band's logo). It is kept exactly as written | Declare "mature or sensitive themes / crude humour" where a form asks; it is part of the product as it is |
-| User-generated content / chat / mail | Yes: word filters, report and block in the app, mutes and bans by moderators (answer UGC questions "yes, with moderation and reporting") | See `ugc-and-moderation.md` |
-| Online interactions | Yes: accounts, other players, chat, mail, rankings | |
+| User-generated content / chat / mail | **Online builds only** (the solo-only first release has none). Yes: word filters, report and block in the app, mutes and bans by moderators (answer UGC questions "yes, with moderation and reporting") | See `ugc-and-moderation.md` |
+| Online interactions | Online builds only: accounts, other players, chat, mail, rankings. Guests can play and read but cannot type for others | |
 | In-app purchases, ads, loot boxes, contests, real-money | None found | None |
 | Location sharing | None | None |
 
 **There is no milder edition to ship.** Rate the whole product for the content above, answer every questionnaire truthfully for it, and accept the rating that results. Disclosing content on a rating form or store page is not altering it; nothing in the game is hidden, blurred or switched off for a store build, and no in-game content warning is added. (Online play has house rules for how players treat each other; they do not apply to the game's own text.)
+
+## The game's own age rating, and the tick box (owner's decision 8, 2026-11-06)
+
+The game states its rating plainly: **18+, for adults, mature humour** (rated for the content in the table above, as it is). Online play, and only online play, shows a first-run notice with that rating, the short conduct rules for chat and mail, and one required tick box, **"I am 18 or older and accept these rules"**. That is a rating and a self-declaration. It is **not age verification**: no birth date, no identity check, nothing about age sent to or stored on the server (the tick is remembered on the device only, `fq.conduct` in `localStorage`). Solo play, which is also the whole of the first mobile release, has no notice and no gate. Where a store form asks whether the app collects age or date of birth, or verifies age: **no**. Where it asks for the target audience: **18+**; where it asks about "age assurance" or parental controls: none in the app beyond this declaration.
 
 ## Expected ratings
 
@@ -55,7 +59,7 @@ One place for every questionnaire. The game ships the **original 2001 text, pict
 | Digital purchases | No |
 | Unrestricted web access | No (the app only talks to its server; confirm no outbound links open a browser. Credits link to external pages: those open the system browser) |
 
-Target audience: **18+ or 13+ and up; not "children"**. Do not select under-13 groups; that triggers Families policy (ads/SDK rules, no UGC).
+Target audience: **18+** (the game's own rating; decision 8); not "children". Do not select under-13 groups; that triggers Families policy (ads/SDK rules, no UGC).
 
 ### Apple age rating
 
@@ -73,7 +77,7 @@ Target audience: **18+ or 13+ and up; not "children"**. Do not select under-13 g
 | Gambling (real money) | No |
 | Unrestricted web access | No |
 | User-generated content / messaging | **Yes** (requires 1.2 features) |
-| Parental controls / age assurance | None in app |
+| Parental controls / age assurance | None in app. Online play (not in the solo-only first release) asks for a self-declared "I am 18 or older" tick box; no age is collected or checked |
 
 ### Steam content survey
 
@@ -96,4 +100,4 @@ Use plain text: "Dark humour, cartoon violence, crude humour, language including
 
 ## Sounds and music
 
-The original sounds and music are **not used** (CLAUDE.md; `apps/client/src/audio/AudioManager.ts` says no audio files ship yet). Store pages and Data safety forms should not mention original music. If new audio is added, record it in the planned ledger `assets/audio/LICENSES.md` (does not exist yet: `assets/` currently holds only `classic` and `manifest.json`). Museum mode serves the original sounds and must be off on the official server and absent from store builds.
+The original sounds and music are **not used** by the remaster: neither sound pack (Synth, generated by this repository's code; Studio, generated with ElevenLabs) contains any of the original audio, which is licensed for Funeral Quest only. The original sounds play only in museum mode, inside the original Flash client. Store pages and Data safety forms should not mention original music. The packs' ledgers are `assets/audio/LICENSES.md` and `assets/audio-studio/LICENSES.md`. Museum mode serves the original sounds and must be off on the official server and absent from store builds. Sound is on by default (a browser starts it at the first click or key press), with a mute button on every screen; say so in review notes.

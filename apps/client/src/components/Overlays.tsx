@@ -3,6 +3,9 @@ import { type RefObject, useEffect, useId, useRef, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { useT } from "../i18n/I18nContext.js";
 import { LetterActions, MessageActions } from "../moderation/ActionMenu.js"; // moderation hook
+import { useModeration } from "../moderation/context.js";
+import { guestRefusalKey, useIsGuest } from "../moderation/guest.js";
+import { say } from "../moderation/text.js";
 import { Dialog } from "./Dialog.js";
 import { QuillIcon } from "./Icons.js";
 import { PictureLayers } from "./Picture.js";
@@ -32,13 +35,19 @@ interface OverlayProps {
 }
 
 export function OverlayView({ overlay, onAction }: OverlayProps) {
+  const guest = useIsGuest();
   switch (overlay.kind) {
     case "message":
       return <MessageDialog overlay={overlay} onAction={onAction} />;
     case "confirm":
       return <ConfirmDialog overlay={overlay} onAction={onAction} />;
     case "textInput":
-      return <NotepadDialog overlay={overlay} onAction={onAction} />;
+      // A guest cannot type for other people: the notepad becomes an explanation (decision 7).
+      return guest && guestRefusalKey(overlay.id) !== null ? (
+        <GuestNotepad overlay={overlay} onAction={onAction} />
+      ) : (
+        <NotepadDialog overlay={overlay} onAction={onAction} />
+      );
     case "playerPicker":
       return <PlayerPickerDialog overlay={overlay} onAction={onAction} />;
   }
@@ -174,6 +183,55 @@ function PlayerPickerDialog({
           onClick={() => onAction({ type: "pickPlayer", overlayId: overlay.id, playerId: null })}
         >
           {t("overlay.cancel")}
+        </button>
+      </div>
+    </Dialog>
+  );
+}
+
+/**
+ * What a guest sees where the notepad would be: why it is unavailable and how to get a free
+ * account. A battle quote is skipped without a word, as if the player had cancelled it, so the
+ * fight carries on.
+ */
+function GuestNotepad({
+  overlay,
+  onAction,
+}: {
+  overlay: Of<"textInput">;
+  onAction: (a: Action) => void;
+}) {
+  const id = useId();
+  const mod = useModeration();
+  const key = guestRefusalKey(overlay.id);
+  const skipped = useRef(false);
+  const skip = overlay.id === "battle:quote";
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once, when the prompt opens.
+  useEffect(() => {
+    if (skip && !skipped.current) {
+      skipped.current = true;
+      onAction({ type: "submitText", overlayId: overlay.id, text: null });
+    }
+  }, []);
+  if (skip || key === null) return null;
+  return (
+    <Dialog className="fq-dialog fq-surface-dark" labelledBy={id} describedBy={`${id}-why`}>
+      <h2 id={id} className="fq-mod-title">
+        {say("guest.title")}
+      </h2>
+      <p id={`${id}-why`} className="fq-dialog-text" data-testid="guest-notepad">
+        {say(key)} {say("guest.how")}
+      </p>
+      <div className="fq-dialog-actions">
+        <button type="button" className="fq-dbtn" data-autofocus onClick={() => mod?.openUpgrade()}>
+          {say("guest.make")}
+        </button>
+        <button
+          type="button"
+          className="fq-dbtn"
+          onClick={() => onAction({ type: "submitText", overlayId: overlay.id, text: null })}
+        >
+          {say("guest.never")}
         </button>
       </div>
     </Dialog>
