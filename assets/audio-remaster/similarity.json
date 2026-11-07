@@ -1,0 +1,1853 @@
+{
+ "note": "Remake against original, measured locally (scripts/remasterCompare.py). similarity: mean of length, band shape, envelope, centroid, tagger and onset agreement, each 0..1.",
+ "sounds": {
+  "animals/dog-dragging-hand/2.mp3": {
+   "lengthOriginal": 1.74,
+   "lengthRemake": 1.72,
+   "lengthRatio": 0.988,
+   "centroidHz": [
+    685,
+    471
+   ],
+   "bandShapeCorr": 0.818,
+   "envelopeCorr": 0.509,
+   "onsets": [
+    1,
+    2
+   ],
+   "key": [
+    "E minor (0.25)",
+    "A minor (0.36)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Animal",
+    "Dog",
+    "Domestic animals, pets",
+    "Growling",
+    "Yip"
+   ],
+   "tagsRemake": [
+    "Animal",
+    "Dog",
+    "Domestic animals, pets",
+    "Growling",
+    "Inside, small room"
+   ],
+   "tagCosine": 0.993,
+   "sharedSpecificTags": [
+    "Dog",
+    "Domestic animals, pets",
+    "Growling"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.824,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_1/2.mp3": {
+   "lengthOriginal": 1.46,
+   "lengthRemake": 1.44,
+   "lengthRatio": 0.986,
+   "centroidHz": [
+    933,
+    1224
+   ],
+   "bandShapeCorr": 0.818,
+   "envelopeCorr": 0.447,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "G minor (0.64)",
+    "F# minor (0.53)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Doorbell",
+    "Ding-dong",
+    "Bell",
+    "Music",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Doorbell",
+    "Bell",
+    "Ding",
+    "Ding-dong",
+    "Clang"
+   ],
+   "tagCosine": 0.944,
+   "sharedSpecificTags": [
+    "Doorbell",
+    "Ding-dong",
+    "Bell"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.867,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_2/2.mp3": {
+   "lengthOriginal": 1.88,
+   "lengthRemake": 1.84,
+   "lengthRatio": 0.979,
+   "centroidHz": [
+    925,
+    1054
+   ],
+   "bandShapeCorr": 0.751,
+   "envelopeCorr": 0.364,
+   "onsets": [
+    2,
+    2
+   ],
+   "key": [
+    "Eb major (0.51)",
+    "Eb major (0.73)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Doorbell",
+    "Ding-dong",
+    "Music",
+    "Inside, small room",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Doorbell",
+    "Ding-dong",
+    "Music",
+    "Inside, small room",
+    "Bell"
+   ],
+   "tagCosine": 0.986,
+   "sharedSpecificTags": [
+    "Doorbell",
+    "Ding-dong"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.874,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_3/2.mp3": {
+   "lengthOriginal": 1.01,
+   "lengthRemake": 1.0,
+   "lengthRatio": 0.99,
+   "centroidHz": [
+    849,
+    2128
+   ],
+   "bandShapeCorr": 0.672,
+   "envelopeCorr": 0.369,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "E major (0.50)",
+    "F# minor (0.56)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Doorbell",
+    "Ding-dong",
+    "Music",
+    "Bell",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Doorbell",
+    "Ding-dong",
+    "Music",
+    "Bell",
+    "Inside, small room"
+   ],
+   "tagCosine": 0.995,
+   "sharedSpecificTags": [
+    "Doorbell",
+    "Ding-dong",
+    "Bell"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.748,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_4/2.mp3": {
+   "lengthOriginal": 1.93,
+   "lengthRemake": 1.92,
+   "lengthRatio": 0.995,
+   "centroidHz": [
+    866,
+    915
+   ],
+   "bandShapeCorr": 0.879,
+   "envelopeCorr": 0.347,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "Eb major (0.72)",
+    "Eb major (0.69)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Doorbell",
+    "Ding-dong",
+    "Siren",
+    "Music",
+    "Civil defense siren"
+   ],
+   "tagsRemake": [
+    "Doorbell",
+    "Ding-dong",
+    "Music",
+    "Bell",
+    "Inside, small room"
+   ],
+   "tagCosine": 0.967,
+   "sharedSpecificTags": [
+    "Doorbell",
+    "Ding-dong"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.91,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_5/2.mp3": {
+   "lengthOriginal": 1.29,
+   "lengthRemake": 1.28,
+   "lengthRatio": 0.992,
+   "centroidHz": [
+    944,
+    2057
+   ],
+   "bandShapeCorr": 0.688,
+   "envelopeCorr": 0.174,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "Eb major (0.68)",
+    "F minor (0.82)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Doorbell",
+    "Ding-dong",
+    "Bell",
+    "Music",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Ding",
+    "Clang",
+    "Doorbell",
+    "Bell",
+    "Music"
+   ],
+   "tagCosine": 0.111,
+   "sharedSpecificTags": [
+    "Doorbell",
+    "Bell"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.61,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "background/background_church/2.mp3": {
+   "lengthOriginal": 10.96,
+   "lengthRemake": 12.056,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    552,
+    750
+   ],
+   "bandShapeCorr": 0.919,
+   "envelopeCorr": 0.854,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "G major (0.90)",
+    "G major (0.92)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Musical instrument",
+    "French horn"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Keyboard (musical)",
+    "Electronic organ"
+   ],
+   "tagCosine": 0.892,
+   "sharedSpecificTags": [
+    "Organ",
+    "Hammond organ"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.871,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "closed/5.mp3": {
+   "lengthOriginal": 1.23,
+   "lengthRemake": 1.23,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    1228,
+    1966
+   ],
+   "bandShapeCorr": -0.196,
+   "envelopeCorr": 0.878,
+   "onsets": [
+    2,
+    1
+   ],
+   "key": [
+    "Ab minor (0.30)",
+    "G major (0.54)"
+   ],
+   "tempo": [
+    48.8,
+    136.0
+   ],
+   "tagsOriginal": [
+    "Vehicle",
+    "Car",
+    "Music",
+    "Noise",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Spray",
+    "Hiss",
+    "Steam",
+    "White noise"
+   ],
+   "tagCosine": 0.399,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.61,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": 2.4,
+    "rawJoin": 0.24,
+    "joinRatio": 0.16
+   }
+  },
+  "morning_coffee/5.mp3": {
+   "lengthOriginal": 5.06,
+   "lengthRemake": 5.06,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    2990,
+    3919
+   ],
+   "bandShapeCorr": 0.641,
+   "envelopeCorr": 0.26,
+   "onsets": [
+    2,
+    11
+   ],
+   "key": [
+    "B major (0.37)",
+    "G major (0.49)"
+   ],
+   "tempo": [
+    147.7,
+    147.7
+   ],
+   "tagsOriginal": [
+    "Bird",
+    "Bird vocalization, bird call, bird song",
+    "Chirp, tweet",
+    "Environmental noise",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Chirp, tweet",
+    "Bird vocalization, bird call, bird song",
+    "Bird",
+    "Insect",
+    "Music"
+   ],
+   "tagCosine": 0.965,
+   "sharedSpecificTags": [
+    "Bird",
+    "Bird vocalization, bird call, bird song",
+    "Chirp, tweet"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.695,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": 0.2,
+    "rawJoin": 0.02,
+    "joinRatio": 0.01
+   }
+  },
+  "mother/happy/5.mp3": {
+   "lengthOriginal": 1.42,
+   "lengthRemake": 1.4,
+   "lengthRatio": 0.986,
+   "centroidHz": [
+    569,
+    506
+   ],
+   "bandShapeCorr": 0.876,
+   "envelopeCorr": 0.712,
+   "onsets": [
+    2,
+    2
+   ],
+   "key": [
+    "C major (0.70)",
+    "C major (0.69)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Ukulele",
+    "Inside, small room",
+    "Musical instrument",
+    "Guitar"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Ukulele",
+    "Musical instrument",
+    "Inside, small room",
+    "Guitar"
+   ],
+   "tagCosine": 0.978,
+   "sharedSpecificTags": [
+    "Ukulele",
+    "Guitar"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.928,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "music/music_fight/1.mp3": {
+   "lengthOriginal": 2.0,
+   "lengthRemake": 2.0,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    347,
+    1066
+   ],
+   "bandShapeCorr": 0.802,
+   "envelopeCorr": 0.117,
+   "onsets": [
+    7,
+    12
+   ],
+   "key": [
+    "A major (0.30)",
+    "D minor (0.62)"
+   ],
+   "tempo": [
+    120.2,
+    120.2
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Electronic music",
+    "Techno",
+    "Electronica",
+    "Trance music"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Electronic music",
+    "Disco",
+    "House music",
+    "Techno"
+   ],
+   "tagCosine": 0.96,
+   "sharedSpecificTags": [
+    "Electronic music",
+    "Techno",
+    "Electronica"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.651,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -10.6,
+    "rawJoin": 1.13,
+    "joinRatio": 0.23
+   }
+  },
+  "music/music_sneak/1.mp3": {
+   "lengthOriginal": 4.0,
+   "lengthRemake": 4.0,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    1227,
+    228
+   ],
+   "bandShapeCorr": 0.528,
+   "envelopeCorr": -0.176,
+   "onsets": [
+    4,
+    3
+   ],
+   "key": [
+    "E major (0.30)",
+    "E minor (0.54)"
+   ],
+   "tempo": [
+    166.7,
+    60.1
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Timpani",
+    "Musical instrument",
+    "Orchestra",
+    "Speech"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Musical instrument",
+    "Electronic music",
+    "Speech",
+    "Background music"
+   ],
+   "tagCosine": 0.945,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.606,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -11.5,
+    "rawJoin": 2.95,
+    "joinRatio": 0.38
+   }
+  },
+  "people/jesus_happy/13.mp3": {
+   "lengthOriginal": 2.33,
+   "lengthRemake": 2.32,
+   "lengthRatio": 0.996,
+   "centroidHz": [
+    1258,
+    1319
+   ],
+   "bandShapeCorr": 0.924,
+   "envelopeCorr": 0.222,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "F minor (0.44)",
+    "C major (0.81)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Choir",
+    "Music",
+    "Singing",
+    "A capella",
+    "Chant"
+   ],
+   "tagsRemake": [
+    "Choir",
+    "Music",
+    "A capella",
+    "Singing",
+    "Chant"
+   ],
+   "tagCosine": 0.96,
+   "sharedSpecificTags": [
+    "Choir",
+    "Singing",
+    "A capella"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.907,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "places/desk/12.mp3": {
+   "lengthOriginal": 0.99,
+   "lengthRemake": 0.99,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    2405,
+    2072
+   ],
+   "bandShapeCorr": 0.83,
+   "envelopeCorr": -0.269,
+   "onsets": [
+    2,
+    3
+   ],
+   "key": [
+    "C minor (0.40)",
+    "Ab major (0.58)"
+   ],
+   "tempo": [
+    126.0,
+    60.8
+   ],
+   "tagsOriginal": [
+    "Clock",
+    "Scissors",
+    "Inside, small room",
+    "Animal",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Tick-tock",
+    "Tick",
+    "Clock",
+    "Inside, small room",
+    "Speech"
+   ],
+   "tagCosine": 0.47,
+   "sharedSpecificTags": [
+    "Clock"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.713,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -9.1,
+    "rawJoin": 0,
+    "joinRatio": 0
+   }
+  },
+  "places/desk_enemy/8.mp3": {
+   "lengthOriginal": 0.99,
+   "lengthRemake": 0.99,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    2405,
+    2072
+   ],
+   "bandShapeCorr": 0.83,
+   "envelopeCorr": -0.269,
+   "onsets": [
+    2,
+    3
+   ],
+   "key": [
+    "C minor (0.40)",
+    "Ab major (0.58)"
+   ],
+   "tempo": [
+    126.0,
+    60.8
+   ],
+   "tagsOriginal": [
+    "Clock",
+    "Scissors",
+    "Inside, small room",
+    "Animal",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Tick-tock",
+    "Tick",
+    "Clock",
+    "Inside, small room",
+    "Speech"
+   ],
+   "tagCosine": 0.47,
+   "sharedSpecificTags": [
+    "Clock"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.713,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -9.1,
+    "rawJoin": 0,
+    "joinRatio": 0
+   }
+  },
+  "places/embalming-room/3.mp3": {
+   "lengthOriginal": 2.03,
+   "lengthRemake": 2.03,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    898,
+    770
+   ],
+   "bandShapeCorr": 0.636,
+   "envelopeCorr": -0.131,
+   "onsets": [
+    4,
+    10
+   ],
+   "key": [
+    "B minor (0.31)",
+    "B minor (0.24)"
+   ],
+   "tempo": [
+    156.6,
+    112.3
+   ],
+   "tagsOriginal": [
+    "Sidetone",
+    "Echo",
+    "Sound effect",
+    "Radio",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Boing",
+    "Music",
+    "Sound effect",
+    "Plop",
+    "Speech"
+   ],
+   "tagCosine": 0.087,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.569,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -10.1,
+    "rawJoin": 0.55,
+    "joinRatio": 0.45
+   }
+  },
+  "places/fire/5.mp3": {
+   "lengthOriginal": 2.32,
+   "lengthRemake": 2.32,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    451,
+    223
+   ],
+   "bandShapeCorr": 0.775,
+   "envelopeCorr": 0.725,
+   "onsets": [
+    2,
+    6
+   ],
+   "key": [
+    "D minor (0.33)",
+    "C# minor (0.38)"
+   ],
+   "tempo": [
+    110.0,
+    178.2
+   ],
+   "tagsOriginal": [
+    "Vehicle",
+    "Car",
+    "Speech",
+    "Boat, Water vehicle",
+    "Outside, urban or manmade"
+   ],
+   "tagsRemake": [
+    "Animal",
+    "Vehicle",
+    "Chewing, mastication",
+    "Horse",
+    "Rumble"
+   ],
+   "tagCosine": 0.457,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.631,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -21.1,
+    "rawJoin": 0.48,
+    "joinRatio": 0.41
+   }
+  },
+  "places/funeral-ceremony/2.mp3": {
+   "lengthOriginal": 10.96,
+   "lengthRemake": 12.056,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    552,
+    750
+   ],
+   "bandShapeCorr": 0.919,
+   "envelopeCorr": 0.854,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "G major (0.90)",
+    "G major (0.92)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Musical instrument",
+    "French horn"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Keyboard (musical)",
+    "Electronic organ"
+   ],
+   "tagCosine": 0.892,
+   "sharedSpecificTags": [
+    "Organ",
+    "Hammond organ"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.871,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "places/funeral-ceremony2/6.mp3": {
+   "lengthOriginal": 10.96,
+   "lengthRemake": 12.056,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    552,
+    750
+   ],
+   "bandShapeCorr": 0.919,
+   "envelopeCorr": 0.854,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "G major (0.90)",
+    "G major (0.92)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Musical instrument",
+    "French horn"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Organ",
+    "Hammond organ",
+    "Keyboard (musical)",
+    "Electronic organ"
+   ],
+   "tagCosine": 0.892,
+   "sharedSpecificTags": [
+    "Organ",
+    "Hammond organ"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.871,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "places/hospital_ambulance/2.mp3": {
+   "lengthOriginal": 2.35,
+   "lengthRemake": 2.279,
+   "lengthRatio": 0.97,
+   "centroidHz": [
+    1314,
+    1440
+   ],
+   "bandShapeCorr": 0.688,
+   "envelopeCorr": 0.53,
+   "onsets": [
+    8,
+    7
+   ],
+   "key": [
+    "E major (0.52)",
+    "G minor (0.42)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Speech",
+    "Vehicle",
+    "Radio",
+    "Inside, small room",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Speech",
+    "Radio",
+    "Sidetone",
+    "Inside, small room",
+    "Vehicle"
+   ],
+   "tagCosine": 0.812,
+   "sharedSpecificTags": [
+    "Radio"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.83,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "places/hospital_desk/5.mp3": {
+   "lengthOriginal": 3.04,
+   "lengthRemake": 3.04,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    1141,
+    897
+   ],
+   "bandShapeCorr": 0.842,
+   "envelopeCorr": 0.92,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "E minor (0.34)",
+    "G major (0.35)"
+   ],
+   "tempo": [
+    76.0,
+    99.4
+   ],
+   "tagsOriginal": [
+    "Speech",
+    "Chatter",
+    "Hubbub, speech noise, speech babble",
+    "Outside, urban or manmade",
+    "Vehicle"
+   ],
+   "tagsRemake": [
+    "Speech",
+    "Train",
+    "Vehicle",
+    "Rail transport",
+    "Railroad car, train wagon"
+   ],
+   "tagCosine": 0.899,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.914,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -11.1,
+    "rawJoin": 0.2,
+    "joinRatio": 0.08
+   }
+  },
+  "places/hospital_room/9.mp3": {
+   "lengthOriginal": 1.59,
+   "lengthRemake": 1.59,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    1415,
+    2030
+   ],
+   "bandShapeCorr": 0.158,
+   "envelopeCorr": 0.07,
+   "onsets": [
+    2,
+    1
+   ],
+   "key": [
+    "B minor (0.37)",
+    "G major (0.65)"
+   ],
+   "tempo": [
+    143.6,
+    37.7
+   ],
+   "tagsOriginal": [
+    "Beep, bleep",
+    "Speech",
+    "Music",
+    "Animal",
+    "Inside, small room"
+   ],
+   "tagsRemake": [
+    "Whistling",
+    "Whistle",
+    "Music",
+    "Microwave oven",
+    "Beep, bleep"
+   ],
+   "tagCosine": 0.431,
+   "sharedSpecificTags": [
+    "Beep, bleep"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.591,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -3.7,
+    "rawJoin": 0,
+    "joinRatio": 0.01
+   }
+  },
+  "places/palors/5.mp3": {
+   "lengthOriginal": 2.0,
+   "lengthRemake": 2.0,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    956,
+    862
+   ],
+   "bandShapeCorr": 0.784,
+   "envelopeCorr": 0.617,
+   "onsets": [
+    5,
+    7
+   ],
+   "key": [
+    "F# major (0.47)",
+    "F# major (0.84)"
+   ],
+   "tempo": [
+    120.2,
+    120.2
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Musical instrument",
+    "Ringtone",
+    "Synthesizer",
+    "Keyboard (musical)"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Musical instrument",
+    "Tick-tock",
+    "Tick",
+    "Clock"
+   ],
+   "tagCosine": 0.971,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.864,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -9.2,
+    "rawJoin": 0.53,
+    "joinRatio": 0.3
+   }
+  },
+  "places/psych/7.mp3": {
+   "lengthOriginal": 3.29,
+   "lengthRemake": 3.28,
+   "lengthRatio": 0.997,
+   "centroidHz": [
+    440,
+    647
+   ],
+   "bandShapeCorr": 0.781,
+   "envelopeCorr": 0.575,
+   "onsets": [
+    3,
+    3
+   ],
+   "key": [
+    "D major (0.78)",
+    "A minor (0.81)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Harp",
+    "Music",
+    "Musical instrument",
+    "Pizzicato",
+    "Plucked string instrument"
+   ],
+   "tagsRemake": [
+    "Harp",
+    "Music",
+    "Musical instrument",
+    "Pizzicato",
+    "Plucked string instrument"
+   ],
+   "tagCosine": 0.988,
+   "sharedSpecificTags": [
+    "Harp",
+    "Pizzicato",
+    "Plucked string instrument"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.866,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "places/yangs/6.mp3": {
+   "lengthOriginal": 4.0,
+   "lengthRemake": 4.0,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    678,
+    454
+   ],
+   "bandShapeCorr": 0.729,
+   "envelopeCorr": 0.268,
+   "onsets": [
+    7,
+    15
+   ],
+   "key": [
+    "F# minor (0.65)",
+    "F# minor (0.72)"
+   ],
+   "tempo": [
+    161.5,
+    120.2
+   ],
+   "tagsOriginal": [
+    "Zither",
+    "Music",
+    "Pizzicato",
+    "Musical instrument",
+    "Mandolin"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Pizzicato",
+    "Musical instrument",
+    "Bowed string instrument",
+    "Cello"
+   ],
+   "tagCosine": 0.743,
+   "sharedSpecificTags": [
+    "Zither",
+    "Pizzicato"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.702,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -9.5,
+    "rawJoin": 1.44,
+    "joinRatio": 0.34
+   }
+  },
+  "ring/ring&hand/5.mp3": {
+   "lengthOriginal": 2.12,
+   "lengthRemake": 2.065,
+   "lengthRatio": 0.974,
+   "centroidHz": [
+    2290,
+    3203
+   ],
+   "bandShapeCorr": 0.891,
+   "envelopeCorr": -0.144,
+   "onsets": [
+    1,
+    2
+   ],
+   "key": [
+    "G minor (0.27)",
+    "G minor (0.47)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Tuning fork",
+    "Music",
+    "Chime",
+    "Chirp tone",
+    "Sine wave"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Tambourine",
+    "Jingle bell",
+    "Musical instrument",
+    "Speech"
+   ],
+   "tagCosine": 0.507,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.701,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "ring/ring/4.mp3": {
+   "lengthOriginal": 2.12,
+   "lengthRemake": 2.065,
+   "lengthRatio": 0.974,
+   "centroidHz": [
+    2290,
+    3203
+   ],
+   "bandShapeCorr": 0.891,
+   "envelopeCorr": -0.144,
+   "onsets": [
+    1,
+    2
+   ],
+   "key": [
+    "G minor (0.27)",
+    "G minor (0.47)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Tuning fork",
+    "Music",
+    "Chime",
+    "Chirp tone",
+    "Sine wave"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Tambourine",
+    "Jingle bell",
+    "Musical instrument",
+    "Speech"
+   ],
+   "tagCosine": 0.507,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.701,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/battle_lose/2.mp3": {
+   "lengthOriginal": 6.43,
+   "lengthRemake": 6.4,
+   "lengthRatio": 0.995,
+   "centroidHz": [
+    358,
+    160
+   ],
+   "bandShapeCorr": 0.672,
+   "envelopeCorr": 0.384,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "Bb minor (0.26)",
+    "Eb minor (0.41)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Gong",
+    "Singing bowl",
+    "Music",
+    "Church bell",
+    "Tubular bells"
+   ],
+   "tagsRemake": [
+    "Silence",
+    "Music",
+    "Gong",
+    "Rumble",
+    "Vehicle"
+   ],
+   "tagCosine": 0.48,
+   "sharedSpecificTags": [
+    "Gong"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.683,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/lottery_lose/19.mp3": {
+   "lengthOriginal": 0.28,
+   "lengthRemake": 0.308,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    2179,
+    2418
+   ],
+   "bandShapeCorr": 0.756,
+   "envelopeCorr": 0.396,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "D minor (0.31)",
+    "D major (0.38)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Inside, small room",
+    "Silence"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Inside, small room",
+    "Silence"
+   ],
+   "tagCosine": 1.0,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.854,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/lottery_lose/26.mp3": {
+   "lengthOriginal": 1.7,
+   "lengthRemake": 1.68,
+   "lengthRatio": 0.988,
+   "centroidHz": [
+    1415,
+    509
+   ],
+   "bandShapeCorr": -0.402,
+   "envelopeCorr": 0.049,
+   "onsets": [
+    2,
+    3
+   ],
+   "key": [
+    "Bb major (0.49)",
+    "E minor (0.57)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Musical instrument",
+    "Violin, fiddle",
+    "Meow",
+    "Harmonica"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Musical instrument",
+    "Synthesizer",
+    "Guitar",
+    "Keyboard (musical)"
+   ],
+   "tagCosine": 0.92,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.539,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/lottery_win/19.mp3": {
+   "lengthOriginal": 0.28,
+   "lengthRemake": 0.308,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    2179,
+    2418
+   ],
+   "bandShapeCorr": 0.756,
+   "envelopeCorr": 0.396,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "D minor (0.31)",
+    "D major (0.38)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Inside, small room",
+    "Silence"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Inside, small room",
+    "Silence"
+   ],
+   "tagCosine": 1.0,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.854,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/lottery_win/25.mp3": {
+   "lengthOriginal": 1.33,
+   "lengthRemake": 1.32,
+   "lengthRatio": 0.992,
+   "centroidHz": [
+    2115,
+    1742
+   ],
+   "bandShapeCorr": 0.834,
+   "envelopeCorr": 0.848,
+   "onsets": [
+    2,
+    2
+   ],
+   "key": [
+    "B minor (0.68)",
+    "Bb major (0.66)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Cash register",
+    "Printer",
+    "Typewriter",
+    "Speech",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Cash register",
+    "Speech",
+    "Telephone",
+    "Telephone bell ringing",
+    "Coin (dropping)"
+   ],
+   "tagCosine": 0.982,
+   "sharedSpecificTags": [
+    "Cash register"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.924,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/money_bag/7.mp3": {
+   "lengthOriginal": 3.16,
+   "lengthRemake": 3.16,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    960,
+    535
+   ],
+   "bandShapeCorr": 0.702,
+   "envelopeCorr": 0.304,
+   "onsets": [
+    2,
+    1
+   ],
+   "key": [
+    "B major (0.66)",
+    "B major (0.85)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Guitar",
+    "Musical instrument",
+    "Plucked string instrument",
+    "Acoustic guitar"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Guitar",
+    "Musical instrument",
+    "Plucked string instrument",
+    "Acoustic guitar"
+   ],
+   "tagCosine": 0.994,
+   "sharedSpecificTags": [
+    "Guitar",
+    "Plucked string instrument",
+    "Acoustic guitar"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.761,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/money_bag_2/9.mp3": {
+   "lengthOriginal": 0.85,
+   "lengthRemake": 0.84,
+   "lengthRatio": 0.988,
+   "centroidHz": [
+    2241,
+    1966
+   ],
+   "bandShapeCorr": 0.918,
+   "envelopeCorr": 0.131,
+   "onsets": [
+    2,
+    1
+   ],
+   "key": [
+    "Eb minor (0.75)",
+    "G major (0.71)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Cash register",
+    "Printer",
+    "Single-lens reflex camera",
+    "Speech",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Door",
+    "Cash register",
+    "Sliding door",
+    "Music",
+    "Vehicle"
+   ],
+   "tagCosine": 0.547,
+   "sharedSpecificTags": [
+    "Cash register"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.772,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "stuff/toilet/3.mp3": {
+   "lengthOriginal": 4.02,
+   "lengthRemake": 3.958,
+   "lengthRatio": 0.985,
+   "centroidHz": [
+    1919,
+    2042
+   ],
+   "bandShapeCorr": 0.966,
+   "envelopeCorr": 0.725,
+   "onsets": [
+    2,
+    5
+   ],
+   "key": [
+    "C minor (0.30)",
+    "E minor (0.56)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Toilet flush",
+    "Water",
+    "Speech",
+    "Music",
+    "Inside, small room"
+   ],
+   "tagsRemake": [
+    "Toilet flush",
+    "Water",
+    "Speech",
+    "Music",
+    "Hiss"
+   ],
+   "tagCosine": 0.994,
+   "sharedSpecificTags": [
+    "Toilet flush",
+    "Water"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.855,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "wait/5.mp3": {
+   "lengthOriginal": 2.18,
+   "lengthRemake": 2.138,
+   "lengthRatio": 0.981,
+   "centroidHz": [
+    1549,
+    1919
+   ],
+   "bandShapeCorr": 0.222,
+   "envelopeCorr": 0.194,
+   "onsets": [
+    1,
+    1
+   ],
+   "key": [
+    "Bb minor (0.46)",
+    "G minor (0.69)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Vehicle",
+    "Aircraft",
+    "Fixed-wing aircraft, airplane",
+    "Speech",
+    "Music"
+   ],
+   "tagsRemake": [
+    "Hiss",
+    "Whoosh, swoosh, swish",
+    "Snake",
+    "Music",
+    "Sound effect"
+   ],
+   "tagCosine": 0.188,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.627,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "welcome/46.mp3": {
+   "lengthOriginal": 0.19,
+   "lengthRemake": 0.209,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    2306,
+    3315
+   ],
+   "bandShapeCorr": 0.548,
+   "envelopeCorr": -0.039,
+   "onsets": [
+    1,
+    2
+   ],
+   "key": [
+    "C minor (0.26)",
+    "F# minor (0.41)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Silence",
+    "Inside, small room"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Speech",
+    "Vehicle",
+    "Silence",
+    "Inside, small room"
+   ],
+   "tagCosine": 1.0,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.702,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "welcome/Map.mp3": {
+   "lengthOriginal": 4.0,
+   "lengthRemake": 4.0,
+   "lengthRatio": 1.0,
+   "centroidHz": [
+    874,
+    802
+   ],
+   "bandShapeCorr": 0.729,
+   "envelopeCorr": 0.039,
+   "onsets": [
+    10,
+    18
+   ],
+   "key": [
+    "C major (0.64)",
+    "C major (0.69)"
+   ],
+   "tempo": [
+    120.2,
+    120.2
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Musical instrument",
+    "Guitar",
+    "Plucked string instrument",
+    "Funny music"
+   ],
+   "tagsRemake": [
+    "Music",
+    "Musical instrument",
+    "Bluegrass",
+    "Plucked string instrument",
+    "Country"
+   ],
+   "tagCosine": 0.984,
+   "sharedSpecificTags": [
+    "Guitar",
+    "Plucked string instrument"
+   ],
+   "speech": "no speech found",
+   "similarity": 0.785,
+   "clippedSamples": 0,
+   "loopCheck": {
+    "periodDb": -11,
+    "rawJoin": 0.81,
+    "joinRatio": 0.29
+   }
+  },
+  "welcome/intro.mp3": {
+   "lengthOriginal": 20.08,
+   "lengthRemake": 22.088,
+   "lengthRatio": 1.1,
+   "centroidHz": [
+    1103,
+    644
+   ],
+   "bandShapeCorr": 0.968,
+   "envelopeCorr": 0.773,
+   "onsets": [
+    1,
+    40
+   ],
+   "key": [
+    "C major (0.37)",
+    "C major (0.96)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Music",
+    "Musical instrument",
+    "Theme music",
+    "Orchestra",
+    "Organ"
+   ],
+   "tagsRemake": [
+    "Music",
+    "New-age music",
+    "Ambient music",
+    "Tender music",
+    "Sad music"
+   ],
+   "tagCosine": 0.864,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.67,
+   "clippedSamples": 0,
+   "loopCheck": null
+  },
+  "welcome/paper.mp3": {
+   "lengthOriginal": 0.81,
+   "lengthRemake": 0.8,
+   "lengthRatio": 0.988,
+   "centroidHz": [
+    2101,
+    2390
+   ],
+   "bandShapeCorr": 0.651,
+   "envelopeCorr": 0.016,
+   "onsets": [
+    1,
+    3
+   ],
+   "key": [
+    "C# minor (0.47)",
+    "C# major (0.36)"
+   ],
+   "tempo": [
+    null,
+    null
+   ],
+   "tagsOriginal": [
+    "Speech",
+    "Inside, small room",
+    "Animal",
+    "Silence",
+    "Zipper (clothing)"
+   ],
+   "tagsRemake": [
+    "Vehicle",
+    "Music",
+    "Speech",
+    "Rustling leaves",
+    "Wind noise (microphone)"
+   ],
+   "tagCosine": 0.641,
+   "sharedSpecificTags": [],
+   "speech": "no speech found",
+   "similarity": 0.692,
+   "clippedSamples": 0,
+   "loopCheck": null
+  }
+ }
+}

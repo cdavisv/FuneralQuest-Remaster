@@ -11,7 +11,10 @@ concurrency:
   cancel-in-progress: true
 
 # The jobs below run side by side. Everything that exists is run somewhere:
-#   lint        biome, the art pack check, every package's typecheck
+#   lint        biome, the art pack check, every package's typecheck, the version check (one
+#               version in the root package.json, copied nowhere that can drift), and a lint of the
+#               workflow files themselves
+#   (release.yml, started by hand or by a tag, builds the alpha files; this file never builds a release)
 #   unit        every package's and tool's unit tests, in four groups (the oracle's tests are in
 #               "tools"; they skip themselves without a C++ toolchain, and the runner has g++)
 #   build       the production client, with the bundle-size budget (docs/performance.md)
@@ -30,6 +33,13 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends librsvg2-bin
       - run: node tools/art/check.mjs
       - run: pnpm typecheck
+      # The version lives in the root package.json; Cargo.toml, the Tauri config and the wrappers'
+      # package.json files must agree with it (scripts/version.mjs). The release scripts parse.
+      - run: node scripts/version.mjs --check
+      - run: node --check scripts/release/package.mjs
+      # Every workflow file parses and its expressions and shell steps are valid.
+      - name: Lint the workflow files
+        run: pipx run --spec actionlint-py actionlint .github/workflows/*.yml
 
   unit:
     name: Unit tests (${{ matrix.group }})
@@ -54,6 +64,12 @@ jobs:
         if: matrix.group == 'tools'
         run: g++ --version
       - run: pnpm --filter "${{ matrix.filter }}" test
+      # The soak harness's short mode belongs here, after the server's tests. Its README
+      # (tools/soak/README.md) had no command yet when this was written: replace the line below
+      # with the command it names, then uncomment the step.
+      # - name: Soak harness, short mode
+      #   if: matrix.group == 'server'
+      #   run: pnpm --filter @fq/soak soak --short
       # Desktop and mobile have no unit tests; their scripts are syntax-checked.
       - name: Wrappers
         if: matrix.group == 'client'

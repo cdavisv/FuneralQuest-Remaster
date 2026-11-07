@@ -1,4 +1,5 @@
-import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { cp, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -150,7 +151,7 @@ function buildInfo(): Plugin {
       this.emitFile({
         type: "asset",
         fileName: "build-info.json",
-        source: `${JSON.stringify({ soloOnly: process.env.VITE_SOLO_ONLY === "1", base: siteBase() }, null, 2)}\n`,
+        source: `${JSON.stringify({ soloOnly: process.env.VITE_SOLO_ONLY === "1", base: siteBase(), ...buildId }, null, 2)}\n`,
       });
     },
   };
@@ -266,10 +267,42 @@ function siteBase(): string {
   return raw.endsWith("/") ? raw : `${raw}/`;
 }
 
+/**
+ * What this build is: the root package.json's version (the one source, see scripts/version.mjs,
+ * which does the same for the other apps; this copy exists because a Docker build has no scripts/
+ * directory) and the short commit, or FQ_BUILD, or "dev" when there is no git. The game shows
+ * them in Settings and on the front door, and the feedback report carries them.
+ */
+function buildVersion(): { version: string; build: string } {
+  const root = fileURLToPath(new URL("../..", import.meta.url));
+  const { version } = JSON.parse(readFileSync(`${root}/package.json`, "utf8")) as {
+    version: string;
+  };
+  let build = (process.env.FQ_BUILD ?? "").trim().slice(0, 12);
+  if (!build) {
+    try {
+      build = execFileSync("git", ["rev-parse", "--short=7", "HEAD"], {
+        cwd: root,
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim();
+    } catch {
+      build = "dev";
+    }
+  }
+  return { version, build: build || "dev" };
+}
+const buildId = buildVersion();
+
 const serverTarget = process.env.FQ_SERVER_URL ?? "http://127.0.0.1:8080";
 
 export default defineConfig(({ command }) => ({
   base: siteBase(),
+  define: {
+    __FQ_VERSION__: JSON.stringify(buildId.version),
+    __FQ_BUILD__: JSON.stringify(buildId.build),
+  },
   plugins: [react(), classicIds(), pwa(), buildInfo(), bundleArt(), bundleAudio(), precache()],
   publicDir: command === "serve" ? assetsDir : false,
   build: { outDir, emptyOutDir: true, sourcemap: true },

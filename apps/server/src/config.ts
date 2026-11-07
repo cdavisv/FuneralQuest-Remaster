@@ -108,6 +108,29 @@ const ConfigSchema = z.object({
   chatBufferMinutes: intish(1, 1440),
   /** Reports that were dismissed or acted on are deleted after this many days. 0 keeps them. */
   reportRetentionDays: intish(0, 36_500),
+  /**
+   * Backups (`POST /admin/backups`, the `backup` command). Where they are written: empty means a
+   * `backups` directory next to the database file.
+   */
+  backupDir: z.string(),
+  /** Hours between automatic backups; 0 turns them off. */
+  backupIntervalHours: intish(0, 8760),
+  /** Automatic and admin backups kept in `backupDir`; older ones are deleted. 0 keeps all. */
+  backupKeep: intish(0, 100_000),
+  /**
+   * Soak tests only, refused when NODE_ENV is production. Game time runs this many times faster
+   * than real time (1 is real time). See `ScaledClock`.
+   */
+  testClockSpeed: z.coerce.number().min(1).max(10_000_000),
+  /** Soak tests only: the game time (ISO or epoch ms) the clock shows at `testClockAnchor`. */
+  testClockStart: z.string(),
+  /** Soak tests only: the real epoch ms at which the game clock shows `testClockStart` (0 = start-up). */
+  testClockAnchor: z.coerce.number().int().min(0),
+  /**
+   * Soak tests only: pause this many real milliseconds inside each midnight maintenance, after the
+   * new day is computed and before it is saved, so a test can kill the process mid-maintenance.
+   */
+  testMaintenanceDelayMs: intish(0, 600_000),
 });
 
 export type ServerConfig = z.infer<typeof ConfigSchema>;
@@ -164,6 +187,13 @@ const ENV_KEYS: Record<keyof ServerConfig, string> = {
   chatBufferLines: "FQ_CHAT_BUFFER_LINES",
   chatBufferMinutes: "FQ_CHAT_BUFFER_MINUTES",
   reportRetentionDays: "FQ_REPORT_RETENTION_DAYS",
+  backupDir: "FQ_BACKUP_DIR",
+  backupIntervalHours: "FQ_BACKUP_INTERVAL_HOURS",
+  backupKeep: "FQ_BACKUP_KEEP",
+  testClockSpeed: "FQ_TEST_CLOCK_SPEED",
+  testClockStart: "FQ_TEST_CLOCK_START",
+  testClockAnchor: "FQ_TEST_CLOCK_ANCHOR",
+  testMaintenanceDelayMs: "FQ_TEST_MAINTENANCE_DELAY_MS",
 };
 
 export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolean> = {
@@ -216,6 +246,13 @@ export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolea
   chatBufferLines: 100,
   chatBufferMinutes: 30,
   reportRetentionDays: 180,
+  backupDir: "",
+  backupIntervalHours: 0,
+  backupKeep: 14,
+  testClockSpeed: 1,
+  testClockStart: "",
+  testClockAnchor: 0,
+  testMaintenanceDelayMs: 0,
 };
 
 /** Reads configuration from `env` (defaults to `process.env`). Throws a readable error. */
@@ -236,7 +273,32 @@ export function loadConfig(env: Env = process.env): ServerConfig {
   if (config.adminToken !== "" && config.adminToken.length < 24) {
     throw new Error("Invalid configuration:\n  FQ_ADMIN_TOKEN: must be at least 24 characters");
   }
+  if (usesTestClock(config) && env.NODE_ENV === "production") {
+    throw new Error(
+      "Invalid configuration:\n  FQ_TEST_CLOCK_SPEED, FQ_TEST_CLOCK_START and FQ_TEST_MAINTENANCE_DELAY_MS are for soak tests and are refused when NODE_ENV=production",
+    );
+  }
+  if (config.testClockStart !== "") {
+    const t = /^\d+$/.test(config.testClockStart)
+      ? Number(config.testClockStart)
+      : Date.parse(config.testClockStart);
+    if (!Number.isFinite(t)) {
+      throw new Error(
+        `Invalid configuration:\n  FQ_TEST_CLOCK_START: not an ISO time or epoch milliseconds: ${config.testClockStart}`,
+      );
+    }
+  }
   return config;
+}
+
+/** True when any soak-test knob is set (an accelerated clock or a maintenance pause). */
+export function usesTestClock(config: ServerConfig): boolean {
+  return (
+    config.testClockSpeed !== 1 ||
+    config.testClockStart !== "" ||
+    config.testClockAnchor !== 0 ||
+    config.testMaintenanceDelayMs !== 0
+  );
 }
 
 /** A full config for tests and embedding: defaults plus overrides, in memory, silent. */

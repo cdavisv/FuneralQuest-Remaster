@@ -279,6 +279,10 @@ export interface ErrorBody {
 
 /** `GET /api/features`: optional parts of this server, so a client shows only what exists. */
 export interface FeaturesResponse {
+  /** The server's version: the root package.json's, e.g. "0.1.0-alpha.1". Always sent. */
+  version?: string;
+  /** The server's build: the short git commit, FQ_BUILD, or "dev". Always sent. */
+  build?: string;
   /** Museum mode: the original 2001 client at `path`, playing the same town. */
   museum: {
     enabled: boolean;

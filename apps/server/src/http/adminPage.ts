@@ -48,7 +48,7 @@ tr.row:hover{background:color-mix(in srgb,var(--acc) 8%,transparent)}
 const SCRIPT = String.raw`
 "use strict";
 var $ = function (id) { return document.getElementById(id); };
-var state = { token: sessionStorage.getItem("fq_admin") || "", mod: localStorage.getItem("fq_mod") || "", tab: "reports", report: null, account: null };
+var state = { token: sessionStorage.getItem("fq_admin") || "", mod: localStorage.getItem("fq_mod") || "", tab: "reports", report: null, account: null, town: null };
 var CATS = ["harassment", "hate", "sexual", "threats", "spam", "cheating", "other"];
 var SCOPES = ["chat", "mail", "announcements", "fortunes"];
 
@@ -57,6 +57,7 @@ function h(tag, attrs) {
   if (attrs) Object.keys(attrs).forEach(function (k) {
     var v = attrs[k];
     if (v === null || v === undefined || v === false) return;
+    if (v === false || v === null || v === undefined) return;
     if (k === "class") el.className = v;
     else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
     else if (k === "value") el.value = v;
@@ -106,18 +107,18 @@ function login() {
     } }, "Sign in"))));
 }
 
-var TABS = [["reports", "Reports"], ["mutes", "Mutes"], ["accounts", "Accounts"], ["towns", "Towns"], ["bans", "Address bans"], ["audit", "Audit log"]];
+var TABS = [["reports", "Reports"], ["mutes", "Mutes"], ["accounts", "Accounts"], ["towns", "Towns"], ["backups", "Backups"], ["bans", "Address bans"], ["audit", "Audit log"]];
 function render() {
   var nav = $("nav"); clear(nav);
   $("whoBox").hidden = !state.token;
   if (!state.token) { login(); return; }
   $("who").textContent = state.mod || "admin";
   TABS.forEach(function (t) {
-    nav.appendChild(h("button", { class: state.tab === t[0] ? "on" : "", onclick: function () { state.tab = t[0]; state.report = null; state.account = null; render(); } }, t[1]));
+    nav.appendChild(h("button", { class: state.tab === t[0] ? "on" : "", onclick: function () { state.tab = t[0]; state.report = null; state.account = null; state.town = null; render(); } }, t[1]));
   });
   nav.appendChild(h("button", { onclick: signOut }, "Sign out"));
   var main = $("main"); clear(main);
-  ({ reports: reportsTab, mutes: mutesTab, accounts: accountsTab, towns: townsTab, bans: bansTab, audit: auditTab })[state.tab](main);
+  ({ reports: reportsTab, mutes: mutesTab, accounts: accountsTab, towns: townsTab, backups: backupsTab, bans: bansTab, audit: auditTab })[state.tab](main);
 }
 
 function select(options, value, onchange, any) {
@@ -329,22 +330,172 @@ function accountDetail(main, id) {
 
 // -------------------------------------------------------------------- towns
 function townsTab(main) {
+  if (state.town) return townDetail(main, state.town);
   var box = h("div", null, "Loading..."); main.appendChild(box);
+  var id = h("input", { type: "text", placeholder: "id (letters, digits, -)", class: "w11" });
+  var name = h("input", { type: "text", placeholder: "Town name", class: "grow" });
+  var ruleset = select(["classic", "expanded"], "classic", function () {});
+  var zone = h("input", { type: "text", placeholder: "Time zone, e.g. Europe/London", class: "w11", value: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC" });
+  var days = h("input", { type: "number", placeholder: "Tournament days (blank: endless)", class: "w11" });
+  main.insertBefore(h("div", { class: "card" }, h("h3", null, "New town"),
+    h("div", { class: "row2" }, id, name, ruleset, zone, days, h("button", { class: "on", onclick: function () {
+      if (!id.value.trim() || !name.value.trim()) return toast("A town needs an id and a name.", true);
+      var body = { id: id.value.trim(), name: name.value.trim(), ruleset: ruleset.value, timeZone: zone.value.trim() || "UTC" };
+      if (days.value) body.settings = { tournamentActive: true, tournamentDays: Number(days.value) };
+      api("POST", "/admin/towns", body).then(function () { toast("Town created."); render(); }).catch(fail);
+    } }, "Create"))), box);
   api("GET", "/admin/towns").then(function (d) {
     clear(box);
     d.towns.forEach(function (t) {
       var msg = h("input", { type: "text", placeholder: "Broadcast to everyone online", class: "grow" });
       box.appendChild(h("div", { class: "card" }, h("h3", null, t.name + " (" + t.id + ")"),
-        h("p", null, t.rulesetLabel + ", day " + t.day + ", " + t.players.registered + " players, " + t.players.online + " online. Next day " + when(t.nextDayAt)),
+        h("p", null, t.rulesetLabel + ", day " + t.day + (t.tournament && t.tournament.active ? " (" + t.tournament.daysLeft + " days left in the tournament)" : "") + ", " + t.players.registered + " players, " + t.players.online + " online. Next day " + when(t.nextDayAt)),
         h("div", { class: "row2" }, msg, h("button", { onclick: function () {
           if (!msg.value.trim() || !ask("Broadcast to everyone online in " + t.name + "?")) return;
           api("POST", "/admin/towns/" + t.id + "/broadcast", { message: msg.value }).then(function (r) { toast("Sent to " + r.delivered + " players."); msg.value = ""; }).catch(fail);
         } }, "Broadcast"), h("button", { class: "danger", onclick: function () {
           if (!ask("Run a new day in " + t.name + " now? The schedule is not changed.")) return;
           api("POST", "/admin/towns/" + t.id + "/new-day").then(function (r) { toast("Day " + r.day + "."); render(); }).catch(fail);
-        } }, "Run a new day"))));
+        } }, "Run a new day"), h("button", { onclick: function () { state.town = t.id; render(); } }, "Manage"))));
     });
-    box.appendChild(h("p", { class: "mut" }, "Settings, snapshots, rollback and town creation are in the admin API (apps/server/README.md)."));
+  }).catch(fail);
+}
+
+/** One town: Game Settings, players, snapshots and rollback, reset. */
+function townDetail(main, townId) {
+  var base = "/admin/towns/" + encodeURIComponent(townId);
+  main.appendChild(h("p", null, h("button", { onclick: function () { state.town = null; render(); } }, "Back to towns")));
+  var settingsBox = h("div", { class: "card" }, "Loading settings...");
+  var playersBox = h("div", { class: "card" }, "Loading players...");
+  var snapsBox = h("div", { class: "card" }, "Loading snapshots...");
+  var resetBox = h("div", { class: "card" });
+  main.appendChild(settingsBox); main.appendChild(playersBox); main.appendChild(snapsBox); main.appendChild(resetBox);
+
+  api("GET", base + "/settings").then(function (d) {
+    clear(settingsBox);
+    settingsBox.appendChild(h("h3", null, "Game Settings"));
+    var inputs = {};
+    var t = h("table", null, h("tr", null, ["Setting", "Value", "Default"].map(function (x) { return h("th", null, x); })));
+    Object.keys(d.settings).forEach(function (k) {
+      var v = d.settings[k];
+      var input;
+      if (typeof v === "boolean") input = h("input", { type: "checkbox", checked: v });
+      else if (typeof v === "number") input = h("input", { type: "number", step: "any", value: String(v), class: "w11" });
+      else return;
+      inputs[k] = input;
+      t.appendChild(h("tr", null, h("td", null, k), h("td", null, input), h("td", { class: "mut" }, JSON.stringify(d.defaults[k]))));
+    });
+    settingsBox.appendChild(t);
+    settingsBox.appendChild(h("p", null, h("button", { class: "on", onclick: function () {
+      var patch = {};
+      Object.keys(inputs).forEach(function (k) {
+        var el = inputs[k];
+        var v = el.type === "checkbox" ? el.checked : Number(el.value);
+        if (v !== d.settings[k]) patch[k] = v;
+      });
+      if (!Object.keys(patch).length) return toast("Nothing changed.");
+      if (!ask("Change " + Object.keys(patch).join(", ") + "? It applies at once.")) return;
+      api("PATCH", base + "/settings", patch).then(function () { toast("Saved."); render(); }).catch(fail);
+    } }, "Save settings")));
+  }).catch(fail);
+
+  api("GET", base + "/players?limit=500").then(function (d) {
+    clear(playersBox);
+    playersBox.appendChild(h("h3", null, "Players (" + d.total + ")"));
+    var t = h("table", null, h("tr", null, ["Name", "Parlor", "BP", "Turns", "Money", "Online", ""].map(function (x) { return h("th", null, x); })));
+    d.players.forEach(function (p) {
+      var bp = h("input", { type: "number", value: String(p.bp), class: "w6" });
+      var turns = h("input", { type: "number", value: String(p.turns), class: "w6" });
+      t.appendChild(h("tr", null, h("td", null, p.name), h("td", null, p.parlor), h("td", null, bp), h("td", null, turns), h("td", null, String(p.money)),
+        h("td", null, p.online ? tag("online", "good") : ""),
+        h("td", null, h("div", { class: "row2" },
+          h("button", { onclick: function () {
+            var patch = {};
+            if (Number(bp.value) !== p.bp) patch.bp = Number(bp.value);
+            if (Number(turns.value) !== p.turns) patch.turns = Number(turns.value);
+            if (!Object.keys(patch).length) return toast("Nothing changed.");
+            if (!ask("Change " + p.name + ": " + JSON.stringify(patch) + "?")) return;
+            api("PATCH", base + "/players/" + p.id, patch).then(function () { toast("Saved."); render(); }).catch(fail);
+          } }, "Save"),
+          p.online ? h("button", { onclick: function () {
+            if (ask("Log " + p.name + " off?")) api("POST", base + "/players/" + p.id + "/kick").then(function () { toast("Kicked."); render(); }).catch(fail);
+          } }, "Kick") : null,
+          p.accountId !== null ? h("button", { onclick: function () { state.tab = "accounts"; state.account = p.accountId; render(); } }, "Account") : null,
+          h("button", { class: "danger", onclick: function () {
+            if (ask("DELETE " + p.name + "'s parlor and its text from this town? The account stays.")) api("DELETE", base + "/players/" + p.id).then(function () { toast("Deleted."); render(); }).catch(fail);
+          } }, "Delete")))));
+    });
+    playersBox.appendChild(t);
+  }).catch(fail);
+
+  api("GET", base + "/snapshots").then(function (d) {
+    clear(snapsBox);
+    snapsBox.appendChild(h("h3", null, "Snapshots and rollback"));
+    snapsBox.appendChild(h("p", { class: "mut" }, "The server keeps a snapshot at every new day, hourly when anything changed, and before a reset or rollback. Rolling back ends every session in the town; players who joined after the snapshot lose their parlor."));
+    var why = h("input", { type: "text", placeholder: "Why (optional)", class: "grow" });
+    snapsBox.appendChild(h("div", { class: "row2" }, why, h("button", { onclick: function () {
+      api("POST", base + "/snapshots", why.value.trim() ? { reason: why.value.trim().slice(0, 64) } : {}).then(function (r) { toast("Snapshot " + r.id + " taken."); render(); }).catch(fail);
+    } }, "Take a snapshot now")));
+    var t = h("table", null, h("tr", null, ["#", "Taken", "Day", "Why", ""].map(function (x) { return h("th", null, x); })));
+    d.snapshots.slice().reverse().forEach(function (s) {
+      t.appendChild(h("tr", null, h("td", null, String(s.id)), h("td", null, when(new Date(s.taken_at).toISOString())), h("td", null, String(s.day)), h("td", null, s.reason),
+        h("td", null, h("button", { class: "danger", onclick: function () {
+          if (ask("Roll " + townId + " back to snapshot " + s.id + " (day " + s.day + ")? Everything since is undone; a snapshot of now is taken first.")) {
+            api("POST", base + "/rollback", { snapshotId: s.id }).then(function () { toast("Rolled back."); render(); }).catch(fail);
+          }
+        } }, "Roll back"))));
+    });
+    snapsBox.appendChild(t);
+  }).catch(fail);
+
+  var confirmId = h("input", { type: "text", placeholder: "Type the town id to confirm", class: "w11" });
+  var clearDeeds = h("input", { type: "checkbox" });
+  resetBox.appendChild(h("h3", null, "Reset the town"));
+  resetBox.appendChild(h("p", { class: "mut" }, "Every parlor is removed and the town starts again at day 1. Settings, news and (unless ticked) the Book of Deeds are kept; accounts stay. A snapshot is taken first. No hall-of-fame entry is written."));
+  resetBox.appendChild(h("div", { class: "row2" }, confirmId, h("label", null, clearDeeds, " also clear the Book of Deeds"), h("button", { class: "danger", onclick: function () {
+    if (confirmId.value.trim() !== townId) return toast("Type the town id to confirm.", true);
+    if (!ask("Reset " + townId + " now?")) return;
+    api("POST", base + "/reset", { confirm: townId, clearDeeds: clearDeeds.checked }).then(function () { toast("Reset."); render(); }).catch(fail);
+  } }, "Reset")));
+}
+
+// ------------------------------------------------------------------ backups
+function backupsTab(main) {
+  var box = h("div", null, "Loading..."); 
+  var label = h("input", { type: "text", placeholder: "Label (optional: letters, digits, -)", class: "w11" });
+  main.appendChild(h("div", { class: "card" },
+    h("p", null, "A backup is a consistent copy of the whole database (every town, account, snapshot and the audit log), made while the server runs. Download it and keep it somewhere else. To restore one, stop the server and run the restore command (docs/sysop-guide.md); to undo a mistake in one town, use its snapshots instead (Towns, Manage)."),
+    h("div", { class: "row2" }, label, h("button", { class: "on", onclick: function () {
+      var body = label.value.trim() ? { label: label.value.trim() } : {};
+      api("POST", "/admin/backups", body).then(function (m) { toast("Backup " + m.file + " written."); render(); }).catch(fail);
+    } }, "Back up now"))));
+  main.appendChild(box);
+  api("GET", "/admin/backups").then(function (d) {
+    clear(box);
+    box.appendChild(h("p", { class: "mut" }, "In " + d.dir + "; the newest " + (d.keep || "all") + " are kept."));
+    if (!d.backups.length) { box.appendChild(h("p", { class: "mut" }, "No backups yet.")); return; }
+    var t = h("table", null, h("tr", null, ["File", "Made", "Size", "Towns", ""].map(function (x) { return h("th", null, x); })));
+    d.backups.forEach(function (b) {
+      var m = b.manifest;
+      t.appendChild(h("tr", null, h("td", null, b.name), h("td", null, m ? when(m.createdAt) + " (" + m.source + ")" : ""), h("td", null, Math.round(b.bytes / 1024) + " KiB"),
+        h("td", null, m ? m.towns.map(function (x) { return x.id + " day " + x.day; }).join(", ") : ""),
+        h("td", null, h("div", { class: "row2" }, h("button", { onclick: function () { download(b.name); } }, "Download"),
+          h("button", { class: "danger", onclick: function () {
+            if (ask("Delete the backup " + b.name + "?")) api("DELETE", "/admin/backups/" + encodeURIComponent(b.name)).then(function () { render(); }).catch(fail);
+          } }, "Delete")))));
+    });
+    box.appendChild(t);
+  }).catch(fail);
+}
+function download(name) {
+  fetch("/admin/backups/" + encodeURIComponent(name), { headers: { "authorization": "Bearer " + state.token, "x-moderator": state.mod || "admin" } }).then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.blob();
+  }).then(function (blob) {
+    var url = URL.createObjectURL(blob);
+    var a = h("a", { href: url, download: name });
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
   }).catch(fail);
 }
 

@@ -5,9 +5,19 @@ Funeral Quest is a daily-turn game about rival funeral parlors, in the style of 
 This repository is a free, open-source **remaster**: the 2001 game (Robinson Technologies, by Seth A. Robinson) rebuilt in TypeScript so it runs in any modern browser, on one rules engine with two rulesets:
 
 - **Classic**: the 2001 game reproduced faithfully (rules, text, art, screen layout), with the original 2001 text and art untouched. Complete, and checked against the original itself: `tools/oracle` compiles the original C++ server for Linux and plays it side by side with the port (213,350 steps with identical random draws, player records and words; [what is and is not verified](docs/classic-fidelity.md)). The few gameplay bug and exploit fixes are flags a town can turn off.
-- **Expanded**: the same game grown up, with the features the original cut. In development; the engine work is under way in `packages/core`.
+- **Expanded**: the same game grown up, with the features the original cut (a parlor to upgrade, the bank, church Bingo, City Hall elections, parlor chains, story arcs). Playable online and in Solo. Its balance is still being tuned and no person has played a full 30-day season yet ([what the simulator says](docs/balance/)).
 
 The original 2001 server, Flash client and content are kept untouched in [`legacy/`](legacy/README.md) as the reference for every rule.
+
+## Alpha
+
+**This is an alpha (version 0.1.0-alpha.1, shown in the game as "Alpha 0.1.0").** For this project that means three things:
+
+- **It is complete enough to play, and not yet proven on people.** Classic is feature-complete against the [rules specification](docs/classic-rules.md) and was checked step by step against the original game's own code; Solo, online play and museum mode all run. What has _not_ happened is real players: nobody outside the project has played a full tournament, and the alpha is "done" when a private town of 5 to 10 people finishes a 14-day tournament with no lost data and no blocker bugs.
+- **Expect rough edges.** Expanded's balance is still being tuned; the sound has been measured but nobody has listened to it all; the new portraits in the Remastered art pack need an illustrator; the Docker image, Windows, macOS, iOS and any real phone have never been tried; there is no public server. [docs/STATUS.md](docs/STATUS.md) lists what was run, what was only tested and what is missing, honestly.
+- **Saves and settings may change between alpha versions.** Export a Solo career to a file if you want to keep it. Do not run a public server on an alpha.
+
+The checklist that decides when alpha is over is [docs/ALPHA.md](docs/ALPHA.md); what changed in each version is in the [changelog](CHANGELOG.md). Found a bug or something that felt wrong? See [Report a bug](#report-a-bug).
 
 ## Play it in five minutes
 
@@ -19,7 +29,9 @@ pnpm install
 pnpm play            # builds the web client, starts the server, serves both: http://127.0.0.1:8080
 ```
 
-Open <http://127.0.0.1:8080>. The front door asks how you want to play.
+Open <http://127.0.0.1:8080>. The front door asks how you want to play, and shows the version and build at the bottom.
+
+Not a developer? Alpha builds are attached to the project's releases when one is published (nothing has been released yet): the web bundle as a zip (online-capable, or solo-only, each with a README), the Linux desktop app (`.deb` and AppImage), an Android APK (solo-only, debug-signed, so you may need to allow installs from unknown sources) and the server as a tarball. Check them against `SHA256SUMS`. Solo works with no server in all of them; online play needs a server, yours or someone else's.
 
 ### Online (a town of other players, on a server)
 
@@ -59,7 +71,15 @@ docker compose up -d --build
 curl localhost:8080/health
 ```
 
-Without Docker: `pnpm --filter @fq/client build`, then `FQ_CLIENT_DIR=apps/client/dist-build FQ_ADMIN_TOKEN=... pnpm --filter @fq/server dev` (or `build` then `start` for the bundled server). Put TLS in front with a reverse proxy. Towns, game settings, bans, snapshots and rollbacks, content packs and backups are covered in the [server README](apps/server/README.md).
+Without Docker: `pnpm --filter @fq/client build`, then `FQ_CLIENT_DIR=apps/client/dist-build FQ_ADMIN_TOKEN=... pnpm --filter @fq/server dev` (or `build` then `start` for the bundled server), or unpack the server tarball from a release and follow its README. Put TLS in front with a reverse proxy.
+
+Running a **private town for friends** (create it, set it up, watch it, ban someone, take a backup and restore one, and what to do at the end of a season) is the [sysop guide](docs/sysop-guide.md); the reference for every setting is the [server README](apps/server/README.md). The Docker image has never been built or run by the project, so treat `docker compose` as untested until it has been (see [docs/TODO.md](docs/TODO.md)).
+
+## Report a bug
+
+In the game, open **Settings** (the gear) or look at the bottom of the front door and choose **Send feedback**. It opens a report already filled in with the version, build, ruleset, browser and the title of the screen you were on, plus a box for what happened and what you expected. Copy it and send it to the address the dialog names. **That address is not chosen yet** (GitHub Issues are switched off for this repository, so there is nothing to link to): until it is, the dialog shows a marked blank, and the owner is deciding between GitHub Issues, a Discord and a project email ([docs/TODO.md](docs/TODO.md)). The report holds no name, password or game data. In the solo-only build it leaves out the browser details.
+
+Running a server? Reports about _players_ (abuse, rule-breaking) are a different thing: they go to the town's moderators through the in-game Report button and the admin page ([the server README](apps/server/README.md#player-safety-and-moderation)).
 
 ## Repository layout
 
@@ -73,9 +93,13 @@ Without Docker: `pnpm --filter @fq/client build`, then `FQ_CLIENT_DIR=apps/clien
 | `packages/legacy-compat` | The bridge that lets the original Flash client play the new engine (museum mode).                                                  |
 | `apps/server`            | The game server: Fastify, WebSocket, SQLite, accounts, towns, the day scheduler, the admin API.                                    |
 | `apps/client`            | The web client (React, Vite): front door, the game in three layouts, Solo mode, PWA, Playwright tests.                             |
+| `apps/desktop`           | The desktop app (Tauri 2) around the web client: Linux `.deb` and AppImage in the alpha; Windows and macOS configured, never run.  |
+| `apps/mobile`            | The mobile apps (Capacitor 8): Android APK (solo-only, built, not run on a device); the iOS project cannot be built on Linux.      |
 | `tools/sim`              | The balance simulator: many towns of rival bots, a report, invariant and exploit checks.                                           |
 | `tools/extract`          | Exports the original assets and text from `legacy/` (art as SVG, tables as data).                                                  |
 | `tools/oracle`           | The fidelity oracle: the original C++ compiled for Linux (32-bit) and driven side by side with the port.                           |
+| `tools/soak`             | The soak harness: a tournament played against the real server over HTTP, through midnights, restarts and a backup restore.         |
+| `scripts`                | `version.mjs` (the one place the version is read) and `release/package.mjs` (builds and names the alpha release files).            |
 | `packages/audio`         | The sound: the Synth pack generated from code, the cue map, and the tools for the optional Studio pack.                            |
 | `legacy/`                | The original 2001 server, Flash client and content, untouched. [Its README](legacy/README.md) is the original one.                 |
 | `docs/`                  | The plan, the rules, balance reports and reference notes (below).                                                                  |
@@ -90,18 +114,22 @@ pnpm dev:client                    # web client with hot reload, http://localhos
 pnpm sim --days 30 --towns 20      # balance simulation (tools/sim)
 ```
 
-Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScript, Classic rules ported line by line with source citations, game text as content data, no original sounds in the new tree). Each package and app has its own README. CI (`.github/workflows/ci.yml`) runs lint, typecheck and tests, builds the client, and runs the Playwright suites, keeping traces of any failure.
+Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScript, Classic rules ported line by line with source citations, game text as content data, no original sounds in the new tree). Each package and app has its own README. CI (`.github/workflows/ci.yml`) runs lint and typecheck, the version and workflow-file checks, every package's and tool's tests, the client build with its size budget, the Playwright suites in Chromium, Firefox and WebKit (keeping traces of any failure), and a dependency audit. The tests include the oracle that compares Classic with the original code.
+
+**The version** is the `version` in the root `package.json` (for example `0.1.0-alpha.1`); the web client, the desktop and Android apps and the server tarball all read it, and `node scripts/version.mjs` prints it with the build. **Alpha builds** are made by `.github/workflows/release.yml` (started by hand, or by a tag that matches the version) and can be made locally with `node scripts/release/package.mjs web-online | web-solo | server`; see [docs/release/BUILDING.md](docs/release/BUILDING.md). The workflow publishes nothing to any store, GitHub Pages or Docker registry.
 
 ### Where the plan and the rules are
 
+- [`docs/ALPHA.md`](docs/ALPHA.md): what alpha means here and the checklist that ends it.
 - [`docs/STATUS.md`](docs/STATUS.md): what is finished, what is only tested, what has never been run, and what needs a human.
 - [`docs/REMASTER_PLAN.md`](docs/REMASTER_PLAN.md): what the remaster is, what the review of the original found, the phases and the decisions.
 - [`docs/classic-rules.md`](docs/classic-rules.md): the Classic rules specification, each section marked Reviewed or Ported against the original source, and whether the oracle verified it; section 9 lists the gameplay fixes.
 - [`docs/classic-fidelity.md`](docs/classic-fidelity.md): the oracle's comparison with the original C++, every difference it found and what remains unverified.
 - [`docs/expanded-rules.md`](docs/expanded-rules.md): the Expanded ruleset.
-- [`docs/DECISIONS.md`](docs/DECISIONS.md): questions waiting on the owner, and the answers given.
+- [`docs/DECISIONS.md`](docs/DECISIONS.md): the owner's decisions, with dates; [`docs/TODO.md`](docs/TODO.md): what is waiting on the owner or on something outside the repository.
 - [`docs/balance/`](docs/balance): the simulator's baseline report for Classic.
 - [`docs/security.md`](docs/security.md) and [`docs/performance.md`](docs/performance.md): the server's threat model and the performance budget.
+- [`docs/sysop-guide.md`](docs/sysop-guide.md): running a town.
 - [`docs/release/`](docs/release): store, build and launch checklists.
 - [`docs/reference/`](docs/reference): notes on the original Flash client (its structure, protocol script and sound inventory).
 

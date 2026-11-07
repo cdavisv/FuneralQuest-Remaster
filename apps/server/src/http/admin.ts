@@ -13,6 +13,7 @@ import type { TownRuntime } from "../game/town.js";
 import { TOWN_ID, TownConfigSchema } from "../game/townConfig.js";
 import { currentValues, tunableRules } from "../game/tuning.js";
 import { deleteAccount, historyIn } from "../moderation/account.js";
+import { registerBackupAdmin } from "./adminBackup.js";
 import { registerModerationAdmin } from "./adminModeration.js";
 import type { AppContext } from "./context.js";
 import { HttpError } from "./errors.js";
@@ -675,6 +676,7 @@ export async function registerAdminRoutes(app: FastifyInstance, ctx: AppContext)
       });
 
       registerModerationAdmin(admin, ctx, { audit, moderatorOf, townOf, accountOf, safeName });
+      registerBackupAdmin(admin, ctx, audit);
 
       // --------------------------------------------------------------- audit
 

@@ -1,9 +1,11 @@
 import { PACK_IDS as SOUND_PACK_IDS, type PackId as SoundPackId } from "@fq/audio";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { PACKS } from "../art/packs.js";
 import { useCurrentMusic } from "../audio/AudioContext.js";
 import { useVoicesOn } from "../audio/voiceHook.js";
+import { FeedbackDialog } from "../feedback/FeedbackDialog.js";
+import { VersionText } from "../feedback/VersionLine.js";
 import { useT } from "../i18n/I18nContext.js";
 import type { MessageKey } from "../i18n/messages.js";
 import { SafetySettings } from "../moderation/SafetySettings.js"; // moderation hook
@@ -105,6 +107,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const music = useCurrentMusic();
   const voicesOn = useVoicesOn();
   const art = useArt();
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const opts = <T extends string>(prefix: string, values: T[]) =>
     values.map((value) => ({ value, label: t(`${prefix}.${value}` as MessageKey) }));
   return (
@@ -252,6 +255,19 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           </span>
         ))}
       </p>
+      <h3 className="fq-set-heading">{t("about.version")}</h3>
+      <p className="fq-set-note fq-version-line">
+        <VersionText />{" "}
+        <button
+          type="button"
+          className="fq-linkbtn"
+          data-testid="settings-send-feedback"
+          onClick={() => setFeedbackOpen(true)}
+        >
+          {t("feedback.open")}
+        </button>
+      </p>
+      {feedbackOpen && <FeedbackDialog onClose={() => setFeedbackOpen(false)} />}
       <div className="fq-dialog-actions">
         <button type="button" className="fq-dbtn" onClick={onClose}>
           {t("settings.close")}

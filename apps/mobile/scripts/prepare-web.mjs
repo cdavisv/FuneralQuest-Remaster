@@ -17,14 +17,17 @@
  */
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "../../..");
 const www = join(here, "../www");
-const built = join(root, "apps/client/dist-build");
+// FQ_BUILD_OUT builds (and reads) the client in a directory of its own, as the client's vite config does.
+const built = process.env.FQ_BUILD_OUT
+  ? resolve(process.env.FQ_BUILD_OUT)
+  : join(root, "apps/client/dist-build");
 const soloOnly = process.env.FQ_SOLO_ONLY !== "0";
 
 if (process.env.FQ_SKIP_CLIENT_BUILD !== "1" || !existsSync(join(built, "index.html"))) {

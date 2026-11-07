@@ -178,7 +178,13 @@ describe("the pack manifests", () => {
         expect(Number.isFinite(t.lufs) && Number.isFinite(t.peakDb), id).toBe(true);
         expect(t.peakDb, id).toBeLessThan(-1);
       }
-      expect(total).toBe(m.totalBytes);
+      // A pack that also lists its files by original sound (remaster) counts each file once.
+      const unique = new Map<string, number>();
+      for (const t of [...Object.values(m.tracks), ...Object.values(m.originals ?? {})])
+        for (const f of t.files) unique.set(f.ogg, f.bytes);
+      expect(m.originals ? [...unique.values()].reduce((x, y) => x + y, 0) : total).toBe(
+        m.totalBytes,
+      );
     });
 
     it(`${pack}: loop seams measure clean after the client's repair`, () => {

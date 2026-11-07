@@ -58,6 +58,11 @@ export interface TownDeps {
   idleTimeoutMs: number;
   maxCatchUpDays: number;
   snapshotKeep: number;
+  /**
+   * Soak tests only (`FQ_TEST_MAINTENANCE_DELAY_MS`): real milliseconds to pause inside midnight
+   * maintenance, after the new day is computed and before it is saved.
+   */
+  maintenanceDelayMs?: number;
 }
 
 /** What an operator chooses when creating a town. */
@@ -820,6 +825,15 @@ export class TownRuntime {
       }
     }
     const result = { town: state, effects, daysRun };
+    const pause = this.deps.maintenanceDelayMs ?? 0;
+    if (pause > 0 && daysRun > 0) {
+      // A soak test kills the process when it reads this line; nothing of the new day is saved yet.
+      this.deps.log.info(
+        { townId: this.row.id, day: this.state.day, toDay: state.day, pauseMs: pause },
+        "maintenance paused before saving (FQ_TEST_MAINTENANCE_DELAY_MS)",
+      );
+      await new Promise((resolve) => setTimeout(resolve, pause));
+    }
     if (effects.some((e) => e.kind === "tournamentReset")) {
       this.takeSnapshotInternal("pre-tournament-reset");
     }

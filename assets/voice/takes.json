@@ -36,6 +36,13 @@
       "actual": 312,
       "date": "2026-11-06",
       "lines": 7
+    },
+    {
+      "name": "retake",
+      "estimate": 476.95,
+      "actual": 477,
+      "date": "2026-11-06",
+      "lines": 3
     }
   ],
   "takes": [
@@ -961,6 +968,42 @@
       "prompt": "[calmly] It's more of a donation with a point.",
       "credits": 46,
       "batch": "batch4",
+      "date": "2026-11-06"
+    },
+    {
+      "key": "clerk-d476baa84093a15e",
+      "generationId": "obxApVX81NI89Ai0kw80",
+      "sessionId": "GceqkxfNffYUFuhWqFvz",
+      "nodeId": "UkFtMDt2f8wxLTVKtdD7",
+      "voiceId": "dmWfLQZJq7wNPv9WmtiM",
+      "model": "eleven_v4",
+      "prompt": "[dryly] Watch their mood and their patience. Every pitch uses up a little patience. When it runs out, everything you do annoys them, and if they get angry enough they walk out and a rival gets the body. What a customer says is true. Someone clutching a photo loved the deceased: use Sympathy. Someone watching the clock didn't: Guilt works. Listen costs two patience and teaches you something new.",
+      "credits": 397,
+      "batch": "retake",
+      "date": "2026-11-06"
+    },
+    {
+      "key": "smyth-02a49161f01215d3",
+      "generationId": "8DMtWxSFxQ8vriz9KAVf",
+      "sessionId": "JgDFPgNuOzkAsPPB5PjA",
+      "nodeId": "4M8lIqtgsycoZZ62L4PN",
+      "voiceId": "MDLAMJ0jxkpYkjXbmG4t",
+      "model": "eleven_v4",
+      "prompt": "[warmly] She has money. Be gentle. Lemon bars Sunday.",
+      "credits": 53,
+      "batch": "retake",
+      "date": "2026-11-06"
+    },
+    {
+      "key": "vane-a7b00e28391de382",
+      "generationId": "7wiMbj2XeLfgoyJ5nP7C",
+      "sessionId": "8LUYqIUjrEsGx8vL4quI",
+      "nodeId": "BRkW8u8yeoGKGwPiNifw",
+      "voiceId": "M5E055lOUxMi0kJpGyE9",
+      "model": "eleven_v4",
+      "prompt": "[calmly] Except that clerk.",
+      "credits": 27,
+      "batch": "retake",
       "date": "2026-11-06"
     }
   ]

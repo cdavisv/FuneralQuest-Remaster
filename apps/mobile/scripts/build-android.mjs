@@ -2,7 +2,8 @@
 /**
  * Builds the Android app: web bundle, `cap sync android`, then Gradle.
  *   node scripts/build-android.mjs debug      -> android/app/build/outputs/apk/debug/app-debug.apk
- *   node scripts/build-android.mjs release    -> an unsigned release APK and an AAB (sign them with your own key)
+ *   node scripts/build-android.mjs release    -> an unsigned release APK and an AAB (sign them with your own key;
+ *                                                FQ_ANDROID_NO_AAB=1 builds the APK only)
  * Needs JDK 21 (Capacitor 8) and the Android SDK (platform 36, build-tools 36). It looks at
  * JAVA_HOME and ANDROID_HOME, then at ~/jdks/jdk-21* and ~/Android/Sdk.
  */
@@ -11,6 +12,7 @@ import { existsSync, readdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readVersion } from "../../../scripts/version.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const app = join(here, "..");
@@ -49,5 +51,16 @@ const run = (cmd, args, cwd = app) => {
 run("node", ["scripts/prepare-web.mjs"]);
 run("pnpm", ["exec", "cap", "sync", "android"]);
 const gradlew = process.platform === "win32" ? "gradlew.bat" : "./gradlew";
-const tasks = kind === "release" ? ["assembleRelease", "bundleRelease"] : ["assembleDebug"];
-run(gradlew, [...tasks, "--no-daemon"], join(app, "android"));
+// The version comes from the root package.json (scripts/version.mjs): versionName is the full
+// semver and the build hash, versionCode grows with the version.
+const v = readVersion();
+const versionArgs = [`-PfqVersionName=${v.version}+${v.build}`, `-PfqVersionCode=${v.code}`];
+console.log(`android: version ${v.version} (build ${v.build}), versionCode ${v.code}`);
+// FQ_ANDROID_NO_AAB=1 skips the app bundle (the alpha release needs only the APKs).
+const tasks =
+  kind === "release"
+    ? process.env.FQ_ANDROID_NO_AAB === "1"
+      ? ["assembleRelease"]
+      : ["assembleRelease", "bundleRelease"]
+    : ["assembleDebug"];
+run(gradlew, [...tasks, ...versionArgs, "--no-daemon"], join(app, "android"));

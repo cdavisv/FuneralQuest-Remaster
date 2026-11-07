@@ -702,6 +702,22 @@ export const en = {
   "x.club.result.push": "Part of the stake back",
   "x.club.result.even": "Stake back",
   "x.club.result.detail": "Staked {stake}, handed back {payout}",
+  "feedback.open": "Send feedback",
+  "feedback.title": "Send feedback",
+  "feedback.intro":
+    "Found a bug, or something that felt wrong? Say what happened below, copy the report, and send it to the address at the bottom.",
+  "feedback.note": "What happened (and what you expected)",
+  "feedback.report": "The report that will be copied",
+  "feedback.private":
+    "Nothing is sent from here. The report holds the version, your ruleset, this screen's title and basic browser details, and no name, password or game data.",
+  "feedback.private.solo":
+    "Nothing is sent from here. The report holds the version, your ruleset and this screen's title, and no browser details, name or game data.",
+  "feedback.destination": "Send it to:",
+  "feedback.copy": "Copy report",
+  "feedback.copied": "Copied. Paste it where you are sending feedback.",
+  "feedback.copyFailed": "Could not copy. Select the report text and copy it by hand.",
+  "feedback.close": "Close",
+  "about.version": "Version",
 } as const;
 
 export type MessageKey = keyof typeof en;

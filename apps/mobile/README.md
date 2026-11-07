@@ -19,6 +19,8 @@ pnpm --filter @fq/mobile icons            # redraw icons and splash screens (nee
 | `scripts/make-icons.mjs`    | Adaptive and legacy launcher icons, notification icon, splash images, iOS icon and splash                                                                                                          |
 | `android/`, `ios/`          | The native projects, committed. Generated files inside them are git-ignored                                                                                                                        |
 
+Version: Android's `versionName` is the root `package.json` version plus the build (`0.1.0-alpha.1+abc1234`) and `versionCode` grows with it (`scripts/version.mjs`); `build-android.mjs` passes both to Gradle (`-PfqVersionName`, `-PfqVersionCode`). `FQ_ANDROID_NO_AAB=1` builds the APK without the app bundle, as the alpha release does; `FQ_BUILD_OUT=<dir>` builds the client in a directory of its own.
+
 Environment: `FQ_SOLO_ONLY=0` (build the online-capable client; default is solo-only), `FQ_DEFAULT_SERVER` (default server address, online builds only), `FQ_SKIP_CLIENT_BUILD=1` (reuse `apps/client/dist-build`, which must have been built the same way: `build-info.json` is checked).
 
 Plugins: `@capacitor/app` (back button, deep links, lifecycle), `browser`, `filesystem` and `share` (save files), `keyboard`, `local-notifications`, `splash-screen`; the status and gesture bars are Capacitor core's `SystemBars`. No push, no analytics, no Firebase.

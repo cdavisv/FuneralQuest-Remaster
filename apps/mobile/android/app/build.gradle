@@ -7,8 +7,10 @@ android {
         applicationId "org.funeralquest.remaster"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // From the root package.json, passed by scripts/build-android.mjs (-PfqVersionName,
+        // -PfqVersionCode); the fallback is only for a build started by hand in Android Studio.
+        versionCode = (project.findProperty("fqVersionCode") ?: "1").toInteger()
+        versionName = (project.findProperty("fqVersionName") ?: "0.0.0-dev").toString()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
