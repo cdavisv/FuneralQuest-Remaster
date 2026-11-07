@@ -4,6 +4,11 @@ What changed, in plain language, for players and for people who run a town. The 
 
 The version number lives in one place, the root `package.json`, and every app reads it. Versions look like `0.1.0-alpha.1`; the game shows it as "Alpha 0.1.0 (build abc1234)", where the build is the commit it was made from.
 
+## Unreleased
+
+- **Every sound pack and the character voices ship in every build.** The owner confirmed the ElevenLabs terms (decision 24), so the Studio and "Original, remastered" packs and the voices are now in the web build on GitHub Pages, the release zips, the desktop and Android apps and the Docker image. Until now the Pages site and the release zips carried the Synth pack only, and the voices were opt-in.
+- The project is called **FuneralQuest Remastered** (decision 21); feedback goes to GitHub Issues (decision 22); the Docker image was built and run (ALPHA.md A10); the solo-only game is live at https://cdavisv.github.io/FuneralQuest-Remaster/.
+
 ## 0.1.0-alpha.1 (2026-11-07)
 
 The first alpha, on top of pull requests 1 to 3 below. What alpha means here, and what is still open (a playtest by real people, the Docker image), is in [docs/ALPHA.md](docs/ALPHA.md).

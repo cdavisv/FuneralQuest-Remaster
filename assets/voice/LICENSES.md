@@ -1,6 +1,6 @@
 # Character voice ledger
 
-What every file in this directory is, and what is not settled about it.
+What every file in this directory is, and on what terms it is distributed.
 
 - **Origin.** Each clip was generated with ElevenLabs text to speech (model `eleven_v4`) under
   the project owner's ElevenLabs account, from the game's own text: the exact words of one line
@@ -15,12 +15,9 @@ What every file in this directory is, and what is not settled about it.
 - **Checked against the script.** Every clip was transcribed back to text with a local
   speech-to-text model and its words compared with the line; a take whose words differ in any
   way was rejected. The transcripts are in `sources.json`.
-- **Licence: not established here.** These files are not covered by the project's licence. Their
-  redistribution terms are those of ElevenLabs' terms of service for the plan the owner's account
-  is on at the time of generation, and of the library voices used. The owner must confirm those
-  terms allow shipping them (in the web build, the desktop and mobile apps, and any store build)
-  before the voice pack ships in a store build. Until then the web build bundles it only when asked
-  to (`FQ_AUDIO_PACKS` naming `voice`).
+- **Licence.** These files are not covered by the project's licence: their redistribution terms are
+  those of ElevenLabs' terms of service for the plan the owner's account was on when they were
+  generated, and of the library voices used. The owner confirmed on 2026-11-07 that the ElevenLabs plan's terms allow distributing these files in the public repository, in the web, desktop and mobile builds and in store builds (docs/DECISIONS.md, decision 24). The voices ship in every build.
 - **Cost.** 7382 credits in all (every take, kept or not; the ledger is in `sources.json`).
 
 | File | Speaker | Model | Voice id | Generation id | Generated on |

@@ -26,6 +26,7 @@ Gzip level 9, the size a server sends; sourcemaps never counted.
 | sound, Synth pack (Opus and AAC) | 142 | 14.1 MB | 14.0 MB | on demand; filled in the background for offline play |
 | sound, Studio pack | 142 | 12.2 MB | 12.2 MB | on demand; kept on first play, not in the offline install |
 | sound, Original remastered pack | 73 | 1.2 MB | 1.2 MB | on demand; filled in the background for offline play |
+| sound, character voices (Opus and AAC) | 148 | 4.1 MB | 3.8 MB | on demand, one clip as its line is shown; kept once played, not in the offline install (bundled since 2026-11-07, decision 24) |
 | **everything but sound** | 217 | 10.1 MB | 3.0 MB | |
 
 What a first visit to the front door costs: `index.html`, `app.js`, `app.css` and the fonts and pictures of that one screen, **227 to 302 KB over the wire** (about 1 MB once decoded).

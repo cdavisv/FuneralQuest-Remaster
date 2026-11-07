@@ -5,7 +5,7 @@ The game has three sets of audio files with the same track ids.
 | Pack | Where | Made by | Licence |
 |---|---|---|---|
 | **Synth** | `assets/audio/` | `packages/audio`'s own synthesiser, sequencer and effect generators (`pnpm --filter @fq/audio run render`) | the project's licence |
-| **Studio** | `assets/audio-studio/` | ElevenLabs generations from text prompts written for this project, post-processed by `packages/audio` (`pnpm --filter @fq/audio run studio`) | not settled: see `assets/audio-studio/LICENSES.md` |
+| **Studio** | `assets/audio-studio/` | ElevenLabs generations from text prompts written for this project, post-processed by `packages/audio` (`pnpm --filter @fq/audio run studio`) | ElevenLabs' terms for the owner's plan, confirmed to allow distribution (decision 24): see `assets/audio-studio/LICENSES.md` |
 
 The player picks one in Settings, "Sound pack": **Automatic (recommended)**, the default, or Synth, Studio or Original, remastered, which override Automatic everywhere (owner's decision 15a, 2026-11-06). A saved explicit choice is kept; a player with none gets Automatic.
 
@@ -94,7 +94,7 @@ Some of the town's characters speak their lines aloud (owner's decision 15b). Ev
 | `takes.json` | every generation: line key, generation id, session, flow node, voice, model, the exact prompt, credits, batch |
 | `sources.json` | the build's record of every take: transcript, word check, measurements, verdict; the batches and credits; lines generated but not yet downloaded |
 | `manifest.json` | what the client reads: per clip the key, speaker, exact text, part, rulesets, files, duration |
-| `LICENSES.md` | the ledger: origin, what is not settled about the licence, cost |
+| `LICENSES.md` | the ledger: origin, the licence terms, cost |
 | `<character>/<key>.ogg`, `.m4a` | the clips: Ogg Opus 32 kbit/s mono and AAC 40 kbit/s mono (the bitrates the sound packs use for mono one-shots), normalised to -16 LUFS integrated, sample peaks limited at -1.5 dBFS, encoded true peak under -1 dBTP |
 
 **Which lines.** A line is a quotation attributed to a known character, by a white speaker tag (`` `wElijah: `$"..." ``) or, untagged, by narration in the same paragraph that names exactly one character ("...," Mr Yang tells you). `spokenLines` in `packages/audio/src/voice.ts` finds them; the build and the client use the same function. A line with a placeholder (the player's name, a price) is voiced only when the placeholder sits in its first or last sentence and the rest is fixed text; the clip then speaks the fixed sentences ("Hi {player}. I don't recall you having a pick-up today." speaks the second sentence). Newspaper quotes, the Expanded starter content (shown only when a pack has no Expanded section) and the county clerk's line are listed but not voiced. Customers are not voiced. Original 2001 lines are spoken word for word as written.
@@ -105,6 +105,6 @@ Some of the town's characters speak their lines aloud (owner's decision 15b). Ev
 
 **In the game.** Settings, Sound: "Character voices" (on or off) and "Voices volume". The default is on in Expanded towns and Solo careers and off in Classic towns, since the original game had no recorded voices; museum mode is the original client and never plays them. The voice plays once as the text appears, on its own bus through the master (so mute and the 2001 radio filter apply), ducking the music by about 6 dB; moving to another screen cuts it off with a 40 ms fade; the same screen updated (a chat line, a re-render) does not replay it; one voice at a time, a screen's lines in order. `window.__fqVoice.debug()` reports what is playing, what was cut, the voice bus level and the duck. Code: `apps/client/src/audio/voiceLines.ts`, `voicePlayer.ts`, `voiceHook.ts`.
 
-**Delivery.** `vite dev` serves `assets/voice` at `/voice`. `vite build` copies it to `<outDir>/voice` only with `FQ_AUDIO_PACKS` naming `voice` (or `VITE_VOICE_BASE` hosts it), because its licence is not settled; `lines.json`, `cast.json`, `takes.json` and `sources.json` are not copied. Voice files are not in the service worker's install list or its background fill; the worker keeps each clip once it has been played, so only a player with voices on downloads any.
+**Delivery.** `vite dev` serves `assets/voice` at `/voice`. `vite build` copies it to `<outDir>/voice` by default (the terms were confirmed on 2026-11-07, decision 24; `FQ_AUDIO_PACKS` without `voice` leaves it out, or `VITE_VOICE_BASE` hosts it elsewhere); `lines.json`, `cast.json`, `takes.json` and `sources.json` are not copied. Voice files are not in the service worker's install list or its background fill; the worker keeps each clip once it has been played, so only a player with voices on downloads any.
 
 **Regenerating.** The source MP3s are kept outside the repository in `~/.cache/fq-voice/source/<key>__<generationId>.mp3`; each can be fetched again from the owner's ElevenLabs account by its generation id (flow "Funeral Quest character voices", id in `takes.json`). Add the take to `takes.json`, put the MP3 in the cache, run `pnpm --filter @fq/audio run voice`, then `pnpm --filter @fq/audio run listen-page`.

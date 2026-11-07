@@ -65,7 +65,7 @@ mkdirSync(out, { recursive: true });
 function buildClient(name, soloOnly) {
   const dir = join(work, name);
   rmSync(dir, { recursive: true, force: true });
-  const env = { ...process.env, FQ_BUILD_OUT: dir, FQ_AUDIO_PACKS: "synth" };
+  const env = { ...process.env, FQ_BUILD_OUT: dir, FQ_AUDIO_PACKS: "synth,studio,remaster,voice" };
   // Nothing hosted elsewhere, no baked-in server: the bundle is the whole site.
   for (const k of [
     "VITE_SERVER_URL",

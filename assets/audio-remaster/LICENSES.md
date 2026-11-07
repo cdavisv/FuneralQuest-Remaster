@@ -1,10 +1,10 @@
 # "Original, remastered" audio ledger
 
-What every file in this directory is, and what is not settled about it.
+What every file in this directory is, and on what terms it is distributed.
 
 - **What they are.** New audio made to resemble the original 2001 game's sounds, one remake per original sound. They are not the 2001 recordings. Each file was generated with ElevenLabs (`eleven_music_v2_5` for music, `eleven_text_to_sound_v2` for ambience and effects) under the project owner's ElevenLabs account, from the text prompt recorded for it in `sources.json` (with the model, its parameters, the generation id, the date and the credits charged), and then post-processed by `packages/audio` (`pnpm --filter @fq/audio run remaster`): loops cut to the original's length (three music loops also transposed to the original's key, where the model ignored the key asked for), one-shots trimmed, mastered and encoded as the other packs are.
 - **No original audio was used.** The 2001 sounds were analysed only on the owner's machine (`packages/audio/scripts/remasterDescribe.py`; numbers and words in `brief.json`). No original audio, and nothing derived from its samples other than those numbers and words, was uploaded to any service or given to a generator as input. The prompts describe the kind of sound, instruments, tempo, key, mood and length, never the original's notes.
-- **Licence: not established here.** These files are not covered by the project's licence. Their redistribution terms are those of ElevenLabs' terms of service for the plan the owner's account is on at the time of generation, for the owner to confirm before the pack is made the default or shipped in any build. The Synth pack remains fully generated from this repository's own code.
+- **Licence.** These files are not covered by the project's licence: their redistribution terms are those of ElevenLabs' terms of service for the plan the owner's account was on when they were generated. The owner confirmed on 2026-11-07 that the ElevenLabs plan's terms allow distributing these files in the public repository, in the web, desktop and mobile builds and in store builds (docs/DECISIONS.md, decision 24). They ship in every build. The Synth pack remains fully generated from this repository's own code.
 - **Cost.** 3692 credits in all, against a cap of 20,000:
 
 | Batch | What | Estimated | Charged |
