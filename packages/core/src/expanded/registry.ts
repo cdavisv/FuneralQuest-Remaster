@@ -1,7 +1,7 @@
 import { CLASSIC_PLACES, createClassicRegistry } from "../classic/modules/index.js";
 import type { ContentPack } from "../content/types.js";
 import type { Registry } from "../engine/registry.js";
-import type { EngineContext } from "../engine/turn.js";
+import type { EngineContext, Turn } from "../engine/turn.js";
 import type { ClassicRules } from "../rules/classicRules.js";
 import { EXPANDED_RULES } from "../rules/expandedRules.js";
 import { EXPANDED_STARTER } from "./content/starter.js";
@@ -20,7 +20,7 @@ import { tutorialModule } from "./modules/tutorial.js";
 import { expandedNegotiationModule } from "./negotiation.js";
 import { decorateExpandedView } from "./panels.js";
 import { refreshRating } from "./parlor.js";
-import { ensureExpanded } from "./players.js";
+import { ensureExpanded, moneyMod } from "./players.js";
 import { expandedScriptEvent } from "./scripts.js";
 import { registerTown, TOWN_PLACES } from "./town/index.js";
 
@@ -54,6 +54,7 @@ export function createExpandedRegistry(): Registry {
     .registerScript(expandedScriptEvent)
     .onPlayerCreated((turn) => {
       ensureExpanded(turn.player, turn.rules);
+      lateStartMoney(turn);
       refreshRating(turn.rules, turn.player);
     })
     .onMaintenance((turn) => pruneModifiers(turn.town));
@@ -62,6 +63,19 @@ export function createExpandedRegistry(): Registry {
   registry.onView(decorateExpandedView);
   for (const place of EXPANDED_PLACES) registry.addPlace({ ...place });
   return registry;
+}
+
+/**
+ * Section 9.4: a parlor that opens after day 1 of a season starts with
+ * `underdog.late.money` dollars more per season day already played (the
+ * others bought their upgrades in that time).
+ */
+function lateStartMoney(turn: Turn): void {
+  const town = turn.town;
+  const per = turn.rules.expanded?.underdog.late.money ?? 0;
+  if (!town.settings.tournamentActive || town.day <= 1 || per <= 0) return;
+  const days = Math.min(town.day, town.settings.tournamentDays) - 1;
+  moneyMod(turn.player, per * days);
 }
 
 /** A pack with the Expanded starter content filled in when it has none. */

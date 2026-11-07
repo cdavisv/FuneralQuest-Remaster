@@ -42,7 +42,7 @@ export const GATE_POINTS: { lead: string; text: string }[] = [
   },
   {
     lead: "We are watching the door.",
-    text: "Report anything nasty and block whoever sent it. Moderators read the reports and can mute, rename or ban players.",
+    text: "These rules are about the people you play with, not the game: its own text and pictures are the 2001 originals, as they were. Report a player who breaks the rules and block whoever sent it. Moderators read the reports and can mute, rename or ban players.",
   },
   {
     lead: "Age.",

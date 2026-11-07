@@ -839,6 +839,7 @@ export const TOWN_STARTER: ExpandedTownContent = {
       badName: "`$The clerk won't register that name. Try another.",
       duesUnpaid: "`4You couldn't pay the ${dues} chain dues, so the chain dropped you.`$",
       noFriendlyFire: "`${name} is in your chain. You can't do that to family.",
+      removedName: "Parlor Chain No. {n}",
     },
 
     hospital: {

@@ -4,7 +4,7 @@ Funeral Quest is a daily-turn game about rival funeral parlors, in the style of 
 
 This repository is a free, open-source **remaster**: the 2001 game (Robinson Technologies, by Seth A. Robinson) rebuilt in TypeScript so it runs in any modern browser, on one rules engine with two rulesets:
 
-- **Classic**: the 2001 game reproduced faithfully (rules, text, art, screen layout). Complete.
+- **Classic**: the 2001 game reproduced faithfully (rules, text, art, screen layout), with the original 2001 text and art untouched. Complete, and checked against the original itself: `tools/oracle` compiles the original C++ server for Linux and plays it side by side with the port (213,350 steps with identical random draws, player records and words; [what is and is not verified](docs/classic-fidelity.md)). The few gameplay bug and exploit fixes are flags a town can turn off.
 - **Expanded**: the same game grown up, with the features the original cut. In development; the engine work is under way in `packages/core`.
 
 The original 2001 server, Flash client and content are kept untouched in [`legacy/`](legacy/README.md) as the reference for every rule.
@@ -27,7 +27,7 @@ Choose **Play online**, then **New user** (or **Play as guest**), pick a name fo
 
 ### Solo (offline, against computer rivals)
 
-Choose **Play solo**. You make a career (your name, your parlor, how many rivals from none to seven, how good they are, a 30-day career or endless, Classic or Vintage wording) and play it entirely on your own device: the rivals' days run in a Web Worker, careers are saved in your browser after every move (you can keep several, export one to a file, and import it on another device), and nothing needs a server. **End the Day** on the desk lets the rivals take their turns and starts the next morning's paper.
+Choose **Play solo**. You make a career (your name, your parlor, how many rivals from none to seven, how good they are, a 30-day career or endless) and play it entirely on your own device: the rivals' days run in a Web Worker, careers are saved in your browser after every move (you can keep several, export one to a file, and import it on another device), and nothing needs a server. **End the Day** on the desk lets the rivals take their turns and starts the next morning's paper.
 
 Solo needs no game server at all. It works from the installed app with no connection (the page keeps itself for offline use after its first visit) and from any static file host:
 
@@ -49,7 +49,7 @@ The front door links to it when the server has it switched on. On a server of yo
 
 ## Host a town
 
-A server hosts any number of towns (Classic rules, with Classic or Vintage wording), with accounts, a day scheduler, an admin API and SQLite storage. The quick way is Docker, which builds the web client and serves the whole game on one port:
+A server hosts any number of towns (Classic or Expanded rules; the original 2001 text in both), with accounts, a day scheduler, an admin API and SQLite storage. The quick way is Docker, which builds the web client and serves the whole game on one port:
 
 ```sh
 cp apps/server/.env.example apps/server/.env     # set FQ_ADMIN_TOKEN (openssl rand -hex 32)
@@ -61,26 +61,28 @@ Without Docker: `pnpm --filter @fq/client build`, then `FQ_CLIENT_DIR=apps/clien
 
 ## Repository layout
 
-| Path                     | What is there                                                                                                          |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `packages/protocol`      | The `View` and `Action` types shared by the engine, server and clients. Text is rich-text spans, never HTML.           |
-| `packages/core`          | The rules engine: pure, deterministic, no I/O. Classic ported line by line from `legacy/source`; Expanded in progress. |
-| `packages/content`       | Content packs (`classicPack`, `vintagePack`) converted from `legacy/dist/*.txt`, with the importer and schema.         |
-| `packages/bots`          | AI rival parlors that play from the same Views a person sees.                                                          |
-| `packages/solo`          | Offline Solo mode: a whole town in a Web Worker, save slots, save files.                                               |
-| `packages/legacy-compat` | The bridge that lets the original Flash client play the new engine (museum mode).                                      |
-| `apps/server`            | The game server: Fastify, WebSocket, SQLite, accounts, towns, the day scheduler, the admin API.                        |
-| `apps/client`            | The web client (React, Vite): front door, the game in three layouts, Solo mode, PWA, Playwright tests.                 |
-| `tools/sim`              | The balance simulator: many towns of rival bots, a report, invariant and exploit checks.                               |
-| `tools/extract`          | Exports the original assets and text from `legacy/` (art as SVG, tables as data).                                      |
-| `legacy/`                | The original 2001 server, Flash client and content, untouched. [Its README](legacy/README.md) is the original one.     |
-| `docs/`                  | The plan, the rules, balance reports and reference notes (below).                                                      |
+| Path                     | What is there                                                                                                                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/protocol`      | The `View` and `Action` types shared by the engine, server and clients. Text is rich-text spans, never HTML.                       |
+| `packages/core`          | The rules engine: pure, deterministic, no I/O. Classic ported line by line from `legacy/source`; Expanded in progress.             |
+| `packages/content`       | Content packs (`classicPack`, the original text; `expandedPack`) converted from `legacy/dist/*.txt`, with the importer and schema. |
+| `packages/bots`          | AI rival parlors that play from the same Views a person sees.                                                                      |
+| `packages/solo`          | Offline Solo mode: a whole town in a Web Worker, save slots, save files.                                                           |
+| `packages/legacy-compat` | The bridge that lets the original Flash client play the new engine (museum mode).                                                  |
+| `apps/server`            | The game server: Fastify, WebSocket, SQLite, accounts, towns, the day scheduler, the admin API.                                    |
+| `apps/client`            | The web client (React, Vite): front door, the game in three layouts, Solo mode, PWA, Playwright tests.                             |
+| `tools/sim`              | The balance simulator: many towns of rival bots, a report, invariant and exploit checks.                                           |
+| `tools/extract`          | Exports the original assets and text from `legacy/` (art as SVG, tables as data).                                                  |
+| `tools/oracle`           | The fidelity oracle: the original C++ compiled for Linux (32-bit) and driven side by side with the port.                           |
+| `packages/audio`         | The sound: the Synth pack generated from code, the cue map, and the tools for the optional Studio pack.                            |
+| `legacy/`                | The original 2001 server, Flash client and content, untouched. [Its README](legacy/README.md) is the original one.                 |
+| `docs/`                  | The plan, the rules, balance reports and reference notes (below).                                                                  |
 
 ## Working on it
 
 ```sh
 pnpm check                         # lint, typecheck and tests for every package
-pnpm e2e                           # builds the client and runs the Playwright suites (online and solo) in Chromium
+pnpm e2e                           # builds the client and runs the Playwright suites (online, solo, museum, Expanded) in Chromium, Firefox and WebKit
 pnpm dev:server                    # game server with auto-restart, http://127.0.0.1:8080
 pnpm dev:client                    # web client with hot reload, http://localhost:5173 (talks to the dev server)
 pnpm sim --days 30 --towns 20      # balance simulation (tools/sim)
@@ -90,9 +92,15 @@ Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScrip
 
 ### Where the plan and the rules are
 
+- [`docs/STATUS.md`](docs/STATUS.md): what is finished, what is only tested, what has never been run, and what needs a human.
 - [`docs/REMASTER_PLAN.md`](docs/REMASTER_PLAN.md): what the remaster is, what the review of the original found, the phases and the decisions.
-- [`docs/classic-rules.md`](docs/classic-rules.md): the Classic rules specification, each section marked Reviewed or Ported against the original source.
+- [`docs/classic-rules.md`](docs/classic-rules.md): the Classic rules specification, each section marked Reviewed or Ported against the original source, and whether the oracle verified it; section 9 lists the gameplay fixes.
+- [`docs/classic-fidelity.md`](docs/classic-fidelity.md): the oracle's comparison with the original C++, every difference it found and what remains unverified.
+- [`docs/expanded-rules.md`](docs/expanded-rules.md): the Expanded ruleset.
+- [`docs/DECISIONS.md`](docs/DECISIONS.md): questions waiting on the owner, and the answers given.
 - [`docs/balance/`](docs/balance): the simulator's baseline report for Classic.
+- [`docs/security.md`](docs/security.md) and [`docs/performance.md`](docs/performance.md): the server's threat model and the performance budget.
+- [`docs/release/`](docs/release): store, build and launch checklists.
 - [`docs/reference/`](docs/reference): notes on the original Flash client (its structure, protocol script and sound inventory).
 
 ## Licence
@@ -100,6 +108,7 @@ Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScrip
 - The source code uses the [Proton SDK license](license.txt) (BSD-style), which permits reuse and porting subject to its attribution and other terms.
 - Akiko Robinson's artwork, including the Flash vector art that the Classic art pack is exported from, is also released under the Proton SDK license. Please credit her when using it.
 - **The sounds and music in the Flash files are licensed only for Funeral Quest and are not covered by that license.** The remaster does not reuse them: nothing from `legacy/` is copied into the new code or any build, and the only way they reach a player is museum mode, which serves the original client from `legacy/` as it is, only when you switch it on.
+- The remaster's own sound comes in two packs, chosen in Settings: **Synth** (the default), generated by this repository's code and under its licence, and **Studio** (`assets/audio-studio/`), generated with ElevenLabs, whose redistribution terms the owner has yet to confirm ([its ledger](assets/audio-studio/LICENSES.md)); a build includes Studio only when asked to.
 
 This product includes software written by Seth A. Robinson ( www.rtsoft.com ).
 

@@ -56,8 +56,15 @@ export const en = {
   "settings.volume.ambience": "Ambience volume",
   "settings.audio.mute": "Mute all sound",
   "settings.audio.radio": "2001 radio (the old 11 kHz mono sound)",
-  "settings.audio.note":
-    "Every note and noise is synthesised from the game's own source code. Sound starts after your first click.",
+  "settings.audio.pack": "Sound pack",
+  "settings.audio.pack.synth": "Synth",
+  "settings.audio.pack.studio": "Studio",
+  "settings.audio.pack.note":
+    "Synth is made by the game's own code. Studio is recorded-style audio generated with ElevenLabs; anything it lacks plays from Synth.",
+  "settings.audio.note.synth":
+    "You are hearing the Synth pack: every note and noise is synthesised from the game's own source code. Sound starts after your first click.",
+  "settings.audio.note.studio":
+    "You are hearing the Studio pack: music and effects generated with ElevenLabs from text prompts written for this game, with Synth filling any gap (and playing everything if this build ships without Studio). Sound starts after your first click.",
   "settings.audio.nowPlaying": "Now playing: {id}",
   "settings.audio.none": "No music playing",
   "audio.on": "Sound on",
@@ -289,7 +296,7 @@ export const en = {
   "solo.menu.progress": "Day {day} of {total}",
   "solo.menu.progressEndless": "Day {day}, endless",
   "solo.menu.detail":
-    "{bp} Bury Points, {rivals, plural, =0 {no rivals} one {1 rival} other {# rivals}}, {text} wording",
+    "{bp} Bury Points, {rivals, plural, =0 {no rivals} one {1 rival} other {# rivals}}, Classic rules",
   "solo.menu.progressDaily": "Daily practice",
   "solo.menu.detailExpanded":
     "{bp} Bury Points, {rivals, plural, =0 {no rivals} one {1 rival} other {# rivals}}, Expanded rules",
@@ -321,11 +328,6 @@ export const en = {
   "solo.setup.tour.yes": "Show me",
   "solo.setup.tour.no": "Skip it",
   "solo.setup.tour.hint": "A short tour by the Guild clerk and a practice customer.",
-  "solo.setup.text": "Which wording?",
-  "solo.setup.text.classic": "Classic",
-  "solo.setup.text.vintage": "Vintage",
-  "solo.setup.text.hint":
-    "Classic is the 2001 text with typos mended; Vintage is exactly as written.",
   "solo.setup.start": "open the parlor",
   "solo.setup.back": "return to saves",
   "solo.setup.failed": "The career could not be started: {reason}",
@@ -372,6 +374,8 @@ export const en = {
   "x.ledger.close": "Fold the books",
   "x.ledger.delta.up": "{amount} more",
   "x.ledger.delta.down": "{amount} less",
+  "x.ledger.warning.hit-rumour":
+    "Word is a hit man has been hired against you. He comes at midnight unless you are covered: a bodyguard or Tiny for the night, body armour, police protection or the Peace Pledge.",
   "x.karma.axis": "Karma axis, from evil to angelic",
   "x.karma.evil": "Evil",
   "x.karma.angelic": "Angelic",
@@ -667,6 +671,8 @@ export const en = {
   "x.monument.title": "Monuments",
   "x.monument.tiers": "The five monuments, cheapest first",
   "x.monument.tier": "Tier {n}",
+  "x.monument.built": "Built",
+  "x.monument.unbuilt": "{price}",
   "x.monument.next": "Next up:",
   "x.monument.allBuilt": "Every monument is built.",
 

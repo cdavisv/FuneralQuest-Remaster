@@ -59,7 +59,7 @@ function Chips<T extends string | number>({
 
 /**
  * The new-career form, in the style of the new-user screens: your name, your parlor, your sex
- * (the two skulls), then how many rivals and how good, how long and which wording.
+ * (the two skulls), then how many rivals and how good and how long.
  */
 export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
   const t = useT();
@@ -73,7 +73,6 @@ export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [ruleset, setRuleset] = useState<"classic" | "expanded">("classic");
   const [mode, setMode] = useState<"career" | "endless" | "daily">("career");
-  const [wording, setWording] = useState<"classic" | "vintage">("classic");
   const [tour, setTour] = useState<"yes" | "no">("yes");
   const expanded = ruleset === "expanded";
   // The Daily Challenge practice is one seeded day with no rivals, Expanded only.
@@ -91,7 +90,7 @@ export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
     const seed = newSeed();
     const config: SoloConfig = {
       seed,
-      contentPack: expanded ? "expanded" : wording,
+      contentPack: expanded ? "expanded" : "classic",
       ruleset,
       mode: expanded ? mode : mode === "daily" ? "career" : mode,
       ...(mode === "career" || (!expanded && mode === "daily") ? { careerDays: 30 } : {}),
@@ -256,19 +255,6 @@ export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
                 { value: "no", label: t("solo.setup.tour.no") },
               ]}
               onChange={setTour}
-            />
-          )}
-          {!expanded && (
-            <Chips
-              legend={t("solo.setup.text")}
-              hint={t("solo.setup.text.hint")}
-              name="wording"
-              value={wording}
-              options={[
-                { value: "classic", label: t("solo.setup.text.classic") },
-                { value: "vintage", label: t("solo.setup.text.vintage") },
-              ]}
-              onChange={setWording}
             />
           )}
         </div>

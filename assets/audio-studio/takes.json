@@ -1,0 +1,1356 @@
+{
+  "flowId": "BRa2W68HRylxzpTwk9h1",
+  "ledger": [
+    {
+      "batch": "pilot",
+      "description": "growl, siren, amb-night x2 takes; newday x1",
+      "estimated": 710.6,
+      "actual": 256.0
+    },
+    {
+      "batch": "pilot2",
+      "description": "bank loop 46s + newday retake 10s",
+      "estimated": 1540.0,
+      "actual": 840.0
+    },
+    {
+      "batch": "ambience",
+      "description": "12 ambience loops x2",
+      "estimated": 3828.0,
+      "actual": 1160.0
+    },
+    {
+      "batch": "effects1",
+      "description": "20 effects x2",
+      "estimated": 752.4,
+      "actual": 242.0
+    },
+    {
+      "batch": "effects2",
+      "description": "11 effects x2 (first call refused 429, nothing generated; rerun)",
+      "estimated": 547.8,
+      "actual": 168.0
+    },
+    {
+      "batch": "musicA",
+      "description": "main town desk ceremony cafe yangs dimart x1",
+      "estimated": 13750.0,
+      "actual": 7500.0
+    },
+    {
+      "batch": "musicB",
+      "description": "university hospital sneak battle graveyard cityhall club meteor x1",
+      "estimated": 12595.0,
+      "actual": 6870.0
+    },
+    {
+      "batch": "clock2",
+      "description": "amb-clock retake x2 (new prompt)",
+      "estimated": 264.0,
+      "actual": 80.0
+    },
+    {
+      "batch": "musicC",
+      "description": "negotiation x3, main-stinger, victory, defeat, endday x1",
+      "estimated": 4922.5,
+      "actual": 2685.0
+    }
+  ],
+  "tracks": {
+    "alarm-bell": {
+      "takes": [
+        {
+          "generationId": "aReuhLXMGJqRQTg5JElY",
+          "sessionId": "T6MeX2HHLwh4NlZk0Zg7",
+          "nodeId": "9PytvLpVIYRy228KI2Ul",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "iK3Jz0a5kPud6QFktoDW",
+          "sessionId": "WiYQqJXWJnQYvAfYoHFP",
+          "nodeId": "9PytvLpVIYRy228KI2Ul",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "aReuhLXMGJqRQTg5JElY",
+      "reason": "Rings and then stops before the end, as asked; the other take rings to the end."
+    },
+    "amb-birds": {
+      "takes": [
+        {
+          "generationId": "spUC2d8FSA6OvMoznssH",
+          "sessionId": "r2EMmRQRwrWhCnWTzuzF",
+          "nodeId": "b8j2mPbUKSzFpY54zDk4",
+          "credits": 53.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "3vcol9CePxshRd3iaFud",
+          "sessionId": "SJh8ZPLN9eGhF1D0qQXx",
+          "nodeId": "b8j2mPbUKSzFpY54zDk4",
+          "credits": 53.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "3vcol9CePxshRd3iaFud",
+      "reason": "Same level at both ends of the loop; the other take drops 12 dB across its seam."
+    },
+    "amb-bubbles": {
+      "takes": [
+        {
+          "generationId": "uaVo1QVfgopo2UbyH1Sl",
+          "sessionId": "sdIkxdrtfQK1xQHT2SEM",
+          "nodeId": "icTewAIkLQjD1WKQbfKV",
+          "credits": 33.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "bSlUvuMfE2IqbcGhjq3u",
+          "sessionId": "MzjHFgvvotIXIlIr1aVt",
+          "nodeId": "icTewAIkLQjD1WKQbfKV",
+          "credits": 33.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "bSlUvuMfE2IqbcGhjq3u",
+      "reason": "Equal levels across the seam; the other take drops 7 dB."
+    },
+    "amb-clock": {
+      "takes": [
+        {
+          "generationId": "UOgDawwrewDXa5GLmBHe",
+          "sessionId": "CVGcLvRCrbWmtBGZ28pq",
+          "nodeId": "4B5I7dMgvBHVYxO1tIBg",
+          "credits": 27,
+          "date": "2026-11-06",
+          "prompt": "A wooden pendulum wall clock ticking steadily once per second in a quiet carpeted office, soft room tone, nothing else.",
+          "params": {
+            "duration_seconds": 8,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "n0hSvsXFOY2ToUnjC0HB",
+          "sessionId": "0gRa8k5Wd7kZqkbEOqYd",
+          "nodeId": "4B5I7dMgvBHVYxO1tIBg",
+          "credits": 27,
+          "date": "2026-11-06",
+          "prompt": "A wooden pendulum wall clock ticking steadily once per second in a quiet carpeted office, soft room tone, nothing else.",
+          "params": {
+            "duration_seconds": 8,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "a4gHT9aZxEw3kVo77rp5",
+          "sessionId": "bDJRNblXyj5Jgvpuhl2p",
+          "nodeId": "4B5I7dMgvBHVYxO1tIBg",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "LsQQKURdVIEo3091e4VQ",
+          "sessionId": "MONhNbEYSFuZjKf9qoEV",
+          "nodeId": "4B5I7dMgvBHVYxO1tIBg",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "a4gHT9aZxEw3kVo77rp5",
+      "reason": "Second prompt: ticks measured 1.00 s apart (0.98 to 1.01). The first prompt's takes ticked irregularly (0.4 to 0.9 s) or at 0.37 s."
+    },
+    "amb-fire": {
+      "takes": [
+        {
+          "generationId": "ji2TQqOsd7qjfxh7myF2",
+          "sessionId": "E0veGM5P9jt1KfcSTCy7",
+          "nodeId": "S9wLla6yBNwhkxSwVg5Y",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "Xs6UyIzWxKQFa5iTlEO2",
+          "sessionId": "p8lgZp4UTlVHFAKzgMoz",
+          "nodeId": "S9wLla6yBNwhkxSwVg5Y",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "Xs6UyIzWxKQFa5iTlEO2",
+      "reason": "Steadier (8 dB range) with matching levels across the seam."
+    },
+    "amb-fogbell": {
+      "takes": [
+        {
+          "generationId": "bNkb7xDew50lUdf6DSf4",
+          "sessionId": "W3eht23nbRNm0K4GZaVh",
+          "nodeId": "RyqS4M8fAJLcrDR8R485",
+          "credits": 60.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "v6o5SAy4gGVjk9dQFaIt",
+          "sessionId": "HGYcZtcaNYL7U0z8FJK3",
+          "nodeId": "RyqS4M8fAJLcrDR8R485",
+          "credits": 60.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "bNkb7xDew50lUdf6DSf4",
+      "reason": "Neither take's own seam is continuous; this one is louder and is crossfaded tail into head."
+    },
+    "amb-hospital": {
+      "takes": [
+        {
+          "generationId": "WOU1C2up1lBMizs5Ty03",
+          "sessionId": "HLUQCZzsm7Gn5Tp18M6J",
+          "nodeId": "XlfWJH4exhhxoX4hEwRq",
+          "credits": 53.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "i8hClM80N8P2RyRGIDvD",
+          "sessionId": "m1RpeJon7lZcmqfwTMsl",
+          "nodeId": "XlfWJH4exhhxoX4hEwRq",
+          "credits": 53.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "WOU1C2up1lBMizs5Ty03",
+      "reason": "Continuous seam (0.17) and equal levels."
+    },
+    "amb-kitchen": {
+      "takes": [
+        {
+          "generationId": "N8y0EOKMLffq7GNuhP6I",
+          "sessionId": "c1TWEhtlEEFiFrxafThk",
+          "nodeId": "WMwGJophcA3BHTRucje7",
+          "credits": 33.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "2QZipSrkRuVRPoWJNDZo",
+          "sessionId": "F8JyWLrRPOWYpmE8WifG",
+          "nodeId": "WMwGJophcA3BHTRucje7",
+          "credits": 33.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "N8y0EOKMLffq7GNuhP6I",
+      "reason": "Equal levels across the seam (the other take drops 4 dB)."
+    },
+    "amb-monitor": {
+      "takes": [
+        {
+          "generationId": "s5pSUcBEijNbKvdda0eJ",
+          "sessionId": "m6fJ6xUhYsDZGUccuLK2",
+          "nodeId": "cgQur6Y9fjFYWV0cm4WE",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "h4bUkxDharJlGKP0aSaP",
+          "sessionId": "pxPmwNO36kW4OLLHGZgZ",
+          "nodeId": "cgQur6Y9fjFYWV0cm4WE",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "h4bUkxDharJlGKP0aSaP",
+      "reason": "Beeps about 0.85 s apart (about 70 per minute); the other take's beeps wander (0.6 to 2.5 s apart)."
+    },
+    "amb-night": {
+      "takes": [
+        {
+          "generationId": "ZLxDaEfnK59fsiL1SlAE",
+          "sessionId": "yGe8HIcHccBL3dFe1atR",
+          "nodeId": "yrcfAta98pBNVQgv9X8X",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "6rL7ivaN0XK0PLJDIu5V",
+          "sessionId": "QhL9nEKCly7uscvF4YcP",
+          "nodeId": "yrcfAta98pBNVQgv9X8X",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "ZLxDaEfnK59fsiL1SlAE",
+      "reason": "Continuous seam (0.01) and steadier, louder bed; the other take is 6 dB quieter and its ends match less well."
+    },
+    "amb-rain": {
+      "takes": [
+        {
+          "generationId": "X0PIKBDbZHIMgkB3moB4",
+          "sessionId": "a72VwPAZPxEFoGKKIyzw",
+          "nodeId": "Tap0NXXkPlNylgsEqprT",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "BXUyVxKWuVCfinCmY7xC",
+          "sessionId": "sbccVtcE96J1ypOacIJW",
+          "nodeId": "Tap0NXXkPlNylgsEqprT",
+          "credits": 40.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "X0PIKBDbZHIMgkB3moB4",
+      "reason": "Continuous seam (0.07) and equal levels."
+    },
+    "amb-storm": {
+      "takes": [
+        {
+          "generationId": "d7L5GdsrLdTsBYraakSP",
+          "sessionId": "sDMPhQuptXiLPa2K2wd8",
+          "nodeId": "Hvl2DjbBLjwXc6OngS5f",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "PBVxpO2r5gWfLtJUn3cl",
+          "sessionId": "SqxEwfP1qt2kp5DTxp0n",
+          "nodeId": "Hvl2DjbBLjwXc6OngS5f",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "d7L5GdsrLdTsBYraakSP",
+      "reason": "Continuous seam and equal levels."
+    },
+    "amb-street": {
+      "takes": [
+        {
+          "generationId": "J4MzoDhWNhZqwdmcffTb",
+          "sessionId": "lV3R84D0rypvXq944HA5",
+          "nodeId": "t6jDfOw2VDAYCxjisMBJ",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "Y9r5yCGhtGa8sLbg6Mai",
+          "sessionId": "qwOBnn0DUMS1patZlfcw",
+          "nodeId": "t6jDfOw2VDAYCxjisMBJ",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "Y9r5yCGhtGa8sLbg6Mai",
+      "reason": "Continuous seam and the closest spectra across it (0.85); has the distant bark."
+    },
+    "amb-wind": {
+      "takes": [
+        {
+          "generationId": "s0VGYVC7PvY6W5UqvJLR",
+          "sessionId": "L0svyup05WIIajgd2TcO",
+          "nodeId": "4JRNvno2nhX95AZOxwyU",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "3nRHZxtcdMO3xRWyWeJe",
+          "sessionId": "J3GiOs3zfxHDrMJxM13n",
+          "nodeId": "4JRNvno2nhX95AZOxwyU",
+          "credits": 67.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "s0VGYVC7PvY6W5UqvJLR",
+      "reason": "The model's own seam is continuous (step 0.23) and the level is the same either side; the other take steps (1.6)."
+    },
+    "angelic": {
+      "takes": [
+        {
+          "generationId": "Xh06ZFhf7GbGgmn411eL",
+          "sessionId": "0OPeCKFvORfJiTl54GjI",
+          "nodeId": "KfsiFVkojWH4GmU2HJGZ",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "HUcqhufa6plt1D1YK8JG",
+          "sessionId": "lI9djcBeQY9Ba6MfztaS",
+          "nodeId": "KfsiFVkojWH4GmU2HJGZ",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "Xh06ZFhf7GbGgmn411eL",
+      "reason": "Both takes are a sustained bright chord; this one dies away sooner (-20 dB after 1.3 s against 1.5 s)."
+    },
+    "bank": {
+      "takes": [
+        {
+          "generationId": "YLhzNE9w9WCcjvubrs9K",
+          "sessionId": "H6GhJ9lnyYduSeNW0aOq",
+          "nodeId": "kDXY9PFkGD91Rhxdu3Ju",
+          "credits": 690.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "YLhzNE9w9WCcjvubrs9K",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "battle": {
+      "takes": [
+        {
+          "generationId": "JabjmntYELUqDmO1bfoD",
+          "sessionId": "d3LWB3JqAd2O4ofEp1A2",
+          "nodeId": "Ll51OTZToHRfEC4loix4",
+          "credits": 540.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "JabjmntYELUqDmO1bfoD",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "bingo-ball": {
+      "takes": [
+        {
+          "generationId": "SMmjrOD4Zg9tmtzLNF0b",
+          "sessionId": "YvMW4KmLG6ZHPXjdvwPm",
+          "nodeId": "yok9DR363LxsR56SiVns",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "6Jc1JBs7Y2rEAhrW0cFQ",
+          "sessionId": "SLnGbbVaF7Reo6cuul7Q",
+          "nodeId": "yok9DR363LxsR56SiVns",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "6Jc1JBs7Y2rEAhrW0cFQ",
+      "reason": "More rattle events (13 against 8)."
+    },
+    "bingo-lose": {
+      "takes": [
+        {
+          "generationId": "cUycU8D88mldnkB4OHEP",
+          "sessionId": "J6gKEozrxFdJs1Gx6JhO",
+          "nodeId": "KJAaWmPWZH7hgPA3jr6t",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "J8kr2pdf9ezHmRt4NO2X",
+          "sessionId": "QTLDbA9rDQ6FZIniFyE6",
+          "nodeId": "KJAaWmPWZH7hgPA3jr6t",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "cUycU8D88mldnkB4OHEP",
+      "reason": "Both take three notes; this one ends quieter (-60 dB)."
+    },
+    "bingo-win": {
+      "takes": [
+        {
+          "generationId": "PysryczViwpB5cl9E9wS",
+          "sessionId": "Wb7YEqOQlAs3unpXVXKP",
+          "nodeId": "Cw63NFy5UxrmBrF6xsA2",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "P6baMw0yP8GZ7VLLkvLX",
+          "sessionId": "qNotpl9puy0jkh0kabjE",
+          "nodeId": "Cw63NFy5UxrmBrF6xsA2",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "P6baMw0yP8GZ7VLLkvLX",
+      "reason": "Four onsets (a run) against one."
+    },
+    "cafe": {
+      "takes": [
+        {
+          "generationId": "IjnYAIoJxnbWQ1VeJDBj",
+          "sessionId": "VdxDkoZkCLEC8kNmGGaK",
+          "nodeId": "IFtYlPjsZZeiCUXJeJp4",
+          "credits": 825.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "IjnYAIoJxnbWQ1VeJDBj",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "cards": {
+      "takes": [
+        {
+          "generationId": "W1YkzqiCdrZzm0SD3sZl",
+          "sessionId": "4qkXl6Ze3KCKC6H9RpfO",
+          "nodeId": "egLHIiaLp7NuLbQ8wKsU",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "ttX9u3sdurkTw4GafMDI",
+          "sessionId": "QSTimNCjdspDaINoPTAc",
+          "nodeId": "egLHIiaLp7NuLbQ8wKsU",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "ttX9u3sdurkTw4GafMDI",
+      "reason": "Riffle then deals (15 onsets) against 9, and a quieter end."
+    },
+    "cash-register": {
+      "takes": [
+        {
+          "generationId": "zwIMf0HPJlebm9hQJhB7",
+          "sessionId": "vKybjshVxq8PB9k8a7Nj",
+          "nodeId": "B0G6NplCb4018tNZD26d",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "Vb48j84nJSWX3drugZcR",
+          "sessionId": "43Om6EybA61TOJRLIsvu",
+          "nodeId": "B0G6NplCb4018tNZD26d",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "zwIMf0HPJlebm9hQJhB7",
+      "reason": "Three separate events (keys, bell, drawer) against two."
+    },
+    "casket-thump": {
+      "takes": [
+        {
+          "generationId": "SNXQS4axVB49jkv3DyXc",
+          "sessionId": "KZu8XxJkxTKM1dERUnVt",
+          "nodeId": "JnMPNjA6vKsYiu1SVCrF",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "hfOl0GkVqUT29kOuVllq",
+          "sessionId": "oepqG7dUEQ6IOEXGsaix",
+          "nodeId": "JnMPNjA6vKsYiu1SVCrF",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "hfOl0GkVqUT29kOuVllq",
+      "reason": "One thud at the start and a short rattle (1 onset); the other take has a 0.2 s lead and four events."
+    },
+    "ceremony": {
+      "takes": [
+        {
+          "generationId": "eL3XgiYoUqxhklMwQPct",
+          "sessionId": "XPkmfZZZej7TqYYVw6mI",
+          "nodeId": "rXLR911YDUSIz6eJjosH",
+          "credits": 1050.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "eL3XgiYoUqxhklMwQPct",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "cityhall": {
+      "takes": [
+        {
+          "generationId": "jazP4i7iv4ptQJ3oGb0N",
+          "sessionId": "vdcIbhdINpxG5F1nmXQA",
+          "nodeId": "ot5bzIXt5Q4HlQLtVZM2",
+          "credits": 930.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "jazP4i7iv4ptQJ3oGb0N",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "club": {
+      "takes": [
+        {
+          "generationId": "EZfSfvSCdMDELN3ovspu",
+          "sessionId": "5iyB7tZepIPrDCOOfYQ8",
+          "nodeId": "3q0SARKaMrkVvWqwbxGX",
+          "credits": 975.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "EZfSfvSCdMDELN3ovspu",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "coins": {
+      "takes": [
+        {
+          "generationId": "LHvKcxFqmkIyiYudb4lr",
+          "sessionId": "1AwUkaYvCR2v7p54E1fS",
+          "nodeId": "VYAY65B77aSdJW3lopF8",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "g4rZLdj6wjloUi16MyYR",
+          "sessionId": "R4ASJlq7DwVJw5Wi4xbR",
+          "nodeId": "VYAY65B77aSdJW3lopF8",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "g4rZLdj6wjloUi16MyYR",
+      "reason": "More separate coin hits (8 onsets against 4) and a clean tail (-61 dB)."
+    },
+    "defeat": {
+      "takes": [
+        {
+          "generationId": "nI2f3iPEjwMZruPeq76d",
+          "sessionId": "y54wMfYnwdOdIF6Z142J",
+          "nodeId": "gIRMC9RvDjkIkbUZsK0M",
+          "credits": 135.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "nI2f3iPEjwMZruPeq76d",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "desk": {
+      "takes": [
+        {
+          "generationId": "6JovC0mNBViY4IN2tW4Q",
+          "sessionId": "Gu67JsT2HwqUwAYtdv2S",
+          "nodeId": "UMii5thauAJlZ1e9iJTX",
+          "credits": 975.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "6JovC0mNBViY4IN2tW4Q",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "dice": {
+      "takes": [
+        {
+          "generationId": "GVtMCAGlqWieGPCnvlh7",
+          "sessionId": "LYMi8QKJdjOZcZ9dqeIl",
+          "nodeId": "hBpMyUTnuMgmc8KNON5M",
+          "credits": 4.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "yiQoh39OEozdvEzLrhfS",
+          "sessionId": "04P22tZhaQIjtoEvc6sI",
+          "nodeId": "hBpMyUTnuMgmc8KNON5M",
+          "credits": 4.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "GVtMCAGlqWieGPCnvlh7",
+      "reason": "Shake then throw (peak at 0.25 s, 8 onsets); the other take peaks at its first sample."
+    },
+    "dimart": {
+      "takes": [
+        {
+          "generationId": "m3FzdwtV5NEN7WGbH8Z5",
+          "sessionId": "a969uRjwxkKBmALMtqf6",
+          "nodeId": "HrRVKN9oZeJSGiQ6hh5w",
+          "credits": 1050.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "m3FzdwtV5NEN7WGbH8Z5",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "door": {
+      "takes": [
+        {
+          "generationId": "yxru0fLN28bI6srrqtSL",
+          "sessionId": "xl0dr6jfKuJrBzsH0LbH",
+          "nodeId": "AWU0tCI4V5IdM1I9eU1G",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "by8FHBF2PK912vMvwcQb",
+          "sessionId": "ay3YAz6jgxniDlKn3L4B",
+          "nodeId": "AWU0tCI4V5IdM1I9eU1G",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "by8FHBF2PK912vMvwcQb",
+      "reason": "Three clear groups (latch, creak, closing thud); the other take is a run of small clicks before the thud."
+    },
+    "doorbell": {
+      "takes": [
+        {
+          "generationId": "RFtjqRePbLhJt7kQjSNX",
+          "sessionId": "a1woIlWeR8RDz8RX0FHa",
+          "nodeId": "9hvkciRCmssYDNFopgGF",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "HuWJn0YWgpTOCfQAbyFZ",
+          "sessionId": "9tGSA1QtMrwJJFPluGbt",
+          "nodeId": "9hvkciRCmssYDNFopgGF",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "RFtjqRePbLhJt7kQjSNX",
+      "reason": "A ringing bell with two strikes; the other take is a busier jingle (9 onsets) than the two or three rings asked for."
+    },
+    "endday": {
+      "takes": [
+        {
+          "generationId": "gnWJyGVyzsbQPaz06GoB",
+          "sessionId": "xbl4oF2qlwraQzF1a4c0",
+          "nodeId": "3nG6gslv535yWxiHu5gy",
+          "credits": 315.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "gnWJyGVyzsbQPaz06GoB",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "fail-trombone": {
+      "takes": [
+        {
+          "generationId": "UPECgZgAnOQNDvKYzQXw",
+          "sessionId": "4YMZL3i3tkyN8SmPAj9t",
+          "nodeId": "VvUrC060wRmXGzBlkIUA",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "h080h0FLutFGsRWmgyY4",
+          "sessionId": "PK4qHngVV67icMorAGoE",
+          "nodeId": "VvUrC060wRmXGzBlkIUA",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "h080h0FLutFGsRWmgyY4",
+      "reason": "Four separate falling notes visible in the spectrogram and 5 onsets; the other take merges the first notes."
+    },
+    "fanfare-exact": {
+      "takes": [
+        {
+          "generationId": "8RNLkNlfBVIeBNHvbp9w",
+          "sessionId": "pb2bf5bh4kqMPw2J6256",
+          "nodeId": "a5IDifhsGkBhlows0lZL",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "UVpuLJUgkeRjtLwW6EHW",
+          "sessionId": "Lh7ie8FAw47UJZzxldJa",
+          "nodeId": "a5IDifhsGkBhlows0lZL",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "8RNLkNlfBVIeBNHvbp9w",
+      "reason": "A short note before a held chord (the ta-da shape); the other take is one sustained chord."
+    },
+    "glint": {
+      "takes": [
+        {
+          "generationId": "UhUlheEXcmFiuccl8Qhb",
+          "sessionId": "Jm85Nx2FxtI7ZOWIKgz1",
+          "nodeId": "AEep5aXWSDBX18BUsfeH",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "S02ssi4WvOHYKABM9ZO8",
+          "sessionId": "B0I8ySHqaP0iLT6QoQVV",
+          "nodeId": "AEep5aXWSDBX18BUsfeH",
+          "credits": 3.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "S02ssi4WvOHYKABM9ZO8",
+      "reason": "Shorter decay (-20 dB after 0.2 s)."
+    },
+    "gong": {
+      "takes": [
+        {
+          "generationId": "CgKvPKdWaSWagsykDvfB",
+          "sessionId": "X41cRk10hZFjHOgy4qfB",
+          "nodeId": "LikIdV8vAoSDUJE9Aez1",
+          "credits": 15.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "BgyiBklwJNZ9hA61R9LB",
+          "sessionId": "krsdeDblMcOC42nFvAPg",
+          "nodeId": "LikIdV8vAoSDUJE9Aez1",
+          "credits": 15.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "BgyiBklwJNZ9hA61R9LB",
+      "reason": "One strike, decays to -62 dB by the end (the other ends at -54 dB)."
+    },
+    "graveyard": {
+      "takes": [
+        {
+          "generationId": "Q0dBe6u4bBSLLvPr1nsm",
+          "sessionId": "ZZ4H2AyaZIR3AV596Pa6",
+          "nodeId": "G2SJzyfc2cYEskerKaQG",
+          "credits": 1020.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "Q0dBe6u4bBSLLvPr1nsm",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "growl": {
+      "takes": [
+        {
+          "generationId": "JIZtiGnyWhMzialQDZce",
+          "sessionId": "C3pjPUbbYEoqgTmty0Y9",
+          "nodeId": "BV9H0x8ZeENVugrVG334",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "CoJSqzyVJEAz93oeuB6i",
+          "sessionId": "ao52Vs7STjWQQiKzI9zX",
+          "nodeId": "BV9H0x8ZeENVugrVG334",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "JIZtiGnyWhMzialQDZce",
+      "reason": "A short growl then two separate barks, as asked; ends cleanly (-65 dB). The other take is a long growl and one bark."
+    },
+    "harp-good-news": {
+      "takes": [
+        {
+          "generationId": "limw1vcbML98zr6Fe65u",
+          "sessionId": "iIrLVuiagX94Fzy9L861",
+          "nodeId": "UpqtGUGSjQRb0oofe62P",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "f4B2aEvildxX8HkgL4rU",
+          "sessionId": "4DklegrvHpXagIZr96Mz",
+          "nodeId": "UpqtGUGSjQRb0oofe62P",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "f4B2aEvildxX8HkgL4rU",
+      "reason": "Several distinct plucks in the sweep; the other take reads as one smeared onset."
+    },
+    "hospital": {
+      "takes": [
+        {
+          "generationId": "iIK0oU8LJSiBS75sUdjo",
+          "sessionId": "q3eBTt1xoGwFGqZtnMNx",
+          "nodeId": "R5M6y0g8bY4fHufXPSGs",
+          "credits": 930.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "iIK0oU8LJSiBS75sUdjo",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "level-up": {
+      "takes": [
+        {
+          "generationId": "rzm6WJwikdMW60Bda9Zm",
+          "sessionId": "ZMcCNY9xv0HjBcMyWkti",
+          "nodeId": "lN7CqnarUXD0A2hmy0hW",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "iyyxSpqRfGSmHLVN2HM1",
+          "sessionId": "4qLPojtSzQokmNf1ne5C",
+          "nodeId": "lN7CqnarUXD0A2hmy0hW",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "rzm6WJwikdMW60Bda9Zm",
+      "reason": "A visible rising line of notes (5 onsets) against 2."
+    },
+    "lockpick": {
+      "takes": [
+        {
+          "generationId": "CeLcY8NMvxV7WccJtoeO",
+          "sessionId": "eT9A28nIko9FEqqcJIsb",
+          "nodeId": "aLnzX1vA7B4ccyjcdB1h",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "zAA6RbNEeu6Qrjxpl5YC",
+          "sessionId": "0hAsYER6Aqu4D32U4nEo",
+          "nodeId": "aLnzX1vA7B4ccyjcdB1h",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "CeLcY8NMvxV7WccJtoeO",
+      "reason": "Seven small clicks then the release, against four."
+    },
+    "main": {
+      "takes": [
+        {
+          "generationId": "32rDpvMqDOGkzRoQpGTj",
+          "sessionId": "oqgFnhsTYViXJ4HiJOTS",
+          "nodeId": "z7SUuj4Su5kORoh5FYgK",
+          "credits": 1425.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "32rDpvMqDOGkzRoQpGTj",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "main-stinger": {
+      "takes": [
+        {
+          "generationId": "IKKEWBtQdkzjzM8gFdV6",
+          "sessionId": "S7Hxm0yyHvBriciPgmql",
+          "nodeId": "FK8n6hz2LfPJculAD0v3",
+          "credits": 135.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "IKKEWBtQdkzjzM8gFdV6",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "meteor": {
+      "takes": [
+        {
+          "generationId": "dkiWz5Rl66Af4TQ63lnl",
+          "sessionId": "eB2AgHOEsQiPSOSkMPeM",
+          "nodeId": "RSEKXvHhj0bqx5z6hgPz",
+          "credits": 900.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "dkiWz5Rl66Af4TQ63lnl",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "monument": {
+      "takes": [
+        {
+          "generationId": "6lrQuHvMMKbbHTMCYGEt",
+          "sessionId": "8aCxJ3m1KHrnO5LjguFk",
+          "nodeId": "F1Jwnznre26riUg7jo6S",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "H8U27T1y3cdTaGcB4GfC",
+          "sessionId": "1sd2mPejAzrw4dEjgcF7",
+          "nodeId": "F1Jwnznre26riUg7jo6S",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "6lrQuHvMMKbbHTMCYGEt",
+      "reason": "Scrape then thud (two groups); the other take has three separate thuds."
+    },
+    "negotiation.layer0": {
+      "takes": [
+        {
+          "generationId": "6AaZ9NjydaXTJIIOsECN",
+          "sessionId": "Z1BnLnymTSLyaeL1wiRJ",
+          "nodeId": "Hf7G35RgTFu0eqCllXIn",
+          "credits": 660.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "6AaZ9NjydaXTJIIOsECN",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "negotiation.layer1": {
+      "takes": [
+        {
+          "generationId": "1BQPS87Ca7lzPedKU622",
+          "sessionId": "fKcZgdLYgkJyKnR5UGpz",
+          "nodeId": "HTVw8Gh0kMnTsoevnbBL",
+          "credits": 660.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "1BQPS87Ca7lzPedKU622",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "negotiation.layer2": {
+      "takes": [
+        {
+          "generationId": "Esptqvzbgxt6bOlWOBDO",
+          "sessionId": "ft1xtWFPMhqUiXvsWiSg",
+          "nodeId": "rYtqjUZ3HbpD5CS8Xgey",
+          "credits": 660.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "Esptqvzbgxt6bOlWOBDO",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "newday": {
+      "takes": [
+        {
+          "generationId": "YEnRHUGCPMzeTMp7wlBY",
+          "sessionId": "ZLq68MUKOGojVUzSOHJ7",
+          "nodeId": "0eo5d4gg4EkHtWZatdo7",
+          "credits": 90,
+          "date": "2026-11-06",
+          "prompt": "A cheerful six-second instrumental morning jingle in G major: bright banjo picking, a perky reed organ melody and a plucked upright bass, brisk 132 bpm, ending on a tidy final chord. Dry, small-town, slightly comic, vintage radio feel.",
+          "params": {
+            "duration_seconds": 6,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        },
+        {
+          "generationId": "NwBj8GDINlNUJ9DiUGdI",
+          "sessionId": "qMpvCG1PB1O4ASUWE5zM",
+          "nodeId": "0eo5d4gg4EkHtWZatdo7",
+          "credits": 150,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "NwBj8GDINlNUJ9DiUGdI",
+      "reason": "Second prompt. The first prompt at 6 s gave one decaying chord with no melody (one onset).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "padlock-break": {
+      "takes": [
+        {
+          "generationId": "DR7XDh1xxOZe18Wio7yf",
+          "sessionId": "RWomDnRi4kB94Pz2mET6",
+          "nodeId": "MSv7HuRgr42UpmAO7Pfb",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "QTiQ69wcOk4SlTV3Ycfu",
+          "sessionId": "mVZxjuq9CcJA9e2ftcVz",
+          "nodeId": "MSv7HuRgr42UpmAO7Pfb",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "QTiQ69wcOk4SlTV3Ycfu",
+      "reason": "Strike at the start then chain and drop (5 events); the other take builds to its loudest hit at 0.6 s."
+    },
+    "psychic": {
+      "takes": [
+        {
+          "generationId": "R4dAkye0cdvLiavIG7M0",
+          "sessionId": "cknRYNBaqakXaf5le4KB",
+          "nodeId": "kmdOLwRVcARFcBSHDMtM",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "3JfF5lciL4Gmbsy8xiWH",
+          "sessionId": "BFlo2PIn3uf13S6CaU37",
+          "nodeId": "kmdOLwRVcARFcBSHDMtM",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "R4dAkye0cdvLiavIG7M0",
+      "reason": "The pitch visibly swoops up and down; the other take is a near-steady tone."
+    },
+    "punch": {
+      "takes": [
+        {
+          "generationId": "zfrUEbPuwFOVG5RyjQan",
+          "sessionId": "qzImB4e7mlsfNkVfRAaG",
+          "nodeId": "bpw9trEdOHdnK30d73xM",
+          "credits": 2.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "9hb9AdLymVrCpQcLfHot",
+          "sessionId": "dvAsaYeEfPos1LtGkcsV",
+          "nodeId": "bpw9trEdOHdnK30d73xM",
+          "credits": 2.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "9hb9AdLymVrCpQcLfHot",
+      "reason": "Two events (whoosh, thump) against one."
+    },
+    "rain-hit": {
+      "takes": [
+        {
+          "generationId": "KUx5a14s18IcUoUJX27H",
+          "sessionId": "XqeOdBbMIARNco8VRRI4",
+          "nodeId": "Z9EV4e9DkzalDjcK9K00",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "mvCa0pn994RQmfRJOvqt",
+          "sessionId": "bNK7v3mBmB2v6gxwZbEB",
+          "nodeId": "Z9EV4e9DkzalDjcK9K00",
+          "credits": 8.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "KUx5a14s18IcUoUJX27H",
+      "reason": "Swells to a peak at 1.6 s and settles (-44 dB at the end); the other take is cut off at -28 dB."
+    },
+    "rattle": {
+      "takes": [
+        {
+          "generationId": "SB9AJWuECTnObgQ4EhXc",
+          "sessionId": "DkQIPHH58u8SZs8UKagn",
+          "nodeId": "ENpNyR0ZTO33QQnA40Eo",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "n9ozhrp9CLUIYfWZG7q8",
+          "sessionId": "6eWHN7GBf7YibWrO4CP4",
+          "nodeId": "ENpNyR0ZTO33QQnA40Eo",
+          "credits": 5.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "SB9AJWuECTnObgQ4EhXc",
+      "reason": "Denser rattle (16 onsets) and a quiet end (-51 dB)."
+    },
+    "safe-click": {
+      "takes": [
+        {
+          "generationId": "YGjRPazW5q34eGBsSKRR",
+          "sessionId": "yEHrlCb4WFMHQCnRXAd3",
+          "nodeId": "EeiQw5xB72xFRCcfHcAT",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "94lc65FVkHze8lAceBt1",
+          "sessionId": "6mZkULIOXSXzhTV5Koz6",
+          "nodeId": "EeiQw5xB72xFRCcfHcAT",
+          "credits": 6.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "YGjRPazW5q34eGBsSKRR",
+      "reason": "Ends cleanly (-52 dB) against -37 dB."
+    },
+    "siren": {
+      "takes": [
+        {
+          "generationId": "8WXzglC0QEor3zvg9dLv",
+          "sessionId": "wcLuIfIwlrQNeY5YFLjQ",
+          "nodeId": "Phc9JsIFj62980deDJdL",
+          "credits": 10.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "HMsdsMr4fWjlG9OLgCGK",
+          "sessionId": "xvYevxcNkZhq1KEBEzPX",
+          "nodeId": "Phc9JsIFj62980deDJdL",
+          "credits": 10.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "HMsdsMr4fWjlG9OLgCGK",
+      "reason": "Level rises to a peak mid-file and falls away: a pass-by envelope. The other take starts at full level and only decays."
+    },
+    "slap": {
+      "takes": [
+        {
+          "generationId": "8lytatqctqGYno83Hmaf",
+          "sessionId": "XN3miJhQ9Zej7uTFvLwH",
+          "nodeId": "1i8jF9LjX0F0gAtiLchk",
+          "credits": 2.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "Q2nzQBXjPBoxNaY4Y56G",
+          "sessionId": "p00GfrxRPYOp4bthqrkI",
+          "nodeId": "1i8jF9LjX0F0gAtiLchk",
+          "credits": 2.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "8lytatqctqGYno83Hmaf",
+      "reason": "One hit with a natural tail; the other take is still at -27 dB when the file ends."
+    },
+    "slot-machine": {
+      "takes": [
+        {
+          "generationId": "0dtoC7Jej0tHd7rIBKTi",
+          "sessionId": "uOAzJB9REt1NIzE2lRwh",
+          "nodeId": "eLLNr4D2qcoLmwIcw9bl",
+          "credits": 9.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "uvYTqvgLBsP2MOtGrWeo",
+          "sessionId": "dH6J9AZE5vSRT2xLKnSN",
+          "nodeId": "eLLNr4D2qcoLmwIcw9bl",
+          "credits": 9.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "0dtoC7Jej0tHd7rIBKTi",
+      "reason": "Many separate mechanical events (14) with the loudest late (the stop and payout), as asked."
+    },
+    "sneak": {
+      "takes": [
+        {
+          "generationId": "TNyD9Cm62EGuDFh1Nh5l",
+          "sessionId": "LTdAxFsQU4NfjynYWCsm",
+          "nodeId": "ZxdcPQc9PzsHI5KLI65n",
+          "credits": 750.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "TNyD9Cm62EGuDFh1Nh5l",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "thunder": {
+      "takes": [
+        {
+          "generationId": "82kpMWvclXbCL0Ag3Xpf",
+          "sessionId": "RgCfGHWO7Y2yBXiQf4MR",
+          "nodeId": "XEjD3Z2SX4Sgcl57WJcW",
+          "credits": 15.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "PDSwhou9cl7JYmb5ySpS",
+          "sessionId": "OGy7p8wb5JQse6GO39qg",
+          "nodeId": "XEjD3Z2SX4Sgcl57WJcW",
+          "credits": 15.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "PDSwhou9cl7JYmb5ySpS",
+      "reason": "One crack and a roll (one main onset); the other take is a long crackle with 12 onsets."
+    },
+    "toilet-flush": {
+      "takes": [
+        {
+          "generationId": "VIPL9rbcV5VlmAu2xuYj",
+          "sessionId": "K96R4Pxo2vSQJqa035al",
+          "nodeId": "UYgRTxWdNsrXDy5FHWgL",
+          "credits": 13.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "MzH6lHlNvDV72pyRMKim",
+          "sessionId": "KlBT7ox7CXQuAoS1hGVn",
+          "nodeId": "UYgRTxWdNsrXDy5FHWgL",
+          "credits": 13.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "VIPL9rbcV5VlmAu2xuYj",
+      "reason": "Click, flush and refill as three regions; the other take's flush is shorter and it ends louder."
+    },
+    "town": {
+      "takes": [
+        {
+          "generationId": "vW5TUOsqoisIO8TGwWM6",
+          "sessionId": "GbbOeXfjR9BK4bn8qLVe",
+          "nodeId": "eA5vTtFFe9yMkTfbn194",
+          "credits": 1200.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "vW5TUOsqoisIO8TGwWM6",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "university": {
+      "takes": [
+        {
+          "generationId": "xCzYagXdhANtdWCrIi1g",
+          "sessionId": "8JSO8Tb53IVipWxbrjMl",
+          "nodeId": "S7Lof4B4657lYjPWkZ3f",
+          "credits": 825.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "xCzYagXdhANtdWCrIi1g",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "victory": {
+      "takes": [
+        {
+          "generationId": "VxHD5ou93NUIaAgIpMNJ",
+          "sessionId": "fbNMwp0qsG2hFnZqWl7I",
+          "nodeId": "kr8dSIAWm9cjlgDvVbra",
+          "credits": 120.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "VxHD5ou93NUIaAgIpMNJ",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    },
+    "walkout": {
+      "takes": [
+        {
+          "generationId": "fZRcbntjLAnADF8VS5RI",
+          "sessionId": "GNWRTV3N2TyF907ntBHx",
+          "nodeId": "WBNO9i2V99ik3XHtHYc5",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        },
+        {
+          "generationId": "sPO2syFXbypPs6dCy5n1",
+          "sessionId": "0qAdSm9hcrt02y5oQlwv",
+          "nodeId": "WBNO9i2V99ik3XHtHYc5",
+          "credits": 7.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "fZRcbntjLAnADF8VS5RI",
+      "reason": "The slam is the loudest event and comes first, then the bell; the other take has 14 events spread over the file."
+    },
+    "yangs": {
+      "takes": [
+        {
+          "generationId": "qLJU5xG3d0XwTljiuuJ8",
+          "sessionId": "SyU4Vw8eG7YrfSgTv5az",
+          "nodeId": "iYOFBLOw0BxNXCshXpJM",
+          "credits": 975.0,
+          "date": "2026-11-06"
+        }
+      ],
+      "chosen": "qLJU5xG3d0XwTljiuuJ8",
+      "reason": "The only take (one take per music piece).",
+      "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme."
+    }
+  }
+}

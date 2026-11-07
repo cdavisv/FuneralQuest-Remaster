@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { showTime } from "../src/classic/clock.js";
 import {
   type EngineContext,
   richTextToPlain,
@@ -32,7 +33,14 @@ describe("the Pale Horse Cafe (commands_bar.cpp)", () => {
     expect(richTextToPlain(first.view.text)).toContain("You are the only one here.");
     expect(entered.view.scene).toBe("cafe");
     expect(richTextToPlain(entered.view.text)).toContain("Other people here: Morticia");
-    expect(chatLines(entered)).toEqual(["Skelly saunters in."]);
+    // The newcomer's first poll shows the notices waiting in the queue, then the
+    // arrival (add_que_messages_chat, broadcast.cpp:103-154).
+    expect(chatLines(entered).at(-1)).toBe("Skelly saunters in.");
+    expect(
+      chatLines(entered)
+        .slice(0, -1)
+        .every((l) => /^\d+:\d\d [AP]M:/.test(l)),
+    ).toBe(true);
     expect(chatFor(entered, 1)).toEqual(["Skelly saunters in."]);
     // Digby is not in the cafe: no chat for him, and nothing queued.
     expect(entered.effects.every((e) => e.kind !== "chat" || !e.to.includes(2))).toBe(true);
@@ -54,10 +62,12 @@ describe("the Pale Horse Cafe (commands_bar.cpp)", () => {
     const { town, ctx } = cafe();
     expect(chatFor(say(town, 0, "/me waves", ctx), 1)).toEqual(["Skelly waves"]);
     const yell = say(town, 0, "/yell FIRE", ctx);
-    expect(chatFor(yell, 1)).toEqual(["Skelly yells: FIRE"]);
-    expect(chatLines(yell)).toEqual(["Skelly yells: FIRE"]);
+    // /yell is a broadcast, so the server's time comes first (broadcast.cpp:391-407).
+    const yelled = `${showTime(ctx)}:Skelly yells: FIRE`;
+    expect(chatFor(yell, 1)).toEqual([yelled]);
+    expect(chatLines(yell)).toEqual([yelled]);
     const queued = yell.town.players[2]?.mail.at(-1);
-    expect(queued?.type === "simpleText" && queued.text).toBe("Skelly yells: FIRE");
+    expect(queued?.type === "simpleText" && queued.text).toBe(yelled);
     expect(yell.town.players[3]?.mail.some((m) => m.type === "simpleText")).toBe(false);
     expect(
       yell.town.players[1]?.mail.some((m) => m.type === "simpleText" && m.text.includes("FIRE")),

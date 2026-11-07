@@ -410,10 +410,17 @@ describe("the cafe (sprite 469)", () => {
     expectObject("i_chat");
     expectVars("st_message", "i_chat_speed");
     expect(plain(flash.get("st_message"))).toContain("Pale Horse");
-    expect(plain(flash.get("st_message"))).toContain("saunters in");
+    // command_chat_start (commands_bar.cpp:321-348) queues "X saunters in." for
+    // everyone in the cafe, the newcomer included: it arrives with the next poll,
+    // before what that poll says (one queue, broadcast.cpp:103-154).
+    expect(plain(flash.get("st_message"))).not.toContain("saunters in");
     await flash.command(Request.chatUpdate, { input: "hello Deathville" });
     expect(flash.num("i_sent")).toBe(Request.chatUpdate);
-    expect(plain(flash.get("st_message"))).toContain("Tess Tester: hello Deathville");
+    const said = plain(flash.get("st_message"));
+    expect(said.indexOf("saunters in")).toBeGreaterThanOrEqual(0);
+    expect(said.indexOf("Tess Tester: hello Deathville")).toBeGreaterThan(
+      said.indexOf("saunters in"),
+    );
     // An empty poll returns nothing new.
     await flash.command(Request.chatUpdate, { input: "" });
     expect(flash.num("i_sent")).toBe(Request.chatUpdate);

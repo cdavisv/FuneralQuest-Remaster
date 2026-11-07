@@ -22,7 +22,10 @@ const built = join(root, "apps/client/dist-build");
 if (process.env.FQ_SKIP_CLIENT_BUILD !== "1" || !existsSync(join(built, "index.html"))) {
   const env = { ...process.env };
   delete env.VITE_SERVER_URL;
-  const r = spawnSync("pnpm", ["--filter", "@fq/client", "build"], {
+  // FQ_SKIP_TYPECHECK=1 builds the bundle without the client's type check (CI checks types in
+  // its own job; this is for a tree that is mid-edit elsewhere).
+  const script = process.env.FQ_SKIP_TYPECHECK === "1" ? "bundle" : "build";
+  const r = spawnSync("pnpm", ["--filter", "@fq/client", script], {
     cwd: root,
     stdio: "inherit",
     env,

@@ -1,4 +1,4 @@
-import type { RichText } from "@fq/protocol";
+import type { ChatSpeaker, RichText } from "@fq/protocol";
 import type { ClassicText } from "../content/classicText.js";
 import type { ContentPack } from "../content/types.js";
 import type { ClassicRandom } from "../rng/classicRandom.js";
@@ -14,6 +14,20 @@ export interface EngineContext {
   registry: Registry;
   /** Wall-clock time in ms since epoch. Only stored (last logon and so on); never drives rules. */
   now: number;
+  /**
+   * The server's local time minus UTC, in minutes (for example -300 for New
+   * York in winter). With `now` it gives the time of day the original printed
+   * in front of notices ("12:05 AM:Bob logged on.", classic/clock.ts). 0 when
+   * absent.
+   */
+  localTimeOffsetMinutes?: number;
+  /**
+   * Comparison only (tools/oracle): when set, every draw of every turn comes
+   * from this one generator, as the original server drew from one global
+   * Mersenne Twister and one C runtime `rand()`, instead of the per-player,
+   * per-day streams. `town.streams` is then left alone. Never set in play.
+   */
+  sharedRandom?: ClassicRandom;
 }
 
 /** Side effects for the host. State changes are already in the returned town. */
@@ -38,7 +52,16 @@ export type Effect =
    * like the original's normal-importance packets. `to` names only active,
    * logged-on players.
    */
-  | { kind: "chat"; to: number[]; text: RichText }
+  | {
+      kind: "chat";
+      to: number[];
+      text: RichText;
+      /**
+       * Expanded only: the player who said the line, as data (absent for the room's own lines).
+       * Classic leaves it out: its recorded transcripts are locked (docs/expanded-rules.md 1.3).
+       */
+      from?: ChatSpeaker;
+    }
   | { kind: "playerCreated"; playerId: number }
   | { kind: "playerDeleted"; playerId: number; reason: "inactive" | "noSales" }
   | {
@@ -114,6 +137,7 @@ export class Turn {
   /** The seeded stream for the acting player (or the town) and the current day. */
   get rng(): ClassicRandom {
     if (this.override) return this.override;
+    if (this.engine.sharedRandom) return this.engine.sharedRandom;
     const day = this.town.day;
     if (this.stream && this.streamDay === day) return this.stream;
     if (this.stream) this.saveStream();

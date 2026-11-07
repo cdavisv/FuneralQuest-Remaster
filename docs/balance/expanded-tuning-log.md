@@ -207,3 +207,88 @@ No rule number changed. The bots (`packages/bots`) and the simulator (`tools/sim
 | Simulator: Shove duels, hits by hirer, the late upgrades' return (difference of differences), news / arc frequency | to judge the above |
 
 Result: win / fair necromancer 2.51, tycoon 2.15, politician 1.91, shark 1.78, pacifist 1.41, builder 0.50, gambler 0.48, saboteur 0.41, saint 0.39, organiser 0.29, scholar 0.17, Soft Touch 0.06 (was 2.75 / 2.54 ... scholar 0): not met. Billboard returns 0.031 BP a dollar (dominant), Night Watchman and Memorial Garden nothing (bought on day 26). Recommended numbers are in the baseline's "Recommended next tuning".
+
+## Engine gaps (before the balance round)
+
+No balance number changed here; these change what the bots can see and do, so the round below starts from a re-run, not from the old baseline. Details in `docs/expanded-rules.md` 11.5, 13.5, 20.4 and 29.
+
+| change | effect on the simulation |
+| --- | --- |
+| A hit-man rumour is data (`Hud.warnings`, `PlayerLife.rumourDay`) | the bots could not see the rumour (it is desk text, not an overlay), so nobody bought protection. Now the scholar, tycoon, politician, organiser and builder (`XStyle.protect`) go to the club the day they are warned and hire the bodyguard, or Tiny or the vest. In the first 100-town run: 75 bodyguards, 176 vests, (was 0 and 0 for a rumour) |
+| Rewards reported by mail queue an `applied` reward packet (10.2) | none on play (the reader skips it); a reward overlay can be told from a notice |
+| Age-aware lines (13.5): two starter Sympathy lines with limits | changes the random draws of the customers they fit (minors, old deceased): the towns are not the old baseline's towns line for line |
+| `View.monuments`, `saleOutcome`, `NewsPanel.meteor`, `Overlay.messageKind`, `ChatLine.from` | presentation only |
+| Simulator: happy and sour families by personality; win tables add each group's BP against its town's mean and the sd of that, and the spread of the means and mean places | to judge the round |
+
+## Balance round (rounds 13 to 16)
+
+Runs: `pnpm --filter @fq/sim run sim -- --days 30 --towns 100 --players 8 --rules expanded --seed 1` (100 towns, about 15 minutes with worker threads); the late joiner with `--towns 60 --latejoin 10`. "Before" is the first 100 towns of the bots-pass baseline (same seeds; the bots now also buy protection, so not every town is the same game). Win / fair is noisy at this size: a personality has 55 to 75 seats, so one win moves its share by about 0.12.
+
+Before (100 towns): tycoon 2.54 (+5.5% of its town's mean BP), necromancer 2.51 (-1.6%, sd 12.1%), politician 1.80 (+3.2%), shark 1.75, pacifist 1.39, saint 0.55, organiser 0.35, gambler 0.35, scholar 0.24, saboteur 0.23, builder 0.13, Soft Touch 0.12. Paths: evil 1.35, good 0.93, neutral 0.91.
+
+### Round 13
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| `pvp.necroMult` | x1.25 | x1.10 | the necromancer won 2.5x its share on a mean below the field: its season swings (sd 12% of the town mean against 3 to 5% for sellers) |
+| `markup.ratingPer10` | -4 | -5 | the tycoon's markup |
+| monuments 4 and 5 (`town.graveyard.monuments`) | 340, 420 BP | 300, 360 | only the tycoon and the shark build them; they are most of the tycoon's lead |
+| Billboard | $14,000, income +10 | $18,000, +8 | 0.031 BP a dollar, three times a monument |
+| Memorial Garden | $30,000, patience +1 | $20,000, patience +2 | bought on day 26, returned nothing |
+| Night Watchman | $20,000 | $12,000 | bought on day 26 |
+| `underdog.late.money` (new rule, 9.4) | none | $1,500 a season day already played | a late parlor lacks the upgrades the others bought in that time; the BP catch-up alone left it below mid-table |
+
+Result: tycoon 3.72 (+5.9%: the rating cut barely touches it), shark 2.03, politician 1.67, necromancer 1.46 (-5.4%), pacifist 1.21, gambler 0.88, saint 0.40, organiser 0.34, builder 0.28, Soft Touch 0.13, saboteur 0.11 (-8.3%: it is in the Necromancer band too, so the cut hit it hardest), scholar 0. Paths: evil 0.83, good 0.85, neutral 1.19. Billboard 0.019 BP a dollar, Garden 0.003, Night Watchman -0.008 (both still bought on day 25). 75 bodyguards and 176 vests bought on a rumour.
+
+### Round 14
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| `pvp.necroMult` | x1.10 | x1.15 | between: the saboteur fell too far |
+| monuments 4 and 5 | 300, 360 | 220, 260 | the tycoon still +5.9% |
+| Mayor's rating (`cityHall.election.perks.rating`) | +3 | +2 | the politician +4.6% |
+| `bank.savings.rate` | 0.2% | 0.15% a day | the tycoon |
+| Memorial Garden | income 0 | income +4 | a late rating buy cannot pay back; rating moves the income roll by a sixth of a point each |
+| Night Watchman | income 0 | income +3 | the same: its buyers are rarely attacked, so defence alone measures as nothing |
+
+Result: tycoon 2.48 (+5.3%), politician 1.78 (+4.9%), shark 1.67, necromancer 1.46, pacifist 1.10, gambler 0.88, builder 0.69, saint 0.67, Soft Touch 0.52, scholar 0.44, saboteur 0.44, organiser 0 (-0.2%, 70 seats: noise at this size). Paths: evil 0.94, good 0.99, neutral 1.04. Billboard 0.021, Garden 0.008 (+47 BP a day once owned), Night Watchman 0.003, monuments 0.010.
+
+Finding (consistency scoring): the simulator now counts happy families. Good-path parlors leave 46 to 49% of families happy, everyone else 28 to 33%, and the steady neutral sellers who trail (organiser 31%, scholar 28%, builder 30%) are at the bottom. A satisfaction bonus would pay the politician and the pacifist, already above their share, and not the sellers it is meant for, so it was written, tested and taken out again.
+
+### Round 15
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| monuments 4 and 5 | 220, 260 BP | 160, 180 | the tycoon still +5.3%: five monuments against the field's three were most of its lead |
+| `markup.cheapnessPer10` | 1.0 | 1.3 | a markup still cost the tycoon and the shark almost nothing in refusals |
+| Billboard | $18,000, income +8 | $20,000, +7 | still twice a monument per dollar (0.021) |
+| Night Watchman | income +3 | +5 | still 0.003 BP a dollar |
+
+Result: politician 2.56 (+5.0%), necromancer 2.14 (-4.5%, sd 12.3%: no necromancer number changed since round 14, where it was 1.46, which shows the noise of 70 high-variance seats), tycoon 1.10 (+4.5%), builder 1.10, gambler 0.88, pacifist 0.77, shark 0.72, saint 0.67, Soft Touch 0.65, organiser 0.57, saboteur 0.44, scholar 0.33. Paths: good 1.13, evil 1.12, neutral 0.84. Billboard 0.009 BP a dollar, Garden 0.008, Night Watchman 0.012, monuments 0.009: no dominant purchase, none dead.
+
+Late joiner (60 towns, a ninth bot on day 10, with `underdog.late.money`): mean place 5.20 of 9 (was 5.95), 60% in the top half, 19,546 BP against a town median of 19,525.
+
+### Round 16
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| `customer.ratingDiv` | 6 | 7 | the politician (+5.0%) stacks rating: good path, chain, mayor, certificates |
+
+Result: worse. Politician 3.11 (+4.3%), necromancer 2.03, gambler 1.38, tycoon and pacifist 1.10, shark 0.96, builder 0.83, saboteur 0.55, saint 0.53, Soft Touch 0.26, scholar and organiser 0 (neutral path 0.70): the sellers who trail lose more from a weaker rating than the politician does. Reverted.
+
+## Shipped (the balance round's final numbers)
+
+| change | from | to |
+| --- | --- | --- |
+| `pvp.necroMult` | x1.25 | x1.15 |
+| `markup.ratingPer10`, `markup.cheapnessPer10` | -4, 1.0 | -5, 1.3 |
+| monuments 4 and 5 (BP) | 340, 420 | 160, 180 |
+| `bank.savings.rate` | 0.2% | 0.15% a day |
+| Mayor's rating (`cityHall.election.perks.rating`) | +3 | +1 (+2 in rounds 14 to 16; +1 for the final run as a last small step, its effect is a sixth of an income point) |
+| Billboard | $14,000, income +10 | $20,000, income +7 |
+| Memorial Garden | $30,000, patience +1 | $20,000, patience +2, income +4 |
+| Night Watchman | $20,000 | $12,000, income +5 |
+| `underdog.late.money` (new rule) | none | $1,500 a season day already played |
+| `customer.ratingDiv` | 6 | 6 (tried 7, reverted) |
+
+The 200-town baseline with these numbers is `docs/balance/expanded-baseline.md` (1,865 s, checks passed), with its reading. Against the targets: win / fair politician 2.67, necromancer 2.45, pacifist 1.35, tycoon 1.24, shark 0.92, gambler 0.84, saint 0.72, builder 0.62, Soft Touch 0.44, saboteur 0.29, scholar 0.28, organiser 0.17 (before: necromancer 2.51, tycoon 2.15 ... Soft Touch 0.06): still two above 2 and three below a third. Mean final BP 17,897 to 20,486 (sd of the means 678, was 642); mean place 2.75 to 6.26. Paths: evil 1.29 (was 1.42), good 1.23, neutral 0.70. Purchases: Billboard 0.009 BP a dollar (was 0.031), Night Watchman 0.010, Memorial Garden 0.007, monuments 0.009. Day-10 starter 5.10 of 9 (was 5.95). Hard bots 16.7% above easy ones.

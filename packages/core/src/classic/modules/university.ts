@@ -207,11 +207,16 @@ function paperStart(turn: Turn): View {
 /**
  * `command_spirit_paper` (:390-437): any past day's front page, from day 1 to
  * yesterday. The yellowing-paper text makes the page legible over black
- * (`7 becomes `w, `^ becomes `$). A cancelled prompt goes back to the
- * library (the original read the client's abort marker as the number 12).
+ * (`7 becomes `w, `^ becomes `$). A cancelled prompt: with
+ * `fixes.oldPapersCancel` back to the library; the original read the client's
+ * abort marker "12ABORT12" (welcome.swf button 487) with `atoi` as day 12.
  */
-function paper(turn: Turn, answer: string | null): View {
-  if (answer === null) return libraryRestart(turn);
+function paper(turn: Turn, given: string | null): View {
+  let answer = given;
+  if (answer === null) {
+    if (turn.rules.fixes.oldPapersCancel) return libraryRestart(turn);
+    answer = "12ABORT12";
+  }
   const t = turn.text.places.university;
   const day = atoi(answer);
   let text: string;

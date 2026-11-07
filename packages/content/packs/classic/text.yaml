@@ -22,6 +22,7 @@ newPlayer:
 session:
   loggedOn: '{name} logged on.'
   loggedOff: '{name} logged off.'
+  parlorLocked: 'Someone is currently poking around your parlor...please log back on in a few minutes!'
 desk:
   title: 'At Home'
   welcomeBack: '`$Welcome back, `w{name}`$.  Unfinished business?

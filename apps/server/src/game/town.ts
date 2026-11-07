@@ -33,13 +33,14 @@ import type {
 import { eraseParlorFrom, type NameHistory } from "../moderation/erase.js";
 import type { ModerationService } from "../moderation/service.js";
 import type { EndReason, ParlorForm, ParlorInfo, RankingRow, TownInfo } from "../wire.js";
+import { RejectedActionThrottle } from "./auditThrottle.js";
 import { diffPushes, type EffectPlan, notice, type Outbound, planEffects } from "./effects.js";
 import { buildHallEntry } from "./hall.js";
 import type { Hub } from "./hub.js";
 import { reportPresence } from "./presence.js";
 import { SerialQueue } from "./queue.js";
 import { getRuleset, type RulesetDef } from "./rulesets.js";
-import { createSchedule, type DaySchedule } from "./schedule.js";
+import { createSchedule, type DaySchedule, utcOffsetMinutes } from "./schedule.js";
 import type { RuleOverrides } from "./tuning.js";
 
 /** Everything a town runtime shares with its host. */
@@ -159,6 +160,7 @@ export class TownRuntime {
   private readonly activeAt = new Map<number, number>();
   private closed = false;
   private readonly observers = new Set<EffectObserver>();
+  private readonly rejections = new RejectedActionThrottle();
   /** The block-list version this town's engine state last matched (see `syncBlocks`). */
   private appliedBlockVersion = -1;
 
@@ -215,7 +217,7 @@ export class TownRuntime {
         ...(spec.settings ? { settings: spec.settings } : {}),
         ...(spec.serverNews !== undefined ? { serverNews: spec.serverNews } : {}),
       },
-      { ...baseCtx, now },
+      { ...baseCtx, now, localTimeOffsetMinutes: utcOffsetMinutes(spec.timeZone, now) },
     );
     const schedule = createSchedule({
       timeZone: spec.timeZone,
@@ -308,7 +310,13 @@ export class TownRuntime {
   }
 
   private ctx(): EngineContext {
-    return { ...this.baseCtx, now: this.deps.clock.now() };
+    const now = this.deps.clock.now();
+    // The original printed notices in the server's local time; a town's is its own time zone.
+    return {
+      ...this.baseCtx,
+      now,
+      localTimeOffsetMinutes: utcOffsetMinutes(this.row.time_zone, now),
+    };
   }
 
   /** Runs `fn` after everything queued before it. */
@@ -545,14 +553,27 @@ export class TownRuntime {
       const recorded =
         action.type === "chat" ? { type: "chat", length: action.text.length } : action;
       if (r.rejected) {
-        this.deps.audit.append({
-          at: this.deps.clock.now(),
-          townId: this.row.id,
-          accountId: account.id,
-          playerId,
-          kind: "action:rejected",
-          data: { action: recorded, reason: r.rejected },
+        const at = this.deps.clock.now();
+        const logged = this.rejections.allow(playerId, at, (dropped) => {
+          this.deps.audit.append({
+            at,
+            townId: this.row.id,
+            accountId: account.id,
+            playerId,
+            kind: "action:rejected:suppressed",
+            data: { dropped },
+          });
         });
+        if (logged) {
+          this.deps.audit.append({
+            at,
+            townId: this.row.id,
+            accountId: account.id,
+            playerId,
+            kind: "action:rejected",
+            data: { action: recorded, reason: r.rejected },
+          });
+        }
         return { kind: "rejected", reason: r.rejected, view: r.view } as const;
       }
       await this.commit({
@@ -1234,8 +1255,6 @@ export class TownRuntime {
     visibleTo: (playerId: number) => boolean,
   ): Outbound[] {
     const mod = this.deps.moderation;
-    const senderAccount = sender === null ? null : mod.accountOfPlayer(this.row.id, sender);
-    const senderName = sender === null ? null : (this.state.players[sender]?.name ?? null);
     const out: Outbound[] = [];
     for (const push of pushes) {
       const message = push.message;
@@ -1243,12 +1262,24 @@ export class TownRuntime {
         out.push(push);
         continue;
       }
+      // Expanded names the speaker of every spoken line as data (`ChatLine.from`); a line without
+      // one is the room's own (an arrival, the TV, a notice), said by nobody. Classic lines carry
+      // no speaker (its transcripts are locked), so there it is whoever the change was for.
+      const speaker = message.notice.from
+        ? message.notice.from.playerId
+        : this.state.ruleset === "expanded"
+          ? null
+          : sender;
+      const senderAccount = speaker === null ? null : mod.accountOfPlayer(this.row.id, speaker);
+      const senderName =
+        message.notice.from?.name ??
+        (speaker === null ? null : (this.state.players[speaker]?.name ?? null));
       const r = push.recipient;
       const ids = r.to === "players" ? r.playerIds : r.to === "player" ? [r.playerId] : [];
       const kept = ids.filter(visibleTo);
       mod.recordChat(
         this.row.id,
-        { playerId: sender, accountId: senderAccount, name: senderName },
+        { playerId: speaker, accountId: senderAccount, name: senderName },
         richTextToPlain(message.notice.text),
         sender === null ? kept : [...kept, sender],
       );

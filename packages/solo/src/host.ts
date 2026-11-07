@@ -27,7 +27,7 @@ import {
   withExpandedContent,
 } from "@fq/core";
 import type { Action, Button, View } from "@fq/protocol";
-import { practiceDay } from "./dates.js";
+import { practiceDay, zoneOffsetMinutes } from "./dates.js";
 import { migrateSave } from "./saves.js";
 import {
   END_DAY,
@@ -54,6 +54,21 @@ const TV_DIGEST = 3;
 export interface HostOptions {
   /** Wall clock in ms since epoch; default `Date.now`. Only real-time mode reads it for rules. */
   now?: () => number;
+  /**
+   * The player's IANA time zone (the page passes its own: a worker has no window). The time in
+   * front of notices is printed in it, following daylight saving. Without it: the config's
+   * `utcOffsetMinutes`, else the zone of the runtime's `Date`.
+   */
+  timeZone?: string;
+}
+
+/** The player's local time minus UTC at `now`, in minutes, for the engine's notices. */
+function offsetFor(config: Pick<SoloConfig, "utcOffsetMinutes">, options: HostOptions) {
+  return (now: number): number => {
+    if (options.timeZone) return zoneOffsetMinutes(options.timeZone, now);
+    if (config.utcOffsetMinutes !== undefined) return config.utcOffsetMinutes;
+    return -new Date(now).getTimezoneOffset();
+  };
 }
 
 export function rulesFor(name: SoloConfig["ruleset"]): ClassicRules {
@@ -65,15 +80,18 @@ const CHALLENGE_DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /** The engine context for a game: Classic or Expanded rules, always with the given registry. */
 function contextFor(
-  config: Pick<SoloConfig, "ruleset">,
+  config: Pick<SoloConfig, "ruleset" | "utcOffsetMinutes">,
   content: ContentPack,
   registry: Registry,
   now: number,
+  options: HostOptions,
 ): EngineContext {
   const rules = rulesFor(config.ruleset);
-  return config.ruleset === "expanded"
-    ? expandedContext(content, { rules, registry, now })
-    : classicContext(content, { rules, registry, now });
+  const base =
+    config.ruleset === "expanded"
+      ? expandedContext(content, { rules, registry, now })
+      : classicContext(content, { rules, registry, now });
+  return { ...base, localTimeOffsetMinutes: offsetFor(config, options)(now) };
 }
 
 function registryFor(config: Pick<SoloConfig, "ruleset">): Registry {
@@ -132,7 +150,7 @@ export class SoloHost implements Transport {
     private readonly config: SoloConfig,
     private readonly content: ContentPack,
     save: Pick<SoloSave, "town" | "humanId" | "bots" | "realDay" | "createdAt">,
-    options: HostOptions,
+    private readonly options: HostOptions,
   ) {
     this.now = options.now ?? Date.now;
     this.registry = registryFor(config);
@@ -164,7 +182,7 @@ export class SoloHost implements Transport {
     }
     if (config.mode === "daily") return SoloHost.createDaily(config, content, options, now);
     const registry = registryFor(config);
-    const ctx = contextFor(config, content, registry, now);
+    const ctx = contextFor(config, content, registry, now, options);
     // `maintDelete` (maint.cpp:296) closes a parlor that has sold nothing by midnight. That keeps
     // a server's list of dead accounts short; on the player's own machine it would only end
     // their game for a slow first days, so it is off.
@@ -230,7 +248,7 @@ export class SoloHost implements Transport {
       throw new SoloSetupError("challengeDay", `"${day}" is not a date such as 2026-11-06.`);
     }
     const registry = registryFor(config);
-    const ctx = contextFor(config, content, registry, now);
+    const ctx = contextFor(config, content, registry, now, options);
     let started: ReturnType<typeof startDailyChallenge>;
     try {
       started = startDailyChallenge(createDailyChallenge(day, ctx), config.player, ctx);
@@ -386,7 +404,7 @@ export class SoloHost implements Transport {
   // ------------------------------------------------------------ internals
 
   private ctx(): EngineContext {
-    return contextFor(this.config, this.content, this.registry, this.now());
+    return contextFor(this.config, this.content, this.registry, this.now(), this.options);
   }
 
   private get daily(): boolean {

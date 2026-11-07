@@ -83,7 +83,9 @@ test("a report filed in the cafe appears, with its evidence, on the moderators' 
   const a = await playerInCafe(browser, alice);
   const b = await playerInCafe(browser, bob);
   await say(a, "a line before");
-  await say(b, "an unkind remark about funerals");
+  // Unique per run: every browser project files its report on the same server.
+  const remark = `an unkind remark about funerals ${bob.login}`;
+  await say(b, remark);
   await say(b, "a line after");
   await expect(log(a)).toContainText("a line after");
 
@@ -93,7 +95,7 @@ test("a report filed in the cafe appears, with its evidence, on the moderators' 
     .click();
   await a.getByRole("button", { name: "Report", exact: true }).click();
   const form = a.getByRole("dialog", { name: "Report to the moderators" });
-  await expect(form).toContainText("an unkind remark about funerals");
+  await expect(form).toContainText(remark);
   await form.getByRole("radio", { name: "Harassment or bullying" }).check({ force: true });
   await form.getByLabel(/Anything else/).fill("e2e: please look");
   await form.getByRole("button", { name: "Send report" }).click();
@@ -112,7 +114,7 @@ test("a report filed in the cafe appears, with its evidence, on the moderators' 
   await admin.getByPlaceholder(/Your name/).fill("e2e moderator");
   await admin.getByRole("button", { name: "Sign in" }).click();
   await admin.getByRole("button", { name: "Reports", exact: true }).click();
-  const row = admin.getByRole("row").filter({ hasText: "an unkind remark about funerals" });
+  const row = admin.getByRole("row").filter({ hasText: remark });
   await expect(row).toHaveCount(1);
   await row.click();
   await expect(admin.getByRole("heading", { name: /^Report \d+/ })).toBeVisible();
@@ -120,7 +122,7 @@ test("a report filed in the cafe appears, with its evidence, on the moderators' 
   await expect(admin.getByText(alice.login)).toBeVisible(); // the reporter, for moderators only
   const evidence = admin.getByRole("heading", { name: "The cafe around that line" }).locator("..");
   await expect(evidence).toContainText("a line before");
-  await expect(evidence).toContainText("an unkind remark about funerals");
+  await expect(evidence).toContainText(remark);
   await expect(evidence).toContainText("a line after");
 
   // The reported player cannot see any of this.

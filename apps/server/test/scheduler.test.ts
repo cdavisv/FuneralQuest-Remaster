@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { FakeClock } from "../src/clock.js";
-import { createSchedule } from "../src/game/schedule.js";
-import { type Harness, startServer, TestPlayer } from "./support/harness.js";
+import { createSchedule, utcOffsetMinutes } from "../src/game/schedule.js";
+import { type Harness, startServer, TestPlayer, toDesk } from "./support/harness.js";
 
 let h: Harness | null = null;
 afterEach(async () => {
@@ -54,6 +54,42 @@ describe("the day schedule", () => {
     expect(blitz.nextBoundary(1000)).toBe(1000 + 15 * 60_000);
     expect(blitz.countBetween(1000, 1000 + 60 * 60_000, 100)).toBe(4);
     expect(blitz.countBetween(1000, 1000 + 60 * 60_000, 3)).toBe(3);
+  });
+});
+
+describe("the time on notices (show_time, std_all.cpp:328-347)", () => {
+  it("is the town zone's offset from UTC, following daylight saving", () => {
+    expect(utcOffsetMinutes("UTC", Date.UTC(2030, 0, 1, 12))).toBe(0);
+    expect(utcOffsetMinutes("America/New_York", Date.UTC(2030, 0, 1, 12))).toBe(-300);
+    expect(utcOffsetMinutes("America/New_York", Date.UTC(2030, 6, 1, 12))).toBe(-240);
+    // The spring-forward instant: 06:59 UTC is 01:59 EST, 07:00 UTC is 03:00 EDT.
+    expect(utcOffsetMinutes("America/New_York", Date.UTC(2030, 2, 10, 6, 59))).toBe(-300);
+    expect(utcOffsetMinutes("America/New_York", Date.UTC(2030, 2, 10, 7, 0))).toBe(-240);
+    expect(utcOffsetMinutes("Europe/Paris", Date.UTC(2030, 0, 1, 12))).toBe(60);
+    expect(utcOffsetMinutes("Asia/Kolkata", Date.UTC(2030, 0, 1, 12))).toBe(330);
+    expect(utcOffsetMinutes("Pacific/Chatham", Date.UTC(2030, 0, 1, 12))).toBe(825);
+  });
+
+  it("notices carry the town's local time, as the original server wrote them", async () => {
+    // 12:00 UTC on 2030-01-01 is 7:00 AM in New York (EST).
+    h = await startServer({
+      clock: new FakeClock(Date.UTC(2030, 0, 1, 12, 0, 0)),
+      towns: [{ id: "main", name: "Dead Calm", seed: 1234, timeZone: "America/New_York" }],
+    });
+    const alice = await new TestPlayer(h, "alice").signUp();
+    await alice.enter();
+    await toDesk(alice);
+    await h.clock.advance(5 * 60_000);
+    const bob = await new TestPlayer(h, "bob", undefined, "10.0.0.2").signUp();
+    await bob.enter();
+    await alice.press("go:map");
+    const back = await alice.act({ type: "visit", placeId: "funeral-home" });
+    expect(back.status).toBe(200);
+    const desk = back.body.view;
+    const text = desk.text.map((s) => s.text).join("");
+    // A new parlor is announced (new_user.cpp), with the time in front.
+    expect(text).toContain("7:05 AM:bob has just moved into town!");
+    expect(text).not.toMatch(/(^|\n)bob has just/);
   });
 });
 

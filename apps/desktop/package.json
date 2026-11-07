@@ -10,7 +10,7 @@
     "build": "tauri build",
     "build:linux": "tauri build --bundles deb,appimage",
     "bundle": "node scripts/build-client.mjs",
-    "typecheck": "node --check shim/fq-wrapper.js && node --check scripts/build-client.mjs && node --check scripts/make-icons.mjs",
+    "typecheck": "node --check shim/fq-wrapper.js && node --check scripts/selftest.js && node --check scripts/build-client.mjs && node --check scripts/make-icons.mjs",
     "tauri": "tauri"
   },
   "devDependencies": {

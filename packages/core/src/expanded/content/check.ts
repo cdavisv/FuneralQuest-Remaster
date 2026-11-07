@@ -1,9 +1,10 @@
 import type { NewsCondition } from "../../content/newsCondition.js";
 import type { ExpandedRules } from "../../rules/expandedRules.js";
+import { hasAgeLimits } from "../ages.js";
 import { MODIFIER_KEYS } from "../modifiers.js";
 import { TOWN_MODIFIER_KEYS } from "../town/life.js";
 import type { ExpandedTownContent, ModifierDef } from "./townTypes.js";
-import type { ExpandedContent } from "./types.js";
+import type { AgeLimits, ExpandedContent } from "./types.js";
 
 /**
  * Checks an Expanded content section against the rules (docs/expanded-rules.md
@@ -33,7 +34,22 @@ export function checkExpandedContent(content: ExpandedContent, rules: ExpandedRu
   for (const t of content.traits) {
     for (const x of t.excludes ?? [])
       need(traitIds.has(x), `traits.${t.id}: excludes unknown trait ${x}`);
+    for (const why of ageProblems(t)) problems.push(`traits.${t.id}: ${why}`);
   }
+  need(
+    content.traits.filter((t) => !hasAgeLimits(t)).length >= 3,
+    "traits: need at least 3 without age limits (13.5), so every customer can get them",
+  );
+  const neg = content.text.negotiation as unknown as Record<string, unknown>;
+  (content.text.negotiation.agedLines ?? []).forEach((l, i) => {
+    const path = l.pool.split(".");
+    let list: unknown = neg;
+    for (const k of path) list = (list as Record<string, unknown> | undefined)?.[k];
+    need(Array.isArray(list), `text.negotiation.agedLines[${i}]: unknown pool ${l.pool}`);
+    need(l.text !== "", `text.negotiation.agedLines[${i}]: empty text`);
+    need(hasAgeLimits(l), `text.negotiation.agedLines[${i}]: no age limit (put it in ${l.pool})`);
+    for (const why of ageProblems(l)) problems.push(`text.negotiation.agedLines[${i}]: ${why}`);
+  });
   need(content.backstories.length > 0, "backstories: need at least one");
   const bits = content.backstoryBits;
   need(
@@ -195,5 +211,21 @@ export function checkNewsCondition(
   }
   for (const id of when.notArcs ?? [])
     if (!endingsOf(id)) out.push(`${where}: when names unknown arc ${id}`);
+  return out;
+}
+
+/** Section 13.5: bounds that are not whole ages from 0 to 120, or a minimum above its maximum. */
+function ageProblems(l: AgeLimits): string[] {
+  const out: string[] = [];
+  for (const [k, v] of Object.entries(l) as [keyof AgeLimits, unknown][]) {
+    if (!["minCustomerAge", "maxCustomerAge", "minDeceasedAge", "maxDeceasedAge"].includes(k))
+      continue;
+    if (v !== undefined && (!Number.isInteger(v) || (v as number) < 0 || (v as number) > 120))
+      out.push(`${k} must be a whole age from 0 to 120`);
+  }
+  if ((l.minCustomerAge ?? 0) > (l.maxCustomerAge ?? 120))
+    out.push("minCustomerAge > maxCustomerAge");
+  if ((l.minDeceasedAge ?? 0) > (l.maxDeceasedAge ?? 120))
+    out.push("minDeceasedAge > maxDeceasedAge");
   return out;
 }

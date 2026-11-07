@@ -11,6 +11,8 @@
   "scripts": {
     "render": "tsx scripts/render.ts",
     "analyse": "tsx scripts/analyse.ts",
+    "studio": "tsx scripts/studio.ts",
+    "listen-page": "tsx scripts/listen.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

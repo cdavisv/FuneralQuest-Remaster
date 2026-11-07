@@ -1,10 +1,10 @@
 # Remastered art pack: notes
 
-The Remastered pack is new vector art for Funeral Quest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, adds the Expanded ruleset's places, people and icons, and fixes one original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
+The Remastered pack is new vector art for Funeral Quest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, and adds the Expanded ruleset's places, people and icons. It replaces no original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
 
 - **Files:** `assets/remastered/<id>.svg` (77 SVGs, 1.3 MB in all, largest 131 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
 - **Sheets:** `assets/remastered/contact-sheet.png` and `.html` (every piece with its grade); `assets/remastered/comparisons.png` and `comparisons/*.png` (each traced original beside its redraw).
-- **Credit:** "Funeral Quest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. The fixed `people/m_adult_u` stays Akiko Robinson's drawing under its original licence; only its new shirt logo is ours.
+- **Credit:** "Funeral Quest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. No original portrait is overridden: every original person picture is used unchanged under every art pack.
 
 ## How it is made
 
@@ -65,11 +65,11 @@ A ships; B is an acceptable placeholder that holds up beside the originals; C ne
 
 **Expanded places (all B):** `places/graveyard`, `places/graveyard-duel`, `places/city-hall`, `places/mayor-office`, `places/reaper-club-door`, `places/reaper-club`, `places/reaper-tables`, `places/black-market`, `places/parlor-office`, `places/parlor-1` to `-5` (Shack, Fixer-Upper, Respectable, Chapel House, Colonial Mansion: one building growing, in the object style of the original shack and mansion), `places/prep-table`, `places/prep-cosmetics`, `places/prep-viewing`, `places/bingo-night`, `places/sick-room`, `places/bank-vault`.
 
-**Portraits:** `people/mayor-grubb`, `people/lucius-vane`, `people/inspector-mudge`, `people/teller-prudence`, `people/nurse-gertie`, and four new customers `people/f_old_3` (churchgoer in a Sunday hat), `people/m_adult_5` (farmer), `people/f_adult_3` (diner waitress), `people/m_old_7` (retired watchmaker): **all C**. `people/morty` (the parlor skeleton with one glass eye): **B**. `people/m_adult_u` with the real band's logo replaced by an invented one (HEARSEFIRE): **A**.
+**Portraits:** `people/mayor-grubb`, `people/lucius-vane`, `people/inspector-mudge`, `people/teller-prudence`, `people/nurse-gertie`, and four new customers `people/f_old_3` (churchgoer in a Sunday hat), `people/m_adult_5` (farmer), `people/f_adult_3` (diner waitress), `people/m_old_7` (retired watchmaker): **all C**. `people/morty` (the parlor skeleton with one glass eye): **B**.
 
 **UI and icons:** `ui/capsule-parlor` **A**; `ui/building-city-hall` and `ui/building-reaper-club` **B**; 20 ledger and town-strip icons, `icons/karma-balance`, `icons/parlor-1` to `-5` and `icons/monument-1` to `-5`: **B**.
 
-Totals: 2 A, 66 B, 9 C.
+Totals: 1 A, 66 B, 9 C.
 
 ## Compared and corrected
 
@@ -128,5 +128,4 @@ These belong to the content and engine owners (`packages/content`, `packages/cor
 
 - The portraits are attempts, graded C, as said above.
 - The karma balance icon was checked as a render and in the unit tests, not on a live body-preparation screen.
-- The service worker precaches every bundled file, so the Remastered pictures (about 1.2 MB) are fetched at install even for players who keep Classic; `vite.config.ts` could treat them as art (best effort) instead.
 - There is no art for a graveyard building on the map (the README suggests `ui/building-graveyard.svg`); the base map's own crosses serve.

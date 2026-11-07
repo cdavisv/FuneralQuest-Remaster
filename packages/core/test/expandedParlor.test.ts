@@ -499,7 +499,7 @@ describe("10.2 rewards apply at once", () => {
     town = runDailyMaintenance(town, p.ctx).town;
     expect(town.players[0]?.bp).toBeGreaterThan(bp);
     expect(town.players[0]?.luck).toBeGreaterThan(luck);
-    expect(town.players[0]?.mail.some((m) => m.type === "varMod")).toBe(false);
+    expect(town.players[0]?.mail.some((m) => m.type === "varMod" && !m.applied)).toBe(false);
   });
 });
 

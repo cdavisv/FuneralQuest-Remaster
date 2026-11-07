@@ -230,7 +230,7 @@ function ownLines(turn: Turn): ChatLine[] {
   for (let i = 0; i < turn.effects.length; i++) {
     const e = turn.effects[i];
     if (e?.kind !== "chat" || !e.to.includes(turn.playerId)) continue;
-    lines.push({ text: e.text });
+    lines.push(e.from ? { text: e.text, from: e.from } : { text: e.text });
     const to = e.to.filter((id) => id !== turn.playerId);
     if (to.length === 0) {
       turn.effects.splice(i, 1);
@@ -239,6 +239,24 @@ function ownLines(turn: Turn): ChatLine[] {
       turn.effects[i] = { ...e, to };
     }
   }
+  return lines;
+}
+
+/**
+ * `add_que_messages_chat` (broadcast.cpp:103-154): a cafe poll also shows the
+ * simple-text notices waiting in the player's queue (log-on notices, yells,
+ * shops closing), "`w" + text, and removes them, so the desk never shows
+ * them. Other packets stay for the desk.
+ */
+function queuedNotices(turn: Turn): ChatLine[] {
+  const mail = turn.player.mail;
+  const lines: ChatLine[] = [];
+  const kept = mail.filter((packet) => {
+    if (packet.type !== "simpleText") return true;
+    lines.push({ text: legacy(fill(turn.text.social.cafe.notice, { text: packet.text })) });
+    return false;
+  });
+  if (lines.length > 0) turn.player.mail = kept;
   return lines;
 }
 
@@ -256,7 +274,7 @@ function cafeView(turn: Turn): View {
     title: turn.text.social.cafe.title,
     text: legacy(introOf(turn)),
     hud: hud(turn.player),
-    chat: ownLines(turn),
+    chat: [...queuedNotices(turn), ...ownLines(turn)],
     buttons: [goButton("map", turn.text.social.cafe.leave)],
   };
 }

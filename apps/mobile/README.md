@@ -23,4 +23,4 @@ Environment: `FQ_DEFAULT_SERVER` (default server address), `FQ_SKIP_CLIENT_BUILD
 
 Plugins: `@capacitor/app` (back button, deep links, lifecycle), `browser`, `filesystem` and `share` (save files), `keyboard`, `local-notifications`, `splash-screen`; the status and gesture bars are Capacitor core's `SystemBars`. No push, no analytics, no Firebase.
 
-Client changes wanted: the same list as [apps/desktop/README.md](../desktop/README.md#client-changes-not-made-the-wrappers-work-around-each).
+Client changes: all made; see [apps/desktop/README.md](../desktop/README.md#client-side).

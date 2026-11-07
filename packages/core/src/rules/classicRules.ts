@@ -138,6 +138,21 @@ export interface ClassicFixes {
    * still be robbed or attacked.
    */
   visitTargetRecheck: boolean;
+  /**
+   * Read past a Continue stop that has nothing before it (the first packet of
+   * a news blurb's gift mail, maint.cpp:33-95). The original showed the desk
+   * with only a Continue button and applied the gift at the next click
+   * (commands_main.cpp:89-108, broadcast.cpp:42-50); fixed, the gift is read
+   * at once and the player is spared one empty click.
+   */
+  emptyMailStop: boolean;
+  /**
+   * Cancel on the library's Old Papers prompt goes back to the library. The
+   * original read the client's abort marker "12ABORT12" with `atoi` as day 12
+   * (commands_spirit.cpp:393) and showed that day's paper, or "You desperately
+   * hunt around for anything dealing with a day 12 but fail."
+   */
+  oldPapersCancel: boolean;
 }
 
 /** Visits and battle numbers (legacy/source/commands_comp.cpp, commands_battle.cpp). */
@@ -407,6 +422,8 @@ export const CLASSIC_RULES: ClassicRules = {
     hearseRebuy: true,
     battleDisconnect: true,
     visitTargetRecheck: true,
+    emptyMailStop: true,
+    oldPapersCancel: true,
   },
 };
 
@@ -422,6 +439,8 @@ export function originalClassicRules(): ClassicRules {
       hearseRebuy: false,
       battleDisconnect: false,
       visitTargetRecheck: false,
+      emptyMailStop: false,
+      oldPapersCancel: false,
     },
   };
 }

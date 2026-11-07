@@ -11,15 +11,16 @@ Both apps play **Solo mode with no connection and no server**. Online play needs
 
 The app/bundle identifier is `org.funeralquest.remaster`. **It is a placeholder.** It cannot be changed after the first upload to Google Play or the App Store, so choose the real one (a reverse-domain name you control) before that: `apps/desktop/src-tauri/tauri.conf.json` (`identifier`), `apps/mobile/capacitor.config.json` (`appId`), the Android `namespace`/`applicationId` in `apps/mobile/android/app/build.gradle` and the Java package path of `MainActivity`, and `PRODUCT_BUNDLE_IDENTIFIER` in the Xcode project.
 
-## What the wrappers add (and do not touch the client for)
+## What the wrappers add
 
-The client was not edited. A shared script, `apps/desktop/shim/fq-wrapper.js`, runs before the page's own scripts (Tauri injects it; the mobile build loads it first from `index.html`). It:
+The web client does the game's own work inside a native webview (it reads its server address from `window.fqWrapper.server`, plays gamepads itself, exports saves through `window.fqWrapper.saveFile`, registers `window.fqHandleBack`, and does not register its service worker inside a wrapper). A shared script, `apps/desktop/shim/fq-wrapper.js`, runs before the page's own scripts (Tauri injects it; the mobile build loads it first from `index.html`) and supplies only what a plain page cannot have:
 
-- **Re-points the client's own-origin `/api`, `/health` and `/admin` requests, and its WebSocket, at the configured server.** The client reads its server only from the build-time `VITE_SERVER_URL`; this is the wrapper-side substitute. Only `https://` addresses (and `http://` for localhost) are accepted.
-- Offers a **Server address** dialog: desktop menu *Game > Server address* or F2; mobile via the Android back button at the front door (Stay / Settings / Leave), the deep link `funeralquest://settings`, or a gamepad's Start button. The value persists in the webview's storage (`fqw.server.v1`) and survives updates.
-- Maps a **gamepad** (standard layout): d-pad or left stick moves focus, A presses the focused control, B is Escape, X/Y/LB/RB are keys 1 to 4, Start opens the settings dialog.
-- Opens links to other sites in the **system browser**, and sends **save exports** (`<a download>` of a blob, which webviews do not handle) to a native save dialog (desktop) or the share sheet (mobile). Import uses the client's own file input, which works in both webviews.
+- A **server address** that persists (webview storage, `fqw.server.v1`, surviving updates), read by the client as `fqWrapper.server`, and the **Server address** dialog (`fqWrapper.openSettings()`): desktop menu *Game > Server address* or F2, the client's Settings, the deep link `funeralquest://settings`, and on mobile the Android back button at the front door (Stay / Settings / Leave). Only `https://` addresses (and `http://` for localhost) are accepted. The shim no longer rewrites `fetch` or `WebSocket`; the client builds its own URLs from the address.
+- `fqWrapper.saveFile(name, text, type)` and, on desktop, `fqWrapper.openFile(accept)`: the host's **native save and open dialogs** (desktop) or the **share sheet** (mobile, save only) for the client's save export and import. Mobile import uses the client's own file input, which works in both webviews.
+- Links to other sites open in the **system browser**.
 - Desktop only: F11 and Alt+Enter toggle fullscreen; the window remembers its size and position.
+
+Gamepads are the client's (`apps/client/src/input`): d-pad or left stick moves focus once per press, A presses, B goes back, X submits, Start opens Settings.
 
 The online server must allow the wrapper's origin, because the page is not served from the server: set `FQ_ALLOWED_ORIGINS` on the server to include
 
@@ -71,7 +72,7 @@ Tauri's guides: <https://v2.tauri.app/distribute/sign/windows/> and <https://v2.
 ### Security notes (desktop)
 
 - Content Security Policy in `tauri.conf.json`: scripts only from the app itself; `connect-src` allows the app, IPC, `https:`/`wss:` and localhost. Because the server address is chosen by the player, the host cannot be narrower than "any https host" in a static policy; the shim itself refuses to use anything but `https` (or `http` on localhost).
-- Capability file `src-tauri/capabilities/default.json` grants the window **no plugin permissions**: no shell, no filesystem, no HTTP client, no opener. The three commands the page can call are in the app (`open_external` refuses anything but http, https and mailto; `save_file` writes only to the path the person picks in the native dialog; `toggle_fullscreen`). Navigation away from the app's own origin is refused.
+- Capability file `src-tauri/capabilities/default.json` grants the window **no plugin permissions**: no shell, no filesystem, no HTTP client, no opener. The four commands the page can call are in the app (`open_external` refuses anything but http, https and mailto; `save_file` writes only to the path the person picks in the native dialog; `open_file` reads only the file the person picks in the native dialog; `toggle_fullscreen`). Navigation away from the app's own origin is refused.
 - Remote pages never get IPC: the window only ever loads the bundled app.
 
 ## Mobile (Capacitor 8)
@@ -105,7 +106,7 @@ yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME
 
 Signing for Google Play: create an upload key once (`keytool -genkeypair -v -storetype PKCS12 -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`), keep it and its passwords somewhere safe (losing it is recoverable with Play App Signing, but only through Google support), sign the AAB with `jarsigner` or by configuring `signingConfigs` in `android/app/build.gradle` from environment variables, and upload the AAB. Enrol in Play App Signing. Raise `versionCode` in `android/app/build.gradle` for every upload.
 
-What the manifest holds (verified on the built APK): permissions `INTERNET` and `POST_NOTIFICATIONS` only (the notification plugin's wake-lock, exact-alarm and boot permissions are removed on purpose), cleartext traffic and auto-backup off, a `funeralquest://` deep link, no other exported component than the launcher activity.
+What the manifest holds (verified on the built APK): permissions `INTERNET` and `POST_NOTIFICATIONS` only (the notification plugin's wake-lock, exact-alarm and boot permissions are removed on purpose), cleartext traffic and auto-backup off, a `funeralquest://` deep link, and no exported component but the launcher activity and AndroidX's `ProfileInstallReceiver` (it is exported by the library and guarded by the system-only `android.permission.DUMP`, so only the system can call it).
 
 Behaviour: portrait and landscape both work, and the client picks its phone or wide layout from the viewport. Capacitor's `SystemBars` plugin keeps the page clear of the status and gesture bars (and publishes `--safe-area-inset-*`); the client's `env(safe-area-inset-*)` rules cover notches. The status and gesture bars use light icons on the game's dark background. The Android back button: (1) closes the wrapper's own dialog, (2) closes the client's top dialog or overlay (it sends the client's Escape), (3) goes back in history on routed screens (`#/rules`, `#/credits` and so on), (4) at the front door or in a game, asks *Leave Funeral Quest?* with *Stay*, *Settings...* and *Leave*. The keyboard resizes the web view (`resize: native`) and the focused field is scrolled into view. Splash screen is hidden after the first paint.
 
@@ -129,10 +130,12 @@ The CI workflow `.github/workflows/release-mobile.yml` (manual or tag) builds th
 
 `funeralquest://join?server=https://fq.example.com&town=<town id>` points the app at a server (after a confirmation that names the host; a link never switches server silently) and the town the front door should pre-select. `funeralquest://settings` opens the settings dialog. Universal/App Links (`https://` links that open the app) need a hosted `apple-app-site-association` / `assetlinks.json` and are not set up.
 
-## Client changes wanted (the wrappers work without them)
+## Client changes
 
-See `apps/desktop/README.md` ("Client changes"). In short: a runtime server address in `src/net/config.ts`, a Settings entry that opens the wrapper dialog, an optional back-button hook, gamepad support owned by the client, and `download` handling for save export.
+All made: the runtime server address (`src/net/config.ts`), a Server address entry in Settings, `window.fqHandleBack`, gamepad support owned by the client, save export and import through the wrapper, and no service worker inside a wrapper. `apps/desktop/README.md` ("Client side") lists them.
 
 ## Verified on the build machine (Linux, 2026-11-06)
 
-See the final report of the work and `apps/desktop/README.md` / `apps/mobile/README.md` for artifact names and sizes. Not verified: Windows and macOS builds (CI only), signing, the Android APK on a device or emulator (none here), anything on iOS.
+- **Desktop (Linux):** `FQ_SKIP_TYPECHECK=1 NO_STRIP=true pnpm --filter @fq/desktop exec tauri build --bundles deb,appimage` built `Funeral Quest_0.1.0_amd64.deb` (18 MiB) and `.AppImage` (117 MiB) with the current client bundle (audio included). The release binary starts and stays up. A separate `selftest` build was launched and driven: a solo game starts, a synthetic controller press moves focus once, `fqWrapper.saveFile` and `openFile` exist, the page's `fetch` and `WebSocket` are the browser's own, no service worker is registered, and Export reached the native GTK save dialog and wrote a valid save. Not driven: the native open dialog, and everything on Windows and macOS (CI only).
+- **Android:** `node scripts/build-android.mjs debug` built `app-debug.apk` (23 MB, with the sound) from the current bundle. Checked in the APK: the new shim (no gamepad code, `saveFile` and `openFile`), no service worker, offline page or sourcemaps, the manifest above. **The APK was not run on a device or an emulator; none exists here.**
+- **Not verified:** Windows and macOS builds (CI only), signing, anything on iOS, a real phone.

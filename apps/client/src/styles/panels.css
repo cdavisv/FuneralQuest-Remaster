@@ -251,6 +251,10 @@
   object-fit: contain;
 }
 
+.fq-monument-state {
+  font-size: 0.9em;
+}
+
 .fq-monument-num {
   display: grid;
   place-items: center;
@@ -259,6 +263,22 @@
   border: 2px solid #5a3d12;
   border-radius: 50%;
   font-weight: 700;
+}
+
+/* A stone not yet bought is dimmed; the ones that stand are lit. */
+.fq-monument-tiers li[data-built="false"] img,
+.fq-monument-tiers li[data-built="false"] .fq-monument-num {
+  opacity: 0.38;
+  filter: grayscale(1);
+}
+
+.fq-monument-tiers li[data-built="true"] img {
+  filter: drop-shadow(0 0 calc(var(--u) * 5) rgba(255, 214, 120, 0.9));
+}
+
+.fq-monument-tiers li[data-built="true"] .fq-monument-state {
+  font-weight: 700;
+  color: #5a3d12;
 }
 
 .fq-monument-next {

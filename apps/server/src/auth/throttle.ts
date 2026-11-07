@@ -52,3 +52,54 @@ export class LoginThrottle {
     if (this.failures.size >= 10_000) this.failures.clear();
   }
 }
+
+/**
+ * Counts events per key inside a sliding window, in memory (a restart clears it). Used for the
+ * hourly cap on new accounts per address. The table is bounded: past `maxKeys` the expired keys
+ * are dropped, and if that is not enough the oldest half goes.
+ */
+export class SlidingCounter {
+  private readonly events = new Map<string, number[]>();
+
+  constructor(
+    private readonly clock: Clock,
+    private readonly windowMs: number,
+    private readonly maxKeys = 20_000,
+  ) {}
+
+  /** How many events `key` has in the window. */
+  count(key: string): number {
+    return this.fresh(key).length;
+  }
+
+  /** Records one event and returns how many the key has now, this one included. */
+  hit(key: string): number {
+    const now = this.clock.now();
+    const list = this.fresh(key);
+    if (this.events.size >= this.maxKeys && !this.events.has(key)) this.prune(now);
+    list.push(now);
+    this.events.set(key, list);
+    return list.length;
+  }
+
+  private fresh(key: string): number[] {
+    const now = this.clock.now();
+    const list = (this.events.get(key) ?? []).filter((t) => now - t < this.windowMs);
+    if (list.length === 0) this.events.delete(key);
+    else this.events.set(key, list);
+    return list;
+  }
+
+  private prune(now: number): void {
+    for (const [key, list] of this.events) {
+      if (list.every((t) => now - t >= this.windowMs)) this.events.delete(key);
+    }
+    if (this.events.size >= this.maxKeys) {
+      let drop = Math.ceil(this.events.size / 2);
+      for (const key of this.events.keys()) {
+        if (drop-- <= 0) break;
+        this.events.delete(key);
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { relative, resolve, sep } from "node:path";
 import cors from "@fastify/cors";
 import rateLimit from "@fastify/rate-limit";
 import fastifyStatic from "@fastify/static";
@@ -7,6 +7,7 @@ import websocket from "@fastify/websocket";
 import Fastify, { type FastifyInstance } from "fastify";
 import { registerMuseum } from "../museum/mount.js";
 import { registerAdminRoutes } from "./admin.js";
+import { registerStaticCompression } from "./compress.js";
 import type { AppContext } from "./context.js";
 import { installErrorHandling, sendNotFound } from "./errors.js";
 import { registerPages } from "./pages.js";
@@ -14,9 +15,54 @@ import { registerRoutes } from "./routes.js";
 import { registerSafetyRoutes } from "./safety.js";
 import { registerSocket } from "./socket.js";
 
+/**
+ * What the web client's page may load: its own scripts, styles (with inline style attributes, which
+ * React uses), pictures, fonts and sounds from this server, a module worker (Solo) and the
+ * service worker from this server, and connections to this server and to the configured origins
+ * (the page's own address, over http, https, ws and wss). No inline script, no `eval`, no plugins,
+ * no framing.
+ */
+export function clientPolicy(host: string, origins: readonly string[]): string {
+  const connect = new Set(["'self'"]);
+  // The host comes from a request header: only a plain host and port may reach the policy.
+  if (/^[\w.[\]:-]{1,255}$/.test(host)) {
+    connect.add(`ws://${host}`);
+    connect.add(`wss://${host}`);
+  }
+  for (const origin of origins) {
+    try {
+      const url = new URL(origin);
+      connect.add(origin);
+      if (url.protocol === "http:") connect.add(`ws://${url.host}`);
+      if (url.protocol === "https:") connect.add(`wss://${url.host}`);
+    } catch {
+      // Not an address (a wrapper origin such as tauri://localhost is listed as it is above).
+    }
+  }
+  return [
+    "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob:",
+    "font-src 'self' data:",
+    "media-src 'self' blob: data:",
+    `connect-src ${[...connect].join(" ")}`,
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+  ].join("; ");
+}
+
 /** Builds the Fastify app over an already-assembled context. */
 export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
   const { config } = ctx;
+  const origins = config.allowedOrigins
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean);
   const trust = config.trustProxy.trim().toLowerCase();
   // "N" means trust the N nearest proxies; otherwise a boolean or a list of addresses.
   const trustProxy: boolean | string[] | ((address: string, hop: number) => boolean) =
@@ -34,16 +80,21 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
     trustProxy,
     // Secrets never reach the logs: bodies and headers are not logged at all.
     routerOptions: { maxParamLength: 128 },
-    requestTimeout: 30_000,
+    // Slow clients: the whole request (headers and body) must arrive within this time, the
+    // headers within the shorter of it and ten seconds, an idle keep-alive socket is closed after
+    // five seconds, and the sweep that enforces these runs often enough to matter.
+    requestTimeout: config.requestTimeoutSeconds * 1000,
+    keepAliveTimeout: 5000,
+    connectionTimeout: 0,
+    http: {
+      headersTimeout: Math.min(10_000, config.requestTimeoutSeconds * 1000),
+      connectionsCheckingInterval: Math.min(2000, config.requestTimeoutSeconds * 500),
+    },
   });
   app.decorateRequest("auth", null);
 
   installErrorHandling(app);
 
-  const origins = config.allowedOrigins
-    .split(",")
-    .map((o) => o.trim())
-    .filter(Boolean);
   await app.register(cors, {
     origin: origins.length > 0 ? origins : false,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -68,16 +119,32 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
     timeWindow: config.rateWindowSeconds * 1000,
     // Keep the table bounded when an attacker rotates addresses.
     cache: 20_000,
+    // The plugin counts an IPv6 address as its subnet (a /56 by default), so a client rotating
+    // through its own block shares one budget.
   });
 
   await app.register(websocket, { options: { maxPayload: 2048 } });
 
-  app.addHook("onSend", async (_request, reply) => {
+  app.addHook("onSend", async (request, reply) => {
     reply.header("x-content-type-options", "nosniff");
     reply.header("referrer-policy", "no-referrer");
     reply.header("x-frame-options", "DENY");
     if (!reply.hasHeader("cache-control")) reply.header("cache-control", "no-store");
+    // The web client's own page. The admin and deletion pages set a stricter policy of their own,
+    // and the museum's pages belong to the original client and Ruffle, which need more.
+    const type = reply.getHeader("content-type");
+    if (
+      config.clientCsp &&
+      typeof type === "string" &&
+      type.startsWith("text/html") &&
+      !reply.hasHeader("content-security-policy") &&
+      !request.url.startsWith("/museum")
+    ) {
+      reply.header("content-security-policy", clientPolicy(request.host, origins));
+    }
   });
+
+  registerStaticCompression(app, (url) => !/^\/(api|admin|health|museum)(\/|\?|$)/.test(url));
 
   registerRoutes(app, ctx);
   registerSafetyRoutes(app, ctx);
@@ -98,7 +165,12 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
         cacheControl: true,
         maxAge: "1h",
         setHeaders: (res, path) => {
-          if (path.endsWith("index.html")) res.header("cache-control", "no-cache");
+          const rel = relative(root, path).split(sep).join("/");
+          // Hashed files never change under their name; the page and the service worker are
+          // fetched again every time (the worker must be, or an update could never arrive).
+          if (rel === "index.html" || rel === "sw.js") res.header("cache-control", "no-cache");
+          else if (rel.startsWith("assets/"))
+            res.header("cache-control", "public, max-age=31536000, immutable");
         },
       });
       serveClient = true;

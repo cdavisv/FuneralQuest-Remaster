@@ -19,8 +19,9 @@ export function testContent(): ContentPack {
 /** One way of running a Solo game: the host directly, or through the worker proxy. */
 export interface Driver {
   readonly name: string;
-  create(config: SoloConfig, fixedNow: number): Promise<void>;
-  load(save: SoloSave, fixedNow: number): Promise<void>;
+  /** `timeZone`: the page's zone, as the client passes it (`WireHostOptions.timeZone`). */
+  create(config: SoloConfig, fixedNow: number, timeZone?: string): Promise<void>;
+  load(save: SoloSave, fixedNow: number, timeZone?: string): Promise<void>;
   connect(): Promise<View>;
   send(action: Action): Promise<View>;
   endDay(): Promise<View>;
@@ -49,11 +50,21 @@ export function directDriver(): Driver {
     name: "direct host",
     notices,
     pushes,
-    async create(config, fixedNow) {
-      attach(SoloHost.create(config, testContent(), { now: () => fixedNow }));
+    async create(config, fixedNow, timeZone) {
+      attach(
+        SoloHost.create(config, testContent(), {
+          now: () => fixedNow,
+          ...(timeZone ? { timeZone } : {}),
+        }),
+      );
     },
-    async load(save, fixedNow) {
-      attach(SoloHost.load(save, testContent(), { now: () => fixedNow }));
+    async load(save, fixedNow, timeZone) {
+      attach(
+        SoloHost.load(save, testContent(), {
+          now: () => fixedNow,
+          ...(timeZone ? { timeZone } : {}),
+        }),
+      );
     },
     connect: () => need().connect(),
     send: (a) => need().send(a),
@@ -90,8 +101,10 @@ export function workerDriver(): Driver {
     name: "worker proxy (Node worker_threads)",
     notices,
     pushes,
-    create: (config, fixedNow) => client.create(config, undefined, { fixedNow }),
-    load: (save, fixedNow) => client.load(save, undefined, { fixedNow }),
+    create: (config, fixedNow, timeZone) =>
+      client.create(config, undefined, { fixedNow, ...(timeZone ? { timeZone } : {}) }),
+    load: (save, fixedNow, timeZone) =>
+      client.load(save, undefined, { fixedNow, ...(timeZone ? { timeZone } : {}) }),
     connect: () => client.connect(),
     send: (a) => client.send(a),
     endDay: () => client.endDay(),

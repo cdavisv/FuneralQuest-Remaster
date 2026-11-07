@@ -84,7 +84,22 @@ export function decorateExpandedView(turn: Turn, view: View): View {
   if ((hud.injuries ?? 0) > 0) hud.injuryList = injuryRows(turn, player);
   const band = karmaBandOf(karmaScale(turn.rules, content), hud.karma);
   if (band) hud.karmaPath = band;
+  // Section 20.4: a hit-man rumour heard today, as data.
+  if (player.expanded.life?.rumourDay === turn.town.day)
+    hud.warnings = [{ kind: "hit-rumour", day: turn.town.day }];
+  // Sound cues as data (11.5): the overlay's kind and the meteor edition.
+  const o = view.overlay;
+  if (o?.kind === "message" && o.messageKind === undefined) o.messageKind = "notice";
+  else if (o?.kind === "confirm" && o.id === "mailbox:reply") o.messageKind = "letter";
+  if (view.news && carriesMeteor(turn, view.news.day)) view.news.meteor = true;
   return view;
+}
+
+/** Whether the stored front page of `day` carries the season-ending meteor story. */
+function carriesMeteor(turn: Turn, day: number): boolean {
+  const headline = turn.text.news.meteorHeadline;
+  const front = turn.town.news[String(day)]?.front ?? "";
+  return headline !== "" && front.includes(headline);
 }
 
 /** The tour's speaker, plain ("Clerk" from "`wClerk: `$"). */

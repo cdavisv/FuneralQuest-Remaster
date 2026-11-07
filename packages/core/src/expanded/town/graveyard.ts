@@ -1,4 +1,4 @@
-import type { Button, View } from "@fq/protocol";
+import type { Button, MonumentsPanel, View } from "@fq/protocol";
 import { mailContinue, sendPacket } from "../../classic/mail.js";
 import { addToNews } from "../../classic/news.js";
 import { expModForceTotal, luckMod } from "../../classic/players.js";
@@ -52,7 +52,23 @@ function pics(turn: Turn) {
 
 function screen(turn: Turn, text: string, buttons: Button[]): View {
   const t = xt(turn).text.graveyard;
-  return townScreen(turn, { title: t.title, note: t.note, text, buttons, ...pics(turn) });
+  const view = townScreen(turn, { title: t.title, note: t.note, text, buttons, ...pics(turn) });
+  view.monuments = monumentsPanel(turn);
+  return view;
+}
+
+/** Section 11.5: the monuments built and every tier, so the client can light the built ones. */
+export function monumentsPanel(turn: Turn): MonumentsPanel {
+  const names = xt(turn).monuments;
+  return {
+    built: life(turn).monuments,
+    tiers: tr(turn).graveyard.monuments.map((m, i) => ({
+      name: names[i] ?? `#${i + 1}`,
+      price: m.price,
+      bp: m.bp,
+      rating: m.rating,
+    })),
+  };
 }
 
 function duelsLeft(turn: Turn): number {

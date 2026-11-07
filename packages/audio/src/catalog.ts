@@ -29,20 +29,30 @@ export interface CatalogEntry {
   master: MasterOptions;
 }
 
-const MUSIC_MASTER: MasterOptions = {
+export const MUSIC_MASTER: MasterOptions = {
   target: -16,
   measure: "integrated",
   ceilingDb: -3,
   loop: true,
 };
-const STING_MASTER: MasterOptions = {
+export const STING_MASTER: MasterOptions = {
   target: -16,
   measure: "integrated",
   ceilingDb: -3,
   loop: false,
 };
-const AMB_MASTER: MasterOptions = { target: -26, measure: "integrated", ceilingDb: -6, loop: true };
-const SFX_MASTER: MasterOptions = { target: -16, measure: "momentary", ceilingDb: -2, loop: false };
+export const AMB_MASTER: MasterOptions = {
+  target: -26,
+  measure: "integrated",
+  ceilingDb: -6,
+  loop: true,
+};
+export const SFX_MASTER: MasterOptions = {
+  target: -16,
+  measure: "momentary",
+  ceilingDb: -2,
+  loop: false,
+};
 
 const fromStereo = (s: Stereo, sr: number): Rendered => ({ stems: [s], length: s.l.length, sr });
 

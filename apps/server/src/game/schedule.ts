@@ -33,6 +33,48 @@ export function isValidTimeZone(zone: string): boolean {
   }
 }
 
+const offsetFormats = new Map<string, Intl.DateTimeFormat>();
+
+/**
+ * The time zone's local time minus UTC at `t`, in minutes (-300 in New York in winter, -240 in
+ * summer), so it follows daylight saving. The engine prints the original's time prefix on notices
+ * ("12:05 AM:Bob logged on.", `show_time`, std_all.cpp:328-347) in this local time
+ * (`EngineContext.localTimeOffsetMinutes`). An unknown zone counts as UTC.
+ */
+export function utcOffsetMinutes(timeZone: string, t: number): number {
+  let format = offsetFormats.get(timeZone);
+  if (!format) {
+    try {
+      format = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        hourCycle: "h23",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      });
+    } catch {
+      return 0;
+    }
+    offsetFormats.set(timeZone, format);
+  }
+  const part: Record<string, number> = {};
+  for (const p of format.formatToParts(new Date(t))) {
+    if (p.type !== "literal") part[p.type] = Number(p.value);
+  }
+  const local = Date.UTC(
+    part.year ?? 1970,
+    (part.month ?? 1) - 1,
+    part.day ?? 1,
+    part.hour ?? 0,
+    part.minute ?? 0,
+    part.second ?? 0,
+  );
+  return Math.round((local - Math.floor(t / 1000) * 1000) / 60_000);
+}
+
 export function createSchedule(config: ScheduleConfig): DaySchedule {
   return config.dayLengthMs === null
     ? new MidnightSchedule(config.timeZone)

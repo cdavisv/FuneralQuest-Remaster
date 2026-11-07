@@ -100,6 +100,7 @@ export const TOWN_TEXT_TOKENS: Readonly<Record<string, readonly string[]>> = {
   "chains.cooldown": ["days"],
   "chains.duesUnpaid": ["dues"],
   "chains.noFriendlyFire": ["name"],
+  "chains.removedName": ["n"],
   "hospital.greeting": ["player", "nurse"],
   "hospital.injuryLine": ["name", "days", "price"],
   "hospital.buttons.treat": ["name"],

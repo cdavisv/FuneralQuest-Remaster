@@ -129,9 +129,9 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
       ? view.hud.injuryList
       : undefined;
   const monument = view.buttons.find((b) => b.id === "graveyard:monument");
-  const monuments = view.buttons.some(
-    (b) => b.id === "graveyard:monuments" || b.id === "graveyard:monument",
-  );
+  const monuments =
+    view.monuments !== undefined ||
+    view.buttons.some((b) => b.id === "graveyard:monuments" || b.id === "graveyard:monument");
   const parchment =
     bingo ||
     ballots ||
@@ -198,7 +198,7 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
   ) : injuries ? (
     <InjuryPanel injuries={injuries} />
   ) : monuments ? (
-    <MonumentLadder next={monument?.label} price={monument?.detail} />
+    <MonumentLadder next={monument?.label} price={monument?.detail} monuments={view.monuments} />
   ) : file ? (
     <CustomerFile
       customer={file}
@@ -264,7 +264,7 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
                       <li key={i}>
                         <RichText spans={line.text} />
                         {/* moderation hook */}
-                        <ChatLineActions text={spanText(line.text)} />
+                        <ChatLineActions text={spanText(line.text)} from={line.from} />
                       </li>
                     ))}
                   </ul>

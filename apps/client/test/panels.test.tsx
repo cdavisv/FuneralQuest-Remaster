@@ -225,6 +225,33 @@ describe("injuries, from Hud.injuryList", () => {
   });
 });
 
+describe("warnings, from Hud.warnings (expanded-rules.md 20.4)", () => {
+  const warned = (): View => {
+    const view = xview("deskQuiet");
+    if (!view.hud) throw new Error("no hud");
+    return { ...view, hud: { ...view.hud, warnings: [{ kind: "hit-rumour", day: 4 }] } };
+  };
+
+  for (const layout of layouts) {
+    it(`the ledger shows the hit-man rumour (${layout})`, async () => {
+      renderGame(new ScriptedTransport(warned()), { settings: { layout } });
+      const ledger = await screen.findByRole("region", { name: "Your parlor's books" });
+      const alert = within(ledger).getByRole("alert");
+      expect(alert).toHaveAttribute("data-warning", "hit-rumour");
+      expect(alert).toHaveTextContent("hit man has been hired against you");
+      expect(alert).toHaveTextContent("Peace Pledge");
+      cleanup();
+    });
+  }
+
+  it("draws nothing when the engine sends no warning", async () => {
+    renderGame(new ScriptedTransport(xview("deskQuiet")), { settings: { layout: "phone" } });
+    const ledger = await screen.findByRole("region", { name: "Your parlor's books" });
+    expect(within(ledger).queryByRole("alert")).toBeNull();
+    expect(ledger.querySelector(".fq-ledger-warning")).toBeNull();
+  });
+});
+
 describe("karma, from Hud.karmaPath and View.karmaScale", () => {
   it("the ledger names the band the engine put the player in", async () => {
     renderGame(new ScriptedTransport(xview("deskQuiet")));
@@ -254,6 +281,56 @@ describe("the graveyard's monuments", () => {
     expect(panel).toHaveTextContent("Next up:");
     expect(panel).toHaveTextContent("A Granite Bench With Your Name on the Seat");
     expect(panel).toHaveTextContent("$3,000");
+  });
+});
+
+describe("the graveyard's monuments, from the engine's data", () => {
+  const withData = (built: number) => ({
+    ...xview("monuments"),
+    monuments: {
+      built,
+      tiers: [
+        { name: "A Wooden Cross", price: 500, bp: 10, rating: 1 },
+        { name: "A Granite Bench", price: 3000, bp: 60, rating: 2 },
+        { name: "A Stone Angel", price: 9000, bp: 150, rating: 3 },
+        { name: "A Marble Obelisk", price: 20000, bp: 320, rating: 4 },
+        { name: "A Mausoleum", price: 50000, bp: 800, rating: 5 },
+      ],
+    },
+  });
+
+  it("lights the tiers that stand and dims the rest", async () => {
+    renderGame(new ScriptedTransport(withData(2)));
+    const panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    const tiers = within(panel).getAllByRole("listitem");
+    expect(tiers.map((li) => li.getAttribute("data-built"))).toEqual([
+      "true",
+      "true",
+      "false",
+      "false",
+      "false",
+    ]);
+    expect(tiers[0]).toHaveTextContent("Built");
+    expect(tiers[2]).toHaveTextContent("$9,000");
+    expect(tiers[1]).toHaveAttribute("title", "A Granite Bench");
+  });
+
+  it("shows no stone lit when none is built, and every one when all are", async () => {
+    const { unmount } = renderGame(new ScriptedTransport(withData(0)));
+    let panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    expect(
+      within(panel)
+        .getAllByRole("listitem")
+        .every((li) => li.getAttribute("data-built") === "false"),
+    ).toBe(true);
+    unmount();
+    renderGame(new ScriptedTransport(withData(5)));
+    panel = await screen.findByRole("region", { name: "The graveyard's monuments" });
+    expect(
+      within(panel)
+        .getAllByRole("listitem")
+        .every((li) => li.getAttribute("data-built") === "true"),
+    ).toBe(true);
   });
 });
 

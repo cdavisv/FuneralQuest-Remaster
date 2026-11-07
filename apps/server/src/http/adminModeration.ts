@@ -1,4 +1,13 @@
-import { removePlayerText, renamePlayer, type TownState } from "@fq/core";
+import {
+  listAnnouncements,
+  listQueuedLetters,
+  removeAnnouncement,
+  removeLetter,
+  removePlayerText,
+  renamePlayer,
+  type StoredText,
+  type TownState,
+} from "@fq/core";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import { z } from "zod";
 import type { Account } from "../auth/accounts.js";
@@ -295,7 +304,8 @@ export function registerModerationAdmin(
          * What to take down. The engine's `removePlayerText` works per player: `all` removes their
          * queued letters, announcements on every stored page, battle quotes and fortunes;
          * `announcements` keeps only the paper's change; `mail` only what is queued for others.
-         * It cannot pick one announcement out of a player's several. Chat was never stored.
+         * To take down one item only, list it (`GET /towns/:id/stored-text`) and use
+         * `POST /moderation/remove-item`. Chat was never stored.
          */
         scope: z.enum(["all", "announcements", "mail"]).default("all"),
         reason,
@@ -356,6 +366,121 @@ export function registerModerationAdmin(
     );
     settle(request, body.reportId, body.resolve, "content taken down", body.reason);
     return { removed: results };
+  });
+
+  // ------------------------------------------------ single items of stored text
+
+  /**
+   * What a player has written that is still stored in a town, item by item, so a moderator can
+   * take down one. Announcements and battle quotes are matched by the author's names (the
+   * player's own and those in the audit history); letters by the sender's player id, across every
+   * other player's waiting mail.
+   */
+  admin.get("/towns/:townId/stored-text", async (request) => {
+    const { townId } = z.object({ townId: TownId }).parse(request.params);
+    const { playerId } = z
+      .object({ playerId: z.coerce.number().int().min(0).max(1_000_000) })
+      .parse(request.query);
+    const t = h.townOf(townId);
+    const player = t.player(playerId);
+    if (!player) throw new HttpError(404, "no_such_player", "No such player.");
+    const link = host.parlorStore.byPlayer(t.id, playerId);
+    const names = new Set([
+      player.name,
+      ...(link ? historyIn(safety, link.account_id, t.id).names : []),
+    ]);
+    const town = t.snapshotState;
+    const engine = t.engineContext();
+    const announcements: (StoredText & { day: number; section: "front" | "crime" })[] = [];
+    for (const key of Object.keys(town.news)) {
+      for (const section of ["front", "crime"] as const) {
+        for (const item of listAnnouncements(town, engine, Number(key), section)) {
+          if (typeof item.author === "string" && names.has(item.author)) {
+            announcements.push({ ...item, day: Number(key), section });
+          }
+        }
+      }
+    }
+    const letters: (StoredText & { to: number; toName: string })[] = [];
+    for (const other of town.players) {
+      if (other.id === playerId) continue;
+      for (const item of listQueuedLetters(town, other.id)) {
+        if (item.author === playerId) letters.push({ ...item, to: other.id, toName: other.name });
+      }
+    }
+    return { announcements: announcements.slice(0, 200), letters: letters.slice(0, 200) };
+  });
+
+  admin.post("/moderation/remove-item", async (request) => {
+    const common = { reason, reportId, resolve: z.boolean().default(true) };
+    const body = z
+      .discriminatedUnion("kind", [
+        z.strictObject({
+          kind: z.literal("announcement"),
+          townId: TownId,
+          day: z.number().int().min(0).max(1_000_000),
+          section: z.enum(["front", "crime"]).default("front"),
+          index: z.number().int().min(0).max(10_000).optional(),
+          hash: z
+            .string()
+            .regex(/^[0-9a-f]{8}$/)
+            .optional(),
+          ...common,
+        }),
+        z.strictObject({
+          kind: z.literal("letter"),
+          townId: TownId,
+          to: z.number().int().min(0).max(1_000_000),
+          index: z.number().int().min(0).max(10_000).optional(),
+          hash: z
+            .string()
+            .regex(/^[0-9a-f]{8}$/)
+            .optional(),
+          ...common,
+        }),
+      ])
+      .parse(request.body);
+    if (body.index === undefined && body.hash === undefined) {
+      throw new HttpError(400, "invalid_request", "Name the item by index or hash (or both).");
+    }
+    const t = h.townOf(body.townId);
+    const removed = await t.transform(
+      body.kind === "announcement" ? "mod:remove-announcement" : "mod:remove-letter",
+      (town, engine) => {
+        const out =
+          body.kind === "announcement"
+            ? removeAnnouncement(town, engine, {
+                day: body.day,
+                section: body.section,
+                ...(body.index !== undefined ? { index: body.index } : {}),
+                ...(body.hash !== undefined ? { hash: body.hash } : {}),
+              })
+            : removeLetter(town, {
+                to: body.to,
+                ...(body.index !== undefined ? { index: body.index } : {}),
+                ...(body.hash !== undefined ? { hash: body.hash } : {}),
+              });
+        return { town: out.town, data: { removed: out.removed } };
+      },
+    );
+    if (!removed.removed) {
+      throw new HttpError(
+        404,
+        "no_such_item",
+        "That item is not stored any more (it may have moved).",
+      );
+    }
+    h.audit(request, body.kind === "announcement" ? "remove-announcement" : "remove-letter", t.id, {
+      reason: body.reason,
+      reportId: body.reportId ?? null,
+      ...(body.kind === "announcement"
+        ? { day: body.day, section: body.section }
+        : { to: body.to }),
+      index: body.index ?? null,
+      hash: body.hash ?? null,
+    });
+    settle(request, body.reportId, body.resolve, "item taken down", body.reason);
+    return { removed: true };
   });
 
   admin.post("/moderation/rename", async (request) => {

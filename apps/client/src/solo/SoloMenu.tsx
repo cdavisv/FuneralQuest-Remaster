@@ -89,7 +89,6 @@ export function SoloMenu({
                     {t(expanded ? "solo.menu.detailExpanded" : "solo.menu.detail", {
                       bp: save.bp,
                       rivals: save.rivals,
-                      text: save.contentPack === "vintage" ? "Vintage" : "Classic",
                     })}
                     {". "}
                     {t("solo.menu.saved", { when: when(save.savedAt) })}

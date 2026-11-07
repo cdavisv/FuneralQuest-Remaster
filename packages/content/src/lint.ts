@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noTemplateCurlyInString: "${price}" in messages is a dollar sign before a {price} placeholder.
 import {
+  type AgedLine,
   CLASSIC_TEXT,
   type ContentPack,
   checkExpandedContent,
@@ -296,6 +297,14 @@ function expandedRule(path: string): FieldRule {
   return { tokens: ["*"], max: 700 };
 }
 
+/** An aged line (13.5) takes the placeholders of the pool it joins. */
+function agedLineRule(pack: ContentPack, path: Path): FieldRule {
+  const lines = pack.expanded?.text.negotiation.agedLines ?? [];
+  const pool = lines[path[3] as number]?.pool ?? "";
+  const top = pool.split(".")[0] ?? "";
+  return { tokens: [...X, ...(NEGOTIATION_EXTRAS[top] ?? [])], max: 220 };
+}
+
 /** Tokens CLASSIC_TEXT already uses at `path` (all alternatives of an array together). */
 function classicTextTokens(path: string): Set<string> {
   const out = new Set<string>();
@@ -516,7 +525,9 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
       if (isNew(leaf.value)) {
         const rule =
           table === EXPANDED_KEY
-            ? expandedRule(path)
+            ? path === "text.negotiation.agedLines[].text"
+              ? agedLineRule(pack, leaf.path)
+              : expandedRule(path)
             : table === "text"
               ? classicTextRule(path)
               : (TABLE_RULES[table]?.find(([re]) => re.test(path))?.[1] ?? {
@@ -557,6 +568,14 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
     for (const c of cKeys) {
       for (const l of leaves(cn[c], ["negotiation", c])) addToGroup(key, "text", l);
     }
+    // An aged line joins its pool when the ages fit, so it must not repeat a line of the pool.
+    (xn?.agedLines as AgedLine[] | undefined)?.forEach((l, i) => {
+      if (l.pool !== xKey) return;
+      addToGroup(key, EXPANDED_KEY, {
+        path: ["text", "negotiation", "agedLines", i, "text"],
+        value: l.text,
+      });
+    });
   }
   for (const list of groups.values()) {
     const seen = new Map<string, { value: string }>();
@@ -767,7 +786,7 @@ function isStructural(table: TableKey | typeof EXPANDED_KEY, path: string): bool
   if (table === "newsBlurbs") return /\.when\./.test(path);
   if (table === EXPANDED_KEY) {
     if (path.startsWith("town.")) return /\.id$/.test(path) || townStructural(path);
-    return /(\.id|\.article|\.tags\[\]|\.track|\.requires|\.excludes\[\]|\.traits\[\]|\.pet\[\]|\.perk|\.label|\.portrait|\.picture|\.person\.\w+)$/.test(
+    return /(\.id|\.pool|\.article|\.tags\[\]|\.track|\.requires|\.excludes\[\]|\.traits\[\]|\.pet\[\]|\.perk|\.label|\.portrait|\.picture|\.person\.\w+)$/.test(
       path,
     );
   }

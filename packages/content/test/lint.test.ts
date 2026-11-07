@@ -108,6 +108,31 @@ describe("the content lint", () => {
     expect(out).toContainEqual(expect.stringMatching(/^events\.yaml: ranges\[2\]/));
   });
 
+  it("checks an aged line (13.5) against the pool it joins", () => {
+    const p = pack();
+    const aged = xp(p).text.negotiation.agedLines ?? [];
+    expect(aged.length).toBeGreaterThan(0);
+    // A soft-sell line may name the item; a sympathy line may not.
+    aged.push({ pool: "softPitch", minCustomerAge: 18, text: '`w{player}: `$"The {item}?"\n\n' });
+    aged.push({
+      pool: "sympathyPitch",
+      minCustomerAge: 18,
+      text: '`w{player}: `$"About the {item}..."\n\n',
+    });
+    // It must not repeat a line of its pool.
+    aged.push({
+      pool: "sympathyPitch",
+      maxCustomerAge: 17,
+      text: xp(p).text.negotiation.sympathyPitch[0] as string,
+    });
+    xp(p).text.negotiation.agedLines = aged;
+    const out = lint(p);
+    expect(out.filter((l) => l.includes("agedLines"))).toEqual([
+      expect.stringMatching(/agedLines\[3\]\.text.*placeholder \{item\} is not filled in here/),
+      expect.stringMatching(/agedLines\[4\]\.text.*duplicate line/),
+    ]);
+  });
+
   it("checks price grids and ranges, and articles", () => {
     const p = pack();
     p.softSell.push({ article: "a", name: "Gilded Ear Trumpet", price: 625 });

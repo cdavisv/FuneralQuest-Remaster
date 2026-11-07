@@ -1,6 +1,7 @@
 /**
- * @fq/audio for the page: the cue map, the track ids, the manifest's shape, the UI sounds that
- * are synthesised live, and the loop seam repair. Nothing here pulls in the compositions; the
+ * @fq/audio for the page: the cue map, the track ids, the manifest's shape, the sound packs
+ * (Synth and Studio) and their per-track fallback, the UI sounds that are synthesised live, and
+ * the loop seam repair. Nothing here pulls in the compositions; the
  * render (scripts/render.ts) and `@fq/audio/catalog` do.
  */
 export {
@@ -26,6 +27,19 @@ export {
 export { LIVE_IDS, LOOP_FADE, renderLive } from "./live.js";
 export { repairLoop } from "./loop.js";
 export type { AudioManifest, ManifestTrack } from "./manifestTypes.js";
+export {
+  type AudioPackInfo,
+  DEFAULT_PACK,
+  isPackId,
+  nextBarTime,
+  PACK_IDS,
+  PACKS,
+  type PackId,
+  packChain,
+  type ResolvedTrack,
+  resolveTrack,
+  stemGains,
+} from "./packs.js";
 export {
   AMBIENCE,
   type AmbienceId,

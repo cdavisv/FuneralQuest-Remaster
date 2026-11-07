@@ -6,3 +6,4 @@ src/art/packs/classic/ui/
 e2e/results/
 playwright-report/
 test-results/
+perf/results.json

@@ -14,6 +14,7 @@ import { addToNews } from "../classic/news.js";
 import { killScript } from "../classic/scripts/runtime.js";
 import { endSession, lobbyView, logOn, quit } from "../classic/session.js";
 import { newPlayersClosed } from "../classic/tournament.js";
+import { CLASSIC_TEXT } from "../content/classicText.js";
 import type { ContentPack } from "../content/types.js";
 import { TOWN_STREAM } from "../rng/streams.js";
 import { CLASSIC_RULES, type ClassicRules, type GameSettings } from "../rules/classicRules.js";
@@ -30,6 +31,11 @@ export interface StepResult {
   effects: Effect[];
   /** Set when the action was refused; `town` is then the input unchanged. */
   rejected?: string;
+  /**
+   * When a log-on is refused for a reason the original told the player
+   * (`send_error_message`, commands_misc.cpp:3-14), the text it showed.
+   */
+  message?: RichText;
 }
 
 export interface MaintenanceResult {
@@ -167,6 +173,21 @@ export function createPlayer(
 export function enterGame(town: TownState, playerId: number, ctx: EngineContext): StepResult {
   const player = town.players[playerId];
   if (!player?.active) return { town, view: lobbyView(), effects: [], rejected: "No such player" };
+  // check_name_and_password (funeral.cpp:357-363): nobody may log on while
+  // another player is inside their parlor (get_player_who_locked_this_guy,
+  // misc_utils.cpp:279-301).
+  for (const [key, s] of Object.entries(town.sessions)) {
+    if (s.hisId === playerId && s.locked && town.players[Number(key)]?.active) {
+      const text = ctx.content.text.session.parlorLocked ?? CLASSIC_TEXT.session.parlorLocked ?? "";
+      return {
+        town,
+        view: lobbyView(),
+        effects: [],
+        rejected: "Parlor locked",
+        message: legacy(text),
+      };
+    }
+  }
   const turn = new Turn(clone(town), ctx, playerId);
   if (turn.town.sessions[String(playerId)]) endSession(turn, "replaced");
   logOn(turn);

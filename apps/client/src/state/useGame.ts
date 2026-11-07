@@ -36,6 +36,8 @@ export function useGame(transport: Transport): GameApi {
     responseId: 0,
   });
   const busyRef = useRef(false);
+  /** Cafe lines typed while an answer is awaited; sent in order, one at a time. */
+  const queued = useRef<Action[]>([]);
   const generation = useRef(0);
   const [attempt, setAttempt] = useState(0);
 
@@ -44,6 +46,7 @@ export function useGame(transport: Transport): GameApi {
     const gen = ++generation.current;
     let alive = true;
     busyRef.current = false;
+    queued.current = [];
     setState({ status: "connecting", view: null, busy: false, sendError: null, responseId: 0 });
     const off = transport.onPush((view) => {
       if (alive) setState((s) => ({ ...s, view }));
@@ -67,18 +70,29 @@ export function useGame(transport: Transport): GameApi {
 
   const dispatch = useCallback(
     (action: Action) => {
-      if (busyRef.current) return;
+      if (busyRef.current) {
+        // A button pressed twice is one press: the second is dropped. A line of cafe talk is
+        // somebody's words, already cleared from the box: it waits its turn instead of vanishing.
+        if (action.type === "chat" && queued.current.length < 10) queued.current.push(action);
+        return;
+      }
       busyRef.current = true;
       const gen = generation.current;
       setState((s) => ({ ...s, busy: true }));
+      const next = () => {
+        const following = queued.current.shift();
+        if (following && generation.current === gen) dispatch(following);
+      };
       transport.send(action).then(
         (view) => {
           busyRef.current = false;
           if (generation.current !== gen) return;
           setState((s) => ({ ...s, view, busy: false, responseId: s.responseId + 1 }));
+          next();
         },
         (error: unknown) => {
           busyRef.current = false;
+          queued.current = [];
           if (generation.current !== gen) return;
           const failure = error instanceof SendError ? error.failure : "network";
           setState((s) => ({ ...s, busy: false, sendError: failure }));
@@ -94,6 +108,7 @@ export function useGame(transport: Transport): GameApi {
     generation.current++;
     transport.close();
     busyRef.current = false;
+    queued.current = [];
     setState((s) => ({ ...s, status: "closed", busy: false }));
   }, [transport]);
 

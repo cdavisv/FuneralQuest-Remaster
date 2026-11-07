@@ -1,0 +1,25 @@
+{
+  "name": "@fq/oracle",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Differential oracle: the original 2001 server's game logic compiled for Linux, driven side by side with @fq/core.",
+  "type": "module",
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "compare": "tsx src/cli.ts",
+    "inspect": "tsx src/inspect.ts",
+    "text-audit": "tsx src/textAudit.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/content": "workspace:*",
+    "@fq/core": "workspace:*",
+    "@fq/legacy-compat": "workspace:*",
+    "@fq/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15"
+  }
+}

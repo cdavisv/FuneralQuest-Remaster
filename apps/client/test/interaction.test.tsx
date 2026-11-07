@@ -134,6 +134,43 @@ describe("cafe chat", () => {
   });
 });
 
+describe("cafe chat while an answer is awaited", () => {
+  /** A transport whose answers come only when the test lets them. */
+  class SlowTransport extends ScriptedTransport {
+    release: (() => void)[] = [];
+    override send(action: Action): Promise<View> {
+      this.sent.push(action);
+      return new Promise((resolve) => this.release.push(() => resolve(FIXTURES.cafe)));
+    }
+  }
+
+  it("keeps a second line typed before the first is answered, and sends it after", async () => {
+    const t = new SlowTransport(FIXTURES.cafe);
+    renderGame(t);
+    const box = await screen.findByRole("textbox", { name: "Say something" });
+    const user = userEvent.setup();
+    await user.click(box);
+    await user.keyboard("first line{Enter}");
+    await user.keyboard("second line{Enter}");
+    // The second line is not lost, and not sent over the first: one request at a time.
+    expect(t.sent).toEqual([{ type: "chat", text: "first line" }]);
+    t.release.shift()?.();
+    await waitFor(() => expect(t.sent).toHaveLength(2));
+    expect(t.sent[1]).toEqual({ type: "chat", text: "second line" });
+    t.release.shift()?.();
+  });
+
+  it("still drops a button pressed twice, which is one press", async () => {
+    const t = new SlowTransport(five);
+    renderGame(t);
+    const alpha = await screen.findByRole("button", { name: "Alpha" });
+    await userEvent.click(alpha);
+    await userEvent.click(screen.getByRole("button", { name: "Bravo" }));
+    expect(t.sent).toEqual([{ type: "press", buttonId: "a" }]);
+    t.release.shift()?.();
+  });
+});
+
 describe("overlays", () => {
   const messageId =
     OVERLAY_FIXTURES.message.overlay?.kind === "message" ? OVERLAY_FIXTURES.message.overlay.id : "";

@@ -42,7 +42,7 @@ Cheapest, fastest store: no fee, no review gate for most content, good for a fir
 ## Content and policy
 
 - [ ] Content warnings in the description: dark humour, death, cartoon violence, crude humour, simulated gambling with in-game money, user chat
-- [ ] "Mature content" flag if the Vintage wording is included (see age sheet)
+- [ ] "Mature content" flag: yes, the original 2001 text ships unaltered in every mode (see age sheet)
 - [ ] AI disclosure: itch lets you declare generative AI use; the plan says AI tools were used for concept art and content drafts. Declare truthfully
 - [ ] Open source: link `[REPOSITORY URL - OWNER TO FILL IN]`; licence line mentions the Proton SDK licence and the acknowledgement "This product includes software written by Seth A. Robinson (www.rtsoft.com)"
 - [ ] Privacy policy and terms linked in the description (itch has no data form; the page should say if the build connects to a server)

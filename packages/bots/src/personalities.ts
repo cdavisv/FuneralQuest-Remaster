@@ -181,6 +181,11 @@ export interface XStyle {
   appeals: number;
   /** Sends a few wood tags to the poorest parlor now and then (section 21.1). */
   charity: boolean;
+  /**
+   * Answers a hit-man rumour (`Hud.warnings`, section 20.4) by hiring a bodyguard at the
+   * Reaper Club that day, or failing that by buying Tiny or the vest on the black market.
+   */
+  protect?: boolean;
 }
 
 const STANDARD_UPGRADES = [
@@ -500,6 +505,7 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.15, cafe: 0.2, letter: 0 },
     expanded: xs({
+      protect: true,
       tags: [
         { item: "hearse", upTo: 2 },
         { item: "psych", upTo: 4 },
@@ -558,6 +564,7 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      protect: true,
       upgrades: [
         "paint",
         "coffee-machine",
@@ -716,6 +723,7 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.2, cafe: 0.2, letter: 0 },
     expanded: xs({
+      protect: true,
       markup: 10,
       tags: [
         { item: "psych", upTo: 4 },
@@ -770,6 +778,7 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.6, cafe: 0.5, letter: 0 },
     expanded: xs({
+      protect: true,
       path: "good",
       mayor: 3,
       lobby: true,
@@ -809,6 +818,7 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.4, cafe: 0.4, letter: 0 },
     expanded: xs({
+      protect: true,
       upgrades: [
         "paint",
         "coffee-machine",

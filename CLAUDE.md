@@ -9,7 +9,7 @@ A free, open-source remaster of Funeral Quest (Robinson Technologies, 2001). Rea
 - `packages/core` is the rules engine: pure, deterministic, no I/O, no clock, no `Math.random`.
 - `packages/content` holds content packs converted from `legacy/dist/*.txt`.
 - `packages/bots` holds the AI rival policies, `packages/solo` the offline Solo Career (a whole town in a Web Worker, saves), `packages/legacy-compat` the bridge that lets the original Flash client play the engine (museum mode).
-- `apps/server`, `apps/client`, `tools/*` are as named in the plan. The Solo and bots packages and the simulator load content from `@fq/content` (`classicPack`, `vintagePack`), never from `legacy/` directly.
+- `apps/server`, `apps/client`, `tools/*` are as named in the plan. The Solo and bots packages and the simulator load content from `@fq/content` (`classicPack`, `expandedPack`), never from `legacy/` directly.
 
 ## Commands
 

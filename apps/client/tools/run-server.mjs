@@ -9,7 +9,9 @@
  * Options (or the matching FQ_RUN_* environment variables):
  *   --port <n>     listen port (default 8080; 18765 with --test)
  *   --db <path>    SQLite file (default apps/client/.data/fq.sqlite; a temp file with --test)
- *   --no-build     use the bundle in dist-build as it is
+ *   --out <dir>    build the bundle into (and serve it from) this directory instead of dist-build
+ *                  (FQ_RUN_OUT); the end-to-end runs use one per run
+ *   --no-build     use the bundle as it is
  *   --after <url>  wait until this address answers before starting (a second server that shares
  *                  the first one's build)
  *   --museum       also serve the original 2001 Flash client at /museum/ (FQ_LEGACY_CLIENT=1)
@@ -40,6 +42,7 @@ const test = flag("test") || process.env.FQ_RUN_TEST === "1";
 const port = Number(option("port", process.env.FQ_RUN_PORT ?? (test ? "18765" : "8080")));
 const museum = flag("museum") || process.env.FQ_RUN_MUSEUM === "1";
 const skipBuild = flag("no-build") || process.env.FQ_RUN_SKIP_BUILD === "1";
+const outDir = option("out", process.env.FQ_RUN_OUT ?? "");
 const towns = option("towns", process.env.FQ_RUN_TOWNS ?? (test ? "classic" : ""));
 
 const after = option("after", "");
@@ -53,7 +56,13 @@ while (after) {
 }
 
 if (!skipBuild) {
-  const build = spawnSync("pnpm", ["run", "build"], { cwd: clientDir, stdio: "inherit" });
+  // The tests build the bundle without the type check, which has its own step in CI and must not
+  // stand in the way of a test run when another part of the repository is mid-edit.
+  const build = spawnSync("pnpm", ["run", test ? "bundle" : "build"], {
+    cwd: clientDir,
+    stdio: "inherit",
+    env: { ...process.env, ...(outDir ? { FQ_BUILD_OUT: resolve(outDir) } : {}) },
+  });
   if (build.status !== 0) process.exit(build.status ?? 1);
 }
 
@@ -93,7 +102,8 @@ const tsx = join(serverDir, "node_modules", ".bin", "tsx");
 const env = {
   ...baseEnv,
   FQ_PORT: String(port),
-  FQ_CLIENT_DIR: process.env.FQ_RUN_CLIENT_DIR ?? join(clientDir, "dist-build"),
+  FQ_CLIENT_DIR:
+    process.env.FQ_RUN_CLIENT_DIR ?? (outDir ? resolve(outDir) : join(clientDir, "dist-build")),
   ...(museum ? { FQ_LEGACY_CLIENT: "1" } : {}),
 };
 const child = spawn(tsx, ["src/main.ts"], { cwd: serverDir, env, stdio: "inherit" });

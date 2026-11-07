@@ -2,9 +2,9 @@
 
 This is the source of truth for the Classic ruleset. Every rule cites the original code under `legacy/source/` so a test can point back to it.
 
-**Status column.** "Ported" means the rule is implemented in `packages/core` with tests and was read line by line. "Reviewed" means it comes from the code review and must be re-read against the source when it is ported; treat line numbers there as starting points.
+**Status column.** "Ported" means the rule is implemented in `packages/core` with tests and was read line by line. "Reviewed" means it comes from the code review and must be re-read against the source when it is ported; treat line numbers there as starting points. "Verified against the original code" means the differential oracle (`tools/oracle`, `docs/classic-fidelity.md`) compiled the original C++ for Linux and drove it side by side with the port with identical seeds and requests, and the random draws and player records agreed after every step; what was not exercised is listed in `docs/classic-fidelity.md`.
 
-## 1. Randomness (Ported)
+## 1. Randomness (Ported; verified against the original code)
 
 | Rule | Source |
 |---|---|
@@ -17,7 +17,7 @@ This is the source of truth for the Classic ruleset. Every rule cites the origin
 
 Handlers must make their draws in the original order. The remaster seeds one stream per player per day instead of using wall-clock time.
 
-## 2. Customer generation (Ported)
+## 2. Customer generation (Ported; verified against the original code)
 
 Source: `create_customer.cpp:242-293`. Draws happen in this order.
 
@@ -88,7 +88,7 @@ Source: `create_customer.cpp:242-293`. Draws happen in this order.
 | 9 | Angry | Angry |
 | above 9 | Pissed | Pissed |
 
-## 3. Wait for Customer (Ported)
+## 3. Wait for Customer (Ported; verified against the original code)
 
 Source: `commands_customer.cpp:4-73`. Each click resolves in this order. Code: `packages/core/src/classic/wait.ts`.
 
@@ -101,7 +101,7 @@ Source: `commands_customer.cpp:4-73`. Each click resolves in this order. Code: `
 
 Net per click: about 8% event, 7.4% risk, 4.2% script, 80.4% customer (measured by `test/distribution.test.ts`). The odds compare against 32-bit floats.
 
-## 4. Negotiation (Ported)
+## 4. Negotiation (Ported; verified against the original code)
 
 Source: `commands_complicated.cpp`. Code: `packages/core/src/classic/modules/negotiation.ts`. Mood and cheapness are 32-bit floats; every `a + frandom(b)` below is computed in 32-bit floats.
 
@@ -140,7 +140,7 @@ The review listed these in a different order; the order above is the code's and 
 
 **Price** (`online_struct.cpp:574-597`): casket + every soft-sell item bought + every upgrade up to the last one bought.
 
-## 5. Risks and events (Ported)
+## 5. Risks and events (Ported; verified against the original code)
 
 - **Risk** (`commands_customer_risk.cpp`, `risks.txt`, code `classic/modules/risk.ts`): the risk is picked with `random(count)`. `*SIR*`, `*NAME*`, `*PARLOR*` and `\n` are replaced. Declining pays `random_range(4, 10)` BP. Taking it passes on `get_random_yes_no(luck, 0.90)` and wins or loses the Game Settings risk amount (default 50 BP). A loss is limited by `exp_mod` to today's BP, but the text still says 50. An empty background in the file leaves the current one on screen.
 - **risks.txt loading** (`COptions.cpp:7-109`): one record is reused for the whole file, so a key a block leaves out keeps the previous block's value. The same holds for `soft_sell.txt` and `hard_sell.txt`.
@@ -149,7 +149,7 @@ The review listed these in a different order; the order above is the code's and 
   - **Bonus tag** (`events/bonus_tag.c`): tier `RandomRange(0, 2)`, place `RandomRange(0, 5)`, +1 tag.
   - **Arson** (`events/arson.c`): the Twins charge 6 gold tags (checked before you pick a target, paid only when they go). The target must be another player who is offline. With a smoke detector, `RandomRange(1, 10) > 2` (80%) stops the fire: the target gets 3 gold tags at once and a letter. Otherwise the target loses `int(plots × 0.05f)` plots and, without a safe, all wood tags; a headline `RandomRange(1, 2)` goes on the front page, the TV reports it, and the target gets a letter.
 
-## 6. Town (Ported)
+## 6. Town (Ported; verified against the original code, words included)
 
 Code: `packages/core/src/classic/modules/{bank,store,university,yangs,church,hospital,options}.ts`, `classic/scripts/storeScripts.ts`, `classic/swearFilter.ts`. Prices and costs are in `ClassicRules.places`. Each place's screens, buttons (in the original's slot order) and messages are the original's; the Flash client's text boxes are overlays.
 
@@ -174,7 +174,7 @@ Code: `packages/core/src/classic/modules/{bank,store,university,yangs,church,hos
 - **Yang's out-of-bounds bug.** `class yangs_food` declares `i_cost[3]` and `i_mod[3]` but indexes them with `C_YANGS_DRAGON = 3` (`commands_yangs.cpp:13-33`), so its constructor writes one element past the end of each array (the cost write lands on `i_mod[0]`, the other past the object). Nothing reads index 3: the Dragon handler hard-codes 5 BP and +10 luck, the Tiger 20 BP and -10, and the constructor's "dragon cost 10" never mattered. The port uses the intended 5 / 20 / 20 from `ClassicRules.places.yangs`.
 - Church: `commands_church.cpp` also exists, but the map runs `church.c` (the history file says the church is completely run by script), so the script is what is ported.
 
-## 7. Visits, battle and the cafe (Ported)
+## 7. Visits, battle and the cafe (Ported; verified against the original code, words included; the cafe's `/?` follows the 2001 help, see below)
 
 Code: `classic/modules/visit.ts` (place `competitors`), `modules/battle.ts`, `modules/cafe.ts`, `classic/presence.ts`, `classic/nameSearch.ts`. Numbers are in `ClassicRules.pvp`.
 
@@ -187,7 +187,7 @@ Code: `classic/modules/visit.ts` (place `competitors`), `modules/battle.ts`, `mo
 - **Try Door** (`:370-413`): a padlock (`custom[Padlock]`) stops you, showing its strength and your lockpicks. **Pick Lock** (`:416-480`): without a pick nothing happens; otherwise `random_range(5, 10)` damage, the pick breaks, the owner gets a letter, and Continue leads inside whatever the strength left (one pick always gets you in). Below 1 the padlock falls off (padlock and strength 0).
 - **Inside** (`:306-367`): the owner's max HP is shown; a safe hides Steal (a forged Steal is refused).
 - **Steal** (`:521-613`, `steal_random_caskets` `:642-681`): `random(3)` picks the tier; if the victim holds none, nothing else is drawn ("can't find anything of value"); otherwise `random_range(0, 3)` capped at what they hold. The victim always gets a letter, the prowler picture and Continue. "Lingerie" only when a male thief robs a female owner.
-- **Fix** `fixes.visitTargetRecheck` (default on): Try Door, Pick Lock, Inside, Steal and Attack check again that the rival is offline and unprotected. The original checked only at the door, so a rival who logged on meanwhile could still be robbed or attacked.
+- **Fix** `fixes.visitTargetRecheck` (default on): Try Door, Pick Lock, Inside, Steal and Attack check again that the rival is offline and unprotected. The original checked only at the door. It also refused the rival's log-on while the parlor was held (`funeral.cpp:357-363`, now ported), so in practice the recheck matters when a host reports a dropped connection back online (`setPresence`) or protection changes mid-visit.
 
 **Battle** (`commands_battle.cpp`)
 - Attack sets both players to full HP (`commands_comp.cpp:616-635`). The cry is `random(6)` (`:241-253`). If you have **more** plots than the rival you swing first; otherwise (ties included) the rival swings before you can act (`:262-280`).
@@ -200,11 +200,12 @@ Code: `classic/modules/visit.ts` (place `competitors`), `modules/battle.ts`, `mo
 
 **Pale Horse Cafe** (`commands_bar.cpp`)
 - Entering (`:321-348`) sets the status "in cafe", tells the others "X saunters in." and lists the others ("You are the only one here."). Leaving is the map's "steps outside".
-- A `chat` action may hold several lines separated by `|` (`:350-411`). A line starting `/` is a command; any other is said aloud after the swear filter (`:380`; the review said chat was unfiltered). Commands (first word, case-insensitive except `?`): `/?` help; `/who` the others here; `/info` turns, visits left, BP and tags; `/give name tier` (`:136-222`: the first player in the cafe whose name contains the text; tier wood/silver/gold; checks in order: nobody found, bad tier, no such tag (told to the room), yourself (tossed in the air), the recipient's daily limit (0 means "the admin has disabled tag transfer"), then one tag moves and the room hears it); `/tv`, `/tv on` or `ON` (any other word, "On" included, turns it off); `/me text` and `/yell text`, both swear-filtered, `/yell` reaching every player online; `/all` everyone online with location and time since their last action; anything else "Unknown command".
+- A `chat` action may hold several lines separated by `|` (`:350-411`). The 2019 source release answers `/?` (and any one-character command) with "Unknown command": its replacement for StringEx's `GetField` (`FakeCStringEx.cpp:52-67`) returns nothing for a one-character string. The port shows the help, which is what the help text and the 2001 server (built with the original StringEx, not in the repository) evidently intended; the oracle reports this difference (`docs/classic-fidelity.md`). A line starting `/` is a command; any other is said aloud after the swear filter (`:380`; the review said chat was unfiltered). Commands (first word, case-insensitive except `?`): `/?` help; `/who` the others here; `/info` turns, visits left, BP and tags; `/give name tier` (`:136-222`: the first player in the cafe whose name contains the text; tier wood/silver/gold; checks in order: nobody found, bad tier, no such tag (told to the room), yourself (tossed in the air), the recipient's daily limit (0 means "the admin has disabled tag transfer"), then one tag moves and the room hears it); `/tv`, `/tv on` or `ON` (any other word, "On" included, turns it off); `/me text` and `/yell text`, both swear-filtered, `/yell` reaching every player online; `/all` everyone online with location and time since their last action; anything else "Unknown command".
+- **Notices in the cafe.** A cafe poll also shows the simple-text notices waiting in the player's queue (log-on notices and the like, `add_que_messages_chat`, `broadcast.cpp:103-154`) and removes them, so the desk does not show them again.
 - **Delivery.** The original queued chat packets for the client to poll (`add_que_messages_chat`, `broadcast.cpp:103-154`). The engine emits a `chat` effect `{ kind: "chat", to, text }` naming the other players in the cafe; the host delivers it. The speaker's own lines come back in the view's `chat`. Notices for everyone (`broadcast`) are queued for players outside the cafe and sent as `chat` effects to those inside (the cafe read simple text, `broadcast.cpp:126-131`).
 - **The TV** is one switch for the whole town (`g_tvOn`, `commands_bar.cpp:11`, kept in `TownState.tvOn`), not one per player. TV reports reach the cafe only while it is on; the `tv` effect (the original's log line) is emitted either way.
 
-## 8. Days, mail, the paper and the tournament (Ported)
+## 8. Days, mail, the paper and the tournament (Ported; verified against the original code, words included)
 
 Code: `classic/maintenance.ts`, `classic/newDay.ts`, `classic/tournament.ts`, `modules/desk.ts`, `modules/mailbox.ts`, `modules/news.ts`, `modules/rankings.ts`.
 
@@ -218,7 +219,9 @@ Code: `classic/maintenance.ts`, `classic/newDay.ts`, `classic/tournament.ts`, `m
   7. `maint.c` (logs only).
 - **A new game** runs maintenance once at start (`funeral.cpp:98-103`), so play starts on day 1; `createTown({ paused: true })` stays on day 0 instead.
 - **Per-player new day**, on the first desk visit of the day (`commands_newday.cpp:3-77`, `commands_main.cpp:5-109`): turns = turns per day (15) + hearse bonus; today's BP, visits and the Yang's ban reset; police protection ends; on the tournament's final day turns are 0 and visits used up. If midnight passes while the player is online, the next desk visit shows the wake-up text instead.
-- **Desk and mail** (`broadcast.cpp:14-100`, `message_que.*`): later desk visits read the queue in order. Expired packets are dropped; text is gathered; pictures replace the picture; luck and BP rewards apply as they are read (Classic). A Continue packet stops reading: what was gathered is shown in a message overlay (`mailbox:letter`, closed with `dismiss`, which reads on). A letter from a player stops at Reply / Continue, shown as a confirm overlay (`mailbox:reply`): yes opens the notepad with the quote, no reads on. Text with no stop after it is shown on the desk, as before. Normal-importance packets (log-on notices) are dropped when the player is offline or logs off.
+- **Notices** (`broadcast`, `broadcast.cpp:391-407`): log-on, log-off, "moved into town", `/yell` and shop-closing notices carry the server's local time in front, as `show_time()` wrote it (`std_all.cpp:328-347`, `GetTimeFormat` picture "h':'mm' 'tt": "12:05 AM:Bob logged on."). The host supplies `now` and the server's offset from UTC (`EngineContext.localTimeOffsetMinutes`); code `classic/clock.ts`.
+- **Log on refused while the parlor is held** (`funeral.cpp:357-363`): when another player is inside (`get_player_who_locked_this_guy`), log-on is refused with "Someone is currently poking around your parlor...please log back on in a few minutes!" (`enterGame` returns `rejected` and `message`).
+- **Desk and mail** (`broadcast.cpp:14-100`, `message_que.*`): later desk visits read the queue in order. Only a request for the desk (`c_request_main`) reads it: the name box's Cancel and "nobody by that name", and the notepad's close button, are the client's own (welcome.swf buttons 496, 504, 451) and leave the queue for the next visit (fixed after the oracle found the port reading it there; `test/oracleFidelity.test.ts`). Expired packets are dropped; text is gathered; pictures replace the picture; luck and BP rewards apply as they are read (Classic). A Continue packet stops reading: what was gathered is shown in a message overlay (`mailbox:letter`, closed with `dismiss`, which reads on). A letter from a player stops at Reply / Continue, shown as a confirm overlay (`mailbox:reply`): yes opens the notepad with the quote, no reads on. Text with no stop after it is shown on the desk, as before. Normal-importance packets (log-on notices) are dropped when the player is offline or logs off.
 - **Writing a letter** (the desk's pen, Flash `i_getname` / `i_namenext` / `i_mail`; `commands_getname.cpp`, `commands_send_mail.cpp`): the same name search as visits, then the notepad. An unknown or deleted recipient: "Can't email, player doesn't exist?". A letter is three packets (`send_packet_mail`, `broadcast.cpp:254-303`): the text ("You have received a letter from ..."), the quote a reply starts with, and Reply / Continue. The quote is the part after the last line starting with `>` (and the blank line after it), each line prefixed with `>`; a letter that **starts** with a quote has no `\n>` before it, so the original quotes the whole letter again (kept). A recipient in the cafe hears "You have mail waiting". The original never filtered mail, and Classic does not either; the host option `filterUserText` (off in Classic, on in Expanded) runs the swear filter over it, and over Yang's fortunes.
 - **The paper** (`commands_news.cpp`): front page or Crime section ("There has been no crime reported today.") of today or yesterday (`:124-170`); the tournament lines at the top of the front page come from the current day, whichever paper is shown (`:24-53`); the top seller panels (`:73-106`). **Make Announcement** (`:172-238`): swear filter, then every backtick removed, then each `[address]` becomes a link (the first `]` after each `[`; brackets inside dropped), then a header line and the text go on today's front page. The original wrote `http://` + address into an HTML anchor; the engine stores the address and draws a pink `RichText` span with `href` only when `http://` + address (or the address itself, if it already starts with `http://` or `https://`) parses as an http or https URL without user name or password; anything else stays plain pink text. The original's loop never ended when a `]` came before every `[` (it re-inserted the same text); here such text is left alone.
 - **New players** (`new_user.cpp`): checks in order: town full, name 3 to 20 and unique (case-insensitive), log-on name 3 to 20 and unique, parlor 3 to 20, password 1 to 20 and matching, email 4 to 45. The characters `? | = / \ ; : , { } @ + < > % $`, the backtick, and characters 123 to 127 are removed from the name and parlor. Start: 500 money, 50 luck, 50 karma, 40 rating, 10 HP, 3 strength, no tags or turns. A deleted player's slot is reused. The player is announced, a front-page line is added, and the paper is shown. On day 0 and on a tournament's day N+1 new accounts are refused (`st_no_more`, `funeral.cpp:268-279`; the client hid the New button).
@@ -226,7 +229,7 @@ Code: `classic/maintenance.ts`, `classic/newDay.ts`, `classic/tournament.ts`, `m
 - **Tournament** (`maint.cpp:99-148`): default 30 days. On day N+1 nobody can play (turns 0, visits used up), new accounts are refused, the winner and the meteor go on the front page, "Top seller of the universe" replaces today's top seller, and the winner enters the Book of Deeds. The log-on game line (`lobbyStatus`, `funeral.cpp:198-236`) says the tournament is over.
 - **Reset** (`reset_game.cpp`, at the next midnight or the sysop's Reset Game, `resetTown`): every session ends (`sessionEnded`, reason "reset"); players, mail, the paper and yesterday's top seller are deleted; the day goes to 0; `reset.c` runs (it only logs); then maintenance starts day 1 (with `resetTown(..., { paused: true })` the town waits on day 0 until the next midnight, the original's day-0 auto-start). The Book of Deeds, the settings, the sysop's news and the TV switch survive. The engine emits `tournamentReset` and mixes a constant into the town seed so the next tournament does not replay the last one's draws.
 
-## Text (Ported)
+## Text (Ported; every player-facing literal of the C++ and scripts checked against the port, docs/classic-fidelity.md section 6)
 
 Backtick codes (`funeral_util.cpp:336-495`) become `RichText` spans: `` `1 ``-`` `0 ``, `` `! ``, `` `@ ``, `` `# ``, `` `$ ``/`` `y ``, `` `w ``, `` `^ `` set a colour; `` `fN `` sets size step N; `` `= `` is "="; any other code prints a backtick and swallows the next character. Strings the original hard-coded are in `ContentPack.text` (`packages/core/src/content/classicText.ts`). The desk menu, stats labels and "not built yet" wording are new: the original drew them in Flash.
 
@@ -238,13 +241,14 @@ This table lists gameplay bug and exploit fixes only. Original content is never 
 |---|---|
 | Re-buying a hearse grants its turns again (`price - price/2` gold); "buying" a cheaper hearse has a negative price and pays gold tags | Fixed (`fixes.hearseRebuy`, default on): only a dearer hearse can be bought. With the flag off both behaviours are reproduced and tested. |
 | Disconnecting escapes a lost battle | Fixed (`fixes.battleDisconnect`): leaving mid-fight is a loss (section 7) |
-| A rival who logs on while you are inside can still be robbed or attacked (only the door checks) | Fixed (`fixes.visitTargetRecheck`) |
+| A rival who comes back online while you are inside can still be robbed or attacked (only the door checks; a full log-on is refused while you hold the parlor) | Fixed (`fixes.visitTargetRecheck`) |
 | An announcement with `]` before every `[` hung the server | The text is left as typed |
 | 0-BP players deleted at midnight | 3 midnights of grace from the day the account was made (`fixes.zeroBpGracePeriod`; the sysop toggle is still `maint delete`). The grace also covers the inactivity check for accounts that never reached the desk, which the original deleted at the first midnight once the game was older than 15 days. |
 | One player per IP per day | Dropped |
 | New-player welcome never shows (`commands_newday.cpp:88` tests the day after setting it) | Fixed: tested before the new day (`fixes.newPlayerWelcome`) |
 | Police-patrol message never shows (`:70` tests the flag after `:42` cleared it) | Fixed: shown if the player was protected overnight; protection still ends at the new day (`fixes.policeNewDayMessage`) |
 | Server down for several days advances one day | Catches up every missed day (`fixes.catchUpMissedDays`) |
-| Cancelling the Old Papers prompt reads the client's abort marker `12ABORT12` as day 12 (`atoi`) | Cancel returns to the library |
+| Cancelling the Old Papers prompt reads the client's abort marker `12ABORT12` as day 12 (`atoi`) | Cancel returns to the library (`fixes.oldPapersCancel`; off in `originalClassicRules()`, which shows day 12) |
+| A news blurb's gift mail starts with a Continue that has nothing before it: the desk shows "You are sitting at your desk." with only that Continue, and the gift's BP and luck come at the next click (`commands_main.cpp:89-108`) | Read past the empty stop: the gift at once (`fixes.emptyMailStop`; with it off the desk shows the original's Continue, and the legacy bridge draws it as the original did) |
 | Yang's constructor writes past the end of its cost and luck arrays | Intended costs from the rules table (see section 6) |
 | The swear filter would loop forever on an empty word in `swear_words.txt` | Empty words are skipped |

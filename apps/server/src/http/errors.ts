@@ -1,5 +1,6 @@
 import type { FastifyError, FastifyInstance, FastifyReply } from "fastify";
 import { ZodError } from "zod";
+import { HasherBusy } from "../auth/passwords.js";
 import type { ErrorBody } from "../wire.js";
 
 /** An error that becomes a JSON response with this status. */
@@ -20,6 +21,12 @@ export function installErrorHandling(app: FastifyInstance): void {
       return reply
         .status(error.status)
         .send({ error: error.code, message: error.message, ...error.extra });
+    }
+    if (error instanceof HasherBusy) {
+      return reply
+        .status(503)
+        .header("retry-after", "5")
+        .send({ error: "busy", message: "The server is busy. Try again in a few seconds." });
     }
     if (error instanceof ZodError) {
       return reply.status(400).send({

@@ -5649,7 +5649,8 @@
     },
     "session": {
       "loggedOn": "{name} logged on.",
-      "loggedOff": "{name} logged off."
+      "loggedOff": "{name} logged off.",
+      "parlorLocked": "Someone is currently poking around your parlor...please log back on in a few minutes!"
     },
     "desk": {
       "title": "At Home",
@@ -12371,7 +12372,20 @@
         },
         "raisePitch": "`$You mutter a few words from the book in your basement. Somewhere in the back room, chairs scrape.\n\n",
         "raiseResult": "`$Three pale mourners shuffle in and stand behind {customerName}, moaning softly. {cHeCap} decides not to argue about money any more.",
-        "threat": "{customer}\"You disappoint me.\" The large men walk you out to the alley and explain your disappointment to your ribs."
+        "threat": "{customer}\"You disappoint me.\" The large men walk you out to the alley and explain your disappointment to your ribs.",
+        "agedLines": [
+          {
+            "pool": "sympathyPitch",
+            "maxCustomerAge": 17,
+            "text": "`w{player}: `$\"Would you like a juice box? We keep them for the bravest visitors.\"\n\n"
+          },
+          {
+            "pool": "sympathyPitch",
+            "minCustomerAge": 18,
+            "minDeceasedAge": 60,
+            "text": "`w{player}: `$\"{dFirst} had a long life. The good ones always seem too short anyway.\"\n\n"
+          }
+        ]
       },
       "office": {
         "title": "Your Office",
@@ -12429,7 +12443,7 @@
         },
         "necromancer": {
           "name": "Necromancer",
-          "description": "Raise mourners once per customer to scare them out of haggling, one 'accident' customer a day, and your attacks pay a quarter more."
+          "description": "Raise mourners once per customer to scare them out of haggling, one 'accident' customer a day, and your attacks pay 15% more."
         },
         "neutral": {
           "name": "Neutral",
@@ -16580,7 +16594,8 @@
           "cooldown": "You left a chain recently ({days} more days)",
           "badName": "`$The clerk won't register that name. Try another, preferably one the Mayor can say in church.",
           "duesUnpaid": "`4You couldn't pay the ${dues} chain dues, so the chain dropped you. They want the lapel pin back by mail.`$",
-          "noFriendlyFire": "`${name} is in your chain. You can't do that to family."
+          "noFriendlyFire": "`${name} is in your chain. You can't do that to family.",
+          "removedName": "Parlor Chain No. {n}"
         },
         "challenge": {
           "title": "Daily Challenge",
@@ -18130,7 +18145,7 @@
       },
       "night-watchman": {
         "name": "Night Watchman",
-        "description": "Security level 3. He is mostly asleep, but loudly. Needs the Alarm System."
+        "description": "Security level 3. He is mostly asleep, but loudly, and families like a parlor with a man at the door: richer families notice you. Needs the Alarm System."
       },
       "chapel": {
         "name": "Chapel",
@@ -18146,7 +18161,7 @@
       },
       "memorial-garden": {
         "name": "Memorial Garden",
-        "description": "Roses, a fountain, a bench nobody sits on. Customers have 1 more patience. Needs a zoning permit from City Hall."
+        "description": "Roses, a fountain, a bench nobody sits on. Customers have 2 more patience, and richer families notice you. Needs a zoning permit from City Hall."
       },
       "crematorium": {
         "name": "Crematorium",

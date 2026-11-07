@@ -1,4 +1,5 @@
 export { blockedList, blockersOf, isBlocking, setBlocked } from "./classic/blocking.js";
+export { showTime, stampNotice } from "./classic/clock.js";
 export * from "./classic/customer.js";
 export {
   casketName,
@@ -11,10 +12,16 @@ export {
 } from "./classic/customerText.js";
 export { computeEvent, type ResolvedEvent } from "./classic/events.js";
 export {
+  listAnnouncements,
+  listQueuedLetters,
   type RemovedText,
   type RenameError,
+  removeAnnouncement,
+  removeLetter,
   removePlayerText,
   renamePlayer,
+  type StoredText,
+  textHash,
 } from "./classic/moderation.js";
 export { enterHospitalRoom } from "./classic/modules/hospital.js";
 export { CLASSIC_PLACES, createClassicRegistry } from "./classic/modules/index.js";

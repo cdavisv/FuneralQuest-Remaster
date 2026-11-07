@@ -396,6 +396,9 @@ export class XCollector {
         if (rn.great > rw.great) this.both(id, "great");
         if (rn.nice > rw.nice) this.both(id, "nice");
         if (rn.cremations > rw.cremations) this.both(id, "cremations");
+        // The family's mood at Done (Done does not change it): happy and sour families (3.7).
+        if (c && c.mood < this.x.scoring.happyBelow) this.both(id, "salesHappy");
+        if (c && c.mood >= this.x.scoring.sourAt) this.both(id, "salesSour");
         const cx = c?.expanded;
         if (cx) {
           for (const [cat, tier] of Object.entries(cx.packages)) {

@@ -718,18 +718,6 @@
       "license": "CC BY 4.0"
     },
     {
-      "id": "people/m_adult_u",
-      "file": "remastered/people/m_adult_u.svg",
-      "kind": "fix",
-      "overrides": "people/m_adult_u",
-      "usedBy": "customers",
-      "grade": "A",
-      "notes": "Akiko Robinson's original drawing with the real band's logo removed and an invented band, HEARSEFIRE, lettered in its place.",
-      "viewBox": "0 0 550 400",
-      "credit": "Akiko Robinson (drawing); the replacement shirt logo by the Funeral Quest Remastered project",
-      "license": "Proton SDK license (the original drawing); CC BY 4.0 (the replacement logo)"
-    },
-    {
       "id": "places/graveyard",
       "file": "remastered/places/graveyard.svg",
       "kind": "place",

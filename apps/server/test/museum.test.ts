@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Request } from "../../../packages/legacy-compat/src/commands.js";
 import { FlashClient, plain } from "../../../packages/legacy-compat/test/support/flashClient.js";
 import { ApiClient } from "../src/client/index.js";
+import { FakeClock } from "../src/clock.js";
 import type { Notice, ServerMessage } from "../src/wire.js";
 import {
   connectSocket,
@@ -297,6 +298,28 @@ describe("museum mode is on", () => {
     await socket.until((m) => notices(m).some((n) => n.kind === "chat"));
     const line = notices(socket.messages).find((n) => n.kind === "chat");
     expect(JSON.stringify(line)).toContain("hello from the museum");
+  });
+
+  it("shows notices with the town's local time in front, as the original server did", async () => {
+    // show_time (std_all.cpp:328-347): 12:00 UTC on 2030-01-01 is 7:00 AM in New York.
+    h = await startServer({
+      config: { legacyClient: true },
+      clock: new FakeClock(Date.UTC(2030, 0, 1, 12, 0, 0)),
+      towns: [{ id: "main", name: "Dead Calm", seed: 1234, timeZone: "America/New_York" }],
+    });
+    const flash = new FlashClient(h.server.app, "/museum");
+    await legacySignUp(flash, "timelou", "Time Lou", "Lou Rest");
+    await flash.command(Request.main);
+    if (flash.buttons().length === 1) await flash.click("3");
+    await h.clock.advance(5 * 60_000);
+    const modern = new TestPlayer(h, "timemo", PASSWORD);
+    await modern.signUp();
+    await modern.enter("main", { name: "Time Mo", parlor: "Mo Rest", male: false });
+    // Back at the desk, the newcomer's notice is read from the queue.
+    await flash.command(Request.map);
+    await flash.command(Request.main);
+    expect(plain(flash.get("st_main"))).toContain("7:05 AM:Time Mo has just moved into town!");
+    expect(plain(flash.get("st_main"))).not.toMatch(/(^|\n)Time Mo has just/);
   });
 
   it("takes an existing account with no parlor, and refuses a wrong password or a second parlor", async () => {

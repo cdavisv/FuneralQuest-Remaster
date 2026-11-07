@@ -1,4 +1,4 @@
-import type { Action, RichText, View } from "@fq/protocol";
+import type { Action, ChatSpeaker, RichText, View } from "@fq/protocol";
 
 /**
  * Everything that crosses the wire between this server and a client that is
@@ -40,7 +40,15 @@ export type Notice =
   /** The cafe television. Sent to players sitting in the cafe. */
   | { kind: "tv"; text: RichText }
   /** A cafe chat line. */
-  | { kind: "chat"; text: RichText }
+  | {
+      kind: "chat";
+      text: RichText;
+      /**
+       * Expanded towns: who said the line, as data (the engine's own record). Absent for the
+       * room's own lines and in Classic towns.
+       */
+      from?: ChatSpeaker;
+    }
   /** Mail arrived; it is read at the desk. */
   | { kind: "mail"; count: number }
   /** Midnight passed (or a Blitz day ended). */
@@ -118,7 +126,12 @@ export type ReportCategory = (typeof REPORT_CATEGORIES)[number];
 export type SafetyTarget =
   | { kind: "player"; playerId: number }
   | { kind: "name"; name: string }
-  | { kind: "chat"; text: string }
+  | {
+      kind: "chat";
+      text: string;
+      /** The speaker's player id, when the line carried one (`ChatLine.from`): picks the line by data, not text alone. */
+      fromPlayerId?: number | undefined;
+    }
   | { kind: "letter"; text: string; fromPlayerId?: number | undefined }
   | { kind: "announcement"; text: string }
   | { kind: "fortune"; text: string }

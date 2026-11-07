@@ -88,7 +88,7 @@ The original 2001 Flash client cannot show a report or block button or a form, s
 - [x] Report button on cafe lines, letters, announcements, names (built, tested)
 - [x] Block honoured by chat, `/yell`, mail, gifts and battle quotes, and persisted per account (built, tested)
 - [x] A moderator way to see reports and act (the `/admin/` page and API)
-- [x] Filter list: the strict word list mechanism exists; **the list itself is the sysop's to supply** (check `FQ_BLOCKLIST_FILE` is set on the deployed server). The engine's own swear list still has words only in the Vintage pack
+- [x] Filter list: the strict word list mechanism exists; **the list itself is the sysop's to supply** (check `FQ_BLOCKLIST_FILE` is set on the deployed server). The filter applies only to text players write; the game's own original text is never filtered or altered (the original's `swear_words.yaml` is kept as data)
 - [x] Terms and age statement before online play (draft notice; owner to finalise)
 - [x] In-app "delete my account" plus a web page at `https://<host>/account/delete` (built; **`[ACCOUNT DELETION URL - OWNER TO FILL IN]` is that address once the server is public**)
 - [ ] Published abuse contact `[ABUSE REPORT ADDRESS OR FORM - OWNER TO FILL IN]` and response target `[RESPONSE TIME FOR REPORTS - OWNER TO FILL IN]`

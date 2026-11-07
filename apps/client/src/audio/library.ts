@@ -1,4 +1,12 @@
-import { type AudioManifest, LOOP_FADE, type ManifestTrack, repairLoop } from "@fq/audio";
+import {
+  type AudioManifest,
+  LOOP_FADE,
+  type ManifestTrack,
+  type PackId,
+  packChain,
+  repairLoop,
+  resolveTrack,
+} from "@fq/audio";
 
 /**
  * Loads the rendered audio: assets/audio/manifest.json, then each track's files on demand
@@ -7,6 +15,10 @@ import { type AudioManifest, LOOP_FADE, type ManifestTrack, repairLoop } from "@
  * PCM); the compressed bytes of anything fetched are kept, so coming back is quick. Anything
  * missing (no manifest, a 404, a file the browser cannot decode) resolves to null, once, with a
  * console warning, and is not asked for again.
+ *
+ * Sound packs: `base` is the Synth pack; `bases` may add others (the Studio pack). With a pack
+ * selected (`setPack`), each track plays from the first pack in its chain that has it (the Studio
+ * pack, then Synth), so a partial or absent Studio pack falls back track by track.
  */
 export interface LibraryDeps {
   /** Base URL of assets/audio (no trailing slash). */
@@ -16,13 +28,19 @@ export interface LibraryDeps {
   fetchBytes(url: string): Promise<ArrayBuffer>;
   decode(bytes: ArrayBuffer): Promise<AudioBuffer>;
   warn?(message: string): void;
+  /** Base URLs of other packs (no trailing slash). The Synth pack's is `base`. */
+  bases?: Partial<Record<PackId, string>>;
 }
 
 /** Decoded tracks kept per kind before the least recently used is dropped. */
 const KEEP: Record<string, number> = { music: 4, ambience: 3, stinger: 6, sfx: 64, ui: 16 };
 
 export class AudioLibrary {
-  private manifestP: Promise<AudioManifest | null> | null = null;
+  private manifests = new Map<PackId, Promise<AudioManifest | null>>();
+  private pack: PackId = "synth";
+  private generation = 0;
+  /** Which pack each loaded id came from (for the debug probe). */
+  readonly sources = new Map<string, PackId>();
   private bytes = new Map<string, Promise<ArrayBuffer | null>>();
   private decoded = new Map<string, AudioBuffer[]>();
   private pending = new Map<string, Promise<AudioBuffer[] | null>>();
@@ -33,44 +51,88 @@ export class AudioLibrary {
     this.format = deps.format;
   }
 
-  manifest(): Promise<AudioManifest | null> {
-    this.manifestP ??= this.deps
-      .fetchBytes(`${this.deps.base}/manifest.json`)
-      .then((b) => JSON.parse(new TextDecoder().decode(b)) as AudioManifest)
-      .catch(() => {
-        this.warn("no audio manifest: the game plays silently");
-        return null;
-      });
-    return this.manifestP;
+  private baseOf(pack: PackId): string | undefined {
+    return pack === "synth" ? this.deps.base : this.deps.bases?.[pack];
+  }
+
+  /** A pack's manifest (the Synth pack's by default), or null if it cannot be had. */
+  manifest(pack: PackId = "synth"): Promise<AudioManifest | null> {
+    let p = this.manifests.get(pack);
+    if (!p) {
+      const base = this.baseOf(pack);
+      p = base
+        ? this.deps
+            .fetchBytes(`${base}/manifest.json`)
+            .then((b) => JSON.parse(new TextDecoder().decode(b)) as AudioManifest)
+            .catch(() => {
+              this.warn(
+                pack === "synth"
+                  ? "no audio manifest: the game plays silently"
+                  : `no ${pack} sound pack here: its tracks play from the Synth pack`,
+              );
+              return null;
+            })
+        : Promise.resolve(null);
+      this.manifests.set(pack, p);
+    }
+    return p;
+  }
+
+  /** The selected pack. A change drops decoded audio (the compressed bytes stay cached). */
+  setPack(pack: PackId): void {
+    if (pack === this.pack) return;
+    this.pack = pack;
+    this.generation++;
+    this.decoded.clear();
+    this.pending.clear();
+    this.missing.clear();
+    this.sources.clear();
+  }
+
+  /** Where a track plays from with the selected pack: the pack, its base URL, its entry. */
+  private async resolve(
+    id: string,
+  ): Promise<{ pack: PackId; base: string; track: ManifestTrack } | null> {
+    const chain = packChain(this.pack);
+    const loaded = await Promise.all(chain.map((p) => this.manifest(p)));
+    const r = resolveTrack(Object.fromEntries(chain.map((p, i) => [p, loaded[i]])), id, this.pack);
+    const base = r ? this.baseOf(r.pack) : undefined;
+    return r && base ? { ...r, base } : null;
   }
 
   async track(id: string): Promise<ManifestTrack | null> {
-    return (await this.manifest())?.tracks[id] ?? null;
+    return (await this.resolve(id))?.track ?? null;
   }
 
   private warn(message: string) {
     (this.deps.warn ?? console.warn)(`[audio] ${message}`);
   }
 
-  private fetchFile(path: string): Promise<ArrayBuffer | null> {
-    let p = this.bytes.get(path);
+  private fetchFile(base: string, path: string): Promise<ArrayBuffer | null> {
+    const url = `${base}/${path}`;
+    let p = this.bytes.get(url);
     if (!p) {
-      p = this.deps.fetchBytes(`${this.deps.base}/${path}`).catch(() => null);
-      this.bytes.set(path, p);
+      p = this.deps.fetchBytes(url).catch(() => null);
+      this.bytes.set(url, p);
     }
     return p;
   }
 
   /** Fetches (but does not decode) a track's files, for later. */
   async prefetch(id: string): Promise<void> {
-    const t = await this.track(id);
-    if (!t) return;
-    await Promise.all(t.files.map((f) => this.fetchFile(this.format === "ogg" ? f.ogg : f.m4a)));
+    const r = await this.resolve(id);
+    if (!r) return;
+    await Promise.all(
+      r.track.files.map((f) => this.fetchFile(r.base, this.format === "ogg" ? f.ogg : f.m4a)),
+    );
   }
 
-  private async decodeFile(f: { ogg: string; m4a: string }): Promise<AudioBuffer | null> {
+  private async decodeFile(
+    base: string,
+    f: { ogg: string; m4a: string },
+  ): Promise<AudioBuffer | null> {
     for (const fmt of this.format === "ogg" ? (["ogg", "m4a"] as const) : (["m4a"] as const)) {
-      const bytes = await this.fetchFile(f[fmt]);
+      const bytes = await this.fetchFile(base, f[fmt]);
       if (!bytes) continue;
       try {
         // decodeAudioData detaches its argument: give it a copy so the cache stays usable
@@ -95,16 +157,18 @@ export class AudioLibrary {
     if (this.missing.has(id)) return Promise.resolve(null);
     let p = this.pending.get(id);
     if (p) return p;
+    const generation = this.generation;
     p = (async () => {
-      const t = await this.track(id);
-      if (!t) {
+      const r = await this.resolve(id);
+      const t = r?.track;
+      if (!r || !t) {
         if (await this.manifest()) this.warn(`"${id}" is not in the manifest`);
         this.missing.add(id);
         return null;
       }
       const bufs: AudioBuffer[] = [];
       for (const f of t.files) {
-        const b = await this.decodeFile(f);
+        const b = await this.decodeFile(r.base, f);
         if (!b) {
           this.warn(`could not load "${id}" (${f.ogg})`);
           this.missing.add(id);
@@ -119,7 +183,11 @@ export class AudioLibrary {
         }
         bufs.push(b);
       }
-      this.remember(id, t.kind, bufs);
+      // a pack change while this loaded: hand it over, but do not cache it for the new pack
+      if (generation === this.generation) {
+        this.remember(id, t.kind, bufs);
+        this.sources.set(id, r.pack);
+      }
       return bufs;
     })().finally(() => this.pending.delete(id));
     this.pending.set(id, p);

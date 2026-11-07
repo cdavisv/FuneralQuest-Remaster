@@ -1,3 +1,4 @@
+import "./zodJitless.js";
 import { expandedPack } from "@fq/content";
 import {
   createPlayer,

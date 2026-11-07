@@ -30,7 +30,7 @@ Build and launch side, written with the desktop and mobile apps: [BUILDING.md](B
 3. **Player-typed text is kept in the audit log**, except cafe chat, which is no longer stored: mail bodies, announcements, battle quotes and fortunes are retained in `audit_log` (90 days by default; `0` keeps forever), and an account's deletion removes the rows that hold what it typed. The privacy policy draft says so; keep the periods in step.
 4. **The "Funeral Quest" name and the original sounds.** Rights to the name are unresolved (`docs/REMASTER_PLAN.md` section 9). Get written confirmation from Seth Robinson / Robinson Technologies before any store submission. Museum mode serves original sounds and must be off on the official server.
 5. **AI-assisted art and text.** The plan says AI tools were used for concept art and content drafts. Steam and itch.io ask for disclosure; see [checklist-steam.md](checklist-steam.md).
-6. **Vintage wording pack** contains stronger language and brand/real-person references than Classic and Expanded. Decide whether store builds expose it. See [age-rating-and-content.md](age-rating-and-content.md).
+6. **The original 2001 text ships unaltered in every mode.** It contains profanity, crude and sexual humour, dated material and a few real-person and brand references. Answer rating forms truthfully for it; see [age-rating-and-content.md](age-rating-and-content.md).
 
 ## Owner must fill in
 

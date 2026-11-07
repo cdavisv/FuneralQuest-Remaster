@@ -109,9 +109,10 @@ describe("RichText to the client's HTML", () => {
     }
   });
 
-  it("escapes <, > and & (RichText is never HTML) and writes line breaks as <br>", () => {
+  it("escapes < and & (RichText is never HTML), keeps > as the original sent it, writes line breaks as <br>", () => {
     const text: RichText = [{ text: "a <b> & c\nd", color: "white" }];
-    expect(richTextToLegacyHtml(text)).toBe('<font color="#FFFFFF">a &lt;b&gt; &amp; c<br>d');
+    // A lone ">" (the quote marks of a letter) is shown as is by the HTML field.
+    expect(richTextToLegacyHtml(text)).toBe('<font color="#FFFFFF">a &lt;b> &amp; c<br>d');
   });
 
   it("returns to the field's colour after a coloured span", () => {

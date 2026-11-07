@@ -407,6 +407,109 @@ describe("operator actions", () => {
     expect(alice && carol).toBeTruthy();
   });
 
+  it("takes down one announcement or one queued letter, by index or hash, and only that one", async () => {
+    const { bobby } = await reported();
+    const town = (h as Harness).server.host.get("main");
+    expect((await announce(bobby, "First announcement from Bobby")).status).toBe(200);
+    expect((await announce(bobby, "Second announcement from Bobby")).status).toBe(200);
+    expect(await sendLetter(bobby, "carol", "Dear Carol, the first letter")).toBe(200);
+    expect(await sendLetter(bobby, "carol", "Dear Carol, the second letter")).toBe(200);
+    const paper = () => JSON.stringify(town?.snapshotState.news);
+    const mail = () => JSON.stringify(town?.snapshotState.players[2]?.mail);
+
+    type Stored = {
+      announcements: { day: number; section: string; index: number; hash: string; text: string }[];
+      letters: { to: number; index: number; hash: string; text: string }[];
+    };
+    const listed = await admin<Stored>(
+      h as Harness,
+      "GET",
+      "/admin/towns/main/stored-text?playerId=1",
+      undefined,
+      mod,
+    );
+    expect(listed.status).toBe(200);
+    const first = listed.body.announcements.find((a) => a.text.includes("First announcement"));
+    const second = listed.body.announcements.find((a) => a.text.includes("Second announcement"));
+    expect(first && second).toBeTruthy();
+    const firstLetter = listed.body.letters.find((l) => l.text.includes("first letter"));
+    expect(firstLetter).toBeTruthy();
+    expect(listed.body.letters.every((l) => l.to === 2)).toBe(true);
+
+    // One announcement, by hash; the other stays.
+    const gone = await admin(
+      h as Harness,
+      "POST",
+      "/admin/moderation/remove-item",
+      {
+        kind: "announcement",
+        townId: "main",
+        day: first?.day,
+        section: first?.section,
+        hash: first?.hash,
+        reason: why,
+      },
+      mod,
+    );
+    expect(gone.status, JSON.stringify(gone.body)).toBe(200);
+    expect(paper()).not.toContain("First announcement");
+    expect(paper()).toContain("Second announcement");
+    // The same item again: it is gone, and nothing else is touched.
+    const again = await admin(
+      h as Harness,
+      "POST",
+      "/admin/moderation/remove-item",
+      { kind: "announcement", townId: "main", day: first?.day, hash: first?.hash, reason: why },
+      mod,
+    );
+    expect(again.status).toBe(404);
+    expect(paper()).toContain("Second announcement");
+
+    // One letter, by hash and index together.
+    const letter = await admin(
+      h as Harness,
+      "POST",
+      "/admin/moderation/remove-item",
+      {
+        kind: "letter",
+        townId: "main",
+        to: 2,
+        index: firstLetter?.index,
+        hash: firstLetter?.hash,
+        reason: why,
+      },
+      mod,
+    );
+    expect(letter.status, JSON.stringify(letter.body)).toBe(200);
+    expect(mail()).not.toContain("first letter");
+    expect(mail()).toContain("second letter");
+
+    // Refused: no way to name the item, an unknown field, a bad hash, an unknown town.
+    for (const body of [
+      { kind: "letter", townId: "main", to: 2, reason: why },
+      { kind: "letter", townId: "main", to: 2, index: 0, reason: why, extra: 1 },
+      { kind: "letter", townId: "main", to: 2, hash: "zz", reason: why },
+      { kind: "letter", townId: "nowhere", to: 2, index: 0, reason: why },
+      { kind: "announcement", townId: "main", day: 1, index: 0 },
+    ]) {
+      const r = await admin(h as Harness, "POST", "/admin/moderation/remove-item", body, mod);
+      expect([400, 404], JSON.stringify(body)).toContain(r.status);
+    }
+    // Audited with the moderator, the reason and what was named.
+    const [row] = auditOf("admin:remove-letter");
+    expect(row?.data).toMatchObject({ moderator: "Morticia", reason: why, to: 2 });
+    expect(auditOf("admin:remove-announcement")).toHaveLength(1);
+    // Both need the admin token.
+    expect(
+      (
+        await (h as Harness).inject({
+          method: "GET",
+          url: "/admin/towns/main/stored-text?playerId=1",
+        })
+      ).statusCode,
+    ).toBe(401);
+  });
+
   it("forces a rename, in the rankings and the stored paper, and refuses bad ones", async () => {
     const { bobby } = await reported();
     const town = (h as Harness).server.host.get("main");

@@ -1,20 +1,22 @@
 /*
  * Funeral Quest wrapper shim. One classic script, shared by the Tauri desktop app (injected
  * before the page's own scripts) and the Capacitor mobile app (copied into the bundle and loaded
- * first from index.html). It adds what the web client does not do by itself inside a native
- * webview, without touching the client:
+ * first from index.html). The web client does the game's own work inside a webview (it reads the
+ * server address from window.fqWrapper.server, plays gamepads itself, saves through
+ * window.fqWrapper.saveFile, skips its service worker, registers window.fqHandleBack); this script
+ * only supplies what a plain page cannot have:
  *
- *  - a server address that persists: requests the client makes to its own origin under /api,
- *    /health and /admin (and its WebSocket) are re-pointed at the configured server;
- *  - a small settings dialog for that address (window.fqWrapper.openSettings());
- *  - gamepad mapping (d-pad / left stick move focus, A presses, B is Escape, X Y LB RB are keys
- *    1 to 4, Start opens the settings dialog when the page offers no Settings of its own);
- *  - links to other sites open in the system browser;
- *  - save files (<a download> with a blob) go to a native save dialog or share sheet;
- *  - F11 and Alt+Enter toggle fullscreen (desktop).
+ *  - a server address that persists (localStorage), read by the client as fqWrapper.server, and a
+ *    small settings dialog for it (window.fqWrapper.openSettings());
+ *  - fqWrapper.saveFile(name, text, type) and, where the host has one, fqWrapper.openFile(accept):
+ *    the host's native save and open dialogs (or the share sheet) for the client's save export
+ *    and import;
+ *  - links to other sites open in the system browser (the host's openExternal);
+ *  - F11 and Alt+Enter toggle fullscreen and F2 opens the server dialog (desktop).
  *
  * The host (desktop or mobile) defines window.__fqHost before or after this script runs:
- *   { platform, defaultServer, openExternal(url), saveFile(name, text, type), toggleFullscreen?,
+ *   { platform, defaultServer, openExternal(url), saveFile(name, text, type),
+ *     openFile?(accept), toggleFullscreen?,
  *     extraSettings?: [{ id, label, type: "checkbox", get(), set(v) }] }
  * Everything here is plain DOM and CSSOM (no inline <style>, no eval), so a strict CSP holds.
  */
@@ -24,7 +26,6 @@
   const KEY = "fqw.server.v1";
   const host = () => window.__fqHost || {};
   const ownOrigin = location.origin;
-  const API_PATHS = /^\/(api|health|admin)(\/|$|\?)/;
 
   /** Normalises what a person typed. Returns { url } or { error }. */
   function parseServer(text) {
@@ -63,48 +64,6 @@
 
   let server = configuredServer();
 
-  function rewrite(input) {
-    if (!server) return null;
-    try {
-      const u = new URL(input, location.href);
-      if (u.origin === ownOrigin && API_PATHS.test(u.pathname + u.search)) {
-        return server + u.pathname + u.search;
-      }
-    } catch {
-      /* not a URL */
-    }
-    return null;
-  }
-
-  // ---- fetch and WebSocket re-pointing ------------------------------------------------------
-  const nativeFetch = window.fetch.bind(window);
-  window.fetch = (input, init) => {
-    const href = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
-    const to = rewrite(href);
-    if (to === null) return nativeFetch(input, init);
-    if (typeof input === "string" || input instanceof URL) return nativeFetch(to, init);
-    return nativeFetch(new Request(to, input), init);
-  };
-
-  const NativeWebSocket = window.WebSocket;
-  function FqWebSocket(url, protocols) {
-    let target = String(url);
-    try {
-      const u = new URL(url, location.href);
-      const asHttp = new URL(u.href.replace(/^ws/, "http"));
-      const to = rewrite(asHttp.href);
-      if (to) target = to.replace(/^http/, "ws");
-    } catch {
-      /* leave the address alone */
-    }
-    return protocols === undefined
-      ? new NativeWebSocket(target)
-      : new NativeWebSocket(target, protocols);
-  }
-  FqWebSocket.prototype = NativeWebSocket.prototype;
-  for (const k of ["CONNECTING", "OPEN", "CLOSING", "CLOSED"]) FqWebSocket[k] = NativeWebSocket[k];
-  window.WebSocket = FqWebSocket;
-
   // ---- external links -----------------------------------------------------------------------
   document.addEventListener(
     "click",
@@ -112,17 +71,6 @@
       if (e.defaultPrevented || e.button !== 0) return;
       const a = e.target instanceof Element ? e.target.closest("a[href]") : null;
       if (!a) return;
-      // A save file: <a download href="blob:...">.
-      if (a.hasAttribute("download") && a.href.startsWith("blob:") && host().saveFile) {
-        e.preventDefault();
-        e.stopPropagation();
-        const name = a.getAttribute("download") || "funeral-quest-save.json";
-        fetch(a.href)
-          .then((r) => r.text())
-          .then((text) => host().saveFile(name, text, a.type || "application/json"))
-          .catch(() => toast("The file could not be saved."));
-        return;
-      }
       let u;
       try {
         u = new URL(a.href, location.href);
@@ -444,159 +392,27 @@
     true,
   );
 
-  // ---- gamepad ------------------------------------------------------------------------------
-  // Buttons follow the "standard" mapping. The client reads keys 1 to 9 and Escape from window
-  // keydown events, so a gamepad press is turned into the same synthetic key events; focus is
-  // moved among the page's own buttons so it also works in menus, forms and dialogs.
-  const FOCUSABLE =
-    'button:not([disabled]), a[href], input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
-  function visible(n) {
-    const r = n.getBoundingClientRect();
-    return r.width > 0 && r.height > 0 && getComputedStyle(n).visibility !== "hidden";
-  }
-  function focusables() {
-    const dialog = document.querySelector(
-      '[role="dialog"][aria-modal="true"], [role="alertdialog"]',
-    );
-    const root = dialog || document;
-    return [...root.querySelectorAll(FOCUSABLE)].filter(visible);
-  }
-  /** Moves focus to the nearest focusable in a direction (0 right, 1 down, 2 left, 3 up). */
-  function moveFocus(dir) {
-    const list = focusables();
-    if (!list.length) return;
-    const cur =
-      document.activeElement && list.includes(document.activeElement)
-        ? document.activeElement
-        : null;
-    if (!cur) {
-      list[0].focus();
-      return;
-    }
-    const a = cur.getBoundingClientRect();
-    const ax = a.left + a.width / 2,
-      ay = a.top + a.height / 2;
-    let best = null,
-      bestScore = Infinity;
-    for (const n of list) {
-      if (n === cur) continue;
-      const b = n.getBoundingClientRect();
-      const dx = b.left + b.width / 2 - ax,
-        dy = b.top + b.height / 2 - ay;
-      const along = dir === 0 ? dx : dir === 2 ? -dx : dir === 1 ? dy : -dy;
-      const across = dir === 0 || dir === 2 ? Math.abs(dy) : Math.abs(dx);
-      if (along <= 1) continue;
-      const score = along + across * 2;
-      if (score < bestScore) {
-        bestScore = score;
-        best = n;
-      }
-    }
-    if (best) {
-      best.focus();
-      best.scrollIntoView({ block: "nearest" });
-    }
-  }
-  function key(k) {
-    const init = {
-      key: k,
-      code: k === "Escape" ? "Escape" : `Digit${k}`,
-      bubbles: true,
-      cancelable: true,
-    };
-    (document.activeElement || document.body).dispatchEvent(new KeyboardEvent("keydown", init));
-    (document.activeElement || document.body).dispatchEvent(new KeyboardEvent("keyup", init));
-  }
-  const held = new Map();
-  function press(i) {
-    switch (i) {
-      case 0: {
-        const a = document.activeElement;
-        if (a instanceof HTMLElement && a !== document.body) a.click();
-        else moveFocus(1);
-        break;
-      }
-      case 1:
-        key("Escape");
-        break;
-      case 2:
-        key("1");
-        break;
-      case 3:
-        key("2");
-        break;
-      case 4:
-        key("3");
-        break;
-      case 5:
-        key("4");
-        break;
-      case 12:
-        moveFocus(3);
-        break;
-      case 13:
-        moveFocus(1);
-        break;
-      case 14:
-        moveFocus(2);
-        break;
-      case 15:
-        moveFocus(0);
-        break;
-      case 9:
-        if (!document.querySelector('[role="dialog"]')) openSettings();
-        break;
-      default:
-        break;
-    }
-  }
-  let pollTimer = 0;
-  function poll() {
-    const pads = navigator.getGamepads ? [...navigator.getGamepads()].filter(Boolean) : [];
-    const now = performance.now();
-    for (const pad of pads) {
-      pad.buttons.forEach((b, i) => {
-        const id = `${pad.index}:b${i}`;
-        const was = held.get(id);
-        if (b.pressed && !was) {
-          held.set(id, now + 380);
-          press(i);
-        } else if (b.pressed && was && now > was && i >= 12 && i <= 15) {
-          held.set(id, now + 130);
-          press(i);
-        } else if (!b.pressed && was) held.delete(id);
-      });
-      const [x, y] = pad.axes;
-      for (const [id, active, dir] of [
-        ["ax+", x > 0.6, 0],
-        ["ax-", x < -0.6, 2],
-        ["ay+", y > 0.6, 1],
-        ["ay-", y < -0.6, 3],
-      ]) {
-        const hid = `${pad.index}:${id}`;
-        const was = held.get(hid);
-        if (active && (!was || now > was)) {
-          held.set(hid, now + (was ? 160 : 380));
-          moveFocus(dir);
-        } else if (!active && was) held.delete(hid);
-      }
-    }
-    pollTimer = requestAnimationFrame(poll);
-  }
-  window.addEventListener("gamepadconnected", () => {
-    if (!pollTimer) pollTimer = requestAnimationFrame(poll);
-  });
-  window.addEventListener("gamepaddisconnected", () => {
-    if (!(navigator.getGamepads && [...navigator.getGamepads()].some(Boolean))) {
-      cancelAnimationFrame(pollTimer);
-      pollTimer = 0;
-      held.clear();
-    }
-  });
+  /** The host's file functions, as the client calls them. Absent until the host defines them. */
+  const saveFile = (name, text, type) =>
+    Promise.resolve(host().saveFile(name, text, type || "application/json")).catch((error) => {
+      toast("The file could not be saved.");
+      throw error;
+    });
+  const openFile = (accept) =>
+    Promise.resolve(host().openFile(accept || "")).catch((error) => {
+      toast("The file could not be opened.");
+      throw error;
+    });
 
   window.fqWrapper = {
     get server() {
       return server;
+    },
+    get saveFile() {
+      return host().saveFile ? saveFile : undefined;
+    },
+    get openFile() {
+      return host().openFile ? openFile : undefined;
     },
     parseServer,
     openSettings,

@@ -86,6 +86,7 @@ export interface ChallengeDeps {
 }
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
+const RANKED_CACHE_MS = 5000;
 
 export function isChallengeDay(text: string): boolean {
   return DAY.test(text) && !Number.isNaN(Date.parse(`${text}T00:00:00Z`));
@@ -110,11 +111,20 @@ export class ChallengeService {
   private readonly queue = new SerialQueue();
   private readonly secret: string;
   private baseCtx: EngineContext | null = null;
+  private readonly rankedCache = new Map<
+    string,
+    { at: number; rows: (LeaderboardRow & { accountId: number })[] }
+  >();
 
   constructor(private readonly deps: ChallengeDeps) {
     this.secret = deps.secrets.getOrCreate("daily-challenge", () =>
       randomBytes(32).toString("hex"),
     );
+  }
+
+  /** Operations waiting in the challenge's queue (the HTTP layer refuses new ones past a limit). */
+  get pending(): number {
+    return this.queue.length;
   }
 
   // --------------------------------------------------------------- days
@@ -131,7 +141,8 @@ export class ChallengeService {
 
   private ctx(): EngineContext {
     this.baseCtx ??= expandedContext(this.deps.content.load("expanded"));
-    return { ...this.baseCtx, now: this.deps.clock.now() };
+    // The challenge's day is the UTC date, so its clock is UTC too.
+    return { ...this.baseCtx, now: this.deps.clock.now(), localTimeOffsetMinutes: 0 };
   }
 
   /**
@@ -158,7 +169,7 @@ export class ChallengeService {
         nextAt: this.nextAt(),
         loadout: { turns: l.turns, money: l.money, stock: l.stock, psych: l.psych },
         played: this.deps.store.played(day),
-        ranked: this.deps.store.board(day).length,
+        ranked: this.ranked(day).length,
         you: account ? this.youFor(account, day) : null,
       };
     });
@@ -178,7 +189,27 @@ export class ChallengeService {
     return this.ranked(day).find((r) => r.accountId === accountId)?.place ?? null;
   }
 
+  /**
+   * The ranked board for a day, kept for a few seconds: anyone may ask for it without logging in,
+   * and ranking is a sort of every finished run. A run finishing, or an account being deleted
+   * (`invalidate`), drops it at once.
+   */
   private ranked(day: string): (LeaderboardRow & { accountId: number })[] {
+    const now = this.deps.clock.now();
+    const cached = this.rankedCache.get(day);
+    if (cached && now - cached.at < RANKED_CACHE_MS) return cached.rows;
+    const rows = this.rank(day);
+    if (this.rankedCache.size >= 8) this.rankedCache.clear();
+    this.rankedCache.set(day, { at: now, rows });
+    return rows;
+  }
+
+  /** Forgets the cached boards (call after anything that removes or changes finished runs). */
+  invalidate(): void {
+    this.rankedCache.clear();
+  }
+
+  private rank(day: string): (LeaderboardRow & { accountId: number })[] {
     const rows = this.deps.store.board(day);
     const byId = new Map(rows.map((r) => [String(r.account_id), r]));
     const results: DailyChallengeResult[] = rows.map((r) => ({
@@ -364,6 +395,7 @@ export class ChallengeService {
     stateJson: string,
     at: number,
   ): DailyChallengeScore {
+    this.invalidate();
     transaction(this.deps.db, () => {
       this.deps.store.finish(row.day, row.account_id, score, { abandoned, at, stateJson });
       this.deps.audit.append({

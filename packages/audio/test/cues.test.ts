@@ -219,9 +219,74 @@ describe("the cue picker", () => {
     expect(ambienceFor(v({ scene: "cafe" }))).toBeNull();
   });
 
-  it("plays the meteor on the season's last paper", () => {
-    const paper = v({ scene: "news", text: [{ text: "A METEOR hits Deathville!" }] });
+  it("plays the meteor on the season's last paper, by the engine's flag and not by its words", () => {
+    const paper = v({
+      scene: "news",
+      text: [{ text: "Day 30." }],
+      news: {
+        day: 30,
+        section: "front",
+        isYesterday: false,
+        body: [],
+        topToday: [],
+        topYesterday: [],
+        meteor: true,
+      },
+    });
     expect(musicFor(paper, emptyMemory())).toBe("meteor");
+    // A paper that merely mentions a meteor is just the paper.
+    expect(
+      musicFor(v({ scene: "news", text: [{ text: "A METEOR hits Deathville!" }] }), emptyMemory()),
+    ).toBe("desk");
+  });
+
+  it("hears an Expanded sale's outcome from the data", () => {
+    const customer = pickCue(
+      v({
+        scene: "location",
+        customer: { incomeLabel: "", moodLabel: "", moodLevel: 3, total: 1 },
+      }),
+      emptyMemory(),
+    );
+    const closes = (saleOutcome: NonNullable<View["saleOutcome"]>) =>
+      pickCue(
+        v({ scene: "desk", text: [{ text: "Nothing to read here." }], saleOutcome }),
+        customer.memory,
+      ).cue.sounds;
+    expect(closes("exact")).toContain("fanfare-exact");
+    expect(closes("great")).toContain("harp-good-news");
+    expect(closes("walkout")).toContain("walkout");
+    expect(closes("nice")).toEqual([]);
+    expect(closes("plain")).toEqual([]);
+    // The words no longer matter once the engine has said how it went.
+    expect(
+      pickCue(
+        v({ scene: "desk", text: [{ text: "PERFECT! The bill is exact." }], saleOutcome: "plain" }),
+        customer.memory,
+      ).cue.sounds,
+    ).not.toContain("fanfare-exact");
+  });
+
+  it("tells a letter from a notice and a reward by the message's kind", () => {
+    const message = (messageKind: "letter" | "notice" | "reward" | undefined, text: string) =>
+      pickCue(
+        v({
+          scene: "desk",
+          overlay: {
+            kind: "message",
+            id: `m-${text}`,
+            text: [{ text }],
+            ...(messageKind ? { messageKind } : {}),
+          },
+        }),
+        emptyMemory(),
+      ).cue.sounds;
+    expect(message("letter", "Hello")).toContain("ui-mail");
+    expect(message("notice", "A letter from the mayor")).toContain("ui-page");
+    expect(message("reward", "mail")).toContain("ui-coin");
+    // Classic messages have no kind: the words decide, as before.
+    expect(message(undefined, "You have mail")).toContain("ui-mail");
+    expect(message(undefined, "The bank is closed")).toContain("ui-page");
   });
 
   it("notices a win in a fight and a sale's exact match", () => {

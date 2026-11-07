@@ -136,7 +136,7 @@ Built almost entirely from the original authors' own cut ideas, in priority orde
 ```
 legacy/                 original source/ and dist/, moved here untouched
 packages/core           rules engine, both rulesets, scene scripts, RNGs
-packages/content        classic, vintage and expanded packs + Zod schemas
+packages/content        classic (alias `vintage`) and expanded packs + Zod schemas
 packages/protocol       View and Action types shared by client and server
 packages/legacy-compat  request.xp adapter for the original Flash client
 packages/bots           AI rival parlor policies
@@ -294,9 +294,9 @@ Nothing original ships. The existing inventory is the brief:
 | Solo scope creep | Classic is the only hard requirement for Alpha. Expanded systems are ordered and each is shippable alone. |
 | Art consistency with AI-assisted work | A written style guide, Akiko's art as reference, hand vector cleanup, one reviewer pass per batch. |
 | Audio license contamination | CC0 or self-made only, enforced by the ledger check in CI. |
-| Dated or offensive content | The original is preserved as-is, in every pack and mode (owner's rule, 2026-11-06). It is disclosed through the store age ratings and content descriptors (Phase 6), not edited. |
+| Dated or offensive content | The original is preserved as-is, in every pack and mode (owner's rule, 2026-11-06). It is disclosed through the store age ratings and content descriptors (Phase 6; the forms are answered truthfully for it, `docs/release/age-rating-and-content.md`), not edited. |
 | Low player counts in a multiplayer game | Bots fill towns; Solo Career and Daily Challenge work with one player. |
-| Parity drift from the original | Rules spec with source references, formula tests, the Ruffle bridge as a live oracle. |
+| Parity drift from the original | Rules spec with source references, formula tests, the Ruffle bridge as a live oracle, and the original C++ compiled and compared step by step with the port (`tools/oracle`, `docs/classic-fidelity.md`). |
 
 ## 10. Verification
 

@@ -8,6 +8,10 @@
     "art": "node tools/derive-ui-art.mjs",
     "dev": "node tools/derive-ui-art.mjs && vite",
     "build": "node tools/derive-ui-art.mjs && tsc --noEmit && vite build",
+    "bundle": "node tools/derive-ui-art.mjs && vite build",
+    "perf": "playwright test -c perf/playwright.config.ts",
+    "bundle:check": "node tools/check-bundle.mjs",
+    "bundle:size": "node tools/check-bundle.mjs --print",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "node tools/derive-ui-art.mjs && vitest run",
@@ -15,10 +19,13 @@
     "e2e": "playwright test",
     "icons": "node tools/make-icons.mjs",
     "capture": "tsx tools/capture-expanded.mts",
-    "e2e:online": "playwright test --project online",
-    "e2e:solo": "playwright test --project solo",
-    "e2e:expanded": "playwright test --project expanded --project online -g Expanded",
-    "e2e:museum": "playwright test --project museum"
+    "e2e:chromium": "FQ_E2E_BROWSERS=chromium playwright test",
+    "e2e:firefox": "FQ_E2E_BROWSERS=firefox playwright test",
+    "e2e:webkit": "FQ_E2E_BROWSERS=webkit playwright test",
+    "e2e:online": "playwright test --project 'online-*'",
+    "e2e:solo": "playwright test --project 'solo-*'",
+    "e2e:expanded": "playwright test --project 'expanded-*' --project 'online-*' -g Expanded",
+    "e2e:museum": "playwright test --project 'museum-*'"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.3.0",

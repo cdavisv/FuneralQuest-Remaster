@@ -991,7 +991,8 @@ export const EXPANDED_STARTER: ExpandedContent = {
     },
     "night-watchman": {
       name: "Night Watchman",
-      description: "Security level 3. He is mostly asleep, but loudly. Needs the Alarm System.",
+      description:
+        "Security level 3. He is mostly asleep, but loudly, and families like a parlor with a man at the door: richer customers. Needs the Alarm System.",
     },
     chapel: {
       name: "Chapel",
@@ -1010,7 +1011,7 @@ export const EXPANDED_STARTER: ExpandedContent = {
     "memorial-garden": {
       name: "Memorial Garden",
       description:
-        "Gravel paths, a fountain that mostly works, and benches for the bereaved to sit and wonder what it cost them. Customers stay a little longer. Needs a zoning permit.",
+        "Gravel paths, a fountain that mostly works, and benches for the bereaved to sit and wonder what it cost them. Customers stay a little longer, and richer families notice you. Needs a zoning permit.",
     },
     crematorium: {
       name: "Crematorium Annex",
@@ -1290,6 +1291,20 @@ export const EXPANDED_STARTER: ExpandedContent = {
         "`$Three pale mourners shuffle in and stand behind {customerName}, moaning softly. {cHeCap} decides not to argue about money any more.",
       threat:
         '{customer}"You disappoint me." The large men walk you out to the alley and explain your disappointment to your ribs.',
+      // Section 13.5: lines for some customers only (they join the named pool when the ages fit).
+      agedLines: [
+        {
+          pool: "sympathyPitch",
+          maxCustomerAge: 17,
+          text: '`w{player}: `$"Would you like a juice box? We keep them for the bravest visitors."\n\n',
+        },
+        {
+          pool: "sympathyPitch",
+          minCustomerAge: 18,
+          minDeceasedAge: 60,
+          text: '`w{player}: `$"{dFirst} had a long life. The good ones always seem too short anyway."\n\n',
+        },
+      ],
     },
     done: {
       success:
@@ -1464,7 +1479,7 @@ export const EXPANDED_STARTER: ExpandedContent = {
       necromancer: {
         name: "Necromancer",
         description:
-          "Raise mourners once per customer to scare them out of haggling, people keep having 'accidents' nearby (one more customer a day), and your attacks pay a quarter more.",
+          "Raise mourners once per customer to scare them out of haggling, people keep having 'accidents' nearby (one more customer a day), and your attacks pay 15% more.",
       },
     },
     arson: {

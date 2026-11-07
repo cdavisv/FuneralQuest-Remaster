@@ -14,6 +14,11 @@ export interface PortLike {
 export interface WireHostOptions {
   /** Pin the clock (tests). Default: the worker's `Date.now`. */
   fixedNow?: number;
+  /**
+   * The page's IANA time zone (`pageTimeZone()`), for the time the original printed in front of
+   * notices; see `HostOptions.timeZone`.
+   */
+  timeZone?: string;
 }
 
 /**
@@ -81,8 +86,10 @@ export function serveSolo(port: PortLike, packs: readonly ContentPack[] = []): v
     if (!host) throw new Error("No game is open: send create or load first.");
     return host;
   };
-  const clock = (options?: WireHostOptions) =>
-    options?.fixedNow !== undefined ? { now: () => options.fixedNow as number } : {};
+  const clock = (options?: WireHostOptions) => ({
+    ...(options?.fixedNow !== undefined ? { now: () => options.fixedNow as number } : {}),
+    ...(options?.timeZone ? { timeZone: options.timeZone } : {}),
+  });
 
   port.addEventListener("message", (event) => {
     const req = event.data as WorkerRequest;

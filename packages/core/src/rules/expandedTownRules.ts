@@ -186,8 +186,8 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       { price: 3000, bp: 60, rating: 1 },
       { price: 8000, bp: 130, rating: 1 },
       { price: 20000, bp: 260, rating: 2 },
-      { price: 45000, bp: 340, rating: 2 },
-      { price: 90000, bp: 420, rating: 3 },
+      { price: 45000, bp: 160, rating: 2 },
+      { price: 90000, bp: 180, rating: 3 },
     ],
     tend: {
       perDay: 2,
@@ -248,7 +248,7 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       voteUntil: 10,
       fee: 6000,
       ads: { price: 5000, max: 5 },
-      perks: { turns: 0, rating: 3, ordinanceVotes: 2 },
+      perks: { turns: 0, rating: 1, ordinanceVotes: 2 },
     },
   },
   chains: {
@@ -314,7 +314,7 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
   },
   bank: {
     transfer: { dailyMax: 10, feeShare: 0.1, minAccountDays: 3 },
-    savings: { rate: 0.002, capBase: 100000 },
+    savings: { rate: 0.0015, capBase: 100000 },
     loan: {
       base: 3000,
       perPlot: 100,

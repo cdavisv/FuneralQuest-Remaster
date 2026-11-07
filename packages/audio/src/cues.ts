@@ -1,4 +1,4 @@
-import type { Action, SceneKind, View } from "@fq/protocol";
+import type { Action, MessageKind, SaleOutcome, SceneKind, View } from "@fq/protocol";
 import type { AmbienceId, MusicId, SoundId, StingerId } from "./tracks.js";
 
 /**
@@ -196,6 +196,22 @@ export const ACTION_SOUNDS: [prefix: string, sound: SoundId][] = [
   ["spirit-university:strength", "level-up"],
 ];
 
+/** Expanded: the sound for how a sale ended (`View.saleOutcome`); a plain sale has the till's. */
+export const SALE_OUTCOME_SOUND: Record<SaleOutcome, SoundId | null> = {
+  exact: "fanfare-exact",
+  great: "harp-good-news",
+  nice: null,
+  plain: null,
+  walkout: "walkout",
+};
+
+/** Expanded: the sound for a message overlay by its kind (`Overlay.messageKind`). */
+export const MESSAGE_SOUND: Record<MessageKind, SoundId> = {
+  letter: "ui-mail",
+  notice: "ui-page",
+  reward: "ui-coin",
+};
+
 /** What the picker remembers from one View to the next. */
 export interface CueMemory {
   music: MusicId | null;
@@ -241,12 +257,8 @@ export function musicFor(view: View, mem: CueMemory): MusicId | null {
   if (view.battle) return "battle";
   if (view.customer) return "negotiation";
   if (view.music && ENGINE_MUSIC[view.music]) return ENGINE_MUSIC[view.music] as MusicId;
-  if (
-    view.scene === "news" &&
-    /meteor/i.test(`${plain(view)} ${view.news?.topToday.map((s) => s.text).join("") ?? ""}`)
-  ) {
-    return "meteor";
-  }
+  // The season's last paper: the engine says so (`news.meteor`), nothing is read from the text.
+  if (view.scene === "news" && view.news?.meteor === true) return "meteor";
   if (view.scene !== "location") {
     const s = SCENE_MUSIC[view.scene];
     if (s) return s;
@@ -287,10 +299,16 @@ export function pickCue(view: View, prev: CueMemory): { cue: Cue; memory: CueMem
   for (const p of now)
     if (!prev.pictures.includes(p) && PICTURE_SOUNDS[p]) sounds.push(PICTURE_SOUNDS[p] as SoundId);
 
-  // A sale ends: the customer leaves angry, or the bill was exact, or a sale was made.
+  // A sale ends. An Expanded View says how (`saleOutcome`: the closeness band, a plain sale or a
+  // walkout). The Classic game's Views carry no such field (its transcripts are locked), so for
+  // them the original's own words and the customer's last mood stand in: the exact-bill line,
+  // or an angry customer who is gone.
   if (prev.mood !== undefined && !view.customer) {
-    const text = plain(view);
-    if (/\bPERFECT!/.test(text)) sounds.push("fanfare-exact");
+    const outcome = view.saleOutcome;
+    if (outcome !== undefined) {
+      const sound = SALE_OUTCOME_SOUND[outcome];
+      if (sound) sounds.push(sound);
+    } else if (/\bPERFECT!/.test(plain(view))) sounds.push("fanfare-exact");
     else if (prev.mood >= 8) sounds.push("walkout");
   }
   // Battle: hits, and how it ended.
@@ -328,9 +346,15 @@ export function pickCue(view: View, prev: CueMemory): { cue: Cue; memory: CueMem
   // Overlays: a letter or notice is a page; a prompt is the notepad.
   const ov = view.overlay;
   if (ov && ov.id !== prev.overlay) {
-    if (ov.kind === "message")
-      sounds.push(/letter|mail/i.test(ov.text.map((s) => s.text).join("")) ? "ui-mail" : "ui-page");
-    else if (ov.kind === "textInput") sounds.push("ui-notepad");
+    if (ov.kind === "message") {
+      // Expanded says what the message is (`messageKind`); a Classic one has only its words.
+      const kind = ov.messageKind;
+      if (kind !== undefined) sounds.push(MESSAGE_SOUND[kind]);
+      else
+        sounds.push(
+          /letter|mail/i.test(ov.text.map((s) => s.text).join("")) ? "ui-mail" : "ui-page",
+        );
+    } else if (ov.kind === "textInput") sounds.push("ui-notepad");
   }
   // The front door's sting when the game opens from the lobby.
   if (prev.scene === "lobby" && view.scene !== "lobby") sounds.push("main-stinger");

@@ -52,7 +52,45 @@ export interface Hud {
   karmaPath?: KarmaBand;
   /** Expanded only (19.2): customer leads held. */
   leads?: number;
+  /**
+   * Expanded only: threats the player has been warned of and can still act on
+   * (docs/expanded-rules.md 20.4). Absent when there are none.
+   */
+  warnings?: Warning[];
 }
+
+/**
+ * Expanded: a warning the player can act on. `"hit-rumour"`: a lucky target heard that a hit
+ * man was hired against them; it lands at the midnight after game day `day` unless foiled (a
+ * bodyguard or Tiny for that night, body armour, police protection, the Peace Pledge, or the
+ * security roll). Present on every view of that game day once the rumour was sent.
+ */
+export interface Warning {
+  kind: "hit-rumour";
+  day: number;
+}
+
+/**
+ * Expanded: the Town Graveyard's monuments (docs/expanded-rules.md 16.1), on every graveyard
+ * screen. Tiers are bought in order, so tiers `0 .. built - 1` stand.
+ */
+export interface MonumentsPanel {
+  built: number;
+  tiers: { name: string; price: number; bp: number; rating: number }[];
+}
+
+/**
+ * Expanded: how a sale ended, on the view that closes it (docs/expanded-rules.md 3.7, 3.9):
+ * the closeness band the bill earned (`exact`, `great`, `nice`), a sale outside every band
+ * (`plain`), or a walkout (`walkout`). For sound cues; `text` says the same.
+ */
+export type SaleOutcome = "exact" | "great" | "nice" | "plain" | "walkout";
+
+/**
+ * Expanded: what a message overlay carries, for sound cues: a letter from another player, a
+ * system notice, or mail reporting a reward (luck, BP or turns already applied).
+ */
+export type MessageKind = "letter" | "notice" | "reward";
 
 /**
  * Expanded: the state of the town today (docs/expanded-rules.md section 26),
@@ -439,7 +477,14 @@ export interface Button {
 /** A modal on top of the scene. */
 export type Overlay =
   /** Dismissed with a `dismiss` action carrying this id. */
-  | { kind: "message"; id: string; text: RichText; picture?: Picture }
+  | {
+      kind: "message";
+      id: string;
+      text: RichText;
+      picture?: Picture;
+      /** Expanded: a letter, a system notice or a reward (see `MessageKind`). */
+      messageKind?: MessageKind;
+    }
   | {
       kind: "textInput";
       id: string;
@@ -450,7 +495,13 @@ export type Overlay =
       initial?: string;
     }
   | { kind: "playerPicker"; id: string; prompt: string; players: { id: number; name: string }[] }
-  | { kind: "confirm"; id: string; text: RichText };
+  | {
+      kind: "confirm";
+      id: string;
+      text: RichText;
+      /** Expanded: set on the Reply question of a letter (`"letter"`). */
+      messageKind?: MessageKind;
+    };
 
 export interface MapPlace {
   id: string;
@@ -464,6 +515,8 @@ export interface NewsPanel {
   body: RichText;
   topToday: RichText;
   topYesterday: RichText;
+  /** Expanded: this edition carries the season-ending meteor story. */
+  meteor?: boolean;
 }
 
 /**
@@ -473,6 +526,18 @@ export interface NewsPanel {
  */
 export interface ChatLine {
   text: RichText;
+  /**
+   * Expanded: the player who said the line (talk, `/me`, `/give`, `/yell`), as data. Absent
+   * for the room's own lines (arrivals, the TV, notices). Classic leaves it out (its recorded
+   * transcripts are locked, docs/expanded-rules.md 1.3).
+   */
+  from?: ChatSpeaker;
+}
+
+/** Who said a cafe line: the player id and the name the line was said under. */
+export interface ChatSpeaker {
+  playerId: number;
+  name: string;
 }
 
 /** One row of the stats sheet (`stats.c` / `AddUpdateStats`). */
@@ -538,6 +603,10 @@ export interface View {
   club?: ClubPanel;
   prep?: PrepPanel;
   tutorial?: TutorialPanel;
+  /** Expanded: the monuments built and every tier, on every graveyard screen. */
+  monuments?: MonumentsPanel;
+  /** Expanded: how the sale ended, on the view that closes it (sound cues). */
+  saleOutcome?: SaleOutcome;
   /** The stats sheet, on the "stats" scene. */
   stats?: StatLine[];
   /** Ranked players, on the "rankings" scene. `text` carries the same list as the original's fixed-width lines. */

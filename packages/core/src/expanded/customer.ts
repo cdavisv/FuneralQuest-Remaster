@@ -12,6 +12,7 @@ import type { ClassicRandom } from "../rng/classicRandom.js";
 import type { ExpandedRules } from "../rules/expandedRules.js";
 import type { CustomerState } from "../state/types.js";
 import { fill, intToCash, type TemplateVars } from "../text/format.js";
+import { fitsAges, hasAgeLimits } from "./ages.js";
 import type { CustomerEffects, SpecialCustomerDef, TraitDef } from "./content/types.js";
 import { MODIFIER_KEYS, modValue } from "./modifiers.js";
 import { hasPerk, incomeShift } from "./parlor.js";
@@ -110,6 +111,7 @@ function chooseTraits(
   forced: readonly string[],
   practice: boolean,
   forcedLoved: boolean | undefined,
+  c: CustomerState,
 ): { ids: string[]; visible: number } {
   const all = xc(turn).traits;
   const ids: string[] = forced.filter((id) => all.some((t) => t.id === id));
@@ -124,7 +126,13 @@ function chooseTraits(
     );
   const wanted = 2 + (practice ? 0 : roll(turn.rng) < xr(turn).customer.hiddenTraitChance ? 1 : 0);
   while (ids.length < wanted) {
-    const next = weightedPick(turn, all.filter(fits));
+    // Section 13.5: a trait restricted by age is drawn only for customers it suits (a child is
+    // never Litigious); with none left, the unrestricted ones.
+    const suited = all.filter((t) => fits(t) && fitsAges(t, c));
+    const next = weightedPick(
+      turn,
+      suited.length > 0 ? suited : all.filter((t) => fits(t) && !hasAgeLimits(t)),
+    );
     if (!next) break;
     ids.push(next.id);
   }
@@ -244,6 +252,7 @@ export function generateCustomer(turn: Turn, practice = false, incomeExtra = 0):
     special?.traits ?? (practice ? ["sentimental"] : []),
     practice,
     forcedLoved,
+    c,
   );
   const xcu: ExpandedCustomer = {
     first,

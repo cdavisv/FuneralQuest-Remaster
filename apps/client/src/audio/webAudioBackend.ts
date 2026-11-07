@@ -1,4 +1,13 @@
-import { LIVE_IDS, renderLive, type SoundId } from "@fq/audio";
+import {
+  LIVE_IDS,
+  type ManifestTrack,
+  nextBarTime,
+  PACKS,
+  type PackId,
+  renderLive,
+  type SoundId,
+  stemGains,
+} from "@fq/audio";
 import type { AudioBackend, Volumes } from "./AudioManager.js";
 import { AudioLibrary } from "./library.js";
 
@@ -13,6 +22,10 @@ import { AudioLibrary } from "./library.js";
  * scene change is two gain ramps; the negotiation's stems each have their own gain. Stingers
  * duck the music. One-shots are capped (`MAX_VOICES`, and per sound) so a burst of events cannot
  * pile up. The UI sounds are synthesised here at start-up (`renderLive`), not downloaded.
+ *
+ * Sound packs: the library resolves each id to the selected pack or, if that pack lacks it, the
+ * Synth pack. A track whose stems are alternatives ("crossfade" layer mode, the Studio pack's
+ * negotiation) has one stem heard at a time, and a change of stem waits for the next bar line.
  */
 const MAX_VOICES = 10;
 const MAX_SAME = 2;
@@ -21,6 +34,9 @@ const TRIM = { ui: 0.8, sfx: 0.9, stinger: 1 } as const;
 
 interface Player {
   id: string;
+  track: ManifestTrack;
+  /** Context time at which the loop's start was playing. */
+  startedAt: number;
   gain: GainNode;
   stems: { src: AudioBufferSourceNode; gain: GainNode }[];
 }
@@ -41,6 +57,9 @@ export interface WebAudioDebug {
   level: number;
   voices: number;
   missing: string[];
+  /** The selected sound pack, and the pack each loaded id actually plays from. */
+  pack: PackId;
+  sources: Record<string, PackId>;
 }
 
 declare global {
@@ -62,6 +81,13 @@ export function pickFormat(): "ogg" | "m4a" {
 export function audioBase(): string {
   const env = (import.meta as { env?: Record<string, string | undefined> }).env;
   return (env?.VITE_AUDIO_BASE ?? "/audio").replace(/\/$/, "");
+}
+
+/** Base URL of the Studio pack: VITE_AUDIO_STUDIO_BASE, else beside the Synth pack. */
+export function studioBase(): string {
+  const env = (import.meta as { env?: Record<string, string | undefined> }).env;
+  const own = env?.VITE_AUDIO_STUDIO_BASE;
+  return (own ?? audioBase().replace(/[^/]*$/, PACKS.studio.dir)).replace(/\/$/, "");
 }
 
 /** Creates the backend, or null where there is no Web Audio (old browsers, tests). */
@@ -87,7 +113,9 @@ export function createWebAudioBackend(): AudioBackend | null {
       return res.arrayBuffer();
     },
     decode: (bytes) => ctx.decodeAudioData(bytes),
+    bases: { studio: studioBase() },
   });
+  let pack: PackId = "synth";
 
   // --- the graph -------------------------------------------------------------------------
   const out = ctx.destination;
@@ -182,6 +210,7 @@ export function createWebAudioBackend(): AudioBackend | null {
     gain.gain.value = 0;
     gain.connect(bus);
     const when = ctx.currentTime + 0.03;
+    const initial = stemGains ? stemGainsFor(t, stemGains) : undefined;
     const stems = bufs.map((buf, i) => {
       const src = ctx.createBufferSource();
       src.buffer = buf;
@@ -191,14 +220,47 @@ export function createWebAudioBackend(): AudioBackend | null {
         src.loopEnd = t.loopEnd;
       }
       const g = ctx.createGain();
-      g.gain.value = stemGains?.[i] ?? 1;
+      g.gain.value = initial?.[i] ?? 1;
       src.connect(g).connect(gain);
       src.start(when, t.loopStart ?? 0);
       return { src, gain: g };
     });
     gain.gain.setValueAtTime(0, when);
     gain.gain.linearRampToValueAtTime(1, when + Math.max(0.02, fade));
-    return { id, gain, stems };
+    return { id, track: t, startedAt: when, gain, stems };
+  }
+
+  /** The stem gains a track's layer mode makes of the manager's mood layers. */
+  function stemGainsFor(t: ManifestTrack, gains: number[]): number[] {
+    return stemGains(t.layerMode, gains);
+  }
+
+  /** Starts the current music and ambience again from the selected pack (after a pack change). */
+  function reload() {
+    const m = music;
+    if (m) {
+      const token = ++musicToken;
+      void startPlayer(m.id, musicBus, 1, layers.length ? layers : undefined).then((p) => {
+        if (token !== musicToken) {
+          stopPlayer(p, 0.05);
+          return;
+        }
+        stopPlayer(music, 1);
+        music = p;
+      });
+    }
+    const a = ambience;
+    if (a) {
+      const token = ++ambienceToken;
+      void startPlayer(a.id, ambienceBus, 1).then((p) => {
+        if (token !== ambienceToken) {
+          stopPlayer(p, 0.05);
+          return;
+        }
+        stopPlayer(ambience, 1);
+        ambience = p;
+      });
+    }
   }
 
   async function playOne(id: SoundId, kind: "ui" | "sfx" | "stinger") {
@@ -304,9 +366,29 @@ export function createWebAudioBackend(): AudioBackend | null {
     setLayers(gains, rampSec) {
       layers = gains;
       if (!music) return;
-      music.stems.forEach((s, i) => {
-        ramp(s.gain.gain, gains[i] ?? 1, rampSec);
+      const m = music;
+      const target = stemGainsFor(m.track, gains);
+      if (m.track.layerMode === "crossfade") {
+        // whole pieces in step: change piece on the next bar line, not mid-phrase
+        const at = nextBarTime(ctx.currentTime, m.startedAt, m.track);
+        for (const [i, s] of m.stems.entries()) {
+          const p = s.gain.gain;
+          p.cancelScheduledValues(ctx.currentTime);
+          p.setValueAtTime(p.value, ctx.currentTime);
+          p.setValueAtTime(p.value, at);
+          p.linearRampToValueAtTime(target[i] ?? 0, at + Math.max(0.05, rampSec));
+        }
+        return;
+      }
+      m.stems.forEach((s, i) => {
+        ramp(s.gain.gain, target[i] ?? 1, rampSec);
       });
+    },
+    setPack(next) {
+      if (next === pack) return;
+      pack = next;
+      lib.setPack(next);
+      reload();
     },
     setAmbience(id, fade) {
       const token = ++ambienceToken;
@@ -340,13 +422,16 @@ export function createWebAudioBackend(): AudioBackend | null {
       ramp(radio.gain, on ? 1.4 : 0, 0.15);
     },
     setActive(active) {
-      if (active && ctx.state === "suspended") void ctx.resume();
-      if (!active && ctx.state === "running") void ctx.suspend();
+      // A browser may refuse (Safari when its audio session is interrupted, any engine with no
+      // audio device: "Failed to start the audio device"): the game goes on without sound, and
+      // the next gesture or tab change asks again.
+      if (active && ctx.state === "suspended") ctx.resume().catch(() => undefined);
+      if (!active && ctx.state === "running") ctx.suspend().catch(() => undefined);
     },
     dispose() {
       stopPlayer(music, 0.1);
       stopPlayer(ambience, 0.1);
-      void ctx.close();
+      ctx.close().catch(() => undefined);
       if (window.__fqAudio?.debug === debug) delete window.__fqAudio;
     },
   };
@@ -366,6 +451,8 @@ export function createWebAudioBackend(): AudioBackend | null {
       level: rms > 0 ? Math.round(20 * Math.log10(rms) * 10) / 10 : -120,
       voices: voices.length,
       missing: [...lib.missing],
+      pack,
+      sources: Object.fromEntries(lib.sources),
     };
   };
   window.__fqAudio = { debug };

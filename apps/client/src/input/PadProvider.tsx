@@ -58,15 +58,23 @@ export function PadProvider({ children }: { children: ReactNode }) {
       frame = requestAnimationFrame(loop);
     };
     frame = requestAnimationFrame(loop);
+    // The mouse's last position. A browser also fires `pointermove` when the page moves under a
+    // still mouse (a scroll, a layout change): those carry the same position and must not hand the
+    // screen back. `movementX` says so directly, but not every engine fills it in (WebKit may
+    // leave it at 0 for a real move), so a changed position counts too.
+    let at: { x: number; y: number } | null = null;
     const pointer = (e: Event) => {
       // A real mouse move, a click, a key or a touch hands the screen back to the mouse and keys.
-      if (e.type === "pointermove" && (e as PointerEvent).pointerType !== "mouse") return;
-      if (
-        e.type === "pointermove" &&
-        (e as PointerEvent).movementX === 0 &&
-        (e as PointerEvent).movementY === 0
-      )
-        return;
+      if (e.type === "pointermove") {
+        const p = e as PointerEvent;
+        if (p.pointerType !== "mouse") return;
+        const moved =
+          (p.movementX ?? 0) !== 0 ||
+          (p.movementY ?? 0) !== 0 ||
+          (at !== null && (p.clientX !== at.x || p.clientY !== at.y));
+        at = { x: p.clientX, y: p.clientY };
+        if (!moved) return;
+      }
       if (root.dataset.input !== "pointer") root.dataset.input = "pointer";
     };
     const events = ["pointerdown", "pointermove", "keydown", "touchstart", "wheel"] as const;

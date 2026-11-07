@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main",
-  "description": "The game window. It may use the app's own commands (open_external, save_file, toggle_fullscreen) and nothing else: no shell, no filesystem, no HTTP plugin, no remote origins.",
+  "description": "The game window. It may use the app's own commands (open_external, save_file, open_file, toggle_fullscreen) and nothing else: no shell, no filesystem, no HTTP plugin, no remote origins.",
   "windows": ["main"],
   "permissions": []
 }

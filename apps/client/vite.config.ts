@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
 import { cp, readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vitest/config";
@@ -14,6 +15,11 @@ import { copyArt, listArtIds } from "./tools/bundle-art.mjs";
 // The directory may be missing or partial; the client shows a placeholder for any gap.
 const assetsDir = fileURLToPath(new URL("../../assets", import.meta.url));
 const pwaDir = fileURLToPath(new URL("./pwa", import.meta.url));
+// Where the production bundle goes: dist-build, unless FQ_BUILD_OUT names another directory (the
+// end-to-end runs build into their own, so two runs at once never trample each other's bundle).
+const outDir = process.env.FQ_BUILD_OUT
+  ? resolve(process.env.FQ_BUILD_OUT)
+  : fileURLToPath(new URL("./dist-build", import.meta.url));
 
 /** `virtual:fq-classic-ids`: which pictures the Classic art has (see src/art/classicIds.ts). */
 function classicIds(): Plugin {
@@ -60,7 +66,6 @@ function pwa(): Plugin {
  * app (so Solo mode starts with no connection) and every picture (kept best effort).
  */
 function precache(): Plugin {
-  const outDir = fileURLToPath(new URL("./dist-build", import.meta.url));
   const walk = async (dir: string, prefix = ""): Promise<string[]> => {
     const out: string[] = [];
     for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -97,6 +102,7 @@ function precache(): Plugin {
           !f.startsWith("classic/") &&
           // Sound is fetched when it is first needed; the app works without it.
           !f.startsWith("audio/") &&
+          !f.startsWith("audio-studio/") &&
           f !== "sw.js" &&
           f !== "index.html" &&
           f !== "offline.html" &&
@@ -133,10 +139,7 @@ function bundleArt(): Plugin {
     apply: "build",
     async closeBundle() {
       if (process.env.FQ_BUNDLE_ASSETS === "0" || process.env.VITE_ASSET_BASE) return;
-      const { files, bytes } = await copyArt(
-        assetsDir,
-        fileURLToPath(new URL("./dist-build", import.meta.url)),
-      );
+      const { files, bytes } = await copyArt(assetsDir, outDir);
       console.log(`art: bundled ${files} pictures (${(bytes / 1e6).toFixed(1)} MB)`);
     },
   };
@@ -161,15 +164,41 @@ function bundleAudio(): Plugin {
         console.log("audio: assets/audio has no manifest.json; the build ships no sound");
         return;
       }
-      await cp(from, fileURLToPath(new URL("./dist-build/audio", import.meta.url)), {
-        recursive: true,
-      });
+      await cp(from, `${outDir}/audio`, { recursive: true });
       const manifest = JSON.parse(await readFile(`${from}/manifest.json`, "utf8")) as {
         totalBytes: number;
       };
       console.log(`audio: bundled ${(manifest.totalBytes / 1e6).toFixed(1)} MB`);
+      await bundleStudioAudio();
     },
   };
+}
+
+/**
+ * The optional Studio sound pack (assets/audio-studio, generated with ElevenLabs; see its
+ * LICENSES.md) goes to <outDir>/audio-studio only when FQ_AUDIO_PACKS names it
+ * (`FQ_AUDIO_PACKS=synth,studio`), because its redistribution terms are not settled. Without it,
+ * a player who picks the Studio pack hears the Synth pack. `vite dev` serves both as they are.
+ */
+async function bundleStudioAudio(): Promise<void> {
+  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  if (!packs.includes("studio") || process.env.VITE_AUDIO_STUDIO_BASE) return;
+  const from = `${assetsDir}/audio-studio`;
+  try {
+    await stat(`${from}/manifest.json`);
+  } catch {
+    console.log("audio: assets/audio-studio has no manifest.json; the build has no Studio pack");
+    return;
+  }
+  await cp(from, `${outDir}/audio-studio`, {
+    recursive: true,
+    // the provenance sidecars stay in the repository
+    filter: (src) => !/(takes|sources)\.json$/.test(src),
+  });
+  const manifest = JSON.parse(await readFile(`${from}/manifest.json`, "utf8")) as {
+    totalBytes: number;
+  };
+  console.log(`audio: bundled the Studio pack, ${(manifest.totalBytes / 1e6).toFixed(1)} MB`);
 }
 
 const serverTarget = process.env.FQ_SERVER_URL ?? "http://127.0.0.1:8080";
@@ -177,7 +206,7 @@ const serverTarget = process.env.FQ_SERVER_URL ?? "http://127.0.0.1:8080";
 export default defineConfig(({ command }) => ({
   plugins: [react(), classicIds(), pwa(), bundleArt(), bundleAudio(), precache()],
   publicDir: command === "serve" ? assetsDir : false,
-  build: { outDir: "dist-build", sourcemap: true },
+  build: { outDir, emptyOutDir: true, sourcemap: true },
   // In development the page and the game server are different ports; the client talks to its
   // own origin (see src/net/config.ts), so Vite forwards the API, including the WebSocket.
   server: {
@@ -194,6 +223,6 @@ export default defineConfig(({ command }) => ({
     // Generous for slow CI machines; the default 5 s is too tight for the walk tests.
     testTimeout: 30_000,
     hookTimeout: 30_000,
-    exclude: ["e2e/**", "node_modules/**", "dist-build/**"],
+    exclude: ["e2e/**", "perf/**", "node_modules/**", "dist-build/**"],
   },
 }));

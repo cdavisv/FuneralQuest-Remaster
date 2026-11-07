@@ -5,7 +5,7 @@
  */
 
 export type { Difficulty, PersonalityId } from "@fq/bots/personalities";
-export { practiceDay } from "./dates.js";
+export { pageTimeZone, practiceDay, zoneOffsetMinutes } from "./dates.js";
 export { SoloWorkerClient, type WorkerLike } from "./proxy.js";
 export { chooseRivals } from "./rivals.js";
 export {

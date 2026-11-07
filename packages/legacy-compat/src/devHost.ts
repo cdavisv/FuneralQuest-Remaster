@@ -52,7 +52,15 @@ interface Saved {
 export async function createDevHost(options: DevHostOptions = {}): Promise<DevHost> {
   const registry = createClassicRegistry();
   const content = loadLegacyContent();
-  const context = (): EngineContext => classicContext(content, { registry, now: Date.now() });
+  // The original stamped notices with the server machine's local time (show_time,
+  // std_all.cpp:328-347); this development server is that machine.
+  const context = (): EngineContext => {
+    const now = Date.now();
+    return {
+      ...classicContext(content, { registry, now }),
+      localTimeOffsetMinutes: -new Date(now).getTimezoneOffset(),
+    };
+  };
   const effects: Effect[] = [];
   let town: TownState;
   const passwords: Passwords = new Map();

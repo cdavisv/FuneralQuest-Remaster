@@ -1,4 +1,4 @@
-import type { RichText } from "@fq/protocol";
+import type { ChatSpeaker, RichText } from "@fq/protocol";
 import type { SafetyTarget } from "@fq/server/client";
 import { type KeyboardEvent, useId, useRef, useState } from "react";
 import { findAnnouncements } from "./announcements.js";
@@ -104,13 +104,26 @@ export function speakerOf(line: string): string | null {
 }
 
 /**
- * Report or block the author of a cafe line, unless it is the player's own. Only lines that say
- * who spoke ("Name: text", "Name yells: text") get the menu: arrivals, the TV and the help text
- * are not anyone's words. (A "/me" line has no marker to tell it from them, so it has none.)
+ * Report or block the author of a cafe line, unless it is the player's own. An Expanded line says
+ * who spoke as data (`from`: the player id and name), so the report names the player and does not
+ * depend on the line's wording; every spoken line has the menu, `/me` and `/give` too. A Classic
+ * line carries no speaker, so only the lines whose text says who spoke ("Name: text", "Name
+ * yells: text") get the menu: arrivals, the TV and the help text are not anyone's words.
  */
-export function ChatLineActions({ text }: { text: string }) {
+export function ChatLineActions({ text, from }: { text: string; from?: ChatSpeaker | undefined }) {
   const mod = useModeration();
   if (!mod?.self) return null;
+  if (from) {
+    if (from.playerId === mod.self.playerId) return null;
+    const target: SafetyTarget = { kind: "chat", text, fromPlayerId: from.playerId };
+    return (
+      <ActionMenu
+        who={from.name}
+        block={{ target, subject: from.name }}
+        reports={[{ target, subject: text }]}
+      />
+    );
+  }
   const speaker = speakerOf(text);
   if (!speaker || speaker === mod.self.name) return null;
   return (

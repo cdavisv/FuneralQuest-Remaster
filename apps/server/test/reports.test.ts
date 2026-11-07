@@ -1,5 +1,7 @@
 import { richTextToPlain } from "@fq/core";
 import { afterEach, describe, expect, it } from "vitest";
+import { ChatBuffer } from "../src/moderation/chatBuffer.js";
+import { finishTutorial, type Send, visit } from "./support/expanded.js";
 import {
   connectSocket,
   type Harness,
@@ -124,6 +126,99 @@ describe("reporting", () => {
     expect(everything).not.toContain("rotten embalmer");
     const rows = h.server.db.prepare("SELECT count(*) AS n FROM reports").get() as { n: number };
     expect(rows.n).toBe(1);
+  });
+
+  it("picks a reported cafe line by its speaker's id when the client sends one", async () => {
+    h = await startServer({ listen: true });
+    const alice = await player("alice", 1);
+    const bobby = await player("bobby", 2);
+    const carol = await player("carol", 3);
+    for (const p of [alice, bobby, carol]) await toCafe(p);
+    const aliceSocket = await connectSocket(h, alice.token);
+    sockets.push(aliceSocket);
+    await bobby.act({ type: "chat", text: "something rude" });
+    await aliceSocket.until((m) => chatLines(m).some((l) => l.includes("something rude")));
+    const shown = chatLines(aliceSocket.messages).find((l) =>
+      l.includes("something rude"),
+    ) as string;
+    const report = (fromPlayerId: number) =>
+      alice.request("POST", "/api/reports", {
+        townId: "main",
+        target: { kind: "chat", text: shown, fromPlayerId },
+        category: "harassment",
+      });
+    // Naming the wrong speaker finds no such line: nothing is attributed to anyone.
+    const wrong = filed(await report(2));
+    expect(wrong.blockOffer).toBeNull();
+    const rows = () =>
+      h?.server.db
+        .prepare("SELECT verified, reported_login AS login FROM reports ORDER BY id")
+        .all() as { verified: number; login: string | null }[];
+    expect(rows()).toEqual([{ verified: 0, login: null }]);
+    // The right speaker's id finds it and identifies the author by data.
+    const right = filed(await report(1));
+    expect(right.blockOffer).toMatchObject({ name: "bobby" });
+    expect(rows().at(-1)).toEqual({ verified: 1, login: "bobby" });
+  });
+
+  it("in an Expanded town the speaker is the line's own data, and a room line has none", async () => {
+    h = await startServer({
+      listen: true,
+      towns: [{ id: "main", name: "New Deathville", seed: 77, ruleset: "expanded" }],
+    });
+    const alice = await player("alice", 1);
+    const bobby = await player("bobby", 2);
+    const toExpandedCafe = async (p: TestPlayer) => {
+      const send: Send = (action) => p.act(action);
+      await visit(send, await finishTutorial(send, await p.enter()), "cafe");
+    };
+    await toExpandedCafe(alice);
+    const aliceSocket = await connectSocket(h, alice.token);
+    sockets.push(aliceSocket);
+    // Bobby walks in: the room announces him; nobody said that line.
+    await toExpandedCafe(bobby);
+    await aliceSocket.until((m) => chatLines(m).some((l) => l.includes("bobby")));
+    await bobby.act({ type: "chat", text: "a line bobby really said" });
+    await aliceSocket.until((m) => chatLines(m).some((l) => l.includes("really said")));
+    const lines = chatLines(aliceSocket.messages);
+    const arrival = lines.find((l) => l.includes("bobby") && !l.includes("really said"));
+    const spoken = lines.find((l) => l.includes("really said"));
+    expect(arrival).toBeDefined();
+    expect(spoken).toBeDefined();
+    const report = async (text: string) =>
+      filed(
+        await alice.request("POST", "/api/reports", {
+          townId: "main",
+          target: { kind: "chat", text },
+          category: "harassment",
+        }),
+      );
+    expect((await report(arrival as string)).blockOffer).toBeNull();
+    expect((await report(spoken as string)).blockOffer).toMatchObject({ name: "bobby" });
+    const rows = h.server.db
+      .prepare("SELECT verified, reported_login AS login FROM reports ORDER BY id")
+      .all() as { verified: number; login: string | null }[];
+    expect(rows).toEqual([
+      { verified: 1, login: null },
+      { verified: 1, login: "bobby" },
+    ]);
+  });
+
+  it("the chat window tells two speakers of the same words apart", () => {
+    const buffer = new ChatBuffer(10, 60_000);
+    const line = (senderPlayerId: number) => ({
+      at: 1000,
+      text: "same words",
+      senderPlayerId,
+      senderAccountId: senderPlayerId + 10,
+      senderName: `p${senderPlayerId}`,
+      recipients: new Set([0]),
+    });
+    buffer.record("t", line(1));
+    buffer.record("t", line(2));
+    expect(buffer.find("t", 0, "same words", 1000)?.senderPlayerId).toBe(2);
+    expect(buffer.find("t", 0, "same words", 1000, 1)?.senderPlayerId).toBe(1);
+    expect(buffer.find("t", 0, "same words", 1000, 3)).toBeNull();
   });
 
   it("keeps the window bounded and private to what the reporter could see", async () => {

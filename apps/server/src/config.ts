@@ -32,6 +32,8 @@ const ConfigSchema = z.object({
   packsDir: z.string(),
   /** Museum mode: serve the original 2001 Flash client at /museum, playing the same town. */
   legacyClient: boolish,
+  /** Museum mode: mark the original client's session cookie Secure. Turn on behind HTTPS. */
+  secureCookies: boolish,
   /** Museum mode: the town the original client joins; empty means the first town. */
   legacyTown: z.string(),
   /**
@@ -50,6 +52,10 @@ const ConfigSchema = z.object({
   /** Comma-separated allowed browser origins for CORS and WebSocket. Empty allows none cross-origin. */
   allowedOrigins: z.string(),
   bodyLimitBytes: intish(256, 1_000_000),
+  /** Send a Content-Security-Policy with the web client's page (the admin and deletion pages always have theirs). */
+  clientCsp: boolish,
+  /** Seconds a request may take to arrive in full (slow-body and slow-header protection). */
+  requestTimeoutSeconds: intish(1, 600),
   signupEnabled: boolish,
   guestEnabled: boolish,
   sessionTtlDays: intish(1, 365),
@@ -69,6 +75,17 @@ const ConfigSchema = z.object({
   rateActionMax: intish(1, 1_000_000),
   rateAdminMax: intish(1, 100_000),
   rateWindowSeconds: intish(1, 86_400),
+  /**
+   * New accounts (sign-ups and guests together) one address may make per hour. 0 means three times
+   * the per-window sign-up and log-in budget (`FQ_RATE_AUTH_MAX`), so loosening that one knob for
+   * tests loosens this too.
+   */
+  signupsPerHour: intish(0, 1_000_000),
+  /** WebSockets one player may hold open at once, and one network address in total. */
+  socketsPerPlayer: intish(1, 100),
+  socketsPerAddress: intish(1, 10_000),
+  /** Operations that may wait in one town's queue before new ones are answered 503. */
+  maxQueuedPerTown: intish(1, 1_000_000),
   /** Argon2id cost; the defaults follow OWASP's minimum. Tests lower them. */
   argon2MemoryKiB: intish(8, 1_048_576),
   argon2Passes: intish(1, 20),
@@ -106,6 +123,7 @@ const ENV_KEYS: Record<keyof ServerConfig, string> = {
   townsFile: "FQ_TOWNS_FILE",
   packsDir: "FQ_PACKS_DIR",
   legacyClient: "FQ_LEGACY_CLIENT",
+  secureCookies: "FQ_SECURE_COOKIES",
   legacyTown: "FQ_LEGACY_TOWN",
   museumDir: "FQ_MUSEUM_DIR",
   createDefaultTown: "FQ_CREATE_DEFAULT_TOWN",
@@ -114,6 +132,8 @@ const ENV_KEYS: Record<keyof ServerConfig, string> = {
   trustProxy: "FQ_TRUST_PROXY",
   allowedOrigins: "FQ_ALLOWED_ORIGINS",
   bodyLimitBytes: "FQ_BODY_LIMIT_BYTES",
+  clientCsp: "FQ_CLIENT_CSP",
+  requestTimeoutSeconds: "FQ_REQUEST_TIMEOUT_SECONDS",
   signupEnabled: "FQ_SIGNUP_ENABLED",
   guestEnabled: "FQ_GUEST_ENABLED",
   sessionTtlDays: "FQ_SESSION_TTL_DAYS",
@@ -128,6 +148,10 @@ const ENV_KEYS: Record<keyof ServerConfig, string> = {
   rateActionMax: "FQ_RATE_ACTION_MAX",
   rateAdminMax: "FQ_RATE_ADMIN_MAX",
   rateWindowSeconds: "FQ_RATE_WINDOW_SECONDS",
+  signupsPerHour: "FQ_RATE_SIGNUPS_PER_HOUR",
+  socketsPerPlayer: "FQ_WS_PER_PLAYER",
+  socketsPerAddress: "FQ_WS_PER_ADDRESS",
+  maxQueuedPerTown: "FQ_MAX_QUEUED_PER_TOWN",
   argon2MemoryKiB: "FQ_ARGON2_MEMORY_KIB",
   argon2Passes: "FQ_ARGON2_PASSES",
   blocklistFile: "FQ_BLOCKLIST_FILE",
@@ -151,6 +175,7 @@ export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolea
   townsFile: "",
   packsDir: "",
   legacyClient: false,
+  secureCookies: false,
   legacyTown: "",
   museumDir: "",
   createDefaultTown: true,
@@ -159,6 +184,8 @@ export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolea
   trustProxy: "false",
   allowedOrigins: "",
   bodyLimitBytes: 16_384,
+  clientCsp: true,
+  requestTimeoutSeconds: 30,
   signupEnabled: true,
   guestEnabled: true,
   sessionTtlDays: 30,
@@ -173,6 +200,10 @@ export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolea
   rateActionMax: 120,
   rateAdminMax: 120,
   rateWindowSeconds: 60,
+  signupsPerHour: 0,
+  socketsPerPlayer: 4,
+  socketsPerAddress: 100,
+  maxQueuedPerTown: 256,
   argon2MemoryKiB: 19_456,
   argon2Passes: 2,
   blocklistFile: "",

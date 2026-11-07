@@ -106,7 +106,12 @@ export function planEffects(
       case "chat":
         plan.pushes.push({
           recipient: { to: "players", playerIds: effect.to },
-          message: notice({ kind: "chat", text: effect.text }, at),
+          message: notice(
+            effect.from
+              ? { kind: "chat", text: effect.text, from: effect.from }
+              : { kind: "chat", text: effect.text },
+            at,
+          ),
         });
         break;
       case "playerCreated":

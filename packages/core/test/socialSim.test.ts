@@ -201,7 +201,10 @@ function simulate(
       if (!session) {
         if (rand() < 0.4) {
           const r = enterGame(town, id, ctx);
-          expect(r.rejected).toBeUndefined();
+          // Refused only while someone is inside the parlor (funeral.cpp:357-363).
+          const inside = Object.values(town.sessions).some((s) => s.hisId === id && s.locked);
+          expect(r.rejected).toBe(inside ? "Parlor locked" : undefined);
+          if (r.rejected) continue;
           checkEffects(r.effects, town, r.town, null);
           town = r.town;
         }

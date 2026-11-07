@@ -280,6 +280,7 @@ function decideX(c: Ctx, guide: Guide | null): Action {
   if (s.current && s.errandSteps > ERRAND_BUDGET) finishErrand(c);
   learnFromScreen(c);
   learnX(c);
+  noticeThreat(c);
   if (!isXNegotiation(view)) xm(c).customer = null;
   if (view.scene === "lobby") return { type: "exit" };
   if (s.repeats >= REPEAT_LIMIT) {
@@ -314,6 +315,20 @@ function decideX(c: Ctx, guide: Guide | null): Action {
   if (hasButton(view, "go:tutorial")) return press("go:tutorial");
   if (view.scene === "desk" && hasButton(view, "go:desk")) return press("go:desk");
   return place(c);
+}
+
+/**
+ * Section 20.4: a hit-man rumour arrives as data (`Hud.warnings`). A style that protects
+ * itself goes to the Reaper Club at once (the next errand) to hire a bodyguard for the night.
+ */
+function noticeThreat(c: Ctx): void {
+  const warned = (c.view.hud?.warnings ?? []).some((w) => w.kind === "hit-rumour");
+  if (!warned || !styleOf(c).protect) return;
+  c.memory.session.scratch.threatened = true;
+  if (count(c, "threat") > 0) return;
+  did(c, "threat");
+  const p = xm(c).plan;
+  if (!p.morning.includes("club")) p.morning.unshift("club");
 }
 
 /** The day's errands. Morning ones help today's sales; evening ones spend what the day made. */
@@ -517,7 +532,11 @@ function worthIt(c: Ctx, e: ErrandKind, morning: boolean): boolean {
         money > 3000 + style.reserve
       );
     case "club":
-      if (morning) return karma(c) <= EXPANDED.karma.evil[1] && turns(c) > 1;
+      if (morning)
+        return (
+          (karma(c) <= EXPANDED.karma.evil[1] && turns(c) > 1) ||
+          (!!c.memory.session.scratch.threatened && count(c, "guard") === 0)
+        );
       return (
         (!!style.gamble && money > style.reserve + style.gamble.stake * 2) ||
         (style.market.length > 0 && money > style.reserve + 2500) ||
@@ -1796,6 +1815,16 @@ function club(c: Ctx): Action {
     (/reaper-club:market/.test(c.memory.session.lastAction) && hasButton(v, "reaper-club:main"))
   ) {
     did(c, "market");
+    // A protecting style warned of a hit buys Tiny or the vest when the bodyguard was not to be had.
+    const guards = style.protect && s.scratch.threatened && count(c, "guard") === 0;
+    for (const id of guards ? ["tiny", "vest"] : []) {
+      const b = enabled(v, `reaper-club:buy:${id}`);
+      if (b && cash(c) >= dollars(b.detail)) {
+        did(c, "guard");
+        did(c, `buy:${id}`);
+        return press(b.id);
+      }
+    }
     for (const id of style.market) {
       const b = enabled(v, `reaper-club:buy:${id}`);
       if (b && cash(c) - dollars(b.detail) >= style.reserve && count(c, `buy:${id}`) === 0) {
@@ -1807,21 +1836,21 @@ function club(c: Ctx): Action {
   }
   if (!hasButton(v, "reaper-club:games") && !v.buttons.some((b) => b.id === "reaper-club:games"))
     return leave(c);
-  // Inside.
+  // Inside. A warned parlor hires its bodyguard first (section 20.4).
+  if (s.scratch.threatened && count(c, "guard") === 0) {
+    const guard = enabled(v, "reaper-club:bodyguard");
+    if (guard && cash(c) >= dollars(guard.detail)) {
+      did(c, "guard");
+      return press("reaper-club:bodyguard");
+    }
+    if (styleOf(c).protect && count(c, "market") === 0 && hasButton(v, "reaper-club:market"))
+      return press("reaper-club:market");
+  }
   if (enabled(v, "reaper-club:seance") && turns(c) > 1 && count(c, "seance") === 0) {
     did(c, "seance");
     return press("reaper-club:seance");
   }
   if (turns(c) > 0) return done(c);
-  if (
-    s.scratch.threatened &&
-    enabled(v, "reaper-club:bodyguard") &&
-    count(c, "guard") === 0 &&
-    cash(c) > 6000
-  ) {
-    did(c, "guard");
-    return press("reaper-club:bodyguard");
-  }
   if (style.market.length > 0 && count(c, "market") === 0 && hasButton(v, "reaper-club:market"))
     return press("reaper-club:market");
   if (style.gamble && count(c, "games") === 0 && hasButton(v, "reaper-club:games"))

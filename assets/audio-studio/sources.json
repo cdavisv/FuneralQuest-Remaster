@@ -1,0 +1,3513 @@
+{
+  "flowId": "BRa2W68HRylxzpTwk9h1",
+  "ledger": [
+    {
+      "batch": "pilot",
+      "description": "growl, siren, amb-night x2 takes; newday x1",
+      "estimated": 710.6,
+      "actual": 256
+    },
+    {
+      "batch": "pilot2",
+      "description": "bank loop 46s + newday retake 10s",
+      "estimated": 1540,
+      "actual": 840
+    },
+    {
+      "batch": "ambience",
+      "description": "12 ambience loops x2",
+      "estimated": 3828,
+      "actual": 1160
+    },
+    {
+      "batch": "effects1",
+      "description": "20 effects x2",
+      "estimated": 752.4,
+      "actual": 242
+    },
+    {
+      "batch": "effects2",
+      "description": "11 effects x2 (first call refused 429, nothing generated; rerun)",
+      "estimated": 547.8,
+      "actual": 168
+    },
+    {
+      "batch": "musicA",
+      "description": "main town desk ceremony cafe yangs dimart x1",
+      "estimated": 13750,
+      "actual": 7500
+    },
+    {
+      "batch": "musicB",
+      "description": "university hospital sneak battle graveyard cityhall club meteor x1",
+      "estimated": 12595,
+      "actual": 6870
+    },
+    {
+      "batch": "clock2",
+      "description": "amb-clock retake x2 (new prompt)",
+      "estimated": 264,
+      "actual": 80
+    },
+    {
+      "batch": "musicC",
+      "description": "negotiation x3, main-stinger, victory, defeat, endday x1",
+      "estimated": 4922.5,
+      "actual": 2685
+    }
+  ],
+  "tracks": {
+    "alarm-bell": {
+      "title": "Fire alarm bell",
+      "where": "A fire alarm (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "alarm-bell",
+          "studioTitle": "Fire alarm bell",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An old electric fire alarm bell ringing loudly and rapidly for two seconds, then stopping.",
+          "params": {
+            "duration_seconds": 2.3,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "aReuhLXMGJqRQTg5JElY",
+          "sessionId": "T6MeX2HHLwh4NlZk0Zg7",
+          "nodeId": "9PytvLpVIYRy228KI2Ul",
+          "generatedOn": "2026-11-06",
+          "credits": 8,
+          "chosenBecause": "Rings and then stops before the end, as asked; the other take rings to the end.",
+          "otherTakes": [
+            {
+              "generationId": "iK3Jz0a5kPud6QFktoDW",
+              "credits": 8,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.28,
+            "lufsIntegrated": -19.7,
+            "lufsMomentaryMax": -19,
+            "truePeakDb": -10.8,
+            "centroidHz": 4189,
+            "longestQuietSec": 0.3,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000086,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 3,
+            "envelope": "peak at 1.35 s, -20 dB after 0.40 s, last 50 ms -35 dB re peak",
+            "onsetsExpected": [
+              1,
+              60
+            ]
+          }
+        }
+      ]
+    },
+    "amb-birds": {
+      "title": "Morning birdsong",
+      "where": "Morning coffee (the start of a day).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-birds",
+          "studioTitle": "Morning birdsong",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Early morning in a quiet small-town garden: a few songbirds chirping and a robin singing, distant and gentle, light breeze, no traffic.",
+          "params": {
+            "duration_seconds": 16,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "3vcol9CePxshRd3iaFud",
+          "sessionId": "SJh8ZPLN9eGhF1D0qQXx",
+          "nodeId": "b8j2mPbUKSzFpY54zDk4",
+          "generatedOn": "2026-11-06",
+          "credits": 53,
+          "chosenBecause": "Same level at both ends of the loop; the other take drops 12 dB across its seam.",
+          "otherTakes": [
+            {
+              "generationId": "spUC2d8FSA6OvMoznssH",
+              "credits": 53,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.08 of the 99.9th-percentile step, level 0.1 dB across it"
+          },
+          "checks": {
+            "seconds": 16,
+            "lufsIntegrated": -29,
+            "lufsMomentaryMax": -21.7,
+            "truePeakDb": -8.7,
+            "centroidHz": 645,
+            "longestQuietSec": 0.7500000000000001,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000037,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-bubbles": {
+      "title": "Embalming room: bubbling fluid and a pump",
+      "where": "The embalming room.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-bubbles",
+          "studioTitle": "Embalming room: bubbling fluid and a pump",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A small electric pump humming and chugging softly while liquid bubbles and gurgles in a glass jar, in a tiled back room.",
+          "params": {
+            "duration_seconds": 10,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "bSlUvuMfE2IqbcGhjq3u",
+          "sessionId": "MzjHFgvvotIXIlIr1aVt",
+          "nodeId": "icTewAIkLQjD1WKQbfKV",
+          "generatedOn": "2026-11-06",
+          "credits": 33,
+          "chosenBecause": "Equal levels across the seam; the other take drops 7 dB.",
+          "otherTakes": [
+            {
+              "generationId": "uaVo1QVfgopo2UbyH1Sl",
+              "credits": 33,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.15 of the 99.9th-percentile step, level 0.3 dB across it"
+          },
+          "checks": {
+            "seconds": 10,
+            "lufsIntegrated": -29.3,
+            "lufsMomentaryMax": -25,
+            "truePeakDb": -6.6,
+            "centroidHz": 629,
+            "longestQuietSec": 0.05,
+            "leadingSilenceSec": 0,
+            "dc": -0.000061,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-clock": {
+      "title": "Parlor wall clock, tick-tock, room tone",
+      "where": "The player's desk.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-clock",
+          "studioTitle": "Parlor wall clock, tick-tock, room tone",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A single old pendulum wall clock ticking slowly and perfectly evenly, one tick per second, tick then tock, in a quiet carpeted parlor with faint room tone. Nothing else.",
+          "params": {
+            "duration_seconds": 12,
+            "prompt_influence": 0.7,
+            "loop": true
+          },
+          "generationId": "a4gHT9aZxEw3kVo77rp5",
+          "sessionId": "bDJRNblXyj5Jgvpuhl2p",
+          "nodeId": "4B5I7dMgvBHVYxO1tIBg",
+          "generatedOn": "2026-11-06",
+          "credits": 40,
+          "chosenBecause": "Second prompt: ticks measured 1.00 s apart (0.98 to 1.01). The first prompt's takes ticked irregularly (0.4 to 0.9 s) or at 0.37 s.",
+          "otherTakes": [
+            {
+              "generationId": "UOgDawwrewDXa5GLmBHe",
+              "credits": 27,
+              "date": "2026-11-06",
+              "prompt": "A wooden pendulum wall clock ticking steadily once per second in a quiet carpeted office, soft room tone, nothing else.",
+              "params": {
+                "duration_seconds": 8,
+                "prompt_influence": 0.5,
+                "loop": true
+              }
+            },
+            {
+              "generationId": "n0hSvsXFOY2ToUnjC0HB",
+              "credits": 27,
+              "date": "2026-11-06",
+              "prompt": "A wooden pendulum wall clock ticking steadily once per second in a quiet carpeted office, soft room tone, nothing else.",
+              "params": {
+                "duration_seconds": 8,
+                "prompt_influence": 0.5,
+                "loop": true
+              }
+            },
+            {
+              "generationId": "LsQQKURdVIEo3091e4VQ",
+              "credits": 40,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "bars": 4,
+            "seamSimilarity": 0.937,
+            "method": "pulse at 59.8 per minute; 4 groups of 2 from 2.613 s to 10.613 s, short equal-power crossfade"
+          },
+          "checks": {
+            "seconds": 8,
+            "lufsIntegrated": -31.1,
+            "lufsMomentaryMax": -27.9,
+            "truePeakDb": -5.9,
+            "centroidHz": 2452,
+            "longestQuietSec": 0.1,
+            "leadingSilenceSec": 0,
+            "dc": -0.000088,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-fire": {
+      "title": "Crematorium fire: roar and crackle",
+      "where": "The crematorium oven.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-fire",
+          "studioTitle": "Crematorium fire: roar and crackle",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A furnace roaring steadily behind a metal door with crackling and popping flames, heavy and warm, no music.",
+          "params": {
+            "duration_seconds": 12,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "Xs6UyIzWxKQFa5iTlEO2",
+          "sessionId": "p8lgZp4UTlVHFAKzgMoz",
+          "nodeId": "S9wLla6yBNwhkxSwVg5Y",
+          "generatedOn": "2026-11-06",
+          "credits": 40,
+          "chosenBecause": "Steadier (8 dB range) with matching levels across the seam.",
+          "otherTakes": [
+            {
+              "generationId": "ji2TQqOsd7qjfxh7myF2",
+              "credits": 40,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.04 of the 99.9th-percentile step, level 0.6 dB across it"
+          },
+          "checks": {
+            "seconds": 12,
+            "lufsIntegrated": -29.7,
+            "lufsMomentaryMax": -28.4,
+            "truePeakDb": -9,
+            "centroidHz": 466,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.0001,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-fogbell": {
+      "title": "Fog: low wind and a buoy bell",
+      "where": "Foggy weather.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-fogbell",
+          "studioTitle": "Fog: low wind and a buoy bell",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Foggy harbour at dusk: low soft wind, gentle lapping water and a distant buoy bell clanging slowly now and then.",
+          "params": {
+            "duration_seconds": 18,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "bNkb7xDew50lUdf6DSf4",
+          "sessionId": "W3eht23nbRNm0K4GZaVh",
+          "nodeId": "RyqS4M8fAJLcrDR8R485",
+          "generatedOn": "2026-11-06",
+          "credits": 60,
+          "chosenBecause": "Neither take's own seam is continuous; this one is louder and is crossfaded tail into head.",
+          "otherTakes": [
+            {
+              "generationId": "v6o5SAy4gGVjk9dQFaIt",
+              "credits": 60,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.23 of the 99.9th-percentile step, level 1.8 dB across it"
+          },
+          "checks": {
+            "seconds": 18,
+            "lufsIntegrated": -29.1,
+            "lufsMomentaryMax": -23.3,
+            "truePeakDb": -5.2,
+            "centroidHz": 33,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000053,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-hospital": {
+      "title": "Hospital lobby: air handling, a distant chime, footsteps",
+      "where": "The hospital front desk.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-hospital",
+          "studioTitle": "Hospital lobby: air handling, a distant chime, footsteps",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Quiet hospital lobby: air conditioning hum, distant footsteps on linoleum, a soft paging chime far away, muffled murmur, no clear speech.",
+          "params": {
+            "duration_seconds": 16,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "WOU1C2up1lBMizs5Ty03",
+          "sessionId": "HLUQCZzsm7Gn5Tp18M6J",
+          "nodeId": "XlfWJH4exhhxoX4hEwRq",
+          "generatedOn": "2026-11-06",
+          "credits": 53,
+          "chosenBecause": "Continuous seam (0.17) and equal levels.",
+          "otherTakes": [
+            {
+              "generationId": "i8hClM80N8P2RyRGIDvD",
+              "credits": 53,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.73 of the 99.9th-percentile step, level 0.2 dB across it"
+          },
+          "checks": {
+            "seconds": 16,
+            "lufsIntegrated": -29.8,
+            "lufsMomentaryMax": -22.6,
+            "truePeakDb": -10.4,
+            "centroidHz": 358,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.00027,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-kitchen": {
+      "title": "Yang's kitchen: wok sizzle, scrapes, clinks, the hood fan",
+      "where": "Yang's restaurant.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-kitchen",
+          "studioTitle": "Yang's kitchen: wok sizzle, scrapes, clinks, the hood fan",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Busy restaurant kitchen: vegetables sizzling in a hot wok, a metal spatula scraping, plates clinking and an extractor hood fan whirring, no speech.",
+          "params": {
+            "duration_seconds": 10,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "N8y0EOKMLffq7GNuhP6I",
+          "sessionId": "c1TWEhtlEEFiFrxafThk",
+          "nodeId": "WMwGJophcA3BHTRucje7",
+          "generatedOn": "2026-11-06",
+          "credits": 33,
+          "chosenBecause": "Equal levels across the seam (the other take drops 4 dB).",
+          "otherTakes": [
+            {
+              "generationId": "2QZipSrkRuVRPoWJNDZo",
+              "credits": 33,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.06 of the 99.9th-percentile step, level 0.2 dB across it"
+          },
+          "checks": {
+            "seconds": 10,
+            "lufsIntegrated": -29.3,
+            "lufsMomentaryMax": -23.4,
+            "truePeakDb": -11,
+            "centroidHz": 5367,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -6.4e-7,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-monitor": {
+      "title": "Hospital room: heart monitor at 70 bpm, ventilator, hum",
+      "where": "The hospital room.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-monitor",
+          "studioTitle": "Hospital room: heart monitor, ventilator, hum",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Hospital room: a heart monitor beeping steadily at about seventy beats per minute, a soft ventilator breathing, and low electrical hum.",
+          "params": {
+            "duration_seconds": 12,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "h4bUkxDharJlGKP0aSaP",
+          "sessionId": "pxPmwNO36kW4OLLHGZgZ",
+          "nodeId": "cgQur6Y9fjFYWV0cm4WE",
+          "generatedOn": "2026-11-06",
+          "credits": 40,
+          "chosenBecause": "Beeps about 0.85 s apart (about 70 per minute); the other take's beeps wander (0.6 to 2.5 s apart).",
+          "otherTakes": [
+            {
+              "generationId": "s5pSUcBEijNbKvdda0eJ",
+              "credits": 40,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "bars": 10,
+            "seamSimilarity": 0.817,
+            "method": "pulse at 71.2 per minute; 10 groups of 1 from 1.845 s to 10.613 s, short equal-power crossfade"
+          },
+          "checks": {
+            "seconds": 8.77,
+            "lufsIntegrated": -29,
+            "lufsMomentaryMax": -28,
+            "truePeakDb": -14.7,
+            "centroidHz": 1050,
+            "longestQuietSec": 0.7500000000000001,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000092,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-night": {
+      "title": "Night: crickets and an owl",
+      "where": "The parlor closed for the night; hot weather.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-night",
+          "studioTitle": "Night: crickets and an owl",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Quiet night ambience in a small-town graveyard: steady crickets, a soft breeze, and a great horned owl hooting twice in the distance. No music.",
+          "params": {
+            "duration_seconds": 20,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "ZLxDaEfnK59fsiL1SlAE",
+          "sessionId": "yGe8HIcHccBL3dFe1atR",
+          "nodeId": "yrcfAta98pBNVQgv9X8X",
+          "generatedOn": "2026-11-06",
+          "credits": 67,
+          "chosenBecause": "Continuous seam (0.01) and steadier, louder bed; the other take is 6 dB quieter and its ends match less well.",
+          "otherTakes": [
+            {
+              "generationId": "6rL7ivaN0XK0PLJDIu5V",
+              "credits": 67,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.01 of the 99.9th-percentile step, level 1.6 dB across it"
+          },
+          "checks": {
+            "seconds": 20,
+            "lufsIntegrated": -29.2,
+            "lufsMomentaryMax": -24.6,
+            "truePeakDb": -12.5,
+            "centroidHz": 8260,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -8.6e-7,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-rain": {
+      "title": "Steady rain on a roof",
+      "where": "Rainy weather.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-rain",
+          "studioTitle": "Steady rain on a roof",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Steady medium rain falling on a shingle roof and a gutter, heard from indoors, even and calm.",
+          "params": {
+            "duration_seconds": 12,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "X0PIKBDbZHIMgkB3moB4",
+          "sessionId": "a72VwPAZPxEFoGKKIyzw",
+          "nodeId": "Tap0NXXkPlNylgsEqprT",
+          "generatedOn": "2026-11-06",
+          "credits": 40,
+          "chosenBecause": "Continuous seam (0.07) and equal levels.",
+          "otherTakes": [
+            {
+              "generationId": "BXUyVxKWuVCfinCmY7xC",
+              "credits": 40,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.07 of the 99.9th-percentile step, level 0.1 dB across it"
+          },
+          "checks": {
+            "seconds": 12,
+            "lufsIntegrated": -29.6,
+            "lufsMomentaryMax": -27,
+            "truePeakDb": -5.9,
+            "centroidHz": 5907,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000052,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-storm": {
+      "title": "Storm: heavy rain and a distant thunder roll",
+      "where": "Stormy weather.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-storm",
+          "studioTitle": "Storm: heavy rain and a distant thunder roll",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Heavy rain pouring on a roof with gusting wind and one long distant rumble of thunder, heard from indoors.",
+          "params": {
+            "duration_seconds": 20,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "d7L5GdsrLdTsBYraakSP",
+          "sessionId": "sDMPhQuptXiLPa2K2wd8",
+          "nodeId": "Hvl2DjbBLjwXc6OngS5f",
+          "generatedOn": "2026-11-06",
+          "credits": 67,
+          "chosenBecause": "Continuous seam and equal levels.",
+          "otherTakes": [
+            {
+              "generationId": "PBVxpO2r5gWfLtJUn3cl",
+              "credits": 67,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.11 of the 99.9th-percentile step, level 0.3 dB across it"
+          },
+          "checks": {
+            "seconds": 20,
+            "lufsIntegrated": -31.3,
+            "lufsMomentaryMax": -29.7,
+            "truePeakDb": -12.8,
+            "centroidHz": 3972,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000024,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-street": {
+      "title": "Quiet small-town street: breeze, far birds, a distant dog",
+      "where": "Outside a rival's parlor.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-street",
+          "studioTitle": "Quiet small-town street: breeze, far birds, a distant dog",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Quiet small-town street on a sleepy afternoon: a light breeze, distant birds, a far-off dog barking once, and a car passing slowly in the distance.",
+          "params": {
+            "duration_seconds": 20,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "Y9r5yCGhtGa8sLbg6Mai",
+          "sessionId": "qwOBnn0DUMS1patZlfcw",
+          "nodeId": "t6jDfOw2VDAYCxjisMBJ",
+          "generatedOn": "2026-11-06",
+          "credits": 67,
+          "chosenBecause": "Continuous seam and the closest spectra across it (0.85); has the distant bark.",
+          "otherTakes": [
+            {
+              "generationId": "J4MzoDhWNhZqwdmcffTb",
+              "credits": 67,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.43 of the 99.9th-percentile step, level 0.9 dB across it"
+          },
+          "checks": {
+            "seconds": 20,
+            "lufsIntegrated": -28.8,
+            "lufsMomentaryMax": -21.4,
+            "truePeakDb": -6.3,
+            "centroidHz": 478,
+            "longestQuietSec": 0.05,
+            "leadingSilenceSec": 0,
+            "dc": -0.000013,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "amb-wind": {
+      "title": "Graveyard wind with gusts",
+      "where": "The graveyard, funeral ceremonies outdoors, snow.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "amb-wind",
+          "studioTitle": "Graveyard wind with gusts",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Cold wind blowing across an open hilltop graveyard with slow gusts rising and falling and dry leaves skittering, no music.",
+          "params": {
+            "duration_seconds": 20,
+            "prompt_influence": 0.5,
+            "loop": true
+          },
+          "generationId": "s0VGYVC7PvY6W5UqvJLR",
+          "sessionId": "L0svyup05WIIajgd2TcO",
+          "nodeId": "4JRNvno2nhX95AZOxwyU",
+          "generatedOn": "2026-11-06",
+          "credits": 67,
+          "chosenBecause": "The model's own seam is continuous (step 0.23) and the level is the same either side; the other take steps (1.6).",
+          "otherTakes": [
+            {
+              "generationId": "3nRHZxtcdMO3xRWyWeJe",
+              "credits": 67,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "as generated (the model's loop): seam step 0.30 of the 99.9th-percentile step, level 0.0 dB across it"
+          },
+          "checks": {
+            "seconds": 20,
+            "lufsIntegrated": -29.4,
+            "lufsMomentaryMax": -24.3,
+            "truePeakDb": -13.1,
+            "centroidHz": 405,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000055,
+            "clippedSamples": 0,
+            "flags": []
+          }
+        }
+      ]
+    },
+    "angelic": {
+      "title": "Divine approval: choir chord and harp",
+      "where": "A happy Jesus (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "angelic",
+          "studioTitle": "Divine approval: a choir chord and a harp",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A heavenly choir sings one sustained bright 'aah' major chord with a quick harp glissando, a short comic divine-approval sting, no words.",
+          "params": {
+            "duration_seconds": 2.2,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "Xh06ZFhf7GbGgmn411eL",
+          "sessionId": "0OPeCKFvORfJiTl54GjI",
+          "nodeId": "KfsiFVkojWH4GmU2HJGZ",
+          "generatedOn": "2026-11-06",
+          "credits": 7,
+          "chosenBecause": "Both takes are a sustained bright chord; this one dies away sooner (-20 dB after 1.3 s against 1.5 s).",
+          "otherTakes": [
+            {
+              "generationId": "HUcqhufa6plt1D1YK8JG",
+              "credits": 7,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.2,
+            "lufsIntegrated": -25,
+            "lufsMomentaryMax": -19.3,
+            "truePeakDb": -12.6,
+            "centroidHz": 508,
+            "longestQuietSec": 0.65,
+            "leadingSilenceSec": 0,
+            "dc": -0.000021,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 1,
+            "envelope": "peak at 0.02 s, -20 dB after 1.26 s, last 50 ms -82 dB re peak",
+            "onsetsExpected": [
+              1,
+              6
+            ]
+          }
+        }
+      ]
+    },
+    "bank": {
+      "title": "Hold Music for the Bereaved",
+      "where": "The bank (loans and savings).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "bank",
+          "studioTitle": "Hold Music for the Bereaved",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental telephone hold music in E-flat major at a steady 104 bpm: a polite, slightly cheesy easy-listening tune on a soft reed organ and vibraphone over brushed drums and a walking upright bass, with a tinny small-speaker warmth. Bland, cheerful and a little absurd; keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 46,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "YLhzNE9w9WCcjvubrs9K",
+          "sessionId": "H6GhJ9lnyYduSeNW0aOq",
+          "nodeId": "kDXY9PFkGD91Rhxdu3Ju",
+          "generatedOn": "2026-11-06",
+          "credits": 690,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 16,
+            "seamSimilarity": 0.991,
+            "method": "bar lines 3.456 s to 40.373 s of the recording, 0.58 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 36.92,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.6,
+            "truePeakDb": -2.2,
+            "centroidHz": 169,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000081,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 104,
+            "keyEstimated": "Bb minor (r 0.49)",
+            "narrowband": "66% of frames @ 369 Hz"
+          }
+        }
+      ]
+    },
+    "battle": {
+      "title": "Casket Brawl",
+      "where": "Fights with a rival director.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "battle",
+          "studioTitle": "Casket Brawl",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental silent-film chase music in E minor at 152 bpm: a frantic ragtime piano galloping over oom-pah tuba bass and snare drum rolls, with a reed organ stabbing chords and slapstick energy. Breathless, comic, old cinema pit band. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 36,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "JabjmntYELUqDmO1bfoD",
+          "sessionId": "d3LWB3JqAd2O4ofEp1A2",
+          "nodeId": "Ll51OTZToHRfEC4loix4",
+          "generatedOn": "2026-11-06",
+          "credits": 540,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 15,
+            "seamSimilarity": 0.896,
+            "method": "bar lines 2.165 s to 25.856 s of the recording, 0.39 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 23.69,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -14.6,
+            "truePeakDb": -3.1,
+            "centroidHz": 788,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 2.2e-7,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 152,
+            "keyEstimated": "E major (r 0.88)",
+            "narrowband": "51% of frames @ 662 Hz"
+          }
+        }
+      ]
+    },
+    "bingo-ball": {
+      "title": "Bingo cage turning, a ball drops out",
+      "where": "Church bingo; a lottery ticket.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "bingo-ball",
+          "studioTitle": "Bingo cage turning, a ball drops out",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A small wire bingo cage cranked round with plastic balls rattling inside, then one ball drops out and clicks into a tray. Close, dry.",
+          "params": {
+            "duration_seconds": 1.7,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "6Jc1JBs7Y2rEAhrW0cFQ",
+          "sessionId": "SLnGbbVaF7Reo6cuul7Q",
+          "nodeId": "yok9DR363LxsR56SiVns",
+          "generatedOn": "2026-11-06",
+          "credits": 6,
+          "chosenBecause": "More rattle events (13 against 8).",
+          "otherTakes": [
+            {
+              "generationId": "SMmjrOD4Zg9tmtzLNF0b",
+              "credits": 6,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.68,
+            "lufsIntegrated": -25.6,
+            "lufsMomentaryMax": -21,
+            "truePeakDb": -2.5,
+            "centroidHz": 3399,
+            "longestQuietSec": 0.44999999999999996,
+            "leadingSilenceSec": 0,
+            "dc": 0.0000044,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 13,
+            "envelope": "peak at 0.01 s, -20 dB after 0.36 s, last 50 ms -64 dB re peak",
+            "onsetsExpected": [
+              3,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "bingo-lose": {
+      "title": "Bingo loss: falling marimba and a bonk",
+      "where": "Losing the lottery or bingo.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "bingo-lose",
+          "studioTitle": "Bingo loss: falling marimba and a bonk",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A short sad marimba run going down and ending in a comic hollow wooden bonk. Dry.",
+          "params": {
+            "duration_seconds": 1.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "cUycU8D88mldnkB4OHEP",
+          "sessionId": "J6gKEozrxFdJs1Gx6JhO",
+          "nodeId": "KJAaWmPWZH7hgPA3jr6t",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Both take three notes; this one ends quieter (-60 dB).",
+          "otherTakes": [
+            {
+              "generationId": "J8kr2pdf9ezHmRt4NO2X",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.48,
+            "lufsIntegrated": -23.3,
+            "lufsMomentaryMax": -19.1,
+            "truePeakDb": -8.3,
+            "centroidHz": 306,
+            "longestQuietSec": 0.39999999999999997,
+            "leadingSilenceSec": 0,
+            "dc": 0.0000037,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 4,
+            "envelope": "peak at 0.01 s, -20 dB after 0.71 s, last 50 ms -70 dB re peak",
+            "onsetsExpected": [
+              3,
+              15
+            ]
+          }
+        }
+      ]
+    },
+    "bingo-win": {
+      "title": "Bingo win: xylophone run and bells",
+      "where": "Winning the lottery or bingo.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "bingo-win",
+          "studioTitle": "Bingo win: xylophone run and bells",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A quick happy xylophone run up and a ring of small bells, a cheerful winner jingle. Dry.",
+          "params": {
+            "duration_seconds": 1.8,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "P6baMw0yP8GZ7VLLkvLX",
+          "sessionId": "qNotpl9puy0jkh0kabjE",
+          "nodeId": "Cw63NFy5UxrmBrF6xsA2",
+          "generatedOn": "2026-11-06",
+          "credits": 6,
+          "chosenBecause": "Four onsets (a run) against one.",
+          "otherTakes": [
+            {
+              "generationId": "PysryczViwpB5cl9E9wS",
+              "credits": 6,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.76,
+            "lufsIntegrated": -23.1,
+            "lufsMomentaryMax": -19.4,
+            "truePeakDb": -10.2,
+            "centroidHz": 1481,
+            "longestQuietSec": 0.8000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000061,
+            "clippedSamples": 0,
+            "flags": [
+              "onsets 3 outside 4-30"
+            ],
+            "onsets": 3,
+            "envelope": "peak at 0.17 s, -20 dB after 0.50 s, last 50 ms -70 dB re peak",
+            "onsetsExpected": [
+              4,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "cafe": {
+      "title": "Pale Horse Rag",
+      "where": "The Pale Horse Cafe.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "cafe",
+          "studioTitle": "Pale Horse Rag",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental honky-tonk ragtime in B-flat major at 132 bpm: a bouncy, slightly out-of-tune upright saloon piano playing a stride rag with banjo strumming and upright bass, a washboard keeping time. Cheerful, rowdy diner fun, old-time and dry. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 55,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "IjnYAIoJxnbWQ1VeJDBj",
+          "sessionId": "VdxDkoZkCLEC8kNmGGaK",
+          "nodeId": "IFtYlPjsZZeiCUXJeJp4",
+          "generatedOn": "2026-11-06",
+          "credits": 825,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 24,
+            "seamSimilarity": 0.894,
+            "method": "bar lines 2.731 s to 46.368 s of the recording, 0.46 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 43.64,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.1,
+            "truePeakDb": -2.8,
+            "centroidHz": 640,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000054,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 66,
+            "keyEstimated": "G major (r 0.83)",
+            "narrowband": "47% of frames @ 293 Hz"
+          }
+        }
+      ]
+    },
+    "cards": {
+      "title": "Cards shuffled and three dealt",
+      "where": "Card games at the Reaper Club.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "cards",
+          "studioTitle": "Cards shuffled and dealt",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A deck of playing cards riffle-shuffled once, then three cards dealt onto a felt table with soft flicks. Close, dry.",
+          "params": {
+            "duration_seconds": 1.4,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "ttX9u3sdurkTw4GafMDI",
+          "sessionId": "QSTimNCjdspDaINoPTAc",
+          "nodeId": "egLHIiaLp7NuLbQ8wKsU",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Riffle then deals (15 onsets) against 9, and a quieter end.",
+          "otherTakes": [
+            {
+              "generationId": "W1YkzqiCdrZzm0SD3sZl",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.36,
+            "lufsIntegrated": -27.7,
+            "lufsMomentaryMax": -23.4,
+            "truePeakDb": -1.2,
+            "centroidHz": 1745,
+            "longestQuietSec": 0.1,
+            "leadingSilenceSec": 0,
+            "dc": -0.000019,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 15,
+            "envelope": "peak at 1.16 s, -20 dB after 0.03 s, last 50 ms -39 dB re peak",
+            "onsetsExpected": [
+              3,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "cash-register": {
+      "title": "Cash register: keys, drawer, bell, drawer stop",
+      "where": "A sale is made; the money bag picture.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "cash-register",
+          "studioTitle": "Cash register: keys, drawer, bell",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An old mechanical cash register: two key presses, the bell rings and the drawer slides open with a clunk. Close, dry.",
+          "params": {
+            "duration_seconds": 1.6,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "zwIMf0HPJlebm9hQJhB7",
+          "sessionId": "vKybjshVxq8PB9k8a7Nj",
+          "nodeId": "B0G6NplCb4018tNZD26d",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Three separate events (keys, bell, drawer) against two.",
+          "otherTakes": [
+            {
+              "generationId": "Vb48j84nJSWX3drugZcR",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.6,
+            "lufsIntegrated": -22.3,
+            "lufsMomentaryMax": -21.5,
+            "truePeakDb": -2.3,
+            "centroidHz": 3746,
+            "longestQuietSec": 0.9500000000000003,
+            "leadingSilenceSec": 0,
+            "dc": -0.00002,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 4,
+            "envelope": "peak at 0.34 s, -20 dB after 0.18 s, last 50 ms -69 dB re peak",
+            "onsetsExpected": [
+              2,
+              8
+            ]
+          }
+        }
+      ]
+    },
+    "casket-thump": {
+      "title": "A casket set down: wooden thud and rattling hardware",
+      "where": "Restocking caskets; a casket picture.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "casket-thump",
+          "studioTitle": "A casket set down",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A heavy wooden casket set down on a floor: one solid thud with a brief rattle of its brass handles. Close, dry room.",
+          "params": {
+            "duration_seconds": 1,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "hfOl0GkVqUT29kOuVllq",
+          "sessionId": "oepqG7dUEQ6IOEXGsaix",
+          "nodeId": "JnMPNjA6vKsYiu1SVCrF",
+          "generatedOn": "2026-11-06",
+          "credits": 3,
+          "chosenBecause": "One thud at the start and a short rattle (1 onset); the other take has a 0.2 s lead and four events.",
+          "otherTakes": [
+            {
+              "generationId": "SNXQS4axVB49jkv3DyXc",
+              "credits": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1,
+            "lufsIntegrated": -25.1,
+            "lufsMomentaryMax": -21.5,
+            "truePeakDb": -3.5,
+            "centroidHz": 524,
+            "longestQuietSec": 0.65,
+            "leadingSilenceSec": 0,
+            "dc": -0.000096,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 2,
+            "envelope": "peak at 0.01 s, -20 dB after 0.07 s, last 50 ms -80 dB re peak",
+            "onsetsExpected": [
+              1,
+              3
+            ]
+          }
+        }
+      ]
+    },
+    "ceremony": {
+      "title": "Dearly Departed (Processional)",
+      "where": "The church: funeral ceremonies.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "ceremony",
+          "studioTitle": "Dearly Departed (Processional)",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental church pipe organ processional in F major at 66 bpm: a stately, slightly pompous small-town funeral hymn on a modest church organ with soft flute and reed stops, plain four-part harmony, slow and dignified with a faint wink of comedy. Solo organ only, dry small church. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 70,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "eL3XgiYoUqxhklMwQPct",
+          "sessionId": "XPkmfZZZej7TqYYVw6mI",
+          "nodeId": "rXLR911YDUSIz6eJjosH",
+          "generatedOn": "2026-11-06",
+          "credits": 1050,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 15,
+            "seamSimilarity": 0.94,
+            "method": "bar lines 7.957 s to 63.115 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 55.16,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.9,
+            "truePeakDb": -5.2,
+            "centroidHz": 479,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000011,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 134,
+            "keyEstimated": "F major (r 0.97)",
+            "narrowband": "85% of frames @ 2092 Hz"
+          }
+        }
+      ]
+    },
+    "cityhall": {
+      "title": "Hail to the Coroner",
+      "where": "City Hall (elections, votes, filings).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "cityhall",
+          "studioTitle": "Hail to the Coroner",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental pompous small-town brass-band march in B-flat major at 112 bpm: a puffed-up tuba and trombone oom-pah with a cornet melody, snare drum and bass drum, and a pipe organ doubling the big chords. Self-important and comic, a mayor's parade on a tiny budget. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 62,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "jazP4i7iv4ptQJ3oGb0N",
+          "sessionId": "vdcIbhdINpxG5F1nmXQA",
+          "nodeId": "ot5bzIXt5Q4HlQLtVZM2",
+          "generatedOn": "2026-11-06",
+          "credits": 930,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 18,
+            "seamSimilarity": 0.906,
+            "method": "bar lines 19.861 s to 58.411 s of the recording, 0.53 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 38.55,
+            "lufsIntegrated": -16.1,
+            "lufsMomentaryMax": -12.9,
+            "truePeakDb": -2,
+            "centroidHz": 647,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000053,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 112,
+            "keyEstimated": "D minor (r 0.86)",
+            "narrowband": "65% of frames @ 176 Hz"
+          }
+        }
+      ]
+    },
+    "club": {
+      "title": "Last Call at the Reaper Club",
+      "where": "The Reaper Club (slots, cards, dice, drinks).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "club",
+          "studioTitle": "Last Call at the Reaper Club",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental smoky lounge groove in F minor at 108 bpm: a swinging Hammond organ melody with vibraphone, walking upright bass and brushed jazz drums, a theremin slipping in a few phrases. Cool, late-night and slightly sinister in a fun way. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 65,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "EZfSfvSCdMDELN3ovspu",
+          "sessionId": "5iyB7tZepIPrDCOOfYQ8",
+          "nodeId": "3q0SARKaMrkVvWqwbxGX",
+          "generatedOn": "2026-11-06",
+          "credits": 975,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 22,
+            "seamSimilarity": 0.842,
+            "method": "bar lines 4.437 s to 53.323 s of the recording, 0.55 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 48.89,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.4,
+            "truePeakDb": -3.1,
+            "centroidHz": 259,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000017,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 108,
+            "keyEstimated": "F minor (r 0.85)",
+            "narrowband": "33% of frames @ 129 Hz"
+          }
+        }
+      ]
+    },
+    "coins": {
+      "title": "A handful of coins on a counter",
+      "where": "Small money (the second money bag picture).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "coins",
+          "studioTitle": "A handful of coins on a counter",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A small handful of coins dropped onto a wooden counter, jingling and settling. Close, dry.",
+          "params": {
+            "duration_seconds": 1,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "g4rZLdj6wjloUi16MyYR",
+          "sessionId": "R4ASJlq7DwVJw5Wi4xbR",
+          "nodeId": "VYAY65B77aSdJW3lopF8",
+          "generatedOn": "2026-11-06",
+          "credits": 3,
+          "chosenBecause": "More separate coin hits (8 onsets against 4) and a clean tail (-61 dB).",
+          "otherTakes": [
+            {
+              "generationId": "LHvKcxFqmkIyiYudb4lr",
+              "credits": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1,
+            "lufsIntegrated": -21.1,
+            "lufsMomentaryMax": -19.5,
+            "truePeakDb": -1.9,
+            "centroidHz": 9671,
+            "longestQuietSec": 0.15000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000096,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 8,
+            "envelope": "peak at 0.50 s, -20 dB after 0.13 s, last 50 ms -69 dB re peak",
+            "onsetsExpected": [
+              2,
+              20
+            ]
+          }
+        }
+      ]
+    },
+    "defeat": {
+      "title": "Grave Error",
+      "where": "Losing a fight.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "defeat",
+          "studioTitle": "Grave Error",
+          "model": "eleven_music_v2_5",
+          "prompt": "Short instrumental defeat sting in D minor at 84 bpm: a sad, deflating descending phrase on muted trombone and reed organ over a slow timpani, ending on a sagging low chord. Comic disappointment, a wah-wah letdown.",
+          "params": {
+            "duration_seconds": 9,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "nI2f3iPEjwMZruPeq76d",
+          "sessionId": "y54wMfYnwdOdIF6Z142J",
+          "nodeId": "gIRMC9RvDjkIkbUZsK0M",
+          "generatedOn": "2026-11-06",
+          "credits": 135,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 8.99,
+            "lufsIntegrated": -16.1,
+            "lufsMomentaryMax": -12.3,
+            "truePeakDb": -2.9,
+            "centroidHz": 486,
+            "longestQuietSec": 2.849999999999998,
+            "leadingSilenceSec": 0,
+            "dc": 0.000037,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 176,
+            "keyEstimated": "D major (r 0.73)",
+            "narrowband": "50% of frames @ 111 Hz",
+            "onsets": 4,
+            "envelope": "peak at 3.53 s, -20 dB after 0.87 s, last 50 ms -84 dB re peak"
+          }
+        }
+      ]
+    },
+    "desk": {
+      "title": "Office Hours",
+      "where": "The player's own parlor: the desk, the news, the embalming room, waiting for customers.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "desk",
+          "studioTitle": "Office Hours",
+          "model": "eleven_music_v2_5",
+          "prompt": "Quiet instrumental office music in A minor at 72 bpm: soft muted reed organ chords, a sparse upright bass, and a steady woodblock and rim click like a ticking wall clock, with an occasional lazy vibraphone phrase. Patient, a little drowsy and wry, very low-key background. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 65,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "6JovC0mNBViY4IN2tW4Q",
+          "sessionId": "Gu67JsT2HwqUwAYtdv2S",
+          "nodeId": "UMii5thauAJlZ1e9iJTX",
+          "generatedOn": "2026-11-06",
+          "credits": 975,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 14,
+            "seamSimilarity": 0.792,
+            "method": "bar lines 6.677 s to 53.355 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 46.68,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -9.7,
+            "truePeakDb": -2.2,
+            "centroidHz": 196,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000065,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 72,
+            "keyEstimated": "Eb minor (r 0.44)",
+            "narrowband": "68% of frames @ 293 Hz"
+          }
+        }
+      ]
+    },
+    "dice": {
+      "title": "Dice shaken and thrown",
+      "where": "Shots at the Reaper Club (dice).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "dice",
+          "studioTitle": "Dice shaken and thrown",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "Two dice rattled in a cupped hand and thrown onto a felt table, tumbling and stopping. Close, dry.",
+          "params": {
+            "duration_seconds": 1.1,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "GVtMCAGlqWieGPCnvlh7",
+          "sessionId": "LYMi8QKJdjOZcZ9dqeIl",
+          "nodeId": "hBpMyUTnuMgmc8KNON5M",
+          "generatedOn": "2026-11-06",
+          "credits": 4,
+          "chosenBecause": "Shake then throw (peak at 0.25 s, 8 onsets); the other take peaks at its first sample.",
+          "otherTakes": [
+            {
+              "generationId": "yiQoh39OEozdvEzLrhfS",
+              "credits": 4,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.08,
+            "lufsIntegrated": -23.6,
+            "lufsMomentaryMax": -21.6,
+            "truePeakDb": -3.9,
+            "centroidHz": 6321,
+            "longestQuietSec": 0.25,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000046,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 8,
+            "envelope": "peak at 0.25 s, -20 dB after 0.02 s, last 50 ms -75 dB re peak",
+            "onsetsExpected": [
+              3,
+              20
+            ]
+          }
+        }
+      ]
+    },
+    "dimart": {
+      "title": "Aisle Nine",
+      "where": "Di-Mart, the casket store.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "dimart",
+          "studioTitle": "Aisle Nine",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental supermarket muzak in C major at 100 bpm: a bland, smiling easy-listening tune on electric organ and vibraphone with soft electric piano chords, a gentle bossa drum machine and round bass. Cheesy, over-polite store background music with a slightly hollow cheer. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 70,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "m3FzdwtV5NEN7WGbH8Z5",
+          "sessionId": "a969uRjwxkKBmALMtqf6",
+          "nodeId": "HrRVKN9oZeJSGiQ6hh5w",
+          "generatedOn": "2026-11-06",
+          "credits": 1050,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 20,
+            "seamSimilarity": 0.937,
+            "method": "bar lines 3.595 s to 51.595 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 48,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -14,
+            "truePeakDb": -4.5,
+            "centroidHz": 225,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.0000013,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 100,
+            "keyEstimated": "G major (r 0.72)",
+            "narrowband": "62% of frames @ 246 Hz"
+          }
+        }
+      ]
+    },
+    "door": {
+      "title": "Door: latch, creaking hinge, closing thud",
+      "where": "Entering a place.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "door",
+          "studioTitle": "Door: latch, creak, closing thud",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An old wooden door: the latch clicks, the hinge creaks as it swings, and it closes with a soft thud. Close, dry.",
+          "params": {
+            "duration_seconds": 2,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "by8FHBF2PK912vMvwcQb",
+          "sessionId": "ay3YAz6jgxniDlKn3L4B",
+          "nodeId": "AWU0tCI4V5IdM1I9eU1G",
+          "generatedOn": "2026-11-06",
+          "credits": 7,
+          "chosenBecause": "Three clear groups (latch, creak, closing thud); the other take is a run of small clicks before the thud.",
+          "otherTakes": [
+            {
+              "generationId": "yxru0fLN28bI6srrqtSL",
+              "credits": 7,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2,
+            "lufsIntegrated": -23.5,
+            "lufsMomentaryMax": -19.8,
+            "truePeakDb": -2,
+            "centroidHz": 133,
+            "longestQuietSec": 0.3,
+            "leadingSilenceSec": 0,
+            "dc": -0.000027,
+            "clippedSamples": 0,
+            "flags": [
+              "onsets 7 outside 2-6"
+            ],
+            "onsets": 7,
+            "envelope": "peak at 1.22 s, -20 dB after 0.16 s, last 50 ms -59 dB re peak",
+            "onsetsExpected": [
+              2,
+              6
+            ]
+          }
+        }
+      ]
+    },
+    "doorbell": {
+      "title": "Customer arrives: the shop bell over the door",
+      "where": "A customer arrives (the waiting picture).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "doorbell",
+          "studioTitle": "Customer arrives: the shop bell over the door",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A small brass shop bell above a door tinkling as the door opens, two or three bright rings. Close, dry.",
+          "params": {
+            "duration_seconds": 1.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "RFtjqRePbLhJt7kQjSNX",
+          "sessionId": "a1woIlWeR8RDz8RX0FHa",
+          "nodeId": "9hvkciRCmssYDNFopgGF",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "A ringing bell with two strikes; the other take is a busier jingle (9 onsets) than the two or three rings asked for.",
+          "otherTakes": [
+            {
+              "generationId": "HuWJn0YWgpTOCfQAbyFZ",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.48,
+            "lufsIntegrated": -23.1,
+            "lufsMomentaryMax": -21.6,
+            "truePeakDb": -14.7,
+            "centroidHz": 7987,
+            "longestQuietSec": 0.3,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000058,
+            "clippedSamples": 0,
+            "flags": [
+              "onsets 6 outside 1-5"
+            ],
+            "onsets": 6,
+            "envelope": "peak at 0.29 s, -20 dB after 0.80 s, last 50 ms -59 dB re peak",
+            "onsetsExpected": [
+              1,
+              5
+            ]
+          }
+        }
+      ]
+    },
+    "endday": {
+      "title": "Lights Out at the Parlor",
+      "where": "Solo mode: the end of the day (a lullaby).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "endday",
+          "studioTitle": "Lights Out at the Parlor",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental lullaby in F major, a slow 3/4 waltz at 84 bpm: a tender music-box celesta melody over soft reed organ chords and a gently plucked upright bass, winding down sleepily to a quiet final chord. Sweet, drowsy and faintly wry.",
+          "params": {
+            "duration_seconds": 21,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "gnWJyGVyzsbQPaz06GoB",
+          "sessionId": "xbl4oF2qlwraQzF1a4c0",
+          "nodeId": "3nG6gslv535yWxiHu5gy",
+          "generatedOn": "2026-11-06",
+          "credits": 315,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 20.89,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.6,
+            "truePeakDb": -4.5,
+            "centroidHz": 612,
+            "longestQuietSec": 1.900000000000001,
+            "leadingSilenceSec": 0,
+            "dc": -0.000076,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 83,
+            "keyEstimated": "F major (r 0.81)",
+            "narrowband": "64% of frames @ 170 Hz",
+            "onsets": 27,
+            "envelope": "peak at 15.25 s, -20 dB after 2.08 s, last 50 ms -85 dB re peak"
+          }
+        }
+      ]
+    },
+    "fail-trombone": {
+      "title": "Muted trombone, falling (a fail)",
+      "where": "A failed attempt.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "fail-trombone",
+          "studioTitle": "Muted trombone, falling (a fail)",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A muted trombone playing the classic sad wah-wah-wah-waaah, four falling notes. Close, dry, comic.",
+          "params": {
+            "duration_seconds": 2.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "h080h0FLutFGsRWmgyY4",
+          "sessionId": "PK4qHngVV67icMorAGoE",
+          "nodeId": "VvUrC060wRmXGzBlkIUA",
+          "generatedOn": "2026-11-06",
+          "credits": 8,
+          "chosenBecause": "Four separate falling notes visible in the spectrogram and 5 onsets; the other take merges the first notes.",
+          "otherTakes": [
+            {
+              "generationId": "UPECgZgAnOQNDvKYzQXw",
+              "credits": 8,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.46,
+            "lufsIntegrated": -23.5,
+            "lufsMomentaryMax": -19.3,
+            "truePeakDb": -11.6,
+            "centroidHz": 926,
+            "longestQuietSec": 0.15000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": 0.000005,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 5,
+            "envelope": "peak at 1.77 s, -20 dB after 0.40 s, last 50 ms -59 dB re peak",
+            "onsetsExpected": [
+              3,
+              6
+            ]
+          }
+        }
+      ]
+    },
+    "fanfare-exact": {
+      "title": "Exact-match fanfare: the house motif in D major and a chord",
+      "where": "A perfect sale (the customer's exact wish).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "fanfare-exact",
+          "studioTitle": "Exact-match fanfare",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A short bright brass fanfare of three rising notes and a held major chord, a cheerful little 'ta-da'. Dry, comic.",
+          "params": {
+            "duration_seconds": 2,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "8RNLkNlfBVIeBNHvbp9w",
+          "sessionId": "pb2bf5bh4kqMPw2J6256",
+          "nodeId": "a5IDifhsGkBhlows0lZL",
+          "generatedOn": "2026-11-06",
+          "credits": 7,
+          "chosenBecause": "A short note before a held chord (the ta-da shape); the other take is one sustained chord.",
+          "otherTakes": [
+            {
+              "generationId": "UVpuLJUgkeRjtLwW6EHW",
+              "credits": 7,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.93,
+            "lufsIntegrated": -21.4,
+            "lufsMomentaryMax": -19.2,
+            "truePeakDb": -11.7,
+            "centroidHz": 1494,
+            "longestQuietSec": 0.6,
+            "leadingSilenceSec": 0,
+            "dc": -0.000011,
+            "clippedSamples": 0,
+            "flags": [
+              "onsets 1 outside 2-8"
+            ],
+            "onsets": 1,
+            "envelope": "peak at 0.90 s, -20 dB after 0.36 s, last 50 ms -79 dB re peak",
+            "onsetsExpected": [
+              2,
+              8
+            ]
+          }
+        }
+      ]
+    },
+    "glint": {
+      "title": "A ring sparkles",
+      "where": "A ring (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "glint",
+          "studioTitle": "A ring sparkles",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A tiny bright magical sparkle twinkle, like light glinting off a diamond ring. Short.",
+          "params": {
+            "duration_seconds": 0.8,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "S02ssi4WvOHYKABM9ZO8",
+          "sessionId": "B0I8ySHqaP0iLT6QoQVV",
+          "nodeId": "AEep5aXWSDBX18BUsfeH",
+          "generatedOn": "2026-11-06",
+          "credits": 3,
+          "chosenBecause": "Shorter decay (-20 dB after 0.2 s).",
+          "otherTakes": [
+            {
+              "generationId": "UhUlheEXcmFiuccl8Qhb",
+              "credits": 3,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 0.8,
+            "lufsIntegrated": -26.6,
+            "lufsMomentaryMax": -22.8,
+            "truePeakDb": -8.9,
+            "centroidHz": 8131,
+            "longestQuietSec": 0.39999999999999997,
+            "leadingSilenceSec": 0,
+            "dc": -0.000012,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 1,
+            "envelope": "peak at 0.03 s, -20 dB after 0.26 s, last 50 ms -64 dB re peak",
+            "onsetsExpected": [
+              1,
+              8
+            ]
+          }
+        }
+      ]
+    },
+    "gong": {
+      "title": "Gong (a loss)",
+      "where": "Losing a fight (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "gong",
+          "studioTitle": "Gong (a loss)",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A single large gong struck once and left to shimmer and fade away.",
+          "params": {
+            "duration_seconds": 4.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "BgyiBklwJNZ9hA61R9LB",
+          "sessionId": "krsdeDblMcOC42nFvAPg",
+          "nodeId": "LikIdV8vAoSDUJE9Aez1",
+          "generatedOn": "2026-11-06",
+          "credits": 15,
+          "chosenBecause": "One strike, decays to -62 dB by the end (the other ends at -54 dB).",
+          "otherTakes": [
+            {
+              "generationId": "CgKvPKdWaSWagsykDvfB",
+              "credits": 15,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 4.48,
+            "lufsIntegrated": -24.8,
+            "lufsMomentaryMax": -19,
+            "truePeakDb": -8.7,
+            "centroidHz": 282,
+            "longestQuietSec": 0.7000000000000001,
+            "leadingSilenceSec": 0,
+            "dc": 0.0000056,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 1,
+            "envelope": "peak at 0.11 s, -20 dB after 1.35 s, last 50 ms -71 dB re peak",
+            "onsetsExpected": [
+              1,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    "graveyard": {
+      "title": "Plot Twist",
+      "where": "The graveyard (plots and monuments).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "graveyard",
+          "studioTitle": "Plot Twist",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental moody graveyard nocturne in G minor at 68 bpm: a lonely theremin melody over slow reed organ chords, a soft bowed upright bass and a gently tolling celesta, sparse and misty. Melancholy with a dry wink, never horror. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 68,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "Q0dBe6u4bBSLLvPr1nsm",
+          "sessionId": "ZZ4H2AyaZIR3AV596Pa6",
+          "nodeId": "G2SJzyfc2cYEskerKaQG",
+          "generatedOn": "2026-11-06",
+          "credits": 1020,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 14,
+            "seamSimilarity": 0.813,
+            "method": "bar lines 7.947 s to 57.365 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 49.42,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.2,
+            "truePeakDb": -3.6,
+            "centroidHz": 448,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000069,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 136.5,
+            "keyEstimated": "G minor (r 0.90)",
+            "narrowband": "47% of frames @ 105 Hz"
+          }
+        }
+      ]
+    },
+    "growl": {
+      "title": "A small dog growls, then arfs",
+      "where": "The dog dragging a hand (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "growl",
+          "studioTitle": "A small dog growls, then barks",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A small terrier growls low for a moment, then gives two sharp yappy barks. Close, dry room, no music.",
+          "params": {
+            "duration_seconds": 1.8,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "JIZtiGnyWhMzialQDZce",
+          "sessionId": "C3pjPUbbYEoqgTmty0Y9",
+          "nodeId": "BV9H0x8ZeENVugrVG334",
+          "generatedOn": "2026-11-06",
+          "credits": 6,
+          "chosenBecause": "A short growl then two separate barks, as asked; ends cleanly (-65 dB). The other take is a long growl and one bark.",
+          "otherTakes": [
+            {
+              "generationId": "CoJSqzyVJEAz93oeuB6i",
+              "credits": 6,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.76,
+            "lufsIntegrated": -20.5,
+            "lufsMomentaryMax": -19.6,
+            "truePeakDb": -7.2,
+            "centroidHz": 1241,
+            "longestQuietSec": 0.49999999999999994,
+            "leadingSilenceSec": 0,
+            "dc": 0.000024,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 3,
+            "envelope": "peak at 1.10 s, -20 dB after 0.09 s, last 50 ms -66 dB re peak",
+            "onsetsExpected": [
+              2,
+              5
+            ]
+          }
+        }
+      ]
+    },
+    "harp-good-news": {
+      "title": "Harp glissando up (good news)",
+      "where": "Good news: a happy mother, a red rose, a great sale.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "harp-good-news",
+          "studioTitle": "Harp glissando up (good news)",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A single bright harp glissando sweeping upward, then a soft ringing chord. Close, dry.",
+          "params": {
+            "duration_seconds": 2.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "f4B2aEvildxX8HkgL4rU",
+          "sessionId": "4DklegrvHpXagIZr96Mz",
+          "nodeId": "UpqtGUGSjQRb0oofe62P",
+          "generatedOn": "2026-11-06",
+          "credits": 8,
+          "chosenBecause": "Several distinct plucks in the sweep; the other take reads as one smeared onset.",
+          "otherTakes": [
+            {
+              "generationId": "limw1vcbML98zr6Fe65u",
+              "credits": 8,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.48,
+            "lufsIntegrated": -24.9,
+            "lufsMomentaryMax": -19.1,
+            "truePeakDb": -11.8,
+            "centroidHz": 443,
+            "longestQuietSec": 1.1000000000000003,
+            "leadingSilenceSec": 0,
+            "dc": -0.000021,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 10,
+            "envelope": "peak at 0.07 s, -20 dB after 0.96 s, last 50 ms -86 dB re peak",
+            "onsetsExpected": [
+              1,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "hospital": {
+      "title": "Visiting Hours",
+      "where": "The hospital (the desk, the wards, the ambulance).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "hospital",
+          "studioTitle": "Visiting Hours",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental gentle waiting-room music in F major at 76 bpm: soft vibraphone and clean electric piano melody with a mellow reed organ pad, upright bass and very light brushes. Calm, sterile and faintly awkward, like a hospital corridor radio. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 62,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "iIK0oU8LJSiBS75sUdjo",
+          "sessionId": "q3eBTt1xoGwFGqZtnMNx",
+          "nodeId": "R5M6y0g8bY4fHufXPSGs",
+          "generatedOn": "2026-11-06",
+          "credits": 930,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 12,
+            "seamSimilarity": 0.983,
+            "method": "bar lines 3.467 s to 41.355 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 37.89,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -11.3,
+            "truePeakDb": -2.8,
+            "centroidHz": 193,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000081,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 76,
+            "keyEstimated": "F major (r 0.82)",
+            "narrowband": "54% of frames @ 129 Hz"
+          }
+        }
+      ]
+    },
+    "level-up": {
+      "title": "Training complete: rising arpeggio and shimmer",
+      "where": "Spirit University training done.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "level-up",
+          "studioTitle": "Training complete: rising arpeggio and shimmer",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A quick rising arpeggio on a glockenspiel ending in a sparkling shimmer, a cheerful level-up chime. Dry.",
+          "params": {
+            "duration_seconds": 1.6,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "rzm6WJwikdMW60Bda9Zm",
+          "sessionId": "ZMcCNY9xv0HjBcMyWkti",
+          "nodeId": "lN7CqnarUXD0A2hmy0hW",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "A visible rising line of notes (5 onsets) against 2.",
+          "otherTakes": [
+            {
+              "generationId": "iyyxSpqRfGSmHLVN2HM1",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.6,
+            "lufsIntegrated": -21.1,
+            "lufsMomentaryMax": -19.6,
+            "truePeakDb": -11.4,
+            "centroidHz": 2665,
+            "longestQuietSec": 0.7500000000000001,
+            "leadingSilenceSec": 0,
+            "dc": -0.000013,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 6,
+            "envelope": "peak at 0.57 s, -20 dB after 0.18 s, last 50 ms -55 dB re peak",
+            "onsetsExpected": [
+              3,
+              15
+            ]
+          }
+        }
+      ]
+    },
+    "lockpick": {
+      "title": "Lock pick working the pins, then the click",
+      "where": "Picking a rival's lock.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "lockpick",
+          "studioTitle": "Lock pick working the pins, then the click",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A lock pick scratching and clicking inside a door lock, small metallic ticks, then the lock springs open with a crisp click. Very close, dry.",
+          "params": {
+            "duration_seconds": 1.4,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "CeLcY8NMvxV7WccJtoeO",
+          "sessionId": "eT9A28nIko9FEqqcJIsb",
+          "nodeId": "aLnzX1vA7B4ccyjcdB1h",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Seven small clicks then the release, against four.",
+          "otherTakes": [
+            {
+              "generationId": "zAA6RbNEeu6Qrjxpl5YC",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.34,
+            "lufsIntegrated": -25,
+            "lufsMomentaryMax": -23.9,
+            "truePeakDb": -2.5,
+            "centroidHz": 5727,
+            "longestQuietSec": 0.2,
+            "leadingSilenceSec": 0,
+            "dc": 0.000018,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 6,
+            "envelope": "peak at 0.09 s, -20 dB after 0.03 s, last 50 ms -60 dB re peak",
+            "onsetsExpected": [
+              3,
+              20
+            ]
+          }
+        }
+      ]
+    },
+    "main": {
+      "title": "Open Casket Policy",
+      "where": "The front door (title screen) and the lobby: the game's main theme.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "main",
+          "studioTitle": "Open Casket Policy",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental comic-macabre main theme in D minor at 96 bpm: a memorable, hummable reed organ melody over plucked banjo, walking upright bass and brushed drums, with a theremin answering the tune and a vibraphone glinting on the off-beats. Wry, dry and catchy, like a small-town funeral parlor's own swing number, never horror and never epic. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 95,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "32rDpvMqDOGkzRoQpGTj",
+          "sessionId": "oqgFnhsTYViXJ4HiJOTS",
+          "nodeId": "z7SUuj4Su5kORoh5FYgK",
+          "generatedOn": "2026-11-06",
+          "credits": 1425,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 28,
+            "seamSimilarity": 0.944,
+            "method": "bar lines 12.811 s to 82.805 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 69.99,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.6,
+            "truePeakDb": -2.9,
+            "centroidHz": 267,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000013,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 96,
+            "keyEstimated": "C# minor (r 0.53)",
+            "narrowband": "53% of frames @ 885 Hz"
+          }
+        }
+      ]
+    },
+    "main-stinger": {
+      "title": "Open Casket Policy (sting)",
+      "where": "A short version of the main theme (front door, returning to the lobby).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "main-stinger",
+          "studioTitle": "Open Casket Policy (sting)",
+          "model": "eleven_music_v2_5",
+          "prompt": "Short instrumental comic-macabre sting in D minor at 96 bpm: a two-bar reed organ and theremin flourish over banjo and upright bass, ending on a wry final chord with a cymbal tap. Dry and catchy, never horror.",
+          "params": {
+            "duration_seconds": 9,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "IKKEWBtQdkzjzM8gFdV6",
+          "sessionId": "S7Hxm0yyHvBriciPgmql",
+          "nodeId": "FK8n6hz2LfPJculAD0v3",
+          "generatedOn": "2026-11-06",
+          "credits": 135,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 8.98,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.4,
+            "truePeakDb": -1.5,
+            "centroidHz": 196,
+            "longestQuietSec": 1.2000000000000004,
+            "leadingSilenceSec": 0,
+            "dc": 0.0000043,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 96,
+            "keyEstimated": "C# minor (r 0.50)",
+            "narrowband": "43% of frames @ 885 Hz",
+            "onsets": 33,
+            "envelope": "peak at 5.66 s, -20 dB after 0.40 s, last 50 ms -84 dB re peak"
+          }
+        }
+      ]
+    },
+    "meteor": {
+      "title": "The Sky Is Falling",
+      "where": "The season's end: the paper reports the meteor.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "meteor",
+          "studioTitle": "The Sky Is Falling",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental comic doom theme in C minor at 80 bpm: a big church pipe organ playing ominous descending chords with a wobbling theremin wail, timpani rolls and a low tuba, all a bit over-the-top like a 1950s B-movie trailer, more funny than frightening. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 60,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "dkiWz5Rl66Af4TQ63lnl",
+          "sessionId": "eB2AgHOEsQiPSOSkMPeM",
+          "nodeId": "RSEKXvHhj0bqx5z6hgPz",
+          "generatedOn": "2026-11-06",
+          "credits": 900,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 14,
+            "seamSimilarity": 0.797,
+            "method": "bar lines 4.128 s to 45.803 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 41.67,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.7,
+            "truePeakDb": -3.5,
+            "centroidHz": 538,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000027,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 80,
+            "keyEstimated": "C minor (r 0.95)",
+            "narrowband": "67% of frames @ 393 Hz"
+          }
+        }
+      ]
+    },
+    "monument": {
+      "title": "A heavy stone set in place",
+      "where": "Buying a graveyard monument.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "monument",
+          "studioTitle": "A heavy stone set in place",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A heavy granite slab set down onto stone with a deep grinding scrape and a solid thud. Close, outdoors, dry.",
+          "params": {
+            "duration_seconds": 1.4,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "6lrQuHvMMKbbHTMCYGEt",
+          "sessionId": "8aCxJ3m1KHrnO5LjguFk",
+          "nodeId": "F1Jwnznre26riUg7jo6S",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Scrape then thud (two groups); the other take has three separate thuds.",
+          "otherTakes": [
+            {
+              "generationId": "H8U27T1y3cdTaGcB4GfC",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.36,
+            "lufsIntegrated": -24,
+            "lufsMomentaryMax": -19.4,
+            "truePeakDb": -2.4,
+            "centroidHz": 582,
+            "longestQuietSec": 0.65,
+            "leadingSilenceSec": 0,
+            "dc": -0.000015,
+            "clippedSamples": 0,
+            "flags": [
+              "onsets 5 outside 1-4"
+            ],
+            "onsets": 5,
+            "envelope": "peak at 0.14 s, -20 dB after 0.10 s, last 50 ms -76 dB re peak",
+            "onsetsExpected": [
+              1,
+              4
+            ]
+          }
+        }
+      ]
+    },
+    "negotiation": {
+      "title": "Pre-Need Arrangements",
+      "where": "Selling a funeral to a customer: the customer is calm.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "negotiation.layer0",
+          "studioTitle": "Pre-Need Arrangements (calm)",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental soft sales-pitch music in E minor at 120 bpm: a gentle reed organ melody over plucked upright bass and soft brushed drums, with a vibraphone answering. Polite, reassuring and lightly wry, a salesman's smile. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 44,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "6AaZ9NjydaXTJIIOsECN",
+          "sessionId": "Z1BnLnymTSLyaeL1wiRJ",
+          "nodeId": "Hf7G35RgTFu0eqCllXIn",
+          "generatedOn": "2026-11-06",
+          "credits": 660,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 16,
+            "seamSimilarity": 0.96,
+            "method": "bar lines 9.472 s to 41.472 s of the recording, 0.50 s equal-power crossfade of the continuation into the head, stretched x1.0027 from 119.68 bpm"
+          },
+          "checks": {
+            "seconds": 32,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.8,
+            "truePeakDb": -3.8,
+            "centroidHz": 193,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000019,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 120.5,
+            "keyEstimated": "E minor (r 0.64)",
+            "narrowband": "61% of frames @ 1570 Hz"
+          }
+        },
+        {
+          "brief": "negotiation.layer1",
+          "studioTitle": "Pre-Need Arrangements (uneasy)",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental nervous sales-pitch music in E minor at 120 bpm: a reed organ melody over plucked upright bass and brushed drums, joined by fidgety pizzicato strings, a ticking woodblock and a wavering theremin. Uneasy and fidgety, the smile starting to slip. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 44,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "1BQPS87Ca7lzPedKU622",
+          "sessionId": "fKcZgdLYgkJyKnR5UGpz",
+          "nodeId": "HTVw8Gh0kMnTsoevnbBL",
+          "generatedOn": "2026-11-06",
+          "credits": 660,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 16,
+            "seamSimilarity": 0.926,
+            "method": "bar lines 4.736 s to 36.736 s of the recording, 0.50 s equal-power crossfade of the continuation into the head, stretched x1.0027 from 119.68 bpm"
+          },
+          "checks": {
+            "seconds": 32,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.7,
+            "truePeakDb": -2.3,
+            "centroidHz": 155,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000075,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 120.5,
+            "keyEstimated": "E minor (r 0.43)",
+            "narrowband": "41% of frames @ 662 Hz"
+          }
+        },
+        {
+          "brief": "negotiation.layer2",
+          "studioTitle": "Pre-Need Arrangements (angry)",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental agitated comic music in E minor at 120 bpm: a loud insistent reed organ, driving upright bass, busy snare drum, stabbing brass hits and a shrieking theremin. Flustered and heated, a sale going badly wrong, comic rather than scary. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 44,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "Esptqvzbgxt6bOlWOBDO",
+          "sessionId": "ft1xtWFPMhqUiXvsWiSg",
+          "nodeId": "rYtqjUZ3HbpD5CS8Xgey",
+          "generatedOn": "2026-11-06",
+          "credits": 660,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 16,
+            "seamSimilarity": 0.794,
+            "method": "bar lines 5.728 s to 37.728 s of the recording, 0.50 s equal-power crossfade of the continuation into the head, stretched x1.0027 from 119.68 bpm"
+          },
+          "checks": {
+            "seconds": 32,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.5,
+            "truePeakDb": -3.2,
+            "centroidHz": 348,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.00014,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 120.5,
+            "keyEstimated": "E minor (r 0.46)",
+            "narrowband": "12% of frames @ 100 Hz"
+          }
+        }
+      ]
+    },
+    "newday": {
+      "title": "Rise and Shine, Deathville",
+      "where": "A new day begins.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "newday",
+          "studioTitle": "Rise and Shine, Deathville",
+          "model": "eleven_music_v2_5",
+          "prompt": "Short instrumental morning radio jingle in G major at 132 bpm: a bouncy four-bar banjo and reed organ melody that climbs up cheerfully over plucked upright bass and a light snare, then lands on a bright final chord with a little cymbal tap. Dry, small-town, comic, old-time radio.",
+          "params": {
+            "duration_seconds": 10,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "NwBj8GDINlNUJ9DiUGdI",
+          "sessionId": "qMpvCG1PB1O4ASUWE5zM",
+          "nodeId": "0eo5d4gg4EkHtWZatdo7",
+          "generatedOn": "2026-11-06",
+          "credits": 150,
+          "chosenBecause": "Second prompt. The first prompt at 6 s gave one decaying chord with no melody (one onset).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [
+            {
+              "generationId": "YEnRHUGCPMzeTMp7wlBY",
+              "credits": 90,
+              "date": "2026-11-06",
+              "prompt": "A cheerful six-second instrumental morning jingle in G major: bright banjo picking, a perky reed organ melody and a plucked upright bass, brisk 132 bpm, ending on a tidy final chord. Dry, small-town, slightly comic, vintage radio feel.",
+              "params": {
+                "duration_seconds": 6,
+                "instrumental": true,
+                "lyrics_type": "instrumental"
+              }
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 9.99,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -14.5,
+            "truePeakDb": -3,
+            "centroidHz": 296,
+            "longestQuietSec": 0.3,
+            "leadingSilenceSec": 0,
+            "dc": 0.000087,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 132,
+            "keyEstimated": "G minor (r 0.50)",
+            "narrowband": "73% of frames @ 586 Hz",
+            "onsets": 33,
+            "envelope": "peak at 0.96 s, -20 dB after 7.66 s, last 50 ms -76 dB re peak"
+          }
+        }
+      ]
+    },
+    "padlock-break": {
+      "title": "Padlock broken off: strike, chain, the lock hits the floor",
+      "where": "Breaking a padlock at a rival's parlor.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "padlock-break",
+          "studioTitle": "Padlock broken off and dropped",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A heavy padlock struck hard and snapping open, a chain rattling loose and the lock clanking onto a concrete floor. Close, dry.",
+          "params": {
+            "duration_seconds": 1.4,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "QTiQ69wcOk4SlTV3Ycfu",
+          "sessionId": "mVZxjuq9CcJA9e2ftcVz",
+          "nodeId": "MSv7HuRgr42UpmAO7Pfb",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Strike at the start then chain and drop (5 events); the other take builds to its loudest hit at 0.6 s.",
+          "otherTakes": [
+            {
+              "generationId": "DR7XDh1xxOZe18Wio7yf",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.36,
+            "lufsIntegrated": -27.3,
+            "lufsMomentaryMax": -21.6,
+            "truePeakDb": -1.6,
+            "centroidHz": 7733,
+            "longestQuietSec": 0.49999999999999994,
+            "leadingSilenceSec": 0,
+            "dc": -0.000015,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 6,
+            "envelope": "peak at 0.03 s, -20 dB after 0.10 s, last 50 ms -57 dB re peak",
+            "onsetsExpected": [
+              2,
+              10
+            ]
+          }
+        }
+      ]
+    },
+    "psychic": {
+      "title": "Psychic theremin swoop",
+      "where": "The psychic (Spirit University picture).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "psychic",
+          "studioTitle": "Psychic theremin swoop",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A spooky theremin swooping up and down in a wobbly glide, a comic mystic 'oooo-eee-ooo'. Dry.",
+          "params": {
+            "duration_seconds": 2.1,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "R4dAkye0cdvLiavIG7M0",
+          "sessionId": "cknRYNBaqakXaf5le4KB",
+          "nodeId": "kmdOLwRVcARFcBSHDMtM",
+          "generatedOn": "2026-11-06",
+          "credits": 7,
+          "chosenBecause": "The pitch visibly swoops up and down; the other take is a near-steady tone.",
+          "otherTakes": [
+            {
+              "generationId": "3JfF5lciL4Gmbsy8xiWH",
+              "credits": 7,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.08,
+            "lufsIntegrated": -19.9,
+            "lufsMomentaryMax": -19,
+            "truePeakDb": -14,
+            "centroidHz": 600,
+            "longestQuietSec": 0.5499999999999999,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000086,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 2,
+            "envelope": "peak at 0.84 s, -20 dB after 0.53 s, last 50 ms -53 dB re peak",
+            "onsetsExpected": [
+              1,
+              4
+            ]
+          }
+        }
+      ]
+    },
+    "punch": {
+      "title": "Comic punch: whoosh and thump",
+      "where": "A hit in a fight.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "punch",
+          "studioTitle": "Comic punch: whoosh and thump",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A cartoon punch: a quick whoosh and a meaty thump. Dry, comic, short.",
+          "params": {
+            "duration_seconds": 0.6,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "9hb9AdLymVrCpQcLfHot",
+          "sessionId": "dvAsaYeEfPos1LtGkcsV",
+          "nodeId": "bpw9trEdOHdnK30d73xM",
+          "generatedOn": "2026-11-06",
+          "credits": 2,
+          "chosenBecause": "Two events (whoosh, thump) against one.",
+          "otherTakes": [
+            {
+              "generationId": "zfrUEbPuwFOVG5RyjQan",
+              "credits": 2,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 0.6,
+            "lufsIntegrated": -20.7,
+            "lufsMomentaryMax": -19.2,
+            "truePeakDb": -1.1,
+            "centroidHz": 94,
+            "longestQuietSec": 0.15000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": 0.00012,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 2,
+            "envelope": "peak at 0.17 s, -20 dB after 0.12 s, last 50 ms -60 dB re peak",
+            "onsetsExpected": [
+              1,
+              3
+            ]
+          }
+        }
+      ]
+    },
+    "rain-hit": {
+      "title": "A gust of rain arriving",
+      "where": "Rain starts.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "rain-hit",
+          "studioTitle": "A gust of rain arriving",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A sudden gust of rain sweeping across a roof and window, swelling up then settling to a patter.",
+          "params": {
+            "duration_seconds": 2.4,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "KUx5a14s18IcUoUJX27H",
+          "sessionId": "XqeOdBbMIARNco8VRRI4",
+          "nodeId": "Z9EV4e9DkzalDjcK9K00",
+          "generatedOn": "2026-11-06",
+          "credits": 8,
+          "chosenBecause": "Swells to a peak at 1.6 s and settles (-44 dB at the end); the other take is cut off at -28 dB.",
+          "otherTakes": [
+            {
+              "generationId": "mvCa0pn994RQmfRJOvqt",
+              "credits": 8,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.4,
+            "lufsIntegrated": -22.6,
+            "lufsMomentaryMax": -20.1,
+            "truePeakDb": -4.1,
+            "centroidHz": 248,
+            "longestQuietSec": 0.05,
+            "leadingSilenceSec": 0,
+            "dc": -0.00007,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 1,
+            "envelope": "peak at 1.56 s, -20 dB after 0.59 s, last 50 ms -45 dB re peak",
+            "onsetsExpected": [
+              1,
+              40
+            ]
+          }
+        }
+      ]
+    },
+    "rattle": {
+      "title": "Rattlesnake rattle",
+      "where": "A rattlesnake (picture sound).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "rattle",
+          "studioTitle": "Rattlesnake rattle",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A rattlesnake shaking its rattle in a fast dry buzzing hiss. Close, dry, no other sound.",
+          "params": {
+            "duration_seconds": 1.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "SB9AJWuECTnObgQ4EhXc",
+          "sessionId": "DkQIPHH58u8SZs8UKagn",
+          "nodeId": "ENpNyR0ZTO33QQnA40Eo",
+          "generatedOn": "2026-11-06",
+          "credits": 5,
+          "chosenBecause": "Denser rattle (16 onsets) and a quiet end (-51 dB).",
+          "otherTakes": [
+            {
+              "generationId": "n9ozhrp9CLUIYfWZG7q8",
+              "credits": 5,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.48,
+            "lufsIntegrated": -20.8,
+            "lufsMomentaryMax": -19.5,
+            "truePeakDb": -6,
+            "centroidHz": 10089,
+            "longestQuietSec": 0.15000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": -0.000015,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 19,
+            "envelope": "peak at 0.26 s, -20 dB after 0.83 s, last 50 ms -52 dB re peak",
+            "onsetsExpected": [
+              1,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "safe-click": {
+      "title": "Safe dial clicks, the bolts and the door",
+      "where": "Cracking a safe.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "safe-click",
+          "studioTitle": "Safe dial clicks, the bolts and the door",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A safe's combination dial turning with small clicks, the bolts clunking back and the heavy steel door creaking open. Close, dry.",
+          "params": {
+            "duration_seconds": 1.9,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "YGjRPazW5q34eGBsSKRR",
+          "sessionId": "yEHrlCb4WFMHQCnRXAd3",
+          "nodeId": "EeiQw5xB72xFRCcfHcAT",
+          "generatedOn": "2026-11-06",
+          "credits": 6,
+          "chosenBecause": "Ends cleanly (-52 dB) against -37 dB.",
+          "otherTakes": [
+            {
+              "generationId": "94lc65FVkHze8lAceBt1",
+              "credits": 6,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 1.88,
+            "lufsIntegrated": -25.4,
+            "lufsMomentaryMax": -23.1,
+            "truePeakDb": -3.1,
+            "centroidHz": 8171,
+            "longestQuietSec": 0.39999999999999997,
+            "leadingSilenceSec": 0,
+            "dc": -0.00002,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 12,
+            "envelope": "peak at 0.56 s, -20 dB after 0.01 s, last 50 ms -46 dB re peak",
+            "onsetsExpected": [
+              3,
+              30
+            ]
+          }
+        }
+      ]
+    },
+    "siren": {
+      "title": "Ambulance passing",
+      "where": "The hospital ambulance; the police at a rival's parlor.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "siren",
+          "studioTitle": "Ambulance passing",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An ambulance siren wailing as it drives past on a small-town street, rising then falling in pitch as it passes. Outdoors, no music.",
+          "params": {
+            "duration_seconds": 3,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "HMsdsMr4fWjlG9OLgCGK",
+          "sessionId": "xvYevxcNkZhq1KEBEzPX",
+          "nodeId": "Phc9JsIFj62980deDJdL",
+          "generatedOn": "2026-11-06",
+          "credits": 10,
+          "chosenBecause": "Level rises to a peak mid-file and falls away: a pass-by envelope. The other take starts at full level and only decays.",
+          "otherTakes": [
+            {
+              "generationId": "8WXzglC0QEor3zvg9dLv",
+              "credits": 10,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 3,
+            "lufsIntegrated": -21.8,
+            "lufsMomentaryMax": -19.2,
+            "truePeakDb": -9.8,
+            "centroidHz": 1083,
+            "longestQuietSec": 0.05,
+            "leadingSilenceSec": 0,
+            "dc": -0.0000077,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 7,
+            "envelope": "peak at 1.46 s, -20 dB after 1.15 s, last 50 ms -42 dB re peak",
+            "onsetsExpected": [
+              1,
+              40
+            ]
+          }
+        }
+      ]
+    },
+    "slap": {
+      "title": "Slap",
+      "where": "A slap in a fight or a negotiation.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "slap",
+          "studioTitle": "Slap",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "One sharp open-hand slap on a cheek. Very short, close and dry.",
+          "params": {
+            "duration_seconds": 0.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "8lytatqctqGYno83Hmaf",
+          "sessionId": "XN3miJhQ9Zej7uTFvLwH",
+          "nodeId": "1i8jF9LjX0F0gAtiLchk",
+          "generatedOn": "2026-11-06",
+          "credits": 2,
+          "chosenBecause": "One hit with a natural tail; the other take is still at -27 dB when the file ends.",
+          "otherTakes": [
+            {
+              "generationId": "Q2nzQBXjPBoxNaY4Y56G",
+              "credits": 2,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 0.4,
+            "lufsIntegrated": -21.1,
+            "lufsMomentaryMax": -21.1,
+            "truePeakDb": -2.9,
+            "centroidHz": 2547,
+            "longestQuietSec": 0.1,
+            "leadingSilenceSec": 0,
+            "dc": -0.000059,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 1,
+            "envelope": "peak at 0.01 s, -20 dB after 0.16 s, last 50 ms -38 dB re peak",
+            "onsetsExpected": [
+              1,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    "slot-machine": {
+      "title": "Slot machine: lever, reels, three stops, a small payout",
+      "where": "The Reaper Club's slot machine.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "slot-machine",
+          "studioTitle": "Slot machine: lever, reels, stops, a small payout",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An old mechanical slot machine: the lever pulled, reels whirring and clicking, three clunks as they stop, then a few coins dropping into the tray. Close, dry.",
+          "params": {
+            "duration_seconds": 2.6,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "0dtoC7Jej0tHd7rIBKTi",
+          "sessionId": "uOAzJB9REt1NIzE2lRwh",
+          "nodeId": "eLLNr4D2qcoLmwIcw9bl",
+          "generatedOn": "2026-11-06",
+          "credits": 9,
+          "chosenBecause": "Many separate mechanical events (14) with the loudest late (the stop and payout), as asked.",
+          "otherTakes": [
+            {
+              "generationId": "uvYTqvgLBsP2MOtGrWeo",
+              "credits": 9,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2.56,
+            "lufsIntegrated": -21.8,
+            "lufsMomentaryMax": -19.4,
+            "truePeakDb": -1.4,
+            "centroidHz": 6806,
+            "longestQuietSec": 0.25,
+            "leadingSilenceSec": 0,
+            "dc": -0.000024,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 14,
+            "envelope": "peak at 1.61 s, -20 dB after 0.18 s, last 50 ms -74 dB re peak",
+            "onsetsExpected": [
+              5,
+              60
+            ]
+          }
+        }
+      ]
+    },
+    "sneak": {
+      "title": "Tiptoe Through the Tulip Beds",
+      "where": "Visiting rival parlors (sneaking, vandalism, theft).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "sneak",
+          "studioTitle": "Tiptoe Through the Tulip Beds",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental comic sneaking music in C minor at 100 bpm: tiptoeing pizzicato upright bass, staccato bassoon-like reed organ notes and a sly vibraphone, with soft brushed snare and an occasional woodblock. Mischievous cartoon-burglar mood, quiet and dry. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 50,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "TNyD9Cm62EGuDFh1Nh5l",
+          "sessionId": "LTdAxFsQU4NfjynYWCsm",
+          "nodeId": "ZxdcPQc9PzsHI5KLI65n",
+          "generatedOn": "2026-11-06",
+          "credits": 750,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 16,
+            "seamSimilarity": 0.852,
+            "method": "bar lines 2.400 s to 40.800 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 38.4,
+            "lufsIntegrated": -16.1,
+            "lufsMomentaryMax": -12.1,
+            "truePeakDb": -2.5,
+            "centroidHz": 152,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000066,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 100,
+            "keyEstimated": "C major (r 0.46)",
+            "narrowband": "67% of frames @ 100 Hz"
+          }
+        }
+      ]
+    },
+    "thunder": {
+      "title": "Thunder: crack and roll",
+      "where": "A storm starts.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "thunder",
+          "studioTitle": "Thunder: crack and roll",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A nearby thunder crack followed by a long rolling rumble that fades away.",
+          "params": {
+            "duration_seconds": 4.5,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "PDSwhou9cl7JYmb5ySpS",
+          "sessionId": "OGy7p8wb5JQse6GO39qg",
+          "nodeId": "XEjD3Z2SX4Sgcl57WJcW",
+          "generatedOn": "2026-11-06",
+          "credits": 15,
+          "chosenBecause": "One crack and a roll (one main onset); the other take is a long crackle with 12 onsets.",
+          "otherTakes": [
+            {
+              "generationId": "82kpMWvclXbCL0Ag3Xpf",
+              "credits": 15,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 4.48,
+            "lufsIntegrated": -23.4,
+            "lufsMomentaryMax": -19.1,
+            "truePeakDb": -7.1,
+            "centroidHz": 250,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": -0.000041,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 3,
+            "envelope": "peak at 0.47 s, -20 dB after 1.10 s, last 50 ms -32 dB re peak",
+            "onsetsExpected": [
+              1,
+              8
+            ]
+          }
+        }
+      ]
+    },
+    "toilet-flush": {
+      "title": "Toilet flush: handle, rush, gurgles, refill",
+      "where": "The toilet picture.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "toilet-flush",
+          "studioTitle": "Toilet flush",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "An old toilet: the handle clicks, a loud rushing flush and gurgle, then the tank refilling with a hiss. Small tiled bathroom.",
+          "params": {
+            "duration_seconds": 3.8,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "VIPL9rbcV5VlmAu2xuYj",
+          "sessionId": "K96R4Pxo2vSQJqa035al",
+          "nodeId": "UYgRTxWdNsrXDy5FHWgL",
+          "generatedOn": "2026-11-06",
+          "credits": 13,
+          "chosenBecause": "Click, flush and refill as three regions; the other take's flush is shorter and it ends louder.",
+          "otherTakes": [
+            {
+              "generationId": "MzH6lHlNvDV72pyRMKim",
+              "credits": 13,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 3.76,
+            "lufsIntegrated": -21.2,
+            "lufsMomentaryMax": -19.3,
+            "truePeakDb": -8.8,
+            "centroidHz": 6213,
+            "longestQuietSec": 0.5499999999999999,
+            "leadingSilenceSec": 0,
+            "dc": -0.00006,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 4,
+            "envelope": "peak at 0.11 s, -20 dB after 0.14 s, last 50 ms -48 dB re peak",
+            "onsetsExpected": [
+              1,
+              15
+            ]
+          }
+        }
+      ]
+    },
+    "town": {
+      "title": "Main Street, Deathville",
+      "where": "The Deathville town map, between visits.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "town",
+          "studioTitle": "Main Street, Deathville",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental small-town strolling tune in G major at 112 bpm: jaunty banjo picking and upright bass with a cheerful reed organ melody and a little glockenspiel, light brushed snare. Sunny, neighbourly and faintly odd, old-time country-parlor feel. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 80,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "vW5TUOsqoisIO8TGwWM6",
+          "sessionId": "GbbOeXfjR9BK4bn8qLVe",
+          "nodeId": "eA5vTtFFe9yMkTfbn194",
+          "generatedOn": "2026-11-06",
+          "credits": 1200,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 31,
+            "seamSimilarity": 0.92,
+            "method": "bar lines 3.456 s to 69.909 s of the recording, 0.53 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 66.45,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -13.3,
+            "truePeakDb": -3.4,
+            "centroidHz": 265,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000072,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 112,
+            "keyEstimated": "F# major (r 0.36)",
+            "narrowband": "49% of frames @ 1178 Hz"
+          }
+        }
+      ]
+    },
+    "university": {
+      "title": "Office of Psychic Studies",
+      "where": "Spirit University (psychic and strength training).",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "university",
+          "studioTitle": "Office of Psychic Studies",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental eerie waltz in A minor, 3/4 time at 132 bpm: a gliding theremin melody over a music-box celesta and soft reed organ, with plucked upright bass on the downbeats. Spooky but playful, a seance in a dusty classroom, never scary. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 55,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "xCzYagXdhANtdWCrIi1g",
+          "sessionId": "8JSO8Tb53IVipWxbrjMl",
+          "nodeId": "S7Lof4B4657lYjPWkZ3f",
+          "generatedOn": "2026-11-06",
+          "credits": 825,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 32,
+            "seamSimilarity": 0.972,
+            "method": "bar lines 4.096 s to 47.733 s of the recording, 0.46 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 43.64,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12,
+            "truePeakDb": -2.6,
+            "centroidHz": 316,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000074,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 66,
+            "keyEstimated": "C minor (r 0.62)",
+            "narrowband": "41% of frames @ 100 Hz"
+          }
+        }
+      ]
+    },
+    "victory": {
+      "title": "Ashes to Ashes, Bust to Bust",
+      "where": "Winning a fight.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "victory",
+          "studioTitle": "Ashes to Ashes, Bust to Bust",
+          "model": "eleven_music_v2_5",
+          "prompt": "Short instrumental victory fanfare in D major at 120 bpm: a cocky brass and reed organ flourish with a snare roll and a cymbal crash, ending on a bright major chord. Comic and triumphant, old cartoon style.",
+          "params": {
+            "duration_seconds": 8,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "VxHD5ou93NUIaAgIpMNJ",
+          "sessionId": "fbNMwp0qsG2hFnZqWl7I",
+          "nodeId": "kr8dSIAWm9cjlgDvVbra",
+          "generatedOn": "2026-11-06",
+          "credits": 120,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 7.94,
+            "lufsIntegrated": -16.4,
+            "lufsMomentaryMax": -13.3,
+            "truePeakDb": -1.9,
+            "centroidHz": 668,
+            "longestQuietSec": 0.8000000000000002,
+            "leadingSilenceSec": 0,
+            "dc": -0.00049,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 120,
+            "keyEstimated": "C# major (r 0.41)",
+            "narrowband": "23% of frames @ 100 Hz",
+            "onsets": 31,
+            "envelope": "peak at 5.28 s, -20 dB after 0.21 s, last 50 ms -79 dB re peak"
+          }
+        }
+      ]
+    },
+    "walkout": {
+      "title": "Customer walks out: door slam and the jangling shop bell",
+      "where": "A customer walks out of a negotiation.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "walkout",
+          "studioTitle": "Customer walks out: door slam and the shop bell",
+          "model": "eleven_text_to_sound_v2",
+          "prompt": "A shop door slammed shut in anger, the little brass bell above it jangling wildly afterwards. Close, dry.",
+          "params": {
+            "duration_seconds": 2,
+            "prompt_influence": 0.6,
+            "loop": false
+          },
+          "generationId": "fZRcbntjLAnADF8VS5RI",
+          "sessionId": "GNWRTV3N2TyF907ntBHx",
+          "nodeId": "WBNO9i2V99ik3XHtHYc5",
+          "generatedOn": "2026-11-06",
+          "credits": 7,
+          "chosenBecause": "The slam is the loudest event and comes first, then the bell; the other take has 14 events spread over the file.",
+          "otherTakes": [
+            {
+              "generationId": "sPO2syFXbypPs6dCy5n1",
+              "credits": 7,
+              "date": "2026-11-06"
+            }
+          ],
+          "post": {
+            "method": "lead-in trimmed, cut to the brief's length with a fade"
+          },
+          "checks": {
+            "seconds": 2,
+            "lufsIntegrated": -21.7,
+            "lufsMomentaryMax": -19.9,
+            "truePeakDb": -3.4,
+            "centroidHz": 351,
+            "longestQuietSec": 0.65,
+            "leadingSilenceSec": 0.02,
+            "dc": -0.000069,
+            "clippedSamples": 0,
+            "flags": [],
+            "onsets": 6,
+            "envelope": "peak at 0.27 s, -20 dB after 0.21 s, last 50 ms -62 dB re peak",
+            "onsetsExpected": [
+              1,
+              10
+            ]
+          }
+        }
+      ]
+    },
+    "yangs": {
+      "title": "Fortune Favors the Takeout",
+      "where": "Yang's restaurant.",
+      "generatedWith": "ElevenLabs",
+      "stems": [
+        {
+          "brief": "yangs",
+          "studioTitle": "Fortune Favors the Takeout",
+          "model": "eleven_music_v2_5",
+          "prompt": "Instrumental light bossa nova in A major at 108 bpm: breezy marimba and vibraphone melody over nylon-string guitar comping, soft upright bass and brushed shaker and rim clicks. Easygoing, sunny restaurant lounge music, airy and relaxed. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "params": {
+            "duration_seconds": 65,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          },
+          "generationId": "qLJU5xG3d0XwTljiuuJ8",
+          "sessionId": "SyU4Vw8eG7YrfSgTv5az",
+          "nodeId": "iYOFBLOw0BxNXCshXpJM",
+          "generatedOn": "2026-11-06",
+          "credits": 975,
+          "chosenBecause": "The only take (one take per music piece).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
+          "otherTakes": [],
+          "post": {
+            "bars": 22,
+            "seamSimilarity": 0.943,
+            "method": "bar lines 4.437 s to 53.323 s of the recording, 0.55 s equal-power crossfade of the continuation into the head"
+          },
+          "checks": {
+            "seconds": 48.89,
+            "lufsIntegrated": -16,
+            "lufsMomentaryMax": -12.8,
+            "truePeakDb": -2.9,
+            "centroidHz": 245,
+            "longestQuietSec": 0,
+            "leadingSilenceSec": 0,
+            "dc": 0.000018,
+            "clippedSamples": 0,
+            "flags": [],
+            "bpmEstimated": 108,
+            "keyEstimated": "A minor (r 0.59)",
+            "narrowband": "38% of frames @ 105 Hz"
+          }
+        }
+      ]
+    }
+  }
+}

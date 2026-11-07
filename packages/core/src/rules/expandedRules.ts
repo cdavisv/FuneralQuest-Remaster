@@ -157,7 +157,17 @@ export interface ExpandedRules {
      * these numbers (the higher share applies), so a late starter can reach the
      * middle of the table without lifting every established parlor that trails.
      */
-    late: { below: number; scale: number; max: number };
+    late: {
+      below: number;
+      scale: number;
+      max: number;
+      /**
+       * Dollars a parlor created after day 1 of a season starts with, per season day already
+       * played, on top of the starting money (section 9.4): the established parlors bought
+       * their upgrades with that time.
+       */
+      money: number;
+    };
   };
   /** Section 10.3. */
   newPlayerGraceDays: number;
@@ -245,7 +255,7 @@ export const EXPANDED: ExpandedRules = {
     storeroomCapacity: 18,
     shadyStock: 0.85,
   },
-  markup: { options: [-10, 0, 10, 20, 30], cheapnessPer10: 1, ratingPer10: -4 },
+  markup: { options: [-10, 0, 10, 20, 30], cheapnessPer10: 1.3, ratingPer10: -5 },
   hearses: [
     { upkeep: 0, rating: 0 },
     { upkeep: 150, rating: 1 },
@@ -283,7 +293,16 @@ export const EXPANDED: ExpandedRules = {
     },
     { id: "incinerator", price: 24000, rating: 2 },
     // Engine pass (tuning log, "Loose ends"): 32,000 / +1 -> 20,000 / +2.
-    { id: "night-watchman", price: 20000, rating: 2, defence: 3, requires: "alarm" },
+    // Balance round (tuning log, round 13): 20,000 -> 12,000, so a defended parlor can afford it
+    // while there is still a season to protect.
+    {
+      id: "night-watchman",
+      price: 12000,
+      rating: 2,
+      defence: 3,
+      requires: "alarm",
+      incomeShift: 5,
+    },
     {
       id: "chapel",
       price: 50000,
@@ -295,8 +314,17 @@ export const EXPANDED: ExpandedRules = {
     { id: "mausoleum", price: 80000, rating: 8, building: true, requires: "chapel" },
     // Section 18.1: late upgrades that need a City Hall permit.
     // Engine pass: billboard 20,000 / +8 -> 14,000 / +10; garden 45,000 / +5 -> 30,000 / +6.
-    { id: "billboard", price: 14000, rating: 2, incomeShift: 10, permit: "signage" },
-    { id: "memorial-garden", price: 30000, rating: 6, patience: 1, permit: "zoning" },
+    // Round 13: billboard 14,000 / +10 -> 18,000 / +8 (three times a monument per dollar);
+    // garden 30,000 / patience +1 -> 20,000 / patience +2 (bought on day 26, returned nothing).
+    { id: "billboard", price: 20000, rating: 2, incomeShift: 7, permit: "signage" },
+    {
+      id: "memorial-garden",
+      price: 20000,
+      rating: 6,
+      patience: 2,
+      incomeShift: 4,
+      permit: "zoning",
+    },
     {
       id: "crematorium",
       price: 60000,
@@ -322,7 +350,7 @@ export const EXPANDED: ExpandedRules = {
     gainCap: 95,
     lossShare: 0.5,
     cutthroatMult: 1.25,
-    necroMult: 1.25,
+    necroMult: 1.15,
     sanctuaryMult: 0.5,
     defencePerLevel: 0.15,
     strengthPerLevel: 2,
@@ -333,7 +361,12 @@ export const EXPANDED: ExpandedRules = {
     cashSteal: { share: 0.05, max: 1500 },
     arson: { stockShare: 0.5, reviews: -5 },
   },
-  underdog: { below: 0.7, scale: 0.5, max: 0.25, late: { below: 0.98, scale: 3, max: 1.5 } },
+  underdog: {
+    below: 0.7,
+    scale: 0.5,
+    max: 0.25,
+    late: { below: 0.98, scale: 3, max: 1.5, money: 1500 },
+  },
   newPlayerGraceDays: 7,
   town: EXPANDED_TOWN,
 };

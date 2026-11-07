@@ -49,7 +49,7 @@ Not legal advice. Facts are from the repository on 2026-11-06.
 | Game text | Original text converted to packs; Expanded text new | Original: Proton licence; Expanded: **owner's** (the plan says drafts were AI-assisted then edited) | Disclose AI assistance on Steam/itch as required |
 | New art (planned) | Remaster | Plan says CC BY 4.0, credited with Akiko Robinson | If used, add attribution to credits |
 | Sounds and music | Original: not used. New: none ship yet | Plan: self-made or CC0, with a ledger | Keep the ledger when audio arrives |
-| Names, brands, real people | Vintage pack keeps some | Third-party marks | Hide Vintage from store builds or clean it (see age sheet) |
+| Names, brands, real people | The original text and art keep a few (Elvis; a real band's logo on one customer's shirt) | Third-party marks | Shipped as the original has them. Disclose in the age sheet; if a rights holder objects, that is a legal matter for the owner, not a reason to edit by default |
 
 ## The name "Funeral Quest": a risk, not a conclusion
 

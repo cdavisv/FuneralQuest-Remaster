@@ -594,3 +594,12 @@ blessResult:
 raisePitch: "`$You mutter a few words from the book in your basement. Somewhere in the back room, chairs scrape.\n\n"
 raiseResult: '`$Three pale mourners shuffle in and stand behind {customerName}, moaning softly. {cHeCap} decides not to argue about money any more.'
 threat: '{customer}"You disappoint me." The large men walk you out to the alley and explain your disappointment to your ribs.'
+# Section 13.5: lines for some customers only; each joins the named pool when the ages fit.
+agedLines:
+  - pool: sympathyPitch
+    maxCustomerAge: 17
+    text: "`w{player}: `$\"Would you like a juice box? We keep them for the bravest visitors.\"\n\n"
+  - pool: sympathyPitch
+    minCustomerAge: 18
+    minDeceasedAge: 60
+    text: "`w{player}: `$\"{dFirst} had a long life. The good ones always seem too short anyway.\"\n\n"

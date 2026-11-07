@@ -207,6 +207,7 @@ export async function deleteAccount(
     } satisfies DeletionSummary;
   });
   host.moderation.forgetAccount(account.id);
+  host.challenge.invalidate();
   await host.moderation.applyEverywhere();
   return summary;
 }
