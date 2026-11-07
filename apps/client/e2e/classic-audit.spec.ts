@@ -1031,9 +1031,21 @@ async function readLetters(page: Page, reply: "Yes" | "No" = "No"): Promise<stri
   // Logging on shows the paper first.
   if (await page.locator(".fq-news").isVisible()) await press(page, "Continue");
   await drain();
+  // An idle desk is pushed a letter a moment after it is queued.
+  if (texts.length === 0) {
+    const late = await dialog(page)
+      .waitFor({ state: "visible", timeout: 1_500 })
+      .then(
+        () => true,
+        () => false,
+      );
+    if (late) await drain();
+  }
   // Letters wait for a visit to the desk: if the player is somewhere else, go there.
   if (texts.length === 0) {
-    if (await btn(page, "Town Map").isVisible()) await btn(page, "Town Map").click();
+    await btn(page, "Town Map")
+      .click({ timeout: 5_000 })
+      .catch(() => undefined);
     await page.getByRole("button", { name: /Go to Your Parlor/ }).click();
     await settle(page);
     await drain();
@@ -2091,6 +2103,8 @@ test("a new day: the banner, the wake-up at the desk, the morning screen, the da
       await dialog(page).getByRole("button").first().click();
       await settle(page);
     }
+    // Mail with no Continue after it (the daily rewards) is read out on the desk's own text.
+    found.push(norm(await well(page).textContent()));
     letters[who] = found.join(" | ");
   };
   await read("alice", a);
@@ -2099,14 +2113,15 @@ test("a new day: the banner, the wake-up at the desk, the morning screen, the da
     a,
     rx(T.desk.hearseBonus.replace("{ride}", T.hearseNames[2] as string).replace("{turns}", "4")),
   );
+  // The daily rewards come by mail on the next visit to the desk (the top seller of the day and the
+  // top three parlors); reading them pays the Bury Points and the luck.
+  letters.alice = (await readLetters(a)).join(" | ");
   const stats = await readStats(a);
   expect(num(stats.turns)).toBe(404);
   // Today's Bury Points start again at zero, plus the rewards the letters just paid.
   expect(num(stats.bpToday)).toBeLessThanOrEqual(60);
   expect(num(stats.bpToday)).toBeLessThan(bpToday);
   expect(num(stats.visits)).toBe(8);
-
-  // The rewards: the top seller of the day and the top three parlors, by mail.
   const rewards = rx(M.topSeller);
   if (top === alice.player.name) expect(letters.alice).toMatch(rewards);
   const place = rank.indexOf(alice.player.name);
@@ -2115,6 +2130,7 @@ test("a new day: the banner, the wake-up at the desk, the morning screen, the da
   await b.getByRole("button", { name: /Go to Your Parlor/ }).click();
   await settle(b);
   await read("bob", b);
+  letters.bob = (await readLetters(b)).join(" | ");
   const bobPlace = rank.indexOf(bob.player.name);
   expect(letters.bob).toMatch(rx([M.topParlor, M.secondParlor, M.thirdParlor][bobPlace] as string));
   if (top === bob.player.name) expect(letters.bob).toMatch(rewards);

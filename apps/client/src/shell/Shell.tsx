@@ -1,5 +1,6 @@
 import { type AccountInfo, ApiError, type MeResponse, type ParlorInfo } from "@fq/server/client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { SoundContext } from "../audio/AudioContext.js";
 import { Game } from "../Game.js";
 import { useT } from "../i18n/I18nContext.js";
 import { ConductGate } from "../moderation/ConductGate.js"; // moderation hook
@@ -359,7 +360,15 @@ export function Shell({ backend, solo }: ShellProps) {
   }, [backend, loadAccount, t]);
 
   if (step === "playing" && transport) {
-    const game = <Game transport={transport} onLeave={onLeave} />;
+    // the sound follows the town's ruleset (a Daily Challenge run is its own mode)
+    const playing =
+      lobby.state === "ready" ? lobby.towns.find((x) => x.id === townId)?.ruleset : undefined;
+    const game = (
+      <>
+        <SoundContext mode={playingDaily ? "daily" : "town"} ruleset={playing} />
+        <Game transport={transport} onLeave={onLeave} />
+      </>
+    );
     // moderation hook: report, block and delete-account exist in a town session, never in the Daily Challenge
     return backend.moderation && townId && !playingDaily ? (
       <ModerationProvider

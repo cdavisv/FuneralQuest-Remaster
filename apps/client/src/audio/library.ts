@@ -16,9 +16,11 @@ import {
  * missing (no manifest, a 404, a file the browser cannot decode) resolves to null, once, with a
  * console warning, and is not asked for again.
  *
- * Sound packs: `base` is the Synth pack; `bases` may add others (the Studio pack). With a pack
- * selected (`setPack`), each track plays from the first pack in its chain that has it (the Studio
- * pack, then Synth), so a partial or absent Studio pack falls back track by track.
+ * Sound packs: `base` is the Synth pack; `bases` may add the others (Studio, Original remastered).
+ * With a pack in effect (`setPack`), each track plays from the first pack in its chain that has it
+ * (`packChain`: remaster, Studio, Synth, from the pack in effect on), so a partial or absent pack
+ * falls back track by track. A file that cannot be had from that pack (not cached and offline, a
+ * 404) falls back the same way rather than going silent.
  */
 export interface LibraryDeps {
   /** Base URL of assets/audio (no trailing slash). */
@@ -46,6 +48,8 @@ export class AudioLibrary {
   private pending = new Map<string, Promise<AudioBuffer[] | null>>();
   private format: "ogg" | "m4a";
   readonly missing = new Set<string>();
+  /** The manifest entry each loaded id plays from (not always the first pack's: see `buffers`). */
+  private used = new Map<string, ManifestTrack>();
 
   constructor(private readonly deps: LibraryDeps) {
     this.format = deps.format;
@@ -87,21 +91,28 @@ export class AudioLibrary {
     this.pending.clear();
     this.missing.clear();
     this.sources.clear();
+    this.used.clear();
   }
 
   /** Where a track plays from with the selected pack: the pack, its base URL, its entry. */
   private async resolve(
     id: string,
+    skip: readonly PackId[] = [],
   ): Promise<{ pack: PackId; base: string; track: ManifestTrack } | null> {
     const chain = packChain(this.pack);
     const loaded = await Promise.all(chain.map((p) => this.manifest(p)));
-    const r = resolveTrack(Object.fromEntries(chain.map((p, i) => [p, loaded[i]])), id, this.pack);
+    const r = resolveTrack(
+      Object.fromEntries(chain.map((p, i) => [p, skip.includes(p) ? null : loaded[i]])),
+      id,
+      this.pack,
+    );
     const base = r ? this.baseOf(r.pack) : undefined;
     return r && base ? { ...r, base } : null;
   }
 
+  /** A track's manifest entry: the one of the pack its audio was actually loaded from. */
   async track(id: string): Promise<ManifestTrack | null> {
-    return (await this.resolve(id))?.track ?? null;
+    return this.used.get(id) ?? (await this.resolve(id))?.track ?? null;
   }
 
   private warn(message: string) {
@@ -159,39 +170,59 @@ export class AudioLibrary {
     if (p) return p;
     const generation = this.generation;
     p = (async () => {
-      const r = await this.resolve(id);
-      const t = r?.track;
-      if (!r || !t) {
-        if (await this.manifest()) this.warn(`"${id}" is not in the manifest`);
-        this.missing.add(id);
-        return null;
-      }
-      const bufs: AudioBuffer[] = [];
-      for (const f of t.files) {
-        const b = await this.decodeFile(r.base, f);
-        if (!b) {
-          this.warn(`could not load "${id}" (${f.ogg})`);
+      const failed: PackId[] = [];
+      for (;;) {
+        const r = await this.resolve(id, failed);
+        const t = r?.track;
+        if (!r || !t) {
+          if (failed.length === 0 && (await this.manifest())) {
+            this.warn(`"${id}" is not in the manifest`);
+          }
           this.missing.add(id);
           return null;
         }
-        if (t.loop && t.loopStart !== undefined && t.loopEnd !== undefined) {
-          const s = Math.round(t.loopStart * b.sampleRate);
-          const e = Math.round(t.loopEnd * b.sampleRate);
-          for (let c = 0; c < b.numberOfChannels; c++) {
-            repairLoop(b.getChannelData(c), s, e, Math.round(LOOP_FADE * b.sampleRate));
-          }
+        const bufs = await this.decodeTrack(r.base, t, id);
+        if (!bufs) {
+          // this pack's files cannot be had: the next pack in the chain, if any, plays it
+          failed.push(r.pack);
+          continue;
         }
-        bufs.push(b);
+        // a pack change while this loaded: hand it over, but do not cache it for the new pack
+        if (generation === this.generation) {
+          this.remember(id, t.kind, bufs);
+          this.sources.set(id, r.pack);
+          this.used.set(id, t);
+        }
+        return bufs;
       }
-      // a pack change while this loaded: hand it over, but do not cache it for the new pack
-      if (generation === this.generation) {
-        this.remember(id, t.kind, bufs);
-        this.sources.set(id, r.pack);
-      }
-      return bufs;
     })().finally(() => this.pending.delete(id));
     this.pending.set(id, p);
     return p;
+  }
+
+  /** Every stem of a track decoded (loop seams repaired), or null with a warning if one fails. */
+  private async decodeTrack(
+    base: string,
+    t: ManifestTrack,
+    id: string,
+  ): Promise<AudioBuffer[] | null> {
+    const bufs: AudioBuffer[] = [];
+    for (const f of t.files) {
+      const b = await this.decodeFile(base, f);
+      if (!b) {
+        this.warn(`could not load "${id}" (${f.ogg})`);
+        return null;
+      }
+      if (t.loop && t.loopStart !== undefined && t.loopEnd !== undefined) {
+        const s = Math.round(t.loopStart * b.sampleRate);
+        const e = Math.round(t.loopEnd * b.sampleRate);
+        for (let c = 0; c < b.numberOfChannels; c++) {
+          repairLoop(b.getChannelData(c), s, e, Math.round(LOOP_FADE * b.sampleRate));
+        }
+      }
+      bufs.push(b);
+    }
+    return bufs;
   }
 
   private kinds = new Map<string, string>();

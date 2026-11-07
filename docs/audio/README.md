@@ -1,17 +1,28 @@
-# Sound packs: Synth and Studio
+# Sound packs: Synth, Studio and Original, remastered
 
-The game has two sets of audio files with the same track ids.
+The game has three sets of audio files with the same track ids.
 
 | Pack | Where | Made by | Licence |
 |---|---|---|---|
-| **Synth** (default) | `assets/audio/` | `packages/audio`'s own synthesiser, sequencer and effect generators (`pnpm --filter @fq/audio run render`) | the project's licence |
+| **Synth** | `assets/audio/` | `packages/audio`'s own synthesiser, sequencer and effect generators (`pnpm --filter @fq/audio run render`) | the project's licence |
 | **Studio** | `assets/audio-studio/` | ElevenLabs generations from text prompts written for this project, post-processed by `packages/audio` (`pnpm --filter @fq/audio run studio`) | not settled: see `assets/audio-studio/LICENSES.md` |
 
-The player picks one in Settings, "Sound pack". Any id the picked pack lacks plays from Synth (`resolveTrack` in `packages/audio/src/packs.ts`), track by track, so the Studio pack may be partial. The default stays Synth until the owner has listened and settled the Studio pack's licence. The nine UI sounds (clicks, page turns) are synthesised on the page in both packs.
+The player picks one in Settings, "Sound pack": **Automatic (recommended)**, the default, or Synth, Studio or Original, remastered, which override Automatic everywhere (owner's decision 15a, 2026-11-06). A saved explicit choice is kept; a player with none gets Automatic.
+
+**Automatic picks by what is being played** (`AUTO_PACK` in `packages/audio/src/packs.ts`, one table):
+
+| Playing | Pack |
+|---|---|
+| Classic-ruleset town, Classic Solo career, museum mode, the front door | Original, remastered |
+| Expanded-ruleset town, Expanded Solo career, the Daily Challenge | Studio |
+
+The pack follows the town or career on screen (`SoundContext` in `apps/client/src/audio/AudioContext.tsx`, rendered beside `Game` by the online shell and the Solo shell) and changes without a reload; music and ambience already playing crossfade to the new pack's track for the same cue. Museum mode is the original client in its own page, which plays its own audio; the table row exists for any host that tells the manager it is in museum mode. The Settings note says which pack is playing and why.
+
+**Fallback.** Any id the pack in effect lacks plays from the next pack in `FALLBACK_ORDER` (`["remaster", "studio", "synth"]`, one line to change): the remaster falls back to Studio, then Synth; Studio to Synth; Synth to nothing (`resolveTrack`, `packChain`). A file that cannot be fetched (offline and not cached) falls back the same way instead of going silent. The remaster has 25 game tracks, so a Classic town plays Studio's version of the other 43 Synth ids (every one of them is in Studio): music `bank`, `cafe`, `ceremony`, `cityhall`, `club`, `desk`, `dimart`, `graveyard`, `hospital`, `main`, `meteor`, `negotiation`, `university`; ambience `amb-fogbell`, `amb-kitchen`, `amb-rain`, `amb-storm`, `amb-street`, `amb-wind`; stingers `defeat`, `endday`, `main-stinger`, `newday`, `victory`; and 19 effects (`alarm-bell`, `cards`, `casket-thump`, `dice`, `door`, `fail-trombone`, `fanfare-exact`, `level-up`, `lockpick`, `monument`, `padlock-break`, `punch`, `rain-hit`, `rattle`, `safe-click`, `slap`, `slot-machine`, `thunder`, `walkout`). Nothing falls through to Synth except the nine UI sounds, which are synthesised on the page in every pack.
 
 To hear both side by side and leave notes, open [`listen.html`](listen.html) (below).
 
-**Neither pack contains the original 2001 game's audio.** The original sounds and music are licensed for the original game only; the game plays them only in museum mode, inside the original client. The listening page can also play them for comparison (the "Original (2001)" column, below), from a copy extracted on the owner's own machine that is never committed or distributed.
+**None of the packs contains the original 2001 game's audio.** The original sounds and music are licensed for the original game only; the game plays them only in museum mode, inside the original client. The listening page can also play them for comparison (the "Original (2001)" column, below), from a copy extracted on the owner's own machine that is never committed or distributed.
 
 ## The Studio pack, end to end
 
@@ -41,9 +52,9 @@ What this does not give: the melodies and chord changes of the three pieces are 
 
 ## Pack plumbing
 
-- `@fq/audio` exports `PACK_IDS`, `PACKS`, `DEFAULT_PACK` ("synth"), `isPackId`, `packChain`, `resolveTrack`, `stemGains` and `nextBarTime` (`src/packs.ts`).
+- `@fq/audio` exports `PACK_IDS`, `PACKS`, `PACK_SETTINGS`, `DEFAULT_PACK_SETTING` ("auto"), `AUTO_PACK`, `effectivePack`, `autoReason`, `FALLBACK_ORDER`, `isPackId`, `isPackSetting`, `packChain`, `resolveTrack`, `stemGains` and `nextBarTime` (`src/packs.ts`).
 - The client's audio library (`apps/client/src/audio/library.ts`) loads the Synth manifest from `/audio` and, when Studio is picked, the Studio manifest from `/audio-studio` (or `VITE_AUDIO_STUDIO_BASE`), and resolves each id through the chain. The backend (`webAudioBackend.ts`) applies the layer mode, restarts the music and ambience when the pack changes, and reports the pack each loaded id came from in `window.__fqAudio.debug().sources`. The manager (`AudioManager.ts`) passes the setting through (`setPack`); the setting is `soundPack` in `src/settings/settings.tsx`, shown in Settings as "Sound pack".
-- `vite dev` serves both packs from `assets/`. `vite build` copies the Synth pack as before; it copies the Studio pack to `<outDir>/audio-studio` only with `FQ_AUDIO_PACKS=synth,studio` (without it, picking Studio plays Synth). The provenance sidecars are not copied. The service worker's offline audio fill covers the Synth pack only.
+- `vite dev` serves every pack from `assets/`. `vite build` copies all three by default (`FQ_AUDIO_PACKS` defaults to `synth,studio,remaster`; voices are opt-in, `…,voice`), so Automatic can pick either; name fewer to ship fewer (a missing pack plays from the next in the fallback order; the GitHub Pages build sets `synth`). The provenance sidecars are not copied. The service worker's offline fill (`pwa/sw.js`) covers Synth and the remaster (about 8 MB of Opus); Studio (about 6 MB more) is cached the first time it is played, to keep the install small. `docs/performance.md` has the sizes and budget.
 
 ## The listening page
 
@@ -62,7 +73,7 @@ Pack id `remaster`, shown as "Original, remastered": new audio made to resemble 
 
 The manifest lists the remakes by game track (25 tracks whose loop behaviour matches the remake; everything else plays Synth) and by original file under `originals`. The title theme and the ceremony organ are one-shots in 2001 but loops in the game's track list, so they are reached through `originals` only.
 
-The client offers it as the third "Sound pack" choice; the build copies it only with `FQ_AUDIO_PACKS=…,remaster`.
+The client offers it as a "Sound pack" choice, and Automatic plays it in Classic towns, Classic careers and museum mode; the build copies it by default (`FQ_AUDIO_PACKS` names it).
 
 ### The Original (2001) column
 

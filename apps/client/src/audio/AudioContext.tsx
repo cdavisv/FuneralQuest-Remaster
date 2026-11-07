@@ -1,9 +1,11 @@
+import { DOOR_CONTEXT, type PlayContext, type PlayMode, type Ruleset } from "@fq/audio";
 import {
   createContext,
   type ReactNode,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useSyncExternalStore,
 } from "react";
 import { useSettings } from "../settings/settings.js";
@@ -80,6 +82,29 @@ export function AudioProvider({
   }, [audio]);
 
   return <AudioCtx.Provider value={audio}>{children}</AudioCtx.Provider>;
+}
+
+/** The ruleset a host's name for it means: anything but "expanded" (Solo's "original" too) is Classic. */
+export const rulesetOf = (name: string | undefined): Ruleset | undefined =>
+  name === undefined ? undefined : name === "expanded" ? "expanded" : "classic";
+
+/**
+ * Tells the sound what the player is in for as long as it is on screen: render it beside the game
+ * (a town, a Solo career, the Daily Challenge). With the "Automatic" sound pack the music follows
+ * the ruleset; it goes back to the front door's when this goes away. A ruleset that is briefly
+ * unknown (the lobby reloading under a running game) keeps the last one it knew.
+ */
+export function SoundContext({ mode, ruleset }: { mode: PlayMode; ruleset?: string | undefined }) {
+  const audio = useAudio();
+  const known = useRef<Ruleset | undefined>(undefined);
+  known.current = rulesetOf(ruleset) ?? known.current;
+  const resolved: Ruleset = known.current ?? "classic";
+  useEffect(() => {
+    const context: PlayContext = { ruleset: resolved, mode };
+    audio.setContext(context);
+    return () => audio.setContext(DOOR_CONTEXT);
+  }, [audio, mode, resolved]);
+  return null;
 }
 
 export function useAudio(): AudioManager {

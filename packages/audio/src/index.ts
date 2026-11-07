@@ -1,6 +1,6 @@
 /**
  * @fq/audio for the page: the cue map, the track ids, the manifest's shape, the sound packs
- * (Synth and Studio) and their per-track fallback, the UI sounds that are synthesised live, and
+ * (Synth, Studio, Original remastered), the selection by ruleset and their per-track fallback, the UI sounds that are synthesised live, and
  * the loop seam repair. Nothing here pulls in the compositions; the
  * render (scripts/render.ts) and `@fq/audio/catalog` do.
  */
@@ -28,15 +28,29 @@ export { LIVE_IDS, LOOP_FADE, renderLive } from "./live.js";
 export { repairLoop } from "./loop.js";
 export type { AudioManifest, ManifestTrack } from "./manifestTypes.js";
 export {
+  AUTO_PACK,
   type AudioPackInfo,
-  DEFAULT_PACK,
+  type AutoReason,
+  autoReason,
+  DEFAULT_PACK_SETTING,
+  DOOR_CONTEXT,
+  effectivePack,
+  FALLBACK_ORDER,
   isPackId,
+  isPackSetting,
   nextBarTime,
   PACK_IDS,
+  PACK_SETTINGS,
   PACKS,
   type PackId,
+  type PackSetting,
+  PLAY_MODES,
+  type PlayContext,
+  type PlayMode,
   packChain,
   type ResolvedTrack,
+  RULESETS,
+  type Ruleset,
   resolveTrack,
   stemGains,
 } from "./packs.js";

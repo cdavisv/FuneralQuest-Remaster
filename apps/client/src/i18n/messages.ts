@@ -61,17 +61,27 @@ export const en = {
   "settings.audio.mute": "Mute all sound",
   "settings.audio.radio": "2001 radio (the old 11 kHz mono sound)",
   "settings.audio.pack": "Sound pack",
+  "settings.audio.pack.auto": "Automatic (recommended)",
   "settings.audio.pack.synth": "Synth",
   "settings.audio.pack.studio": "Studio",
   "settings.audio.pack.remaster": "Original, remastered",
   "settings.audio.pack.note":
-    "Neither pack is the original game's audio. The 2001 sounds and music are licensed for the original game only, so they play only in museum mode, inside the original client. Synth is made by the game's own code. Studio is generated with ElevenLabs; anything it lacks plays from Synth.",
+    "Automatic plays Original, remastered in Classic towns and careers and Studio in Expanded towns and careers and the Daily Challenge; Synth, Studio and Original, remastered each play everywhere when you pick them. None of the three is the 2001 game's own audio: the 2001 sounds and music are licensed for the original game only, so they play only in museum mode, inside the original client. Synth is made by the game's own code; Studio and Original, remastered are generated with ElevenLabs. A pack that lacks a sound plays it from the next one: Original, remastered, then Studio, then Synth.",
+  "settings.audio.note.auto":
+    "Automatic: the pack follows the game you are in. Right now you are hearing {pack}, because {reason}. These are not the original game's sounds, and a sound the pack lacks (or a pack this build ships without) plays from the next one. Sound is on unless you mute it; your browser starts it at your first click or key press.",
+  "settings.audio.reason.door": "this is the front door, which plays the Classic game's music",
+  "settings.audio.reason.classic-town": "you are in a Classic-ruleset town",
+  "settings.audio.reason.classic-solo": "you are in a Classic Solo career",
+  "settings.audio.reason.expanded-town": "you are in an Expanded-ruleset town",
+  "settings.audio.reason.expanded-solo": "you are in an Expanded Solo career",
+  "settings.audio.reason.daily": "you are playing the Daily Challenge",
+  "settings.audio.reason.museum": "museum mode plays the Classic game",
   "settings.audio.note.synth":
     "You are hearing the Synth pack: every note and noise is synthesised from the game's own source code. These are not the original game's sounds. Sound is on unless you mute it; your browser starts it at your first click or key press.",
   "settings.audio.note.studio":
     "You are hearing the Studio pack: music and effects generated with ElevenLabs from text prompts written for this game, with Synth filling any gap (and playing everything if this build ships without Studio). These are not the original game's sounds. Sound is on unless you mute it; your browser starts it at your first click or key press.",
   "settings.audio.note.remaster":
-    "You are hearing the Original, remastered pack: new audio made with ElevenLabs to resemble the 2001 game's sounds, not the 2001 recordings, with Synth playing every track that had no 2001 counterpart (and everything if this build ships without the pack). Sound is on unless you mute it; your browser starts it at your first click or key press.",
+    "You are hearing the Original, remastered pack: new audio made with ElevenLabs to resemble the 2001 game's sounds, not the 2001 recordings. Studio plays every track that had no 2001 counterpart, and Synth anything Studio lacks (and everything if this build ships without these packs). Sound is on unless you mute it; your browser starts it at your first click or key press.",
   "settings.audio.nowPlaying": "Now playing: {id}",
   "settings.audio.voices": "Character voices",
   "settings.volume.voice": "Voices volume",

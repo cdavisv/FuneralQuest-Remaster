@@ -23,7 +23,9 @@ Gzip level 9, the size a server sends; sourcemaps never counted.
 | `dev-town.js` (the `?expanded` development town: the engine again, for tests and development) | 1 | 993 KB | 319 KB | only with `?expanded`; not precached |
 | fonts (`.woff2`) | 23 | 292 KB | 292 KB | as the screens need them |
 | pictures (art bundled for the game) | 159 | 6.4 MB | 1.4 MB | as the screens need them |
-| sound (Opus and AAC) | 142 | 14.1 MB | 14.0 MB | on demand; filled in the background for offline play |
+| sound, Synth pack (Opus and AAC) | 142 | 14.1 MB | 14.0 MB | on demand; filled in the background for offline play |
+| sound, Studio pack | 142 | 12.2 MB | 12.2 MB | on demand; kept on first play, not in the offline install |
+| sound, Original remastered pack | 73 | 1.2 MB | 1.2 MB | on demand; filled in the background for offline play |
 | **everything but sound** | 217 | 10.1 MB | 3.0 MB | |
 
 What a first visit to the front door costs: `index.html`, `app.js`, `app.css` and the fonts and pictures of that one screen, **227 to 302 KB over the wire** (about 1 MB once decoded).
@@ -83,10 +85,14 @@ Checked by CI (`pnpm --filter @fq/client bundle:check`, after the build; the cei
 | any other chunk, together | 64 KB |
 | fonts (`.woff2`) | 337 KB |
 | pictures | 1.6 MB |
-| sound | 16.1 MB |
+| sound, Synth | 16.1 MB |
+| sound, Studio | 14.4 MB |
+| sound, Original remastered | 1.4 MB |
 | first load (`index.html`, `app.js`, `app.css`) | 236 KB |
 | everything but sound | 3.5 MB |
-| everything | 19.6 MB |
+| everything | 35.0 MB |
+
+The three sound packs ship in every build by default (decision 15a: the "Automatic" sound pack plays the remaster in Classic and Studio in Expanded), which raised "everything" from 19.6 to 35.0 MB (measured 30.5 MB). The first-load figures do not change: sound loads on demand. To keep the offline install small, the service worker fills only Synth and the remaster (about 8 MB of Opus); Studio is cached as it is played.
 
 If growth is on purpose, raise the ceiling in `bundle-budget.json` in the same change and say why here. Regenerate with `node apps/client/tools/check-bundle.mjs --suggest`.
 

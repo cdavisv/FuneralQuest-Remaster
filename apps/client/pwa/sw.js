@@ -4,9 +4,10 @@
  *    itself, the Solo worker and the fonts) and, best effort, the pictures the game draws;
  *  - a page load that cannot reach the network is answered with the kept app, which sees it is
  *    offline and opens in Solo mode; only if nothing was kept does it show /offline.html;
- *  - the rendered audio (about 7 MB for the format a browser plays) is kept as it is played and,
- *    when the page asks once the game is usable, filled in the background (message "fq-fill-audio"),
- *    so an offline Solo game is not silent and the first load stays fast;
+ *  - the rendered audio is kept as it is played and, when the page asks once the game is usable,
+ *    the Synth and "Original, remastered" packs (about 8 MB for the format a browser plays) are
+ *    filled in the background (message "fq-fill-audio"), so an offline Solo game is not silent
+ *    and the first load stays fast. The Studio pack (about 6 MB more) is only kept as it is played;
  *  - it never touches the API: /api, /admin, /health and /museum always go to the network.
  * The online game itself still needs its server; this only decides what an offline visit sees.
  */
@@ -68,14 +69,22 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/** Every audio file of the manifest in one container, as paths. */
-function audioPaths(manifest, format) {
+// The sound packs the background fill installs, by directory (the remaster first: it is what a
+// Classic game plays). Studio (audio-studio/) is not here: it is kept on first play, so the
+// install stays small. A player who is offline before ever hearing it gets Synth for its tracks.
+const FILL_PACKS = ["audio-remaster", "audio"];
+// Every directory of sound the worker keeps as it is played.
+const SOUND = /^(audio|audio-studio|audio-remaster|voice)\//;
+const SOUND_MANIFEST = /^(audio|audio-studio|audio-remaster|voice)\/manifest\.json$/;
+
+/** Every audio file of a pack's manifest in one container, as paths. */
+function audioPaths(manifest, format, dir) {
   const paths = [];
   for (const track of Object.values(manifest.tracks ?? {})) {
     for (const file of track.files ?? []) {
       const name = file[format];
       if (typeof name === "string" && /^[\w./-]+$/.test(name) && !name.includes("..")) {
-        paths.push(at(`audio/${name}`));
+        paths.push(at(`${dir}/${name}`));
       }
     }
   }
@@ -92,17 +101,27 @@ async function fillAudio(format) {
   filling = true;
   try {
     const cache = await caches.open(AUDIO);
-    const manifestPath = at("audio/manifest.json");
-    const response = await fetch(manifestPath, { cache: "no-cache" });
-    if (!response.ok) return;
-    const text = await response.clone().text();
-    const manifest = JSON.parse(text);
-    const kept = await cache.match(manifestPath);
-    if (kept && (await kept.text()) !== text) {
-      for (const key of await cache.keys()) await cache.delete(key);
+    const queue = [];
+    for (const dir of FILL_PACKS) {
+      const manifestPath = at(`${dir}/manifest.json`);
+      try {
+        const response = await fetch(manifestPath, { cache: "no-cache" });
+        if (!response.ok) continue; // a build without this pack
+        const text = await response.clone().text();
+        const manifest = JSON.parse(text); // a host that answers a missing file with a page throws here
+        const kept = await cache.match(manifestPath);
+        if (kept && (await kept.text()) !== text) {
+          // a new render of this pack: its files start afresh, the other packs' stay
+          for (const key of await cache.keys()) {
+            if (new URL(key.url).pathname.startsWith(at(`${dir}/`))) await cache.delete(key);
+          }
+        }
+        await cache.put(manifestPath, response);
+        queue.push(...audioPaths(manifest, format, dir));
+      } catch {
+        // this pack is not there (or the connection is): the others still fill
+      }
     }
-    await cache.put(manifestPath, response);
-    const queue = audioPaths(manifest, format);
     const worker = async () => {
       for (let path = queue.shift(); path !== undefined; path = queue.shift()) {
         if (await cache.match(path)) continue;
@@ -208,12 +227,13 @@ self.addEventListener("fetch", (event) => {
 
   // Sound: kept copy first, else the network (and keep that too). The manifest is the exception:
   // the network when there is one, so a new render is noticed. Character voices (voice/) are kept
-  // the same way, but only as they are played: they are never part of the install or the fill.
-  if (path.startsWith("audio/") || path.startsWith("voice/")) {
+  // the same way, as is the Studio pack (audio-studio/): only as they are played, never part of
+  // the install or the fill.
+  if (SOUND.test(path)) {
     event.respondWith(
       caches.open(AUDIO).then(async (cache) => {
         const hit = await cache.match(request, { ignoreVary: true });
-        if (path === "audio/manifest.json" || path === "voice/manifest.json") {
+        if (SOUND_MANIFEST.test(path)) {
           try {
             const response = await fetch(request);
             if (response.ok) cache.put(request, response.clone());

@@ -203,13 +203,23 @@ function bundleAudio(): Plugin {
 }
 
 /**
- * The optional Studio sound pack (assets/audio-studio, generated with ElevenLabs; see its
- * LICENSES.md) goes to <outDir>/audio-studio only when FQ_AUDIO_PACKS names it
- * (`FQ_AUDIO_PACKS=synth,studio`), because its redistribution terms are not settled. Without it,
- * a player who picks the Studio pack hears the Synth pack. `vite dev` serves both as they are.
+ * The sound packs and character voices a build ships. The default is every pack the "Automatic"
+ * sound setting can pick (decision 15a: Original, remastered for Classic, Studio for Expanded),
+ * with Synth behind both; voices are opt-in (`FQ_AUDIO_PACKS=synth,studio,remaster,voice`).
+ * Name fewer to ship fewer (`FQ_AUDIO_PACKS=synth`): a pack a build lacks plays from the next
+ * one in the fallback order.
+ */
+const DEFAULT_AUDIO_PACKS = "synth,studio,remaster";
+const audioPacks = () =>
+  (process.env.FQ_AUDIO_PACKS ?? DEFAULT_AUDIO_PACKS).split(",").map((p) => p.trim());
+
+/**
+ * The Studio sound pack (assets/audio-studio, generated with ElevenLabs; see its LICENSES.md)
+ * goes to <outDir>/audio-studio when FQ_AUDIO_PACKS names it (the default). `vite dev` serves
+ * every pack as it is.
  */
 async function bundleStudioAudio(): Promise<void> {
-  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  const packs = audioPacks();
   if (!packs.includes("studio") || process.env.VITE_AUDIO_STUDIO_BASE) return;
   const from = `${assetsDir}/audio-studio`;
   try {
@@ -230,11 +240,11 @@ async function bundleStudioAudio(): Promise<void> {
 }
 
 /**
- * The optional "Original, remastered" pack (assets/audio-remaster), copied like the Studio pack
- * only when FQ_AUDIO_PACKS names it (`FQ_AUDIO_PACKS=synth,remaster`), for the same reason.
+ * The "Original, remastered" pack (assets/audio-remaster) and the voice pack (assets/voice),
+ * copied like the Studio pack when FQ_AUDIO_PACKS names them (the remaster by default, voices not).
  */
 async function bundleOptionalPack(id: string, dir: string, baseEnv: string): Promise<void> {
-  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  const packs = audioPacks();
   if (!packs.includes(id) || process.env[baseEnv]) return;
   const from = `${assetsDir}/${dir}`;
   try {
