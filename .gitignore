@@ -43,3 +43,6 @@ assets/classic/**/*.frames/
 # original game only: never commit them. `pnpm listen:originals` writes them outside the
 # repository (~/.cache/fq-audio-original); packages/audio/test/originals.test.ts checks this.
 assets/audio-original/
+
+# Alpha release files made by scripts/release/package.mjs
+release-out/

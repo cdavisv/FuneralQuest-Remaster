@@ -1966,6 +1966,34 @@ textarea.fq-notepad-input {
   display: none;
 }
 
+/*
+ * Four or more choices (the sale's five, a shelf's four) sit in two columns on the phone, so
+ * the text above them, which holds the customer's words or the price list, keeps its room
+ * instead of shrinking to a line or two behind a scroll.
+ */
+.fq-cabinet[data-layout="phone"]
+  .fq-r-buttons
+  .fq-plaques:not([data-size])
+  ul:has(> li:nth-child(4)) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.fq-cabinet[data-layout="phone"]
+  .fq-r-buttons
+  .fq-plaques:not([data-size])
+  ul:has(> li:nth-child(4))
+  > li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.fq-cabinet[data-layout="phone"]
+  .fq-r-buttons
+  .fq-plaques:not([data-size])
+  ul:has(> li:nth-child(4))
+  .fq-plaque {
+  font-size: 20px;
+}
+
 .fq-cabinet[data-layout="phone"] .fq-tip {
   left: 0;
   right: 0;

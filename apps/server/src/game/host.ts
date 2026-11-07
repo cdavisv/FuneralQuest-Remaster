@@ -4,6 +4,7 @@ import type { Account, AccountService } from "../auth/accounts.js";
 import type { Clock } from "../clock.js";
 import type { ServerConfig } from "../config.js";
 import type { ContentSource } from "../content/index.js";
+import { backupDirOf, makeBackup } from "../db/backup.js";
 import type { Db } from "../db/database.js";
 import {
   AuditStore,
@@ -117,8 +118,12 @@ export class GameHost {
       idleTimeoutMs: config.idleTimeoutMinutes * 60_000,
       maxCatchUpDays: config.maxCatchUpDays,
       snapshotKeep: config.snapshotKeep,
+      maintenanceDelayMs: config.testMaintenanceDelayMs,
     };
+    this.db = db;
   }
+
+  private readonly db: Db;
 
   /**
    * Loads every stored town, creates the configured ones that are missing,
@@ -273,6 +278,17 @@ export class GameHost {
     every(this.config.snapshotIntervalMinutes * 60_000, async () => {
       for (const t of this.towns.values()) await t.snapshotIfDirty("periodic");
     });
+    const backups = backupDirOf(this.config);
+    if (this.config.backupIntervalHours > 0 && backups !== null) {
+      every(this.config.backupIntervalHours * 3_600_000, () => {
+        const manifest = makeBackup(this.db, backups, {
+          at: this.clock.now(),
+          source: "automatic",
+          keep: this.config.backupKeep,
+        });
+        this.log.info({ file: manifest.file, bytes: manifest.bytes }, "automatic backup written");
+      });
+    }
     every(3_600_000, () => {
       this.accounts.purgeExpired();
       const guests = this.accounts.purgeGuests(7 * 86_400_000);

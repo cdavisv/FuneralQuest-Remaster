@@ -79,8 +79,13 @@ describe("the installable web app", () => {
     expect(sw).toContain('const AUDIO = "fq-audio-v1"');
     expect(sw).toContain("k !== AUDIO");
     // Files are served from the kept copy and kept when fetched; the manifest goes to the network first.
-    expect(sw).toContain('path.startsWith("audio/")');
-    expect(sw).toContain('at("audio/manifest.json")');
+    expect(sw).toContain("SOUND.test(path)");
+    expect(sw).toContain("SOUND_MANIFEST.test(path)");
+    // Every sound pack is kept as it is played; the install fills the Synth and remaster packs only,
+    // and Studio (the bigger one) is cached on first play.
+    expect(sw).toContain("(audio|audio-studio|audio-remaster|voice)");
+    expect(sw).toContain('const FILL_PACKS = ["audio-remaster", "audio"];');
+    expect(sw).not.toMatch(/FILL_PACKS = \[[^\]]*studio/);
     // The page asks, once the game is usable, for one format; nothing is fetched at install.
     expect(sw).toContain('"fq-fill-audio"');
     expect(sw).toContain("async function fillAudio(format)");

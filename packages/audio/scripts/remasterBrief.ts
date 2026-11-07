@@ -8,6 +8,15 @@
  * prompt and estimate into brief.json beside each sound's measurements, so every prompt can be
  * traced to the numbers it came from.
  *
+ * Music uses the music model; ambience and effects the sound-effects model. The short music
+ * loops (2 and 4 s) are generated at about 16 s at 120 bpm and cut to exactly one or two bars on a
+ * bar line (the beat tracking and loop cutting of `studioLoop.ts`): the pilot tried the
+ * sound-effects model's `loop` option first, and it returned seamless loops of the wrong length
+ * (2.25 s for 2.00 s, 4.5 beats per cycle), which cannot be fitted to the original's bar without
+ * changing the tempo. Ambience loops from that option are stretched (pitch kept) to the exact
+ * length, which a texture tolerates. The two longer pieces (the title theme and the ceremony
+ * organ) are generated a little long and cut to their own length with a fade.
+ *
  * Rules the prompts keep: they describe the kind of sound, the instruments, the tempo, the key (for
  * music), the mood and the length; they never describe or transcribe the original's notes or
  * melody, and no original audio, or anything derived from its samples, is given to any service.
@@ -48,8 +57,6 @@ export interface RemasterEntry {
   key?: string;
   /** Takes to generate (two for effects and ambience, one for music). */
   takes: number;
-  /** Also cut a seamless loop from this generation for the game track (a one-shot original whose track loops). */
-  trackLoop?: boolean;
 }
 
 const music = (s: number) => ({
@@ -68,7 +75,7 @@ export const REMASTER: RemasterEntry[] = [
   {
     id: "welcome-intro",
     originals: ["welcome/intro.mp3"],
-    tracks: ["main"],
+    tracks: [],
     kind: "music",
     description:
       "The title-screen theme (source file fq_theme.wav), 20.08 s, played once. Tagged Music 0.65, Theme music 0.14, Orchestra 0.09. Very smooth, tonal spectrum (flatness 0.006, centroid about 1.1 kHz); one sustained arc from start to end (it does not fall 20 dB until 18.7 s); pitch centre about G#2 in the bass. Tempo estimate 81 bpm, weak; key estimate C major, weak (r 0.37).",
@@ -76,13 +83,12 @@ export const REMASTER: RemasterEntry[] = [
     model: MUSIC_MODEL,
     prompt:
       "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
-    params: music(30),
+    params: music(24),
     seconds: 20.08,
     loop: false,
     bpm: 80,
     key: "C major",
     takes: 1,
-    trackLoop: true,
   },
   {
     id: "welcome-map",
@@ -189,19 +195,18 @@ export const REMASTER: RemasterEntry[] = [
       "places/funeral-ceremony2/6.mp3",
       "background/background_church/2.mp3",
     ],
-    tracks: ["ceremony"],
+    tracks: [],
     kind: "music",
     description:
       "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
     model: MUSIC_MODEL,
     prompt:
       "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
-    params: music(16),
+    params: music(14),
     seconds: 10.96,
     loop: false,
     key: "G major",
     takes: 1,
-    trackLoop: true,
   },
   // --- ambience (seamless loops of the original's length) ------------------------------
   {

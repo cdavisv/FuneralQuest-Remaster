@@ -1,35 +1,62 @@
 {
-  "note": "Nothing in this pack has been generated yet: the ElevenLabs connection was removed from the session before the pilot ran. Each entry is ready to generate from the prompt shown (see brief.json for the measurements behind it).",
-  "ledger": [],
-  "spentCredits": 0,
-  "estimatedCreditsRemaining": 4765,
-  "tracks": {
-    "ring-ring": {
-      "originals": [
-        "ring/ring/4.mp3",
-        "ring/ring&hand/5.mp3"
-      ],
-      "tracks": [
-        "glint"
-      ],
-      "status": "not generated",
-      "model": "eleven_text_to_sound_v2",
-      "prompt": "A delicate high wind chime shimmer, a soft glassy sparkle that swells briefly and rings out, quiet and magical.",
-      "params": {
-        "duration_seconds": 2.12,
-        "prompt_influence": 0.6,
-        "loop": false
-      },
-      "estimateCredits": 47
+  "flowId": "8lnJKLnggddrWctzs0pH",
+  "connector": "ElevenLabs MCP (full connector cd8c8672 for music and reads; voice connector a51d19ce for the first sound-effects runs)",
+  "ledger": [
+    {
+      "batch": "rpilot",
+      "description": "fight loop, fire loop, dog growl, gong (sfx model) x2",
+      "estimated": 274.78,
+      "actual": 84
     },
+    {
+      "batch": "rpilot-music",
+      "description": "fight loop via music model 16 s x1",
+      "estimated": 440,
+      "actual": 240
+    },
+    {
+      "batch": "rmusic",
+      "description": "intro, map, sneak, palors, yangs, ceremony (music model) x1",
+      "estimated": 2805,
+      "actual": 1530
+    },
+    {
+      "batch": "ramb",
+      "description": "6 ambience loops + gong retake x2",
+      "estimated": 448.14,
+      "actual": 134
+    },
+    {
+      "batch": "rfx1",
+      "description": "9 effects x2",
+      "estimated": 347.38,
+      "actual": 104
+    },
+    {
+      "batch": "rfx2",
+      "description": "10 effects x2",
+      "estimated": 403.48,
+      "actual": 124
+    },
+    {
+      "batch": "rretake",
+      "description": "retakes: palors, yangs, map (music) and bell 3, bell 5, night, wind x2",
+      "estimated": 2765.62,
+      "actual": 1476
+    }
+  ],
+  "spentCredits": 3692,
+  "tracks": {
     "animals-dog-dragging-hand": {
+      "status": "delivered",
       "originals": [
         "animals/dog-dragging-hand/2.mp3"
       ],
       "tracks": [
         "growl"
       ],
-      "status": "not generated",
+      "description": "A dog dragging a hand (dog_growl.wav), 1.74 s, played once. Tagged Dog 0.74, Growling 0.61. One continuous growl (one onset), peak early, fading over about 1.4 s; centroid 770 Hz.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A medium dog growling low and menacing for under two seconds, one continuous throaty growl, close and dry.",
       "params": {
@@ -37,14 +64,29 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 39
+      "generationId": "Vv827PiJbK6OfnIX7nX8",
+      "sessionId": "r1hWSk1Ha6O6Wd7eVpox",
+      "nodeId": "9BEtQP6hDdexaCEq796C",
+      "generatedOn": "2026-11-07",
+      "credits": 5.8,
+      "chosenBecause": "Higher measured similarity (0.83 against 0.82): band shape below 5 kHz closer (r 0.82 against 0.76), and the tagger hears Dog and Growling as it does in the original.",
+      "otherTakes": [
+        {
+          "generationId": "zJw4ipQzU3oU24oZFMS2",
+          "credits": 5.8,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.91 s (the original's 1.74 s plus 10 %) with a fade; level -0.7 dB against its kind's target (the original's loudness against its peers)"
     },
     "background-background_1": {
+      "status": "delivered",
       "originals": [
         "background/background_1/2.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Parlor background 1 (bell_1.wav), 1.46 s, played once. Tagged Doorbell 0.75, Ding-dong 0.13; one strike, pitch about D#3 with brighter partials, rings out over about 1 s.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A single low shop doorbell ding, one warm metallic strike that rings out, close and clean.",
       "params": {
@@ -52,14 +94,29 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 32
+      "generationId": "lKPVsxnsGgDkq7SXNlX5",
+      "sessionId": "6mHu9ML0Ic5ZtPnJv4Sv",
+      "nodeId": "TKdpRpvvyh9DfpCQ5noA",
+      "generatedOn": "2026-11-07",
+      "credits": 4.87,
+      "chosenBecause": "Higher similarity (0.84 against 0.80); same single strike (1 onset) and the tagger hears Doorbell, Ding-dong and Bell as in the original.",
+      "otherTakes": [
+        {
+          "generationId": "JccdOIPVgxYy8zSQjb3x",
+          "credits": 4.87,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.61 s (the original's 1.46 s plus 10 %) with a fade; level +0.5 dB against its kind's target (the original's loudness against its peers)"
     },
     "background-background_2": {
+      "status": "delivered",
       "originals": [
         "background/background_2/2.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Parlor background 2 (bell_2.wav), 1.88 s, played once. Tagged Doorbell 0.81, Ding-dong 0.26; three onsets (a two-tone or repeated chime), pitch about F5.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A two-tone ding-dong doorbell chime, bright and clear, ringing out, close and clean.",
       "params": {
@@ -67,29 +124,75 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 42
+      "generationId": "Xyb8VDbnEvgRDK4djMRO",
+      "sessionId": "md4yYGxIV5cT8KhE2Id3",
+      "nodeId": "MRs6Mem5SdQtcQFK2NaJ",
+      "generatedOn": "2026-11-07",
+      "credits": 6.27,
+      "chosenBecause": "Higher similarity (0.83 against 0.65): band shape far closer (r 0.76 against 0.16), centroid 1.07 kHz against the original's 0.93 kHz, and the same key estimate (E-flat major).",
+      "otherTakes": [
+        {
+          "generationId": "mawr8TBnthl5DBVUWJN4",
+          "credits": 6.27,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 2.07 s (the original's 1.88 s plus 10 %) with a fade; level -1.4 dB against its kind's target (the original's loudness against its peers)"
     },
     "background-background_3": {
+      "status": "delivered",
       "originals": [
         "background/background_3/2.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Parlor background 3 (bell_3.wav), 1.01 s, played once. Tagged Doorbell 0.58, Ding-dong 0.15; one strike, pitch about E5.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
-      "prompt": "A single short bright bell ding, one strike, quick ring-out, close and clean.",
+      "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register with a short ring-out, close and clean.",
       "params": {
         "duration_seconds": 1.01,
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 22
+      "generationId": "cTmXZryIrTPO5icFIcoW",
+      "sessionId": "OjllHdESrBLRaNTs13s4",
+      "nodeId": "3i2Za345GxF51JICR6MO",
+      "generatedOn": "2026-11-07",
+      "credits": 3,
+      "chosenBecause": "Best of four (0.74; the first two takes scored 0.32 and 0.39, too bright and with extra strikes). From the retake with a warmer prompt: one strike and tagged Doorbell, Ding-dong and Bell, though still brighter than the original (centroid 2.2 kHz against 0.85 kHz).",
+      "otherTakes": [
+        {
+          "generationId": "AgEEHZS5IOeguCOHPXRd",
+          "credits": 3.37,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "9izGwH63by5jKtX3aV8R",
+          "credits": 3.37,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "98amWVsgdCrIHqSweJUg",
+          "credits": 3,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register with a short ring-out, close and clean.",
+          "model": {
+            "duration_seconds": 1.01,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.11 s (the original's 1.01 s plus 10 %) with a fade; level +1.8 dB against its kind's target (the original's loudness against its peers)"
     },
     "background-background_4": {
+      "status": "delivered",
       "originals": [
         "background/background_4/2.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Parlor background 4 (bell_4.wav), 1.93 s, played once. Tagged Doorbell 0.77, Ding-dong 0.29; one strike, pitch about D#5, the longest ring (-20 dB after 1.4 s).",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A single bright doorbell ding with a long clear ring-out, close and clean.",
       "params": {
@@ -97,31 +200,77 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 43
+      "generationId": "acXeSQR4Ya6kzK3mmAAq",
+      "sessionId": "3r23aa2S3jtFwHdxbj1r",
+      "nodeId": "nrSxXJlpCypUNNaoXMCF",
+      "generatedOn": "2026-11-07",
+      "credits": 6.43,
+      "chosenBecause": "Similarity 0.91 against 0.91; band shape closer (r 0.91 against 0.89) and the same key estimate as the original (E-flat major).",
+      "otherTakes": [
+        {
+          "generationId": "gRRJsrcg5c0wiIKucw91",
+          "credits": 6.43,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 2.12 s (the original's 1.93 s plus 10 %) with a fade; level +0.9 dB against its kind's target (the original's loudness against its peers)"
     },
     "background-background_5": {
+      "status": "delivered",
       "originals": [
         "background/background_5/2.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Parlor background 5 (bell_5.wav), 1.29 s, played once. Tagged Doorbell 0.71, Bell 0.14; one strike, pitch about E5.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
-      "prompt": "A single bright bell ding, one strike with a short ring-out, close and clean.",
+      "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register that rings out briefly, close and clean.",
       "params": {
         "duration_seconds": 1.29,
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 29
+      "generationId": "eb6vR9qCmGpxPwgb2wnv",
+      "sessionId": "8pPiqMcVBYEutXBZ9nev",
+      "nodeId": "hsih03CBdpDv5dI5vq9L",
+      "generatedOn": "2026-11-07",
+      "credits": 4,
+      "chosenBecause": "Best of four (0.59; the first two takes scored 0.41 and 0.39). From the retake with a warmer prompt: one strike, tagged Doorbell and Bell; still brighter than the original (centroid 2.1 kHz against 0.94 kHz).",
+      "otherTakes": [
+        {
+          "generationId": "RIRQpeHvcEY6gutBRyUj",
+          "credits": 4.3,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2z9PIYjy9N3ET9Eo9kAT",
+          "credits": 4.3,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "kGyTBcaLQogPGXtsJEWn",
+          "credits": 4,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register that rings out briefly, close and clean.",
+          "model": {
+            "duration_seconds": 1.29,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.42 s (the original's 1.29 s plus 10 %) with a fade; level +0.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "closed": {
+      "status": "delivered",
       "originals": [
         "closed/5.mp3"
       ],
       "tracks": [
         "amb-night"
       ],
-      "status": "not generated",
+      "description": "The parlor closed for the night (night_2.wav), a 1.23 s loop repeated 100 times: a steady high chirp pitch around 1.6 kHz (G6) in most frames, a short swell. Quiet (-37 LUFS). Tagged weakly (Vehicle 0.15, Noise 0.12).",
+      "uncertain": "The tagger does not name it; the steady 1.6 kHz pitch and the source name suggest crickets.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "Night crickets chirping steadily in a field, high even chirps, quiet and continuous, no other sounds.",
       "params": {
@@ -129,16 +278,53 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 27
+      "generationId": "sLygzooxlnRqsWJTmr8Z",
+      "sessionId": "ccD81orokpNALut8MC8d",
+      "nodeId": "JatNNiXt6P0wVqhRGBaU",
+      "generatedOn": "2026-11-07",
+      "credits": 4.1,
+      "chosenBecause": "Best of four (0.44; the other first take 0.26, the two retakes with a single-cricket prompt 0.20 and 0.23). Its loudness envelope follows the original's (r 0.71); the band shape does not (the original is a narrow chirp near 1.6 kHz with little else). The least alike of the effects.",
+      "otherTakes": [
+        {
+          "generationId": "v0Zya7Lsr29uQOTP7Pvs",
+          "credits": 4.1,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "IjpfRfJbr7EUaoOtpCtX",
+          "credits": 4,
+          "date": "2026-11-07",
+          "prompt": "A single field cricket chirping in a steady rhythm on a warm night, close, high and even, nothing else.",
+          "model": {
+            "duration_seconds": 1.23,
+            "prompt_influence": 0.6,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "cPP5PxJbkFtbuWgr9PKu",
+          "credits": 4,
+          "date": "2026-11-07",
+          "prompt": "A single field cricket chirping in a steady rhythm on a warm night, close, high and even, nothing else.",
+          "model": {
+            "duration_seconds": 1.23,
+            "prompt_influence": 0.6,
+            "loop": true
+          }
+        }
+      ],
+      "post": "model loop 1.650 s stretched x1.3415 to 1.23 s (pitch kept); level +0.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "morning_coffee": {
+      "status": "delivered",
       "originals": [
         "morning_coffee/5.mp3"
       ],
       "tracks": [
         "amb-birds"
       ],
-      "status": "not generated",
+      "description": "Morning coffee (bird.wav), a 5.06 s loop repeated 100 times: birdsong. Tagged Bird vocalization 0.46, Chirp, tweet 0.44, Bird 0.43. Very quiet (-44 LUFS), bright (centroid 2.8 kHz), short calls rather than a dense chorus.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A few songbirds chirping in the early morning, short bright tweets with gaps between, distant and gentle, quiet garden.",
       "params": {
@@ -146,16 +332,31 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 112
+      "generationId": "VcQzcJiCBQA0Uo4cD6YD",
+      "sessionId": "47YHb4bV23rRTjg09hBS",
+      "nodeId": "HqO5rZPMB5v0mmd9Nu3f",
+      "generatedOn": "2026-11-07",
+      "credits": 16.87,
+      "chosenBecause": "Higher similarity (0.69 against 0.65), band shape closer (r 0.68 against 0.52); both are tagged Bird, Bird song and Chirp as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "d4BG5wTnO47dvSeqUQb6",
+          "credits": 16.87,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 5.040 s stretched x0.9960 to 5.06 s (pitch kept); level -7.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "mother-happy": {
+      "status": "delivered",
       "originals": [
         "mother/happy/5.mp3"
       ],
       "tracks": [
         "harp-good-news"
       ],
-      "status": "not generated",
+      "description": "A happy mother (happy harp.wav), 1.42 s, played once. Tagged Music 0.79, Ukulele 0.55: a short bright plucked-string flourish (2 onsets), loud (-14 LUFS), dying within 0.8 s.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A short happy plucked harp flourish, two quick bright strums rising, cheerful good-news sting, close and clean.",
       "params": {
@@ -163,16 +364,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 32
+      "generationId": "KQhIKCFszON6f6oD32xw",
+      "sessionId": "7hz7nXEsUyMPCvmPHs2G",
+      "nodeId": "eb9SJaJk6jmQYVnkHcf7",
+      "generatedOn": "2026-11-07",
+      "credits": 4.73,
+      "chosenBecause": "Higher similarity (0.94 against 0.85): centroid 520 Hz against the original's 569 Hz (the other take 736 Hz), the same two onsets and key (C major); tagged Ukulele and Guitar as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "rDlTn1bZuCtmqr6RNdYW",
+          "credits": 4.73,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.56 s (the original's 1.42 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "music-music_fight": {
+      "status": "delivered",
       "originals": [
         "music/music_fight/1.mp3"
       ],
       "tracks": [
         "battle"
       ],
-      "status": "not generated",
+      "description": "Fight music (fight loop.wav), a 2.00 s loop repeated 999 times: one bar of 4 beats at 120 bpm. Tagged Music 0.79, Electronic music 0.22, Drum machine 0.14, Electronica 0.12. Dark and bass-heavy (centroid 360 Hz, roll-off 630 Hz), pitch centre about B1; key estimate D minor, weak (r 0.31).",
+      "uncertain": "Key is a weak estimate; the loop is mostly drums and bass.",
       "model": "eleven_music_v2_5",
       "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
       "params": {
@@ -180,16 +396,50 @@
         "instrumental": true,
         "lyrics_type": "instrumental"
       },
-      "estimateCredits": 440
+      "generationId": "6fcRBh6x0lC8HP2OFjZX",
+      "sessionId": "O8vttt12mpshGYAwkq85",
+      "nodeId": "r5zQeQTZlzoRz197kwVc",
+      "generatedOn": "2026-11-07",
+      "credits": 239.95,
+      "chosenBecause": "Music model take, cut to exactly one bar at 120 bpm. The two sound-effects-model loops tried first came back 2.25 s long with 4.5 beats per cycle, so they cannot be fitted to the original's one 2.00 s bar without changing the tempo.",
+      "otherTakes": [
+        {
+          "generationId": "GcnHa9tDi4ZmkLIyGdeq",
+          "credits": 6.67,
+          "date": "2026-11-07",
+          "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+          "model": {
+            "model": "eleven_text_to_sound_v2",
+            "duration_seconds": 2,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "JcbbgvPOaimbvT6zyTwX",
+          "credits": 6.67,
+          "date": "2026-11-07",
+          "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+          "model": {
+            "model": "eleven_text_to_sound_v2",
+            "duration_seconds": 2,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        }
+      ],
+      "post": "stretched x1.0027 from 119.68 bpm to 120; 1 bar(s) from 10.965 s (bar-line seam similarity 0.991), 0.250 s equal-power crossfade of the continuation into the head; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "music-music_sneak": {
+      "status": "delivered",
       "originals": [
         "music/music_sneak/1.mp3"
       ],
       "tracks": [
         "sneak"
       ],
-      "status": "not generated",
+      "description": "Sneaking music (scary.wav), a 4.00 s loop repeated 999 times: 8 beats, two bars at 120 bpm (tracked 123). Quiet (-34 LUFS, the quietest music), sparse (6 onsets). Tagged Music 0.74, Timpani 0.10. Key estimate E major, weak (r 0.31); pitch centre about A2.",
+      "uncertain": "Key and instrumentation are weak estimates; the tagger hears timpani and little else.",
       "model": "eleven_music_v2_5",
       "prompt": "Instrumental quiet suspense loop at exactly 120 bpm in 4/4, in E: soft timpani and low pizzicato strings tiptoeing with a few eerie high notes, sparse and creeping, a comic sneaking mood, never horror. Two bars repeated with no intro and no ending. Clean modern recording, low level.",
       "params": {
@@ -197,16 +447,25 @@
         "instrumental": true,
         "lyrics_type": "instrumental"
       },
-      "estimateCredits": 440
+      "generationId": "NaVE5N4ugQ4G2DcjomFi",
+      "sessionId": "sWDtaSU4GAqiXWq3w3ro",
+      "nodeId": "3K3KKITcZviWqRbvxIfV",
+      "generatedOn": "2026-11-07",
+      "credits": 240,
+      "chosenBecause": "The one music take, as briefed. Tagged Timpani as the original is; key estimate E minor against the original's weak E major.",
+      "otherTakes": [],
+      "post": "stretched x1.0027 from 119.68 bpm to 120; 2 bar(s) from 9.973 s (bar-line seam similarity 0.973), 0.500 s equal-power crossfade of the continuation into the head; level -7.7 dB against its kind's target (the original's loudness against its peers)"
     },
     "people-jesus_happy": {
+      "status": "delivered",
       "originals": [
         "people/jesus_happy/13.mp3"
       ],
       "tracks": [
         "angelic"
       ],
-      "status": "not generated",
+      "description": "A happy Jesus (jesus.wav), 2.33 s, played once. Tagged Choir 0.30, Singing 0.16, A capella 0.14: a sung choir chord swelling to its peak near 0.8 s and fading.",
+      "uncertain": "It is sung, so the remake must be a wordless choir 'aah'; the speech screen should find no words.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A heavenly choir singing one wordless 'aah' chord that swells and fades, warm and bright, angelic approval.",
       "params": {
@@ -214,9 +473,23 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 52
+      "generationId": "Y0G9QLmZuvIgdFrZM4wz",
+      "sessionId": "FY1ipsbNzgfuW6qTaBcu",
+      "nodeId": "cakK2Kqunql7KBMsE4zd",
+      "generatedOn": "2026-11-07",
+      "credits": 7.77,
+      "chosenBecause": "Similarity 0.85 against 0.85; band shape closer (r 0.93 against 0.89). Both tagged Choir, Singing and A capella as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "8eHWtXmAYXLdNNlGvakF",
+          "credits": 7.77,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 2.56 s (the original's 2.33 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-desk": {
+      "status": "delivered",
       "originals": [
         "places/desk/12.mp3",
         "places/desk_enemy/8.mp3"
@@ -224,7 +497,8 @@
       "tracks": [
         "amb-clock"
       ],
-      "status": "not generated",
+      "description": "The desk clock (clock.wav), a 0.99 s loop repeated 200 times (both desks use the same recording): noisy clicks (flatness 0.46, roll-off 3.3 kHz), 3 onsets per loop, each click dying within 50 ms. Quiet (-38 LUFS). Tagger is unsure (Inside, small room 0.06).",
+      "uncertain": "The tagger does not name it; the source name (clock.wav), the picture and the click pattern do.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A small mechanical clock ticking, crisp dry clicks close up in a quiet room, steady and even.",
       "params": {
@@ -232,16 +506,31 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 22
+      "generationId": "SNXOacZDziZQDRuG403l",
+      "sessionId": "gnx0rcWKHya9yDCbwgct",
+      "nodeId": "f3ksv3kVjrIjgx821ZBB",
+      "generatedOn": "2026-11-07",
+      "credits": 3,
+      "chosenBecause": "Higher similarity (0.59 against 0.54) and the same key estimate (C minor); tagged Clock as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "0viSlTjxsSeDSSA6ThxO",
+          "credits": 3,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 1.470 s stretched x1.4848 to 0.99 s (pitch kept); level -1.4 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-embalming-room": {
+      "status": "delivered",
       "originals": [
         "places/embalming-room/3.mp3"
       ],
       "tracks": [
         "amb-bubbles"
       ],
-      "status": "not generated",
+      "description": "Embalming room (water_bubble.wav), a 2.03 s loop repeated 100 times: two bubbling gurgles per loop, louder late in the loop; warm (centroid 920 Hz). Tagged weakly (Sidetone 0.21, Echo 0.08).",
+      "uncertain": "Tags are weak; the source name says water bubbling.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "Liquid bubbling and gurgling in a glass container, slow wet bubbles, close and dry, steady.",
       "params": {
@@ -249,16 +538,31 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 45
+      "generationId": "UoyoQnGHn0JJfTvQzDLh",
+      "sessionId": "CRjtc4rkHJZySeb9dP30",
+      "nodeId": "LkWJRpe7wIBo9F06P368",
+      "generatedOn": "2026-11-07",
+      "credits": 6.77,
+      "chosenBecause": "Similarity 0.54 against 0.55, within noise; chosen for the band shape (r 0.68 against 0.62), centroid nearer the original's (808 Hz against 561 Hz for the other; the original 898 Hz) and the same key estimate (B minor).",
+      "otherTakes": [
+        {
+          "generationId": "SjEE06IlSeD7tVd7wKqh",
+          "credits": 6.77,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 2.250 s stretched x1.1084 to 2.03 s (pitch kept); level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-fire": {
+      "status": "delivered",
       "originals": [
         "places/fire/5.mp3"
       ],
       "tracks": [
         "amb-fire"
       ],
-      "status": "not generated",
+      "description": "Crematorium fire (fire.wav), a 2.32 s loop repeated 100 times: a low roar (centroid 530 Hz, roll-off 1.2 kHz) with a rumble around 60 Hz. Tagged Vehicle 0.21, Explosion 0.10: a broadband roar the tagger reads as engine-like.",
+      "uncertain": "The tagger does not say fire; the source name and the picture do.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A big furnace fire roaring steadily, deep low rumble with soft crackle, heard close, even and continuous.",
       "params": {
@@ -266,35 +570,57 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 52
+      "generationId": "rzVJnxn1gbhM4QgHhSPE",
+      "sessionId": "Pdi81HfFXMUOSfX7CmiD",
+      "nodeId": "2xnbr7JcnDJCQuX00ghB",
+      "generatedOn": "2026-11-07",
+      "credits": 7.73,
+      "chosenBecause": "Higher similarity (0.60 against 0.59) and its centroid (260 Hz) is nearer the original's (451 Hz) than the other take's (107 Hz).",
+      "otherTakes": [
+        {
+          "generationId": "y7vdOGEOzoxYFjIfkJYt",
+          "credits": 7.73,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 2.460 s stretched x1.0603 to 2.32 s (pitch kept); level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-funeral-ceremony": {
+      "status": "delivered",
       "originals": [
         "places/funeral-ceremony/2.mp3",
         "places/funeral-ceremony2/6.mp3",
         "background/background_church/2.mp3"
       ],
-      "tracks": [
-        "ceremony"
-      ],
-      "status": "not generated",
+      "tracks": [],
+      "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
+      "uncertain": null,
       "model": "eleven_music_v2_5",
       "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
       "params": {
-        "duration_seconds": 16,
+        "duration_seconds": 14,
         "instrumental": true,
         "lyrics_type": "instrumental"
       },
-      "estimateCredits": 440
+      "generationId": "ZgvzhYGwoA16RZlVcr63",
+      "sessionId": "P9bPKdBMLLhl4AkTXyit",
+      "nodeId": "zuW2HRMAM3Qf6A8jU7uP",
+      "generatedOn": "2026-11-07",
+      "credits": 210,
+      "chosenBecause": "The one music take, as briefed. Similarity 0.81: same key (G major, strong), loudness envelope r 0.97, tagged Organ and Hammond organ as the original is.",
+      "otherTakes": [],
+      "post": "lead-in trimmed, cut to at most 12.06 s (the original's 10.96 s plus 10 %) with a fade; level -2.7 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-hospital_ambulance": {
+      "status": "delivered",
       "originals": [
         "places/hospital_ambulance/2.mp3"
       ],
       "tracks": [
         "siren"
       ],
-      "status": "not generated",
+      "description": "Hospital ambulance (police call.wav), 2.35 s, played once. Tagged Speech 0.70, Radio 0.20, Telephone dialing 0.10: a police radio call, a burst of radio voice with squelch, not a siren. Loud (-13 LUFS), 5 onsets.",
+      "uncertain": "The original carries a voice. A remake 'similar' in kind is radio chatter, which the no-speech check will flag; the prompt asks for unintelligible, filtered radio chatter and a squelch, and a listener should confirm no words are clear.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A police radio crackle: a squelch click, a short burst of muffled unintelligible dispatcher chatter through a tinny radio, then a second squelch.",
       "params": {
@@ -302,16 +628,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 52
+      "generationId": "qnk2eigJpelGs9tjfXrA",
+      "sessionId": "c8W0nVHobTeJmlGwTsey",
+      "nodeId": "FUtTbfRH3xWCdUaEaEXD",
+      "generatedOn": "2026-11-07",
+      "credits": 7.83,
+      "chosenBecause": "Higher similarity (0.78 against 0.74): loudness envelope follows the original's (r 0.77 against -0.02); tagged Radio as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "Tm4GiFQkLfRFYUXFHMBc",
+          "credits": 7.83,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 2.59 s (the original's 2.35 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-hospital_desk": {
+      "status": "delivered",
       "originals": [
         "places/hospital_desk/5.mp3"
       ],
       "tracks": [
         "amb-hospital"
       ],
-      "status": "not generated",
+      "description": "Hospital front desk (hospital lobby.wav), a 3.04 s loop repeated 999 times: murmuring people. Tagged Speech 0.75, Chatter 0.24, Hubbub 0.14. Quiet (-37 LUFS).",
+      "uncertain": "It is crowd murmur, so the remake must be indistinct babble; the speech screen will flag it and needs a listener's judgment that no words are intelligible.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "Quiet hospital lobby crowd murmur, indistinct distant chatter of several people, no clear words, soft and steady room tone.",
       "params": {
@@ -319,16 +660,31 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 67
+      "generationId": "2VZkNge3ruk54xJXa4DT",
+      "sessionId": "IfArgALdPp0zp3BYwHG8",
+      "nodeId": "5dtSVZvMFfTE9vP8JLD2",
+      "generatedOn": "2026-11-07",
+      "credits": 10.13,
+      "chosenBecause": "Higher similarity (0.91 against 0.87) with the same single onset as the original; the tagger hears murmur and speech-like room tone in both, as it does in the original, but the speech screen finds no words.",
+      "otherTakes": [
+        {
+          "generationId": "PMW5jhuuX7toF4yGyEwP",
+          "credits": 10.13,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 3.000 s stretched x0.9868 to 3.04 s (pitch kept); level -0.7 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-hospital_room": {
+      "status": "delivered",
       "originals": [
         "places/hospital_room/9.mp3"
       ],
       "tracks": [
         "amb-monitor"
       ],
-      "status": "not generated",
+      "description": "Hospital room (heart monitor.wav), a 1.59 s loop repeated 999 times: one beep per loop (about 38 per minute when looped), pitch about 1.0 kHz (C6). Tagged Beep, bleep 0.35.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A hospital heart monitor giving one clean electronic beep at about one kilohertz followed by quiet room hum, then silence.",
       "params": {
@@ -336,14 +692,29 @@
         "prompt_influence": 0.6,
         "loop": true
       },
-      "estimateCredits": 35
+      "generationId": "2Kd2j9UUwAtHKB2DHpMB",
+      "sessionId": "1ygYRk7FX10trAvHYxx7",
+      "nodeId": "1UPILATEkqIV01QhDhmN",
+      "generatedOn": "2026-11-07",
+      "credits": 5.3,
+      "chosenBecause": "Higher similarity (0.52 against 0.47); band shape closer (r 0.17 against 0.00) and centroid nearer (2.0 kHz against 2.8 kHz; the original 1.4 kHz). Tagged Beep as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "jMmUWTOnfHkXCqDA8YCX",
+          "credits": 5.3,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "model loop 1.920 s stretched x1.2075 to 1.59 s (pitch kept); level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-palors": {
+      "status": "delivered",
       "originals": [
         "places/palors/5.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "Rival parlors picture (mystery tinkle loop.wav), a 2.00 s loop repeated 999 times: one bar at 120 bpm. Tagged Music 0.73, Ringtone 0.34: a tinkling, bell-like melodic figure; pitch centre about F#4; key estimate F# major (r 0.45).",
+      "uncertain": null,
       "model": "eleven_music_v2_5",
       "prompt": "Instrumental mysterious tinkling loop in F-sharp major at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious figure over a soft pad, playful and a little spooky. One bar repeated with no intro and no ending. Clean, bright modern recording.",
       "params": {
@@ -351,16 +722,48 @@
         "instrumental": true,
         "lyrics_type": "instrumental"
       },
-      "estimateCredits": 440
+      "generationId": "IGSVTuhWbJ5Hzz065Utf",
+      "sessionId": "mSlfZkPpYHLcPC6XKUVV",
+      "nodeId": "KAkE2IsyS7atnIv7sYQ6",
+      "generatedOn": "2026-11-07",
+      "credits": 240,
+      "chosenBecause": "Best of three music takes once transposed: the music model wrote all three in C major although the prompts asked for F-sharp major. Transposed down 6 semitones (tempo kept) it measures F-sharp major as the original does and scores 0.60 (the retakes 0.57 and below).",
+      "otherTakes": [
+        {
+          "generationId": "ZiA15h4Vsp1DunLdxoBM",
+          "credits": 240,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp major, tonic F-sharp, at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious tinkling figure in the middle register over a soft sustained F-sharp pad, playful and a little mysterious. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+          "model": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        },
+        {
+          "generationId": "1lF5pODQgXkLKgSOV7yR",
+          "credits": 240,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp major, tonic F-sharp, at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious tinkling figure in the middle register over a soft sustained F-sharp pad, playful and a little mysterious. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+          "model": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "post": "stretched x1.0027 from 119.68 bpm to 120; 1 bar(s) from 8.971 s (bar-line seam similarity 0.681), 0.250 s equal-power crossfade of the continuation into the head; transposed -6 semitones (tempo kept) to the original's key; level +0.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-psych": {
+      "status": "delivered",
       "originals": [
         "places/psych/7.mp3"
       ],
       "tracks": [
         "psychic"
       ],
-      "status": "not generated",
+      "description": "The psychic (Cinematic 12 Harp 01.wav), 3.29 s, played once. Tagged Harp 0.65, Pizzicato 0.13: a low, cinematic harp gesture; warm (centroid 440 Hz), key estimate D major (r 0.80), pitch centre about A2; peak early, ringing out over 1.7 s.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A low cinematic harp glissando in D major, a mysterious sweeping gesture that rings out, warm and resonant, about three seconds.",
       "params": {
@@ -368,33 +771,107 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 73
+      "generationId": "UVdYJOww9PV4k0QgaCj3",
+      "sessionId": "uTZsvZcc1mh4jVSQWdEJ",
+      "nodeId": "K6O0gI7rtwJtprDBTmKZ",
+      "generatedOn": "2026-11-07",
+      "credits": 10.96,
+      "chosenBecause": "Higher similarity (0.81 against 0.80), band shape closer (r 0.75 against 0.69); both tagged Harp, Pizzicato and Plucked string as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "zKVY71LzfzlD33kSFOEm",
+          "credits": 10.96,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 3.62 s (the original's 3.29 s plus 10 %) with a fade; level +2.6 dB against its kind's target (the original's loudness against its peers)"
     },
     "places-yangs": {
+      "status": "delivered",
       "originals": [
         "places/yangs/6.mp3"
       ],
       "tracks": [
         "yangs"
       ],
-      "status": "not generated",
+      "description": "Yang's restaurant picture (yangs.wav), a 4.00 s loop repeated 999 times: 8 beats, two bars at 120 bpm (beats very regular, 3%). Tagged Zither 0.72, Pizzicato 0.39, Mandolin 0.10: a plucked zither-like string figure; key estimate F# minor (r 0.66), pitch centre about F#2.",
+      "uncertain": null,
       "model": "eleven_music_v2_5",
-      "prompt": "Instrumental restaurant loop in F-sharp minor at exactly 120 bpm in 4/4: a plucked zither and pizzicato strings playing a light, flowing pattern over a soft low drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+      "prompt": "Instrumental loop in the key of F-sharp minor, tonic F-sharp, at exactly 120 bpm in 4/4: a plucked zither with pizzicato strings playing a light flowing pattern over a low F-sharp drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
       "params": {
         "duration_seconds": 16,
         "instrumental": true,
         "lyrics_type": "instrumental"
       },
-      "estimateCredits": 440
+      "generationId": "ifiN33b2wy5QXMuiviKm",
+      "sessionId": "Q2kEpUteVZ1YUvP1gjST",
+      "nodeId": "VsjDriFaPTjpjUND36pq",
+      "generatedOn": "2026-11-07",
+      "credits": 240,
+      "chosenBecause": "The music model ignored the asked key in all three takes (C major, C minor, A minor against the original's F-sharp minor). This retake, transposed down 6 semitones (tempo kept), measures F-sharp minor as the original does and has the closest band shape (r 0.72 against 0.54 and below).",
+      "otherTakes": [
+        {
+          "generationId": "bzubW0ivikkaXScSZf2Q",
+          "credits": 240,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "qFYS0QtyhPNK4S4ASnVO",
+          "credits": 240,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp minor, tonic F-sharp, at exactly 120 bpm in 4/4: a plucked zither with pizzicato strings playing a light flowing pattern over a low F-sharp drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+          "model": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "post": "stretched x1.0027 from 119.68 bpm to 120; 2 bar(s) from 5.739 s (bar-line seam similarity 0.926), 0.500 s equal-power crossfade of the continuation into the head; transposed -6 semitones (tempo kept) to the original's key; level +3.0 dB against its kind's target (the original's loudness against its peers)"
+    },
+    "ring-ring": {
+      "status": "delivered",
+      "originals": [
+        "ring/ring/4.mp3",
+        "ring/ring&hand/5.mp3"
+      ],
+      "tracks": [
+        "glint"
+      ],
+      "description": "A ring (chimes1_akiko.wav), 2.12 s, played once (both ring pictures share it): a high chime, pitch about B6 (2 kHz), one onset, swelling to its peak at about 0.5 s and ringing out. Very quiet (-42.5 LUFS). Tagged Tuning fork 0.05, Ding 0.05, Sonar 0.05.",
+      "uncertain": null,
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A delicate high wind chime shimmer, a soft glassy sparkle that swells briefly and rings out, quiet and magical.",
+      "params": {
+        "duration_seconds": 2.12,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "generationId": "5xRaenpfXk392ANPzZmt",
+      "sessionId": "FSDJHVpuJdQ8rk2LLBj3",
+      "nodeId": "0Nx9HWt6j0psP9YzTJRJ",
+      "generatedOn": "2026-11-07",
+      "credits": 7.07,
+      "chosenBecause": "Higher similarity (0.75 against 0.58): one onset as in the original (the other take 4) and the same key estimate (G minor).",
+      "otherTakes": [
+        {
+          "generationId": "dBwrBwQnYQ20u3sgNqFb",
+          "credits": 7.07,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 2.33 s (the original's 2.12 s plus 10 %) with a fade; level -8.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-battle_lose": {
+      "status": "delivered",
       "originals": [
         "stuff/battle_lose/2.mp3"
       ],
       "tracks": [
         "gong"
       ],
-      "status": "not generated",
+      "description": "Losing a fight (death gong sound.wav), 6.43 s, played once. Tagged Gong 0.59, Singing bowl 0.14: one deep strike (pitch about D3, centroid 320 Hz) blooming to its peak at about 1.4 s and decaying slowly. Quiet for its kind (-32.5 LUFS).",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A single deep large gong struck once, a dark slow bloom and a long shimmering decay, about six seconds.",
       "params": {
@@ -402,16 +879,53 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 143
+      "generationId": "tdRPaWnzGj5Ed8EFuFLy",
+      "sessionId": "PiBUUjPWjAOgoKsqhPVy",
+      "nodeId": "YrVeqqhguMV6OiOi7CFF",
+      "generatedOn": "2026-11-07",
+      "credits": 21.43,
+      "chosenBecause": "Best of four (similarity 0.68 delivered in the pilot; the brighter retakes scored about 0.51 and 0.54). Tagged Gong as the original is. It is darker than the original (centroid 143 Hz against 358 Hz), but nearer than the retakes, which overshoot to about 2.4 kHz.",
+      "otherTakes": [
+        {
+          "generationId": "g9NTkQOTWjQuhYrFPVAV",
+          "credits": 21.43,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2s2AFSgXkfn5c5KWidsV",
+          "credits": 21.43,
+          "date": "2026-11-07",
+          "prompt": "A large bronze gong struck firmly once: a bright metallic crash that blooms into a loud shimmering wash and decays slowly over about six seconds.",
+          "model": {
+            "duration_seconds": 6.43,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        },
+        {
+          "generationId": "tJu6DylILj8Q46CxEB59",
+          "credits": 21.43,
+          "date": "2026-11-07",
+          "prompt": "A large bronze gong struck firmly once: a bright metallic crash that blooms into a loud shimmering wash and decays slowly over about six seconds.",
+          "model": {
+            "duration_seconds": 6.43,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 7.07 s (the original's 6.43 s plus 10 %) with a fade; level -6.5 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-lottery_lose-26": {
+      "status": "delivered",
       "originals": [
         "stuff/lottery_lose/26.mp3"
       ],
       "tracks": [
         "bingo-lose"
       ],
-      "status": "not generated",
+      "description": "Losing the lottery (loser edited.wav), 1.70 s, played once. Tagged Music 0.70 (and Cat 0.08): a short loud (-15.6 LUFS) musical 'loser' gesture, 4 onsets, peak late at about 1.4 s, pitch about D#3.",
+      "uncertain": "The tagger only says music; four onsets and a late peak suggest a short descending comic phrase.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A short comic losing sting, a few descending brassy notes ending on a low flat note, about one and a half seconds.",
       "params": {
@@ -419,9 +933,23 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 38
+      "generationId": "x0FhzEUmN4RRFCjYdDDC",
+      "sessionId": "bVeSqvm1AolMkMtbkjNt",
+      "nodeId": "knb6iAXXeSliBuzTWXHJ",
+      "generatedOn": "2026-11-07",
+      "credits": 5.67,
+      "chosenBecause": "Higher similarity (0.53 against 0.52), fewer onsets (1 against 5; the original 2). Neither take is close: the original is a brassy musical sting and both remakes are darker.",
+      "otherTakes": [
+        {
+          "generationId": "rPYVOImcTz99yP2ioKnn",
+          "credits": 5.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.87 s (the original's 1.7 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-lottery_win-19": {
+      "status": "delivered",
       "originals": [
         "stuff/lottery_win/19.mp3",
         "stuff/lottery_lose/19.mp3"
@@ -429,7 +957,8 @@
       "tracks": [
         "bingo-ball"
       ],
-      "status": "not generated",
+      "description": "Scratching a lottery ticket (scratch_shot.wav), 0.28 s, played three times per ticket (winning and losing tickets share it): one short noisy scrape (flatness 0.24, roll-off 3.6 kHz). Very quiet (-39 LUFS). Tagger cannot name it.",
+      "uncertain": "Too short and too quiet for the tagger; the source name and the picture say a scratch.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "One quick scratch of a coin across a scratch-off lottery ticket, a short dry papery scrape, very close.",
       "params": {
@@ -437,16 +966,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 11
+      "generationId": "62DW1ZQZo7mzYgsCE392",
+      "sessionId": "VcatNmKlOjlk88fjxea3",
+      "nodeId": "xhACuiyVpKZaAETHsuXW",
+      "generatedOn": "2026-11-07",
+      "credits": 1.67,
+      "chosenBecause": "Higher similarity (0.68 against 0.67), band shape closer (r 0.74 against 0.73); both one strike as the original.",
+      "otherTakes": [
+        {
+          "generationId": "WMbkYZytc6xADcgPV6T7",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 0.31 s (the original's 0.28 s plus 10 %) with a fade; level -8.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-lottery_win-25": {
+      "status": "delivered",
       "originals": [
         "stuff/lottery_win/25.mp3"
       ],
       "tracks": [
         "bingo-win"
       ],
-      "status": "not generated",
+      "description": "Winning the lottery (cash register.wav), 1.33 s, played once. Tagged Cash register 0.93: keys, bell and drawer (6 onsets), bright (pitch about B6 in the bell).",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "An old mechanical cash register: quick key clacks, the bright bell ring and the drawer sliding open, close and clean.",
       "params": {
@@ -454,16 +998,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 30
+      "generationId": "QYRClx1yyoslnHcpmp05",
+      "sessionId": "kM7ef75ZqTXzdxt02JMT",
+      "nodeId": "wKKT4VBIRtkPwylvoUS6",
+      "generatedOn": "2026-11-07",
+      "credits": 4.43,
+      "chosenBecause": "Higher similarity (0.93 against 0.84): loudness envelope r 0.74 against 0.25, the same two onsets; tagged Cash register as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "BZQKF0VIYQvj98nM7wnm",
+          "credits": 4.43,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 1.46 s (the original's 1.33 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-money_bag": {
+      "status": "delivered",
       "originals": [
         "stuff/money_bag/7.mp3"
       ],
       "tracks": [
         "cash-register"
       ],
-      "status": "not generated",
+      "description": "The money bag (money_lose.wav), 3.16 s, played once. Tagged Music 0.73, Guitar 0.37, Plucked string instrument 0.32: a short plucked-guitar musical sting (2 onsets), key estimate B major (r 0.65), ringing out over 1.6 s.",
+      "uncertain": "Despite the money picture it is a guitar sting, not a cash sound; the remake follows the sound.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "A short acoustic guitar sting in B major, two plucked strums and a ringing chord, about three seconds, close and clean.",
       "params": {
@@ -471,16 +1030,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 70
+      "generationId": "rd2LJPY1MWNWUXFMjtpM",
+      "sessionId": "ZWRvD9jaJsAGvdke18O0",
+      "nodeId": "ujcyV8exGuljBbkGAFoO",
+      "generatedOn": "2026-11-07",
+      "credits": 10.53,
+      "chosenBecause": "Higher similarity (0.81 against 0.74), the same two onsets and key estimate (B major); tagged Guitar and Acoustic guitar as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "0znZiD7NuoV99LXQP3rK",
+          "credits": 10.53,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 3.48 s (the original's 3.16 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-money_bag_2": {
+      "status": "delivered",
       "originals": [
         "stuff/money_bag_2/9.mp3"
       ],
       "tracks": [
         "coins"
       ],
-      "status": "not generated",
+      "description": "The second money bag (cash register.wav), 0.85 s, played once. Tagged Cash register 0.98: a quick register bell and clunk (2 onsets), bell pitch about E6.",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A quick cash register ka-ching: one bright bell ding and a drawer clunk, under one second, close and clean.",
       "params": {
@@ -488,16 +1062,31 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 19
+      "generationId": "iTOiGisOO7ZVKGBxnolN",
+      "sessionId": "69TOzVW8dbvuWL2CmfMz",
+      "nodeId": "fn95AXc6YOsQm1XHQ07b",
+      "generatedOn": "2026-11-07",
+      "credits": 2.83,
+      "chosenBecause": "Higher similarity (0.80 against 0.63): band shape r 0.94 against 0.52; tagged Cash register.",
+      "otherTakes": [
+        {
+          "generationId": "Cd6TgaS49p0YS6u70Ru0",
+          "credits": 2.83,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 0.94 s (the original's 0.85 s plus 10 %) with a fade; level -0.8 dB against its kind's target (the original's loudness against its peers)"
     },
     "stuff-toilet": {
+      "status": "delivered",
       "originals": [
         "stuff/toilet/3.mp3"
       ],
       "tracks": [
         "toilet-flush"
       ],
-      "status": "not generated",
+      "description": "The toilet (toilet_flush.wav), 4.02 s, played once. Tagged Toilet flush 0.87, Water 0.27: a rushing flush with gurgles (15 onsets), bright (centroid 1.8 kHz).",
+      "uncertain": null,
       "model": "eleven_text_to_sound_v2",
       "prompt": "A toilet flushing: a strong rushing swirl of water with gurgles draining away, about four seconds, small bathroom.",
       "params": {
@@ -505,80 +1094,77 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 89
+      "generationId": "zCQqQbKWHsRJ3O3W1tQ3",
+      "sessionId": "B5wLzHng5BDPxiTnv33m",
+      "nodeId": "rPeviiHXKnBcO6Mwhv9R",
+      "generatedOn": "2026-11-07",
+      "credits": 13.4,
+      "chosenBecause": "Higher similarity (0.86 against 0.82): loudness envelope r 0.79 against 0.43; tagged Toilet flush and Water as the original is.",
+      "otherTakes": [
+        {
+          "generationId": "SDNq3dSIHtGMNXECa67B",
+          "credits": 13.4,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 4.42 s (the original's 4.02 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
     },
     "wait": {
+      "status": "delivered",
       "originals": [
         "wait/5.mp3"
       ],
       "tracks": [
         "doorbell"
       ],
-      "status": "not generated",
+      "description": "Waiting for a customer (wind_short_3.wav), 2.18 s, played once at frame 20. Tagged Vehicle 0.20, Aircraft 0.05: a short gust of wind (one onset, swelling to a peak near 1.1 s and falling away).",
+      "uncertain": "The tagger reads the broadband swell as a vehicle; the source name says a short wind.",
       "model": "eleven_text_to_sound_v2",
-      "prompt": "A short gust of wind rising and falling away, a single whoosh over about two seconds, outdoors.",
+      "prompt": "A short airy gust of wind, a breathy hissing whoosh that swells and fades away over about two seconds, outdoors, no low rumble.",
       "params": {
         "duration_seconds": 2.18,
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 48
-    },
-    "welcome-paper": {
-      "originals": [
-        "welcome/paper.mp3"
+      "generationId": "MC5KsHkFMM5YvPjqDHZr",
+      "sessionId": "cQPV712PaV5uGWaWaG4A",
+      "nodeId": "jdpXuO2K5cu8rL6bzN0n",
+      "generatedOn": "2026-11-07",
+      "credits": 7,
+      "chosenBecause": "Best of four (0.62; the first two takes 0.37 and 0.42 were a low rumble, centroid about 350 Hz against the original's 1.55 kHz). From the retake asking for an airy hiss: centroid 2.0 kHz.",
+      "otherTakes": [
+        {
+          "generationId": "TT35OxIOoKQ5Ha8Z1Oca",
+          "credits": 7.27,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "8b2AbexueSw278rV3WQB",
+          "credits": 7.27,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "SbWzbAFpq8AC7IElcEqs",
+          "credits": 7,
+          "date": "2026-11-07",
+          "prompt": "A short airy gust of wind, a breathy hissing whoosh that swells and fades away over about two seconds, outdoors, no low rumble.",
+          "model": {
+            "duration_seconds": 2.18,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
       ],
-      "tracks": [],
-      "status": "not generated",
-      "model": "eleven_text_to_sound_v2",
-      "prompt": "A single page of paper flipped over quickly, a crisp papery flick, very close.",
-      "params": {
-        "duration_seconds": 0.81,
-        "prompt_influence": 0.6,
-        "loop": false
-      },
-      "estimateCredits": 18
-    },
-    "welcome-map": {
-      "originals": [
-        "welcome/Map.mp3"
-      ],
-      "tracks": [
-        "town"
-      ],
-      "status": "not generated",
-      "model": "eleven_music_v2_5",
-      "prompt": "Instrumental cheerful country hoedown loop in C major at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass and light brushed snare, steady and busy, comic small-town feel. Keep the same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
-      "params": {
-        "duration_seconds": 16,
-        "instrumental": true,
-        "lyrics_type": "instrumental"
-      },
-      "estimateCredits": 440
-    },
-    "welcome-intro": {
-      "originals": [
-        "welcome/intro.mp3"
-      ],
-      "tracks": [
-        "main"
-      ],
-      "status": "not generated",
-      "model": "eleven_music_v2_5",
-      "prompt": "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
-      "params": {
-        "duration_seconds": 30,
-        "instrumental": true,
-        "lyrics_type": "instrumental"
-      },
-      "estimateCredits": 825
+      "post": "lead-in trimmed, cut to at most 2.40 s (the original's 2.18 s plus 10 %) with a fade; level -0.7 dB against its kind's target (the original's loudness against its peers)"
     },
     "welcome-46": {
+      "status": "delivered",
       "originals": [
         "welcome/46.mp3"
       ],
       "tracks": [],
-      "status": "not generated",
+      "description": "An unnamed 0.19 s sound attached by script in welcome.swf (character 46; no source name recorded). Almost silent (-70 LUFS integrated), one noisy click (flatness 0.24).",
+      "uncertain": "What it is, and whether the game ever played it audibly, is unknown; the measurements only say a very quiet click.",
       "model": "eleven_text_to_sound_v2",
       "prompt": "One tiny soft click, very short and quiet.",
       "params": {
@@ -586,7 +1172,117 @@
         "prompt_influence": 0.6,
         "loop": false
       },
-      "estimateCredits": 11
+      "generationId": "ESxoSacWllwVaemdpQ9W",
+      "sessionId": "o7g40xMLtjXoW6FuppRZ",
+      "nodeId": "YOpurY1SS0SgToJAs9jO",
+      "generatedOn": "2026-11-07",
+      "credits": 1.67,
+      "chosenBecause": "Similarity 0.60 against 0.60; band shape closer (r 0.60 against 0.48). The original is an almost silent 0.19 s click; the model's shortest output is 0.5 s, cut to 0.21 s in post.",
+      "otherTakes": [
+        {
+          "generationId": "Buj5OXb28STVLKabgHXP",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 0.21 s (the original's 0.19 s plus 10 %) with a fade; level -8.0 dB against its kind's target (the original's loudness against its peers)"
+    },
+    "welcome-intro": {
+      "status": "delivered",
+      "originals": [
+        "welcome/intro.mp3"
+      ],
+      "tracks": [],
+      "description": "The title-screen theme (source file fq_theme.wav), 20.08 s, played once. Tagged Music 0.65, Theme music 0.14, Orchestra 0.09. Very smooth, tonal spectrum (flatness 0.006, centroid about 1.1 kHz); one sustained arc from start to end (it does not fall 20 dB until 18.7 s); pitch centre about G#2 in the bass. Tempo estimate 81 bpm, weak; key estimate C major, weak (r 0.37).",
+      "uncertain": "Tempo and key are weak estimates on a piece with few clear attacks.",
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
+      "params": {
+        "duration_seconds": 24,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "generationId": "pSPCQaMqlf5UUL3hUjhy",
+      "sessionId": "vlI7GO3bwuVnG8ecQdNB",
+      "nodeId": "xGOdDVrsnC9StOiisCd1",
+      "generatedOn": "2026-11-07",
+      "credits": 360,
+      "chosenBecause": "The one music take, as briefed. Same key estimate (C major) and band shape r 0.97; a single sustained arc like the original.",
+      "otherTakes": [],
+      "post": "lead-in trimmed, cut to at most 22.09 s (the original's 20.08 s plus 10 %) with a fade; level +3.0 dB against its kind's target (the original's loudness against its peers)"
+    },
+    "welcome-map": {
+      "status": "delivered",
+      "originals": [
+        "welcome/Map.mp3"
+      ],
+      "tracks": [
+        "town"
+      ],
+      "description": "The town map music (country town.wav), a 4.00 s loop the game repeated 9999 times: 8 beats, two bars at 120 bpm (tracked 117.5). Tagged Music 0.72, Funny music 0.06, Mandolin 0.04. Busy (20 onsets in the loop), bright plucked texture over a bass around C2; key estimate C major (r 0.63).",
+      "uncertain": null,
+      "model": "eleven_music_v2_5",
+      "prompt": "Instrumental cheerful country loop in the key of C major, tonic C, at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass on C and G and a light brushed snare, steady and busy, comic small-town feel. The same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+      "params": {
+        "duration_seconds": 16,
+        "instrumental": true,
+        "lyrics_type": "instrumental"
+      },
+      "generationId": "VlsrULy8axp22Y7NvH0R",
+      "sessionId": "8PW1bzugrnpGppVY6JRN",
+      "nodeId": "aIx9Yir2pIH0uo0DnyJX",
+      "generatedOn": "2026-11-07",
+      "credits": 240,
+      "chosenBecause": "Best of three music takes once transposed: the music model wrote all three in G major although the prompts asked for C major. Transposed down 7 semitones (tempo kept) this retake measures C major as the original does and scores 0.59 (others 0.53 and below).",
+      "otherTakes": [
+        {
+          "generationId": "8hFnBxBBvOc6gpTrSAy1",
+          "credits": 240,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "PNsvHZVfRcPIIcNIisS5",
+          "credits": 240,
+          "date": "2026-11-07",
+          "prompt": "Instrumental cheerful country loop in the key of C major, tonic C, at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass on C and G and a light brushed snare, steady and busy, comic small-town feel. The same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+          "model": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "post": "stretched x1.0027 from 119.68 bpm to 120; 2 bar(s) from 2.741 s (bar-line seam similarity 0.953), 0.500 s equal-power crossfade of the continuation into the head; transposed -7 semitones (tempo kept) to the original's key; level +3.0 dB against its kind's target (the original's loudness against its peers)"
+    },
+    "welcome-paper": {
+      "status": "delivered",
+      "originals": [
+        "welcome/paper.mp3"
+      ],
+      "tracks": [],
+      "description": "Front-door buttons (paper_flipping.wav), 0.81 s, played once per press: a paper flip (2 onsets, noisy, roll-off 3.4 kHz). Quiet (-37 LUFS). Tagger cannot name it.",
+      "uncertain": null,
+      "model": "eleven_text_to_sound_v2",
+      "prompt": "A single page of paper flipped over quickly, a crisp papery flick, very close.",
+      "params": {
+        "duration_seconds": 0.81,
+        "prompt_influence": 0.6,
+        "loop": false
+      },
+      "generationId": "SkgV36DZIAM7DwhjFkZH",
+      "sessionId": "qvjH79z0qVaQWwOxk2uz",
+      "nodeId": "Xm5hNh2EitRCYaYFDMUZ",
+      "generatedOn": "2026-11-07",
+      "credits": 2.7,
+      "chosenBecause": "Higher similarity (0.72 against 0.67) and the same key estimate (C-sharp); fewer extra onsets (3 against 5; the original 1).",
+      "otherTakes": [
+        {
+          "generationId": "LHWS991KebaM8w92DU4P",
+          "credits": 2.7,
+          "date": "2026-11-07"
+        }
+      ],
+      "post": "lead-in trimmed, cut to at most 0.89 s (the original's 0.81 s plus 10 %) with a fade; level -8.0 dB against its kind's target (the original's loudness against its peers)"
     }
   }
 }

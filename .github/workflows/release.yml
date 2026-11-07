@@ -1,0 +1,242 @@
+name: Release (alpha builds)
+
+# Builds the alpha files and attaches them to a GitHub release (a draft, marked pre-release, that
+# the owner reads before publishing it). Run it by hand (Actions > Release (alpha builds) > Run
+# workflow: the files come out as workflow artifacts and nothing else happens) or push a tag
+# that matches the version in the root package.json, for example v0.1.0-alpha.1 (the files are
+# also attached to a draft release for that tag).
+#
+#   funeral-quest-<version>-web-online.zip              web bundle, online-capable, with a README
+#   funeral-quest-<version>-web-solo.zip                web bundle, solo-only, with a README
+#   funeral-quest-<version>-linux-amd64.deb             desktop, Debian and Ubuntu
+#   funeral-quest-<version>-linux-x86_64.AppImage       desktop, any Linux
+#   funeral-quest-<version>-android-debug.apk           Android, debug-signed, installs directly
+#   funeral-quest-<version>-android-release-unsigned.apk  Android, release build, NOT signed
+#   funeral-quest-<version>-server.tar.gz               the server, the web client, its Dockerfile
+#   SHA256SUMS                                          checksums of all of the above
+#
+# THIS WORKFLOW PUBLISHES NOTHING ANYWHERE ELSE: no store, no GitHub Pages, no Docker or package
+# registry. It has no deploy job and no registry login, and it must not get one. Pages has its
+# own workflow (pages.yml), started by hand after the name is confirmed (docs/TODO.md).
+#
+# The version is the root package.json's "version" (scripts/version.mjs); the build is the short
+# commit. Both reach every file: the web bundles' build-info.json and the game's Settings and
+# front door, the desktop app's version and the Android versionName and versionCode, the file
+# names, and the server tarball's version.json. Windows, macOS and iOS builds are not part of the
+# alpha; their workflows (release-desktop.yml, release-mobile.yml) stay available by hand.
+#
+# Repository variable FQ_FEEDBACK_DESTINATION (optional) is the text the in-game "Send feedback"
+# dialog tells players to send their report to; unset, the dialog shows a marked blank.
+on:
+  workflow_dispatch:
+    inputs:
+      default_server:
+        description: "Default server address baked into the desktop app (optional; players can change it)"
+        required: false
+        default: ""
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  VITE_FEEDBACK_DESTINATION: ${{ vars.FQ_FEEDBACK_DESTINATION }}
+
+jobs:
+  meta:
+    name: Version
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      build: ${{ steps.v.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: v
+        run: |
+          build="${GITHUB_SHA::7}"
+          version="$(FQ_BUILD="$build" node scripts/version.mjs --version)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+          echo "Building ${version} (build ${build})" >> "$GITHUB_STEP_SUMMARY"
+      # A tag must say what the code says: v0.1.0-alpha.1 for version 0.1.0-alpha.1.
+      - name: The tag matches the version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          if [ "${GITHUB_REF_NAME}" != "v${{ steps.v.outputs.version }}" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match package.json version ${{ steps.v.outputs.version }}"
+            exit 1
+          fi
+      - run: node scripts/version.mjs --check
+
+  web:
+    name: Web bundle (${{ matrix.edition }})
+    needs: meta
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        edition: [online, solo]
+    env:
+      FQ_BUILD: ${{ needs.meta.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: node scripts/release/package.mjs web-${{ matrix.edition }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-web-${{ matrix.edition }}
+          path: release-out/*.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  server:
+    name: Server tarball
+    needs: meta
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FQ_BUILD: ${{ needs.meta.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: node scripts/release/package.mjs server
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-server
+          path: release-out/*.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+
+  desktop-linux:
+    name: Linux desktop (deb, AppImage)
+    needs: meta
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    env:
+      FQ_BUILD: ${{ needs.meta.outputs.build }}
+      FQ_DEFAULT_SERVER: ${{ inputs.default_server }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+      - name: Linux system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf
+      - run: pnpm install --frozen-lockfile
+      # beforeBuildCommand (apps/desktop/scripts/build-client.mjs) builds the client first.
+      - name: Build
+        working-directory: apps/desktop
+        env:
+          NO_STRIP: "true"
+        run: pnpm exec tauri build --bundles deb,appimage
+      - run: node scripts/release/package.mjs desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-desktop-linux
+          path: |
+            release-out/*.deb
+            release-out/*.AppImage
+          if-no-files-found: error
+          retention-days: 14
+
+  android:
+    name: Android (debug APK, unsigned release APK)
+    needs: meta
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FQ_BUILD: ${{ needs.meta.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - name: Android SDK packages
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - run: pnpm install --frozen-lockfile
+      - name: Build debug APK
+        working-directory: apps/mobile
+        run: node scripts/build-android.mjs debug
+      - name: Build release APK (unsigned)
+        working-directory: apps/mobile
+        env:
+          FQ_SKIP_CLIENT_BUILD: "1"
+          FQ_ANDROID_NO_AAB: "1"
+        run: node scripts/build-android.mjs release
+      - run: node scripts/release/package.mjs android
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-android
+          path: release-out/*.apk
+          if-no-files-found: error
+          retention-days: 14
+
+  assemble:
+    name: Checksums and draft release
+    needs: [meta, web, server, desktop-linux, android]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write # only to attach the files to a draft release, on a tag
+    env:
+      FQ_BUILD: ${{ needs.meta.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: release-out
+          merge-multiple: true
+      - run: node scripts/release/package.mjs checksums
+      - name: What was built
+        run: |
+          node scripts/release/package.mjs list
+          { echo '```'; node scripts/release/package.mjs list; echo; cat release-out/SHA256SUMS; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: funeral-quest-${{ needs.meta.outputs.version }}-all
+          path: release-out/*
+          if-no-files-found: error
+          retention-days: 30
+      # Only on a tag: a draft pre-release for the owner to read and publish by hand. Nothing here
+      # goes to a store, to Pages or to a registry.
+      - name: Draft GitHub pre-release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          prerelease: true
+          name: Funeral Quest ${{ needs.meta.outputs.version }}
+          body: |
+            Alpha build ${{ needs.meta.outputs.version }} (build ${{ needs.meta.outputs.build }}).
+            Unsigned, unsupported, and not for stores. See CHANGELOG.md and docs/ALPHA.md.
+            Check the files against SHA256SUMS.
+          files: release-out/*

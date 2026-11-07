@@ -1,6 +1,6 @@
 {
   "name": "@fq/desktop",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "description": "Funeral Quest desktop app (Tauri 2): wraps the @fq/client bundle for Windows, macOS, Linux and Steam Deck.",
   "type": "module",

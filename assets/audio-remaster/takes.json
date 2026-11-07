@@ -1,5 +1,939 @@
 {
-  "flowId": null,
-  "ledger": [],
-  "tracks": {}
+  "flowId": "8lnJKLnggddrWctzs0pH",
+  "ledger": [
+    {
+      "batch": "rpilot",
+      "description": "fight loop, fire loop, dog growl, gong (sfx model) x2",
+      "estimated": 274.78,
+      "actual": 84.0
+    },
+    {
+      "batch": "rpilot-music",
+      "description": "fight loop via music model 16 s x1",
+      "estimated": 440.0,
+      "actual": 240.0
+    },
+    {
+      "batch": "rmusic",
+      "description": "intro, map, sneak, palors, yangs, ceremony (music model) x1",
+      "estimated": 2805.0,
+      "actual": 1530.0
+    },
+    {
+      "batch": "ramb",
+      "description": "6 ambience loops + gong retake x2",
+      "estimated": 448.14,
+      "actual": 134.0
+    },
+    {
+      "batch": "rfx1",
+      "description": "9 effects x2",
+      "estimated": 347.38,
+      "actual": 104.0
+    },
+    {
+      "batch": "rfx2",
+      "description": "10 effects x2",
+      "estimated": 403.48,
+      "actual": 124.0
+    },
+    {
+      "batch": "rretake",
+      "description": "retakes: palors, yangs, map (music) and bell 3, bell 5, night, wind x2",
+      "estimated": 2765.62,
+      "actual": 1476.0
+    }
+  ],
+  "tracks": {
+    "animals-dog-dragging-hand": {
+      "takes": [
+        {
+          "generationId": "Vv827PiJbK6OfnIX7nX8",
+          "sessionId": "r1hWSk1Ha6O6Wd7eVpox",
+          "nodeId": "9BEtQP6hDdexaCEq796C",
+          "credits": 5.8,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "zJw4ipQzU3oU24oZFMS2",
+          "sessionId": "hC5jwK0rly8t6v2cSfqR",
+          "nodeId": "9BEtQP6hDdexaCEq796C",
+          "credits": 5.8,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "Vv827PiJbK6OfnIX7nX8",
+      "reason": "Higher measured similarity (0.83 against 0.82): band shape below 5 kHz closer (r 0.82 against 0.76), and the tagger hears Dog and Growling as it does in the original."
+    },
+    "background-background_1": {
+      "takes": [
+        {
+          "generationId": "JccdOIPVgxYy8zSQjb3x",
+          "sessionId": "UjCZqz0NEhwDtXclAsHw",
+          "nodeId": "TKdpRpvvyh9DfpCQ5noA",
+          "credits": 4.87,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "lKPVsxnsGgDkq7SXNlX5",
+          "sessionId": "6mHu9ML0Ic5ZtPnJv4Sv",
+          "nodeId": "TKdpRpvvyh9DfpCQ5noA",
+          "credits": 4.87,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "lKPVsxnsGgDkq7SXNlX5",
+      "reason": "Higher similarity (0.84 against 0.80); same single strike (1 onset) and the tagger hears Doorbell, Ding-dong and Bell as in the original."
+    },
+    "background-background_2": {
+      "takes": [
+        {
+          "generationId": "mawr8TBnthl5DBVUWJN4",
+          "sessionId": "zc01kOqf7hBzjZLNEWJj",
+          "nodeId": "MRs6Mem5SdQtcQFK2NaJ",
+          "credits": 6.27,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "Xyb8VDbnEvgRDK4djMRO",
+          "sessionId": "md4yYGxIV5cT8KhE2Id3",
+          "nodeId": "MRs6Mem5SdQtcQFK2NaJ",
+          "credits": 6.27,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "Xyb8VDbnEvgRDK4djMRO",
+      "reason": "Higher similarity (0.83 against 0.65): band shape far closer (r 0.76 against 0.16), centroid 1.07 kHz against the original's 0.93 kHz, and the same key estimate (E-flat major)."
+    },
+    "background-background_3": {
+      "takes": [
+        {
+          "generationId": "AgEEHZS5IOeguCOHPXRd",
+          "sessionId": "rB45HXspWaqhW0LEApAO",
+          "nodeId": "vVBpONVTabvl9oCPvqfM",
+          "credits": 3.37,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "9izGwH63by5jKtX3aV8R",
+          "sessionId": "4mElAKHLWOKEButkFAgo",
+          "nodeId": "vVBpONVTabvl9oCPvqfM",
+          "credits": 3.37,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "cTmXZryIrTPO5icFIcoW",
+          "sessionId": "OjllHdESrBLRaNTs13s4",
+          "nodeId": "3i2Za345GxF51JICR6MO",
+          "credits": 3.0,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register with a short ring-out, close and clean.",
+          "params": {
+            "duration_seconds": 1.01,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        },
+        {
+          "generationId": "98amWVsgdCrIHqSweJUg",
+          "sessionId": "KRXdieKLiQxBKU8ONKYY",
+          "nodeId": "3i2Za345GxF51JICR6MO",
+          "credits": 3.0,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register with a short ring-out, close and clean.",
+          "params": {
+            "duration_seconds": 1.01,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "chosen": "cTmXZryIrTPO5icFIcoW",
+      "reason": "Best of four (0.74; the first two takes scored 0.32 and 0.39, too bright and with extra strikes). From the retake with a warmer prompt: one strike and tagged Doorbell, Ding-dong and Bell, though still brighter than the original (centroid 2.2 kHz against 0.85 kHz)."
+    },
+    "background-background_4": {
+      "takes": [
+        {
+          "generationId": "acXeSQR4Ya6kzK3mmAAq",
+          "sessionId": "3r23aa2S3jtFwHdxbj1r",
+          "nodeId": "nrSxXJlpCypUNNaoXMCF",
+          "credits": 6.43,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "gRRJsrcg5c0wiIKucw91",
+          "sessionId": "DCKj6MOCYGVLj58fOteL",
+          "nodeId": "nrSxXJlpCypUNNaoXMCF",
+          "credits": 6.43,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "acXeSQR4Ya6kzK3mmAAq",
+      "reason": "Similarity 0.91 against 0.91; band shape closer (r 0.91 against 0.89) and the same key estimate as the original (E-flat major)."
+    },
+    "background-background_5": {
+      "takes": [
+        {
+          "generationId": "RIRQpeHvcEY6gutBRyUj",
+          "sessionId": "mS2qkOCHRrHrw9dus9y3",
+          "nodeId": "NnkgxhSsiD1mkEhluxlp",
+          "credits": 4.3,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2z9PIYjy9N3ET9Eo9kAT",
+          "sessionId": "2YEwMCFuCKAWN9OAQQa1",
+          "nodeId": "NnkgxhSsiD1mkEhluxlp",
+          "credits": 4.3,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "kGyTBcaLQogPGXtsJEWn",
+          "sessionId": "cn7vYExF4kfgEuKCTkFX",
+          "nodeId": "hsih03CBdpDv5dI5vq9L",
+          "credits": 4.0,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register that rings out briefly, close and clean.",
+          "params": {
+            "duration_seconds": 1.29,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        },
+        {
+          "generationId": "eb6vR9qCmGpxPwgb2wnv",
+          "sessionId": "8pPiqMcVBYEutXBZ9nev",
+          "nodeId": "hsih03CBdpDv5dI5vq9L",
+          "credits": 4.0,
+          "date": "2026-11-07",
+          "prompt": "A single warm shop doorbell ding, one mellow metallic strike in the middle register that rings out briefly, close and clean.",
+          "params": {
+            "duration_seconds": 1.29,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "chosen": "eb6vR9qCmGpxPwgb2wnv",
+      "reason": "Best of four (0.59; the first two takes scored 0.41 and 0.39). From the retake with a warmer prompt: one strike, tagged Doorbell and Bell; still brighter than the original (centroid 2.1 kHz against 0.94 kHz)."
+    },
+    "closed": {
+      "takes": [
+        {
+          "generationId": "v0Zya7Lsr29uQOTP7Pvs",
+          "sessionId": "qlN7InnTpt7PGXqDDBJR",
+          "nodeId": "JatNNiXt6P0wVqhRGBaU",
+          "credits": 4.1,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "sLygzooxlnRqsWJTmr8Z",
+          "sessionId": "ccD81orokpNALut8MC8d",
+          "nodeId": "JatNNiXt6P0wVqhRGBaU",
+          "credits": 4.1,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "IjpfRfJbr7EUaoOtpCtX",
+          "sessionId": "FPac0BwpVwTkZHGVlpei",
+          "nodeId": "I0C4N9gVHyMToZYKm7WG",
+          "credits": 4.0,
+          "date": "2026-11-07",
+          "prompt": "A single field cricket chirping in a steady rhythm on a warm night, close, high and even, nothing else.",
+          "params": {
+            "duration_seconds": 1.23,
+            "prompt_influence": 0.6,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "cPP5PxJbkFtbuWgr9PKu",
+          "sessionId": "UukbBUA9gVN2DxJ6QOrM",
+          "nodeId": "I0C4N9gVHyMToZYKm7WG",
+          "credits": 4.0,
+          "date": "2026-11-07",
+          "prompt": "A single field cricket chirping in a steady rhythm on a warm night, close, high and even, nothing else.",
+          "params": {
+            "duration_seconds": 1.23,
+            "prompt_influence": 0.6,
+            "loop": true
+          }
+        }
+      ],
+      "chosen": "sLygzooxlnRqsWJTmr8Z",
+      "reason": "Best of four (0.44; the other first take 0.26, the two retakes with a single-cricket prompt 0.20 and 0.23). Its loudness envelope follows the original's (r 0.71); the band shape does not (the original is a narrow chirp near 1.6 kHz with little else). The least alike of the effects."
+    },
+    "morning_coffee": {
+      "takes": [
+        {
+          "generationId": "d4BG5wTnO47dvSeqUQb6",
+          "sessionId": "CDeInawvgPZegtfWRgV4",
+          "nodeId": "HqO5rZPMB5v0mmd9Nu3f",
+          "credits": 16.87,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "VcQzcJiCBQA0Uo4cD6YD",
+          "sessionId": "47YHb4bV23rRTjg09hBS",
+          "nodeId": "HqO5rZPMB5v0mmd9Nu3f",
+          "credits": 16.87,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "VcQzcJiCBQA0Uo4cD6YD",
+      "reason": "Higher similarity (0.69 against 0.65), band shape closer (r 0.68 against 0.52); both are tagged Bird, Bird song and Chirp as the original is."
+    },
+    "mother-happy": {
+      "takes": [
+        {
+          "generationId": "KQhIKCFszON6f6oD32xw",
+          "sessionId": "7hz7nXEsUyMPCvmPHs2G",
+          "nodeId": "eb9SJaJk6jmQYVnkHcf7",
+          "credits": 4.73,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "rDlTn1bZuCtmqr6RNdYW",
+          "sessionId": "9TXqoHcCzGKzOVroHf5x",
+          "nodeId": "eb9SJaJk6jmQYVnkHcf7",
+          "credits": 4.73,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "KQhIKCFszON6f6oD32xw",
+      "reason": "Higher similarity (0.94 against 0.85): centroid 520 Hz against the original's 569 Hz (the other take 736 Hz), the same two onsets and key (C major); tagged Ukulele and Guitar as the original is."
+    },
+    "music-music_fight": {
+      "takes": [
+        {
+          "generationId": "GcnHa9tDi4ZmkLIyGdeq",
+          "sessionId": "sjIVgwQHqjp3EOxYLJFJ",
+          "nodeId": "0aJfjG4WJPjePI5TtotM",
+          "credits": 6.67,
+          "date": "2026-11-07",
+          "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+          "params": {
+            "model": "eleven_text_to_sound_v2",
+            "duration_seconds": 2,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "JcbbgvPOaimbvT6zyTwX",
+          "sessionId": "bv3K3UookoaIHvN5usNp",
+          "nodeId": "0aJfjG4WJPjePI5TtotM",
+          "credits": 6.67,
+          "date": "2026-11-07",
+          "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+          "params": {
+            "model": "eleven_text_to_sound_v2",
+            "duration_seconds": 2,
+            "prompt_influence": 0.5,
+            "loop": true
+          }
+        },
+        {
+          "generationId": "6fcRBh6x0lC8HP2OFjZX",
+          "sessionId": "O8vttt12mpshGYAwkq85",
+          "nodeId": "r5zQeQTZlzoRz197kwVc",
+          "credits": 239.95,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "6fcRBh6x0lC8HP2OFjZX",
+      "reason": "Music model take, cut to exactly one bar at 120 bpm. The two sound-effects-model loops tried first came back 2.25 s long with 4.5 beats per cycle, so they cannot be fitted to the original's one 2.00 s bar without changing the tempo."
+    },
+    "music-music_sneak": {
+      "takes": [
+        {
+          "generationId": "NaVE5N4ugQ4G2DcjomFi",
+          "sessionId": "sWDtaSU4GAqiXWq3w3ro",
+          "nodeId": "3K3KKITcZviWqRbvxIfV",
+          "credits": 240.0,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "NaVE5N4ugQ4G2DcjomFi",
+      "reason": "The one music take, as briefed. Tagged Timpani as the original is; key estimate E minor against the original's weak E major."
+    },
+    "people-jesus_happy": {
+      "takes": [
+        {
+          "generationId": "Y0G9QLmZuvIgdFrZM4wz",
+          "sessionId": "FY1ipsbNzgfuW6qTaBcu",
+          "nodeId": "cakK2Kqunql7KBMsE4zd",
+          "credits": 7.77,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "8eHWtXmAYXLdNNlGvakF",
+          "sessionId": "1SMD4qjTWY1h7I28PFZg",
+          "nodeId": "cakK2Kqunql7KBMsE4zd",
+          "credits": 7.77,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "Y0G9QLmZuvIgdFrZM4wz",
+      "reason": "Similarity 0.85 against 0.85; band shape closer (r 0.93 against 0.89). Both tagged Choir, Singing and A capella as the original is."
+    },
+    "places-desk": {
+      "takes": [
+        {
+          "generationId": "0viSlTjxsSeDSSA6ThxO",
+          "sessionId": "9Bh5wsv9OwYlih22cl4x",
+          "nodeId": "f3ksv3kVjrIjgx821ZBB",
+          "credits": 3.0,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "SNXOacZDziZQDRuG403l",
+          "sessionId": "gnx0rcWKHya9yDCbwgct",
+          "nodeId": "f3ksv3kVjrIjgx821ZBB",
+          "credits": 3.0,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "SNXOacZDziZQDRuG403l",
+      "reason": "Higher similarity (0.59 against 0.54) and the same key estimate (C minor); tagged Clock as the original is."
+    },
+    "places-embalming-room": {
+      "takes": [
+        {
+          "generationId": "UoyoQnGHn0JJfTvQzDLh",
+          "sessionId": "CRjtc4rkHJZySeb9dP30",
+          "nodeId": "LkWJRpe7wIBo9F06P368",
+          "credits": 6.77,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "SjEE06IlSeD7tVd7wKqh",
+          "sessionId": "JWZ42xuaxFEcjdqpZkqZ",
+          "nodeId": "LkWJRpe7wIBo9F06P368",
+          "credits": 6.77,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "UoyoQnGHn0JJfTvQzDLh",
+      "reason": "Similarity 0.54 against 0.55, within noise; chosen for the band shape (r 0.68 against 0.62), centroid nearer the original's (808 Hz against 561 Hz for the other; the original 898 Hz) and the same key estimate (B minor)."
+    },
+    "places-fire": {
+      "takes": [
+        {
+          "generationId": "rzVJnxn1gbhM4QgHhSPE",
+          "sessionId": "Pdi81HfFXMUOSfX7CmiD",
+          "nodeId": "2xnbr7JcnDJCQuX00ghB",
+          "credits": 7.73,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "y7vdOGEOzoxYFjIfkJYt",
+          "sessionId": "ICrOt1jEGYQI6YC7ZwLT",
+          "nodeId": "2xnbr7JcnDJCQuX00ghB",
+          "credits": 7.73,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "rzVJnxn1gbhM4QgHhSPE",
+      "reason": "Higher similarity (0.60 against 0.59) and its centroid (260 Hz) is nearer the original's (451 Hz) than the other take's (107 Hz)."
+    },
+    "places-funeral-ceremony": {
+      "takes": [
+        {
+          "generationId": "ZgvzhYGwoA16RZlVcr63",
+          "sessionId": "P9bPKdBMLLhl4AkTXyit",
+          "nodeId": "zuW2HRMAM3Qf6A8jU7uP",
+          "credits": 210.0,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "ZgvzhYGwoA16RZlVcr63",
+      "reason": "The one music take, as briefed. Similarity 0.81: same key (G major, strong), loudness envelope r 0.97, tagged Organ and Hammond organ as the original is."
+    },
+    "places-hospital_ambulance": {
+      "takes": [
+        {
+          "generationId": "Tm4GiFQkLfRFYUXFHMBc",
+          "sessionId": "mI4cEXYdNkqPYK4li2WE",
+          "nodeId": "FUtTbfRH3xWCdUaEaEXD",
+          "credits": 7.83,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "qnk2eigJpelGs9tjfXrA",
+          "sessionId": "c8W0nVHobTeJmlGwTsey",
+          "nodeId": "FUtTbfRH3xWCdUaEaEXD",
+          "credits": 7.83,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "qnk2eigJpelGs9tjfXrA",
+      "reason": "Higher similarity (0.78 against 0.74): loudness envelope follows the original's (r 0.77 against -0.02); tagged Radio as the original is."
+    },
+    "places-hospital_desk": {
+      "takes": [
+        {
+          "generationId": "PMW5jhuuX7toF4yGyEwP",
+          "sessionId": "4np2kKlpLL1LEQSOBGGc",
+          "nodeId": "5dtSVZvMFfTE9vP8JLD2",
+          "credits": 10.13,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2VZkNge3ruk54xJXa4DT",
+          "sessionId": "IfArgALdPp0zp3BYwHG8",
+          "nodeId": "5dtSVZvMFfTE9vP8JLD2",
+          "credits": 10.13,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "2VZkNge3ruk54xJXa4DT",
+      "reason": "Higher similarity (0.91 against 0.87) with the same single onset as the original; the tagger hears murmur and speech-like room tone in both, as it does in the original, but the speech screen finds no words."
+    },
+    "places-hospital_room": {
+      "takes": [
+        {
+          "generationId": "jMmUWTOnfHkXCqDA8YCX",
+          "sessionId": "LRl30S0MhKpoz2uVXm7d",
+          "nodeId": "1UPILATEkqIV01QhDhmN",
+          "credits": 5.3,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2Kd2j9UUwAtHKB2DHpMB",
+          "sessionId": "1ygYRk7FX10trAvHYxx7",
+          "nodeId": "1UPILATEkqIV01QhDhmN",
+          "credits": 5.3,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "2Kd2j9UUwAtHKB2DHpMB",
+      "reason": "Higher similarity (0.52 against 0.47); band shape closer (r 0.17 against 0.00) and centroid nearer (2.0 kHz against 2.8 kHz; the original 1.4 kHz). Tagged Beep as the original is."
+    },
+    "places-palors": {
+      "takes": [
+        {
+          "generationId": "IGSVTuhWbJ5Hzz065Utf",
+          "sessionId": "mSlfZkPpYHLcPC6XKUVV",
+          "nodeId": "KAkE2IsyS7atnIv7sYQ6",
+          "credits": 240.0,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "ZiA15h4Vsp1DunLdxoBM",
+          "sessionId": "WX1IfInfWxusCd6bePn4",
+          "nodeId": "KJYVYWMeOI9h2VP8MrKf",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp major, tonic F-sharp, at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious tinkling figure in the middle register over a soft sustained F-sharp pad, playful and a little mysterious. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        },
+        {
+          "generationId": "1lF5pODQgXkLKgSOV7yR",
+          "sessionId": "abyKCf5h80osXrAcHH3e",
+          "nodeId": "KJYVYWMeOI9h2VP8MrKf",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp major, tonic F-sharp, at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious tinkling figure in the middle register over a soft sustained F-sharp pad, playful and a little mysterious. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "chosen": "IGSVTuhWbJ5Hzz065Utf",
+      "reason": "Best of three music takes once transposed: the music model wrote all three in C major although the prompts asked for F-sharp major. Transposed down 6 semitones (tempo kept) it measures F-sharp major as the original does and scores 0.60 (the retakes 0.57 and below).",
+      "pitchSemitones": -6
+    },
+    "places-psych": {
+      "takes": [
+        {
+          "generationId": "zKVY71LzfzlD33kSFOEm",
+          "sessionId": "jjvjeTv7pvDeVTirb2l4",
+          "nodeId": "K6O0gI7rtwJtprDBTmKZ",
+          "credits": 10.96,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "UVdYJOww9PV4k0QgaCj3",
+          "sessionId": "uTZsvZcc1mh4jVSQWdEJ",
+          "nodeId": "K6O0gI7rtwJtprDBTmKZ",
+          "credits": 10.96,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "UVdYJOww9PV4k0QgaCj3",
+      "reason": "Higher similarity (0.81 against 0.80), band shape closer (r 0.75 against 0.69); both tagged Harp, Pizzicato and Plucked string as the original is."
+    },
+    "places-yangs": {
+      "takes": [
+        {
+          "generationId": "bzubW0ivikkaXScSZf2Q",
+          "sessionId": "mupvmF1Ac3JdVhAggW7T",
+          "nodeId": "NMlxgyt3GF4H1yFThJdl",
+          "credits": 240.0,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "qFYS0QtyhPNK4S4ASnVO",
+          "sessionId": "K1JdKChBCXMk7Lbo3PXF",
+          "nodeId": "VsjDriFaPTjpjUND36pq",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp minor, tonic F-sharp, at exactly 120 bpm in 4/4: a plucked zither with pizzicato strings playing a light flowing pattern over a low F-sharp drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        },
+        {
+          "generationId": "ifiN33b2wy5QXMuiviKm",
+          "sessionId": "Q2kEpUteVZ1YUvP1gjST",
+          "nodeId": "VsjDriFaPTjpjUND36pq",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental loop in the key of F-sharp minor, tonic F-sharp, at exactly 120 bpm in 4/4: a plucked zither with pizzicato strings playing a light flowing pattern over a low F-sharp drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "chosen": "ifiN33b2wy5QXMuiviKm",
+      "reason": "The music model ignored the asked key in all three takes (C major, C minor, A minor against the original's F-sharp minor). This retake, transposed down 6 semitones (tempo kept), measures F-sharp minor as the original does and has the closest band shape (r 0.72 against 0.54 and below).",
+      "pitchSemitones": -6
+    },
+    "ring-ring": {
+      "takes": [
+        {
+          "generationId": "5xRaenpfXk392ANPzZmt",
+          "sessionId": "FSDJHVpuJdQ8rk2LLBj3",
+          "nodeId": "0Nx9HWt6j0psP9YzTJRJ",
+          "credits": 7.07,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "dBwrBwQnYQ20u3sgNqFb",
+          "sessionId": "ttP2rbxKHoyy9iU86Zdr",
+          "nodeId": "0Nx9HWt6j0psP9YzTJRJ",
+          "credits": 7.07,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "5xRaenpfXk392ANPzZmt",
+      "reason": "Higher similarity (0.75 against 0.58): one onset as in the original (the other take 4) and the same key estimate (G minor)."
+    },
+    "stuff-battle_lose": {
+      "takes": [
+        {
+          "generationId": "g9NTkQOTWjQuhYrFPVAV",
+          "sessionId": "xrODmmF7oDkaM83BoeFG",
+          "nodeId": "YrVeqqhguMV6OiOi7CFF",
+          "credits": 21.43,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "tdRPaWnzGj5Ed8EFuFLy",
+          "sessionId": "PiBUUjPWjAOgoKsqhPVy",
+          "nodeId": "YrVeqqhguMV6OiOi7CFF",
+          "credits": 21.43,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "2s2AFSgXkfn5c5KWidsV",
+          "sessionId": "ikI5IoBj1doG3QD5jPZl",
+          "nodeId": "vCyfTuWqlp6HLANeQkBV",
+          "credits": 21.43,
+          "date": "2026-11-07",
+          "prompt": "A large bronze gong struck firmly once: a bright metallic crash that blooms into a loud shimmering wash and decays slowly over about six seconds.",
+          "params": {
+            "duration_seconds": 6.43,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        },
+        {
+          "generationId": "tJu6DylILj8Q46CxEB59",
+          "sessionId": "s4ViK7yZeR6keXTl0eY6",
+          "nodeId": "vCyfTuWqlp6HLANeQkBV",
+          "credits": 21.43,
+          "date": "2026-11-07",
+          "prompt": "A large bronze gong struck firmly once: a bright metallic crash that blooms into a loud shimmering wash and decays slowly over about six seconds.",
+          "params": {
+            "duration_seconds": 6.43,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "chosen": "tdRPaWnzGj5Ed8EFuFLy",
+      "reason": "Best of four (similarity 0.68 delivered in the pilot; the brighter retakes scored about 0.51 and 0.54). Tagged Gong as the original is. It is darker than the original (centroid 143 Hz against 358 Hz), but nearer than the retakes, which overshoot to about 2.4 kHz."
+    },
+    "stuff-lottery_lose-26": {
+      "takes": [
+        {
+          "generationId": "x0FhzEUmN4RRFCjYdDDC",
+          "sessionId": "bVeSqvm1AolMkMtbkjNt",
+          "nodeId": "knb6iAXXeSliBuzTWXHJ",
+          "credits": 5.67,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "rPYVOImcTz99yP2ioKnn",
+          "sessionId": "dCXZPV0IgKZrHYeJpnQR",
+          "nodeId": "knb6iAXXeSliBuzTWXHJ",
+          "credits": 5.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "x0FhzEUmN4RRFCjYdDDC",
+      "reason": "Higher similarity (0.53 against 0.52), fewer onsets (1 against 5; the original 2). Neither take is close: the original is a brassy musical sting and both remakes are darker."
+    },
+    "stuff-lottery_win-19": {
+      "takes": [
+        {
+          "generationId": "62DW1ZQZo7mzYgsCE392",
+          "sessionId": "VcatNmKlOjlk88fjxea3",
+          "nodeId": "xhACuiyVpKZaAETHsuXW",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "WMbkYZytc6xADcgPV6T7",
+          "sessionId": "oyWpzRAec2rrUmskCrPr",
+          "nodeId": "xhACuiyVpKZaAETHsuXW",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "62DW1ZQZo7mzYgsCE392",
+      "reason": "Higher similarity (0.68 against 0.67), band shape closer (r 0.74 against 0.73); both one strike as the original."
+    },
+    "stuff-lottery_win-25": {
+      "takes": [
+        {
+          "generationId": "QYRClx1yyoslnHcpmp05",
+          "sessionId": "kM7ef75ZqTXzdxt02JMT",
+          "nodeId": "wKKT4VBIRtkPwylvoUS6",
+          "credits": 4.43,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "BZQKF0VIYQvj98nM7wnm",
+          "sessionId": "z8MbsdfMDDaZdpBbBIxx",
+          "nodeId": "wKKT4VBIRtkPwylvoUS6",
+          "credits": 4.43,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "QYRClx1yyoslnHcpmp05",
+      "reason": "Higher similarity (0.93 against 0.84): loudness envelope r 0.74 against 0.25, the same two onsets; tagged Cash register as the original is."
+    },
+    "stuff-money_bag": {
+      "takes": [
+        {
+          "generationId": "0znZiD7NuoV99LXQP3rK",
+          "sessionId": "iXwYxCRr6mNoGsyiV81W",
+          "nodeId": "ujcyV8exGuljBbkGAFoO",
+          "credits": 10.53,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "rd2LJPY1MWNWUXFMjtpM",
+          "sessionId": "ZWRvD9jaJsAGvdke18O0",
+          "nodeId": "ujcyV8exGuljBbkGAFoO",
+          "credits": 10.53,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "rd2LJPY1MWNWUXFMjtpM",
+      "reason": "Higher similarity (0.81 against 0.74), the same two onsets and key estimate (B major); tagged Guitar and Acoustic guitar as the original is."
+    },
+    "stuff-money_bag_2": {
+      "takes": [
+        {
+          "generationId": "iTOiGisOO7ZVKGBxnolN",
+          "sessionId": "69TOzVW8dbvuWL2CmfMz",
+          "nodeId": "fn95AXc6YOsQm1XHQ07b",
+          "credits": 2.83,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "Cd6TgaS49p0YS6u70Ru0",
+          "sessionId": "vgMqTxsqB5Cj5UVZijCu",
+          "nodeId": "fn95AXc6YOsQm1XHQ07b",
+          "credits": 2.83,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "iTOiGisOO7ZVKGBxnolN",
+      "reason": "Higher similarity (0.80 against 0.63): band shape r 0.94 against 0.52; tagged Cash register."
+    },
+    "stuff-toilet": {
+      "takes": [
+        {
+          "generationId": "zCQqQbKWHsRJ3O3W1tQ3",
+          "sessionId": "B5wLzHng5BDPxiTnv33m",
+          "nodeId": "rPeviiHXKnBcO6Mwhv9R",
+          "credits": 13.4,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "SDNq3dSIHtGMNXECa67B",
+          "sessionId": "oDNZxqtoEgfqMCmafWCC",
+          "nodeId": "rPeviiHXKnBcO6Mwhv9R",
+          "credits": 13.4,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "zCQqQbKWHsRJ3O3W1tQ3",
+      "reason": "Higher similarity (0.86 against 0.82): loudness envelope r 0.79 against 0.43; tagged Toilet flush and Water as the original is."
+    },
+    "wait": {
+      "takes": [
+        {
+          "generationId": "TT35OxIOoKQ5Ha8Z1Oca",
+          "sessionId": "pPk7DgcE5WpuXqqJA3Jq",
+          "nodeId": "oPAUdVw3Sna2N4zAnD46",
+          "credits": 7.27,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "8b2AbexueSw278rV3WQB",
+          "sessionId": "T80hVRHBaOwsZA8ZVksb",
+          "nodeId": "oPAUdVw3Sna2N4zAnD46",
+          "credits": 7.27,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "SbWzbAFpq8AC7IElcEqs",
+          "sessionId": "sCkrwSskwg8grNnVV24B",
+          "nodeId": "jdpXuO2K5cu8rL6bzN0n",
+          "credits": 7.0,
+          "date": "2026-11-07",
+          "prompt": "A short airy gust of wind, a breathy hissing whoosh that swells and fades away over about two seconds, outdoors, no low rumble.",
+          "params": {
+            "duration_seconds": 2.18,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        },
+        {
+          "generationId": "MC5KsHkFMM5YvPjqDHZr",
+          "sessionId": "cQPV712PaV5uGWaWaG4A",
+          "nodeId": "jdpXuO2K5cu8rL6bzN0n",
+          "credits": 7.0,
+          "date": "2026-11-07",
+          "prompt": "A short airy gust of wind, a breathy hissing whoosh that swells and fades away over about two seconds, outdoors, no low rumble.",
+          "params": {
+            "duration_seconds": 2.18,
+            "prompt_influence": 0.6,
+            "loop": false
+          }
+        }
+      ],
+      "chosen": "MC5KsHkFMM5YvPjqDHZr",
+      "reason": "Best of four (0.62; the first two takes 0.37 and 0.42 were a low rumble, centroid about 350 Hz against the original's 1.55 kHz). From the retake asking for an airy hiss: centroid 2.0 kHz."
+    },
+    "welcome-46": {
+      "takes": [
+        {
+          "generationId": "Buj5OXb28STVLKabgHXP",
+          "sessionId": "7ZkeC69p3uAeENGD6SBh",
+          "nodeId": "YOpurY1SS0SgToJAs9jO",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "ESxoSacWllwVaemdpQ9W",
+          "sessionId": "o7g40xMLtjXoW6FuppRZ",
+          "nodeId": "YOpurY1SS0SgToJAs9jO",
+          "credits": 1.67,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "ESxoSacWllwVaemdpQ9W",
+      "reason": "Similarity 0.60 against 0.60; band shape closer (r 0.60 against 0.48). The original is an almost silent 0.19 s click; the model's shortest output is 0.5 s, cut to 0.21 s in post."
+    },
+    "welcome-intro": {
+      "takes": [
+        {
+          "generationId": "pSPCQaMqlf5UUL3hUjhy",
+          "sessionId": "vlI7GO3bwuVnG8ecQdNB",
+          "nodeId": "xGOdDVrsnC9StOiisCd1",
+          "credits": 360.0,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "pSPCQaMqlf5UUL3hUjhy",
+      "reason": "The one music take, as briefed. Same key estimate (C major) and band shape r 0.97; a single sustained arc like the original."
+    },
+    "welcome-map": {
+      "takes": [
+        {
+          "generationId": "8hFnBxBBvOc6gpTrSAy1",
+          "sessionId": "9kpdROgGRnNEtvy0oMV5",
+          "nodeId": "AAqH9UDetDFJh2Vz56LC",
+          "credits": 240.0,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "VlsrULy8axp22Y7NvH0R",
+          "sessionId": "8PW1bzugrnpGppVY6JRN",
+          "nodeId": "aIx9Yir2pIH0uo0DnyJX",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental cheerful country loop in the key of C major, tonic C, at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass on C and G and a light brushed snare, steady and busy, comic small-town feel. The same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        },
+        {
+          "generationId": "PNsvHZVfRcPIIcNIisS5",
+          "sessionId": "mUL576T8gBDXOwa94v3W",
+          "nodeId": "aIx9Yir2pIH0uo0DnyJX",
+          "credits": 240.0,
+          "date": "2026-11-07",
+          "prompt": "Instrumental cheerful country loop in the key of C major, tonic C, at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass on C and G and a light brushed snare, steady and busy, comic small-town feel. The same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+          "params": {
+            "duration_seconds": 16,
+            "instrumental": true,
+            "lyrics_type": "instrumental"
+          }
+        }
+      ],
+      "chosen": "VlsrULy8axp22Y7NvH0R",
+      "reason": "Best of three music takes once transposed: the music model wrote all three in G major although the prompts asked for C major. Transposed down 7 semitones (tempo kept) this retake measures C major as the original does and scores 0.59 (others 0.53 and below).",
+      "pitchSemitones": -7
+    },
+    "welcome-paper": {
+      "takes": [
+        {
+          "generationId": "SkgV36DZIAM7DwhjFkZH",
+          "sessionId": "qvjH79z0qVaQWwOxk2uz",
+          "nodeId": "Xm5hNh2EitRCYaYFDMUZ",
+          "credits": 2.7,
+          "date": "2026-11-07"
+        },
+        {
+          "generationId": "LHWS991KebaM8w92DU4P",
+          "sessionId": "d7ewKIZck6jCswVHc7YP",
+          "nodeId": "Xm5hNh2EitRCYaYFDMUZ",
+          "credits": 2.7,
+          "date": "2026-11-07"
+        }
+      ],
+      "chosen": "SkgV36DZIAM7DwhjFkZH",
+      "reason": "Higher similarity (0.72 against 0.67) and the same key estimate (C-sharp); fewer extra onsets (3 against 5; the original 1)."
+    }
+  }
 }

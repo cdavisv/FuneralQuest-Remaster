@@ -29,6 +29,61 @@ export class SystemClock implements Clock {
   }
 }
 
+/**
+ * An accelerated clock for soak tests (`FQ_TEST_CLOCK_SPEED`). Game time runs `speed` times
+ * faster than real time: at the real instant `anchorReal` it reads `anchorGame`, and every real
+ * millisecond after that is `speed` game milliseconds. Time is a pure function of the real clock,
+ * so a server killed and started again with the same three numbers carries on where it was, and
+ * the time it was down passes in game time too (missed midnights run at start-up, as they would
+ * after a real outage). Timers fire after their delay divided by `speed`. `loadConfig` refuses it
+ * when `NODE_ENV` is `production`.
+ */
+export class ScaledClock implements Clock {
+  constructor(
+    readonly speed: number,
+    readonly anchorReal: number,
+    readonly anchorGame: number,
+  ) {
+    if (!(speed >= 1)) throw new Error("ScaledClock speed must be at least 1");
+  }
+
+  now(): number {
+    return Math.floor(this.anchorGame + (Date.now() - this.anchorReal) * this.speed);
+  }
+
+  setTimeout(fn: () => void | Promise<void>, ms: number): () => void {
+    // Round up and add one so the game time has passed the target when the timer runs.
+    const real = Math.ceil(Math.max(0, ms) / this.speed) + 1;
+    const handle = setTimeout(
+      () => {
+        void Promise.resolve(fn()).catch(() => undefined);
+      },
+      Math.min(real, MAX_DELAY),
+    );
+    handle.unref();
+    return () => clearTimeout(handle);
+  }
+}
+
+/** The clock a server built from configuration uses: the system clock, or the soak-test one. */
+export function clockFromConfig(config: {
+  testClockSpeed: number;
+  testClockStart: string;
+  testClockAnchor: number;
+}): Clock {
+  if (config.testClockSpeed <= 1 && config.testClockStart === "") return new SystemClock();
+  const anchorReal = config.testClockAnchor > 0 ? config.testClockAnchor : Date.now();
+  const start = config.testClockStart === "" ? anchorReal : parseClockStart(config.testClockStart);
+  return new ScaledClock(config.testClockSpeed, anchorReal, start);
+}
+
+/** `FQ_TEST_CLOCK_START`: an ISO date-time or epoch milliseconds. */
+export function parseClockStart(text: string): number {
+  const t = /^\d+$/.test(text) ? Number(text) : Date.parse(text);
+  if (!Number.isFinite(t)) throw new Error(`FQ_TEST_CLOCK_START: not a time: ${text}`);
+  return t;
+}
+
 interface FakeTimer {
   id: number;
   at: number;

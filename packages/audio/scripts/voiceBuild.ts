@@ -84,7 +84,10 @@ interface TakesFile {
 
 interface TakeResult extends Take {
   file: string;
+  /** The transcript the word check passed on (or the first model's, when it failed). */
   transcript: string;
+  transcripts: Record<string, string>;
+  sttModel: string;
   words: WordCheck;
   checks: {
     sourceSeconds: number;
@@ -119,8 +122,20 @@ function frameRms(x: Float32Array, n: number): number[] {
   return out;
 }
 
-function transcribeAll(files: string[]): Record<string, string> {
-  const cachePath = join(cacheDir, "transcripts.json");
+/**
+ * Speech-to-text models, in order: a take passes the word check if either transcribes it word for
+ * word. Both are local and independent of ElevenLabs (its own transcriber, given a generation,
+ * echoed the prompt's delivery tag, so it is not an independent check). The second, larger model
+ * runs only on takes the first did not pass; homophones ("patience"/"patients", "two"/"to") are
+ * where the small model goes wrong.
+ */
+const STT_MODELS = ["small", "medium.en"] as const;
+
+function transcribeAll(files: string[], model: string = STT_MODELS[0]): Record<string, string> {
+  const cachePath = join(
+    cacheDir,
+    model === "small" ? "transcripts.json" : `transcripts-${model}.json`,
+  );
   const cache: Record<string, string> = existsSync(cachePath)
     ? JSON.parse(readFileSync(cachePath, "utf8"))
     : {};
@@ -130,6 +145,7 @@ function transcribeAll(files: string[]): Record<string, string> {
     const out = join(tmp, "stt.json");
     execFileSync(sttPython, ["-I", join(here, "voiceTranscribe.py"), out, ...todo], {
       stdio: ["ignore", "inherit", "inherit"],
+      env: { ...process.env, FQ_STT_MODEL: model },
     });
     Object.assign(cache, JSON.parse(readFileSync(out, "utf8")));
     rmSync(tmp, { recursive: true, force: true });
@@ -264,7 +280,17 @@ function main() {
   const files = takesFile.takes.map((t) => join(sourceDir, `${t.key}__${t.generationId}.mp3`));
   // A take generated (and charged) but not downloaded yet: listed, not used, fetched later by its id.
   const notDownloaded = takesFile.takes.filter((_t, i) => !existsSync(files[i] as string));
-  const transcripts = transcribeAll(files.filter((f) => existsSync(f)));
+  const present = files.filter((f) => existsSync(f));
+  const transcripts = transcribeAll(present);
+  // the second model, for the takes whose words the first did not match
+  const second = transcribeAll(
+    present.filter((f) => {
+      const t = takesFile.takes[files.indexOf(f)] as Take;
+      const line = byVoiceKey.get(t.key);
+      return line?.voice ? !checkWords(line.voice.text, transcripts[f] ?? "").ok : false;
+    }),
+    STT_MODELS[1],
+  );
   const tmp = mkdtempSync(join(tmpdir(), "fq-voice-"));
   const results: TakeResult[] = [];
   const clips: VoiceClip[] = [];
@@ -283,8 +309,26 @@ function main() {
     const stripped = t.prompt.replace(/\[[^\]]*\]\s*/g, "").trim();
     if (stripped !== text)
       throw new Error(`prompt of ${t.generationId} is not the line's exact text`);
-    const words = checkWords(text, transcript);
-    const base = { ...t, file: `${t.key}__${t.generationId}.mp3`, transcript, words };
+    let words = checkWords(text, transcript);
+    let sttModel: string = STT_MODELS[0];
+    if (!words.ok && second[file] !== undefined) {
+      const w2 = checkWords(text, second[file] ?? "");
+      if (w2.ok) {
+        words = w2;
+        sttModel = STT_MODELS[1];
+      }
+    }
+    const base = {
+      ...t,
+      file: `${t.key}__${t.generationId}.mp3`,
+      transcript: sttModel === STT_MODELS[0] ? transcript : (second[file] ?? ""),
+      transcripts: {
+        [STT_MODELS[0]]: transcript,
+        ...(second[file] !== undefined ? { [STT_MODELS[1]]: second[file] } : {}),
+      },
+      sttModel,
+      words,
+    };
     if (done.has(t.key)) {
       results.push({ ...base, checks: null, verdict: "spare", reason: "an earlier take passed" });
       continue;
@@ -362,7 +406,8 @@ function main() {
         lufsTarget: VOICE_LUFS,
         peakCeilingDb: PEAK_CEILING_DB,
         bitrates: { opus: BITRATES[0], aac: BITRATES[1] },
-        speechToText: "faster-whisper small (int8, CPU), no prompt (scripts/voiceTranscribe.py)",
+        speechToText:
+          "faster-whisper small (int8, CPU), no prompt; for takes it does not pass word for word, faster-whisper medium.en; a take passes if either matches (scripts/voiceTranscribe.py)",
         batches: takesFile.batches,
         credits,
         takes: results,

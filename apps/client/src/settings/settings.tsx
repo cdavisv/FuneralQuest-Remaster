@@ -1,4 +1,4 @@
-import { DEFAULT_PACK as DEFAULT_SOUND_PACK, isPackId, type PackId } from "@fq/audio";
+import { DEFAULT_PACK_SETTING, isPackSetting, type PackSetting } from "@fq/audio";
 import {
   createContext,
   type ReactNode,
@@ -27,8 +27,13 @@ export interface Settings {
   muted: boolean;
   /** The "2001 radio" filter: band-limited mono, like the original's 11 kHz sounds. */
   radio: boolean;
-  /** The sound pack: "synth" (the default), "studio" or "remaster"; see @fq/audio's packs. */
-  soundPack: PackId;
+  /**
+   * The sound pack: "auto" (the default: by the ruleset being played), or "synth", "studio" or
+   * "remaster", which win everywhere; see @fq/audio's packs. A saved choice is kept as it is.
+   */
+  soundPack: PackSetting;
+  /** True once the player has picked a sound pack in Settings (see `loadSettings`). */
+  soundPackChosen: boolean;
   /**
    * Character voices: "auto" (on in Expanded towns and Solo careers, off in Classic towns),
    * or the player's own "on" or "off".
@@ -69,7 +74,8 @@ export function defaultSettings(): Settings {
     volume: { master: 0.8, music: 0.6, ambience: 0.6, effects: 0.8, voice: 0.9 },
     muted: false,
     radio: false,
-    soundPack: DEFAULT_SOUND_PACK,
+    soundPack: DEFAULT_PACK_SETTING,
+    soundPackChosen: false,
     voices: "auto",
   };
 }
@@ -113,7 +119,14 @@ export function loadSettings(storage: Pick<Storage, "getItem"> | undefined): Set
       },
       muted: typeof data.muted === "boolean" ? data.muted : base.muted,
       radio: typeof data.radio === "boolean" ? data.radio : base.radio,
-      soundPack: isPackId(data.soundPack) ? data.soundPack : base.soundPack,
+      // A stored "synth" from before the Automatic choice existed (settings were saved whole
+      // on every load, so it was never a choice) becomes Automatic once; a choice made in the
+      // Settings panel is saved with `soundPackChosen` and is kept.
+      soundPack:
+        isPackSetting(data.soundPack) && (data.soundPack !== "synth" || data.soundPackChosen)
+          ? data.soundPack
+          : base.soundPack,
+      soundPackChosen: data.soundPackChosen === true,
       voices:
         data.voices === "on" || data.voices === "off" || data.voices === "auto"
           ? data.voices

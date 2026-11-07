@@ -1,4 +1,5 @@
-import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { cp, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -150,7 +151,7 @@ function buildInfo(): Plugin {
       this.emitFile({
         type: "asset",
         fileName: "build-info.json",
-        source: `${JSON.stringify({ soloOnly: process.env.VITE_SOLO_ONLY === "1", base: siteBase() }, null, 2)}\n`,
+        source: `${JSON.stringify({ soloOnly: process.env.VITE_SOLO_ONLY === "1", base: siteBase(), ...buildId }, null, 2)}\n`,
       });
     },
   };
@@ -202,13 +203,23 @@ function bundleAudio(): Plugin {
 }
 
 /**
- * The optional Studio sound pack (assets/audio-studio, generated with ElevenLabs; see its
- * LICENSES.md) goes to <outDir>/audio-studio only when FQ_AUDIO_PACKS names it
- * (`FQ_AUDIO_PACKS=synth,studio`), because its redistribution terms are not settled. Without it,
- * a player who picks the Studio pack hears the Synth pack. `vite dev` serves both as they are.
+ * The sound packs and character voices a build ships. The default is every pack the "Automatic"
+ * sound setting can pick (decision 15a: Original, remastered for Classic, Studio for Expanded),
+ * with Synth behind both; voices are opt-in (`FQ_AUDIO_PACKS=synth,studio,remaster,voice`).
+ * Name fewer to ship fewer (`FQ_AUDIO_PACKS=synth`): a pack a build lacks plays from the next
+ * one in the fallback order.
+ */
+const DEFAULT_AUDIO_PACKS = "synth,studio,remaster";
+const audioPacks = () =>
+  (process.env.FQ_AUDIO_PACKS ?? DEFAULT_AUDIO_PACKS).split(",").map((p) => p.trim());
+
+/**
+ * The Studio sound pack (assets/audio-studio, generated with ElevenLabs; see its LICENSES.md)
+ * goes to <outDir>/audio-studio when FQ_AUDIO_PACKS names it (the default). `vite dev` serves
+ * every pack as it is.
  */
 async function bundleStudioAudio(): Promise<void> {
-  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  const packs = audioPacks();
   if (!packs.includes("studio") || process.env.VITE_AUDIO_STUDIO_BASE) return;
   const from = `${assetsDir}/audio-studio`;
   try {
@@ -229,11 +240,11 @@ async function bundleStudioAudio(): Promise<void> {
 }
 
 /**
- * The optional "Original, remastered" pack (assets/audio-remaster), copied like the Studio pack
- * only when FQ_AUDIO_PACKS names it (`FQ_AUDIO_PACKS=synth,remaster`), for the same reason.
+ * The "Original, remastered" pack (assets/audio-remaster) and the voice pack (assets/voice),
+ * copied like the Studio pack when FQ_AUDIO_PACKS names them (the remaster by default, voices not).
  */
 async function bundleOptionalPack(id: string, dir: string, baseEnv: string): Promise<void> {
-  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  const packs = audioPacks();
   if (!packs.includes(id) || process.env[baseEnv]) return;
   const from = `${assetsDir}/${dir}`;
   try {
@@ -266,10 +277,42 @@ function siteBase(): string {
   return raw.endsWith("/") ? raw : `${raw}/`;
 }
 
+/**
+ * What this build is: the root package.json's version (the one source, see scripts/version.mjs,
+ * which does the same for the other apps; this copy exists because a Docker build has no scripts/
+ * directory) and the short commit, or FQ_BUILD, or "dev" when there is no git. The game shows
+ * them in Settings and on the front door, and the feedback report carries them.
+ */
+function buildVersion(): { version: string; build: string } {
+  const root = fileURLToPath(new URL("../..", import.meta.url));
+  const { version } = JSON.parse(readFileSync(`${root}/package.json`, "utf8")) as {
+    version: string;
+  };
+  let build = (process.env.FQ_BUILD ?? "").trim().slice(0, 12);
+  if (!build) {
+    try {
+      build = execFileSync("git", ["rev-parse", "--short=7", "HEAD"], {
+        cwd: root,
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim();
+    } catch {
+      build = "dev";
+    }
+  }
+  return { version, build: build || "dev" };
+}
+const buildId = buildVersion();
+
 const serverTarget = process.env.FQ_SERVER_URL ?? "http://127.0.0.1:8080";
 
 export default defineConfig(({ command }) => ({
   base: siteBase(),
+  define: {
+    __FQ_VERSION__: JSON.stringify(buildId.version),
+    __FQ_BUILD__: JSON.stringify(buildId.build),
+  },
   plugins: [react(), classicIds(), pwa(), buildInfo(), bundleArt(), bundleAudio(), precache()],
   publicDir: command === "serve" ? assetsDir : false,
   build: { outDir, emptyOutDir: true, sourcemap: true },

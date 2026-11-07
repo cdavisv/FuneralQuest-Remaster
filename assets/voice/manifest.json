@@ -2,8 +2,56 @@
   "generator": "packages/audio/scripts/voiceBuild.ts from ElevenLabs takes (assets/voice/takes.json)",
   "license": "See assets/voice/LICENSES.md: generated with ElevenLabs under the owner's account; redistribution terms are for the owner to confirm.",
   "lufs": -16,
-  "totalBytes": 1692466,
+  "totalBytes": 3897545,
   "clips": [
+    {
+      "key": "clerk-2a3f913d43bd10c3",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "After some funerals you'll prepare the body yourself, and there'll be a choice. A ring left on a finger. A fat wallet. Take it, or leave it. That's karma. Be good and the town trusts you: calmer, richer customers. Be bad and the money's nice, the hours are flexible, and the Guild pretends it doesn't know you.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-2a3f913d43bd10c3.ogg",
+        "m4a": "clerk/clerk-2a3f913d43bd10c3.m4a",
+        "bytes": 202666
+      },
+      "duration": 21.57
+    },
+    {
+      "key": "clerk-240963811aec56a7",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Cash is for the business. Di-Mart sells caskets wholesale; ask for Elijah, and don't let him touch your hair. Selling from stock pays better than a rush order. Your office has upgrades: paint, a coffee machine, one day a chapel. That's it! Your first customer is waiting. I'll be watching. Taking notes. Don't mind me.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-240963811aec56a7.ogg",
+        "m4a": "clerk/clerk-240963811aec56a7.m4a",
+        "bytes": 185359
+      },
+      "duration": 19.77
+    },
+    {
+      "key": "clerk-e321c7a9632dde83",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Every customer has a limit: the most they'll spend. You never see it. You see an estimate, a range, and the real number is somewhere inside it. Not necessarily the middle. Psychology classes at Spirit University narrow it down. Nothing you sell can push the bill past their limit. They'll just say no.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-e321c7a9632dde83.ogg",
+        "m4a": "clerk/clerk-e321c7a9632dde83.m4a",
+        "bytes": 178231
+      },
+      "duration": 18.73
+    },
     {
       "key": "clerk-d5d0b470b26e0e76",
       "character": "clerk",
@@ -53,6 +101,22 @@
       "duration": 14.16
     },
     {
+      "key": "clerk-545563d0787540be",
+      "character": "clerk",
+      "speaker": "Clerk",
+      "text": "Soft Sell deals you a hand of three extras; pick one that fits under the top of the estimate. Packages upgrade the embalming, flowers, plot, headstone and service, one step at a time. Hard Sell moves them up a casket. Coffee calms someone down, once per customer. A Discount takes a little off the bill and cheers them up, twice at most. Press Done when the bill is where you want it.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "clerk/clerk-545563d0787540be.ogg",
+        "m4a": "clerk/clerk-545563d0787540be.m4a",
+        "bytes": 227980
+      },
+      "duration": 23.9
+    },
+    {
       "key": "elijah-bfceb479dcc22a4f",
       "character": "elijah",
       "speaker": "Elijah",
@@ -69,6 +133,39 @@
       "duration": 6.15
     },
     {
+      "key": "elijah-1bb109889f7afe4a",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "I'll have the boy drop them off. The boy is 64.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-1bb109889f7afe4a.ogg",
+        "m4a": "elijah/elijah-1bb109889f7afe4a.m4a",
+        "bytes": 37842
+      },
+      "duration": 3.91
+    },
+    {
+      "key": "elijah-d791a9fc2ed3e42a",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "I'm sorry, I really don't have time to waste.",
+      "part": "head",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-d791a9fc2ed3e42a.ogg",
+        "m4a": "elijah/elijah-d791a9fc2ed3e42a.m4a",
+        "bytes": 30079
+      },
+      "duration": 3.09
+    },
+    {
       "key": "elijah-3d061f7153861097",
       "character": "elijah",
       "speaker": "Elija",
@@ -83,6 +180,70 @@
         "bytes": 44725
       },
       "duration": 4.65
+    },
+    {
+      "key": "elijah-a901bda9a94f1337",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "No questions about where they came from. And I mean that as a rule, not a suggestion.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-a901bda9a94f1337.ogg",
+        "m4a": "elijah/elijah-a901bda9a94f1337.m4a",
+        "bytes": 50164
+      },
+      "duration": 5.25
+    },
+    {
+      "key": "elijah-e51521cfeb987d71",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "This town seems accident prone. Investing in security is a great idea.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-e51521cfeb987d71.ogg",
+        "m4a": "elijah/elijah-e51521cfeb987d71.m4a",
+        "bytes": 47927
+      },
+      "duration": 4.98
+    },
+    {
+      "key": "elijah-b4e4c65f5ce17c8d",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "Wait until the one you have breaks. Sorry, company policy.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-b4e4c65f5ce17c8d.ogg",
+        "m4a": "elijah/elijah-b4e4c65f5ce17c8d.m4a",
+        "bytes": 42073
+      },
+      "duration": 4.36
+    },
+    {
+      "key": "elijah-7f48e0acf6bcd812",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Want it gift wrapped? I don't gift wrap.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-7f48e0acf6bcd812.ogg",
+        "m4a": "elijah/elijah-7f48e0acf6bcd812.m4a",
+        "bytes": 27072
+      },
+      "duration": 2.79
     },
     {
       "key": "elijah-ae51db10cd12a3fe",
@@ -116,6 +277,118 @@
         "bytes": 32411
       },
       "duration": 3.33
+    },
+    {
+      "key": "elijah-54867630dc89c13a",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "You already own a Safe. You shouldn't need two.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-54867630dc89c13a.ogg",
+        "m4a": "elijah/elijah-54867630dc89c13a.m4a",
+        "bytes": 31783
+      },
+      "duration": 3.28
+    },
+    {
+      "key": "elijah-3aef7f26c8ae4aa8",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "You don't have a single gold tag at the moment? That's too bad. These are great little lockpicks.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-3aef7f26c8ae4aa8.ogg",
+        "m4a": "elijah/elijah-3aef7f26c8ae4aa8.m4a",
+        "bytes": 55144
+      },
+      "duration": 5.75
+    },
+    {
+      "key": "elijah-25d71da77e6c4805",
+      "character": "elijah",
+      "speaker": "Elija",
+      "text": "Your parlor is quite small. You really don't need two of these things.",
+      "part": "whole",
+      "rulesets": [
+        "classic"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-25d71da77e6c4805.ogg",
+        "m4a": "elijah/elijah-25d71da77e6c4805.m4a",
+        "bytes": 42325
+      },
+      "duration": 4.38
+    },
+    {
+      "key": "elijah-4188aa9744e11ad5",
+      "character": "elijah",
+      "speaker": "Elijah",
+      "text": "Your storeroom is full. Sell some dead people first. I'll wait. I don't blink.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "elijah/elijah-4188aa9744e11ad5.ogg",
+        "m4a": "elijah/elijah-4188aa9744e11ad5.m4a",
+        "bytes": 52666
+      },
+      "duration": 5.53
+    },
+    {
+      "key": "gertie-ae527bd9c093f85b",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "What did you break this time, prince? Don't tell me. Show me. No, tell me.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "gertie/gertie-ae527bd9c093f85b.ogg",
+        "m4a": "gertie/gertie-ae527bd9c093f85b.m4a",
+        "bytes": 59447
+      },
+      "duration": 6.2
+    },
+    {
+      "key": "gertie-fa4426733cd21e91",
+      "character": "gertie",
+      "speaker": "Nurse Gertie",
+      "text": "You're a prince, prince.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "gertie/gertie-fa4426733cd21e91.ogg",
+        "m4a": "gertie/gertie-fa4426733cd21e91.m4a",
+        "bytes": 24670
+      },
+      "duration": 2.51
+    },
+    {
+      "key": "grubb-863246de762321d8",
+      "character": "grubb",
+      "speaker": "Mayor Hollis Grubb",
+      "text": "A taxpayer, in my building! Ask not what your town can do for you. Ask what you can do for the statue fund.",
+      "part": "tail",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "grubb/grubb-863246de762321d8.ogg",
+        "m4a": "grubb/grubb-863246de762321d8.m4a",
+        "bytes": 83361
+      },
+      "duration": 8.41
     },
     {
       "key": "june-c2fd47640d9c6a86",
@@ -237,6 +510,22 @@
       "duration": 2.15
     },
     {
+      "key": "mudge-e45707657015f267",
+      "character": "mudge",
+      "speaker": "Inspector Mudge",
+      "text": "I'm sure everything is up to code. I'm sure of it right now.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "mudge/mudge-e45707657015f267.ogg",
+        "m4a": "mudge/mudge-e45707657015f267.m4a",
+        "bytes": 40192
+      },
+      "duration": 4.14
+    },
+    {
       "key": "nurse-6a1f8532d1d0ca84",
       "character": "nurse",
       "speaker": "Nurse",
@@ -271,6 +560,22 @@
       "duration": 2.85
     },
     {
+      "key": "smyth-c7b2ad74afa6bc3e",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "A good man, with a lantern and a very short temper.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-c7b2ad74afa6bc3e.ogg",
+        "m4a": "smyth/smyth-c7b2ad74afa6bc3e.m4a",
+        "bytes": 48518
+      },
+      "duration": 4.36
+    },
+    {
       "key": "smyth-147ce9b3fdca65dd",
       "character": "smyth",
       "speaker": "Father Smyth",
@@ -285,6 +590,22 @@
         "bytes": 27114
       },
       "duration": 2.8
+    },
+    {
+      "key": "smyth-6e42bdff706bc0d9",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Bless a grieving family with it. Not your fries.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-6e42bdff706bc0d9.ogg",
+        "m4a": "smyth/smyth-6e42bdff706bc0d9.m4a",
+        "bytes": 39686
+      },
+      "duration": 4.08
     },
     {
       "key": "smyth-0aebe0fae31297b0",
@@ -303,6 +624,22 @@
       "duration": 2.38
     },
     {
+      "key": "smyth-c99353119c957b67",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Go in peace,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-c99353119c957b67.ogg",
+        "m4a": "smyth/smyth-c99353119c957b67.m4a",
+        "bytes": 15092
+      },
+      "duration": 1.51
+    },
+    {
       "key": "smyth-21de31fbabe51bfd",
       "character": "smyth",
       "speaker": "Father Smyth",
@@ -317,6 +654,22 @@
         "bytes": 47225
       },
       "duration": 4.68
+    },
+    {
+      "key": "smyth-b8f2152b445c566d",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Ham, potato salad, and a cake shaped like Withers. He asked for the cake.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-b8f2152b445c566d.ogg",
+        "m4a": "smyth/smyth-b8f2152b445c566d.m4a",
+        "bytes": 52479
+      },
+      "duration": 5.33
     },
     {
       "key": "smyth-3f5fc9e386d4d861",
@@ -351,6 +704,22 @@
       "duration": 2.98
     },
     {
+      "key": "smyth-6c3de27b44569fbd",
+      "character": "smyth",
+      "speaker": "Smyth",
+      "text": "I counted it before I left, my child.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-6c3de27b44569fbd.ogg",
+        "m4a": "smyth/smyth-6c3de27b44569fbd.m4a",
+        "bytes": 27781
+      },
+      "duration": 2.57
+    },
+    {
       "key": "smyth-43f9533b2a3283c5",
       "character": "smyth",
       "speaker": "Father Smyth",
@@ -365,6 +734,22 @@
         "bytes": 51054
       },
       "duration": 4.7
+    },
+    {
+      "key": "smyth-8168fdeb6dacb059",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Is that all?",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-8168fdeb6dacb059.ogg",
+        "m4a": "smyth/smyth-8168fdeb6dacb059.m4a",
+        "bytes": 11852
+      },
+      "duration": 1.05
     },
     {
       "key": "smyth-60d7484557c3b50f",
@@ -415,6 +800,22 @@
       "duration": 4.74
     },
     {
+      "key": "smyth-23d8e4ccf040af9a",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "Quite a lot of peace, actually. You paid for the large.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-23d8e4ccf040af9a.ogg",
+        "m4a": "smyth/smyth-23d8e4ccf040af9a.m4a",
+        "bytes": 37425
+      },
+      "duration": 3.79
+    },
+    {
       "key": "smyth-c0dc23ca7325db3c",
       "character": "smyth",
       "speaker": "Father Smyth",
@@ -447,6 +848,22 @@
       "duration": 5.25
     },
     {
+      "key": "smyth-eff981eea7bd6adc",
+      "character": "smyth",
+      "speaker": "Father Smyth",
+      "text": "That's as clean as money gets you, my child. The rest you'll have to earn.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-eff981eea7bd6adc.ogg",
+        "m4a": "smyth/smyth-eff981eea7bd6adc.m4a",
+        "bytes": 54745
+      },
+      "duration": 5.26
+    },
+    {
       "key": "smyth-d431cc76ea0f7df8",
       "character": "smyth",
       "speaker": "Father Smyth",
@@ -461,6 +878,22 @@
         "bytes": 59362
       },
       "duration": 5.86
+    },
+    {
+      "key": "smyth-295466bef0ec9070",
+      "character": "smyth",
+      "speaker": "Smyth",
+      "text": "The Lord provides.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "smyth/smyth-295466bef0ec9070.ogg",
+        "m4a": "smyth/smyth-295466bef0ec9070.m4a",
+        "bytes": 21014
+      },
+      "duration": 1.96
     },
     {
       "key": "smyth-e36f9aa0e657fa02",
@@ -561,6 +994,216 @@
         "bytes": 24232
       },
       "duration": 2.47
+    },
+    {
+      "key": "twins-1afa45efa7f9db49",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We could make that new parlor across town have a really warm evening. For you, a discount. Half price. We just like the work.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "twins/twins-1afa45efa7f9db49.ogg",
+        "m4a": "twins/twins-1afa45efa7f9db49.m4a",
+        "bytes": 77931
+      },
+      "duration": 8.28
+    },
+    {
+      "key": "twins-ee739afb9a1b2f79",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We found this in a barn. The barn was on fire. We didn't start that fire. We started a different fire. Bury it quiet and we'll pay cash.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "twins/twins-ee739afb9a1b2f79.ogg",
+        "m4a": "twins/twins-ee739afb9a1b2f79.m4a",
+        "bytes": 88287
+      },
+      "duration": 9.26
+    },
+    {
+      "key": "twins-c92ee2f47d035f06",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We like to play with fire.",
+      "part": "head",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "twins/twins-c92ee2f47d035f06.ogg",
+        "m4a": "twins/twins-c92ee2f47d035f06.m4a",
+        "bytes": 19491
+      },
+      "duration": 1.89
+    },
+    {
+      "key": "twins-ae226cdef7129330",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "We'll take that empty casket crate off your hands,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "twins/twins-ae226cdef7129330.ogg",
+        "m4a": "twins/twins-ae226cdef7129330.m4a",
+        "bytes": 26508
+      },
+      "duration": 2.69
+    },
+    {
+      "key": "twins-abdbe6614550b0eb",
+      "character": "twins",
+      "speaker": "The Twins",
+      "text": "You don't have enough gold tags, fool! We shall come again...",
+      "part": "whole",
+      "rulesets": [
+        "classic",
+        "expanded"
+      ],
+      "file": {
+        "ogg": "twins/twins-abdbe6614550b0eb.ogg",
+        "m4a": "twins/twins-abdbe6614550b0eb.m4a",
+        "bytes": 41748
+      },
+      "duration": 4.29
+    },
+    {
+      "key": "vane-3dfada11d39f5ac7",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Bigger blade, smaller church. That's arithmetic.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-3dfada11d39f5ac7.ogg",
+        "m4a": "vane/vane-3dfada11d39f5ac7.m4a",
+        "bytes": 37823
+      },
+      "duration": 3.95
+    },
+    {
+      "key": "vane-7043de59220dacf7",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Get help, pal. Real help. Not the kind I sell.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-7043de59220dacf7.ogg",
+        "m4a": "vane/vane-7043de59220dacf7.m4a",
+        "bytes": 37069
+      },
+      "duration": 3.84
+    },
+    {
+      "key": "vane-3f80edd0c5949bd2",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "It's more of a donation with a point.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-3f80edd0c5949bd2.ogg",
+        "m4a": "vane/vane-3f80edd0c5949bd2.m4a",
+        "bytes": 33716
+      },
+      "duration": 3.49
+    },
+    {
+      "key": "vane-ebca209e722d5c28",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "Nothing lasts forever,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-ebca209e722d5c28.ogg",
+        "m4a": "vane/vane-ebca209e722d5c28.m4a",
+        "bytes": 18782
+      },
+      "duration": 1.89
+    },
+    {
+      "key": "vane-181a57afa7da7b5d",
+      "character": "vane",
+      "speaker": "Lucius Vane",
+      "text": "Skeletons never win. They don't have the stomach for it.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-181a57afa7da7b5d.ogg",
+        "m4a": "vane/vane-181a57afa7da7b5d.m4a",
+        "bytes": 38572
+      },
+      "duration": 4
+    },
+    {
+      "key": "vane-29190437d7a1cad1",
+      "character": "vane",
+      "speaker": "Vane",
+      "text": "You don't have to come,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "vane/vane-29190437d7a1cad1.ogg",
+        "m4a": "vane/vane-29190437d7a1cad1.m4a",
+        "bytes": 16987
+      },
+      "duration": 1.68
+    },
+    {
+      "key": "yang-fd4265360d460760",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "Too pale. But good.",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "yang/yang-fd4265360d460760.ogg",
+        "m4a": "yang/yang-fd4265360d460760.m4a",
+        "bytes": 21134
+      },
+      "duration": 2.14
+    },
+    {
+      "key": "yang-6d3db037a0a511d1",
+      "character": "yang",
+      "speaker": "Mr. Yang",
+      "text": "You are a good customer,",
+      "part": "whole",
+      "rulesets": [
+        "expanded"
+      ],
+      "file": {
+        "ogg": "yang/yang-6d3db037a0a511d1.ogg",
+        "m4a": "yang/yang-6d3db037a0a511d1.m4a",
+        "bytes": 19458
+      },
+      "duration": 1.85
     }
   ]
 }

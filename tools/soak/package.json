@@ -1,0 +1,26 @@
+{
+  "name": "@fq/soak",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Soak test: whole seasons played by AI rivals against the real server over HTTP and WebSocket, through hard kills, a backup restore and sysop actions, with invariants checked after every step.",
+  "type": "module",
+  "scripts": {
+    "soak": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fq/bots": "workspace:*",
+    "@fq/content": "workspace:*",
+    "@fq/protocol": "workspace:*",
+    "@fq/server": "workspace:*",
+    "ws": "^8.22.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/ws": "^8.18.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -186,7 +186,18 @@ export function planEffects(
         return assertNever(effect);
     }
   }
+  // The engine ends every session before it announces the reset, but a client that has been told
+  // its session ended is on its way out: the reset notice (and the winner's name) goes first, to
+  // every open socket, and the per-player "session ended" pushes follow.
+  const resets = plan.pushes.filter(isResetNotice);
+  if (resets.length > 0) {
+    plan.pushes = [...resets, ...plan.pushes.filter((p) => !isResetNotice(p))];
+  }
   return plan;
+}
+
+function isResetNotice(push: Outbound): boolean {
+  return push.message.type === "notice" && push.message.notice.kind === "tournamentReset";
 }
 
 /**

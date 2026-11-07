@@ -70,6 +70,8 @@ describe("museum mode is off by default", () => {
     const features = await h.inject({ method: "GET", url: "/api/features" });
     expect(features.statusCode).toBe(200);
     expect(features.json()).toEqual({
+      version: expect.any(String),
+      build: expect.any(String),
       museum: {
         enabled: false,
         path: "/museum/",
@@ -108,6 +110,8 @@ describe("museum mode is on", () => {
     h = await startServer({ config: { legacyClient: true }, listen: true });
     const api = new ApiClient({ baseUrl: h.baseUrl() });
     expect(await api.features()).toEqual({
+      version: expect.any(String),
+      build: expect.any(String),
       museum: { enabled: true, path: "/museum/", available: true, reason: null },
       dailyChallenge: { enabled: true },
       safety: expect.objectContaining({ reports: true, blocks: true, accountDeletion: true }),

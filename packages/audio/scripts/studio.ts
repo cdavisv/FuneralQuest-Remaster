@@ -107,7 +107,7 @@ const masterFor = (b: BriefEntry): MasterOptions =>
         ? AMB_MASTER
         : SFX_MASTER;
 
-function decodeSource(path: string, tmp: string, filter?: string): Stereo {
+export function decodeSource(path: string, tmp: string, filter?: string): Stereo {
   const raw = join(tmp, "src.f32");
   ffmpeg([
     "-i",
@@ -138,7 +138,7 @@ function decodeRaw(raw: string): [Float32Array, Float32Array] {
 }
 
 /** Index of the first sample within 40 dB of the peak (less 10 ms), for trimming a lead-in. */
-function soundStart(x: Stereo): number {
+export function soundStart(x: Stereo): number {
   let pk = 0;
   for (let i = 0; i < x.l.length; i++)
     pk = Math.max(pk, Math.abs(x.l[i] as number), Math.abs(x.r[i] as number));
@@ -150,7 +150,7 @@ function soundStart(x: Stereo): number {
 }
 
 /** A one-shot: lead-in trimmed (5 ms fade in), cut to `maxSeconds`, closed with a fade out. */
-function oneShot(x: Stereo, maxSeconds: number | undefined, fadeOut: number): Stereo {
+export function oneShot(x: Stereo, maxSeconds: number | undefined, fadeOut: number): Stereo {
   const s = soundStart(x);
   const end = Math.min(x.l.length, s + Math.round((maxSeconds ?? 1e9) * SR));
   const out: Stereo = { l: x.l.slice(s, end), r: x.r.slice(s, end) };

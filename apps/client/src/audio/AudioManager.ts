@@ -1,14 +1,19 @@
 import {
   type AmbienceId,
   type CueMemory,
+  DEFAULT_PACK_SETTING,
+  DOOR_CONTEXT,
   ENGINE_MUSIC,
   ENGINE_SOUNDS,
+  effectivePack,
   emptyMemory,
   LAYERED,
   type MusicId,
   moodLayers,
   type PackId,
+  type PackSetting,
   PLACE_MUSIC,
+  type PlayContext,
   pickCue,
   type SoundId,
   soundsForAction,
@@ -50,7 +55,7 @@ export interface AudioBackend {
   setRadio(on: boolean): void;
   /** False while the tab is hidden or the sound is muted: the backend may suspend itself. */
   setActive(active: boolean): void;
-  /** The sound pack to play from (tracks it lacks play from the Synth pack). */
+  /** The sound pack to play from (tracks it lacks play from the next pack in the fallback order). */
   setPack?(pack: PackId): void;
   /** Where character voices play (src/audio/voicePlayer.ts), or none. */
   voiceOutput?(): VoiceOutput | null;
@@ -78,7 +83,11 @@ export interface AudioState {
   ambience: AmbienceId | null;
   mood: number;
   volumes: Volumes;
-  /** The selected sound pack (Settings, "Sound pack"). */
+  /** The Settings "Sound pack" choice: a pack, or "auto" (by what is being played). */
+  packSetting: PackSetting;
+  /** What is being played (the front door, a town, a career...) and its ruleset. */
+  context: PlayContext;
+  /** The pack playing now: the explicit choice, or what "auto" picks for the context. */
   pack: PackId;
 }
 
@@ -94,8 +103,13 @@ export interface AudioManager {
   setVolumes(volumes: Partial<Volumes>): void;
   setMuted(muted: boolean): void;
   setRadio(on: boolean): void;
-  /** The sound pack (Synth or Studio). */
-  setPack(pack: PackId): void;
+  /** The Settings "Sound pack" choice. The pack that plays follows the context when it is "auto". */
+  setPack(setting: PackSetting): void;
+  /**
+   * What the player is in: the front door, a town or career of a ruleset, the Daily Challenge.
+   * With "auto" the pack follows it, and music already playing crossfades to the new pack's track.
+   */
+  setContext(context: PlayContext): void;
   /** The tab became hidden or visible. */
   setHidden(hidden: boolean): void;
   /** The first user interaction: browsers allow sound from here on. */
@@ -136,7 +150,9 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
     ambience: null,
     mood: 0,
     volumes: { master: 1, music: 1, ambience: 1, effects: 1 },
-    pack: "synth",
+    packSetting: DEFAULT_PACK_SETTING,
+    context: DOOR_CONTEXT,
+    pack: effectivePack(DEFAULT_PACK_SETTING, DOOR_CONTEXT),
   };
   const listeners = new Set<() => void>();
   // An immutable copy for React (useSyncExternalStore wants a stable snapshot between changes).
@@ -181,6 +197,14 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
       backend.setAmbience(state.ambience, FADE.ambience);
       sentAmbience = state.ambience;
     }
+  }
+
+  /** The pack to play from follows the setting and the context; the backend hears only changes. */
+  function applyPack() {
+    const next = effectivePack(state.packSetting, state.context);
+    if (next === state.pack) return;
+    state.pack = next;
+    backend?.setPack?.(next);
   }
 
   function play(ids: readonly string[]) {
@@ -257,10 +281,16 @@ export function createAudioManager(options: AudioManagerOptions = {}): AudioMana
       backend?.setRadio(on);
       notify();
     },
-    setPack(pack) {
-      if (pack === state.pack) return;
-      state.pack = pack;
-      backend?.setPack?.(pack);
+    setPack(setting) {
+      if (setting === state.packSetting) return;
+      state.packSetting = setting;
+      applyPack();
+      notify();
+    },
+    setContext(context) {
+      if (context.ruleset === state.context.ruleset && context.mode === state.context.mode) return;
+      state.context = context;
+      applyPack();
       notify();
     },
     setHidden(hidden) {

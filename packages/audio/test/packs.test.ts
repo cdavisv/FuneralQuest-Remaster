@@ -6,12 +6,22 @@ import { BRIEF } from "../scripts/studioBrief.js";
 import { cutLoop, tailIntoHead } from "../scripts/studioLoop.js";
 import type { AudioManifest } from "../src/manifestTypes.js";
 import {
-  DEFAULT_PACK,
+  AUTO_PACK,
+  autoReason,
+  DEFAULT_PACK_SETTING,
+  DOOR_CONTEXT,
+  effectivePack,
+  FALLBACK_ORDER,
   isPackId,
+  isPackSetting,
   nextBarTime,
   PACK_IDS,
+  PACK_SETTINGS,
   PACKS,
+  type PackId,
+  PLAY_MODES,
   packChain,
+  RULESETS,
   resolveTrack,
   stemGains,
 } from "../src/packs.js";
@@ -40,12 +50,16 @@ const manifest = (tracks: Record<string, ReturnType<typeof track>>): AudioManife
 });
 
 describe("sound packs", () => {
-  it("are Synth and Studio, Synth by default", () => {
+  it("are Synth, Studio and Original remastered, chosen automatically by default", () => {
     expect([...PACK_IDS]).toEqual(["synth", "studio", "remaster"]);
     expect(PACKS.remaster.dir).toBe("audio-remaster");
     expect(PACKS.remaster.title).toBe("Original, remastered");
     expect(PACKS.remaster.description).toMatch(/not the 2001 recordings/);
-    expect(DEFAULT_PACK).toBe("synth");
+    expect(DEFAULT_PACK_SETTING).toBe("auto");
+    expect([...PACK_SETTINGS]).toEqual(["auto", "synth", "studio", "remaster"]);
+    expect(isPackSetting("auto")).toBe(true);
+    expect(isPackId("auto")).toBe(false);
+    expect(isPackSetting("vinyl")).toBe(false);
     expect(PACKS.synth.dir).toBe("audio");
     expect(PACKS.studio.dir).toBe("audio-studio");
     expect(isPackId("studio")).toBe(true);
@@ -53,9 +67,11 @@ describe("sound packs", () => {
     expect(isPackId(undefined)).toBe(false);
   });
 
-  it("chain from the pick to Synth", () => {
-    expect(packChain("synth")).toEqual(["synth"]);
+  it("fall back Original remastered, then Studio, then Synth", () => {
+    expect([...FALLBACK_ORDER]).toEqual(["remaster", "studio", "synth"]);
+    expect(packChain("remaster")).toEqual(["remaster", "studio", "synth"]);
     expect(packChain("studio")).toEqual(["studio", "synth"]);
+    expect(packChain("synth")).toEqual(["synth"]);
   });
 
   const synth = manifest({ desk: track("synth desk"), bank: track("synth bank") });
@@ -78,10 +94,78 @@ describe("sound packs", () => {
     expect(resolveTrack({ synth }, "desk", "studio")?.pack).toBe("synth");
   });
 
+  it("fall from the remaster to Studio, then to Synth, track by track", () => {
+    const remaster = manifest({ desk: track("remaster desk") });
+    const only = manifest({ bank: track("studio bank") });
+    const all = { synth, studio: manifest({ ...only.tracks, ...studio.tracks }), remaster };
+    expect(resolveTrack(all, "desk", "remaster")?.pack).toBe("remaster");
+    // the remaster lacks the bank: Studio has it
+    expect(resolveTrack(all, "bank", "remaster")).toMatchObject({ pack: "studio" });
+    // neither has "only-synth": Synth does
+    const s2 = manifest({ ...synth.tracks, "only-synth": track("synth only") });
+    expect(resolveTrack({ ...all, synth: s2 }, "only-synth", "remaster")?.pack).toBe("synth");
+    // a missing Studio pack is skipped, not an error
+    expect(resolveTrack({ synth, studio: null, remaster }, "bank", "remaster")?.pack).toBe("synth");
+    // Synth never looks above itself, and Studio never looks at the remaster
+    expect(resolveTrack(all, "desk", "synth")?.pack).toBe("synth");
+    expect(resolveTrack(all, "desk", "studio")?.pack).toBe("studio");
+    expect(resolveTrack({ synth, remaster }, "desk", "studio")?.pack).toBe("synth");
+  });
+
   it("never use Studio when Synth is picked, and give null for an unknown id", () => {
     expect(resolveTrack({ synth, studio }, "desk", "synth")?.track.title).toBe("synth desk");
     expect(resolveTrack({ synth, studio }, "nope", "studio")).toBeNull();
     expect(resolveTrack({}, "desk", "studio")).toBeNull();
+  });
+});
+
+describe("automatic selection", () => {
+  const picks = (setting: "auto" | PackId) =>
+    Object.fromEntries(
+      PLAY_MODES.map((m) => [
+        m,
+        Object.fromEntries(
+          RULESETS.map((r) => [r, effectivePack(setting, { mode: m, ruleset: r })]),
+        ),
+      ]),
+    );
+
+  it("plays the remaster for Classic towns and careers and museum mode, Studio for Expanded ones and the Daily Challenge", () => {
+    expect(picks("auto")).toEqual({
+      door: { classic: "remaster", expanded: "remaster" },
+      town: { classic: "remaster", expanded: "studio" },
+      solo: { classic: "remaster", expanded: "studio" },
+      daily: { classic: "studio", expanded: "studio" },
+      museum: { classic: "remaster", expanded: "remaster" },
+    });
+    expect(effectivePack("auto", { ruleset: "classic", mode: "solo" })).toBe("remaster");
+    expect(effectivePack("auto", { ruleset: "expanded", mode: "solo" })).toBe("studio");
+    expect(effectivePack("auto", { ruleset: "classic", mode: "museum" })).toBe("remaster");
+    expect(effectivePack("auto", { ruleset: "expanded", mode: "daily" })).toBe("studio");
+    expect(effectivePack("auto", DOOR_CONTEXT)).toBe("remaster");
+  });
+
+  it("has a cell for every mode and ruleset, each a real pack", () => {
+    for (const m of PLAY_MODES)
+      for (const r of RULESETS) expect(isPackId(AUTO_PACK[m][r])).toBe(true);
+  });
+
+  it("is overridden everywhere by an explicit choice", () => {
+    for (const pack of PACK_IDS) {
+      for (const m of PLAY_MODES) {
+        for (const r of RULESETS) expect(effectivePack(pack, { mode: m, ruleset: r })).toBe(pack);
+      }
+    }
+  });
+
+  it("says why", () => {
+    expect(autoReason({ ruleset: "classic", mode: "town" })).toBe("classic-town");
+    expect(autoReason({ ruleset: "classic", mode: "solo" })).toBe("classic-solo");
+    expect(autoReason({ ruleset: "expanded", mode: "town" })).toBe("expanded-town");
+    expect(autoReason({ ruleset: "expanded", mode: "solo" })).toBe("expanded-solo");
+    expect(autoReason({ ruleset: "expanded", mode: "daily" })).toBe("daily");
+    expect(autoReason({ ruleset: "classic", mode: "museum" })).toBe("museum");
+    expect(autoReason(DOOR_CONTEXT)).toBe("door");
   });
 });
 
@@ -178,7 +262,13 @@ describe("the pack manifests", () => {
         expect(Number.isFinite(t.lufs) && Number.isFinite(t.peakDb), id).toBe(true);
         expect(t.peakDb, id).toBeLessThan(-1);
       }
-      expect(total).toBe(m.totalBytes);
+      // A pack that also lists its files by original sound (remaster) counts each file once.
+      const unique = new Map<string, number>();
+      for (const t of [...Object.values(m.tracks), ...Object.values(m.originals ?? {})])
+        for (const f of t.files) unique.set(f.ogg, f.bytes);
+      expect(m.originals ? [...unique.values()].reduce((x, y) => x + y, 0) : total).toBe(
+        m.totalBytes,
+      );
     });
 
     it(`${pack}: loop seams measure clean after the client's repair`, () => {
