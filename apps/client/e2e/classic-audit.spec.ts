@@ -165,12 +165,13 @@ async function goTo(page: Page, place: RegExp): Promise<void> {
     }
   }
   // The map's building on the cabinet layouts, its list of places on the phone.
-  const spot = page.getByRole("button", { name: place });
-  if (await spot.first().isVisible()) await spot.first().click();
-  else
-    await page
-      .getByRole("button", { name: place.source.replace(/^Go to /, ""), exact: true })
-      .click();
+  const spot = page.getByRole("button", { name: place }).first();
+  const listed = page
+    .getByRole("button", { name: place.source.replace(/^Go to /, ""), exact: true })
+    .first();
+  await spot.or(listed).first().waitFor({ state: "visible" });
+  if (await spot.isVisible()) await spot.click();
+  else await listed.click();
 }
 
 const PLACE = {
@@ -228,6 +229,11 @@ async function makeTown(
   town: { id: string; name: string },
   settings: Record<string, unknown>,
 ): Promise<void> {
+  // (A town left over from an earlier resumed run is replaced.)
+  await page.request.fetch(`/admin/towns/${town.id}`, {
+    method: "DELETE",
+    headers: { authorization: ADMIN },
+  });
   await admin(page, "POST", "/admin/towns", { id: town.id, name: town.name, settings });
   created.push(town.id);
 }
@@ -631,7 +637,7 @@ test("a rival joins, and both parlors earn gold tags by selling", async ({ brows
       if (name === "alice") alice = who;
       else bob = who;
     }
-    await alice.page.request.fetch(`/admin/towns/${TOWNS.main.id}/rollback`, {
+    const rolled = await alice.page.request.fetch(`/admin/towns/${TOWNS.main.id}/rollback`, {
       method: "POST",
       headers: {
         authorization: "Bearer e2e-admin-token-0123456789abcdef",
@@ -639,6 +645,10 @@ test("a rival joins, and both parlors earn gold tags by selling", async ({ brows
       },
       data: JSON.stringify({ snapshotId: resume.snapshot }),
     });
+    expect(
+      rolled.status(),
+      "the snapshot is gone: run once without KEEP to farm again",
+    ).toBeLessThan(300);
     for (const who of [alice, bob]) {
       await who.page.reload();
       await toDesk(who.page);
@@ -2054,6 +2064,22 @@ test("rankings: every parlor by Bury Points, with its rating line and who is on"
 
 // ------------------------------------------------------------------ a new day
 
+/**
+ * The morning screen's Continue leads to the desk, where the letters and the daily rewards wait:
+ * each letter is read as a dialog, then the desk's own text (mail without a stop) is returned.
+ */
+async function deskVisit(page: Page): Promise<string> {
+  await press(page, "Continue");
+  const found: string[] = [];
+  for (let i = 0; i < 10 && (await dialog(page).isVisible()); i++) {
+    found.push(norm(await dialog(page).textContent()));
+    await dialog(page).getByRole("button").first().click();
+    await settle(page);
+  }
+  found.push(norm(await well(page).textContent()));
+  return found.join(" | ");
+}
+
 /** The top seller of the day as the paper's notice names it, and the rank order of the parlors. */
 async function topSellerToday(page: Page): Promise<string> {
   await openPaper(page);
@@ -2115,7 +2141,7 @@ test("a new day: the banner, the wake-up at the desk, the morning screen, the da
   );
   // The daily rewards come by mail on the next visit to the desk (the top seller of the day and the
   // top three parlors); reading them pays the Bury Points and the luck.
-  letters.alice = (await readLetters(a)).join(" | ");
+  letters.alice = `${letters.alice} | ${await deskVisit(a)}`;
   const stats = await readStats(a);
   expect(num(stats.turns)).toBe(404);
   // Today's Bury Points start again at zero, plus the rewards the letters just paid.
@@ -2130,7 +2156,7 @@ test("a new day: the banner, the wake-up at the desk, the morning screen, the da
   await b.getByRole("button", { name: /Go to Your Parlor/ }).click();
   await settle(b);
   await read("bob", b);
-  letters.bob = (await readLetters(b)).join(" | ");
+  letters.bob = `${letters.bob} | ${await deskVisit(b)}`;
   const bobPlace = rank.indexOf(bob.player.name);
   expect(letters.bob).toMatch(rx([M.topParlor, M.secondParlor, M.thirdParlor][bobPlace] as string));
   if (top === bob.player.name) expect(letters.bob).toMatch(rewards);
@@ -2187,6 +2213,7 @@ const odds = (page: Page, normal: number, luck: number, script: number) =>
 test("a random event and a risk come in place of a customer, and use no turn", async () => {
   const a = alice.page;
   const W = T.wait;
+  await toDesk(a);
   // Every wait is a special event (the original's 8 percent, turned up).
   await odds(a, 1, 0, 0);
   await press(a, "Wait for Customer");
@@ -2283,7 +2310,7 @@ test("a script event: a bonus tag, or the Twins and their fire (smoke detector a
     if (await btn(b, "Continue").isVisible()) {
       const text = norm(await well(b).textContent());
       expect(text).toMatch(
-        /While cleaning behind the .+ you find a (wooden|silver|gold|Wood|Silver|Gold) tag\./,
+        /While cleaning behind the .+ you find a (wood|wooden|silver|gold|Wood|Silver|Gold) tag\./,
       );
       bonus++;
       await press(b, "Continue");
@@ -2353,7 +2380,11 @@ test("limits: out of turns, no visits left, no name changes, too poor for a clas
   await press(page, "Leave");
 
   // Two turns a day: two customers, then the closing-time line (one of the three) and the shut door.
-  await sellSome(page, 2);
+  await toDesk(page);
+  for (let n = 0; n < 2; n++) {
+    await meet(page);
+    await finishSale(page);
+  }
   await press(page, "Wait for Customer");
   await seeText(page, anyOf(T.wait.noTurns));
   expect(num((await readStats(page)).turns)).toBe(0);
@@ -2413,6 +2444,7 @@ test("the tournament: the countdown, the final day, the winner and the meteor, t
   );
   await press(zp, "Continue");
   await seeText(zp, rx(T.desk.newDayAtDesk));
+  await press(zp, "Continue");
   await press(zp, "Wait for Customer");
   await seeText(zp, anyOf(T.wait.noTurns));
   await goTo(zp, PLACE.rivals);
@@ -2439,11 +2471,19 @@ test("the tournament: the countdown, the final day, the winner and the meteor, t
   await newDay(a, TOWNS.cup);
   const ended = zp.getByRole("alert").filter({ hasText: "Your session has ended" });
   await expect(ended).toBeVisible();
+  // The server pushes its "tournamentReset" notice (with the winner) before the per-player
+  // "session ended" ones (apps/server/src/game/effects.ts), so the ended screen names the winner.
   await expect(ended).toContainText(`The tournament is over. ${z.player.name} won.`);
   await zp.getByRole("button", { name: "Back to the front door" }).click();
   await expect(
     zp.getByText(
-      rx(L.endless.replace("{day}", "1").replace("{online}", "0").replace("{players}", "0")),
+      rx(
+        L.tournament
+          .replace("{day}", "1")
+          .replace("{days}", "3")
+          .replace("{online}", "0")
+          .replace("{players}", "0"),
+      ),
     ),
   ).toBeVisible();
   // The parlor is gone, the account is not: she opens a new one, and the Book of Deeds remembers.
@@ -2500,7 +2540,13 @@ for (const size of SIZES) {
     let shot = 0;
     const check = async (screen: string) => {
       await page.waitForTimeout(200);
-      problems.push(...(await inspect(page, `${screen} / ${size.name}`, phone)));
+      // The map's buildings and the dialogs' buttons are not plaques: the plaque check does not
+      // apply to them (the dialog and hot-spot checks below do).
+      const plaques = (await inspect(page, `${screen} / ${size.name}`, phone)).filter(
+        (problem) =>
+          problem.what !== "no buttons on the screen" || !/map|notepad|picker/.test(problem.screen),
+      );
+      problems.push(...plaques);
       // Nothing makes the page wider than the screen, and an open dialog fits inside it.
       const extra = await page.evaluate(() => {
         const out: string[] = [];
@@ -2518,6 +2564,16 @@ for (const size of SIZES) {
             out.push(
               `a dialog leaves the screen (${Math.round(r.left)},${Math.round(r.top)}-${Math.round(r.right)},${Math.round(r.bottom)})`,
             );
+          }
+        }
+        // Every building on the map can be reached.
+        for (const h of document.querySelectorAll(".fq-hotspot")) {
+          const r = h.getBoundingClientRect();
+          if (
+            r.width > 0 &&
+            (r.left < -1 || r.right > window.innerWidth + 1 || r.bottom > window.innerHeight + 1)
+          ) {
+            out.push(`a map place is off the screen (${h.getAttribute("aria-label")})`);
           }
         }
         return out;
