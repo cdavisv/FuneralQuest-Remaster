@@ -35,6 +35,10 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: android-actions/setup-android@v3
+        with:
+          # The action's default asks sdkmanager for the obsolete "tools" package, which Google's
+          # repository no longer has, and the step fails (first release run, 2026-11-07).
+          packages: platform-tools
       - name: Android SDK packages
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
       - run: pnpm install --frozen-lockfile
