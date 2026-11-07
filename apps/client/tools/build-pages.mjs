@@ -2,7 +2,7 @@
 /**
  * Builds the free solo-only web game for GitHub Pages (owner's decision 14, 2026-11-06): the
  * client with online play switched off (VITE_SOLO_ONLY=1, the same flag as the mobile app), the
- * Classic art, the default Synth sound pack, and every URL relative to the site's sub-path
+ * Classic art, every sound pack and the character voices, and every URL relative to the site's sub-path
  * (https://<user>.github.io/<repo>/). The workflow .github/workflows/pages.yml runs it; the
  * end-to-end suite runs it to serve the output from a sub-path of its own.
  *
@@ -41,15 +41,15 @@ while (after) {
   await new Promise((resolve) => setTimeout(resolve, 300));
 }
 
-// The Classic art and the default (Synth) sound pack only, from this site's own sub-path: no
-// optional Studio pack, no server address, no art or sound hosted elsewhere. (Unset, not empty:
-// an empty value would still count as one.)
+// The Classic art, all three sound packs and the character voices (decision 24), from this site's
+// own sub-path: no server address, no art or sound hosted elsewhere. (Unset, not empty: an empty
+// value would still count as one.)
 const env = {
   ...process.env,
   VITE_SOLO_ONLY: "1",
   FQ_BASE: base,
   FQ_BUILD_OUT: out,
-  FQ_AUDIO_PACKS: "synth",
+  FQ_AUDIO_PACKS: "synth,studio,remaster,voice",
 };
 for (const name of [
   "VITE_SERVER_URL",
@@ -78,15 +78,14 @@ for (const file of [
   "manifest.webmanifest",
   "offline.html",
   "audio/manifest.json",
+  "audio-studio/manifest.json",
+  "audio-remaster/manifest.json",
+  "voice/manifest.json",
 ]) {
   if (!existsSync(join(out, file))) {
     console.error(`pages: ${file} is missing from the build`);
     process.exit(1);
   }
-}
-if (existsSync(join(out, "audio-studio"))) {
-  console.error("pages: the Studio sound pack is in the build; it must not be");
-  process.exit(1);
 }
 if (!existsSync(join(out, "classic", "places", "bank.svg"))) {
   console.error("pages: the Classic art is missing from the build");

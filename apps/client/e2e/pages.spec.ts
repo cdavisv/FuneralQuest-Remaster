@@ -11,17 +11,6 @@ import { makeASale, plaque, reachDesk } from "./helpers";
  */
 const PREFIX = "/fq-pages/";
 
-/**
- * The requests the Pages build knowingly cannot answer: the optional sound packs (the character
- * voices, the Remaster and the Studio packs) are not bundled (their terms are unsettled, and the
- * build ships only the default Synth pack), so the client's best-effort fetch of each manifest is
- * a 404 and the game stays silent for that pack.
- */
-const unbundled = (r: { url: string }) =>
-  ["voice", "audio-remaster", "audio-studio"].some(
-    (pack) => new URL(r.url).pathname === `${PREFIX}${pack}/manifest.json`,
-  );
-
 /** Everything the page asks for, with what the host answered. */
 function watch(page: Page) {
   const requests: { url: string; status: number }[] = [];
@@ -51,7 +40,7 @@ test("opens straight on the solo careers, with nothing online and nothing reques
   expect(seen.failed).toEqual([]);
   const outside = seen.requests.filter((r) => !pathOf(r.url).startsWith(PREFIX));
   expect(outside, "requests outside the sub-path").toEqual([]);
-  const missing = seen.requests.filter((r) => r.status >= 400 && !unbundled(r));
+  const missing = seen.requests.filter((r) => r.status >= 400);
   expect(missing, "requests the host could not answer").toEqual([]);
   expect(seen.requests.some((r) => pathOf(r.url).startsWith(`${PREFIX}api`))).toBe(false);
 });
@@ -84,8 +73,10 @@ test("the manifest, icons, offline page, art and sound are all found under the s
   expect(await offline.text()).toContain('href="./?solo"');
   expect((await request.get(`${PREFIX}classic/places/bank.svg`)).status()).toBe(200);
   expect((await request.get(`${PREFIX}audio/manifest.json`)).status()).toBe(200);
-  // Only the default sound pack ships.
-  expect((await request.get(`${PREFIX}audio-studio/manifest.json`)).status()).toBe(404);
+  // Every sound pack and the character voices ship (decision 24).
+  for (const pack of ["audio-studio", "audio-remaster", "voice"]) {
+    expect((await request.get(`${PREFIX}${pack}/manifest.json`)).status(), pack).toBe(200);
+  }
 });
 
 test("a solo day plays from the sub-path: a sale, the day ends, the next one starts", async ({
@@ -123,7 +114,7 @@ test("a solo day plays from the sub-path: a sale, the day ends, the next one sta
   // The art of the whole game came from under the sub-path, and nothing asked for anything else.
   const outside = seen.requests.filter((r) => !pathOf(r.url).startsWith(PREFIX));
   expect(outside, "requests outside the sub-path").toEqual([]);
-  const missing = seen.requests.filter((r) => r.status >= 400 && !unbundled(r));
+  const missing = seen.requests.filter((r) => r.status >= 400);
   expect(missing, "requests the host could not answer").toEqual([]);
   expect(seen.requests.some((r) => pathOf(r.url).startsWith(`${PREFIX}classic/`))).toBe(true);
   testInfo.annotations.push({ type: "requests", description: String(seen.requests.length) });
@@ -189,9 +180,7 @@ test.describe("service worker and sound", () => {
       })
       .toBe(true);
     expect(
-      seen.requests.filter(
-        (r) => pathOf(r.url).startsWith(PREFIX) && r.status >= 400 && !unbundled(r),
-      ),
+      seen.requests.filter((r) => pathOf(r.url).startsWith(PREFIX) && r.status >= 400),
     ).toEqual([]);
   });
 });

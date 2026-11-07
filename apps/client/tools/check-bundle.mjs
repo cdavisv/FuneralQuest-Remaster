@@ -59,11 +59,13 @@ const GROUPS = {
   // Browsers that can run the game read woff2; the .woff fallbacks are in the total only.
   "fonts (woff2)": (f) => /\.woff2$/.test(f),
   pictures: (f) => f.startsWith("classic/") || /^assets\/.*\.(svg|png|webp)$/.test(f),
-  // Sound: the Synth pack, then the two ElevenLabs packs the "Automatic" setting also plays
-  // (decision 15a). All of it loads on demand; the install fills only Synth and the remaster.
+  // Sound: the Synth pack, the two ElevenLabs packs the "Automatic" setting also plays
+  // (decision 15a) and the character voices. All of it loads on demand; the install fills only
+  // Synth and the remaster.
   audio: (f) => f.startsWith("audio/"),
   "audio-studio": (f) => f.startsWith("audio-studio/"),
   "audio-remaster": (f) => f.startsWith("audio-remaster/"),
+  voice: (f) => f.startsWith("voice/"),
   // What a first visit downloads to reach the front door: the page, the app's script and style,
   // the fonts the front door uses are loaded on demand, so this is a floor, not a promise.
   "first-load.js+css": (f) => f === "index.html" || /^assets\/index-.*\.(js|css)$/.test(f),

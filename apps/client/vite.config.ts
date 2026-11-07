@@ -196,20 +196,20 @@ function bundleAudio(): Plugin {
       console.log(`audio: bundled ${(manifest.totalBytes / 1e6).toFixed(1)} MB`);
       await bundleStudioAudio();
       await bundleOptionalPack("remaster", "audio-remaster", "VITE_AUDIO_REMASTER_BASE");
-      // Character voices (assets/voice, ElevenLabs; see its LICENSES.md): FQ_AUDIO_PACKS=...,voice
+      // Character voices (assets/voice, ElevenLabs; see its LICENSES.md).
       await bundleOptionalPack("voice", "voice", "VITE_VOICE_BASE");
     },
   };
 }
 
 /**
- * The sound packs and character voices a build ships. The default is every pack the "Automatic"
- * sound setting can pick (decision 15a: Original, remastered for Classic, Studio for Expanded),
- * with Synth behind both; voices are opt-in (`FQ_AUDIO_PACKS=synth,studio,remaster,voice`).
- * Name fewer to ship fewer (`FQ_AUDIO_PACKS=synth`): a pack a build lacks plays from the next
- * one in the fallback order.
+ * The sound packs and character voices a build ships. The default is all of them: every pack
+ * the "Automatic" sound setting can pick (decision 15a: Original, remastered for Classic, Studio
+ * for Expanded), Synth behind both, and the character voices (their terms were confirmed on
+ * 2026-11-07, decision 24). Name fewer to ship fewer (`FQ_AUDIO_PACKS=synth`): a pack a build
+ * lacks plays from the next one in the fallback order.
  */
-const DEFAULT_AUDIO_PACKS = "synth,studio,remaster";
+const DEFAULT_AUDIO_PACKS = "synth,studio,remaster,voice";
 const audioPacks = () =>
   (process.env.FQ_AUDIO_PACKS ?? DEFAULT_AUDIO_PACKS).split(",").map((p) => p.trim());
 
@@ -241,7 +241,7 @@ async function bundleStudioAudio(): Promise<void> {
 
 /**
  * The "Original, remastered" pack (assets/audio-remaster) and the voice pack (assets/voice),
- * copied like the Studio pack when FQ_AUDIO_PACKS names them (the remaster by default, voices not).
+ * copied like the Studio pack when FQ_AUDIO_PACKS names them (both by default).
  */
 async function bundleOptionalPack(id: string, dir: string, baseEnv: string): Promise<void> {
   const packs = audioPacks();

@@ -1,6 +1,6 @@
 # Studio audio ledger
 
-What every file in this directory is, and what is not settled about it.
+What every file in this directory is, and on what terms it is distributed.
 
 - **Origin.** Each file was generated with ElevenLabs (models `eleven_music_v2_5` for music
   and stingers, `eleven_text_to_sound_v2` for ambience and effects) under the project owner's
@@ -11,12 +11,7 @@ What every file in this directory is, and what is not settled about it.
   encoded to Ogg Opus and AAC. No recording, sample or music from the original 2001 game, and
   no third-party audio, was given to the generator: the prompts are text written for this
   project.
-- **Licence: not established here.** These files are not covered by the project's licence
-  the way the Synth pack is. Their redistribution terms are those of ElevenLabs' terms of
-  service for the plan the owner's account is on at the time of generation. The owner must
-  confirm those terms allow shipping them (in the web build, the desktop and mobile apps, and
-  any store build) before the Studio pack is made the default or shipped in a store build.
-  Until then the game's default stays the Synth pack.
+- **Licence.** These files are not covered by the project's licence the way the Synth pack is: their redistribution terms are those of ElevenLabs' terms of service for the plan the owner's account was on when they were generated. The owner confirmed on 2026-11-07 that the ElevenLabs plan's terms allow distributing these files in the public repository, in the web, desktop and mobile builds and in store builds (docs/DECISIONS.md, decision 24). They ship in every build.
 - **The Synth pack** (`assets/audio/`) remains fully generated from this repository's own code
   and carries the project's licence; any id this pack lacks plays from it.
 - **Cost.** 19801 credits in all (the ledger is in `sources.json`).
