@@ -7,7 +7,8 @@ import { audioBase, pickFormat } from "./webAudioBackend.js";
  * The service worker (pwa/sw.js) keeps every audio file as it is played. That alone leaves a
  * first offline game silent, so once the game is usable (the page loaded, the browser idle, a few
  * seconds later) the page asks the worker to fetch the rest in the background, two files at a
- * time, in the one container this browser plays (about 7 MB of Ogg Opus, 10 MB of AAC). Nothing
+ * time, in the one container this browser plays (the Synth and "Original, remastered" packs: about
+ * 8 MB of Ogg Opus, 11 MB of AAC; the Studio pack is kept only as it is played). Nothing
  * here runs in the native apps (the audio is part of the app there), on a data-saver connection,
  * or when the audio is hosted on another origin (`VITE_AUDIO_BASE`; the worker only handles its
  * own).

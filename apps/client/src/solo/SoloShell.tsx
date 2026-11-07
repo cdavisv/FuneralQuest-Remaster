@@ -7,6 +7,7 @@ import {
   type SoloSave,
 } from "@fq/solo/client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { SoundContext } from "../audio/AudioContext.js";
 import { Game } from "../Game.js";
 import { useT } from "../i18n/I18nContext.js";
 import { DoorFrame } from "../shell/DoorFrame.js";
@@ -29,7 +30,12 @@ type Screen =
   | { kind: "menu" }
   | { kind: "setup" }
   | { kind: "opening" }
-  | { kind: "playing"; session: SoloSession; slot: string };
+  | {
+      kind: "playing";
+      session: SoloSession;
+      slot: string;
+      played: Pick<SoloConfig, "ruleset" | "mode">;
+    };
 
 export interface SoloShellProps {
   platform: SoloPlatform;
@@ -113,7 +119,11 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
 
   /** Starts a worker with the given game and shows it. */
   const play = useCallback(
-    async (slot: string, start: (client: ReturnType<typeof createSoloClient>) => Promise<void>) => {
+    async (
+      slot: string,
+      start: (client: ReturnType<typeof createSoloClient>) => Promise<void>,
+      played: Pick<SoloConfig, "ruleset" | "mode">,
+    ) => {
       const client = createSoloClient(platform);
       try {
         await start(client);
@@ -130,7 +140,7 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
       current.current = session;
       saver.current = autosaver;
       setPlayingSolo(slot);
-      if (alive.current) setScreen({ kind: "playing", session, slot });
+      if (alive.current) setScreen({ kind: "playing", session, slot, played });
     },
     [platform],
   );
@@ -143,7 +153,10 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
       try {
         const save = await platform.storage.read(slot);
         if (!save) throw new Error("The save is gone.");
-        await play(slot, (client) => client.load(save, undefined, hostOptions()));
+        await play(slot, (client) => client.load(save, undefined, hostOptions()), {
+          ruleset: save.config.ruleset,
+          mode: save.config.mode,
+        });
       } catch (error) {
         setPlayingSolo(null);
         if (alive.current) {
@@ -161,7 +174,10 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
     async (config: SoloConfig) => {
       setBusy(true);
       try {
-        await play(newSlot(platform), (client) => client.create(config, undefined, hostOptions()));
+        await play(newSlot(platform), (client) => client.create(config, undefined, hostOptions()), {
+          ruleset: config.ruleset,
+          mode: config.mode,
+        });
       } finally {
         if (alive.current) setBusy(false);
       }
@@ -257,6 +273,10 @@ export function SoloShell({ platform, onPage, onBack, offline }: SoloShellProps)
   if (screen.kind === "playing") {
     return (
       <>
+        <SoundContext
+          mode={screen.played.mode === "daily" ? "daily" : "solo"}
+          ruleset={screen.played.ruleset}
+        />
         <Game
           transport={screen.session}
           onLeave={() => void leave()}

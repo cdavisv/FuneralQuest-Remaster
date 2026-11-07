@@ -7,14 +7,17 @@
  * worker and the offline page are left out: a Tauri app has no use for them.
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "../../..");
 const out = join(here, "../dist");
-const built = join(root, "apps/client/dist-build");
+// FQ_BUILD_OUT builds (and reads) the client in a directory of its own, as the client's vite config does.
+const built = process.env.FQ_BUILD_OUT
+  ? resolve(process.env.FQ_BUILD_OUT)
+  : join(root, "apps/client/dist-build");
 
 if (process.env.FQ_SKIP_CLIENT_BUILD !== "1" || !existsSync(join(built, "index.html"))) {
   const env = { ...process.env };
@@ -39,4 +42,6 @@ cpSync(built, out, {
   recursive: true,
   filter: (src) => !src.endsWith(".map") && !skip.has(src.slice(built.length + 1)),
 });
-console.log(`desktop: bundle copied to ${out}`);
+// The version and build the client was built as (written by the client's vite config).
+const info = JSON.parse(readFileSync(join(built, "build-info.json"), "utf8"));
+console.log(`desktop: bundle copied to ${out} (${info.version}, build ${info.build})`);

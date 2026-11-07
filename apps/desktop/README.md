@@ -23,6 +23,8 @@ The client is built exactly as for the web, with base path `/`, which is what Ta
 
 Keys: F11 and Alt+Enter fullscreen; F2 server address; the client's own 1 to 5 and Escape. Gamepad: the client's own (BUILDING.md).
 
+The app's version is the root `package.json`'s (`tauri.conf.json` points at it; `Cargo.toml` carries a copy that `node scripts/version.mjs --check` keeps equal), so the installers are named `Funeral Quest_0.1.0-alpha.1_...`; the game inside shows "Alpha 0.1.0 (build abc1234)" in Settings. `.github/workflows/release.yml` builds the Linux `.deb` and AppImage for the alpha release. `FQ_BUILD_OUT=<dir>` builds the client in a directory of its own.
+
 `FQ_DEFAULT_SERVER=https://fq.example.com` at build time sets the address a fresh install starts with; the player's own setting always wins. The server must list the app's origins in `FQ_ALLOWED_ORIGINS` (BUILDING.md).
 
 ### Test build

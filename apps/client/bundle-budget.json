@@ -24,6 +24,12 @@
   "audio": {
     "maxGzipBytes": 16928768
   },
+  "audio-studio": {
+    "maxGzipBytes": 14733312
+  },
+  "audio-remaster": {
+    "maxGzipBytes": 1425408
+  },
   "first-load.js+css": {
     "maxGzipBytes": 241664
   },
@@ -31,6 +37,6 @@
     "maxGzipBytes": 3642368
   },
   "total": {
-    "maxGzipBytes": 20571136
+    "maxGzipBytes": 36742144
   }
 }

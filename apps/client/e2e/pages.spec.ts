@@ -12,12 +12,15 @@ import { makeASale, plaque, reachDesk } from "./helpers";
 const PREFIX = "/fq-pages/";
 
 /**
- * The one request the Pages build knowingly cannot answer: the optional character-voice pack is
- * not bundled (its terms are unsettled, and the build ships only the default Synth pack), so the
- * client's best-effort fetch of its manifest is a 404 and the game stays silent for it.
+ * The requests the Pages build knowingly cannot answer: the optional sound packs (the character
+ * voices, the Remaster and the Studio packs) are not bundled (their terms are unsettled, and the
+ * build ships only the default Synth pack), so the client's best-effort fetch of each manifest is
+ * a 404 and the game stays silent for that pack.
  */
 const unbundled = (r: { url: string }) =>
-  new URL(r.url).pathname === `${PREFIX}voice/manifest.json`;
+  ["voice", "audio-remaster", "audio-studio"].some(
+    (pack) => new URL(r.url).pathname === `${PREFIX}${pack}/manifest.json`,
+  );
 
 /** Everything the page asks for, with what the host answered. */
 function watch(page: Page) {

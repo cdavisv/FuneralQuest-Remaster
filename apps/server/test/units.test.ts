@@ -157,6 +157,43 @@ describe("effect dispatch", () => {
     );
   });
 
+  it("announces the tournament's reset before it ends the sessions", () => {
+    // The engine ends every session and then emits the reset; a client told its session ended is
+    // on its way out, so the reset notice (with the winner) must reach every socket first.
+    const plan = planEffects(
+      [
+        { kind: "sessionEnded", playerId: 1, reason: "reset" },
+        { kind: "sessionEnded", playerId: 2, reason: "reset" },
+        { kind: "tournamentReset", winner: "Skelly" },
+      ],
+      town(),
+      5,
+    );
+    expect(plan.pushes[0]).toEqual({
+      recipient: { to: "connected" },
+      message: {
+        type: "notice",
+        at: 5,
+        notice: { kind: "tournamentReset", winner: "Skelly" },
+      },
+    });
+    const ended = plan.pushes.filter(
+      (p) => p.message.type === "notice" && p.message.notice.kind === "sessionEnded",
+    );
+    expect(ended.map((p) => p.recipient)).toEqual([
+      { to: "player", playerId: 1 },
+      { to: "player", playerId: 2 },
+    ]);
+    // Sockets close only after every push.
+    expect(plan.commands.map((c) => c.kind)).toEqual([
+      "clearPresence",
+      "closePlayer",
+      "clearPresence",
+      "closePlayer",
+      "unlinkAllParlors",
+    ]);
+  });
+
   it("reports a kick as a kick rather than the engine's time-out", () => {
     const plan = planEffects(
       [{ kind: "sessionEnded", playerId: 4, reason: "timeout" }],

@@ -1,8 +1,9 @@
 import type { View } from "@fq/protocol";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { ArtProvider } from "../src/art/ArtContext.js";
-import { AudioProvider, defaultAudioManager } from "../src/audio/AudioContext.js";
+import { AudioProvider, defaultAudioManager, SoundContext } from "../src/audio/AudioContext.js";
 import { type AudioBackend, createAudioManager, FADE } from "../src/audio/AudioManager.js";
 import { AudioLibrary } from "../src/audio/library.js";
 import { SoundToggle } from "../src/audio/SoundToggle.js";
@@ -27,6 +28,7 @@ function fakeBackend() {
     setGains: rec("setGains"),
     setRadio: rec("setRadio"),
     setActive: rec("setActive"),
+    setPack: rec("setPack"),
     dispose: rec("dispose"),
   };
   const of = (name: string) => calls.filter((c) => c[0] === name).map((c) => c.slice(1));
@@ -172,6 +174,93 @@ describe("audio manager", () => {
   });
 });
 
+describe("sound pack by ruleset", () => {
+  const classic = { ruleset: "classic", mode: "town" } as const;
+  const expanded = { ruleset: "expanded", mode: "town" } as const;
+
+  it("starts on Automatic at the front door, which plays the remaster", () => {
+    const audio = createAudioManager();
+    expect(audio.state.packSetting).toBe("auto");
+    expect(audio.state.pack).toBe("remaster");
+    expect(audio.state.context).toEqual({ ruleset: "classic", mode: "door" });
+  });
+
+  it("tells the backend its pack at unlock, and again when the ruleset changes", () => {
+    const f = fakeBackend();
+    const audio = createAudioManager({ backend: () => f.b });
+    audio.setContext(expanded);
+    audio.unlock();
+    expect(f.of("setPack")).toEqual([["studio"]]);
+    audio.setContext(classic);
+    audio.setContext(classic);
+    audio.setContext({ ruleset: "classic", mode: "solo" });
+    audio.setContext({ ruleset: "expanded", mode: "solo" });
+    audio.setContext({ ruleset: "expanded", mode: "daily" });
+    audio.setContext({ ruleset: "classic", mode: "door" });
+    // only changes of pack reach the backend: studio, remaster, studio (daily too), remaster
+    expect(f.of("setPack")).toEqual([["studio"], ["remaster"], ["studio"], ["remaster"]]);
+    expect(audio.state.pack).toBe("remaster");
+  });
+
+  it("keeps the music playing and moves it to the new pack's track for the same cue", () => {
+    const f = fakeBackend();
+    const audio = createAudioManager({ backend: () => f.b, unlocked: true });
+    audio.setContext(classic);
+    audio.cue(desk.music, desk.sounds, desk);
+    f.clear();
+    audio.setContext(expanded);
+    // the backend is told the new pack and reloads the current cue from it; the cue is unchanged
+    expect(f.of("setPack")).toEqual([["studio"]]);
+    expect(f.of("setMusic")).toEqual([]);
+    expect(audio.currentMusic).toBe("desk");
+  });
+
+  it("an explicit choice overrides the ruleset everywhere, and Automatic can be picked again", () => {
+    const f = fakeBackend();
+    const audio = createAudioManager({ backend: () => f.b, unlocked: true });
+    audio.setContext(classic);
+    audio.setPack("synth");
+    expect(audio.state.pack).toBe("synth");
+    audio.setContext(expanded);
+    audio.setContext({ ruleset: "expanded", mode: "daily" });
+    expect(audio.state.pack).toBe("synth");
+    audio.setPack("studio");
+    audio.setContext(classic);
+    expect(audio.state.pack).toBe("studio");
+    audio.setPack("remaster");
+    audio.setContext(expanded);
+    expect(audio.state.pack).toBe("remaster");
+    audio.setPack("auto");
+    expect(audio.state.pack).toBe("studio");
+    audio.setContext(classic);
+    expect(audio.state.pack).toBe("remaster");
+  });
+
+  it("follows the game on screen and goes back to the front door's pack when it leaves", () => {
+    const audio = createAudioManager();
+    const wrap = (children: ReactNode) => (
+      <SettingsProvider>
+        <AudioProvider manager={audio}>{children}</AudioProvider>
+      </SettingsProvider>
+    );
+    const view = render(wrap(<SoundContext mode="town" ruleset="expanded" />));
+    expect(audio.state.pack).toBe("studio");
+    expect(audio.state.context).toEqual(expanded);
+    // a ruleset the lobby briefly forgot keeps the last one known
+    view.rerender(wrap(<SoundContext mode="town" />));
+    expect(audio.state.pack).toBe("studio");
+    // a Classic town (and Solo's "original" ruleset, which is Classic with its fixes off)
+    view.rerender(wrap(<SoundContext mode="solo" ruleset="original" />));
+    expect(audio.state.context).toEqual({ ruleset: "classic", mode: "solo" });
+    expect(audio.state.pack).toBe("remaster");
+    view.rerender(wrap(<SoundContext mode="solo" ruleset="expanded" />));
+    expect(audio.state.pack).toBe("studio");
+    view.rerender(wrap(<div />));
+    expect(audio.state.context).toEqual({ ruleset: "classic", mode: "door" });
+    expect(audio.state.pack).toBe("remaster");
+  });
+});
+
 describe("audio library", () => {
   const manifest = {
     generator: "test",
@@ -257,6 +346,102 @@ describe("audio library", () => {
     expect(fetched).toContain("/audio/music/desk.m4a");
   });
 
+  it("plays each track from the first pack that has it: remaster, then Studio, then Synth", async () => {
+    const only = (...ids: string[]) =>
+      JSON.stringify({
+        ...manifest,
+        tracks: Object.fromEntries(
+          ids.map((id) => [
+            id,
+            {
+              ...manifest.tracks.desk,
+              loop: false,
+              files: [{ ogg: `music/${id}.ogg`, m4a: `music/${id}.m4a`, bytes: 1 }],
+            },
+          ]),
+        ),
+      });
+    const files = {
+      "/audio/manifest.json": only("desk", "bank", "synth-only"),
+      "/audio-studio/manifest.json": only("desk", "bank"),
+      "/audio-remaster/manifest.json": only("desk"),
+      "/audio/music/desk.ogg": new ArrayBuffer(8),
+      "/audio/music/bank.ogg": new ArrayBuffer(8),
+      "/audio/music/synth-only.ogg": new ArrayBuffer(8),
+      "/audio-studio/music/desk.ogg": new ArrayBuffer(8),
+      "/audio-studio/music/bank.ogg": new ArrayBuffer(8),
+      "/audio-remaster/music/desk.ogg": new ArrayBuffer(8),
+    };
+    const fetched: string[] = [];
+    const lib = new AudioLibrary({
+      base: "/audio",
+      bases: { studio: "/audio-studio", remaster: "/audio-remaster" },
+      format: "ogg",
+      fetchBytes: async (url) => {
+        fetched.push(url);
+        const f = (files as Record<string, string | ArrayBuffer>)[url];
+        if (f === undefined) throw new Error("404");
+        return typeof f === "string" ? new TextEncoder().encode(f).buffer : f;
+      },
+      decode: async () => fakeBuffer(2),
+      warn: vi.fn(),
+    });
+    lib.setPack("remaster");
+    for (const id of ["desk", "bank", "synth-only"]) await lib.buffers(id);
+    expect(Object.fromEntries(lib.sources)).toEqual({
+      desk: "remaster",
+      bank: "studio",
+      "synth-only": "synth",
+    });
+    expect(fetched).toContain("/audio-remaster/music/desk.ogg");
+    expect(fetched).toContain("/audio-studio/music/bank.ogg");
+    expect(fetched).toContain("/audio/music/synth-only.ogg");
+    // Synth picked: nothing above it is touched
+    fetched.length = 0;
+    lib.setPack("synth");
+    await lib.buffers("desk");
+    expect(lib.sources.get("desk")).toBe("synth");
+    expect(fetched.filter((u) => u.includes("remaster") || u.includes("studio"))).toEqual([]);
+    // a build without the Studio pack: the remaster's gaps play from Synth
+    const bare = new AudioLibrary({
+      base: "/audio",
+      bases: { studio: "/audio-studio", remaster: "/audio-remaster" },
+      format: "ogg",
+      fetchBytes: async (url) => {
+        if (url.includes("audio-studio")) throw new Error("404");
+        const f = (files as Record<string, string | ArrayBuffer>)[url];
+        if (f === undefined) throw new Error("404");
+        return typeof f === "string" ? new TextEncoder().encode(f).buffer : f;
+      },
+      decode: async () => fakeBuffer(2),
+      warn: vi.fn(),
+    });
+    bare.setPack("remaster");
+    await bare.buffers("bank");
+    expect(bare.sources.get("bank")).toBe("synth");
+
+    // a file that cannot be had (offline, Studio not cached) falls back too, with the metadata of
+    // the pack that plays
+    const offline = new AudioLibrary({
+      base: "/audio",
+      bases: { studio: "/audio-studio", remaster: "/audio-remaster" },
+      format: "ogg",
+      fetchBytes: async (url) => {
+        if (url.includes("audio-studio/music")) throw new Error("offline");
+        const f = (files as Record<string, string | ArrayBuffer>)[url];
+        if (f === undefined) throw new Error("404");
+        return typeof f === "string" ? new TextEncoder().encode(f).buffer : f;
+      },
+      decode: async () => fakeBuffer(2),
+      warn: vi.fn(),
+    });
+    offline.setPack("studio");
+    expect(await offline.buffers("bank")).toHaveLength(1);
+    expect(offline.sources.get("bank")).toBe("synth");
+    expect((await offline.track("bank"))?.files[0]?.ogg).toBe("music/bank.ogg");
+    expect([...offline.missing]).toEqual([]);
+  });
+
   it("treats a missing file, an unknown id and a missing manifest as silence, once", async () => {
     const { lib, warn, fetched } = library({ "/audio/manifest.json": JSON.stringify(manifest) });
     expect(await lib.buffers("gone")).toBeNull();
@@ -304,6 +489,13 @@ describe("sound settings", () => {
   it("the note under the sound packs describes the pack selected", () => {
     setup();
     const note = screen.getByTestId("sound-pack-note");
+    // the default is Automatic, which says what is playing now and why
+    expect(screen.getByLabelText("Automatic (recommended)")).toBeChecked();
+    expect(note).toHaveTextContent("Automatic");
+    expect(note).toHaveTextContent("Right now you are hearing Original, remastered");
+    expect(note).toHaveTextContent("front door");
+    fireEvent.click(screen.getByLabelText("Synth"));
+    expect(loadSettings(window.localStorage).soundPack).toBe("synth");
     expect(note).toHaveTextContent("Synth pack");
     expect(note).toHaveTextContent("synthesised from the game's own source code");
     fireEvent.click(screen.getByLabelText("Studio"));
@@ -311,18 +503,62 @@ describe("sound settings", () => {
     expect(note).toHaveTextContent("Studio pack");
     expect(note).toHaveTextContent("ElevenLabs");
     expect(note).not.toHaveTextContent("synthesised from the game's own source code");
+    fireEvent.click(screen.getByLabelText("Original, remastered"));
+    expect(note).toHaveTextContent("Original, remastered pack");
+    expect(note).toHaveTextContent("not the 2001 recordings");
   });
 
-  it("sound is on by default, and says plainly that neither pack is the original audio", () => {
+  it("the Automatic note names the pack and the reason for the game being played", () => {
+    const { audio } = setup();
+    const note = screen.getByTestId("sound-pack-note");
+    act(() => audio.setContext({ ruleset: "classic", mode: "solo" }));
+    expect(note).toHaveTextContent(
+      "hearing Original, remastered, because you are in a Classic Solo career",
+    );
+    act(() => audio.setContext({ ruleset: "expanded", mode: "town" }));
+    expect(note).toHaveTextContent("hearing Studio, because you are in an Expanded-ruleset town");
+    act(() => audio.setContext({ ruleset: "expanded", mode: "daily" }));
+    expect(note).toHaveTextContent("hearing Studio, because you are playing the Daily Challenge");
+    // an explicit pick wins, and the note stops talking about Automatic
+    fireEvent.click(screen.getByLabelText("Synth"));
+    expect(audio.state.pack).toBe("synth");
+    expect(note).not.toHaveTextContent("Right now");
+  });
+
+  it("sound is on by default, and says plainly that no pack is the original audio", () => {
     setup();
     expect(loadSettings(undefined).muted).toBe(false);
     expect(screen.getByRole("button", { name: "Mute sound" })).toBeVisible();
     expect(screen.getByLabelText("Mute all sound")).not.toBeChecked();
-    expect(screen.getByText(/Neither pack is the original game's audio/)).toBeVisible();
+    expect(screen.getByText(/None of the three is the 2001 game's own audio/)).toBeVisible();
     expect(screen.getByText(/play only in museum mode, inside the original client/)).toBeVisible();
     expect(screen.getByTestId("sound-pack-note")).toHaveTextContent(
       "These are not the original game's sounds",
     );
+  });
+
+  it("a player with no saved choice gets Automatic; a saved choice is kept", () => {
+    expect(loadSettings(undefined).soundPack).toBe("auto");
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ muted: true }));
+    expect(loadSettings(window.localStorage).soundPack).toBe("auto");
+    for (const choice of ["synth", "studio", "remaster", "auto"] as const) {
+      window.localStorage.setItem(
+        "fq.settings.v1",
+        JSON.stringify({ soundPack: choice, soundPackChosen: true }),
+      );
+      expect(loadSettings(window.localStorage).soundPack).toBe(choice);
+    }
+    // A "synth" saved before the Automatic choice existed was never a choice: it becomes Automatic.
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ soundPack: "synth" }));
+    expect(loadSettings(window.localStorage).soundPack).toBe("auto");
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ soundPack: "studio" }));
+    expect(loadSettings(window.localStorage).soundPack).toBe("studio");
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ soundPack: "vinyl" }));
+    expect(loadSettings(window.localStorage).soundPack).toBe("auto");
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ soundPack: "studio" }));
+    const { audio } = setup();
+    expect(audio.state.packSetting).toBe("studio");
+    expect(screen.getByLabelText("Studio")).toBeChecked();
   });
 
   it("the mute button mutes and unmutes, and a saved mute is kept", () => {

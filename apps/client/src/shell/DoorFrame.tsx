@@ -2,6 +2,7 @@ import { type ReactNode, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { Chrome } from "../components/Chrome.js";
 import { SettingsPanel } from "../components/SettingsPanel.js";
+import { VersionFooter } from "../feedback/VersionLine.js";
 import { useSettings } from "../settings/settings.js";
 import { useAppStyle } from "../util/useAppStyle.js";
 import { useLayoutMode } from "../util/useLayout.js";
@@ -43,6 +44,7 @@ export function DoorFrame({
             <main className="fq-scene" id="fq-main">
               {children(layout)}
             </main>
+            <VersionFooter />
           </div>
         </div>
       </div>

@@ -1,17 +1,28 @@
-# Sound packs: Synth and Studio
+# Sound packs: Synth, Studio and Original, remastered
 
-The game has two sets of audio files with the same track ids.
+The game has three sets of audio files with the same track ids.
 
 | Pack | Where | Made by | Licence |
 |---|---|---|---|
-| **Synth** (default) | `assets/audio/` | `packages/audio`'s own synthesiser, sequencer and effect generators (`pnpm --filter @fq/audio run render`) | the project's licence |
+| **Synth** | `assets/audio/` | `packages/audio`'s own synthesiser, sequencer and effect generators (`pnpm --filter @fq/audio run render`) | the project's licence |
 | **Studio** | `assets/audio-studio/` | ElevenLabs generations from text prompts written for this project, post-processed by `packages/audio` (`pnpm --filter @fq/audio run studio`) | not settled: see `assets/audio-studio/LICENSES.md` |
 
-The player picks one in Settings, "Sound pack". Any id the picked pack lacks plays from Synth (`resolveTrack` in `packages/audio/src/packs.ts`), track by track, so the Studio pack may be partial. The default stays Synth until the owner has listened and settled the Studio pack's licence. The nine UI sounds (clicks, page turns) are synthesised on the page in both packs.
+The player picks one in Settings, "Sound pack": **Automatic (recommended)**, the default, or Synth, Studio or Original, remastered, which override Automatic everywhere (owner's decision 15a, 2026-11-06). A saved explicit choice is kept; a player with none gets Automatic.
+
+**Automatic picks by what is being played** (`AUTO_PACK` in `packages/audio/src/packs.ts`, one table):
+
+| Playing | Pack |
+|---|---|
+| Classic-ruleset town, Classic Solo career, museum mode, the front door | Original, remastered |
+| Expanded-ruleset town, Expanded Solo career, the Daily Challenge | Studio |
+
+The pack follows the town or career on screen (`SoundContext` in `apps/client/src/audio/AudioContext.tsx`, rendered beside `Game` by the online shell and the Solo shell) and changes without a reload; music and ambience already playing crossfade to the new pack's track for the same cue. Museum mode is the original client in its own page, which plays its own audio; the table row exists for any host that tells the manager it is in museum mode. The Settings note says which pack is playing and why.
+
+**Fallback.** Any id the pack in effect lacks plays from the next pack in `FALLBACK_ORDER` (`["remaster", "studio", "synth"]`, one line to change): the remaster falls back to Studio, then Synth; Studio to Synth; Synth to nothing (`resolveTrack`, `packChain`). A file that cannot be fetched (offline and not cached) falls back the same way instead of going silent. The remaster has 25 game tracks, so a Classic town plays Studio's version of the other 43 Synth ids (every one of them is in Studio): music `bank`, `cafe`, `ceremony`, `cityhall`, `club`, `desk`, `dimart`, `graveyard`, `hospital`, `main`, `meteor`, `negotiation`, `university`; ambience `amb-fogbell`, `amb-kitchen`, `amb-rain`, `amb-storm`, `amb-street`, `amb-wind`; stingers `defeat`, `endday`, `main-stinger`, `newday`, `victory`; and 19 effects (`alarm-bell`, `cards`, `casket-thump`, `dice`, `door`, `fail-trombone`, `fanfare-exact`, `level-up`, `lockpick`, `monument`, `padlock-break`, `punch`, `rain-hit`, `rattle`, `safe-click`, `slap`, `slot-machine`, `thunder`, `walkout`). Nothing falls through to Synth except the nine UI sounds, which are synthesised on the page in every pack.
 
 To hear both side by side and leave notes, open [`listen.html`](listen.html) (below).
 
-**Neither pack contains the original 2001 game's audio.** The original sounds and music are licensed for the original game only; the game plays them only in museum mode, inside the original client. The listening page can also play them for comparison (the "Original (2001)" column, below), from a copy extracted on the owner's own machine that is never committed or distributed.
+**None of the packs contains the original 2001 game's audio.** The original sounds and music are licensed for the original game only; the game plays them only in museum mode, inside the original client. The listening page can also play them for comparison (the "Original (2001)" column, below), from a copy extracted on the owner's own machine that is never committed or distributed.
 
 ## The Studio pack, end to end
 
@@ -41,23 +52,28 @@ What this does not give: the melodies and chord changes of the three pieces are 
 
 ## Pack plumbing
 
-- `@fq/audio` exports `PACK_IDS`, `PACKS`, `DEFAULT_PACK` ("synth"), `isPackId`, `packChain`, `resolveTrack`, `stemGains` and `nextBarTime` (`src/packs.ts`).
+- `@fq/audio` exports `PACK_IDS`, `PACKS`, `PACK_SETTINGS`, `DEFAULT_PACK_SETTING` ("auto"), `AUTO_PACK`, `effectivePack`, `autoReason`, `FALLBACK_ORDER`, `isPackId`, `isPackSetting`, `packChain`, `resolveTrack`, `stemGains` and `nextBarTime` (`src/packs.ts`).
 - The client's audio library (`apps/client/src/audio/library.ts`) loads the Synth manifest from `/audio` and, when Studio is picked, the Studio manifest from `/audio-studio` (or `VITE_AUDIO_STUDIO_BASE`), and resolves each id through the chain. The backend (`webAudioBackend.ts`) applies the layer mode, restarts the music and ambience when the pack changes, and reports the pack each loaded id came from in `window.__fqAudio.debug().sources`. The manager (`AudioManager.ts`) passes the setting through (`setPack`); the setting is `soundPack` in `src/settings/settings.tsx`, shown in Settings as "Sound pack".
-- `vite dev` serves both packs from `assets/`. `vite build` copies the Synth pack as before; it copies the Studio pack to `<outDir>/audio-studio` only with `FQ_AUDIO_PACKS=synth,studio` (without it, picking Studio plays Synth). The provenance sidecars are not copied. The service worker's offline audio fill covers the Synth pack only.
+- `vite dev` serves every pack from `assets/`. `vite build` copies all three by default (`FQ_AUDIO_PACKS` defaults to `synth,studio,remaster`; voices are opt-in, `…,voice`), so Automatic can pick either; name fewer to ship fewer (a missing pack plays from the next in the fallback order; the GitHub Pages build sets `synth`). The provenance sidecars are not copied. The service worker's offline fill (`pwa/sw.js`) covers Synth and the remaster (about 8 MB of Opus); Studio (about 6 MB more) is cached the first time it is played, to keep the install small. `docs/performance.md` has the sizes and budget.
 
 ## The listening page
 
 `docs/audio/listen.html` is a static page with a Play button and the browser's own controls for every track in both packs, the original 2001 sound that did the same job where there is one, every original 2001 sound, and every character voice clip. Run `pnpm listen` in the repository and open the address it prints (`http://127.0.0.1:4780/`); the small server it starts serves only this page and the two sound packs. Opening the file directly in a web browser window also works. A preview that cannot read the files next to the page (some editors' built-in viewers) shows a red notice saying so.
 
-## The "Original, remastered" pack (in preparation)
+## The "Original, remastered" pack
 
 Pack id `remaster`, shown as "Original, remastered": new audio made to resemble each of the 40 sounds of the 2001 game (35 distinct recordings), at modern fidelity. It is not the 2001 recordings and replaces neither Synth nor Studio.
 
 1. **Describe** (`packages/audio/scripts/remasterDescribe.py`, run locally in a virtualenv with librosa and PANNs): every original extracted by `pnpm listen:originals` is measured on this machine only (length, how the game looped it, tempo and beats per loop, key and pitch centre, spectrum and its shape below 5 kHz, loudness, envelope, onsets) and tagged by a local AudioSet classifier. The results, with the source file names from the author's Flash projects, are in `assets/audio-remaster/brief.json`. No original audio is uploaded or used as a generation input.
 2. **Brief** (`packages/audio/scripts/remasterBrief.ts`, `pnpm --filter @fq/audio run remaster-brief`): a description, the prompt, model, parameters, delivered length and credit estimate for each remake, merged into `brief.json`. Prompts give kind, instruments, tempo, key, mood and length, never the original's notes. The five music loops are 2.00 s (one bar) or 4.00 s (two bars) at exactly 120 bpm.
-3. **Not generated yet**: the ElevenLabs connection was removed from the session before the pilot. `manifest.json` lists nothing, so the pack plays Synth throughout; the listening page shows "not generated yet" with each prompt in its "Original, remastered" column.
+3. **Generate** with ElevenLabs from the prompts alone: `eleven_music_v2_5` for the music (one take; 16 s for loops), `eleven_text_to_sound_v2` for ambience and effects (two takes). Weak sounds were retaken once with a reworded prompt. 81 takes, 3,692 credits; the ledger is in `takes.json` and `LICENSES.md`.
+4. **Choose** (`packages/audio/scripts/remasterCompare.py takes`): each take is measured against its original on this machine (length, band shape below 5 kHz, loudness envelope, centroid, onsets, key, tempo, shared tagger labels) and the more alike take kept; the reason is in `takes.json` and `sources.json`.
+5. **Post** (`pnpm --filter @fq/audio run remaster`): music loops are stretched to exactly 120 bpm and cut on a bar line to the original's one or two bars; ambience loops are the sound model's seamless loop stretched (pitch kept) to the original's exact length; one-shots are trimmed to at most 10 % over the original. The music model ignored the asked key in three loops, so those are transposed (tempo kept) to the original's key: rival parlors -6, Yang's -6, town map -7 semitones. Levels follow the pipeline targets plus each original's loudness against its peers.
+6. **Check** (`remasterCompare.py pack`): `similarity.json` holds each delivered sound's measurements against its original (mean similarity 0.76; lengths 0.97 to 1.10 of the original), a speech screen (no words found in any) and the clipped-sample count (none).
 
-The client offers it as the third "Sound pack" choice; the build copies it only with `FQ_AUDIO_PACKS=…,remaster`.
+The manifest lists the remakes by game track (25 tracks whose loop behaviour matches the remake; everything else plays Synth) and by original file under `originals`. The title theme and the ceremony organ are one-shots in 2001 but loops in the game's track list, so they are reached through `originals` only.
+
+The client offers it as a "Sound pack" choice, and Automatic plays it in Classic towns, Classic careers and museum mode; the build copies it by default (`FQ_AUDIO_PACKS` names it).
 
 ### The Original (2001) column
 
@@ -85,7 +101,7 @@ Some of the town's characters speak their lines aloud (owner's decision 15b). Ev
 
 **Keys.** `voiceKey(character, text)`: the character id and a 64-bit FNV-1a hash of the words (whitespace normalised, case and punctuation kept). The client looks a line up whole, then without its first sentence, then without its last.
 
-**Checks** (`pnpm --filter @fq/audio run voice`, `scripts/voiceBuild.ts`): each take is transcribed back with a local speech-to-text model (`scripts/voiceTranscribe.py`, faster-whisper "small", no prompt) and its words compared with the line after reducing both to letters and digits (`scripts/voiceCheck.ts`); any changed, added or missing word rejects it. A few game names a transcriber cannot spell from sound ("Bury Points" is heard as "berry points", "Di-Mart", the bingo pun "B-4") are mapped on the transcript only, and those clips are marked for a listener. Then: leading and trailing silence trimmed, speaking rate checked (1.2 to 4.8 words a second), clipped samples counted, the noise floor around the speech checked (under -50 dBFS: no music or noise under the voice), loudness normalised, encoded, and read back with ffmpeg's EBU R128 meter.
+**Checks** (`pnpm --filter @fq/audio run voice`, `scripts/voiceBuild.ts`): each take is transcribed back with a local speech-to-text model (`scripts/voiceTranscribe.py`, faster-whisper "small", no prompt; a take it does not pass word for word is transcribed again with the larger "medium.en", and passes if either matches) and its words compared with the line after reducing both to letters and digits (`scripts/voiceCheck.ts`); any changed, added or missing word rejects it. (ElevenLabs' own transcriber was tried as a second opinion and not used: given one of its own generations it returned the prompt's delivery tag, "[dryly]", as a word, so it is not independent of the script.) A few game names a transcriber cannot spell from sound ("Bury Points" is heard as "berry points", "Di-Mart", the bingo pun "B-4") are mapped on the transcript only, and those clips are marked for a listener. Then: leading and trailing silence trimmed, speaking rate checked (1.2 to 4.8 words a second), clipped samples counted, the noise floor around the speech checked (under -50 dBFS: no music or noise under the voice), loudness normalised, encoded, and read back with ffmpeg's EBU R128 meter.
 
 **In the game.** Settings, Sound: "Character voices" (on or off) and "Voices volume". The default is on in Expanded towns and Solo careers and off in Classic towns, since the original game had no recorded voices; museum mode is the original client and never plays them. The voice plays once as the text appears, on its own bus through the master (so mute and the 2001 radio filter apply), ducking the music by about 6 dB; moving to another screen cuts it off with a 40 ms fade; the same screen updated (a chat line, a re-render) does not replay it; one voice at a time, a screen's lines in order. `window.__fqVoice.debug()` reports what is playing, what was cut, the voice bus level and the duck. Code: `apps/client/src/audio/voiceLines.ts`, `voicePlayer.ts`, `voiceHook.ts`.
 

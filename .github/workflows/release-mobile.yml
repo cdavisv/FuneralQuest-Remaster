@@ -1,8 +1,10 @@
 name: Release mobile
 
 # Builds the Capacitor apps: an Android debug APK and a release APK and AAB (unsigned unless the
-# signing secrets exist), and an unsigned iOS archive on a macOS runner. Run it by hand or push
-# a tag such as v0.1.0. Store signing and upload are described in docs/release/BUILDING.md.
+# signing secrets exist), and an unsigned iOS archive on a macOS runner. Run it by hand. It no
+# longer runs on a tag: the alpha release (release.yml) builds the Android debug and unsigned
+# release APKs with the other files. Use this workflow for the AAB and the iOS archive. Store
+# signing and upload are described in docs/release/BUILDING.md.
 on:
   workflow_dispatch:
     inputs:
@@ -10,8 +12,6 @@ on:
         description: "Default server address baked into the apps (optional; players can change it)"
         required: false
         default: ""
-  push:
-    tags: ["v*"]
 
 permissions:
   contents: read

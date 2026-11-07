@@ -11,6 +11,25 @@ Both apps play **Solo mode with no connection and no server**. **The first mobil
 
 The app/bundle identifier is `org.funeralquest.remaster`. **It is a placeholder.** It cannot be changed after the first upload to Google Play or the App Store, so choose the real one (a reverse-domain name you control) before that: `apps/desktop/src-tauri/tauri.conf.json` (`identifier`), `apps/mobile/capacitor.config.json` (`appId`), the Android `namespace`/`applicationId` in `apps/mobile/android/app/build.gradle` and the Java package path of `MainActivity`, and `PRODUCT_BUNDLE_IDENTIFIER` in the Xcode project.
 
+## Alpha builds (the release workflow)
+
+`.github/workflows/release.yml` builds everything an alpha tester needs, in one run, from one version. Start it by hand (Actions, "Release (alpha builds)", Run workflow: the files come out as workflow artifacts) or push a tag that matches the root `package.json` version (`v0.1.0-alpha.1` for `0.1.0-alpha.1`; a mismatch fails the run), which also attaches the files to a **draft pre-release** for the owner to read and publish by hand. It publishes nothing anywhere else: no store, no GitHub Pages, no Docker or package registry, and it must not get such a job.
+
+| File | What |
+| --- | --- |
+| `funeral-quest-<version>-web-online.zip` | The web client, online-capable, with a README (serve from a site's root; online play needs a server behind `/api`) |
+| `funeral-quest-<version>-web-solo.zip` | The solo-only web client (decision 14's build), with a README |
+| `funeral-quest-<version>-linux-amd64.deb`, `-linux-x86_64.AppImage` | The Tauri desktop app for Linux |
+| `funeral-quest-<version>-android-debug.apk`, `-android-release-unsigned.apk` | The solo-only Android app: debug-signed (installs directly) and release (not signed: it cannot be installed until you sign it) |
+| `funeral-quest-<version>-server.tar.gz` | The bundled server, the online-capable client, `.env.example`, `towns.example.json`, the Dockerfile and compose file, a README and `version.json` |
+| `SHA256SUMS` | Checksums of all of the above |
+
+**The version is one number**, the root `package.json` `version` (`0.1.0-alpha.1`), read by `scripts/version.mjs` and nothing else. The web client takes it (and the build, the short commit, or `FQ_BUILD`) at build time from `apps/client/vite.config.ts` and shows "Alpha 0.1.0 (build abc1234)" in Settings and on the front door; `build-info.json` in every web bundle carries both. Tauri's `tauri.conf.json` points its `version` at the root `package.json`; `Cargo.toml` and the two wrapper `package.json` files carry a copy that `node scripts/version.mjs --check` (run by CI) keeps equal. Android's `versionName` is `<version>+<build>` and `versionCode` grows with the version (`0.1.0-alpha.1` is 100001; a final release counts as the top of its number), both passed to Gradle by `apps/mobile/scripts/build-android.mjs`. To change the version, edit the root `package.json`, then the same line in `apps/desktop/src-tauri/Cargo.toml` (and its `Cargo.lock` entry for `funeral-quest`), `apps/desktop/package.json` and `apps/mobile/package.json`, and run the check. iOS's marketing version must be numeric and is not set from this (the iOS project is not part of the alpha).
+
+The same steps run on a laptop: `node scripts/release/package.mjs web-online | web-solo | server` build and name those files in `release-out/` (git-ignored), `desktop` and `android` collect what `tauri build` and `build-android.mjs` made, `checksums` writes `SHA256SUMS`, `list` prints names and sizes. `FQ_BUILD_OUT=<dir>` makes the desktop and mobile scripts build the client in a directory of their own instead of `apps/client/dist-build`. `VITE_FEEDBACK_DESTINATION` (the workflow reads the repository variable `FQ_FEEDBACK_DESTINATION`) sets the text the in-game "Send feedback" dialog tells players to send reports to; unset, it shows the marked blank (docs/TODO.md).
+
+The alpha leaves out Windows, macOS and iOS; `release-desktop.yml` and `release-mobile.yml` remain, by hand only, for those, the AAB and the iOS archive. Neither runs on a tag any more.
+
 ## What the wrappers add
 
 The web client does the game's own work inside a native webview (it reads its server address from `window.fqWrapper.server`, plays gamepads itself, exports saves through `window.fqWrapper.saveFile`, registers `window.fqHandleBack`, and does not register its service worker inside a wrapper). A shared script, `apps/desktop/shim/fq-wrapper.js`, runs before the page's own scripts (Tauri injects it; the mobile build loads it first from `index.html`) and supplies only what a plain page cannot have:
@@ -56,7 +75,7 @@ On a Mac with Xcode command line tools: `rustup target add aarch64-apple-darwin 
 
 ### Continuous integration
 
-`.github/workflows/release-desktop.yml` (manual trigger, or a pushed tag `v*`) builds Linux (deb, AppImage), Windows (NSIS) and macOS (Apple silicon and Intel dmg), unsigned, and uploads them as workflow artifacts; on a tag it also attaches them to a draft GitHub release. Runner labels (`macos-15-intel` and so on) change over time: adjust them if a job fails to start.
+`.github/workflows/release-desktop.yml` (manual trigger only) builds Linux (deb, AppImage), Windows (NSIS) and macOS (Apple silicon and Intel dmg), unsigned, and uploads them as workflow artifacts. The alpha release (`release.yml`, above) builds the Linux files itself and attaches them to its draft release. Runner labels (`macos-15-intel` and so on) change over time: adjust them if a job fails to start.
 
 ### Signing and notarisation (not done; what it needs)
 
@@ -124,7 +143,7 @@ The Xcode project is `apps/mobile/ios/App/App.xcodeproj`, with the plugins as a 
 
 Already set in `Info.plist`: URL scheme `funeralquest` (the solo-only glue ignores it; remove it for the solo-only release), `ITSAppUsesNonExemptEncryption = false` (the app uses only standard HTTPS), `UIRequiredDeviceCapabilities = arm64`, all orientations. The app icon and splash image are in the asset catalog. Increase *Build* (and *Version*) in Xcode for every upload. Notifications ask permission only when the player turns them on.
 
-The CI workflow `.github/workflows/release-mobile.yml` (manual or tag) builds the Android debug APK and release APK and AAB (unsigned) on Linux and, on `macos-15`, runs `xcodebuild archive` with signing disabled and uploads the zipped `.xcarchive`. An unsigned archive is a build check; to ship, archive and sign on a Mac as above, or add your certificate, provisioning profile and App Store Connect API key to CI (fastlane or `xcodebuild -exportArchive`).
+The CI workflow `.github/workflows/release-mobile.yml` (manual only; the alpha release builds the APKs itself) builds the Android debug APK and release APK and AAB (unsigned) on Linux and, on `macos-15`, runs `xcodebuild archive` with signing disabled and uploads the zipped `.xcarchive`. An unsigned archive is a build check; to ship, archive and sign on a Mac as above, or add your certificate, provisioning profile and App Store Connect API key to CI (fastlane or `xcodebuild -exportArchive`).
 
 ### Deep links (online builds only; ignored by the solo-only release)
 

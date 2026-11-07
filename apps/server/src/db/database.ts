@@ -221,6 +221,9 @@ const MIGRATIONS: string[] = [
   `,
 ];
 
+/** The schema version this server writes (`PRAGMA user_version` after every migration ran). */
+export const SCHEMA_VERSION = MIGRATIONS.length;
+
 export function openDatabase(path: string): Db {
   if (path !== ":memory:") mkdirSync(dirname(path), { recursive: true });
   const db = new DatabaseSync(path);
@@ -234,6 +237,12 @@ export function openDatabase(path: string): Db {
 
 function migrate(db: Db): void {
   const row = db.prepare("PRAGMA user_version").get() as { user_version: number };
+  if (row.user_version > MIGRATIONS.length) {
+    // A newer server wrote this file; an older one would misread tables it does not know.
+    throw new Error(
+      `The database was written by a newer server (schema ${row.user_version}; this server knows ${MIGRATIONS.length}). Update the server, or restore a backup taken before the update.`,
+    );
+  }
   for (let v = row.user_version; v < MIGRATIONS.length; v++) {
     db.exec("BEGIN IMMEDIATE");
     try {

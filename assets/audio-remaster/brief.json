@@ -1071,16 +1071,14 @@
      "places/funeral-ceremony/2.mp3",
      "places/funeral-ceremony2/6.mp3"
     ],
-    "tracks": [
-     "ceremony"
-    ],
+    "tracks": [],
     "kind": "music",
     "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
     "uncertain": null,
     "model": "eleven_music_v2_5",
     "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
     "params": {
-     "duration_seconds": 16,
+     "duration_seconds": 14,
      "instrumental": true,
      "lyrics_type": "instrumental"
     },
@@ -2510,16 +2508,14 @@
      "places/funeral-ceremony2/6.mp3",
      "background/background_church/2.mp3"
     ],
-    "tracks": [
-     "ceremony"
-    ],
+    "tracks": [],
     "kind": "music",
     "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
     "uncertain": null,
     "model": "eleven_music_v2_5",
     "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
     "params": {
-     "duration_seconds": 16,
+     "duration_seconds": 14,
      "instrumental": true,
      "lyrics_type": "instrumental"
     },
@@ -2527,7 +2523,7 @@
     "loop": false,
     "key": "G major",
     "takes": 1,
-    "estimateCredits": 440,
+    "estimateCredits": 385,
     "status": "not generated"
    }
   },
@@ -2648,16 +2644,14 @@
      "places/funeral-ceremony/2.mp3",
      "background/background_church/2.mp3"
     ],
-    "tracks": [
-     "ceremony"
-    ],
+    "tracks": [],
     "kind": "music",
     "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
     "uncertain": null,
     "model": "eleven_music_v2_5",
     "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
     "params": {
-     "duration_seconds": 16,
+     "duration_seconds": 14,
      "instrumental": true,
      "lyrics_type": "instrumental"
     },
@@ -4931,16 +4925,14 @@
    "remake": {
     "id": "welcome-intro",
     "sharedWith": [],
-    "tracks": [
-     "main"
-    ],
+    "tracks": [],
     "kind": "music",
     "description": "The title-screen theme (source file fq_theme.wav), 20.08 s, played once. Tagged Music 0.65, Theme music 0.14, Orchestra 0.09. Very smooth, tonal spectrum (flatness 0.006, centroid about 1.1 kHz); one sustained arc from start to end (it does not fall 20 dB until 18.7 s); pitch centre about G#2 in the bass. Tempo estimate 81 bpm, weak; key estimate C major, weak (r 0.37).",
     "uncertain": "Tempo and key are weak estimates on a piece with few clear attacks.",
     "model": "eleven_music_v2_5",
     "prompt": "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
     "params": {
-     "duration_seconds": 30,
+     "duration_seconds": 24,
      "instrumental": true,
      "lyrics_type": "instrumental"
     },
@@ -4949,7 +4941,7 @@
     "bpm": 80,
     "key": "C major",
     "takes": 1,
-    "estimateCredits": 825,
+    "estimateCredits": 660,
     "status": "not generated"
    }
   },

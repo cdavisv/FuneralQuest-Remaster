@@ -2,8 +2,8 @@ import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { AccountService } from "./auth/accounts.js";
 import { createPasswordHasher } from "./auth/passwords.js";
 import { LoginThrottle } from "./auth/throttle.js";
-import { type Clock, SystemClock } from "./clock.js";
-import type { ServerConfig } from "./config.js";
+import { type Clock, clockFromConfig, ScaledClock } from "./clock.js";
+import { type ServerConfig, usesTestClock } from "./config.js";
 import { type ContentSource, createContentSource } from "./content/index.js";
 import { type Db, openDatabase } from "./db/database.js";
 import { GameHost } from "./game/host.js";
@@ -41,12 +41,22 @@ export async function createServer(
   config: ServerConfig,
   options: CreateServerOptions = {},
 ): Promise<GameServer> {
-  const clock = options.clock ?? new SystemClock();
+  const clock = options.clock ?? clockFromConfig(config);
   // Read the content packs before opening the database, so a bad FQ_PACKS_DIR fails cleanly.
   const content = options.content ?? createContentSource({ packsDir: config.packsDir });
   const db = options.db ?? openDatabase(config.dbPath);
 
   const logger = options.logger ?? createLogger(config.logLevel);
+  if (usesTestClock(config) && !options.clock) {
+    logger.warn(
+      {
+        speed: clock instanceof ScaledClock ? clock.speed : 1,
+        gameTime: new Date(clock.now()).toISOString(),
+        maintenanceDelayMs: config.testMaintenanceDelayMs,
+      },
+      "soak-test clock in use (FQ_TEST_CLOCK_*): game time is not real time; never run a real town like this",
+    );
+  }
 
   const accounts = new AccountService(
     db,

@@ -10,6 +10,7 @@ import type { TownRuntime } from "../game/town.js";
 import { blocklistedText } from "../moderation/service.js";
 import { MUSEUM_PATH } from "../museum/path.js";
 import { museumStatus } from "../museum/target.js";
+import { serverVersion } from "../version.js";
 import type {
   AuthResponse,
   DailyChallengeActionResponse,
@@ -149,6 +150,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
     ctx.db.prepare("SELECT 1").get();
     return {
       status: "ok",
+      ...serverVersion(),
       uptimeSeconds: Math.round((ctx.clock.now() - ctx.startedAt) / 1000),
       towns: host.towns.size,
     };
@@ -159,6 +161,7 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
   app.get(
     "/api/features",
     async (): Promise<FeaturesResponse> => ({
+      ...serverVersion(),
       museum: {
         enabled: config.legacyClient,
         path: MUSEUM_PATH,

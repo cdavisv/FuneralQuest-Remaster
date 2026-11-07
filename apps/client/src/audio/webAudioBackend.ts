@@ -24,8 +24,10 @@ import { AudioLibrary } from "./library.js";
  * duck the music. One-shots are capped (`MAX_VOICES`, and per sound) so a burst of events cannot
  * pile up. The UI sounds are synthesised here at start-up (`renderLive`), not downloaded.
  *
- * Sound packs: the library resolves each id to the selected pack or, if that pack lacks it, the
- * Synth pack. A track whose stems are alternatives ("crossfade" layer mode, the Studio pack's
+ * Sound packs: the library resolves each id to the pack in effect (the manager picks it: the
+ * player's choice, or by ruleset for "Automatic") or, if that pack lacks it, the next one in the
+ * fallback order (remaster, Studio, Synth). A pack change crossfades what is playing to the same
+ * cue from the new pack (`reload`). A track whose stems are alternatives ("crossfade" layer mode, the Studio pack's
  * negotiation) has one stem heard at a time, and a change of stem waits for the next bar line.
  */
 const MAX_VOICES = 10;

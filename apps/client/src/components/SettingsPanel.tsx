@@ -1,9 +1,15 @@
-import { PACK_IDS as SOUND_PACK_IDS, type PackId as SoundPackId } from "@fq/audio";
-import { useId } from "react";
+import {
+  autoReason,
+  PACK_SETTINGS as SOUND_PACK_SETTINGS,
+  type PackSetting as SoundPackSetting,
+} from "@fq/audio";
+import { useId, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { PACKS } from "../art/packs.js";
-import { useCurrentMusic } from "../audio/AudioContext.js";
+import { useAudioState, useCurrentMusic } from "../audio/AudioContext.js";
 import { useVoicesOn } from "../audio/voiceHook.js";
+import { FeedbackDialog } from "../feedback/FeedbackDialog.js";
+import { VersionText } from "../feedback/VersionLine.js";
 import { useT } from "../i18n/I18nContext.js";
 import type { MessageKey } from "../i18n/messages.js";
 import { SafetySettings } from "../moderation/SafetySettings.js"; // moderation hook
@@ -103,8 +109,10 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const id = useId();
   const { settings, update } = useSettings();
   const music = useCurrentMusic();
+  const sound = useAudioState();
   const voicesOn = useVoicesOn();
   const art = useArt();
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const opts = <T extends string>(prefix: string, values: T[]) =>
     values.map((value) => ({ value, label: t(`${prefix}.${value}` as MessageKey) }));
   return (
@@ -174,16 +182,21 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         checked={settings.radio}
         onChange={(radio) => update({ radio })}
       />
-      <Choice<SoundPackId>
+      <Choice<SoundPackSetting>
         legend={t("settings.audio.pack")}
         name="fq-sound-pack"
         value={settings.soundPack}
-        options={opts("settings.audio.pack", [...SOUND_PACK_IDS])}
-        onChange={(soundPack) => update({ soundPack })}
+        options={opts("settings.audio.pack", [...SOUND_PACK_SETTINGS])}
+        onChange={(soundPack) => update({ soundPack, soundPackChosen: true })}
       />
       <p className="fq-set-note">{t("settings.audio.pack.note")}</p>
       <p className="fq-set-note" data-testid="sound-pack-note">
-        {t(`settings.audio.note.${settings.soundPack}`)}
+        {settings.soundPack === "auto"
+          ? t("settings.audio.note.auto", {
+              pack: t(`settings.audio.pack.${sound.pack}`),
+              reason: t(`settings.audio.reason.${autoReason(sound.context)}`),
+            })
+          : t(`settings.audio.note.${settings.soundPack}`)}
       </p>
       <p className="fq-set-note">
         {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
@@ -252,6 +265,19 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           </span>
         ))}
       </p>
+      <h3 className="fq-set-heading">{t("about.version")}</h3>
+      <p className="fq-set-note fq-version-line">
+        <VersionText />{" "}
+        <button
+          type="button"
+          className="fq-linkbtn"
+          data-testid="settings-send-feedback"
+          onClick={() => setFeedbackOpen(true)}
+        >
+          {t("feedback.open")}
+        </button>
+      </p>
+      {feedbackOpen && <FeedbackDialog onClose={() => setFeedbackOpen(false)} />}
       <div className="fq-dialog-actions">
         <button type="button" className="fq-dbtn" onClick={onClose}>
           {t("settings.close")}

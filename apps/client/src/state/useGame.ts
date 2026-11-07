@@ -1,6 +1,7 @@
 import type { Action, View } from "@fq/protocol";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SendError, type SendFailure, type Transport } from "../transport/types.js";
+import { emptyTranscript, foldChat } from "./transcript.js";
 
 export type GameStatus = "connecting" | "ready" | "failed" | "closed";
 
@@ -36,6 +37,13 @@ export function useGame(transport: Transport): GameApi {
     responseId: 0,
   });
   const busyRef = useRef(false);
+  /** The cafe's talk so far (`state/transcript.ts`): a View's `chat` is only what is new. */
+  const talk = useRef(emptyTranscript());
+  const fold = useCallback((view: View, kind: "response" | "push"): View => {
+    const folded = foldChat(talk.current, view, kind);
+    talk.current = folded.transcript;
+    return folded.view;
+  }, []);
   /** Cafe lines typed while an answer is awaited; sent in order, one at a time. */
   const queued = useRef<Action[]>([]);
   const generation = useRef(0);
@@ -47,14 +55,23 @@ export function useGame(transport: Transport): GameApi {
     let alive = true;
     busyRef.current = false;
     queued.current = [];
+    talk.current = emptyTranscript();
     setState({ status: "connecting", view: null, busy: false, sendError: null, responseId: 0 });
     const off = transport.onPush((view) => {
-      if (alive) setState((s) => ({ ...s, view }));
+      if (!alive) return;
+      const drawn = fold(view, "push");
+      setState((s) => ({ ...s, view: drawn }));
     });
     transport.connect().then(
       (view) => {
         if (alive && generation.current === gen) {
-          setState((s) => ({ ...s, status: "ready", view, responseId: s.responseId + 1 }));
+          const drawn = fold(view, "response");
+          setState((s) => ({
+            ...s,
+            status: "ready",
+            view: drawn,
+            responseId: s.responseId + 1,
+          }));
         }
       },
       () => {
@@ -66,7 +83,7 @@ export function useGame(transport: Transport): GameApi {
       off();
       transport.close();
     };
-  }, [transport, attempt]);
+  }, [transport, attempt, fold]);
 
   const dispatch = useCallback(
     (action: Action) => {
@@ -87,7 +104,13 @@ export function useGame(transport: Transport): GameApi {
         (view) => {
           busyRef.current = false;
           if (generation.current !== gen) return;
-          setState((s) => ({ ...s, view, busy: false, responseId: s.responseId + 1 }));
+          const drawn = fold(view, "response");
+          setState((s) => ({
+            ...s,
+            view: drawn,
+            busy: false,
+            responseId: s.responseId + 1,
+          }));
           next();
         },
         (error: unknown) => {
@@ -99,7 +122,7 @@ export function useGame(transport: Transport): GameApi {
         },
       );
     },
-    [transport],
+    [transport, fold],
   );
 
   const dismissError = useCallback(() => setState((s) => ({ ...s, sendError: null })), []);
