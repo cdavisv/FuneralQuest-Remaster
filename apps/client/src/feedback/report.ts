@@ -1,10 +1,9 @@
 import type { BuildVersion } from "./version.js";
 
 /**
- * Where a player sends the report. GitHub Issues are switched off for the repository, so there is
- * no link yet: the destination is a marked blank until the owner chooses one (docs/TODO.md,
- * "choose where alpha feedback goes"). Set `VITE_FEEDBACK_DESTINATION` when building (the release
- * workflow reads the repository variable FQ_FEEDBACK_DESTINATION) or replace this constant.
+ * Where a player sends the report: GitHub Issues (docs/DECISIONS.md, decision 22). The address is
+ * `VITE_FEEDBACK_DESTINATION` at build time (the release workflow reads the repository variable
+ * FQ_FEEDBACK_DESTINATION); a build made without it shows this marked blank instead.
  */
 export const FEEDBACK_BLANK = "[FEEDBACK DESTINATION - OWNER TO FILL IN]";
 

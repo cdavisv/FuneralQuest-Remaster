@@ -4,7 +4,7 @@
 
 Prepared, **not published**. `.github/workflows/pages.yml` builds the solo-only game (`VITE_SOLO_ONLY=1`: no server address, log-on, chat or Daily Challenge board, no network request of its own; the Classic art; the default Synth sound pack, never Studio) and deploys it to GitHub Pages. It runs **only when started by hand** (`workflow_dispatch`): no push, pull-request or schedule trigger. Nothing has been triggered and no repository setting has been changed.
 
-**What the owner does, once the name "Funeral Quest" is confirmed in writing (decision 13/14):**
+**What the owner does (the name was settled on 2026-11-07, decision 21, and step 1 was done the same day):**
 
 1. In the repository on GitHub: Settings, Pages, Build and deployment, Source: **GitHub Actions**. (The workflow never changes a setting; with Pages off its `configure-pages` step fails and nothing is published.)
 2. Actions, **Pages (solo-only web build)**, Run workflow, on the branch to publish (normally `master`; Pages deployments from other branches are limited by the `github-pages` environment's branch rules).

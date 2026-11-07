@@ -1,6 +1,6 @@
 # Running a private town for friends
 
-This is the how-to for hosting Funeral Quest Remastered for a group of friends: install it, set it up, make a town, invite people, look after it day to day, back it up, put a backup back, and update it. Every setting and every admin route is described in the reference, the [server README](../apps/server/README.md); this page tells you which ones you need and when.
+This is the how-to for hosting FuneralQuest Remastered for a group of friends: install it, set it up, make a town, invite people, look after it day to day, back it up, put a backup back, and update it. Every setting and every admin route is described in the reference, the [server README](../apps/server/README.md); this page tells you which ones you need and when.
 
 You need a machine that stays on (a small VPS, a home server, a Raspberry Pi 4 or better), and either Docker or Node.js 24 or newer. A town of ten friends uses a few tens of megabytes of memory and a database of a few megabytes per season.
 
@@ -17,7 +17,7 @@ docker compose up -d --build
 curl localhost:8080/health          # {"status":"ok","version":"0.1.0-alpha.1",...}
 ```
 
-Open `http://<your machine>:8080`. Everything the server keeps lives in the Docker volume `fq-data` (mounted at `/data` in the container). The project has not yet built and run the Docker image itself (see `docs/TODO.md`); if it misbehaves, the Node.js route below is the tested one.
+Open `http://<your machine>:8080`. Everything the server keeps lives in the Docker volume `fq-data` (mounted at `/data` in the container). The image has been built and started once by the project (its `/health` and client answered); no tournament has been played through it yet, so if it misbehaves, the Node.js route below is the better-tested one.
 
 ### With Node.js
 

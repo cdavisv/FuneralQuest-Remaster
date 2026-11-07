@@ -1,15 +1,15 @@
 name: Pages (solo-only web build)
 
-# Publishes the free, solo-only web build of Funeral Quest to GitHub Pages
+# Publishes the free, solo-only web build of FuneralQuest Remastered to GitHub Pages
 # (https://<user>.github.io/<repo>/), prepared by the owner's decision 14 (2026-11-06).
 #
 # THIS WORKFLOW RUNS ONLY WHEN SOMEONE STARTS IT BY HAND (Actions, "Pages (solo-only web build)",
 # Run workflow). It has no push, pull_request or schedule trigger, and it must not get one.
 #
-# Do not run it until the name "Funeral Quest" is confirmed in writing (docs/TODO.md), and not
-# before Pages is enabled: Settings > Pages > Build and deployment > Source: GitHub Actions. The
-# workflow never changes a repository setting; with Pages off, the configure step fails and
-# nothing is published.
+# The owner confirmed the project's name, "FuneralQuest Remastered", on 2026-11-07 (decision 21)
+# and Pages was enabled the same day (Settings > Pages > Build and deployment > Source: GitHub
+# Actions). The workflow never changes a repository setting; with Pages off, the configure step
+# fails and nothing is published.
 on:
   workflow_dispatch:
 

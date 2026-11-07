@@ -51,7 +51,7 @@ def contact_sheet(assets):
     rows = (len(assets) + cols - 1) // cols
     sheet = Image.new("RGB", (cols * (tw + pad) + pad, rows * (th + lab + pad) + pad + 40), "#2a2a2a")
     d = ImageDraw.Draw(sheet)
-    d.text((pad, 10), "Funeral Quest Remastered art pack: every piece, with its grade (A ships, B placeholder, C needs an artist)", fill="#dddddd", font=font(16))
+    d.text((pad, 10), "FuneralQuest Remastered art pack: every piece, with its grade (A ships, B placeholder, C needs an artist)", fill="#dddddd", font=font(16))
     colours = {"A": "#7ccf7c", "B": "#e8c060", "C": "#e07060"}
     for i, a in enumerate(assets):
         x = pad + (i % cols) * (tw + pad)
@@ -69,7 +69,7 @@ def contact_sheet(assets):
             f'<br>{html.escape(a.get("overrides", "new"))}<br><small>{html.escape(a["notes"])}</small></figcaption></figure>'
         )
     page = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Funeral Quest Remastered: contact sheet</title>
+<html lang="en"><head><meta charset="utf-8"><title>FuneralQuest Remastered: contact sheet</title>
 <style>
 body{{background:#222;color:#ddd;font:14px/1.4 system-ui,sans-serif;margin:16px}}
 main{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}}
@@ -78,7 +78,7 @@ img{{width:100%;aspect-ratio:550/400;object-fit:contain;background:#000;display:
 .k-icon img{{background:#e8dcc0}} .k-ui img{{background:#888}}
 .gA{{color:#7ccf7c}} .gB{{color:#e8c060}} .gC{{color:#e07060}} small{{color:#aaa}}
 </style></head><body>
-<h1>Funeral Quest Remastered art pack</h1>
+<h1>FuneralQuest Remastered art pack</h1>
 <p>New art in the style of Akiko Robinson's original art, CC BY 4.0 (see manifest.json). Grades: A ships, B acceptable placeholder, C needs an artist.
 Compare the twelve redraws with the traced originals in <a href="comparisons.png">comparisons.png</a>.</p>
 <main>{''.join(cards)}</main></body></html>

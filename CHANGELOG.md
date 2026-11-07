@@ -4,7 +4,7 @@ What changed, in plain language, for players and for people who run a town. The 
 
 The version number lives in one place, the root `package.json`, and every app reads it. Versions look like `0.1.0-alpha.1`; the game shows it as "Alpha 0.1.0 (build abc1234)", where the build is the commit it was made from.
 
-## 0.1.0-alpha.1 (not yet released)
+## 0.1.0-alpha.1 (2026-11-07)
 
 The first alpha, on top of pull requests 1 to 3 below. What alpha means here, and what is still open (a playtest by real people, the Docker image), is in [docs/ALPHA.md](docs/ALPHA.md).
 
@@ -15,7 +15,7 @@ The first alpha, on top of pull requests 1 to 3 below. What alpha means here, an
 - **The "Original, remastered" sound pack exists:** 35 new recordings made to resemble each of the 2001 game's sounds, including the organ. Nothing from the original audio is copied or used as input.
 - **All 74 character voice clips** are in, for every spoken line in the game's text.
 - **Version on screen.** The front door and Settings show "Alpha 0.1.0 (build abc1234)", so a report can say exactly which build it is about.
-- **Send feedback.** A "Send feedback" link on the front door and in Settings opens a report already filled in with the version, build, ruleset, browser and the screen you were on, and a box for what happened. Nothing is sent from the game: you copy the report and send it to the address shown at the bottom. That address is not set up yet (the project's issue tracker is switched off for now); the dialog says so in a marked blank until it is. In the solo-only build the report leaves out the browser details.
+- **Send feedback.** A "Send feedback" link on the front door and in Settings opens a report already filled in with the version, build, ruleset, browser and the screen you were on, and a box for what happened. Nothing is sent from the game: you copy the report and paste it into a new GitHub issue (https://github.com/cdavisv/FuneralQuest-Remaster/issues/new). The alpha.1 builds were made before that address was set, so their dialog shows a marked blank where it should be; the release notes name the address. In the solo-only build the report leaves out the browser details.
 - **Newcomer documents.** The README now says what alpha means, how to play online, solo and in museum mode, how to host a private town and how to report a bug; the status page was brought up to date.
 
 ### For people who run a town
@@ -49,7 +49,7 @@ The first alpha, on top of pull requests 1 to 3 below. What alpha means here, an
 - **Apps:** a server security review ([docs/security.md](docs/security.md)); compression and a bundle size budget ([docs/performance.md](docs/performance.md)); browser tests now run in Chromium, Firefox and WebKit; CI split into parallel jobs.
 - The original text and art stay exactly as they were in every mode; the one altered portrait was removed from the Remastered art pack.
 
-### Pull request 1: Funeral Quest Remastered
+### Pull request 1: FuneralQuest Remastered
 
 - The original 2001 server, Flash client and content moved under `legacy/`, untouched.
 - **A rules engine** with two rulesets: **Classic**, the 2001 game ported line by line, and **Expanded**, built on the features the original authors cut.

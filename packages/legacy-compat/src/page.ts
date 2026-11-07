@@ -38,7 +38,7 @@ export function rufflePage(basePath: string): string {
 </head>
 <body>
 <div id="stage"><div id="player"></div></div>
-<div id="note">Museum mode: the unmodified 2001 Flash client, played with Ruffle against the Funeral Quest Remastered engine.</div>
+<div id="note">Museum mode: the unmodified 2001 Flash client, played with Ruffle against the FuneralQuest Remastered engine.</div>
 <script>
   window.addEventListener("load", function () {
     var ruffle = window.RufflePlayer.newest();

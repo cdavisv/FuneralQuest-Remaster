@@ -2,7 +2,7 @@
 
 The Remastered pack is new vector art drawn to sit beside Akiko Robinson's 2001 artwork for Funeral Quest, not to replace its look. Everything here was read off her own hand-drawn pieces in `assets/classic/` (rendered with `rsvg-convert` and read as SVG text). Where her pieces disagree, the hand-drawn scenes and portraits win over the auto-traced photographs, which are the reason this pack exists.
 
-New art is credited "Funeral Quest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0.
+New art is credited "FuneralQuest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0.
 
 ## 1. What the originals are
 

@@ -2,7 +2,7 @@
 >
 > Facts in this draft were taken from the server code (`apps/server`) and the client (`apps/client`) on 2026-11-06, after the report, block, mute, deletion and export features were built. Where the code could not settle a point the text says so in `[brackets]`. Replace every `[... - OWNER TO FILL IN]` and delete the drafting notes (lines starting "Drafting note") before publishing.
 
-# Privacy Policy for Funeral Quest Remastered
+# Privacy Policy for FuneralQuest Remastered
 
 Effective date: `[EFFECTIVE DATE - OWNER TO FILL IN]`
 

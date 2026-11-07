@@ -77,7 +77,7 @@ describe("the bridge's log-on reply", () => {
     expect(intro).toContain("Uptime:     3 Hour(s)");
     const rest = intro.slice(originalBanner(3 * 3600).length);
     expect(rest.startsWith("<br>")).toBe(true);
-    expect(plain(rest)).toContain("Funeral Quest Remastered engine");
+    expect(plain(rest)).toContain("FuneralQuest Remastered engine");
     // The client's field does not wrap: the whole line must fit where the banner's own does.
     expect(plain(rest).length).toBeLessThanOrEqual(
       originalBanner(3 * 3600).replace(/<[^>]*>/g, "").length,

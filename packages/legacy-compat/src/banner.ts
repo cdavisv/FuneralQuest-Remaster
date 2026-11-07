@@ -55,4 +55,4 @@ export function originalBanner(elapsedSeconds: number): string {
  * field does not wrap, and a longer line is cut off at its right edge.
  */
 export const REMASTER_BANNER_LINE =
-  "`wServed by the Funeral Quest Remastered engine, not the original FQServer.";
+  "`wServed by the FuneralQuest Remastered engine, not the original FQServer.";
