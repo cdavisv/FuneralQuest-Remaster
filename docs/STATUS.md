@@ -1,10 +1,10 @@
 # Status
 
-Where the project stands, for someone arriving cold and for the owner. Updated 2026-11-06 on the branch `dev/alpha` (on top of pull requests 1 to 3 and the owner's decisions in [DECISIONS.md](DECISIONS.md)); the project is at version `0.1.0-alpha.1`, and [ALPHA.md](ALPHA.md) is the checklist that ends alpha. "Run" means somebody started it and watched it work; "tested" means a test suite passes and nobody has looked at the real thing.
+Where the project stands, for someone arriving cold and for the owner. Updated 2026-11-07 on the branch `dev/alpha` (on top of pull requests 1 to 3 and the owner's decisions in [DECISIONS.md](DECISIONS.md)); the project is at version `0.1.0-alpha.1`, and [ALPHA.md](ALPHA.md) is the checklist that ends alpha. "Run" means somebody started it and watched it work; "tested" means a test suite passes and nobody has looked at the real thing.
 
 ## In one paragraph
 
-The game is playable in a browser, online against the server and solo with computer rivals and no server, in two rulesets (Classic, a line-by-line port of the 2001 game, and Expanded, the grown-up version). The original 2001 text and art are kept exactly as they were in every mode. Classic has been checked against the original itself: the 2001 C++ server, compiled for Linux, played 213,350 steps side by side with the port with identical random draws, player records and words. The server has had a security pass. The web client runs in Chromium, Firefox and WebKit. A Linux desktop app and an Android debug APK build from the same bundle, and one release workflow builds every alpha file (web bundles, desktop, APKs, server tarball) from one version number. Nothing has been put in front of real players, nobody has listened to the sound, and no store, phone, Mac or Windows PC has touched any of it.
+The game is playable in a browser, online against the server and solo with computer rivals and no server, in two rulesets (Classic, a line-by-line port of the 2001 game, and Expanded, the grown-up version). The original 2001 text and art are kept exactly as they were in every mode. Classic has been checked against the original itself: the 2001 C++ server, compiled for Linux, played 213,350 steps side by side with the port with identical random draws, player records and words. The server has had a security pass. The web client runs in Chromium, Firefox and WebKit. A Linux desktop app and an Android debug APK build from the same bundle, and one release workflow builds every alpha file (web bundles, desktop, APKs, server tarball) from one version number. Nothing has been put in front of real players, the owner's listening notes on the sound packs have not reached the repository, and no store, phone, Mac or Windows PC has touched any of it.
 
 ## Finished
 
@@ -20,7 +20,7 @@ The game is playable in a browser, online against the server and solo with compu
 | Security review of the server | [security.md](security.md) |
 | Performance budget, with a bundle-size check in CI | [performance.md](performance.md) |
 | CI: lint, typecheck, the version and workflow-file checks, unit tests in four groups, client build and bundle budget, Playwright in three browsers, dependency audit | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) |
-| Versioning: one version (root `package.json`, `0.1.0-alpha.1`) read by the web client (shown as "Alpha 0.1.0 (build abc1234)" in Settings and on the front door), the desktop and Android apps and the server tarball (the running server does not yet report it on `/health` or `/api/features`: `apps/server` belongs to another track, see ALPHA.md row A7) | [../CHANGELOG.md](../CHANGELOG.md), [release/BUILDING.md](release/BUILDING.md) |
+| Versioning: one version (root `package.json`, `0.1.0-alpha.1`) read by the web client (shown as "Alpha 0.1.0 (build abc1234)" in Settings and on the front door), the desktop and Android apps and the server tarball and reported by the running server on `/health` | [../CHANGELOG.md](../CHANGELOG.md), [release/BUILDING.md](release/BUILDING.md) |
 | Feedback: "Send feedback" in Settings and on the front door opens a prefilled report (version, build, ruleset, browser, screen title, free text) to copy. **The destination is a marked blank**: the owner has not chosen where reports go | [TODO.md](TODO.md) |
 | Alpha release workflow (`release.yml`): web bundles (online-capable and solo-only), Linux `.deb` and AppImage, Android debug and unsigned release APKs, server tarball, `SHA256SUMS`; draft pre-release on a tag; publishes nothing to a store, Pages or a registry | [release/BUILDING.md](release/BUILDING.md) |
 
@@ -60,7 +60,7 @@ The game is playable in a browser, online against the server and solo with compu
 
 | Who | What | Detail |
 | --- | --- | --- |
-| Anyone with ears | Listen to every piece of music and every effect, in both packs | Synth has been measured, never listened to ([reference/sound-inventory.md](reference/sound-inventory.md)); Studio is unheard too; `docs/audio/listen.html` plays them side by side |
+| The owner | Listen to every piece of music and every effect in the three packs (Synth, Studio, Original remastered) and send back the notes (`pnpm listen`, then Export notes) | Synth has been measured ([reference/sound-inventory.md](reference/sound-inventory.md)); the owner has listened but the notes have not reached the repository, so nothing has been regenerated yet; `docs/audio/listen.html` plays the packs beside the 2001 originals |
 | An illustrator | The Remastered portraits and the Expanded customers | Graded C by their own notes ([art/remastered-notes.md](art/remastered-notes.md)) |
 | Playtesters | Play Classic and Expanded, online and solo | Balance numbers come from bots; no person has played a full season ([balance/](balance/)) |
 | The owner | Where alpha feedback goes (GitHub Issues enabled, a Discord, or the project email), and tagging and publishing the first alpha release | [TODO.md](TODO.md) |

@@ -6,16 +6,23 @@ The version number lives in one place, the root `package.json`, and every app re
 
 ## 0.1.0-alpha.1 (not yet released)
 
-The first alpha: this is the branch `dev/alpha`, on top of pull requests 1 to 3 below. Work from the other alpha tracks (the 14-day soak test, the sysop's backup and restore, the audit of every Classic feature in the web client) is tracked in [docs/ALPHA.md](docs/ALPHA.md) and is listed here as each piece is finished.
+The first alpha, on top of pull requests 1 to 3 below. What alpha means here, and what is still open (a playtest by real people, the Docker image), is in [docs/ALPHA.md](docs/ALPHA.md).
 
 ### For players
 
+- **Every Classic feature was played through in the web client** against the real server, with the original text as the oracle (33 browser tests, the table in [docs/ALPHA.md](docs/ALPHA.md)). Three things it found are fixed: speaking in the cafe wiped the conversation; on a phone the sale's and the shops' text shrank to a line or two behind five stacked buttons (four or more choices now sit in two columns); and at the end of a tournament the "session ended" screen said "reset by the sysop" without naming the winner.
+- **Sound packs by ruleset.** Settings, Sound pack has a new default, "Automatic": Classic towns, Classic solo careers and museum mode play "Original, remastered"; Expanded towns, careers and the Daily Challenge play "Studio". Synth, Studio and Original, remastered can still be chosen outright. A pack missing a track falls back to the next one. A stored "Synth" that was never chosen in the panel becomes Automatic once; a pack picked in Settings is kept.
+- **The "Original, remastered" sound pack exists:** 35 new recordings made to resemble each of the 2001 game's sounds, including the organ. Nothing from the original audio is copied or used as input.
+- **All 74 character voice clips** are in, for every spoken line in the game's text.
 - **Version on screen.** The front door and Settings show "Alpha 0.1.0 (build abc1234)", so a report can say exactly which build it is about.
 - **Send feedback.** A "Send feedback" link on the front door and in Settings opens a report already filled in with the version, build, ruleset, browser and the screen you were on, and a box for what happened. Nothing is sent from the game: you copy the report and send it to the address shown at the bottom. That address is not set up yet (the project's issue tracker is switched off for now); the dialog says so in a marked blank until it is. In the solo-only build the report leaves out the browser details.
 - **Newcomer documents.** The README now says what alpha means, how to play online, solo and in museum mode, how to host a private town and how to report a bug; the status page was brought up to date.
 
 ### For people who run a town
 
+- **A season was run on the real server before anyone played it.** The soak harness (`tools/soak`) plays a whole tournament of computer players over HTTP and WebSocket, kills the server at the worst moments (mid-day with requests in flight, inside midnight maintenance, inside the final reset), takes a backup during play and restores it two days later, and checks about 200,000 invariants on the way. A 14-day Classic tournament and a 30-day Expanded season both passed, as did a 40-player stress run; a short mode runs on every pull request.
+- **Backups from the admin page.** A Backups tab makes, lists, downloads and deletes consistent backups, and a town can be rolled back to a snapshot. `FQ_BACKUP_INTERVAL_HOURS` takes them on a schedule.
+- **`/health` reports the version.**
 - **Alpha builds you can download.** A release workflow builds, in one go: the web bundle (an online-capable one and a solo-only one, each a zip with a README), the Linux desktop app (`.deb` and AppImage), the Android debug APK and an unsigned release APK, and the server as a tarball with its Dockerfile, with a checksum list. It is started by hand or by a version tag, attaches the files to a draft release, and publishes nothing to any store, GitHub Pages or Docker registry.
 - **One version everywhere.** The server tarball carries a `version.json`, the desktop app and the Android app take their version from the same place as the web client, and CI checks that the copies agree.
 - **CI** now also checks that the version agrees across the apps and that every workflow file is valid.
