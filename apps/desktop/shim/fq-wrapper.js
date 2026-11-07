@@ -14,8 +14,11 @@
  *  - links to other sites open in the system browser (the host's openExternal);
  *  - F11 and Alt+Enter toggle fullscreen and F2 opens the server dialog (desktop).
  *
+ * With host.soloOnly (the first mobile release: online play is switched off) the dialog has no
+ * server address, only the host's own settings (the morning reminder).
+ *
  * The host (desktop or mobile) defines window.__fqHost before or after this script runs:
- *   { platform, defaultServer, openExternal(url), saveFile(name, text, type),
+ *   { platform, defaultServer, soloOnly?, openExternal(url), saveFile(name, text, type),
  *     openFile?(accept), toggleFullscreen?,
  *     extraSettings?: [{ id, label, type: "checkbox", get(), set(v) }] }
  * Everything here is plain DOM and CSSOM (no inline <style>, no eval), so a strict CSP holds.
@@ -221,6 +224,7 @@
   let dialogOpen = false;
   function openSettings() {
     if (dialogOpen) return;
+    const soloOnly = host().soloOnly === true;
     dialogOpen = true;
     const previous = document.activeElement;
     const back = el("div", {
@@ -251,13 +255,15 @@
     const title = el(
       "h2",
       { margin: "0 0 10px", font: "italic 700 24px Georgia, serif", color: "#f6dc8c" },
-      "Server address",
+      soloOnly ? "Reminders" : "Server address",
     );
     title.id = "fqw-title";
     const help = el(
       "p",
       { margin: "0 0 10px" },
-      "Online play connects to this server. Leave it empty to use Solo mode only. Solo needs no server.",
+      soloOnly
+        ? "A reminder each morning that your parlor is open. It is made on this device; nothing is sent anywhere."
+        : "Online play connects to this server. Leave it empty to use Solo mode only. Solo needs no server.",
     );
     const input = el("input", {
       width: "100%",
@@ -277,7 +283,8 @@
     input.value = server;
     const error = el("p", { color: "#ff9a8a", minHeight: "1.4em", margin: "6px 0" });
     error.setAttribute("role", "alert");
-    box.append(title, help, input, error);
+    if (soloOnly) box.append(title, help);
+    else box.append(title, help, input, error);
 
     const extras = (host().extraSettings || []).map((s) => {
       const row = el("label", {
@@ -327,7 +334,8 @@
     box.append(row);
     back.append(box);
     document.body.append(back);
-    input.focus();
+    if (soloOnly) save.focus();
+    else input.focus();
 
     const close = () => {
       dialogOpen = false;
@@ -336,6 +344,11 @@
       if (previous instanceof HTMLElement) previous.focus();
     };
     const commit = async () => {
+      if (soloOnly) {
+        for (const { s, cb } of extras) await s.set(cb.checked);
+        close();
+        return;
+      }
       const parsed = parseServer(input.value);
       if (parsed.error) {
         error.textContent = parsed.error;

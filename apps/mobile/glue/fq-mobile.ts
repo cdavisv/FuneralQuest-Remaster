@@ -58,6 +58,9 @@ const setFlag = (key: string, on: boolean): void => {
 // ---- host half of the shared shim ----------------------------------------------------------
 const defaultServer: string =
   (window as unknown as { __FQ_DEFAULT_SERVER__?: string }).__FQ_DEFAULT_SERVER__ ?? "";
+/** The first release is solo-only (decision 11): no server address, no online reminders, no invitations. */
+const soloOnly: boolean =
+  (window as unknown as { __FQ_SOLO_ONLY__?: boolean }).__FQ_SOLO_ONLY__ === true;
 
 async function ensureNotificationPermission(): Promise<boolean> {
   let status = await LocalNotifications.checkPermissions();
@@ -70,6 +73,7 @@ async function ensureNotificationPermission(): Promise<boolean> {
 window.__fqHost = {
   platform: "mobile",
   defaultServer,
+  soloOnly,
   openExternal: (url: string) => Browser.open({ url }),
   saveFile: async (name: string, text: string) => {
     // Write to the app's cache, then hand the file to the system share sheet ("Save to Files",
@@ -98,20 +102,24 @@ window.__fqHost = {
         if (!on) await cancelRange(SOLO_BASE_ID, 3);
       },
     },
-    {
-      id: "notify-online",
-      label: "Tell me when a new day dawns in my online town",
-      get: () => flag(NOTIFY_ONLINE),
-      set: async (on: boolean) => {
-        if (on && !(await ensureNotificationPermission())) {
-          window.fqWrapper?.toast("Notifications are off for this app in system settings.");
-          setFlag(NOTIFY_ONLINE, false);
-          return;
-        }
-        setFlag(NOTIFY_ONLINE, on);
-        if (!on) await cancelRange(ONLINE_BASE_ID, 3);
-      },
-    },
+    ...(soloOnly
+      ? []
+      : [
+          {
+            id: "notify-online",
+            label: "Tell me when a new day dawns in my online town",
+            get: () => flag(NOTIFY_ONLINE),
+            set: async (on: boolean) => {
+              if (on && !(await ensureNotificationPermission())) {
+                window.fqWrapper?.toast("Notifications are off for this app in system settings.");
+                setFlag(NOTIFY_ONLINE, false);
+                return;
+              }
+              setFlag(NOTIFY_ONLINE, on);
+              if (!on) await cancelRange(ONLINE_BASE_ID, 3);
+            },
+          },
+        ]),
   ],
 };
 
@@ -184,7 +192,7 @@ async function scheduleNotifications(): Promise<void> {
   if (flag(NOTIFY_SOLO) && (await hasSoloCareer())) {
     for (const [i, at] of nextMornings(3).entries()) add(SOLO_BASE_ID + i, at);
   }
-  if (flag(NOTIFY_ONLINE) && hasOnlineSession()) {
+  if (!soloOnly && flag(NOTIFY_ONLINE) && hasOnlineSession()) {
     try {
       // /api/towns is public. window.fetch is the shim's, so this goes to the configured server.
       const res = await fetch("/api/towns");
@@ -244,6 +252,14 @@ async function onBack(canGoBack: boolean): Promise<void> {
   }
   // 5. Otherwise confirm leaving the app. Solo careers save after every move, so nothing is lost.
   if (!wrapper) return void App.exitApp();
+  if (soloOnly) {
+    const leave = await wrapper.choose("Leave Funeral Quest?", "Your solo career is saved.", [
+      "Stay",
+      "Leave",
+    ]);
+    if (leave === 1) await App.exitApp();
+    return;
+  }
   const pick = await wrapper.choose(
     "Leave Funeral Quest?",
     "Your solo career is saved. Online games stay as they are.",
@@ -262,7 +278,8 @@ async function onUrl(raw: string): Promise<void> {
     return;
   }
   const wrapper = window.fqWrapper;
-  if (u.protocol !== "funeralquest:" || !wrapper) return;
+  // Invitations and the server dialog are online play's: none in the solo-only release.
+  if (soloOnly || u.protocol !== "funeralquest:" || !wrapper) return;
   const action = u.hostname || u.pathname.replace(/^\/+/, "");
   if (action === "settings") return wrapper.openSettings();
   if (action !== "join") return;

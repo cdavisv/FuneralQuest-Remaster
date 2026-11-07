@@ -103,10 +103,14 @@ function precache(): Plugin {
           // Sound is fetched when it is first needed; the app works without it.
           !f.startsWith("audio/") &&
           !f.startsWith("audio-studio/") &&
+          !f.startsWith("audio-remaster/") &&
+          // Character voices load on demand, only for a player who has them on.
+          !f.startsWith("voice/") &&
           f !== "sw.js" &&
           f !== "index.html" &&
           f !== "offline.html" &&
           !f.endsWith(".map") &&
+          f !== "build-info.json" &&
           // Browsers that can run the game read woff2; the .woff fallbacks are never fetched.
           !f.endsWith(".woff") &&
           // The `?expanded` development town (about 1 MB with the engine) is not part of the app.
@@ -115,7 +119,8 @@ function precache(): Plugin {
       );
       const optional = all.filter((f) => redraws.has(f));
       const art = all.filter((f) => f.startsWith("classic/"));
-      const list = (files: string[]) => files.map((f) => JSON.stringify(`/${f}`)).join(", ");
+      // Paths relative to the site's base: the service worker adds its own scope in front.
+      const list = (files: string[]) => files.map((f) => JSON.stringify(f)).join(", ");
       const sw = `${outDir}/sw.js`;
       const source = await readFile(sw, "utf8");
       await writeFile(
@@ -128,6 +133,25 @@ function precache(): Plugin {
       console.log(
         `pwa: the service worker keeps ${app.length} app files and ${art.length + optional.length} pictures (${optional.length} Remastered redraws best effort)`,
       );
+    },
+  };
+}
+
+/**
+ * `build-info.json` at the bundle's root: what this build was made as (solo-only or not, and its
+ * base path). The mobile and Pages builds read it to be sure the bundle they are packaging is the
+ * one they asked for (apps/mobile/scripts/prepare-web.mjs).
+ */
+function buildInfo(): Plugin {
+  return {
+    name: "fq-build-info",
+    apply: "build",
+    generateBundle() {
+      this.emitFile({
+        type: "asset",
+        fileName: "build-info.json",
+        source: `${JSON.stringify({ soloOnly: process.env.VITE_SOLO_ONLY === "1", base: siteBase() }, null, 2)}\n`,
+      });
     },
   };
 }
@@ -170,6 +194,9 @@ function bundleAudio(): Plugin {
       };
       console.log(`audio: bundled ${(manifest.totalBytes / 1e6).toFixed(1)} MB`);
       await bundleStudioAudio();
+      await bundleOptionalPack("remaster", "audio-remaster", "VITE_AUDIO_REMASTER_BASE");
+      // Character voices (assets/voice, ElevenLabs; see its LICENSES.md): FQ_AUDIO_PACKS=...,voice
+      await bundleOptionalPack("voice", "voice", "VITE_VOICE_BASE");
     },
   };
 }
@@ -201,10 +228,49 @@ async function bundleStudioAudio(): Promise<void> {
   console.log(`audio: bundled the Studio pack, ${(manifest.totalBytes / 1e6).toFixed(1)} MB`);
 }
 
+/**
+ * The optional "Original, remastered" pack (assets/audio-remaster), copied like the Studio pack
+ * only when FQ_AUDIO_PACKS names it (`FQ_AUDIO_PACKS=synth,remaster`), for the same reason.
+ */
+async function bundleOptionalPack(id: string, dir: string, baseEnv: string): Promise<void> {
+  const packs = (process.env.FQ_AUDIO_PACKS ?? "synth").split(",").map((p) => p.trim());
+  if (!packs.includes(id) || process.env[baseEnv]) return;
+  const from = `${assetsDir}/${dir}`;
+  try {
+    await stat(`${from}/manifest.json`);
+  } catch {
+    console.log(`audio: assets/${dir} has no manifest.json; the build has no ${id} pack`);
+    return;
+  }
+  await cp(from, `${outDir}/${dir}`, {
+    recursive: true,
+    // the provenance sidecars and the measurements of the originals stay in the repository
+    filter: (src) => !/(takes|sources|brief|lines|cast)\.json$/.test(src),
+  });
+  console.log(`audio: bundled the ${id} pack`);
+}
+
+/**
+ * Where the site lives on its host: "/" (a site's root, which is what the game server and the
+ * desktop and mobile apps use) or a sub-path such as "/FuneralQuest-Remaster/" (GitHub Pages
+ * serves a project at https://<user>.github.io/<repo>/). Set FQ_BASE to build for a sub-path.
+ * Everything the page, the service worker and the manifest ask for is relative to it
+ * (src/util/base.ts, pwa/sw.js).
+ */
+function siteBase(): string {
+  const raw = (process.env.FQ_BASE ?? "/").trim();
+  if (raw === "" || raw === "/") return "/";
+  if (!/^\/[\w.~-]+(\/[\w.~-]+)*\/?$/.test(raw)) {
+    throw new Error(`FQ_BASE must be a path such as /repo/ (got "${raw}")`);
+  }
+  return raw.endsWith("/") ? raw : `${raw}/`;
+}
+
 const serverTarget = process.env.FQ_SERVER_URL ?? "http://127.0.0.1:8080";
 
 export default defineConfig(({ command }) => ({
-  plugins: [react(), classicIds(), pwa(), bundleArt(), bundleAudio(), precache()],
+  base: siteBase(),
+  plugins: [react(), classicIds(), pwa(), buildInfo(), bundleArt(), bundleAudio(), precache()],
   publicDir: command === "serve" ? assetsDir : false,
   build: { outDir, emptyOutDir: true, sourcemap: true },
   // In development the page and the game server are different ports; the client talks to its

@@ -200,18 +200,22 @@ test.describe("the notice before online play", () => {
     await expect(page.getByText(/Connected to /)).toBeVisible();
     await page.getByRole("button", { name: /^Play online/ }).click();
     const gate = page.getByTestId("conduct-gate");
-    await expect(gate).toContainText("It is a comedy about death");
-    await expect(gate).toContainText("[MINIMUM AGE - OWNER TO FILL IN]");
+    await expect(gate).toContainText("Rated 18+, for adults.");
+    await expect(gate).toContainText("mature humour");
     await expect(page.getByRole("button", { name: "Log on" })).toHaveCount(0);
 
     // The rules are one click away, and back again.
     await gate.getByRole("button", { name: "Read the house rules" }).click();
     await expect(page.getByRole("heading", { name: "House rules for online play" })).toBeVisible();
     await page.getByRole("button", { name: "Back to the front door" }).click();
-    await page
-      .getByTestId("conduct-gate")
-      .getByRole("button", { name: "I agree. Open the doors" })
-      .click();
+    const back = page.getByTestId("conduct-gate");
+    // Continue waits for the tick box.
+    await expect(back.getByRole("button", { name: "Continue" })).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+    await back.getByRole("checkbox", { name: "I am 18 or older and accept these rules" }).check();
+    await back.getByRole("button", { name: "Continue" }).click();
     await expect(page.getByRole("button", { name: "Log on" })).toBeVisible();
 
     await page.reload();

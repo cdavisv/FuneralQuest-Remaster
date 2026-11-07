@@ -24,6 +24,7 @@ import { createBackend } from "./net/backend.js";
 import { readConfig } from "./net/config.js";
 import { registerServiceWorker } from "./pwa.js";
 import { browserSoloPlatform } from "./solo/platform.js";
+import { soloOnly } from "./util/soloOnly.js";
 import { getWrapper } from "./wrapper.js";
 
 // With `?mock` (or VITE_MOCK=1) the game runs against scripted fixtures, no server needed;
@@ -46,6 +47,9 @@ if (config.expanded) {
     (window as unknown as { __fqExpanded?: unknown }).__fqExpanded = host;
     mount(<App transport={host} />);
   });
+} else if (soloOnly()) {
+  // The solo-only build never creates a backend, so it cannot ask a server for anything.
+  mount(<App solo={browserSoloPlatform()} soloOnly />);
 } else {
   mount(
     config.mock ? (

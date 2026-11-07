@@ -1,0 +1,5057 @@
+{
+ "note": "Times are measured on the decoded MP3, which starts with about 0.14 s of decoder delay (so attack and peak times include it); the length that matters is `seconds`, from the sample count. Measurements of the original 2001 sounds, taken locally from the extracted files (never uploaded, never used as a generation input). Numbers and words only; no audio. The 'description' and 'prompt' fields are added by packages/audio/scripts/remasterBrief.ts.",
+ "tagger": "PANNs Cnn14 (AudioSet 527 labels), CPU, on the clip resampled to 32 kHz",
+ "sounds": [
+  {
+   "file": "ring/ring&hand/5.mp3",
+   "swf": "Ring/ring&hand.swf",
+   "name": "sound 5",
+   "role": "A ring in a hand, played once",
+   "sourceName": "chimes1_akiko.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 2.351,
+   "seconds": 2.12,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -42.5,
+    "truePeakDb": -26.6,
+    "attackSec": 0.279,
+    "peakAtSec": 0.621,
+    "decay20Sec": 1.66,
+    "envelopeDb16": [
+     -143.7,
+     -143.7,
+     -9.9,
+     -8.1,
+     -0.1,
+     -7.6,
+     -6.8,
+     -8.4,
+     -5.4,
+     -8.6,
+     -9.1,
+     -10.3,
+     -10.8,
+     -11.4,
+     -10,
+     -70.9
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.28
+    ],
+    "centroidHz": 2244,
+    "bandwidthHz": 1510,
+    "rolloff85Hz": 4034,
+    "flatness": 0.1044,
+    "bandsBelow5kDb": [
+     -31.9,
+     -35.6,
+     -31,
+     -29.1,
+     -28.2,
+     -26.4,
+     -24.4,
+     -22.7,
+     -10.4,
+     -12,
+     -8.9,
+     -1.5
+    ],
+    "tempoBpm": 246.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G major",
+    "keyR": 0.28,
+    "pitch": {
+     "medianHz": 1999.2,
+     "note": "B6",
+     "voicedShare": 0.33
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.112
+     },
+     {
+      "label": "Sonar",
+      "p": 0.053
+     },
+     {
+      "label": "Tuning fork",
+      "p": 0.05
+     },
+     {
+      "label": "Ding",
+      "p": 0.045
+     },
+     {
+      "label": "Chirp tone",
+      "p": 0.03
+     },
+     {
+      "label": "Sine wave",
+      "p": 0.023
+     },
+     {
+      "label": "Chime",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "ring-ring",
+    "sharedWith": [
+     "ring/ring/4.mp3"
+    ],
+    "tracks": [
+     "glint"
+    ],
+    "kind": "sfx",
+    "description": "A ring (chimes1_akiko.wav), 2.12 s, played once (both ring pictures share it): a high chime, pitch about B6 (2 kHz), one onset, swelling to its peak at about 0.5 s and ringing out. Very quiet (-42.5 LUFS). Tagged Tuning fork 0.05, Ding 0.05, Sonar 0.05.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A delicate high wind chime shimmer, a soft glassy sparkle that swells briefly and rings out, quiet and magical.",
+    "params": {
+     "duration_seconds": 2.12,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 2.12,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 0,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "ring/ring/4.mp3",
+   "swf": "Ring/ring.swf",
+   "name": "sound 4",
+   "role": "A ring picture, played once",
+   "sourceName": "chimes1_akiko.wav",
+   "kind": "sfx",
+   "tracks": [
+    "glint"
+   ],
+   "decodedSeconds": 2.351,
+   "seconds": 2.12,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -42.5,
+    "truePeakDb": -26.6,
+    "attackSec": 0.279,
+    "peakAtSec": 0.621,
+    "decay20Sec": 1.66,
+    "envelopeDb16": [
+     -143.7,
+     -143.7,
+     -9.9,
+     -8.1,
+     -0.1,
+     -7.6,
+     -6.8,
+     -8.4,
+     -5.4,
+     -8.6,
+     -9.1,
+     -10.3,
+     -10.8,
+     -11.4,
+     -10,
+     -70.9
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.28
+    ],
+    "centroidHz": 2244,
+    "bandwidthHz": 1510,
+    "rolloff85Hz": 4034,
+    "flatness": 0.1044,
+    "bandsBelow5kDb": [
+     -31.9,
+     -35.6,
+     -31,
+     -29.1,
+     -28.2,
+     -26.4,
+     -24.4,
+     -22.7,
+     -10.4,
+     -12,
+     -8.9,
+     -1.5
+    ],
+    "tempoBpm": 246.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G major",
+    "keyR": 0.28,
+    "pitch": {
+     "medianHz": 1999.2,
+     "note": "B6",
+     "voicedShare": 0.33
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.112
+     },
+     {
+      "label": "Sonar",
+      "p": 0.053
+     },
+     {
+      "label": "Tuning fork",
+      "p": 0.05
+     },
+     {
+      "label": "Ding",
+      "p": 0.045
+     },
+     {
+      "label": "Chirp tone",
+      "p": 0.03
+     },
+     {
+      "label": "Sine wave",
+      "p": 0.023
+     },
+     {
+      "label": "Chime",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "ring-ring",
+    "sharedWith": [
+     "ring/ring&hand/5.mp3"
+    ],
+    "tracks": [
+     "glint"
+    ],
+    "kind": "sfx",
+    "description": "A ring (chimes1_akiko.wav), 2.12 s, played once (both ring pictures share it): a high chime, pitch about B6 (2 kHz), one onset, swelling to its peak at about 0.5 s and ringing out. Very quiet (-42.5 LUFS). Tagged Tuning fork 0.05, Ding 0.05, Sonar 0.05.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A delicate high wind chime shimmer, a soft glassy sparkle that swells briefly and rings out, quiet and magical.",
+    "params": {
+     "duration_seconds": 2.12,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 2.12,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 47,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "animals/dog-dragging-hand/2.mp3",
+   "swf": "animals/dog-dragging-hand.swf",
+   "name": "sound 2",
+   "role": "A dog dragging a hand, played once",
+   "sourceName": "dog_growl.wav",
+   "kind": "sfx",
+   "tracks": [
+    "growl"
+   ],
+   "decodedSeconds": 1.985,
+   "seconds": 1.74,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -26.7,
+    "truePeakDb": -9.9,
+    "attackSec": 0.151,
+    "peakAtSec": 0.238,
+    "decay20Sec": 1.579,
+    "envelopeDb16": [
+     -162.3,
+     -62.2,
+     -3.4,
+     -5.6,
+     -6.8,
+     -5.8,
+     -8.3,
+     -11.7,
+     -9.8,
+     -15.2,
+     -14.2,
+     -9.5,
+     -11,
+     -7.8,
+     -29.4,
+     -142.7
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 770,
+    "bandwidthHz": 516,
+    "rolloff85Hz": 1252,
+    "flatness": 0.0642,
+    "bandsBelow5kDb": [
+     -22,
+     -22.3,
+     -13.1,
+     -10.7,
+     -13.8,
+     -8.8,
+     -2.6,
+     -9.6,
+     -17.5,
+     -25.9,
+     -38.3,
+     -45.5
+    ],
+    "tempoBpm": 53.8,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "D minor",
+    "keyR": 0.29,
+    "pitch": {
+     "medianHz": 690.7,
+     "note": "F5",
+     "voicedShare": 0.23
+    },
+    "tags": [
+     {
+      "label": "Animal",
+      "p": 0.742
+     },
+     {
+      "label": "Dog",
+      "p": 0.735
+     },
+     {
+      "label": "Domestic animals, pets",
+      "p": 0.638
+     },
+     {
+      "label": "Growling",
+      "p": 0.612
+     },
+     {
+      "label": "Canidae, dogs, wolves",
+      "p": 0.142
+     },
+     {
+      "label": "Roar",
+      "p": 0.129
+     },
+     {
+      "label": "Bark",
+      "p": 0.074
+     },
+     {
+      "label": "Yip",
+      "p": 0.064
+     }
+    ]
+   },
+   "remake": {
+    "id": "animals-dog-dragging-hand",
+    "sharedWith": [],
+    "tracks": [
+     "growl"
+    ],
+    "kind": "sfx",
+    "description": "A dog dragging a hand (dog_growl.wav), 1.74 s, played once. Tagged Dog 0.74, Growling 0.61. One continuous growl (one onset), peak early, fading over about 1.4 s; centroid 770 Hz.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A medium dog growling low and menacing for under two seconds, one continuous throaty growl, close and dry.",
+    "params": {
+     "duration_seconds": 1.74,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.74,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 39,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_1/2.mp3",
+   "swf": "background/background_1.swf",
+   "name": "sound 2",
+   "role": "Parlor background picture 1, played once",
+   "sourceName": "bell_1.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 1.724,
+   "seconds": 1.46,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -25.5,
+    "truePeakDb": -14.7,
+    "attackSec": 0.145,
+    "peakAtSec": 0.226,
+    "decay20Sec": 1.074,
+    "envelopeDb16": [
+     -158.4,
+     -81.1,
+     0,
+     -1.1,
+     -1.4,
+     -1.8,
+     -2.3,
+     -2.9,
+     -3.9,
+     -5.4,
+     -8.2,
+     -17.6,
+     -24,
+     -23.6,
+     -28.9,
+     -156.5
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1048,
+    "bandwidthHz": 902,
+    "rolloff85Hz": 1777,
+    "flatness": 0.0685,
+    "bandsBelow5kDb": [
+     -37.9,
+     -37.3,
+     -31.6,
+     -29.6,
+     -32.8,
+     -28.5,
+     -2.3,
+     -3.9,
+     -31.5,
+     -26.5,
+     -26.7,
+     -29.4
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G minor",
+    "keyR": 0.68,
+    "pitch": {
+     "medianHz": 156.5,
+     "note": "D♯3",
+     "voicedShare": 0.7
+    },
+    "tags": [
+     {
+      "label": "Doorbell",
+      "p": 0.747
+     },
+     {
+      "label": "Ding-dong",
+      "p": 0.13
+     },
+     {
+      "label": "Music",
+      "p": 0.055
+     },
+     {
+      "label": "Bell",
+      "p": 0.053
+     },
+     {
+      "label": "Speech",
+      "p": 0.032
+     }
+    ]
+   },
+   "remake": {
+    "id": "background-background_1",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Parlor background 1 (bell_1.wav), 1.46 s, played once. Tagged Doorbell 0.75, Ding-dong 0.13; one strike, pitch about D#3 with brighter partials, rings out over about 1 s.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single low shop doorbell ding, one warm metallic strike that rings out, close and clean.",
+    "params": {
+     "duration_seconds": 1.46,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.46,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 32,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_2/2.mp3",
+   "swf": "background/background_2.swf",
+   "name": "sound 2",
+   "role": "Parlor background picture 2, played once",
+   "sourceName": "bell_2.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 2.142,
+   "seconds": 1.88,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -27.4,
+    "truePeakDb": -17,
+    "attackSec": 0.145,
+    "peakAtSec": 0.377,
+    "decay20Sec": 1.033,
+    "envelopeDb16": [
+     -158.9,
+     -32.9,
+     -0.8,
+     -2.5,
+     -5.5,
+     -6,
+     -7.9,
+     -11.2,
+     -13.9,
+     -17.8,
+     -18.5,
+     -21.2,
+     -22.1,
+     -22,
+     -20.2,
+     -157.8
+    ],
+    "onsets": 3,
+    "onsetTimes": [
+     0.16,
+     0.24,
+     0.66
+    ],
+    "centroidHz": 1001,
+    "bandwidthHz": 967,
+    "rolloff85Hz": 1849,
+    "flatness": 0.0575,
+    "bandsBelow5kDb": [
+     -28.4,
+     -31.7,
+     -28.1,
+     -30.8,
+     -31.2,
+     -27.5,
+     -6.3,
+     -1.2,
+     -27.6,
+     -25.9,
+     -30.5,
+     -35.1
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Eb major",
+    "keyR": 0.48,
+    "pitch": {
+     "medianHz": 702.8,
+     "note": "F5",
+     "voicedShare": 0.85
+    },
+    "tags": [
+     {
+      "label": "Doorbell",
+      "p": 0.806
+     },
+     {
+      "label": "Ding-dong",
+      "p": 0.263
+     },
+     {
+      "label": "Music",
+      "p": 0.09
+     },
+     {
+      "label": "Bell",
+      "p": 0.053
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.045
+     },
+     {
+      "label": "Speech",
+      "p": 0.037
+     }
+    ]
+   },
+   "remake": {
+    "id": "background-background_2",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Parlor background 2 (bell_2.wav), 1.88 s, played once. Tagged Doorbell 0.81, Ding-dong 0.26; three onsets (a two-tone or repeated chime), pitch about F5.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A two-tone ding-dong doorbell chime, bright and clear, ringing out, close and clean.",
+    "params": {
+     "duration_seconds": 1.88,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.88,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 42,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_3/2.mp3",
+   "swf": "background/background_3.swf",
+   "name": "sound 2",
+   "role": "Parlor background picture 3, played once",
+   "sourceName": "bell_3.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 1.254,
+   "seconds": 1.01,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -24.2,
+    "truePeakDb": -13.3,
+    "attackSec": 0.145,
+    "peakAtSec": 0.168,
+    "decay20Sec": 0.882,
+    "envelopeDb16": [
+     -161.6,
+     -147.6,
+     -0.2,
+     -1.6,
+     -2.4,
+     -4.3,
+     -4.1,
+     -5,
+     -7.2,
+     -8.8,
+     -11.1,
+     -15.9,
+     -18.5,
+     -22.7,
+     -33.4,
+     -109.7
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1029,
+    "bandwidthHz": 893,
+    "rolloff85Hz": 1652,
+    "flatness": 0.0924,
+    "bandsBelow5kDb": [
+     -35.7,
+     -46.5,
+     -41,
+     -40.5,
+     -36.3,
+     -22.7,
+     -0.1,
+     -30.3,
+     -32.6,
+     -27.5,
+     -34.1,
+     -26.1
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C# minor",
+    "keyR": 0.46,
+    "pitch": {
+     "medianHz": 667.2,
+     "note": "E5",
+     "voicedShare": 0.88
+    },
+    "tags": [
+     {
+      "label": "Doorbell",
+      "p": 0.578
+     },
+     {
+      "label": "Ding-dong",
+      "p": 0.148
+     },
+     {
+      "label": "Music",
+      "p": 0.085
+     },
+     {
+      "label": "Bell",
+      "p": 0.072
+     },
+     {
+      "label": "Speech",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "background-background_3",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Parlor background 3 (bell_3.wav), 1.01 s, played once. Tagged Doorbell 0.58, Ding-dong 0.15; one strike, pitch about E5.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single short bright bell ding, one strike, quick ring-out, close and clean.",
+    "params": {
+     "duration_seconds": 1.01,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.01,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 22,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_4/2.mp3",
+   "swf": "background/background_4.swf",
+   "name": "sound 2",
+   "role": "Parlor background picture 4, played once",
+   "sourceName": "bell_4.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 2.09,
+   "seconds": 1.93,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -25.1,
+    "truePeakDb": -13.7,
+    "attackSec": 0.145,
+    "peakAtSec": 0.366,
+    "decay20Sec": 1.393,
+    "envelopeDb16": [
+     -161,
+     -43.6,
+     -11.4,
+     -1.2,
+     -1.9,
+     -3.9,
+     -6.1,
+     -7.2,
+     -9.2,
+     -11.2,
+     -13.1,
+     -15.5,
+     -18,
+     -21.8,
+     -23.6,
+     -47
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 962,
+    "bandwidthHz": 894,
+    "rolloff85Hz": 1600,
+    "flatness": 0.05,
+    "bandsBelow5kDb": [
+     -36.3,
+     -43.3,
+     -42,
+     -32.9,
+     -41.2,
+     -40.5,
+     -0.3,
+     -11.8,
+     -28.7,
+     -31.4,
+     -34.1,
+     -37.3
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Eb major",
+    "keyR": 0.69,
+    "pitch": {
+     "medianHz": 633.4,
+     "note": "D♯5",
+     "voicedShare": 0.93
+    },
+    "tags": [
+     {
+      "label": "Doorbell",
+      "p": 0.772
+     },
+     {
+      "label": "Ding-dong",
+      "p": 0.287
+     },
+     {
+      "label": "Music",
+      "p": 0.099
+     },
+     {
+      "label": "Speech",
+      "p": 0.06
+     },
+     {
+      "label": "Bell",
+      "p": 0.028
+     },
+     {
+      "label": "Animal",
+      "p": 0.026
+     }
+    ]
+   },
+   "remake": {
+    "id": "background-background_4",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Parlor background 4 (bell_4.wav), 1.93 s, played once. Tagged Doorbell 0.77, Ding-dong 0.29; one strike, pitch about D#5, the longest ring (-20 dB after 1.4 s).",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single bright doorbell ding with a long clear ring-out, close and clean.",
+    "params": {
+     "duration_seconds": 1.93,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.93,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 43,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_5/2.mp3",
+   "swf": "background/background_5.swf",
+   "name": "sound 2",
+   "role": "Parlor background picture 5, played once",
+   "sourceName": "bell_5.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 1.515,
+   "seconds": 1.29,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -26,
+    "truePeakDb": -9.7,
+    "attackSec": 0.145,
+    "peakAtSec": 0.168,
+    "decay20Sec": 1.039,
+    "envelopeDb16": [
+     -163.7,
+     -119.8,
+     -3.5,
+     -6.9,
+     -5.6,
+     -9.5,
+     -10.3,
+     -10.7,
+     -10.9,
+     -13.1,
+     -14.8,
+     -17.3,
+     -19.9,
+     -23,
+     -26.3,
+     -70.4
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1038,
+    "bandwidthHz": 887,
+    "rolloff85Hz": 1656,
+    "flatness": 0.0707,
+    "bandsBelow5kDb": [
+     -48.4,
+     -53.1,
+     -42.4,
+     -43.1,
+     -40.4,
+     -27.5,
+     -1.1,
+     -6.6,
+     -27.3,
+     -25.6,
+     -25.5,
+     -39.1
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Eb major",
+    "keyR": 0.62,
+    "pitch": {
+     "medianHz": 671,
+     "note": "E5",
+     "voicedShare": 0.91
+    },
+    "tags": [
+     {
+      "label": "Doorbell",
+      "p": 0.714
+     },
+     {
+      "label": "Ding-dong",
+      "p": 0.145
+     },
+     {
+      "label": "Bell",
+      "p": 0.144
+     },
+     {
+      "label": "Music",
+      "p": 0.068
+     },
+     {
+      "label": "Speech",
+      "p": 0.024
+     },
+     {
+      "label": "Sound effect",
+      "p": 0.02
+     }
+    ]
+   },
+   "remake": {
+    "id": "background-background_5",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Parlor background 5 (bell_5.wav), 1.29 s, played once. Tagged Doorbell 0.71, Bell 0.14; one strike, pitch about E5.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single bright bell ding, one strike with a short ring-out, close and clean.",
+    "params": {
+     "duration_seconds": 1.29,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.29,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 29,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "background/background_church/2.mp3",
+   "swf": "background/background_church.swf",
+   "name": "sound 2",
+   "role": "Church background picture, played once",
+   "sourceName": "celemony.wav",
+   "kind": "music",
+   "tracks": [
+    "ceremony"
+   ],
+   "decodedSeconds": 11.18,
+   "seconds": 10.96,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -29,
+    "truePeakDb": -14,
+    "attackSec": 0.25,
+    "peakAtSec": 6.188,
+    "decay20Sec": 4.772,
+    "envelopeDb16": [
+     -158,
+     -15.3,
+     -7.8,
+     -4.1,
+     -4.9,
+     -5.9,
+     -3.5,
+     -4.5,
+     -6,
+     -4.4,
+     -6.9,
+     -9.8,
+     -7,
+     -6.3,
+     -16.5,
+     -102.6
+    ],
+    "onsets": 7,
+    "onsetTimes": [
+     0.24,
+     1.09,
+     2.44,
+     2.82,
+     2.98,
+     7.47,
+     8.25
+    ],
+    "centroidHz": 589,
+    "bandwidthHz": 528,
+    "rolloff85Hz": 975,
+    "flatness": 0.0106,
+    "bandsBelow5kDb": [
+     -16.7,
+     -11,
+     -7,
+     -10.5,
+     -5.4,
+     -8.8,
+     -10,
+     -10.8,
+     -20,
+     -27.7,
+     -39.8,
+     -48.9
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G major",
+    "keyR": 0.89,
+    "pitch": {
+     "medianHz": 146,
+     "note": "D3",
+     "voicedShare": 0.8
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.539
+     },
+     {
+      "label": "Organ",
+      "p": 0.259
+     },
+     {
+      "label": "Hammond organ",
+      "p": 0.098
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.076
+     },
+     {
+      "label": "Foghorn",
+      "p": 0.054
+     },
+     {
+      "label": "French horn",
+      "p": 0.051
+     },
+     {
+      "label": "Electronic organ",
+      "p": 0.051
+     },
+     {
+      "label": "Ambient music",
+      "p": 0.05
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-funeral-ceremony",
+    "sharedWith": [
+     "places/funeral-ceremony/2.mp3",
+     "places/funeral-ceremony2/6.mp3"
+    ],
+    "tracks": [
+     "ceremony"
+    ],
+    "kind": "music",
+    "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 10.96,
+    "loop": false,
+    "key": "G major",
+    "takes": 1,
+    "estimateCredits": 0,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "closed/5.mp3",
+   "swf": "closed.swf",
+   "name": "sound 5",
+   "role": "The parlor closed for the night, looped 100 times",
+   "sourceName": "night_2.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-night"
+   ],
+   "decodedSeconds": 1.463,
+   "seconds": 1.23,
+   "loops": 100,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -36.6,
+    "truePeakDb": -25.4,
+    "attackSec": 0.139,
+    "peakAtSec": 1.01,
+    "decay20Sec": 0.383,
+    "envelopeDb16": [
+     -146,
+     -86.8,
+     -4.1,
+     -6.3,
+     -8.9,
+     -0.3,
+     -4.1,
+     -6.2,
+     -5.7,
+     -5.5,
+     -4.5,
+     -5.2,
+     -5.7,
+     -6.8,
+     -2.7,
+     -76.9
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1255,
+    "bandwidthHz": 599,
+    "rolloff85Hz": 1751,
+    "flatness": 0.0692,
+    "bandsBelow5kDb": [
+     -28.7,
+     -26.4,
+     -20.9,
+     -19.4,
+     -19.2,
+     -17.8,
+     -19,
+     -16,
+     -1.2,
+     -8.4,
+     -37.9,
+     -51.6
+    ],
+    "tempoBpm": 41,
+    "beatRegularity": 0,
+    "loopBeats": {
+     "beats": 1,
+     "bpm": 48.78
+    },
+    "key": "G minor",
+    "keyR": 0.34,
+    "pitch": {
+     "medianHz": 1605.2,
+     "note": "G6",
+     "voicedShare": 0.9
+    },
+    "tags": [
+     {
+      "label": "Vehicle",
+      "p": 0.153
+     },
+     {
+      "label": "Noise",
+      "p": 0.123
+     },
+     {
+      "label": "Car",
+      "p": 0.05
+     },
+     {
+      "label": "Music",
+      "p": 0.048
+     },
+     {
+      "label": "Speech",
+      "p": 0.044
+     },
+     {
+      "label": "Radio",
+      "p": 0.026
+     },
+     {
+      "label": "Engine",
+      "p": 0.022
+     }
+    ]
+   },
+   "remake": {
+    "id": "closed",
+    "sharedWith": [],
+    "tracks": [
+     "amb-night"
+    ],
+    "kind": "ambience",
+    "description": "The parlor closed for the night (night_2.wav), a 1.23 s loop repeated 100 times: a steady high chirp pitch around 1.6 kHz (G6) in most frames, a short swell. Quiet (-37 LUFS). Tagged weakly (Vehicle 0.15, Noise 0.12).",
+    "uncertain": "The tagger does not name it; the steady 1.6 kHz pitch and the source name suggest crickets.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "Night crickets chirping steadily in a field, high even chirps, quiet and continuous, no other sounds.",
+    "params": {
+     "duration_seconds": 1.23,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 1.23,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 27,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "morning_coffee/5.mp3",
+   "swf": "morning_coffee.swf",
+   "name": "sound 5",
+   "role": "Morning coffee picture (start of a day), looped 100 times",
+   "sourceName": "bird.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-birds"
+   ],
+   "decodedSeconds": 5.224,
+   "seconds": 5.06,
+   "loops": 100,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -43.6,
+    "truePeakDb": -29.3,
+    "attackSec": 0.145,
+    "peakAtSec": 1.225,
+    "decay20Sec": 0.104,
+    "envelopeDb16": [
+     -143.7,
+     -4.5,
+     -10.4,
+     -15.5,
+     -22.7,
+     -12.8,
+     -22.4,
+     -21,
+     -13.7,
+     -19.9,
+     -23.9,
+     -23.9,
+     -25.4,
+     -20.8,
+     -12.5,
+     -42.4
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 2776,
+    "bandwidthHz": 847,
+    "rolloff85Hz": 3596,
+    "flatness": 0.0229,
+    "bandsBelow5kDb": [
+     -55.9,
+     -58.4,
+     -53.9,
+     -52.8,
+     -51.1,
+     -39.2,
+     -29,
+     -27.3,
+     -25.9,
+     -15.8,
+     -2.6,
+     -3.7
+    ],
+    "tempoBpm": 11.5,
+    "beatRegularity": 0,
+    "loopBeats": {
+     "beats": 1,
+     "bpm": 11.86
+    },
+    "key": "B major",
+    "keyR": 0.34,
+    "pitch": {
+     "medianHz": 1849.3,
+     "note": "A♯6",
+     "voicedShare": 0.25
+    },
+    "tags": [
+     {
+      "label": "Bird vocalization, bird call, bird song",
+      "p": 0.46
+     },
+     {
+      "label": "Chirp, tweet",
+      "p": 0.435
+     },
+     {
+      "label": "Bird",
+      "p": 0.431
+     },
+     {
+      "label": "Environmental noise",
+      "p": 0.19
+     },
+     {
+      "label": "Music",
+      "p": 0.088
+     },
+     {
+      "label": "Speech",
+      "p": 0.077
+     },
+     {
+      "label": "Outside, rural or natural",
+      "p": 0.064
+     },
+     {
+      "label": "Animal",
+      "p": 0.063
+     }
+    ]
+   },
+   "remake": {
+    "id": "morning_coffee",
+    "sharedWith": [],
+    "tracks": [
+     "amb-birds"
+    ],
+    "kind": "ambience",
+    "description": "Morning coffee (bird.wav), a 5.06 s loop repeated 100 times: birdsong. Tagged Bird vocalization 0.46, Chirp, tweet 0.44, Bird 0.43. Very quiet (-44 LUFS), bright (centroid 2.8 kHz), short calls rather than a dense chorus.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A few songbirds chirping in the early morning, short bright tweets with gaps between, distant and gentle, quiet garden.",
+    "params": {
+     "duration_seconds": 5.06,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 5.06,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 112,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "mother/happy/5.mp3",
+   "swf": "mother/happy.swf",
+   "name": "sound 5",
+   "role": "A happy mother picture (good news), played once",
+   "sourceName": "happy harp.wav",
+   "kind": "sfx",
+   "tracks": [
+    "harp-good-news"
+   ],
+   "decodedSeconds": 1.672,
+   "seconds": 1.42,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -14.3,
+    "truePeakDb": -1.2,
+    "attackSec": 0.157,
+    "peakAtSec": 0.279,
+    "decay20Sec": 0.766,
+    "envelopeDb16": [
+     -173,
+     -103.1,
+     -3.2,
+     -2.4,
+     -4.4,
+     -7.3,
+     -12.8,
+     -15.6,
+     -17.2,
+     -19.3,
+     -21.4,
+     -25.7,
+     -30.2,
+     -33,
+     -38.7,
+     -169
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.17,
+     0.31
+    ],
+    "centroidHz": 766,
+    "bandwidthHz": 805,
+    "rolloff85Hz": 1392,
+    "flatness": 0.0718,
+    "bandsBelow5kDb": [
+     -50.3,
+     -55.1,
+     -37.8,
+     -10.5,
+     -0.8,
+     -12.6,
+     -20.5,
+     -20.2,
+     -35,
+     -28.1,
+     -35.2,
+     -37.5
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C major",
+    "keyR": 0.68,
+    "pitch": {
+     "medianHz": 65.4,
+     "note": "C2",
+     "voicedShare": 0.78
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.79
+     },
+     {
+      "label": "Ukulele",
+      "p": 0.552
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.125
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.082
+     },
+     {
+      "label": "Guitar",
+      "p": 0.052
+     },
+     {
+      "label": "Plucked string instrument",
+      "p": 0.051
+     },
+     {
+      "label": "Speech",
+      "p": 0.05
+     },
+     {
+      "label": "Harp",
+      "p": 0.041
+     }
+    ]
+   },
+   "remake": {
+    "id": "mother-happy",
+    "sharedWith": [],
+    "tracks": [
+     "harp-good-news"
+    ],
+    "kind": "sfx",
+    "description": "A happy mother (happy harp.wav), 1.42 s, played once. Tagged Music 0.79, Ukulele 0.55: a short bright plucked-string flourish (2 onsets), loud (-14 LUFS), dying within 0.8 s.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A short happy plucked harp flourish, two quick bright strums rising, cheerful good-news sting, close and clean.",
+    "params": {
+     "duration_seconds": 1.42,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.42,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 32,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "music/music_fight/1.mp3",
+   "swf": "music/music_fight.swf",
+   "name": "sound 1",
+   "role": "Fight music, looped 999 times",
+   "sourceName": "fight loop.wav (project also lists scary.wav)",
+   "kind": "music-loop",
+   "tracks": [
+    "battle"
+   ],
+   "decodedSeconds": 2.247,
+   "seconds": 2,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -21.1,
+    "truePeakDb": -6.2,
+    "attackSec": 0.145,
+    "peakAtSec": 1.196,
+    "decay20Sec": 0.435,
+    "envelopeDb16": [
+     -166.4,
+     -5.5,
+     -4,
+     -12.2,
+     -5.3,
+     -5.4,
+     -4.9,
+     -10.2,
+     -0.1,
+     -12.9,
+     -8.4,
+     -5.9,
+     -6.3,
+     -5.6,
+     -3,
+     -155.6
+    ],
+    "onsets": 8,
+    "onsetTimes": [
+     0.16,
+     0.55,
+     0.66,
+     0.91,
+     1.16,
+     1.41,
+     1.66,
+     1.91
+    ],
+    "centroidHz": 360,
+    "bandwidthHz": 409,
+    "rolloff85Hz": 628,
+    "flatness": 0.0449,
+    "bandsBelow5kDb": [
+     -2.8,
+     -12,
+     -11.2,
+     -14.2,
+     -12.8,
+     -7.3,
+     -13.1,
+     -25.9,
+     -28.5,
+     -30.9,
+     -34.5,
+     -43.5
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": 0.109,
+    "loopBeats": {
+     "beats": 4,
+     "bpm": 120
+    },
+    "key": "D minor",
+    "keyR": 0.31,
+    "pitch": {
+     "medianHz": 63.2,
+     "note": "B1",
+     "voicedShare": 0.55
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.788
+     },
+     {
+      "label": "Electronic music",
+      "p": 0.219
+     },
+     {
+      "label": "Drum machine",
+      "p": 0.143
+     },
+     {
+      "label": "Electronica",
+      "p": 0.116
+     },
+     {
+      "label": "Trance music",
+      "p": 0.111
+     },
+     {
+      "label": "Techno",
+      "p": 0.089
+     },
+     {
+      "label": "Sampler",
+      "p": 0.084
+     },
+     {
+      "label": "House music",
+      "p": 0.071
+     }
+    ]
+   },
+   "remake": {
+    "id": "music-music_fight",
+    "sharedWith": [],
+    "tracks": [
+     "battle"
+    ],
+    "kind": "music",
+    "description": "Fight music (fight loop.wav), a 2.00 s loop repeated 999 times: one bar of 4 beats at 120 bpm. Tagged Music 0.79, Electronic music 0.22, Drum machine 0.14, Electronica 0.12. Dark and bass-heavy (centroid 360 Hz, roll-off 630 Hz), pitch centre about B1; key estimate D minor, weak (r 0.31).",
+    "uncertain": "Key is a weak estimate; the loop is mostly drums and bass.",
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental driving electronic fight loop in D minor at exactly 120 bpm in 4/4: a punchy drum machine beat with a heavy, dark synth bass riff and a little tension in the pads, aggressive but slightly comic, video-game action. One bar repeated with no intro and no ending. Clean, full-bandwidth production.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 2,
+    "loop": true,
+    "bpm": 120,
+    "bars": 1,
+    "beatsPerBar": 4,
+    "key": "D minor",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "music/music_sneak/1.mp3",
+   "swf": "music/music_sneak.swf",
+   "name": "sound 1",
+   "role": "Sneaking music at a rival's parlor, looped 999 times",
+   "sourceName": "scary.wav",
+   "kind": "music-loop",
+   "tracks": [
+    "sneak"
+   ],
+   "decodedSeconds": 4.232,
+   "seconds": 4,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -34,
+    "truePeakDb": -17.2,
+    "attackSec": 0.145,
+    "peakAtSec": 0.197,
+    "decay20Sec": 0.128,
+    "envelopeDb16": [
+     -158.5,
+     -11.2,
+     -26.1,
+     -25.7,
+     -19.6,
+     -16.4,
+     -14,
+     -20.1,
+     -2.2,
+     -22.9,
+     -14.5,
+     -7.3,
+     -9.1,
+     -13.7,
+     -22.2,
+     -88.9
+    ],
+    "onsets": 6,
+    "onsetTimes": [
+     0.16,
+     0.67,
+     1.62,
+     1.73,
+     2.92,
+     3.19
+    ],
+    "centroidHz": 1134,
+    "bandwidthHz": 954,
+    "rolloff85Hz": 2166,
+    "flatness": 0.0255,
+    "bandsBelow5kDb": [
+     -11.2,
+     -5,
+     -8.5,
+     -17.7,
+     -15.3,
+     -11.4,
+     -9.4,
+     -13.6,
+     -9.1,
+     -14,
+     -17.5,
+     -21.8
+    ],
+    "tempoBpm": 123,
+    "beatRegularity": 0.06,
+    "loopBeats": {
+     "beats": 8,
+     "bpm": 120
+    },
+    "key": "E major",
+    "keyR": 0.31,
+    "pitch": {
+     "medianHz": 111.3,
+     "note": "A2",
+     "voicedShare": 0.31
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.735
+     },
+     {
+      "label": "Timpani",
+      "p": 0.1
+     },
+     {
+      "label": "Speech",
+      "p": 0.069
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.042
+     },
+     {
+      "label": "Television",
+      "p": 0.03
+     },
+     {
+      "label": "Orchestra",
+      "p": 0.024
+     }
+    ]
+   },
+   "remake": {
+    "id": "music-music_sneak",
+    "sharedWith": [],
+    "tracks": [
+     "sneak"
+    ],
+    "kind": "music",
+    "description": "Sneaking music (scary.wav), a 4.00 s loop repeated 999 times: 8 beats, two bars at 120 bpm (tracked 123). Quiet (-34 LUFS, the quietest music), sparse (6 onsets). Tagged Music 0.74, Timpani 0.10. Key estimate E major, weak (r 0.31); pitch centre about A2.",
+    "uncertain": "Key and instrumentation are weak estimates; the tagger hears timpani and little else.",
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental quiet suspense loop at exactly 120 bpm in 4/4, in E: soft timpani and low pizzicato strings tiptoeing with a few eerie high notes, sparse and creeping, a comic sneaking mood, never horror. Two bars repeated with no intro and no ending. Clean modern recording, low level.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 4,
+    "loop": true,
+    "bpm": 120,
+    "bars": 2,
+    "beatsPerBar": 4,
+    "key": "E major",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "people/jesus_happy/13.mp3",
+   "swf": "people/jesus_happy.swf",
+   "name": "sound 13",
+   "role": "A happy Jesus picture, played once",
+   "sourceName": "jesus.wav",
+   "kind": "sfx",
+   "tracks": [
+    "angelic"
+   ],
+   "decodedSeconds": 2.56,
+   "seconds": 2.33,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -21.6,
+    "truePeakDb": -8.8,
+    "attackSec": 0.157,
+    "peakAtSec": 0.929,
+    "decay20Sec": 1.37,
+    "envelopeDb16": [
+     -162.8,
+     -26.7,
+     -14.2,
+     -9,
+     -2.2,
+     -0.4,
+     -2.1,
+     -3.6,
+     -2.4,
+     -4.8,
+     -6,
+     -6.8,
+     -8.5,
+     -17.3,
+     -20.7,
+     -77.4
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     0.93
+    ],
+    "centroidHz": 1273,
+    "bandwidthHz": 910,
+    "rolloff85Hz": 1869,
+    "flatness": 0.0429,
+    "bandsBelow5kDb": [
+     -51.4,
+     -55.3,
+     -47.9,
+     -47.9,
+     -31.2,
+     -14.4,
+     -6.5,
+     -7,
+     -2.8,
+     -25.3,
+     -23.5,
+     -24.5
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "F minor",
+    "keyR": 0.52,
+    "pitch": {
+     "medianHz": 134.7,
+     "note": "C♯3",
+     "voicedShare": 0.48
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.429
+     },
+     {
+      "label": "Choir",
+      "p": 0.295
+     },
+     {
+      "label": "Singing",
+      "p": 0.16
+     },
+     {
+      "label": "A capella",
+      "p": 0.138
+     },
+     {
+      "label": "Gospel music",
+      "p": 0.06
+     },
+     {
+      "label": "Chant",
+      "p": 0.057
+     },
+     {
+      "label": "Christian music",
+      "p": 0.056
+     },
+     {
+      "label": "Christmas music",
+      "p": 0.041
+     }
+    ]
+   },
+   "remake": {
+    "id": "people-jesus_happy",
+    "sharedWith": [],
+    "tracks": [
+     "angelic"
+    ],
+    "kind": "sfx",
+    "description": "A happy Jesus (jesus.wav), 2.33 s, played once. Tagged Choir 0.30, Singing 0.16, A capella 0.14: a sung choir chord swelling to its peak near 0.8 s and fading.",
+    "uncertain": "It is sung, so the remake must be a wordless choir 'aah'; the speech screen should find no words.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A heavenly choir singing one wordless 'aah' chord that swells and fades, warm and bright, angelic approval.",
+    "params": {
+     "duration_seconds": 2.33,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 2.33,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 52,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/desk/12.mp3",
+   "swf": "places/desk.swf",
+   "name": "sound 12",
+   "role": "The player's desk, looped 200 times",
+   "sourceName": "clock.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-clock"
+   ],
+   "decodedSeconds": 1.149,
+   "seconds": 0.99,
+   "loops": 200,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -38,
+    "truePeakDb": -16.7,
+    "attackSec": 0.348,
+    "peakAtSec": 0.9,
+    "decay20Sec": 0.052,
+    "envelopeDb16": [
+     -151.9,
+     -151.9,
+     -151.9,
+     -151.9,
+     -48.3,
+     -6.8,
+     -20.4,
+     -55.9,
+     -133.4,
+     -151.9,
+     -125.8,
+     -18.8,
+     -9.6,
+     -36,
+     -84.7,
+     -151.9
+    ],
+    "onsets": 3,
+    "onsetTimes": [
+     0.33,
+     0.36,
+     0.83
+    ],
+    "centroidHz": 2061,
+    "bandwidthHz": 1055,
+    "rolloff85Hz": 3313,
+    "flatness": 0.4615,
+    "bandsBelow5kDb": [
+     -46.7,
+     -53.8,
+     -43.4,
+     -40.1,
+     -41.2,
+     -36.5,
+     -30.1,
+     -12.5,
+     -12.6,
+     -3.3,
+     -5.2,
+     -9.4
+    ],
+    "tempoBpm": 126,
+    "beatRegularity": 0.022,
+    "loopBeats": {
+     "beats": 2,
+     "bpm": 121.21
+    },
+    "key": "C minor",
+    "keyR": 0.42,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Animal",
+      "p": 0.062
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.06
+     },
+     {
+      "label": "Music",
+      "p": 0.046
+     },
+     {
+      "label": "Speech",
+      "p": 0.039
+     },
+     {
+      "label": "Silence",
+      "p": 0.038
+     },
+     {
+      "label": "Single-lens reflex camera",
+      "p": 0.03
+     },
+     {
+      "label": "Tick",
+      "p": 0.03
+     },
+     {
+      "label": "Domestic animals, pets",
+      "p": 0.027
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-desk",
+    "sharedWith": [
+     "places/desk_enemy/8.mp3"
+    ],
+    "tracks": [
+     "amb-clock"
+    ],
+    "kind": "ambience",
+    "description": "The desk clock (clock.wav), a 0.99 s loop repeated 200 times (both desks use the same recording): noisy clicks (flatness 0.46, roll-off 3.3 kHz), 3 onsets per loop, each click dying within 50 ms. Quiet (-38 LUFS). Tagger is unsure (Inside, small room 0.06).",
+    "uncertain": "The tagger does not name it; the source name (clock.wav), the picture and the click pattern do.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A small mechanical clock ticking, crisp dry clicks close up in a quiet room, steady and even.",
+    "params": {
+     "duration_seconds": 0.99,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 0.99,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 22,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/desk_enemy/8.mp3",
+   "swf": "places/desk_enemy.swf",
+   "name": "sound 8",
+   "role": "A rival's desk, looped 200 times",
+   "sourceName": "clock.wav",
+   "kind": "ambience",
+   "tracks": [],
+   "decodedSeconds": 1.149,
+   "seconds": 0.99,
+   "loops": 200,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -38,
+    "truePeakDb": -16.7,
+    "attackSec": 0.348,
+    "peakAtSec": 0.9,
+    "decay20Sec": 0.052,
+    "envelopeDb16": [
+     -151.9,
+     -151.9,
+     -151.9,
+     -151.9,
+     -48.3,
+     -6.8,
+     -20.4,
+     -55.9,
+     -133.4,
+     -151.9,
+     -125.8,
+     -18.8,
+     -9.6,
+     -36,
+     -84.7,
+     -151.9
+    ],
+    "onsets": 3,
+    "onsetTimes": [
+     0.33,
+     0.36,
+     0.83
+    ],
+    "centroidHz": 2061,
+    "bandwidthHz": 1055,
+    "rolloff85Hz": 3313,
+    "flatness": 0.4615,
+    "bandsBelow5kDb": [
+     -46.7,
+     -53.8,
+     -43.4,
+     -40.1,
+     -41.2,
+     -36.5,
+     -30.1,
+     -12.5,
+     -12.6,
+     -3.3,
+     -5.2,
+     -9.4
+    ],
+    "tempoBpm": 126,
+    "beatRegularity": 0.022,
+    "loopBeats": {
+     "beats": 2,
+     "bpm": 121.21
+    },
+    "key": "C minor",
+    "keyR": 0.42,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Animal",
+      "p": 0.062
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.06
+     },
+     {
+      "label": "Music",
+      "p": 0.046
+     },
+     {
+      "label": "Speech",
+      "p": 0.039
+     },
+     {
+      "label": "Silence",
+      "p": 0.038
+     },
+     {
+      "label": "Single-lens reflex camera",
+      "p": 0.03
+     },
+     {
+      "label": "Tick",
+      "p": 0.03
+     },
+     {
+      "label": "Domestic animals, pets",
+      "p": 0.027
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-desk",
+    "sharedWith": [
+     "places/desk/12.mp3"
+    ],
+    "tracks": [
+     "amb-clock"
+    ],
+    "kind": "ambience",
+    "description": "The desk clock (clock.wav), a 0.99 s loop repeated 200 times (both desks use the same recording): noisy clicks (flatness 0.46, roll-off 3.3 kHz), 3 onsets per loop, each click dying within 50 ms. Quiet (-38 LUFS). Tagger is unsure (Inside, small room 0.06).",
+    "uncertain": "The tagger does not name it; the source name (clock.wav), the picture and the click pattern do.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A small mechanical clock ticking, crisp dry clicks close up in a quiet room, steady and even.",
+    "params": {
+     "duration_seconds": 0.99,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 0.99,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 0,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/embalming-room/3.mp3",
+   "swf": "places/embalming-room.swf",
+   "name": "sound 3",
+   "role": "Embalming room picture, looped 100 times",
+   "sourceName": "water_bubble.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-bubbles"
+   ],
+   "decodedSeconds": 2.194,
+   "seconds": 2.03,
+   "loops": 100,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -31.5,
+    "truePeakDb": -16.1,
+    "attackSec": 0.145,
+    "peakAtSec": 1.736,
+    "decay20Sec": 0.459,
+    "envelopeDb16": [
+     -155.6,
+     -16.7,
+     -11.7,
+     -10.6,
+     -13.1,
+     -10.3,
+     -7.9,
+     -4.3,
+     -12,
+     -10.5,
+     -7.1,
+     -4.8,
+     -2.9,
+     -9.2,
+     -7.1,
+     -34.5
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     1.74
+    ],
+    "centroidHz": 917,
+    "bandwidthHz": 484,
+    "rolloff85Hz": 1390,
+    "flatness": 0.0439,
+    "bandsBelow5kDb": [
+     -49,
+     -51.6,
+     -35.8,
+     -25.9,
+     -10.4,
+     -5.8,
+     -7.2,
+     -4.9,
+     -9.3,
+     -19.3,
+     -39.3,
+     -48.2
+    ],
+    "tempoBpm": 99.4,
+    "beatRegularity": 0.046,
+    "loopBeats": {
+     "beats": 3,
+     "bpm": 88.67
+    },
+    "key": "F# minor",
+    "keyR": 0.25,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Sidetone",
+      "p": 0.207
+     },
+     {
+      "label": "Echo",
+      "p": 0.077
+     },
+     {
+      "label": "Sound effect",
+      "p": 0.069
+     },
+     {
+      "label": "Radio",
+      "p": 0.052
+     },
+     {
+      "label": "Music",
+      "p": 0.032
+     },
+     {
+      "label": "Speech",
+      "p": 0.021
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-embalming-room",
+    "sharedWith": [],
+    "tracks": [
+     "amb-bubbles"
+    ],
+    "kind": "ambience",
+    "description": "Embalming room (water_bubble.wav), a 2.03 s loop repeated 100 times: two bubbling gurgles per loop, louder late in the loop; warm (centroid 920 Hz). Tagged weakly (Sidetone 0.21, Echo 0.08).",
+    "uncertain": "Tags are weak; the source name says water bubbling.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "Liquid bubbling and gurgling in a glass container, slow wet bubbles, close and dry, steady.",
+    "params": {
+     "duration_seconds": 2.03,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 2.03,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 45,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/fire/5.mp3",
+   "swf": "places/fire.swf",
+   "name": "sound 5",
+   "role": "Crematorium fire picture, looped 100 times",
+   "sourceName": "fire.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-fire"
+   ],
+   "decodedSeconds": 2.56,
+   "seconds": 2.32,
+   "loops": 100,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -25.9,
+    "truePeakDb": -10.1,
+    "attackSec": 0.139,
+    "peakAtSec": 1.155,
+    "decay20Sec": 1.324,
+    "envelopeDb16": [
+     -164,
+     -6.9,
+     -8.1,
+     -5.7,
+     -7.9,
+     -7.4,
+     -5.2,
+     -7.1,
+     -12.3,
+     -3.2,
+     -8.6,
+     -12.7,
+     -7.6,
+     -4.8,
+     -6.8,
+     -107.6
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 534,
+    "bandwidthHz": 768,
+    "rolloff85Hz": 1161,
+    "flatness": 0.0387,
+    "bandsBelow5kDb": [
+     -2.5,
+     -9,
+     -7.3,
+     -12.4,
+     -14.8,
+     -18.6,
+     -22.4,
+     -20.5,
+     -24.5,
+     -24.1,
+     -25.9,
+     -39.7
+    ],
+    "tempoBpm": 82,
+    "beatRegularity": 0.134,
+    "loopBeats": {
+     "beats": 3,
+     "bpm": 77.59
+    },
+    "key": "D minor",
+    "keyR": 0.31,
+    "pitch": {
+     "medianHz": 60,
+     "note": "B1",
+     "voicedShare": 0.58
+    },
+    "tags": [
+     {
+      "label": "Vehicle",
+      "p": 0.205
+     },
+     {
+      "label": "Explosion",
+      "p": 0.101
+     },
+     {
+      "label": "Speech",
+      "p": 0.099
+     },
+     {
+      "label": "Car",
+      "p": 0.063
+     },
+     {
+      "label": "Music",
+      "p": 0.038
+     },
+     {
+      "label": "Burst, pop",
+      "p": 0.037
+     },
+     {
+      "label": "Animal",
+      "p": 0.034
+     },
+     {
+      "label": "Bus",
+      "p": 0.029
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-fire",
+    "sharedWith": [],
+    "tracks": [
+     "amb-fire"
+    ],
+    "kind": "ambience",
+    "description": "Crematorium fire (fire.wav), a 2.32 s loop repeated 100 times: a low roar (centroid 530 Hz, roll-off 1.2 kHz) with a rumble around 60 Hz. Tagged Vehicle 0.21, Explosion 0.10: a broadband roar the tagger reads as engine-like.",
+    "uncertain": "The tagger does not say fire; the source name and the picture do.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A big furnace fire roaring steadily, deep low rumble with soft crackle, heard close, even and continuous.",
+    "params": {
+     "duration_seconds": 2.32,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 2.32,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 52,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/funeral-ceremony/2.mp3",
+   "swf": "places/funeral-ceremony.swf",
+   "name": "sound 2",
+   "role": "Funeral ceremony picture, played once",
+   "sourceName": "celemony.wav",
+   "kind": "music",
+   "tracks": [
+    "ceremony"
+   ],
+   "decodedSeconds": 11.18,
+   "seconds": 10.96,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -29,
+    "truePeakDb": -14,
+    "attackSec": 0.25,
+    "peakAtSec": 6.188,
+    "decay20Sec": 4.772,
+    "envelopeDb16": [
+     -158,
+     -15.3,
+     -7.8,
+     -4.1,
+     -4.9,
+     -5.9,
+     -3.5,
+     -4.5,
+     -6,
+     -4.4,
+     -6.9,
+     -9.8,
+     -7,
+     -6.3,
+     -16.5,
+     -102.6
+    ],
+    "onsets": 7,
+    "onsetTimes": [
+     0.24,
+     1.09,
+     2.44,
+     2.82,
+     2.98,
+     7.47,
+     8.25
+    ],
+    "centroidHz": 589,
+    "bandwidthHz": 528,
+    "rolloff85Hz": 975,
+    "flatness": 0.0106,
+    "bandsBelow5kDb": [
+     -16.7,
+     -11,
+     -7,
+     -10.5,
+     -5.4,
+     -8.8,
+     -10,
+     -10.8,
+     -20,
+     -27.7,
+     -39.8,
+     -48.9
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G major",
+    "keyR": 0.89,
+    "pitch": {
+     "medianHz": 146,
+     "note": "D3",
+     "voicedShare": 0.8
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.539
+     },
+     {
+      "label": "Organ",
+      "p": 0.259
+     },
+     {
+      "label": "Hammond organ",
+      "p": 0.098
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.076
+     },
+     {
+      "label": "Foghorn",
+      "p": 0.054
+     },
+     {
+      "label": "French horn",
+      "p": 0.051
+     },
+     {
+      "label": "Electronic organ",
+      "p": 0.051
+     },
+     {
+      "label": "Ambient music",
+      "p": 0.05
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-funeral-ceremony",
+    "sharedWith": [
+     "places/funeral-ceremony2/6.mp3",
+     "background/background_church/2.mp3"
+    ],
+    "tracks": [
+     "ceremony"
+    ],
+    "kind": "music",
+    "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 10.96,
+    "loop": false,
+    "key": "G major",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/funeral-ceremony2/6.mp3",
+   "swf": "places/funeral-ceremony2.swf",
+   "name": "sound 6",
+   "role": "Second funeral ceremony picture, played once",
+   "sourceName": "celemony.wav",
+   "kind": "music",
+   "tracks": [
+    "ceremony"
+   ],
+   "decodedSeconds": 11.18,
+   "seconds": 10.96,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -29,
+    "truePeakDb": -14,
+    "attackSec": 0.25,
+    "peakAtSec": 6.188,
+    "decay20Sec": 4.772,
+    "envelopeDb16": [
+     -158,
+     -15.3,
+     -7.8,
+     -4.1,
+     -4.9,
+     -5.9,
+     -3.5,
+     -4.5,
+     -6,
+     -4.4,
+     -6.9,
+     -9.8,
+     -7,
+     -6.3,
+     -16.5,
+     -102.6
+    ],
+    "onsets": 7,
+    "onsetTimes": [
+     0.24,
+     1.09,
+     2.44,
+     2.82,
+     2.98,
+     7.47,
+     8.25
+    ],
+    "centroidHz": 589,
+    "bandwidthHz": 528,
+    "rolloff85Hz": 975,
+    "flatness": 0.0106,
+    "bandsBelow5kDb": [
+     -16.7,
+     -11,
+     -7,
+     -10.5,
+     -5.4,
+     -8.8,
+     -10,
+     -10.8,
+     -20,
+     -27.7,
+     -39.8,
+     -48.9
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "G major",
+    "keyR": 0.89,
+    "pitch": {
+     "medianHz": 146,
+     "note": "D3",
+     "voicedShare": 0.8
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.539
+     },
+     {
+      "label": "Organ",
+      "p": 0.259
+     },
+     {
+      "label": "Hammond organ",
+      "p": 0.098
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.076
+     },
+     {
+      "label": "Foghorn",
+      "p": 0.054
+     },
+     {
+      "label": "French horn",
+      "p": 0.051
+     },
+     {
+      "label": "Electronic organ",
+      "p": 0.051
+     },
+     {
+      "label": "Ambient music",
+      "p": 0.05
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-funeral-ceremony",
+    "sharedWith": [
+     "places/funeral-ceremony/2.mp3",
+     "background/background_church/2.mp3"
+    ],
+    "tracks": [
+     "ceremony"
+    ],
+    "kind": "music",
+    "description": "Funeral ceremony and church pictures (celemony.wav, one recording used three times), 10.96 s, played once. Tagged Music 0.54, Organ 0.26, Hammond organ 0.10: a church organ. Very tonal (flatness 0.011), warm (centroid 590 Hz); swells to its loudest at about 6 s and fades out; key estimate G major, strong (r 0.89); pitch centre D3. 7 onsets: slow chord changes.",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental solemn church pipe organ in G major, slow, about eleven seconds: a few sustained hymn-like chords that swell gently to a fuller middle and fade away at the end, dignified and calm, in a small church. Solo organ only, clean modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 10.96,
+    "loop": false,
+    "key": "G major",
+    "takes": 1,
+    "estimateCredits": 0,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/hospital_ambulance/2.mp3",
+   "swf": "places/hospital_ambulance.swf",
+   "name": "sound 2",
+   "role": "Hospital ambulance picture, played once",
+   "sourceName": "police call.wav",
+   "kind": "sfx",
+   "tracks": [
+    "siren"
+   ],
+   "decodedSeconds": 2.508,
+   "seconds": 2.35,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -13,
+    "truePeakDb": 0.1,
+    "attackSec": 0.145,
+    "peakAtSec": 0.342,
+    "decay20Sec": 0.279,
+    "envelopeDb16": [
+     -172.9,
+     -17.3,
+     -1.5,
+     -6.3,
+     -22.2,
+     -8.5,
+     -19.1,
+     -6.4,
+     -15,
+     -10.4,
+     -3.2,
+     -12.8,
+     -2.9,
+     -18.3,
+     -6.8,
+     -49.4
+    ],
+    "onsets": 5,
+    "onsetTimes": [
+     0.16,
+     0.35,
+     0.52,
+     2.12,
+     2.28
+    ],
+    "centroidHz": 1373,
+    "bandwidthHz": 752,
+    "rolloff85Hz": 2180,
+    "flatness": 0.037,
+    "bandsBelow5kDb": [
+     -41.8,
+     -46,
+     -40.3,
+     -23.3,
+     -12.3,
+     -7.3,
+     -6.6,
+     -8.9,
+     -14.1,
+     -4.7,
+     -15.6,
+     -36
+    ],
+    "tempoBpm": 67.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "A major",
+    "keyR": 0.57,
+    "pitch": {
+     "medianHz": 217.6,
+     "note": "A3",
+     "voicedShare": 0.44
+    },
+    "tags": [
+     {
+      "label": "Speech",
+      "p": 0.698
+     },
+     {
+      "label": "Radio",
+      "p": 0.196
+     },
+     {
+      "label": "Telephone dialing, DTMF",
+      "p": 0.098
+     },
+     {
+      "label": "Music",
+      "p": 0.089
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.074
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.07
+     },
+     {
+      "label": "Telephone",
+      "p": 0.048
+     },
+     {
+      "label": "Television",
+      "p": 0.027
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-hospital_ambulance",
+    "sharedWith": [],
+    "tracks": [
+     "siren"
+    ],
+    "kind": "sfx",
+    "description": "Hospital ambulance (police call.wav), 2.35 s, played once. Tagged Speech 0.70, Radio 0.20, Telephone dialing 0.10: a police radio call, a burst of radio voice with squelch, not a siren. Loud (-13 LUFS), 5 onsets.",
+    "uncertain": "The original carries a voice. A remake 'similar' in kind is radio chatter, which the no-speech check will flag; the prompt asks for unintelligible, filtered radio chatter and a squelch, and a listener should confirm no words are clear.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A police radio crackle: a squelch click, a short burst of muffled unintelligible dispatcher chatter through a tinny radio, then a second squelch.",
+    "params": {
+     "duration_seconds": 2.35,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 2.35,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 52,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/hospital_desk/5.mp3",
+   "swf": "places/hospital_desk.swf",
+   "name": "sound 5",
+   "role": "Hospital front desk picture, looped 999 times",
+   "sourceName": "hospital lobby.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-hospital"
+   ],
+   "decodedSeconds": 3.291,
+   "seconds": 3.04,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -37.3,
+    "truePeakDb": -24.3,
+    "attackSec": 0.139,
+    "peakAtSec": 1.689,
+    "decay20Sec": 1.515,
+    "envelopeDb16": [
+     -146.6,
+     -1.1,
+     -3.1,
+     -3.5,
+     -3.9,
+     -2.2,
+     -3.9,
+     -5.8,
+     -4.8,
+     -6,
+     -5.7,
+     -3.9,
+     -4.5,
+     -4,
+     -5.3,
+     -128
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.15
+    ],
+    "centroidHz": 1178,
+    "bandwidthHz": 953,
+    "rolloff85Hz": 2235,
+    "flatness": 0.0366,
+    "bandsBelow5kDb": [
+     -13.7,
+     -17.4,
+     -11.1,
+     -7.8,
+     -9.5,
+     -9.5,
+     -8,
+     -10.4,
+     -10.8,
+     -9.8,
+     -15.7,
+     -19.5
+    ],
+    "tempoBpm": 18.3,
+    "beatRegularity": 0.002,
+    "loopBeats": {
+     "beats": 1,
+     "bpm": 19.74
+    },
+    "key": "E minor",
+    "keyR": 0.31,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Speech",
+      "p": 0.753
+     },
+     {
+      "label": "Chatter",
+      "p": 0.242
+     },
+     {
+      "label": "Hubbub, speech noise, speech babble",
+      "p": 0.143
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.086
+     },
+     {
+      "label": "Outside, urban or manmade",
+      "p": 0.084
+     },
+     {
+      "label": "Inside, public space",
+      "p": 0.081
+     },
+     {
+      "label": "Animal",
+      "p": 0.054
+     },
+     {
+      "label": "Music",
+      "p": 0.038
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-hospital_desk",
+    "sharedWith": [],
+    "tracks": [
+     "amb-hospital"
+    ],
+    "kind": "ambience",
+    "description": "Hospital front desk (hospital lobby.wav), a 3.04 s loop repeated 999 times: murmuring people. Tagged Speech 0.75, Chatter 0.24, Hubbub 0.14. Quiet (-37 LUFS).",
+    "uncertain": "It is crowd murmur, so the remake must be indistinct babble; the speech screen will flag it and needs a listener's judgment that no words are intelligible.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "Quiet hospital lobby crowd murmur, indistinct distant chatter of several people, no clear words, soft and steady room tone.",
+    "params": {
+     "duration_seconds": 3.04,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 3.04,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 67,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/hospital_room/9.mp3",
+   "swf": "places/hospital_room.swf",
+   "name": "sound 9",
+   "role": "Hospital room picture, looped 999 times",
+   "sourceName": "heart monitor.wav",
+   "kind": "ambience",
+   "tracks": [
+    "amb-monitor"
+   ],
+   "decodedSeconds": 1.829,
+   "seconds": 1.59,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -29.3,
+    "truePeakDb": -16.1,
+    "attackSec": 0.139,
+    "peakAtSec": 1.08,
+    "decay20Sec": 0.673,
+    "envelopeDb16": [
+     -155.2,
+     -57.4,
+     -1,
+     -1,
+     -10.6,
+     -6.4,
+     -11.7,
+     -12.4,
+     -10.5,
+     -0.6,
+     -9.7,
+     -5.6,
+     -8.8,
+     -10.2,
+     -10.6,
+     -83.4
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1338,
+    "bandwidthHz": 1090,
+    "rolloff85Hz": 2656,
+    "flatness": 0.0529,
+    "bandsBelow5kDb": [
+     -26.5,
+     -16.1,
+     -13.6,
+     -14.3,
+     -14.8,
+     -10,
+     -12.9,
+     -3.6,
+     -15.1,
+     -13.8,
+     -7.3,
+     -17.6
+    ],
+    "tempoBpm": 32.9,
+    "beatRegularity": 0.003,
+    "loopBeats": {
+     "beats": 1,
+     "bpm": 37.74
+    },
+    "key": "Bb minor",
+    "keyR": 0.45,
+    "pitch": {
+     "medianHz": 1023,
+     "note": "C6",
+     "voicedShare": 0.23
+    },
+    "tags": [
+     {
+      "label": "Beep, bleep",
+      "p": 0.351
+     },
+     {
+      "label": "Music",
+      "p": 0.082
+     },
+     {
+      "label": "Buzzer",
+      "p": 0.067
+     },
+     {
+      "label": "Speech",
+      "p": 0.054
+     },
+     {
+      "label": "Animal",
+      "p": 0.054
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.039
+     },
+     {
+      "label": "Alarm clock",
+      "p": 0.036
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.034
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-hospital_room",
+    "sharedWith": [],
+    "tracks": [
+     "amb-monitor"
+    ],
+    "kind": "ambience",
+    "description": "Hospital room (heart monitor.wav), a 1.59 s loop repeated 999 times: one beep per loop (about 38 per minute when looped), pitch about 1.0 kHz (C6). Tagged Beep, bleep 0.35.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A hospital heart monitor giving one clean electronic beep at about one kilohertz followed by quiet room hum, then silence.",
+    "params": {
+     "duration_seconds": 1.59,
+     "prompt_influence": 0.6,
+     "loop": true
+    },
+    "deliverSeconds": 1.59,
+    "loop": true,
+    "takes": 2,
+    "estimateCredits": 35,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/palors/5.mp3",
+   "swf": "places/palors.swf",
+   "name": "sound 5",
+   "role": "Rival parlors picture, looped 999 times",
+   "sourceName": "mystery tinkle loop.wav",
+   "kind": "music-loop",
+   "tracks": [
+    "sneak"
+   ],
+   "decodedSeconds": 2.247,
+   "seconds": 2,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -26.3,
+    "truePeakDb": -6.9,
+    "attackSec": 0.145,
+    "peakAtSec": 1.167,
+    "decay20Sec": 0.47,
+    "envelopeDb16": [
+     -164.6,
+     -7.4,
+     -10.7,
+     -10.6,
+     -18.2,
+     -13.8,
+     -17.4,
+     -21,
+     -11.1,
+     -10.6,
+     -8,
+     -5.3,
+     -15.5,
+     -13.2,
+     -16.3,
+     -134.6
+    ],
+    "onsets": 7,
+    "onsetTimes": [
+     0.15,
+     0.5,
+     0.66,
+     1.16,
+     1.49,
+     1.65,
+     2
+    ],
+    "centroidHz": 986,
+    "bandwidthHz": 325,
+    "rolloff85Hz": 1281,
+    "flatness": 0.0485,
+    "bandsBelow5kDb": [
+     -47,
+     -48.7,
+     -41,
+     -35,
+     -32.2,
+     -29.4,
+     -4.3,
+     -3,
+     -8.9,
+     -31.6,
+     -50.5,
+     -62.7
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": 0.169,
+    "loopBeats": {
+     "beats": 4,
+     "bpm": 120
+    },
+    "key": "F# major",
+    "keyR": 0.45,
+    "pitch": {
+     "medianHz": 372.3,
+     "note": "F♯4",
+     "voicedShare": 0.76
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.728
+     },
+     {
+      "label": "Ringtone",
+      "p": 0.335
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.029
+     },
+     {
+      "label": "Speech",
+      "p": 0.028
+     },
+     {
+      "label": "Electronic music",
+      "p": 0.027
+     },
+     {
+      "label": "Synthesizer",
+      "p": 0.026
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-palors",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "music",
+    "description": "Rival parlors picture (mystery tinkle loop.wav), a 2.00 s loop repeated 999 times: one bar at 120 bpm. Tagged Music 0.73, Ringtone 0.34: a tinkling, bell-like melodic figure; pitch centre about F#4; key estimate F# major (r 0.45).",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental mysterious tinkling loop in F-sharp major at exactly 120 bpm in 4/4: a music box and celesta playing a light, curious figure over a soft pad, playful and a little spooky. One bar repeated with no intro and no ending. Clean, bright modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 2,
+    "loop": true,
+    "bpm": 120,
+    "bars": 1,
+    "beatsPerBar": 4,
+    "key": "F# major",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/psych/7.mp3",
+   "swf": "places/psych.swf",
+   "name": "sound 7",
+   "role": "The psychic at Spirit University, played once",
+   "sourceName": "Cinematic 12 Harp 01.wav",
+   "kind": "sfx",
+   "tracks": [
+    "psychic"
+   ],
+   "decodedSeconds": 3.553,
+   "seconds": 3.29,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -23.4,
+    "truePeakDb": -7.8,
+    "attackSec": 0.145,
+    "peakAtSec": 0.447,
+    "decay20Sec": 1.654,
+    "envelopeDb16": [
+     -164.9,
+     -11.1,
+     -0.7,
+     -3.8,
+     -8.6,
+     -10,
+     -12.5,
+     -17.2,
+     -16.7,
+     -19.2,
+     -20.3,
+     -22.2,
+     -28.3,
+     -31,
+     -39.6,
+     -164.9
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     1.1
+    ],
+    "centroidHz": 437,
+    "bandwidthHz": 395,
+    "rolloff85Hz": 704,
+    "flatness": 0.0455,
+    "bandsBelow5kDb": [
+     -18.1,
+     -33,
+     -18.9,
+     -6.6,
+     -2.9,
+     -7.2,
+     -16.1,
+     -16.9,
+     -28.5,
+     -36,
+     -30.4,
+     -42.2
+    ],
+    "tempoBpm": 63.8,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "D major",
+    "keyR": 0.8,
+    "pitch": {
+     "medianHz": 109.4,
+     "note": "A2",
+     "voicedShare": 0.43
+    },
+    "tags": [
+     {
+      "label": "Harp",
+      "p": 0.649
+     },
+     {
+      "label": "Music",
+      "p": 0.55
+     },
+     {
+      "label": "Pizzicato",
+      "p": 0.13
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.097
+     },
+     {
+      "label": "Vibraphone",
+      "p": 0.057
+     },
+     {
+      "label": "Plucked string instrument",
+      "p": 0.037
+     },
+     {
+      "label": "Marimba, xylophone",
+      "p": 0.028
+     },
+     {
+      "label": "Speech",
+      "p": 0.025
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-psych",
+    "sharedWith": [],
+    "tracks": [
+     "psychic"
+    ],
+    "kind": "sfx",
+    "description": "The psychic (Cinematic 12 Harp 01.wav), 3.29 s, played once. Tagged Harp 0.65, Pizzicato 0.13: a low, cinematic harp gesture; warm (centroid 440 Hz), key estimate D major (r 0.80), pitch centre about A2; peak early, ringing out over 1.7 s.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A low cinematic harp glissando in D major, a mysterious sweeping gesture that rings out, warm and resonant, about three seconds.",
+    "params": {
+     "duration_seconds": 3.29,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 3.29,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 73,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "places/yangs/6.mp3",
+   "swf": "places/yangs.swf",
+   "name": "sound 6",
+   "role": "Yang's restaurant picture, looped 999 times",
+   "sourceName": "yangs.wav",
+   "kind": "music-loop",
+   "tracks": [
+    "yangs"
+   ],
+   "decodedSeconds": 4.232,
+   "seconds": 4,
+   "loops": 999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -21.6,
+    "truePeakDb": -5.4,
+    "attackSec": 0.145,
+    "peakAtSec": 2.165,
+    "decay20Sec": 1.991,
+    "envelopeDb16": [
+     -166.8,
+     -8,
+     -9.4,
+     -10.5,
+     -10.3,
+     -5.9,
+     -8.8,
+     -13.6,
+     -4.4,
+     -1.6,
+     -7.2,
+     -11.2,
+     -9.2,
+     -10.1,
+     -12.5,
+     -81
+    ],
+    "onsets": 5,
+    "onsetTimes": [
+     0.16,
+     1.15,
+     1.65,
+     2.09,
+     4.1
+    ],
+    "centroidHz": 704,
+    "bandwidthHz": 695,
+    "rolloff85Hz": 1324,
+    "flatness": 0.0228,
+    "bandsBelow5kDb": [
+     -7.9,
+     -12.4,
+     -9,
+     -9.2,
+     -12,
+     -6.3,
+     -8.1,
+     -13.5,
+     -16.4,
+     -19.5,
+     -27.3,
+     -35.2
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": 0.034,
+    "loopBeats": {
+     "beats": 8,
+     "bpm": 120
+    },
+    "key": "F# minor",
+    "keyR": 0.66,
+    "pitch": {
+     "medianHz": 92.5,
+     "note": "F♯2",
+     "voicedShare": 0.79
+    },
+    "tags": [
+     {
+      "label": "Zither",
+      "p": 0.723
+     },
+     {
+      "label": "Music",
+      "p": 0.515
+     },
+     {
+      "label": "Pizzicato",
+      "p": 0.389
+     },
+     {
+      "label": "Mandolin",
+      "p": 0.096
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.09
+     },
+     {
+      "label": "Harp",
+      "p": 0.07
+     },
+     {
+      "label": "Traditional music",
+      "p": 0.06
+     },
+     {
+      "label": "Bowed string instrument",
+      "p": 0.051
+     }
+    ]
+   },
+   "remake": {
+    "id": "places-yangs",
+    "sharedWith": [],
+    "tracks": [
+     "yangs"
+    ],
+    "kind": "music",
+    "description": "Yang's restaurant picture (yangs.wav), a 4.00 s loop repeated 999 times: 8 beats, two bars at 120 bpm (beats very regular, 3%). Tagged Zither 0.72, Pizzicato 0.39, Mandolin 0.10: a plucked zither-like string figure; key estimate F# minor (r 0.66), pitch centre about F#2.",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental restaurant loop in F-sharp minor at exactly 120 bpm in 4/4: a plucked zither and pizzicato strings playing a light, flowing pattern over a soft low drone and a gentle hand drum, calm and pleasant. Two bars repeated with no intro and no ending. Clean modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 4,
+    "loop": true,
+    "bpm": 120,
+    "bars": 2,
+    "beatsPerBar": 4,
+    "key": "F# minor",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/battle_lose/2.mp3",
+   "swf": "stuff/battle_lose.swf",
+   "name": "sound 2",
+   "role": "Losing a fight, played once",
+   "sourceName": "death gong sound.wav",
+   "kind": "sfx",
+   "tracks": [
+    "gong"
+   ],
+   "decodedSeconds": 6.687,
+   "seconds": 6.43,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -32.5,
+    "truePeakDb": -17.8,
+    "attackSec": 0.145,
+    "peakAtSec": 1.498,
+    "decay20Sec": 2.357,
+    "envelopeDb16": [
+     -154,
+     -3.5,
+     -3,
+     -1.9,
+     -2.3,
+     -6.9,
+     -9.8,
+     -12,
+     -18.7,
+     -20.2,
+     -20.6,
+     -17.5,
+     -19.8,
+     -22.7,
+     -26.5,
+     -151.6
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 317,
+    "bandwidthHz": 379,
+    "rolloff85Hz": 492,
+    "flatness": 0.017,
+    "bandsBelow5kDb": [
+     -21,
+     -14.9,
+     -1.5,
+     -14.1,
+     -10.9,
+     -19,
+     -10.3,
+     -17.9,
+     -26.1,
+     -36.9,
+     -39.5,
+     -63
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Bb minor",
+    "keyR": 0.28,
+    "pitch": {
+     "medianHz": 143.5,
+     "note": "D3",
+     "voicedShare": 0.67
+    },
+    "tags": [
+     {
+      "label": "Gong",
+      "p": 0.585
+     },
+     {
+      "label": "Music",
+      "p": 0.162
+     },
+     {
+      "label": "Singing bowl",
+      "p": 0.144
+     },
+     {
+      "label": "Ambient music",
+      "p": 0.035
+     },
+     {
+      "label": "Tubular bells",
+      "p": 0.033
+     },
+     {
+      "label": "Church bell",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-battle_lose",
+    "sharedWith": [],
+    "tracks": [
+     "gong"
+    ],
+    "kind": "sfx",
+    "description": "Losing a fight (death gong sound.wav), 6.43 s, played once. Tagged Gong 0.59, Singing bowl 0.14: one deep strike (pitch about D3, centroid 320 Hz) blooming to its peak at about 1.4 s and decaying slowly. Quiet for its kind (-32.5 LUFS).",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single deep large gong struck once, a dark slow bloom and a long shimmering decay, about six seconds.",
+    "params": {
+     "duration_seconds": 6.43,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 6.43,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 143,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/lottery_lose/19.mp3",
+   "swf": "stuff/lottery_lose.swf",
+   "name": "sound 19",
+   "role": "Scratch ticket, each scratch (losing ticket), played three times",
+   "sourceName": "scratch_shot.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 0.522,
+   "seconds": 0.28,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -39,
+    "truePeakDb": -19.3,
+    "attackSec": 0.139,
+    "peakAtSec": 0.221,
+    "decay20Sec": 0.221,
+    "envelopeDb16": [
+     -146.3,
+     -146.3,
+     -145.1,
+     -105.1,
+     -28.8,
+     -7.7,
+     -0.7,
+     -4.1,
+     -9.8,
+     -14.2,
+     -11.1,
+     -4.7,
+     -9.6,
+     -26.2,
+     -38,
+     -96.3
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.15
+    ],
+    "centroidHz": 2048,
+    "bandwidthHz": 1276,
+    "rolloff85Hz": 3583,
+    "flatness": 0.2395,
+    "bandsBelow5kDb": [
+     -18.1,
+     -49.6,
+     -45.9,
+     -21,
+     -14,
+     -15.4,
+     -12.5,
+     -11.9,
+     -9.3,
+     -7.5,
+     -5.4,
+     -6.8
+    ],
+    "tempoBpm": 246.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C# minor",
+    "keyR": 0.34,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.136
+     },
+     {
+      "label": "Speech",
+      "p": 0.043
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.022
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-lottery_win-19",
+    "sharedWith": [
+     "stuff/lottery_win/19.mp3"
+    ],
+    "tracks": [
+     "bingo-ball"
+    ],
+    "kind": "sfx",
+    "description": "Scratching a lottery ticket (scratch_shot.wav), 0.28 s, played three times per ticket (winning and losing tickets share it): one short noisy scrape (flatness 0.24, roll-off 3.6 kHz). Very quiet (-39 LUFS). Tagger cannot name it.",
+    "uncertain": "Too short and too quiet for the tagger; the source name and the picture say a scratch.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "One quick scratch of a coin across a scratch-off lottery ticket, a short dry papery scrape, very close.",
+    "params": {
+     "duration_seconds": 0.5,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 0.28,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 0,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/lottery_lose/26.mp3",
+   "swf": "stuff/lottery_lose.swf",
+   "name": "sound 26",
+   "role": "Scratch ticket loss, played once at the end",
+   "sourceName": "loser edited.wav",
+   "kind": "sfx",
+   "tracks": [
+    "bingo-lose"
+   ],
+   "decodedSeconds": 1.933,
+   "seconds": 1.7,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -15.6,
+    "truePeakDb": -0.6,
+    "attackSec": 0.18,
+    "peakAtSec": 1.55,
+    "decay20Sec": 0.192,
+    "envelopeDb16": [
+     -169.7,
+     -80.2,
+     -18.9,
+     -5.3,
+     -3,
+     -21.4,
+     -9.5,
+     -0.3,
+     -21.2,
+     -19.9,
+     -13.5,
+     -5.1,
+     -0.1,
+     -7.2,
+     -20.7,
+     -64.1
+    ],
+    "onsets": 4,
+    "onsetTimes": [
+     0.16,
+     0.41,
+     0.82,
+     1.83
+    ],
+    "centroidHz": 1310,
+    "bandwidthHz": 967,
+    "rolloff85Hz": 2309,
+    "flatness": 0.0544,
+    "bandsBelow5kDb": [
+     -44.7,
+     -55.5,
+     -49.8,
+     -46.8,
+     -22.5,
+     -26.1,
+     -9.2,
+     -2.2,
+     -6.8,
+     -15.6,
+     -18,
+     -18.6
+    ],
+    "tempoBpm": 246.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "D minor",
+    "keyR": 0.49,
+    "pitch": {
+     "medianHz": 159.3,
+     "note": "D♯3",
+     "voicedShare": 0.7
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.704
+     },
+     {
+      "label": "Cat",
+      "p": 0.082
+     },
+     {
+      "label": "Meow",
+      "p": 0.076
+     },
+     {
+      "label": "Animal",
+      "p": 0.066
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.061
+     },
+     {
+      "label": "Domestic animals, pets",
+      "p": 0.06
+     },
+     {
+      "label": "Synthetic singing",
+      "p": 0.055
+     },
+     {
+      "label": "Speech",
+      "p": 0.032
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-lottery_lose-26",
+    "sharedWith": [],
+    "tracks": [
+     "bingo-lose"
+    ],
+    "kind": "sfx",
+    "description": "Losing the lottery (loser edited.wav), 1.70 s, played once. Tagged Music 0.70 (and Cat 0.08): a short loud (-15.6 LUFS) musical 'loser' gesture, 4 onsets, peak late at about 1.4 s, pitch about D#3.",
+    "uncertain": "The tagger only says music; four onsets and a late peak suggest a short descending comic phrase.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A short comic losing sting, a few descending brassy notes ending on a low flat note, about one and a half seconds.",
+    "params": {
+     "duration_seconds": 1.7,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.7,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 38,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/lottery_win/19.mp3",
+   "swf": "stuff/lottery_win.swf",
+   "name": "sound 19",
+   "role": "Scratch ticket, each scratch (winning ticket), played three times",
+   "sourceName": "scratch_shot.wav",
+   "kind": "sfx",
+   "tracks": [
+    "bingo-ball"
+   ],
+   "decodedSeconds": 0.522,
+   "seconds": 0.28,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -39,
+    "truePeakDb": -19.3,
+    "attackSec": 0.139,
+    "peakAtSec": 0.221,
+    "decay20Sec": 0.221,
+    "envelopeDb16": [
+     -146.3,
+     -146.3,
+     -145.1,
+     -105.1,
+     -28.8,
+     -7.7,
+     -0.7,
+     -4.1,
+     -9.8,
+     -14.2,
+     -11.1,
+     -4.7,
+     -9.6,
+     -26.2,
+     -38,
+     -96.3
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.15
+    ],
+    "centroidHz": 2048,
+    "bandwidthHz": 1276,
+    "rolloff85Hz": 3583,
+    "flatness": 0.2395,
+    "bandsBelow5kDb": [
+     -18.1,
+     -49.6,
+     -45.9,
+     -21,
+     -14,
+     -15.4,
+     -12.5,
+     -11.9,
+     -9.3,
+     -7.5,
+     -5.4,
+     -6.8
+    ],
+    "tempoBpm": 246.1,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C# minor",
+    "keyR": 0.34,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.136
+     },
+     {
+      "label": "Speech",
+      "p": 0.043
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.022
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-lottery_win-19",
+    "sharedWith": [
+     "stuff/lottery_lose/19.mp3"
+    ],
+    "tracks": [
+     "bingo-ball"
+    ],
+    "kind": "sfx",
+    "description": "Scratching a lottery ticket (scratch_shot.wav), 0.28 s, played three times per ticket (winning and losing tickets share it): one short noisy scrape (flatness 0.24, roll-off 3.6 kHz). Very quiet (-39 LUFS). Tagger cannot name it.",
+    "uncertain": "Too short and too quiet for the tagger; the source name and the picture say a scratch.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "One quick scratch of a coin across a scratch-off lottery ticket, a short dry papery scrape, very close.",
+    "params": {
+     "duration_seconds": 0.5,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 0.28,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 11,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/lottery_win/25.mp3",
+   "swf": "stuff/lottery_win.swf",
+   "name": "sound 25",
+   "role": "Scratch ticket win, played once at the end",
+   "sourceName": "cash register.wav",
+   "kind": "sfx",
+   "tracks": [
+    "bingo-win"
+   ],
+   "decodedSeconds": 1.567,
+   "seconds": 1.33,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -21.6,
+    "truePeakDb": -1.8,
+    "attackSec": 0.215,
+    "peakAtSec": 0.435,
+    "decay20Sec": 0.192,
+    "envelopeDb16": [
+     -166.1,
+     -110.1,
+     -30.6,
+     -16.8,
+     -2.6,
+     -14.8,
+     -20.3,
+     -23.2,
+     -10.1,
+     -9.8,
+     -19.3,
+     -30.3,
+     -32.2,
+     -35.4,
+     -99.3,
+     -166.1
+    ],
+    "onsets": 6,
+    "onsetTimes": [
+     0.16,
+     0.23,
+     0.45,
+     0.78,
+     0.92,
+     1.07
+    ],
+    "centroidHz": 1598,
+    "bandwidthHz": 1145,
+    "rolloff85Hz": 2840,
+    "flatness": 0.1327,
+    "bandsBelow5kDb": [
+     -41.4,
+     -38.5,
+     -29.1,
+     -21.2,
+     -16.8,
+     -16.1,
+     -10.6,
+     -10.9,
+     -13.1,
+     -5.8,
+     -5.1,
+     -7.9
+    ],
+    "tempoBpm": 105.5,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "B minor",
+    "keyR": 0.41,
+    "pitch": {
+     "medianHz": 1999.2,
+     "note": "B6",
+     "voicedShare": 0.35
+    },
+    "tags": [
+     {
+      "label": "Cash register",
+      "p": 0.931
+     },
+     {
+      "label": "Typewriter",
+      "p": 0.047
+     },
+     {
+      "label": "Speech",
+      "p": 0.027
+     },
+     {
+      "label": "Music",
+      "p": 0.024
+     },
+     {
+      "label": "Printer",
+      "p": 0.024
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-lottery_win-25",
+    "sharedWith": [],
+    "tracks": [
+     "bingo-win"
+    ],
+    "kind": "sfx",
+    "description": "Winning the lottery (cash register.wav), 1.33 s, played once. Tagged Cash register 0.93: keys, bell and drawer (6 onsets), bright (pitch about B6 in the bell).",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "An old mechanical cash register: quick key clacks, the bright bell ring and the drawer sliding open, close and clean.",
+    "params": {
+     "duration_seconds": 1.33,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 1.33,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 30,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/money_bag/7.mp3",
+   "swf": "stuff/money_bag.swf",
+   "name": "sound 7",
+   "role": "Money bag picture (a sale), played once",
+   "sourceName": "money_lose.wav",
+   "kind": "sfx",
+   "tracks": [
+    "cash-register"
+   ],
+   "decodedSeconds": 3.396,
+   "seconds": 3.16,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -20.2,
+    "truePeakDb": -5.5,
+    "attackSec": 0.145,
+    "peakAtSec": 0.94,
+    "decay20Sec": 1.637,
+    "envelopeDb16": [
+     -168.6,
+     -12.8,
+     -8.9,
+     -9.2,
+     -3.8,
+     -6.7,
+     -12.9,
+     -14,
+     -5.6,
+     -10.5,
+     -13.3,
+     -18.2,
+     -21.4,
+     -27.8,
+     -33.4,
+     -112.5
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     0.42
+    ],
+    "centroidHz": 928,
+    "bandwidthHz": 1113,
+    "rolloff85Hz": 2276,
+    "flatness": 0.0301,
+    "bandsBelow5kDb": [
+     -9.6,
+     -8.9,
+     -3.1,
+     -9,
+     -13.4,
+     -20.7,
+     -17.4,
+     -16.7,
+     -25.8,
+     -18.8,
+     -15.1,
+     -20.8
+    ],
+    "tempoBpm": 234.9,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "B major",
+    "keyR": 0.65,
+    "pitch": {
+     "medianHz": 123.5,
+     "note": "B2",
+     "voicedShare": 0.48
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.726
+     },
+     {
+      "label": "Guitar",
+      "p": 0.365
+     },
+     {
+      "label": "Plucked string instrument",
+      "p": 0.318
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.304
+     },
+     {
+      "label": "Acoustic guitar",
+      "p": 0.179
+     },
+     {
+      "label": "Zither",
+      "p": 0.081
+     },
+     {
+      "label": "Strum",
+      "p": 0.076
+     },
+     {
+      "label": "Singing",
+      "p": 0.042
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-money_bag",
+    "sharedWith": [],
+    "tracks": [
+     "cash-register"
+    ],
+    "kind": "sfx",
+    "description": "The money bag (money_lose.wav), 3.16 s, played once. Tagged Music 0.73, Guitar 0.37, Plucked string instrument 0.32: a short plucked-guitar musical sting (2 onsets), key estimate B major (r 0.65), ringing out over 1.6 s.",
+    "uncertain": "Despite the money picture it is a guitar sting, not a cash sound; the remake follows the sound.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A short acoustic guitar sting in B major, two plucked strums and a ringing chord, about three seconds, close and clean.",
+    "params": {
+     "duration_seconds": 3.16,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 3.16,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 70,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/money_bag_2/9.mp3",
+   "swf": "stuff/money_bag_2.swf",
+   "name": "sound 9",
+   "role": "Second money bag picture, played once",
+   "sourceName": "cash register.wav",
+   "kind": "sfx",
+   "tracks": [
+    "coins"
+   ],
+   "decodedSeconds": 1.097,
+   "seconds": 0.85,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -26.8,
+    "truePeakDb": -7,
+    "attackSec": 0.157,
+    "peakAtSec": 0.325,
+    "decay20Sec": 0.168,
+    "envelopeDb16": [
+     -160.8,
+     -160.1,
+     -36.9,
+     -18.6,
+     -8.7,
+     -9,
+     -18.7,
+     -20.6,
+     -23.4,
+     -10.3,
+     -9.9,
+     -18.9,
+     -29.4,
+     -31.3,
+     -56.7,
+     -147.4
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     0.61
+    ],
+    "centroidHz": 1769,
+    "bandwidthHz": 1153,
+    "rolloff85Hz": 3057,
+    "flatness": 0.1099,
+    "bandsBelow5kDb": [
+     -44,
+     -43,
+     -31.8,
+     -24.4,
+     -18.7,
+     -16.4,
+     -13.2,
+     -9.5,
+     -12.2,
+     -11.7,
+     -3.4,
+     -6.7
+    ],
+    "tempoBpm": 129.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Eb minor",
+    "keyR": 0.76,
+    "pitch": {
+     "medianHz": 1326.6,
+     "note": "E6",
+     "voicedShare": 0.38
+    },
+    "tags": [
+     {
+      "label": "Cash register",
+      "p": 0.979
+     },
+     {
+      "label": "Typewriter",
+      "p": 0.061
+     },
+     {
+      "label": "Speech",
+      "p": 0.05
+     },
+     {
+      "label": "Printer",
+      "p": 0.036
+     },
+     {
+      "label": "Music",
+      "p": 0.028
+     },
+     {
+      "label": "Coin (dropping)",
+      "p": 0.022
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-money_bag_2",
+    "sharedWith": [],
+    "tracks": [
+     "coins"
+    ],
+    "kind": "sfx",
+    "description": "The second money bag (cash register.wav), 0.85 s, played once. Tagged Cash register 0.98: a quick register bell and clunk (2 onsets), bell pitch about E6.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A quick cash register ka-ching: one bright bell ding and a drawer clunk, under one second, close and clean.",
+    "params": {
+     "duration_seconds": 0.85,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 0.85,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 19,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "stuff/toilet/3.mp3",
+   "swf": "stuff/toilet.swf",
+   "name": "sound 3",
+   "role": "Toilet picture, played once",
+   "sourceName": "toilet_flush.wav",
+   "kind": "sfx",
+   "tracks": [
+    "toilet-flush"
+   ],
+   "decodedSeconds": 4.18,
+   "seconds": 4.02,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -22.8,
+    "truePeakDb": -4.1,
+    "attackSec": 0.389,
+    "peakAtSec": 0.598,
+    "decay20Sec": 0.319,
+    "envelopeDb16": [
+     -167.1,
+     -67.9,
+     -12.1,
+     -8.4,
+     -16.9,
+     -13.5,
+     -14.1,
+     -16.1,
+     -16.9,
+     -17.1,
+     -19.1,
+     -12.6,
+     -20.6,
+     -15.1,
+     -40.6,
+     -99.9
+    ],
+    "onsets": 15,
+    "onsetTimes": [
+     0.38,
+     0.63,
+     1.13,
+     1.32,
+     1.46,
+     1.74,
+     2.03,
+     2.3,
+     2.33,
+     2.46,
+     3.02,
+     3.21,
+     3.41,
+     3.63,
+     3.89
+    ],
+    "centroidHz": 1833,
+    "bandwidthHz": 1036,
+    "rolloff85Hz": 2968,
+    "flatness": 0.0234,
+    "bandsBelow5kDb": [
+     -43.4,
+     -46.2,
+     -38.9,
+     -13.9,
+     -8.9,
+     -12,
+     -4.7,
+     -12.7,
+     -11.4,
+     -9.7,
+     -8.1,
+     -13.7
+    ],
+    "tempoBpm": 82,
+    "beatRegularity": 0,
+    "loopBeats": null,
+    "key": "C minor",
+    "keyR": 0.28,
+    "pitch": {
+     "medianHz": 1892.5,
+     "note": "A♯6",
+     "voicedShare": 0.08
+    },
+    "tags": [
+     {
+      "label": "Toilet flush",
+      "p": 0.87
+     },
+     {
+      "label": "Water",
+      "p": 0.266
+     },
+     {
+      "label": "Speech",
+      "p": 0.054
+     },
+     {
+      "label": "Music",
+      "p": 0.03
+     },
+     {
+      "label": "Animal",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "stuff-toilet",
+    "sharedWith": [],
+    "tracks": [
+     "toilet-flush"
+    ],
+    "kind": "sfx",
+    "description": "The toilet (toilet_flush.wav), 4.02 s, played once. Tagged Toilet flush 0.87, Water 0.27: a rushing flush with gurgles (15 onsets), bright (centroid 1.8 kHz).",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A toilet flushing: a strong rushing swirl of water with gurgles draining away, about four seconds, small bathroom.",
+    "params": {
+     "duration_seconds": 4.02,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 4.02,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 89,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "wait/5.mp3",
+   "swf": "wait.swf",
+   "name": "sound 5",
+   "role": "Waiting for a customer (wait.swf frame 20), played once",
+   "sourceName": "wind_short_3.wav",
+   "kind": "sfx",
+   "tracks": [
+    "doorbell"
+   ],
+   "decodedSeconds": 2.403,
+   "seconds": 2.18,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -26.7,
+    "truePeakDb": -11.6,
+    "attackSec": 0.145,
+    "peakAtSec": 1.225,
+    "decay20Sec": 1.086,
+    "envelopeDb16": [
+     -158.8,
+     -21.2,
+     -15.4,
+     -11.7,
+     -9.9,
+     -4.1,
+     -6.5,
+     -5.3,
+     -4.4,
+     -4.4,
+     -5.9,
+     -7.7,
+     -9.4,
+     -11.9,
+     -17.4,
+     -56.2
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.16
+    ],
+    "centroidHz": 1551,
+    "bandwidthHz": 968,
+    "rolloff85Hz": 2605,
+    "flatness": 0.0444,
+    "bandsBelow5kDb": [
+     -39.6,
+     -36.4,
+     -18.8,
+     -11.2,
+     -11.4,
+     -12.5,
+     -15.3,
+     -16.6,
+     -16.3,
+     -3.1,
+     -6.7,
+     -35.8
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "Bb minor",
+    "keyR": 0.48,
+    "pitch": {
+     "medianHz": 1999.2,
+     "note": "B6",
+     "voicedShare": 0.32
+    },
+    "tags": [
+     {
+      "label": "Vehicle",
+      "p": 0.201
+     },
+     {
+      "label": "Animal",
+      "p": 0.075
+     },
+     {
+      "label": "Aircraft",
+      "p": 0.053
+     },
+     {
+      "label": "Speech",
+      "p": 0.043
+     },
+     {
+      "label": "Music",
+      "p": 0.039
+     },
+     {
+      "label": "Fixed-wing aircraft, airplane",
+      "p": 0.038
+     },
+     {
+      "label": "Outside, rural or natural",
+      "p": 0.031
+     },
+     {
+      "label": "Outside, urban or manmade",
+      "p": 0.029
+     }
+    ]
+   },
+   "remake": {
+    "id": "wait",
+    "sharedWith": [],
+    "tracks": [
+     "doorbell"
+    ],
+    "kind": "sfx",
+    "description": "Waiting for a customer (wind_short_3.wav), 2.18 s, played once at frame 20. Tagged Vehicle 0.20, Aircraft 0.05: a short gust of wind (one onset, swelling to a peak near 1.1 s and falling away).",
+    "uncertain": "The tagger reads the broadband swell as a vehicle; the source name says a short wind.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A short gust of wind rising and falling away, a single whoosh over about two seconds, outdoors.",
+    "params": {
+     "duration_seconds": 2.18,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 2.18,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 48,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "welcome/paper.mp3",
+   "swf": "welcome.swf",
+   "name": "paper",
+   "role": "Button press on the front door (welcome.swf 'paper')",
+   "sourceName": "paper_flipping.wav",
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 1.045,
+   "seconds": 0.81,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -36.9,
+    "truePeakDb": -14.7,
+    "attackSec": 0.197,
+    "peakAtSec": 0.406,
+    "decay20Sec": 0.493,
+    "envelopeDb16": [
+     -150.8,
+     -150.7,
+     -56.9,
+     -22.2,
+     -16.6,
+     -9.9,
+     -0.8,
+     -11.3,
+     -16,
+     -10.7,
+     -15.4,
+     -10.5,
+     -15.5,
+     -21,
+     -32.6,
+     -88.8
+    ],
+    "onsets": 2,
+    "onsetTimes": [
+     0.16,
+     0.42
+    ],
+    "centroidHz": 1997,
+    "bandwidthHz": 1183,
+    "rolloff85Hz": 3384,
+    "flatness": 0.1221,
+    "bandsBelow5kDb": [
+     -27.5,
+     -36.9,
+     -30.4,
+     -24.2,
+     -19.1,
+     -17.8,
+     -18.4,
+     -13.6,
+     -8.4,
+     -5.2,
+     -4.7,
+     -9.2
+    ],
+    "tempoBpm": 234.9,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C major",
+    "keyR": 0.33,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Animal",
+      "p": 0.188
+     },
+     {
+      "label": "Domestic animals, pets",
+      "p": 0.086
+     },
+     {
+      "label": "Speech",
+      "p": 0.084
+     },
+     {
+      "label": "Inside, small room",
+      "p": 0.079
+     },
+     {
+      "label": "Patter",
+      "p": 0.064
+     },
+     {
+      "label": "Zipper (clothing)",
+      "p": 0.053
+     },
+     {
+      "label": "Rodents, rats, mice",
+      "p": 0.041
+     },
+     {
+      "label": "Music",
+      "p": 0.038
+     }
+    ]
+   },
+   "remake": {
+    "id": "welcome-paper",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "Front-door buttons (paper_flipping.wav), 0.81 s, played once per press: a paper flip (2 onsets, noisy, roll-off 3.4 kHz). Quiet (-37 LUFS). Tagger cannot name it.",
+    "uncertain": null,
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "A single page of paper flipped over quickly, a crisp papery flick, very close.",
+    "params": {
+     "duration_seconds": 0.81,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 0.81,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 18,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "welcome/Map.mp3",
+   "swf": "welcome.swf",
+   "name": "Map",
+   "role": "Town map music (welcome.swf 'Map', looped 9999 times)",
+   "sourceName": "country town.wav",
+   "kind": "music-loop",
+   "tracks": [
+    "town"
+   ],
+   "decodedSeconds": 4.232,
+   "seconds": 4,
+   "loops": 9999,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -21.5,
+    "truePeakDb": -3.2,
+    "attackSec": 0.139,
+    "peakAtSec": 2.664,
+    "decay20Sec": 0.319,
+    "envelopeDb16": [
+     -168.3,
+     -7.9,
+     -21,
+     -17.2,
+     -20.4,
+     -2.7,
+     -7.9,
+     -6.4,
+     -6,
+     -20.5,
+     -8.2,
+     -27.3,
+     -5.9,
+     -5.8,
+     -5.8,
+     -74.2
+    ],
+    "onsets": 20,
+    "onsetTimes": [
+     0.15,
+     0.4,
+     0.56,
+     0.66,
+     0.9,
+     1.07,
+     1.17,
+     1.4,
+     1.68,
+     1.8,
+     2.15,
+     2.39,
+     2.67,
+     2.9,
+     3.07,
+     3.16,
+     3.41,
+     3.67,
+     3.8,
+     3.92
+    ],
+    "centroidHz": 861,
+    "bandwidthHz": 963,
+    "rolloff85Hz": 1811,
+    "flatness": 0.0217,
+    "bandsBelow5kDb": [
+     -3.9,
+     -9.7,
+     -8.4,
+     -8.3,
+     -14.2,
+     -12.1,
+     -16.7,
+     -16.7,
+     -19.9,
+     -19.2,
+     -18.8,
+     -17.5
+    ],
+    "tempoBpm": 117.5,
+    "beatRegularity": 0.121,
+    "loopBeats": {
+     "beats": 8,
+     "bpm": 120
+    },
+    "key": "C major",
+    "keyR": 0.63,
+    "pitch": {
+     "medianHz": 64.7,
+     "note": "C2",
+     "voicedShare": 0.61
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.718
+     },
+     {
+      "label": "Funny music",
+      "p": 0.058
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.045
+     },
+     {
+      "label": "Mandolin",
+      "p": 0.04
+     },
+     {
+      "label": "Speech",
+      "p": 0.032
+     },
+     {
+      "label": "Guitar",
+      "p": 0.032
+     },
+     {
+      "label": "Video game music",
+      "p": 0.029
+     },
+     {
+      "label": "Pizzicato",
+      "p": 0.026
+     }
+    ]
+   },
+   "remake": {
+    "id": "welcome-map",
+    "sharedWith": [],
+    "tracks": [
+     "town"
+    ],
+    "kind": "music",
+    "description": "The town map music (country town.wav), a 4.00 s loop the game repeated 9999 times: 8 beats, two bars at 120 bpm (tracked 117.5). Tagged Music 0.72, Funny music 0.06, Mandolin 0.04. Busy (20 onsets in the loop), bright plucked texture over a bass around C2; key estimate C major (r 0.63).",
+    "uncertain": null,
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental cheerful country hoedown loop in C major at exactly 120 bpm in 4/4: bright banjo and mandolin picking over a bouncing upright bass and light brushed snare, steady and busy, comic small-town feel. Keep the same two-bar groove the whole way through with no intro and no ending. Clean modern recording.",
+    "params": {
+     "duration_seconds": 16,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 4,
+    "loop": true,
+    "bpm": 120,
+    "bars": 2,
+    "beatsPerBar": 4,
+    "key": "C major",
+    "takes": 1,
+    "estimateCredits": 440,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "welcome/intro.mp3",
+   "swf": "welcome.swf",
+   "name": "intro",
+   "role": "Title screen intro music (welcome.swf, attached by script as 'intro', played once)",
+   "sourceName": "fq_theme.wav",
+   "kind": "music",
+   "tracks": [
+    "main"
+   ],
+   "decodedSeconds": 20.323,
+   "seconds": 20.08,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -20.3,
+    "truePeakDb": -4.6,
+    "attackSec": 0.18,
+    "peakAtSec": 0.726,
+    "decay20Sec": 18.727,
+    "envelopeDb16": [
+     -166.1,
+     -7.2,
+     -9,
+     -9.3,
+     -4.3,
+     -6.1,
+     -3.5,
+     -8,
+     -4.5,
+     -6,
+     -4.1,
+     -4.9,
+     -7.3,
+     -10.1,
+     -16,
+     -165.3
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.19
+    ],
+    "centroidHz": 1125,
+    "bandwidthHz": 1021,
+    "rolloff85Hz": 2311,
+    "flatness": 0.0056,
+    "bandsBelow5kDb": [
+     -11.8,
+     -12.6,
+     -9.9,
+     -9.3,
+     -8.8,
+     -7.4,
+     -9.1,
+     -10,
+     -13.7,
+     -13.9,
+     -15.8,
+     -20.1
+    ],
+    "tempoBpm": 80.7,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "C major",
+    "keyR": 0.37,
+    "pitch": {
+     "medianHz": 105.1,
+     "note": "G♯2",
+     "voicedShare": 0.63
+    },
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.654
+     },
+     {
+      "label": "Theme music",
+      "p": 0.139
+     },
+     {
+      "label": "Musical instrument",
+      "p": 0.087
+     },
+     {
+      "label": "Orchestra",
+      "p": 0.086
+     },
+     {
+      "label": "Background music",
+      "p": 0.064
+     },
+     {
+      "label": "Organ",
+      "p": 0.053
+     },
+     {
+      "label": "Classical music",
+      "p": 0.047
+     },
+     {
+      "label": "Timpani",
+      "p": 0.044
+     }
+    ]
+   },
+   "remake": {
+    "id": "welcome-intro",
+    "sharedWith": [],
+    "tracks": [
+     "main"
+    ],
+    "kind": "music",
+    "description": "The title-screen theme (source file fq_theme.wav), 20.08 s, played once. Tagged Music 0.65, Theme music 0.14, Orchestra 0.09. Very smooth, tonal spectrum (flatness 0.006, centroid about 1.1 kHz); one sustained arc from start to end (it does not fall 20 dB until 18.7 s); pitch centre about G#2 in the bass. Tempo estimate 81 bpm, weak; key estimate C major, weak (r 0.37).",
+    "uncertain": "Tempo and key are weak estimates on a piece with few clear attacks.",
+    "model": "eleven_music_v2_5",
+    "prompt": "Instrumental orchestral title theme in C major at about 80 bpm, around twenty seconds long: a warm, slightly grand and wry opening for a small-town funeral parlor game, with strings and woodwinds over soft brass and a gentle bass, building through one broad phrase and resolving on a full final chord. Clean, full-bandwidth, modern orchestral recording, never horror.",
+    "params": {
+     "duration_seconds": 30,
+     "instrumental": true,
+     "lyrics_type": "instrumental"
+    },
+    "deliverSeconds": 20.08,
+    "loop": false,
+    "bpm": 80,
+    "key": "C major",
+    "takes": 1,
+    "estimateCredits": 825,
+    "status": "not generated"
+   }
+  },
+  {
+   "file": "welcome/46.mp3",
+   "swf": "welcome.swf",
+   "name": "sound 46",
+   "role": "Unnamed sound attached by script in welcome.swf (character 46); no source name recorded",
+   "sourceName": null,
+   "kind": "sfx",
+   "tracks": [],
+   "decodedSeconds": 0.418,
+   "seconds": 0.19,
+   "loops": 1,
+   "sampleRate": 11025,
+   "measured": {
+    "lufs": -70,
+    "truePeakDb": -0.8,
+    "attackSec": 0.145,
+    "peakAtSec": 0.174,
+    "decay20Sec": 0.07,
+    "envelopeDb16": [
+     -164.6,
+     -164.6,
+     -164.6,
+     -143,
+     -77.3,
+     -32.7,
+     -3.4,
+     -6.3,
+     -17.9,
+     -20.9,
+     -29.7,
+     -38.4,
+     -49.3,
+     -60.5,
+     -78.2,
+     -104.5
+    ],
+    "onsets": 1,
+    "onsetTimes": [
+     0.15
+    ],
+    "centroidHz": 1747,
+    "bandwidthHz": 1077,
+    "rolloff85Hz": 3026,
+    "flatness": 0.2392,
+    "bandsBelow5kDb": [
+     -60.5,
+     -59.5,
+     -57.9,
+     -42.6,
+     -31.5,
+     -17.9,
+     -17.2,
+     -8.9,
+     -9.9,
+     -6.7,
+     -4.8,
+     -7.4
+    ],
+    "tempoBpm": 120.2,
+    "beatRegularity": null,
+    "loopBeats": null,
+    "key": "A minor",
+    "keyR": 0.2,
+    "pitch": null,
+    "tags": [
+     {
+      "label": "Music",
+      "p": 0.136
+     },
+     {
+      "label": "Speech",
+      "p": 0.044
+     },
+     {
+      "label": "Vehicle",
+      "p": 0.023
+     }
+    ]
+   },
+   "remake": {
+    "id": "welcome-46",
+    "sharedWith": [],
+    "tracks": [],
+    "kind": "sfx",
+    "description": "An unnamed 0.19 s sound attached by script in welcome.swf (character 46; no source name recorded). Almost silent (-70 LUFS integrated), one noisy click (flatness 0.24).",
+    "uncertain": "What it is, and whether the game ever played it audibly, is unknown; the measurements only say a very quiet click.",
+    "model": "eleven_text_to_sound_v2",
+    "prompt": "One tiny soft click, very short and quiet.",
+    "params": {
+     "duration_seconds": 0.5,
+     "prompt_influence": 0.6,
+     "loop": false
+    },
+    "deliverSeconds": 0.19,
+    "loop": false,
+    "takes": 2,
+    "estimateCredits": 11,
+    "status": "not generated"
+   }
+  }
+ ]
+}

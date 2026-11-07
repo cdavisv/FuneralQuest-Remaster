@@ -1,5 +1,7 @@
-/** Default place to fetch picture layers from; the dev server maps /classic to <repo>/assets/classic. */
-export const DEFAULT_ASSET_BASE: string = import.meta.env.VITE_ASSET_BASE ?? "/classic";
+import { siteUrl } from "./base.js";
+
+/** Default place to fetch picture layers from; the dev server maps /classic to <repo>/assets/classic; on a sub-path site it is under the base. */
+export const DEFAULT_ASSET_BASE: string = import.meta.env.VITE_ASSET_BASE ?? siteUrl("classic");
 
 /**
  * Builds `${assetBase}/${assetId}.svg`, or returns undefined for an id that could escape

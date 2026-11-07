@@ -24,13 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- funeralquest://join?server=https://host&town=id and funeralquest://settings -->
+            <!-- Solo-only release (decision 11): no funeralquest://join invitation link. When online
+                 play comes back, restore:
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="funeralquest" />
             </intent-filter>
+            -->
 
         </activity>
 
@@ -47,12 +49,18 @@
 
     <!-- Permissions -->
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Solo-only release (decision 11): the app makes no network request, so it does not ask for
+         INTERNET. (Capacitor serves the bundle from inside the app; fonts, art and sound are in it;
+         opening a link hands it to the system browser.) Removing it explicitly keeps a library
+         from adding it back in the merge. Online play needs it again: delete the line below and
+         build with FQ_SOLO_ONLY=0 (apps/mobile/scripts/prepare-web.mjs). -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <!-- The optional morning reminder (local notifications, no push). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- The local-notifications plugin also asks for these. Daily reminders do not need exact
          alarms, a wake lock or a boot receiver (the app reschedules whenever it is opened), so they
-         are removed to keep the permission list to the network and notifications. -->
+         are removed to keep the permission list to notifications. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="remove" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />

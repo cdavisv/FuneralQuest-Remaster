@@ -1,20 +1,38 @@
 /**
- * `pnpm listen`: serves the listening page (docs/audio/listen.html) and both sound packs on
- * localhost, for places that cannot read files next to a page opened from disk. It serves only
- * docs/audio and assets/audio*, read-only, and supports byte ranges so the players can seek.
+ * `pnpm listen`: serves the listening page (docs/audio/listen.html), both sound packs and the
+ * character voice pack on localhost, for places that cannot read files next to a page opened from
+ * disk. It serves only docs/audio, assets/audio, assets/audio-studio, assets/audio-remaster and
+ * assets/voice, read-only,
+ * and supports byte ranges so the players can seek.
+ *
+ * It also serves the original 2001 sounds at /assets/audio-original/ from where `pnpm
+ * listen:originals` extracted them on this machine (~/.cache/fq-audio-original, or
+ * FQ_AUDIO_ORIGINAL_DIR): outside the repository, for the owner's comparison only, never
+ * committed or distributed. Only on 127.0.0.1.
  */
 import { createReadStream, statSync } from "node:fs";
 import { createServer } from "node:http";
+import { homedir } from "node:os";
 import { dirname, extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const port = Number(process.env.FQ_LISTEN_PORT ?? 4780);
-const ALLOWED = ["docs/audio/", "assets/audio/", "assets/audio-studio/"];
+const ALLOWED = [
+  "docs/audio/",
+  "assets/audio/",
+  "assets/audio-studio/",
+  "assets/audio-remaster/",
+  "assets/voice/",
+];
+const ORIGINALS = "assets/audio-original/";
+const originalsDir =
+  process.env.FQ_AUDIO_ORIGINAL_DIR ?? join(homedir(), ".cache", "fq-audio-original");
 const TYPES = {
   ".html": "text/html; charset=utf-8",
   ".ogg": "audio/ogg",
   ".m4a": "audio/mp4",
+  ".mp3": "audio/mpeg",
   ".json": "application/json",
   ".md": "text/plain; charset=utf-8",
 };
@@ -31,12 +49,13 @@ const server = createServer((req, res) => {
     .replace(/^[/\\]+/, "")
     .split(sep)
     .join("/");
-  if (path.includes("..") || !ALLOWED.some((dir) => path.startsWith(dir))) {
+  const original = path.startsWith(ORIGINALS);
+  if (path.includes("..") || !(original || ALLOWED.some((dir) => path.startsWith(dir)))) {
     res.writeHead(404);
     res.end("Not found");
     return;
   }
-  const file = join(repo, path);
+  const file = original ? join(originalsDir, path.slice(ORIGINALS.length)) : join(repo, path);
   let size;
   try {
     const stat = statSync(file);

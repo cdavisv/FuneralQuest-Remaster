@@ -23,8 +23,10 @@ Things that are waiting on the owner, or on something outside the repository. De
 
 | Item | Waiting on |
 |---|---|
-| Publish the solo-only web build on GitHub Pages (the workflow exists and is started by hand) | The name confirmation above |
-| Build and run the Docker image | The docker group change above |
-| Run the Android app on a device; build iOS, Windows and macOS | Hardware, Xcode, and CI runs with signing set up |
+| **Publish the solo-only web build on GitHub Pages.** The workflow `.github/workflows/pages.yml` exists, is started by hand only, and has not been run. The owner's steps: (1) once the name is confirmed in writing, enable Pages in the repository's settings (Settings, Pages, Source: GitHub Actions); (2) run the workflow (Actions, "Pages (solo-only web build)", Run workflow). Details in [release/checklist-web-pwa.md](release/checklist-web-pwa.md) | The name confirmation above |
+| Build and run the Docker image (still unbuilt: this account cannot reach the Docker daemon) | The docker group change above |
+| Run the solo-only Android app on a device (the debug APK is built and its contents checked, nothing more); build iOS, Windows and macOS | Hardware, Xcode, and CI runs with signing set up |
 | Expanded balance: two play styles still win more than twice their share, three less than a third | Playtesting, and a decision on the proposals in `docs/balance/expanded-baseline.md` that change how the game feels |
 | Replace the nine new portraits | An illustrator |
+| Online play on mobile (the first release is solo-only, decision 11): restore `INTERNET` and the `funeralquest://` link in the Android manifest, build with `FQ_SOLO_ONLY=0`, and do everything the store checklists mark "applies again when online play is added" | The owner's decision to add it, a moderator and a contact address |
+| Remove the stale `NOT_IN_PORT` entry for `funeral.cpp:191` in `tools/oracle/src/textAudit.ts` (the museum banner is now the original's) | Whoever next works in `tools/oracle` |

@@ -1,9 +1,10 @@
 import { useArt } from "../art/ArtContext.js";
+import { SoundToggle } from "../audio/SoundToggle.js";
 import { useT } from "../i18n/I18nContext.js";
 import { GearIcon } from "./Icons.js";
 import { MailIndicator } from "./NoticeLayer.js";
 
-/** Title, settings and the round copper Exit button. `compact` is for full-frame scenes. */
+/** Title, settings, the mute control and the round copper Exit button. `compact` is for full-frame scenes. */
 export function Chrome({
   compact,
   mail = 0,
@@ -30,6 +31,7 @@ export function Chrome({
       >
         <GearIcon />
       </button>
+      <SoundToggle iconOnly className="fq-gear fq-mute" />
       {onExit && (
         <button
           type="button"

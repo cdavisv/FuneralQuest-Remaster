@@ -13,6 +13,10 @@
     "analyse": "tsx scripts/analyse.ts",
     "studio": "tsx scripts/studio.ts",
     "listen-page": "tsx scripts/listen.ts",
+    "remaster-brief": "tsx scripts/remasterBrief.ts",
+    "voice-inventory": "tsx scripts/voiceInventory.ts",
+    "voice": "tsx scripts/voiceBuild.ts",
+    "originals": "tsx scripts/originals.ts && tsx scripts/listen.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

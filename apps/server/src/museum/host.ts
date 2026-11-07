@@ -79,7 +79,10 @@ export function createMuseumHost(deps: MuseumHostDeps): MuseumHost {
     });
   };
 
+  // The banner on the original client's log-on screen shows the server's uptime (funeral.cpp:191).
+  const bootedAt = deps.clock.now();
   const host: LegacyHost = {
+    bootTime: () => bootedAt,
     context() {
       const town = deps.town();
       watch(town);

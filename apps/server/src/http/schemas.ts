@@ -24,6 +24,9 @@ export const SignUpBody = z.strictObject({
   password: z.string().min(8).max(128),
 });
 
+/** A guest making their account a full one: the same fields as a sign-up. */
+export const UpgradeBody = SignUpBody;
+
 export const LogInBody = z.strictObject({
   login: z.string().min(1).max(64),
   password: z.string().min(1).max(128),

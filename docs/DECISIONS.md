@@ -30,6 +30,7 @@ Original 2001 content is kept exactly as it was: dialog, game content and behavi
 | 15 | Ship a beta with the nine new portraits that need an illustrator? | Yes for beta | 2026-11-06 | They stay in the Remastered pack for now; replace before 1.0. |
 | 15a | Make the Studio sound pack the default? | To be decided after listening | 2026-11-06 | The owner is comparing the packs on the listening page (`pnpm listen`). See TODO. |
 | 15b | Add spoken character voices using ElevenLabs? | Yes | 2026-11-06 | Being added as a voice pack for the town's characters. |
+| 15c | Also make ElevenLabs remakes of the original 2001 sounds, as a third pack beside Synth and Studio? | Yes | 2026-11-06 | A pack called "Original, remastered": new audio made to resemble each original sound, with its own column on the listening page. It replaces neither Synth nor Studio. The original recordings are not uploaded or used as input. |
 | 16 | Turn sound on by default? | Yes | 2026-11-06 | Sound defaults to on. Browsers still wait for the first click before playing anything. |
 | 17 | New code under the Proton SDK licence, new art and audio under CC BY 4.0? | Yes | 2026-11-06 | As the plan specified. The ElevenLabs-generated audio is the exception: its terms are those of the owner's plan (see TODO). |
 | 18 | Add the owner's user to the `docker` group? | Yes | 2026-11-06 | Owner's step. Docker was still not reachable from this session when last checked. See TODO. |

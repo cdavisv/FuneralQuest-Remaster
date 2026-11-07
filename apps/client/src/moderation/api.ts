@@ -6,6 +6,7 @@ import type {
   ReportRequest,
   ReportResponse,
   SafetyTarget,
+  UpgradeResponse,
 } from "@fq/server/client";
 
 /**
@@ -23,6 +24,8 @@ export interface ModerationApi {
   deleteAccount(password?: string): Promise<void>;
   /** Who this is (guest or not, which parlor in which town) and any mutes in force. */
   me(): Promise<MeResponse>;
+  /** Makes a guest a full account: the parlor and the session carry on. */
+  upgrade(login: string, password: string): Promise<UpgradeResponse>;
 }
 
 export function createModerationApi(api: ApiClient): ModerationApi {
@@ -34,5 +37,6 @@ export function createModerationApi(api: ApiClient): ModerationApi {
     exportData: () => api.exportData(),
     deleteAccount: (password) => api.deleteAccount(password),
     me: () => api.me(),
+    upgrade: (login, password) => api.upgrade(login, password),
   };
 }

@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { acceptConduct, GATE_POINTS } from "./conduct.js";
 import { say } from "./text.js";
 
 /**
- * The notice every player agrees to once before online play (not before Solo). Shown in place of
- * the log-on plaque until accepted. DRAFT wording: see `conduct.ts`.
+ * The notice every player agrees to once before online play (not before Solo): the rating, the
+ * short rules and one tick box. Shown in place of the log-on plaque until accepted. A rating and a
+ * self-declaration, not age verification: see `conduct.ts`.
  */
 export function ConductGate({
   onAccept,
@@ -17,6 +18,8 @@ export function ConductGate({
   onDecline?: (() => void) | undefined;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
+  const [ticked, setTicked] = useState(false);
+  const box = useId();
   useEffect(() => {
     heading.current?.focus();
   }, []);
@@ -36,12 +39,23 @@ export function ConductGate({
           </li>
         ))}
       </ul>
+      <p className="fq-gate-tick">
+        <input
+          id={box}
+          type="checkbox"
+          checked={ticked}
+          required
+          onChange={(e) => setTicked(e.target.checked)}
+        />{" "}
+        <label htmlFor={box}>{say("gate.tick")}</label>
+      </p>
       <div className="fq-door-actions">
         <button
           type="button"
           className="fq-dbtn fq-door-btn"
-          data-autofocus
+          aria-disabled={!ticked || undefined}
           onClick={() => {
+            if (!ticked) return;
             acceptConduct();
             onAccept();
           }}

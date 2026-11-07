@@ -6,7 +6,7 @@ Basis: reading `apps/server/src` (schema in `db/database.ts`, accounts in `auth/
 
 | Data | Where | Notes |
 | --- | --- | --- |
-| Login name | `accounts.login` | Chosen by the player, 3 to 20 chars. Guests get `guest-<8 hex>`. |
+| Login name | `accounts.login` | Chosen by the player, 3 to 20 chars. Guests get `guest-<8 hex>`; a guest who makes a full account (Settings) replaces it with a chosen name on the same account (`POST /api/auth/upgrade`), and nothing new is collected. |
 | Password | `accounts.password_hash` | Argon2id hash only. Guests have none. Passwords are not logged (pino redaction, bodies never logged). |
 | Account created / last login times, banned flag, ban reason | `accounts` | |
 | Session token | `sessions.token_hash` | SHA-256 digest only; token itself is held by the client in `localStorage` (`fq.token.v1`). 30-day sliding expiry (`FQ_SESSION_TTL_DAYS`), expired rows purged hourly, deleted on log-out. |
@@ -28,7 +28,7 @@ Basis: reading `apps/server/src` (schema in `db/database.ts`, accounts in `auth/
 
 Not stored/not present (verified by absence): email address collection, phone, real name, date of birth, precise or coarse location, device identifiers, advertising IDs, contacts, photos, payment data, analytics SDKs, third-party scripts (client README: no third-party scripts; no ads or purchases found in the repo). Cafe chat has no history table and is not in the audit log; only the short in-memory window above holds it, and a report copies from that.
 
-The age and conduct notice's acceptance is stored in the browser or app (`localStorage`, key `fq.conduct`), not on the server.
+The first-run notice for online play (the game's 18+ rating, the short conduct rules and one required tick box, "I am 18 or older and accept these rules") is an age rating and a self-declaration, **not age verification**. **No age data is collected**: no birth date, no age, no identity check, nothing sent to or stored on the server. That the box was ticked is remembered only on the device (`localStorage`, key `fq.conduct`, a version number). For the store forms: answer "no" to collecting date of birth or age, and "no" to age verification. Solo play has no notice.
 
 Data export: `GET /api/me/export` (Settings, Download my data) returns the account, sessions, parlors, blocks (names), reports filed, the count of reports about the account, mutes, Daily Challenge runs, hall-of-fame names and the account's activity. Account deletion: `POST /api/me/delete` (Settings, Delete my account), and the public page `GET /account/delete`.
 

@@ -44,4 +44,10 @@ export interface AudioManifest {
   /** Ids synthesised in the browser (no file). */
   live: string[];
   tracks: Record<string, ManifestTrack>;
+  /**
+   * The "Original, remastered" pack only: the same deliveries keyed by the original 2001 sound
+   * they remake (its path in the local extraction, e.g. `places/fire/5.mp3`), for the listening
+   * page. `tracks` holds those that stand in for a game track, under the game's id.
+   */
+  originals?: Record<string, ManifestTrack>;
 }

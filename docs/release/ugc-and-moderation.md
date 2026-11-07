@@ -43,8 +43,8 @@ Free-text limit is 2000 characters per submission (`submitText`), 500 per chat l
 | Self-service account deletion | Yes | Settings, Delete my account (`POST /api/me/delete`); password re-entry for registered accounts; guests confirm | Rollback snapshots are cleaned; off-server backups and other players' memories are not |
 | Data export | Yes | Settings, Download my data (`GET /api/me/export`) | Other players' text and moderators' notes are left out |
 | Public deletion page | Yes | `GET /account/delete` | Shows a marked blank until `FQ_CONTACT_EMAIL` is set |
-| Age and conduct notice | Yes | Client, before online play (not Solo); also under Rules and Settings | Acceptance is stored in the browser or app only, not on the account; the minimum age is a marked blank |
-| Sign-up and guest toggles | Yes | `FQ_SIGNUP_ENABLED`, `FQ_GUEST_ENABLED` | **Guests can still chat, write letters and report.** Consider turning guests off, or restricting them, for the online store build |
+| Rating and conduct notice | Yes | Client, before online play (not Solo); also under Rules | The game's 18+ rating, the short rules and a required tick box "I am 18 or older and accept these rules". A self-declaration, not age verification: no birth date, nothing about age on the server; the tick is stored in the browser or app only (decision 8) |
+| Sign-up and guest toggles | Yes | `FQ_SIGNUP_ENABLED`, `FQ_GUEST_ENABLED` | **Guests can play and read but cannot type for others** (decision 7): no cafe chat, letters, announcements, fortunes, battle quotes or chain names. The server refuses them (`403 guest_text`) at the same place it enforces mutes, the client shows those inputs as unavailable with a link to make a free account, and a guest can become a full account and keep the parlor (`POST /api/auth/upgrade`). Guests can still report and block |
 | IP and range bans, kick, ban | Yes | Admin API and page | Behind a proxy set `FQ_TRUST_PROXY` |
 
 ## The flows
@@ -65,11 +65,11 @@ The original 2001 Flash client cannot show a report or block button or a form, s
 
 - [ ] **Contact and abuse address** `[ABUSE REPORT ADDRESS OR FORM - OWNER TO FILL IN]`: set `FQ_CONTACT_EMAIL`; it is shown on `/account/delete` and in the in-game rules.
 - [ ] **Response target** `[RESPONSE TIME FOR REPORTS - OWNER TO FILL IN]`: Apple reviewers expect timely action on objectionable content (about 24 hours is the usual expectation). Someone must watch the queue.
-- [ ] **Minimum age** `[MINIMUM AGE - OWNER TO FILL IN]` and the gate and rules wording (`apps/client/src/moderation/conduct.ts`, marked draft). Bump `CONDUCT_VERSION` when the text is final so everyone agrees again. Decide whether acceptance should also be stored on the account (today it is local to the device).
+- [x] **Minimum age: 18**, as a rating and a tick box, with no age verification (decision 8, 2026-11-06). The wording is in `apps/client/src/moderation/conduct.ts` (`CONDUCT_VERSION` 2); bump the version if it changes so everyone agrees again. Acceptance stays local to the device; nothing about age is stored on the server.
 - [ ] **Thresholds:** reports per hour and day (10, 30), the automatic mute (3 reporters, 60 minutes, 24 hours), the cafe window (100 lines, 30 minutes).
 - [ ] **Retention:** audit log (90 days), closed reports (180 days after closing), snapshots (48), backups, server logs. These must match the privacy policy.
 - [ ] **The strict word list:** who writes it, where it is kept (not in the repository), who updates it.
-- [ ] **Guests:** whether they may chat, write letters and report. Turning guests off removes the cheapest way to make throwaway abuse accounts.
+- [x] **Guests:** may not use free text (decision 7). Guests can still be turned off entirely (`FQ_GUEST_ENABLED=false`), but they are no longer a way to make throwaway abuse accounts that can type to others.
 - [ ] **Who moderates** and the runbook below; whether more than one person shares the admin token (they should not share a login name in the audit log).
 - [ ] **Ship online in the store builds at all, or Solo-only first** (below).
 
@@ -89,12 +89,12 @@ The original 2001 Flash client cannot show a report or block button or a form, s
 - [x] Block honoured by chat, `/yell`, mail, gifts and battle quotes, and persisted per account (built, tested)
 - [x] A moderator way to see reports and act (the `/admin/` page and API)
 - [x] Filter list: the strict word list mechanism exists; **the list itself is the sysop's to supply** (check `FQ_BLOCKLIST_FILE` is set on the deployed server). The filter applies only to text players write; the game's own original text is never filtered or altered (the original's `swear_words.yaml` is kept as data)
-- [x] Terms and age statement before online play (draft notice; owner to finalise)
+- [x] Rating, rules and an "I am 18 or older" tick box before online play (decision 8; owner to confirm the wording)
 - [x] In-app "delete my account" plus a web page at `https://<host>/account/delete` (built; **`[ACCOUNT DELETION URL - OWNER TO FILL IN]` is that address once the server is public**)
 - [ ] Published abuse contact `[ABUSE REPORT ADDRESS OR FORM - OWNER TO FILL IN]` and response target `[RESPONSE TIME FOR REPORTS - OWNER TO FILL IN]`
-- [ ] Decide whether guests may chat and send mail
+- [x] Guests may not chat or send mail (decision 7)
 - [ ] A moderator who actually watches the queue
 
 ## Mitigation if the mobile apps must ship before the owner's decisions
 
-Ship mobile as **Solo-only** (no accounts, no UGC, nothing transmitted). That sidesteps 1.2, the UGC policy and account deletion, and the privacy label becomes "Data Not Collected". The client already works offline in Solo. Store reviewers can see an online link inside the app, so hide the online option in that build rather than relying on the description (whether the mobile build can hide it is a question for `BUILDING.md`; **unverified**).
+**Decided (2026-11-06, decision 11): the first mobile release is Solo-only** (no accounts, no UGC, nothing transmitted). That sidesteps 1.2, the UGC policy and account deletion, and the privacy label becomes "Data Not Collected". The mobile wrapper is built with the flag `VITE_SOLO_ONLY=1`, so the online option is not hidden but absent: no server address entry, no log-on, no chat, no Daily Challenge board, and the Android app does not request `INTERNET` (see `BUILDING.md`). Everything above applies again when online play comes to mobile.

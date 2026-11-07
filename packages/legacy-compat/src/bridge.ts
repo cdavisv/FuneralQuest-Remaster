@@ -13,6 +13,7 @@ import {
 } from "@fq/core";
 import type { Action, RichText, View } from "@fq/protocol";
 import type { LegacyAssets } from "./assets.js";
+import { originalBanner, REMASTER_BANNER_LINE } from "./banner.js";
 import { ABORT_TEXT, Logon, PLACE_COMMANDS, RETURN_COMMAND, Request, Sent } from "./commands.js";
 import { encodeBody, type LegacyVars, parseRequestQuery } from "./escape.js";
 import type { LegacyHost } from "./host.js";
@@ -111,11 +112,14 @@ export class LegacyBridge {
   /** Cafe lines waiting for a player's next chat poll. */
   private readonly chatInbox = new Map<number, RichText[]>();
   private tail: Promise<unknown> = Promise.resolve();
+  /** When this bridge was built: the boot time when the host does not say. */
+  private readonly bootedAt: number;
 
   constructor(options: BridgeOptions) {
     this.host = options.host;
     this.assets = options.assets;
     this.clock = options.now ?? Date.now;
+    this.bootedAt = this.clock();
     this.idleMs = options.idleMs ?? DEFAULT_IDLE_MS;
     this.log = options.log ?? (() => undefined);
   }
@@ -296,10 +300,12 @@ export class LegacyBridge {
     const ctx = this.host.context();
     const lobby = lobbyStatus(town, ctx);
     const rich = (markup: string) => richTextToLegacyHtml(parseLegacyText(markup));
-    const intro =
-      "`7Funeral Quest Remastered `8(museum mode): the original 2001 client, playing the new rules engine.";
+    // The original banner exactly as funeral.cpp:191-193 built it (raw HTML), then the line that
+    // names the remaster engine (decision 3b).
+    const uptime = (this.clock() - (this.host.bootTime?.() ?? this.bootedAt)) / 1000;
+    const intro = `${originalBanner(uptime)}<br>${rich(REMASTER_BANNER_LINE)}`;
     return [
-      ["st_intro_news", rich(intro)],
+      ["st_intro_news", intro],
       ["st_no_more", lobby.closed ? rich(lobby.closed) : ""],
       ["st_game_stats", rich(centered(lobby.gameInfo, 120))],
       ["st_server_news", rich(town.serverNews)],

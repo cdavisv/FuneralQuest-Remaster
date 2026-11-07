@@ -36,11 +36,37 @@ import { isChooserScreen, isOfficeHome, isUpgradeScreen } from "../expanded/offi
 import { isPrepChoice, prepOptions } from "../expanded/prep.js";
 import { useT } from "../i18n/I18nContext.js";
 import { ChatLineActions } from "../moderation/ActionMenu.js"; // moderation hook
+import { useModeration } from "../moderation/context.js";
+import { useIsGuest } from "../moderation/guest.js";
+import { say } from "../moderation/text.js";
 import type { SceneProps } from "./types.js";
 
 function ChatForm({ onSend }: { onSend: (text: string) => void }) {
   const t = useT();
+  const guest = useIsGuest();
+  const mod = useModeration();
   const [text, setText] = useState("");
+  if (guest) {
+    // Guests read the cafe but do not talk in it (decision 7): the input is shown, unavailable.
+    return (
+      <form className="fq-chatform" onSubmit={(e) => e.preventDefault()} data-guest="true">
+        <input
+          type="text"
+          disabled
+          aria-label={t("cafe.input")}
+          aria-describedby="fq-chat-guest"
+          title={`${say("guest.chat")} ${say("guest.how")}`}
+          placeholder={say("guest.chatPlaceholder")}
+        />
+        <span id="fq-chat-guest" className="fq-sr">
+          {say("guest.chat")} {say("guest.how")}
+        </span>
+        <button type="button" className="fq-chatsend" onClick={() => mod?.openUpgrade()}>
+          {say("guest.chatSignUp")}
+        </button>
+      </form>
+    );
+  }
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const trimmed = text.trim();

@@ -22,6 +22,7 @@ import type {
   LeaderboardResponse,
   MeResponse,
   TownInfo,
+  UpgradeResponse,
 } from "../wire.js";
 import type { AppContext } from "./context.js";
 import { HttpError } from "./errors.js";
@@ -36,6 +37,7 @@ import {
   LogInBody,
   SignUpBody,
   TownParams,
+  UpgradeBody,
 } from "./schemas.js";
 
 function bearer(request: FastifyRequest): string | undefined {
@@ -52,6 +54,7 @@ const AUTH_MESSAGES: Record<string, [number, string]> = {
   ip_banned: [403, "Your address is banned."],
   signup_disabled: [403, "Sign-up is closed on this server."],
   guest_disabled: [403, "Guest accounts are not allowed on this server."],
+  not_guest: [409, "This account is already a full account."],
 };
 
 function asHttpError(error: unknown): unknown {
@@ -257,6 +260,35 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
       throw asHttpError(error);
     }
   });
+
+  // A guest becomes a full account and keeps the parlor (decision 7: free text needs one).
+  app.post(
+    "/api/auth/upgrade",
+    { onRequest: [authenticate], config: { rateLimit: authLimit } },
+    async (request): Promise<UpgradeResponse> => {
+      const auth = requireAuth(request);
+      if (!auth.account.guest) throw asHttpError(new AuthError("not_guest"));
+      if (!config.signupEnabled) throw asHttpError(new AuthError("signup_disabled"));
+      const body = UpgradeBody.parse(request.body);
+      try {
+        host.moderation.assertTextAllowed(null, body.login, "name", null);
+      } catch (error) {
+        throw asHttp(error);
+      }
+      try {
+        const upgraded = await host.upgradeGuest(auth.account, body.login, body.password);
+        ctx.host.audit.append({
+          at: ctx.clock.now(),
+          accountId: upgraded.id,
+          kind: "account:upgrade",
+          data: { from: auth.account.login, to: upgraded.login },
+        });
+        return { account: { id: upgraded.id, login: upgraded.login, guest: false } };
+      } catch (error) {
+        throw asHttpError(error);
+      }
+    },
+  );
 
   app.post("/api/auth/logout", { onRequest: [authenticate] }, async (request, reply) => {
     const auth = requireAuth(request);

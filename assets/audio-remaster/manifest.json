@@ -1,0 +1,19 @@
+{
+  "generator": "ElevenLabs generations post-processed by packages/audio (not generated yet)",
+  "license": "Generated with ElevenLabs under the owner's account from text prompts; redistribution terms are ElevenLabs' terms for that plan, unconfirmed (see LICENSES.md).",
+  "sampleRate": 48000,
+  "totalBytes": 0,
+  "live": [
+    "ui-click",
+    "ui-hover",
+    "ui-page",
+    "ui-notepad",
+    "ui-chat",
+    "ui-coin",
+    "ui-tag",
+    "ui-stamp",
+    "ui-mail"
+  ],
+  "tracks": {},
+  "originals": {}
+}

@@ -48,6 +48,12 @@ export interface LegacyHost {
   persist(town: TownState, effects: readonly Effect[]): void | Promise<void>;
   accounts: LegacyAccounts;
   /**
+   * Optional: when the server booted, in milliseconds since the epoch. The log-on banner shows
+   * the uptime (`get_uptime`, maint.cpp:336). Without it the uptime counts from when the bridge
+   * was built.
+   */
+  bootTime?(): number;
+  /**
    * Optional: runs `work` with exclusive access to the town. A host that
    * also serves other clients should supply this; without it the bridge only
    * orders its own requests.

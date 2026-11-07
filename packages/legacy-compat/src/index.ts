@@ -1,4 +1,10 @@
 export { LegacyAssets, loadAssets } from "./assets.js";
+export {
+  legacyUptime,
+  ORIGINAL_SERVER_VERSION,
+  originalBanner,
+  REMASTER_BANNER_LINE,
+} from "./banner.js";
 export { type BridgeOptions, type BridgeReply, LegacyBridge } from "./bridge.js";
 export {
   centerLabel,

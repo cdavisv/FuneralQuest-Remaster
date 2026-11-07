@@ -313,19 +313,40 @@ describe("sound settings", () => {
     expect(note).not.toHaveTextContent("synthesised from the game's own source code");
   });
 
-  it("the sound button unlocks first, then mutes and unmutes", () => {
+  it("sound is on by default, and says plainly that neither pack is the original audio", () => {
+    setup();
+    expect(loadSettings(undefined).muted).toBe(false);
+    expect(screen.getByRole("button", { name: "Mute sound" })).toBeVisible();
+    expect(screen.getByLabelText("Mute all sound")).not.toBeChecked();
+    expect(screen.getByText(/Neither pack is the original game's audio/)).toBeVisible();
+    expect(screen.getByText(/play only in museum mode, inside the original client/)).toBeVisible();
+    expect(screen.getByTestId("sound-pack-note")).toHaveTextContent(
+      "These are not the original game's sounds",
+    );
+  });
+
+  it("the mute button mutes and unmutes, and a saved mute is kept", () => {
     const { audio } = setup();
-    const button = screen.getByRole("button", { name: /Sound on/ });
-    // a first gesture elsewhere would unlock; on this button it must not mute instead
-    fireEvent.pointerDown(button);
-    expect(audio.state.unlocked).toBe(false);
-    act(() => button.click());
-    expect(audio.state.unlocked).toBe(true);
-    expect(audio.state.muted).toBe(false);
-    act(() => screen.getByRole("button", { name: /Sound off/ }).click());
+    act(() => screen.getByRole("button", { name: "Mute sound" }).click());
     expect(audio.state.muted).toBe(true);
     expect(loadSettings(window.localStorage).muted).toBe(true);
     expect(screen.getByLabelText("Mute all sound")).toBeChecked();
+    // Pressing mute did not start the audio: nothing was ever going to be heard.
+    expect(audio.state.unlocked).toBe(false);
+    act(() => screen.getByRole("button", { name: "Unmute sound" }).click());
+    expect(audio.state.muted).toBe(false);
+    expect(audio.state.unlocked).toBe(true);
+  });
+
+  it("a player who turned sound off stays muted on the next visit", () => {
+    window.localStorage.setItem("fq.settings.v1", JSON.stringify({ muted: true }));
+    const { audio } = setup();
+    expect(audio.state.muted).toBe(true);
+    expect(screen.getByRole("button", { name: "Unmute sound" })).toBeVisible();
+    // The first interaction anywhere unlocks the audio but does not undo the mute.
+    fireEvent.pointerDown(document.body);
+    expect(audio.state.unlocked).toBe(true);
+    expect(audio.state.muted).toBe(true);
   });
 
   it("unlocks on the first interaction anywhere", () => {

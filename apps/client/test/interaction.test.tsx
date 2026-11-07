@@ -386,7 +386,7 @@ describe("exit and settings", () => {
     expect(screen.getByRole("dialog", { name: "Settings" })).toBeInTheDocument();
     await user.click(screen.getByRole("radio", { name: "Extra large" }));
     expect(document.querySelector(".fq-app")).toHaveStyle("--fq-font-scale: 1.5");
-    expect(screen.getAllByRole("slider")).toHaveLength(4); // master, music, ambience, effects
+    expect(screen.getAllByRole("slider")).toHaveLength(5); // master, music, ambience, effects, voices
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).toBeNull();
   });

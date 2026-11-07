@@ -15,6 +15,18 @@ interface Debug {
   missing: string[];
 }
 
+// Every other spec starts muted so a test run is silent (playwright.config.ts); these are the
+// ones that listen, so they start as a new player does: sound on, saved choice none.
+test.use({
+  storageState: {
+    cookies: [],
+    origins: ["FQ_E2E_PORT", "FQ_E2E_MUSEUM_PORT", "FQ_E2E_EXPANDED_PORT"].map((name) => ({
+      origin: `http://127.0.0.1:${process.env[name]}`,
+      localStorage: [{ name: "fq.conduct", value: "2" }],
+    })),
+  },
+});
+
 const probe = (page: Page) =>
   page.evaluate(
     () => (window as unknown as { __fqAudio?: { debug(): Debug } }).__fqAudio?.debug() ?? null,
@@ -45,7 +57,7 @@ function skipWithoutAudio(browserName: string): void {
 
 // Chromium is started with the autoplay policy of a real browser (sound only after a gesture) by
 // playwright.config.ts; Firefox and WebKit enforce theirs by default.
-test("music starts after the first click on the front door and changes on the map", async ({
+test("music starts after the first click anywhere on the front door and changes on the map", async ({
   page,
   browserName,
 }) => {
@@ -54,14 +66,17 @@ test("music starts after the first click on the front door and changes on the ma
   // Nothing before an interaction: no AudioContext has been made.
   expect(await probe(page)).toBeNull();
 
-  await page.getByRole("button", { name: "Sound on" }).click();
+  // Sound is on by default: the mute control says so before anything has been heard.
+  await expect(page.getByRole("button", { name: "Mute sound" })).toBeVisible();
+  // The first click anywhere starts the audio, not only a button made for it.
+  await page.mouse.click(8, 8);
   await expect.poll(async () => (await probe(page))?.context).toBe("running");
   await expect.poll(async () => (await probe(page))?.music, { timeout: 15_000 }).toBe("main");
   // The analyser hears it: well above the silence floor.
   await expect
     .poll(async () => (await probe(page))?.level ?? -120, { timeout: 10_000 })
     .toBeGreaterThan(-50);
-  await expect(page.getByRole("button", { name: "Sound off" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Mute sound" })).toBeVisible();
 
   // Into the game, to the desk, then the map.
   await page.getByRole("button", { name: /^Play online/ }).click();
@@ -78,18 +93,42 @@ test("music starts after the first click on the front door and changes on the ma
   expect((await probe(page))?.missing).toEqual([]);
 });
 
-test("the front door's sound button mutes, and the mute suspends the audio", async ({
+test("the mute button mutes, suspends the audio, and the choice is kept", async ({
   page,
   browserName,
 }) => {
   await page.goto("/");
   skipWithoutAudio(browserName);
   await expect(page.getByText(/Connected to /)).toBeVisible();
-  await page.getByRole("button", { name: "Sound on" }).click();
+  await page.mouse.click(8, 8);
   await expect.poll(async () => (await probe(page))?.context).toBe("running");
-  await page.getByRole("button", { name: "Sound off" }).click();
+  await page.getByRole("button", { name: "Mute sound" }).click();
   await expect.poll(async () => (await probe(page))?.context).toBe("suspended");
-  // the choice persists
+  // the choice persists: after a reload it is still muted, and the first click does not undo it
   await page.reload();
-  await expect(page.getByRole("button", { name: "Sound on" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Unmute sound" })).toBeVisible();
+  await page.mouse.click(8, 8);
+  await expect.poll(async () => (await probe(page))?.context).toBe("suspended");
+  await expect(page.getByRole("button", { name: "Unmute sound" })).toBeVisible();
+  // and unmuting brings it back
+  await page.getByRole("button", { name: "Unmute sound" }).click();
+  await expect.poll(async () => (await probe(page))?.context).toBe("running");
+});
+
+test("the mute control is on the game's own screens too, not only the front door", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.getByText(/Connected to /)).toBeVisible();
+  await page.getByRole("button", { name: /^Play online/ }).click();
+  const me = newPlayer("mut");
+  await signUp(page, me);
+  await createParlor(page, me);
+  await reachDesk(page);
+  const mute = page.getByRole("button", { name: "Mute sound" });
+  await expect(mute).toBeVisible();
+  await mute.click();
+  await expect(page.getByRole("button", { name: "Unmute sound" })).toBeVisible();
+  await page.getByRole("button", { name: "Settings" }).click();
+  await expect(page.getByLabel("Mute all sound")).toBeChecked();
 });

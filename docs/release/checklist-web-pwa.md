@@ -1,5 +1,20 @@
 # Checklist: web and PWA (the official server)
 
+## Free solo-only web build on GitHub Pages (owner's decision 14, 2026-11-06)
+
+Prepared, **not published**. `.github/workflows/pages.yml` builds the solo-only game (`VITE_SOLO_ONLY=1`: no server address, log-on, chat or Daily Challenge board, no network request of its own; the Classic art; the default Synth sound pack, never Studio) and deploys it to GitHub Pages. It runs **only when started by hand** (`workflow_dispatch`): no push, pull-request or schedule trigger. Nothing has been triggered and no repository setting has been changed.
+
+**What the owner does, once the name "Funeral Quest" is confirmed in writing (decision 13/14):**
+
+1. In the repository on GitHub: Settings, Pages, Build and deployment, Source: **GitHub Actions**. (The workflow never changes a setting; with Pages off its `configure-pages` step fails and nothing is published.)
+2. Actions, **Pages (solo-only web build)**, Run workflow, on the branch to publish (normally `master`; Pages deployments from other branches are limited by the `github-pages` environment's branch rules).
+3. When it is green, the site is at `https://<user>.github.io/<repo>/` (the run's summary shows the exact address). Open it, start a solo career, play a day, reload, and (in Chrome) check the install prompt.
+4. To update the site, run the workflow again. To take it down, Settings, Pages, unpublish.
+
+**How it is built from a sub-path:** the workflow passes `--base "/<repo>/"` to `apps/client/tools/build-pages.mjs`, which sets `FQ_BASE` for Vite. The page's assets, the Solo worker, the art (`classic/`), the sound (`audio/`), the manifest and icons are all under that base; the service worker takes its scope from where it is registered and keeps every path relative to it; the offline page links to `./?solo`. The same client served at a site root (the game server, the desktop and mobile apps) is unchanged (`FQ_BASE` unset means `/`). **Proved** by `e2e/pages.spec.ts` (the `pages-*` projects), which builds the site with `--base /fq-pages/`, serves it from that sub-path on a file host that answers 404 at the root and for `/api`, and plays a solo day in Chromium and Firefox, checking that no request leaves the sub-path, none fails, the worker and service worker are under it, and sound loads from it. The one request it lets fail is `voice/manifest.json`: the optional character-voice pack is not bundled (its terms are unsettled; the build ships only the default Synth pack), so the client's best-effort fetch of it is a 404 and the game stays silent for it. **Not tried on github.io itself** (not published).
+
+**Before it is run, also check:** the contact and privacy text the solo build does not need (it collects nothing and the page makes no request but for its own files, which GitHub Pages serves, so GitHub sees visitors as for any Pages site; say so in the repository README or the listing if the owner wants it stated); that `assets/audio` is present in the checkout (it is committed); and that the licence statements in `CREDITS.md` are what the owner wants shown, because the build ships the credits page.
+
 Source: `apps/server/README.md`, `.env.example`, `apps/client/README.md`. The web version is the primary release; everything else is a wrapper around it.
 
 ## Hosting
@@ -7,12 +22,12 @@ Source: `apps/server/README.md`, `.env.example`, `apps/client/README.md`. The we
 - [ ] Choose host: `[SERVER HOST / HOSTING PROVIDER - OWNER TO FILL IN]`, region `[HOSTING COUNTRY/REGION - OWNER TO FILL IN]` (affects privacy policy and international transfer wording)
 - [ ] Domain and TLS certificate; reverse proxy (the plan suggests Caddy). The server speaks plain HTTP/WS only
 - [ ] Run via Docker (`docker compose up -d --build`) or `pnpm --filter @fq/server build` then `start`
-- [ ] `FQ_CLIENT_DIR` points at the built client so one origin serves site and API; the PWA must be served at the site root (sub-directory deployments unsupported)
+- [ ] `FQ_CLIENT_DIR` points at the built client so one origin serves site and API; the game server serves it at the site root. (A static, solo-only copy can be served from a sub-path: the section above.)
 - [ ] `FQ_TRUST_PROXY` set to the number of proxies in front. If wrong, rate limits and IP bans see the proxy's address (or can be spoofed)
 - [ ] `FQ_ADMIN_TOKEN` set (24+ chars, `openssl rand -hex 32`), stored in a secret manager; never in the repo. Admin API at `/admin` should also be firewalled or proxied behind an allow-list (recommended, not enforced by the app)
 - [ ] `FQ_LEGACY_CLIENT=false` (default) and Docker `FQ_INCLUDE_MUSEUM=0`: museum mode serves the original sounds, which are not licensed for the remaster
 - [ ] `FQ_ALLOWED_ORIGINS` lists any other origin that talks to the API: the Tauri and Capacitor app origins, and itch.io if the HTML5 build goes online (exact origins in `BUILDING.md`: **unverified here**)
-- [ ] `FQ_SIGNUP_ENABLED` / `FQ_GUEST_ENABLED` decisions (guests are throwaway accounts that can chat)
+- [ ] `FQ_SIGNUP_ENABLED` / `FQ_GUEST_ENABLED` decisions (guests are throwaway accounts that can play and read but cannot chat, write letters or post announcements; they can make a full account in place)
 - [ ] `FQ_LOG_LEVEL`, log retention set on the host; confirm whether request logs contain client addresses
 - [ ] `FQ_AUDIT_RETENTION_DAYS` decided (default 90; 0 = forever) and matches the privacy policy
 - [ ] Backups of `FQ_DB_PATH` (SQLite WAL; use Litestream or a stop-the-world copy), restore drill done, backup retention noted for the privacy policy
@@ -25,10 +40,10 @@ Source: `apps/server/README.md`, `.env.example`, `apps/client/README.md`. The we
 
 - [ ] HTTPS (required for installing)
 - [ ] `pwa/manifest.webmanifest`: name, short name, icons 192/512 plus maskable, standalone, theme colour
-- [ ] Service worker keeps the app for offline Solo; never touches `/api`, `/admin`, `/health`, `/museum` (client README)
+- [ ] Service worker keeps the app for offline Solo; never touches `api/`, `admin/`, `health/`, `museum/` under its scope (client README)
 - [ ] Lighthouse PWA/installability pass; test install on Chrome (desktop and Android), Edge, Safari "Add to Home Screen"
 - [ ] Offline test: install, go offline, Solo career opens and saves
-- [ ] Offline page links to `/?solo`
+- [ ] Offline page links to `./?solo`
 - [ ] Update flow: a new service worker version reaches users (test a deploy)
 - [ ] Storage: Solo saves in IndexedDB can be cleared by the browser; the export-to-file feature is the backup, say so in help text
 

@@ -2,6 +2,24 @@
 
 Policies and sizes are from memory and change often. **Verify each item in Play Console and the current Developer Policy Center before submitting.** Build, signing and Capacitor details: `BUILDING.md`.
 
+## The first release is solo-only (owner's decision 11, 2026-11-06)
+
+The first mobile release ships with online play **switched off**: no server address, no log-on, no chat, no Daily Challenge board, no network request at all (`VITE_SOLO_ONLY=1`, built by `apps/mobile/scripts/prepare-web.mjs`; the Android manifest has no `INTERNET` permission, see `BUILDING.md`). That makes this checklist much shorter. **Not run on a device yet** (only the debug APK was built and its contents checked).
+
+**Still applies:**
+
+- Account, package name (the placeholder `org.funeralquest.remaster` must be replaced first; TODO), Play App Signing, target API level
+- Store listing (use the solo-only copy in `store-listing-draft.md`), the Proton acknowledgement, no misleading claims, the name rights (decision 13: no store submission before the name is confirmed in writing)
+- Privacy policy URL (required even when nothing is collected), contact email
+- Content rating (IARC): the same content profile as online, minus "users interact" and UGC. Answer for the original text as it is; target audience 18+
+- Data safety form: **no data collected, none shared** (the optional morning reminder is a notification the device makes for itself)
+- Permissions: only `POST_NOTIFICATIONS`, for that optional reminder (Android 13 and later asks at runtime). Declare nothing else
+- Gambling (simulated, in-game money only), IP and restricted-content items, minimum functionality (Solo is a full offline game with local saves: say so), ads (none), release tracks and the pre-launch report
+
+**Does not apply to this release:** the account-deletion declaration and web link, the User-generated content policy and everything under it (report, block, moderator queue, abuse contact and response time, the strict word list), the 18+ tick box (there is no online play to gate; Solo has none), the demo-account note for reviewers, `INTERNET` and `ACCESS_NETWORK_STATE`, the "someone must watch the queue" item, server hosting.
+
+**Applies again when online play is added to mobile:** every item under "User-generated content policy" and "Account deletion" below, the Data safety answers for an online build, the `INTERNET` permission (restore it in `AndroidManifest.xml`, build with `FQ_SOLO_ONLY=0`) and the `funeralquest://` link, a published contact and response time, a moderator, the 18+ tick box (it shows on the first online play), and a fresh content-rating questionnaire (users interact, UGC).
+
 ## Account
 
 - [ ] Developer account `[GOOGLE PLAY DEVELOPER ACCOUNT - OWNER TO FILL IN]` (one-time fee, about USD 25). Identity verification; a phone and a physical address are required. Organisation accounts need a D-U-N-S number; the address is shown publicly for paid-app/trader accounts under EU DSA (`[OPERATOR POSTAL ADDRESS - OWNER TO FILL IN]`)
@@ -39,11 +57,11 @@ Policies and sizes are from memory and change often. **Verify each item in Play 
 - [ ] **Ads**: declare "No ads"
 - [ ] **Financial features, health, government, news app**: not applicable
 - [ ] **Data deletion practices**: describe what remains after deletion (hall of fame, snapshots, audit rows, backups)
-- [ ] **Permissions**: Capacitor core needs `INTERNET` (and `ACCESS_NETWORK_STATE` for offline detection). Do not request others. Check the final manifest from `BUILDING.md`
+- [ ] **Permissions**: the solo-only release asks only for `POST_NOTIFICATIONS` (checked in the built debug APK with `aapt2 dump permissions`). An online build also needs `INTERNET`. Do not request others. Check the final manifest from `BUILDING.md`
 - [ ] **Advertising ID declaration**: the app does not use it; declare accordingly
 - [ ] **Photos/videos, SMS, location, background location**: not used
 
-## User-generated content policy (online builds)
+## User-generated content policy (online builds only; not in the solo-only first release)
 
 Play's UGC policy requires: terms prohibiting objectionable content, **in-app user reporting, a way to block users, content moderation/filtering and published contact information**. These now exist (see `ugc-and-moderation.md` for exactly what, and its limits):
 
@@ -52,8 +70,8 @@ Play's UGC policy requires: terms prohibiting objectionable content, **in-app us
 - [ ] Moderation: the `/admin/` page and API; **someone must watch the queue** `[RESPONSE TIME FOR REPORTS - OWNER TO FILL IN]`
 - [ ] Filtering: the engine's swear filter plus the strict word list; **set `FQ_BLOCKLIST_FILE` on the deployed server**
 - [ ] Published contact `[ABUSE REPORT ADDRESS OR FORM - OWNER TO FILL IN]` (`FQ_CONTACT_EMAIL`), and the terms (`terms-of-service-DRAFT.md`) finalised
-- [ ] The age and conduct notice's wording and minimum age `[MINIMUM AGE - OWNER TO FILL IN]` decided
-- [ ] Decide whether guests may chat (they can today). Fallback: a Solo-only first release (no accounts, no UGC)
+- [x] The rating and conduct notice with its "I am 18 or older and accept these rules" tick box (a rating and a self-declaration; no age is collected or checked)
+- [x] Guests may not chat, write letters or post announcements (decision 7). The first release is Solo-only anyway (above)
 
 ## Other policy items
 

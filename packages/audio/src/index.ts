@@ -55,3 +55,17 @@ export {
   UI_IDS,
   type UiId,
 } from "./tracks.js";
+export {
+  characterForTag,
+  lineCandidates,
+  normaliseLine,
+  type SpokenLine,
+  sentences,
+  spokenLines,
+  VOICE_CHARACTERS,
+  VOICE_DIR,
+  type VoiceCharacter,
+  type VoiceClip,
+  type VoiceManifest,
+  voiceKey,
+} from "./voice.js";

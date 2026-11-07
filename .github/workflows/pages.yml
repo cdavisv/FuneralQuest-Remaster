@@ -1,0 +1,54 @@
+name: Pages (solo-only web build)
+
+# Publishes the free, solo-only web build of Funeral Quest to GitHub Pages
+# (https://<user>.github.io/<repo>/), prepared by the owner's decision 14 (2026-11-06).
+#
+# THIS WORKFLOW RUNS ONLY WHEN SOMEONE STARTS IT BY HAND (Actions, "Pages (solo-only web build)",
+# Run workflow). It has no push, pull_request or schedule trigger, and it must not get one.
+#
+# Do not run it until the name "Funeral Quest" is confirmed in writing (docs/TODO.md), and not
+# before Pages is enabled: Settings > Pages > Build and deployment > Source: GitHub Actions. The
+# workflow never changes a repository setting; with Pages off, the configure step fails and
+# nothing is published.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a started one is allowed to finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build the solo-only site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      # Fails if Pages is not enabled for the repository (it does not enable it).
+      - uses: actions/configure-pages@v5
+      # VITE_SOLO_ONLY, the Classic art, the Synth sound pack and the repository's own sub-path,
+      # in apps/client/tools/build-pages.mjs (it also checks what it built).
+      - name: Build
+        run: node apps/client/tools/build-pages.mjs --base "/${{ github.event.repository.name }}/" --out "$RUNNER_TEMP/site"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -25,6 +25,7 @@ Build and launch side, written with the desktop and mobile apps: [BUILDING.md](B
 
 ## Blockers found while writing these (read first)
 
+0. **Decided 2026-11-06 (see [../DECISIONS.md](../DECISIONS.md)):** the first mobile release is **solo-only** (decision 11: no online play, no network permission; the store checklists are much shorter), the free web build goes on GitHub Pages when the name is confirmed (decision 14, [checklist-web-pwa.md](checklist-web-pwa.md)), online play is rated **18+ with a tick box and no age verification** (decision 8: no age data collected), and **guests cannot use free text** (decision 7).
 1. **Report, block, mute and the moderator tools now exist** (server, web client and the `/admin/` page) but are **built and tested, not yet run on a device or through store review**, and they need the owner: a contact address (`FQ_CONTACT_EMAIL`), someone watching the report queue, the strict word list file (`FQ_BLOCKLIST_FILE`) and the decisions listed in [ugc-and-moderation.md](ugc-and-moderation.md).
 2. **Self-service account deletion now exists** (Settings, Delete my account, and the public page `/account/delete`), with data export. The deployed URL, the contact address on it and the retention periods in the privacy policy are the owner's to fill in. See [ugc-and-moderation.md](ugc-and-moderation.md) and [privacy-labels.md](privacy-labels.md).
 3. **Player-typed text is kept in the audit log**, except cafe chat, which is no longer stored: mail bodies, announcements, battle quotes and fortunes are retained in `audit_log` (90 days by default; `0` keeps forever), and an account's deletion removes the rows that hold what it typed. The privacy policy draft says so; keep the periods in step.
@@ -50,7 +51,6 @@ Every blank used across these files. Search the folder for `OWNER TO FILL IN` to
 | `[SERVER HOST / HOSTING PROVIDER - OWNER TO FILL IN]` | privacy, web/PWA | Provider name, and `[HOSTING COUNTRY/REGION - OWNER TO FILL IN]` |
 | `[BACKUP PROVIDER AND RETENTION - OWNER TO FILL IN]` | privacy | The plan mentions Litestream backups; none are configured in the repo (unverified where) |
 | `[JURISDICTION / GOVERNING LAW - OWNER TO FILL IN]` | terms, privacy | Country/state for governing law and courts |
-| `[MINIMUM AGE - OWNER TO FILL IN (13 / 16 / 17+)]` | privacy, terms, age sheet | A decision, see the options in the privacy draft |
 | `[EFFECTIVE DATE - OWNER TO FILL IN]` | privacy, terms | |
 | `[DATA PROTECTION CONTACT / EU-UK REPRESENTATIVE IF REQUIRED - OWNER TO FILL IN]` | privacy | Only if the operator is outside the UK/EU and targets players there |
 | `[AUDIT LOG RETENTION DAYS - OWNER TO FILL IN]` | privacy | Server default is 90 (`FQ_AUDIT_RETENTION_DAYS`) |

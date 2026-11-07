@@ -291,7 +291,7 @@ export const NOT_IN_PORT: Readonly<Record<string, string>> = {
   "file_system.cpp:32": "system.dat default (the sysop's licence description)",
   "file_system.cpp:35": "system.dat default (the sysop's game name)",
   "funeral.cpp:191":
-    "the log-on screen's server banner (FQServer version, copyright, uptime); museum mode shows its own line instead (legacy-compat checkLogon): reported for the owner's decision",
+    "the log-on screen's server banner (FQServer version, copyright, uptime): built by legacy-compat (banner.ts) for museum mode exactly as funeral.cpp builds it, so it is not in the core text table",
   "funeral.cpp:258": "licence not initialised: the remaster has no licence server",
   "funeral.cpp:327": "licence not initialised: the remaster has no licence server",
   "funeral.cpp:337": "licence's players-online limit: the remaster has no licence server",
