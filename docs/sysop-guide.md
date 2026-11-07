@@ -17,7 +17,7 @@ docker compose up -d --build
 curl localhost:8080/health          # {"status":"ok","version":"0.1.0-alpha.1",...}
 ```
 
-Open `http://<your machine>:8080`. Everything the server keeps lives in the Docker volume `fq-data` (mounted at `/data` in the container). The project has not yet built and run the Docker image itself (see `docs/TODO.md`); if it misbehaves, the Node.js route below is the tested one.
+Open `http://<your machine>:8080`. Everything the server keeps lives in the Docker volume `fq-data` (mounted at `/data` in the container). The image has been built and started once by the project (its `/health` and client answered); no tournament has been played through it yet, so if it misbehaves, the Node.js route below is the better-tested one.
 
 ### With Node.js
 

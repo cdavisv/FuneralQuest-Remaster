@@ -24,6 +24,7 @@ COPY packages/content/package.json packages/content/package.json
 COPY packages/legacy-compat/package.json packages/legacy-compat/package.json
 COPY packages/bots/package.json packages/bots/package.json
 COPY packages/solo/package.json packages/solo/package.json
+COPY packages/audio/package.json packages/audio/package.json
 # The build scripts pnpm may run (esbuild) are listed in allowBuilds in pnpm-workspace.yaml.
 RUN pnpm install --frozen-lockfile --filter "@fq/server..." --filter "@fq/client..."
 COPY packages/protocol packages/protocol
@@ -33,9 +34,17 @@ COPY packages/legacy-compat packages/legacy-compat
 # Solo mode (the client bundles it, with the AI rivals, into a Web Worker).
 COPY packages/bots packages/bots
 COPY packages/solo packages/solo
+# The audio package (the Synth synthesiser, the cue map, the pack manifests the client reads).
+COPY packages/audio packages/audio
 # The client's build reads the exported Classic art (assets/classic: the UI sprite sheets it
 # derives pieces from, and the single-frame pictures it bundles) and the credits page's text.
 COPY assets/classic assets/classic
+# The sound: the Synth pack (assets/audio), the Studio and "Original, remastered" packs and the
+# character voices. The client's build bundles whichever of them have a manifest.json.
+COPY assets/audio assets/audio
+COPY assets/audio-studio assets/audio-studio
+COPY assets/audio-remaster assets/audio-remaster
+COPY assets/voice assets/voice
 COPY CREDITS.md ./
 COPY apps/server apps/server
 COPY apps/client apps/client

@@ -15,6 +15,13 @@
 # Solo mode: the client bundles the AI rivals and the offline game into a Web Worker.
 !packages/bots
 !packages/solo
+# The audio package (the Synth synthesiser, the cue map, the pack manifests the client reads).
+!packages/audio
+# The sound packs and the character voices the client bundles (about 35 MB together).
+!assets/audio
+!assets/audio-studio
+!assets/audio-remaster
+!assets/voice
 # The Classic art: the client derives its UI pieces from ui/ and bundles the single-frame
 # pictures. The animation frames (about 50 MB) are never used.
 !assets/classic

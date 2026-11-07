@@ -47,9 +47,9 @@ The game is playable in a browser, online against the server and solo with compu
 
 ## Never run
 
-- **The Docker image** (`apps/server/Dockerfile`, `docker-compose.yml`): never built here (this account still cannot reach the Docker daemon).
+- **The Docker image** (`apps/server/Dockerfile`, `docker-compose.yml`): built and run on 2026-11-07 (`/health` answered, the client and every sound pack were served, museum mode absent by default); no tournament has been played through it, and it reports build `dev` because the commit is not passed into the build. The Dockerfile and its ignore list gained the audio package and the sound packs, which the first build was missing.
 - **The release workflow** (`.github/workflows/release.yml`): has run on GitHub on the tag `v0.1.0-alpha.1` (2026-11-07) and made the draft pre-release; see above.
-- **The GitHub Pages workflow** (`.github/workflows/pages.yml`): never run, on purpose; the owner starts it by hand after the name is confirmed ([TODO.md](TODO.md)).
+- **The GitHub Pages workflow** (`.github/workflows/pages.yml`): Pages was enabled on 2026-11-07 (decision 21); the workflow is run by hand once the rename is on `master` ([TODO.md](TODO.md)).
 - **iOS**: the Xcode project is in the tree and cannot be built on Linux.
 - **Windows and macOS builds** of the desktop app: only configured, in `.github/workflows/release-desktop.yml`; unsigned and never run.
 - **A real phone**, Android or iOS, and a real tablet.
