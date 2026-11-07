@@ -84,12 +84,16 @@ const clickClear = async (page: Page, target: Locator): Promise<void> => {
       return;
     } catch (error) {
       if (attempt >= 3) throw error;
-      // A letter covering the page is read away; a click that merely took too long on a slow
-      // engine is tried again with more time.
+      // A letter covering the page is read away and the click tried again.
       if (await dialog(page).isVisible()) {
         await dialog(page).getByRole("button").first().click();
         await settle(page);
+        continue;
       }
+      // A click on a button that is there but merely took too long on a slow engine is tried
+      // again with more time; a button that is not on the screen fails at once (callers that
+      // press an optional Continue rely on that).
+      if ((await target.count()) === 0) throw error;
     }
   }
 };
