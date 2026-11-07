@@ -1,4 +1,5 @@
-import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
 import { createParlor, newPlayer, plaque, reachDesk, signUp } from "./helpers.js";
 
@@ -40,8 +41,34 @@ const probe = (page: Page) =>
  * page's, and Safari has neither: the test says so and skips. Asked of the plug-in files rather
  * than of the page, because a WebKit that lacks them can hang inside the call that would tell.
  */
+/** True when this Linux host has somewhere to play sound: a sound server socket or an ALSA card. */
+function hasAudioOutput(): boolean {
+  const runtime = process.env.XDG_RUNTIME_DIR ?? `/run/user/${process.getuid?.() ?? 0}`;
+  if (existsSync(`${runtime}/pulse/native`) || existsSync(`${runtime}/pipewire-0`)) return true;
+  try {
+    // A sound server started without a runtime directory (as on a CI runner) still answers here.
+    execFileSync("pactl", ["info"], { stdio: "ignore", timeout: 3000 });
+    return true;
+  } catch {
+    // no sound server; fall through to ALSA
+  }
+  try {
+    return /^\s*\d+\s/m.test(readFileSync("/proc/asound/cards", "utf8"));
+  } catch {
+    return false;
+  }
+}
+
 function skipWithoutAudio(browserName: string): void {
-  if (browserName !== "webkit" || process.platform !== "linux") return;
+  if (process.platform !== "linux") return;
+  // Firefox and WebKit leave an AudioContext suspended on a machine with no audio output at all
+  // (a bare CI runner); Chromium falls back to a null sink. CI starts a silent PulseAudio sink
+  // for these two (see .github/workflows/ci.yml), so the tests run there.
+  test.skip(
+    browserName !== "chromium" && !hasAudioOutput(),
+    "this host has no audio output (no PulseAudio or PipeWire socket, no ALSA card): the browser cannot start an AudioContext here",
+  );
+  if (browserName !== "webkit") return;
   const dirs = [
     "/usr/lib/gstreamer-1.0",
     "/usr/lib64/gstreamer-1.0",

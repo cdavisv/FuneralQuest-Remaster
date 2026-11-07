@@ -39,6 +39,8 @@ async function meet(page: Page): Promise<void> {
 }
 
 test("an Expanded day in the browser", async ({ page }) => {
+  // A whole day through every new place: about a minute in WebKit even locally.
+  test.setTimeout(240_000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
