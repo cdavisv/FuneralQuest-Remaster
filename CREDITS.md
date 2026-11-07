@@ -21,7 +21,7 @@ The remaster is an independent, free, open-source project. It is not affiliated 
 
 The Classic art pack is Akiko Robinson's original artwork, exported as it was.
 
-The Remastered art pack (`assets/remastered/`) is new art by the Funeral Quest Remastered project, drawn in the style of Akiko Robinson's original art and released under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). It redraws the traced-photograph backgrounds and adds the Expanded ruleset's places, people and icons. Each piece lists its credit and licence in `assets/remastered/manifest.json`. It replaces no original portrait: every original person picture is Akiko Robinson's drawing under its original licence, in every art pack.
+The Remastered art pack (`assets/remastered/`) is new art by the FuneralQuest Remastered project, drawn in the style of Akiko Robinson's original art and released under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). It redraws the traced-photograph backgrounds and adds the Expanded ruleset's places, people and icons. Each piece lists its credit and licence in `assets/remastered/manifest.json`. It replaces no original portrait: every original person picture is Akiko Robinson's drawing under its original licence, in every art pack.
 
 ### Writing
 

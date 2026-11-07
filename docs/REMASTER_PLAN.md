@@ -1,4 +1,4 @@
-# Funeral Quest Remastered: full plan, from first commit to live
+# FuneralQuest Remastered: full plan, from first commit to live
 
 ## 1. Context
 

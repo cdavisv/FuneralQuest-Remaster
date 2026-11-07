@@ -238,9 +238,10 @@ jobs:
         with:
           draft: true
           prerelease: true
-          name: Funeral Quest ${{ needs.meta.outputs.version }}
+          name: FuneralQuest Remastered ${{ needs.meta.outputs.version }}
           body: |
-            Alpha build ${{ needs.meta.outputs.version }} (build ${{ needs.meta.outputs.build }}).
+            Alpha build ${{ needs.meta.outputs.version }} (build ${{ needs.meta.outputs.build }}) of FuneralQuest Remastered.
             Unsigned, unsupported, and not for stores. See CHANGELOG.md and docs/ALPHA.md.
-            Check the files against SHA256SUMS.
+            Check the files against SHA256SUMS. Found a bug? In the game, Settings > Send feedback,
+            then paste the report into a new issue: https://github.com/cdavisv/FuneralQuest-Remaster/issues/new
           files: release-out/*

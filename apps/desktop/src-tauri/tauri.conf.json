@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Funeral Quest",
+  "productName": "FuneralQuest Remastered",
   "version": "../../../package.json",
   "identifier": "org.funeralquest.remaster",
   "build": {
@@ -33,10 +33,10 @@
     "active": true,
     "targets": ["deb", "appimage", "nsis", "dmg", "app"],
     "category": "Game",
-    "publisher": "Funeral Quest Remaster contributors",
+    "publisher": "FuneralQuest Remastered contributors",
     "copyright": "Copyright 2001 Robinson Technologies. Remaster by its contributors.",
     "shortDescription": "A daily-turn game about rival funeral parlors.",
-    "longDescription": "Funeral Quest Remastered: run a funeral parlor in Deathville. Play solo against computer rivals with no connection, or join an online town. This product includes software written by Seth A. Robinson (www.rtsoft.com).",
+    "longDescription": "FuneralQuest Remastered: run a funeral parlor in Deathville. Play solo against computer rivals with no connection, or join an online town. This product includes software written by Seth A. Robinson (www.rtsoft.com).",
     "licenseFile": "../../../license.txt",
     "icon": [
       "icons/32x32.png",

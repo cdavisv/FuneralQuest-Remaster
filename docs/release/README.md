@@ -1,6 +1,6 @@
 # Release docs (Phase 6: launch preparation)
 
-Drafts and checklists for putting Funeral Quest Remastered in front of players: web/PWA, itch.io, Steam, Google Play and the App Store. Written against the repository as it stood on 2026-11-06. Everything about store rules is from the author's knowledge of the policies and **must be re-checked in the store consoles at submission time**; policies change. Anything not verifiable from the repo is marked **unverified**.
+Drafts and checklists for putting FuneralQuest Remastered in front of players: web/PWA, itch.io, Steam, Google Play and the App Store. Written against the repository as it stood on 2026-11-06. Everything about store rules is from the author's knowledge of the policies and **must be re-checked in the store consoles at submission time**; policies change. Anything not verifiable from the repo is marked **unverified**.
 
 **Alpha builds** (the web bundles, Linux desktop, Android APKs and the server tarball, from one workflow, one version, publishing nothing to any store) are described in [BUILDING.md](BUILDING.md#alpha-builds-the-release-workflow). The store checklists below are for the releases after the alpha; none of them is needed to hand a build to alpha testers, who get files from a draft GitHub release.
 
@@ -57,13 +57,13 @@ Every blank used across these files. Search the folder for `OWNER TO FILL IN` to
 | `[DATA PROTECTION CONTACT / EU-UK REPRESENTATIVE IF REQUIRED - OWNER TO FILL IN]` | privacy | Only if the operator is outside the UK/EU and targets players there |
 | `[AUDIT LOG RETENTION DAYS - OWNER TO FILL IN]` | privacy | Server default is 90 (`FQ_AUDIT_RETENTION_DAYS`) |
 | `[REPOSITORY URL - OWNER TO FILL IN]` | listings, licences | Public source link |
-| `[FINAL GAME TITLE - OWNER TO FILL IN]` | listings | Depends on the name-rights outcome |
+| `[FINAL GAME TITLE - OWNER TO FILL IN]` | listings | "FuneralQuest Remastered" (decision 21, 2026-11-07); still depends on the name-rights outcome for store listings |
 | `[NAME PERMISSION STATUS - OWNER TO FILL IN]` | licences | Written permission (or not) from Robinson Technologies |
 | `[APP ID / BUNDLE ID - SEE BUILDING.md]` | Google Play, App Store | Chosen by the desktop/mobile effort |
 | `[STEAM APP ID - OWNER TO FILL IN]` | Steam | Assigned by Steamworks |
 | `[APPLE DEVELOPER ACCOUNT / TEAM - OWNER TO FILL IN]`, `[GOOGLE PLAY DEVELOPER ACCOUNT - OWNER TO FILL IN]`, `[STEAMWORKS PARTNER ACCOUNT - OWNER TO FILL IN]`, `[ITCH.IO ACCOUNT - OWNER TO FILL IN]` | checklists | Account type (individual/organisation) affects verification |
 | `[COMMUNITY LINK (DISCORD ETC) - OWNER TO FILL IN]` | listings | Optional |
-| `[FEEDBACK DESTINATION - OWNER TO FILL IN]` | the game's "Send feedback" dialog (`apps/client/src/feedback`), the README's "Report a bug" | Where alpha testers send their copied report: GitHub Issues (enable them), a Discord or the project email. Set the repository variable `FQ_FEEDBACK_DESTINATION` (build-time `VITE_FEEDBACK_DESTINATION`); see [../TODO.md](../TODO.md) |
+| `[FEEDBACK DESTINATION - OWNER TO FILL IN]` | the game's "Send feedback" dialog (`apps/client/src/feedback`), the README's "Report a bug" | Decided (decision 22, 2026-11-07): GitHub Issues, `https://github.com/cdavisv/FuneralQuest-Remaster/issues/new`, in the repository variable `FQ_FEEDBACK_DESTINATION` (build-time `VITE_FEEDBACK_DESTINATION`). The blank is what a build made without the variable shows |
 | `[TRAILER URL - OWNER TO FILL IN]` | listings | Optional |
 | `[ABUSE REPORT ADDRESS OR FORM - OWNER TO FILL IN]` | ugc, terms | Published reporting route (may equal the contact email) |
 | `[RESPONSE TIME FOR REPORTS - OWNER TO FILL IN]` | ugc, terms | For example 72 hours; a promise the operator must keep |

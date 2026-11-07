@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Funeral Quest</string>
-    <string name="title_activity_main">Funeral Quest</string>
+    <string name="app_name">FuneralQuest Remastered</string>
+    <string name="title_activity_main">FuneralQuest Remastered</string>
     <string name="package_name">org.funeralquest.remaster</string>
     <string name="custom_url_scheme">org.funeralquest.remaster</string>
 </resources>

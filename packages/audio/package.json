@@ -2,7 +2,7 @@
   "name": "@fq/audio",
   "version": "0.0.0",
   "private": true,
-  "description": "Funeral Quest Remastered audio: a small synthesiser and sequencer, the score, the effects, the cue map and the build that renders them.",
+  "description": "FuneralQuest Remastered audio: a small synthesiser and sequencer, the score, the effects, the cue map and the build that renders them.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

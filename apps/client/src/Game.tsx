@@ -119,7 +119,7 @@ export function Game({ transport, onLeave, busyNote, ownLobby, solo }: GameProps
   useCharacterVoices(view, solo === true);
 
   useEffect(() => {
-    document.title = view ? `${view.title} - ${t("app.title")}` : t("app.title");
+    document.title = view ? `${view.title} - ${t("app.product")}` : t("app.product");
   }, [view, t]);
 
   // Keep the text of screens the player has moved past for the wide layout's log.

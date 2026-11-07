@@ -2,7 +2,7 @@
 name = "funeral-quest"
 version = "0.1.0-alpha.1"
 description = "Funeral Quest: a daily-turn game about rival funeral parlors, remastered."
-authors = ["Funeral Quest Remaster contributors"]
+authors = ["FuneralQuest Remastered contributors"]
 license-file = "../../../license.txt"
 edition = "2021"
 rust-version = "1.77"

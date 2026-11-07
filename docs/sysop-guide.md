@@ -1,6 +1,6 @@
 # Running a private town for friends
 
-This is the how-to for hosting Funeral Quest Remastered for a group of friends: install it, set it up, make a town, invite people, look after it day to day, back it up, put a backup back, and update it. Every setting and every admin route is described in the reference, the [server README](../apps/server/README.md); this page tells you which ones you need and when.
+This is the how-to for hosting FuneralQuest Remastered for a group of friends: install it, set it up, make a town, invite people, look after it day to day, back it up, put a backup back, and update it. Every setting and every admin route is described in the reference, the [server README](../apps/server/README.md); this page tells you which ones you need and when.
 
 You need a machine that stays on (a small VPS, a home server, a Raspberry Pi 4 or better), and either Docker or Node.js 24 or newer. A town of ten friends uses a few tens of megabytes of memory and a database of a few megabytes per season.
 

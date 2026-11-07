@@ -10,7 +10,7 @@ First-draft copy in the game's dry, gallows-humour voice. Character counts are s
 
 | Option | Chars | Notes |
 | --- | --- | --- |
-| Funeral Quest Remastered | 24 | Depends on name permission |
+| FuneralQuest Remastered | 24 | Depends on name permission |
 | Funeral Quest: Deathville | 25 | Depends on name permission |
 | Deathville Undertakers | 22 | Fallback, no reliance on the original name |
 

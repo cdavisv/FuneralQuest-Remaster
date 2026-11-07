@@ -2,7 +2,7 @@
 >
 > Replace every `[... - OWNER TO FILL IN]`. The report and block tools, in-app account deletion and the moderator tools now exist (see `ugc-and-moderation.md`); the moderator *process* (who watches reports, how fast) is the operator's, so remove any promise the operator cannot keep.
 
-# Terms of Service for Funeral Quest Remastered
+# Terms of Service for FuneralQuest Remastered
 
 Effective date: `[EFFECTIVE DATE - OWNER TO FILL IN]`
 

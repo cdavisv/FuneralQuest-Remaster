@@ -249,7 +249,7 @@ function page(
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Funeral Quest Remastered: Synth, Studio and the 2001 originals, side by side; character voices</title>
+<title>FuneralQuest Remastered: Synth, Studio and the 2001 originals, side by side; character voices</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   body { font: 15px/1.45 system-ui, sans-serif; margin: 0; padding: 1rem 1.5rem 4rem; background: #f6f3ee; color: #222; }

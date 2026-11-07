@@ -1,4 +1,4 @@
-# Funeral Quest
+# FuneralQuest Remastered
 
 Funeral Quest is a daily-turn game about rival funeral parlors, in the style of old BBS door games. You run a parlor in Deathville. Each day you have a handful of turns to wait for customers, upsell grieving relatives (sympathy, guilt, hard sell, soft sell, and knowing when to stop), spend your casket tags around town, and sabotage your rivals. The score is Bury Points.
 
@@ -17,7 +17,7 @@ The original 2001 server, Flash client and content are kept untouched in [`legac
 - **Expect rough edges.** Expanded's balance is still being tuned; the sound has been measured but nobody has listened to it all; the new portraits in the Remastered art pack need an illustrator; the Docker image, Windows, macOS, iOS and any real phone have never been tried; there is no public server. [docs/STATUS.md](docs/STATUS.md) lists what was run, what was only tested and what is missing, honestly.
 - **Saves and settings may change between alpha versions.** Export a Solo career to a file if you want to keep it. Do not run a public server on an alpha.
 
-The checklist that decides when alpha is over is [docs/ALPHA.md](docs/ALPHA.md); what changed in each version is in the [changelog](CHANGELOG.md). Found a bug or something that felt wrong? See [Report a bug](#report-a-bug).
+The alpha builds (web, Linux desktop, Android, server) are on the [Releases page](https://github.com/cdavisv/FuneralQuest-Remaster/releases). The checklist that decides when alpha is over is [docs/ALPHA.md](docs/ALPHA.md); what changed in each version is in the [changelog](CHANGELOG.md). Found a bug or something that felt wrong? See [Report a bug](#report-a-bug).
 
 ## Play it in five minutes
 
@@ -77,7 +77,7 @@ Running a **private town for friends** (create it, set it up, watch it, ban some
 
 ## Report a bug
 
-In the game, open **Settings** (the gear) or look at the bottom of the front door and choose **Send feedback**. It opens a report already filled in with the version, build, ruleset, browser and the title of the screen you were on, plus a box for what happened and what you expected. Copy it and send it to the address the dialog names. **That address is not chosen yet** (GitHub Issues are switched off for this repository, so there is nothing to link to): until it is, the dialog shows a marked blank, and the owner is deciding between GitHub Issues, a Discord and a project email ([docs/TODO.md](docs/TODO.md)). The report holds no name, password or game data. In the solo-only build it leaves out the browser details.
+In the game, open **Settings** (the gear) or look at the bottom of the front door and choose **Send feedback**. It opens a report already filled in with the version, build, ruleset, browser and the title of the screen you were on, plus a box for what happened and what you expected. Copy it and paste it into a [new GitHub issue](https://github.com/cdavisv/FuneralQuest-Remaster/issues/new). (The 0.1.0-alpha.1 builds were made before that address was set, so their dialog shows a marked blank where it should be; later builds name it.) The report holds no name, password or game data. In the solo-only build it leaves out the browser details.
 
 Running a server? Reports about _players_ (abuse, rule-breaking) are a different thing: they go to the town's moderators through the in-game Report button and the admin page ([the server README](apps/server/README.md#player-safety-and-moderation)).
 

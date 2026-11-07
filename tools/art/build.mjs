@@ -41,7 +41,7 @@ export async function loadPieces() {
   return all;
 }
 
-const CREDIT = "Funeral Quest Remastered project, in the style of Akiko Robinson's original art";
+const CREDIT = "FuneralQuest Remastered project, in the style of Akiko Robinson's original art";
 
 async function main() {
   const pieces = await loadPieces();

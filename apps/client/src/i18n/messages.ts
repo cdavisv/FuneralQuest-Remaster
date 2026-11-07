@@ -8,6 +8,7 @@
  */
 export const en = {
   "app.title": "Funeral Quest",
+  "app.product": "FuneralQuest Remastered",
   "app.loading": "Opening the parlor...",
   "app.connectFailed": "The parlor could not be reached.",
   "app.retry": "Try again",

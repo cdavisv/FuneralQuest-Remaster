@@ -147,7 +147,7 @@ fn main() {
         })
         .setup(|app| {
             let about = AboutMetadataBuilder::new()
-                .name(Some("Funeral Quest"))
+                .name(Some("FuneralQuest Remastered"))
                 .version(Some(env!("CARGO_PKG_VERSION")))
                 .copyright(Some("Copyright 2001 Robinson Technologies. Remaster by its contributors."))
                 .comments(Some(
@@ -179,7 +179,7 @@ fn main() {
             app.set_menu(menu)?;
 
             let window = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
-                .title("Funeral Quest")
+                .title("FuneralQuest Remastered")
                 .inner_size(1024.0, 768.0)
                 .min_inner_size(480.0, 360.0)
                 .center()

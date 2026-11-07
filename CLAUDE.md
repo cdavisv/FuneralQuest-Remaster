@@ -1,4 +1,4 @@
-# Funeral Quest Remastered
+# FuneralQuest Remastered
 
 A free, open-source remaster of Funeral Quest (Robinson Technologies, 2001). Read `docs/REMASTER_PLAN.md` for the full plan and `docs/classic-rules.md` for the Classic rules spec before changing game logic.
 

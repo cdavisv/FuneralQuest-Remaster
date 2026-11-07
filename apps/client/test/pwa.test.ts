@@ -14,7 +14,7 @@ describe("the installable web app", () => {
   };
 
   it("has a manifest a browser will install: name, start URL, standalone, 192 and 512 icons", () => {
-    expect(manifest.name).toBe("Funeral Quest");
+    expect(manifest.name).toBe("FuneralQuest Remastered");
     // Relative, so the same manifest works at a site's root and under /<repo>/ (GitHub Pages).
     expect(manifest.start_url).toBe("./");
     expect((manifest as unknown as { scope: string }).scope).toBe("./");

@@ -1,10 +1,10 @@
 # Remastered art pack: notes
 
-The Remastered pack is new vector art for Funeral Quest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, and adds the Expanded ruleset's places, people and icons. It replaces no original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
+The Remastered pack is new vector art for FuneralQuest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, and adds the Expanded ruleset's places, people and icons. It replaces no original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
 
 - **Files:** `assets/remastered/<id>.svg` (77 SVGs, 1.3 MB in all, largest 131 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
 - **Sheets:** `assets/remastered/contact-sheet.png` and `.html` (every piece with its grade); `assets/remastered/comparisons.png` and `comparisons/*.png` (each traced original beside its redraw).
-- **Credit:** "Funeral Quest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. No original portrait is overridden: every original person picture is used unchanged under every art pack.
+- **Credit:** "FuneralQuest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. No original portrait is overridden: every original person picture is used unchanged under every art pack.
 
 ## How it is made
 

@@ -94,7 +94,7 @@ function buildClient(name, soloOnly) {
   return dir;
 }
 
-const header = `Funeral Quest Remastered ${v.label} (build ${v.build}), version ${v.version}`;
+const header = `FuneralQuest Remastered ${v.label} (build ${v.build}), version ${v.version}`;
 
 function webReadme(soloOnly) {
   const common = `${header}
