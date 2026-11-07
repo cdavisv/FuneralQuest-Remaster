@@ -82,6 +82,8 @@ test("the lobby names each town's ruleset, and an Expanded town plays with its t
 test("the Daily Challenge: a guest plays, then sees a result and no place; a member is on the board", async ({
   browser,
 }) => {
+  // Two whole challenge days through the front door: WebKit on a CI runner needs more than a minute.
+  test.setTimeout(150_000);
   // A guest, from the front door.
   const guest = await (await browser.newContext()).newPage();
   await guest.goto("/");
