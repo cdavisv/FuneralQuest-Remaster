@@ -23,7 +23,10 @@ describe("the server reports its version", () => {
 
   it("on /health and /api/features", async () => {
     h = await startServer();
-    const health = (await h.inject({ method: "GET", url: "/health" })).json() as Record<string, unknown>;
+    const health = (await h.inject({ method: "GET", url: "/health" })).json() as Record<
+      string,
+      unknown
+    >;
     const features = (await h.inject({ method: "GET", url: "/api/features" })).json() as Record<
       string,
       unknown

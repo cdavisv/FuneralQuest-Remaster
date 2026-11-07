@@ -1,7 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { CLASSIC_TEXT } from "@fq/core";
 import { type BrowserContext, expect, type Locator, type Page, test } from "@playwright/test";
-import { admin, createParlor, PASSWORD, newPlayer, type Player, signUp } from "./helpers";
+import { admin, createParlor, newPlayer, PASSWORD, type Player, signUp } from "./helpers";
+import { inspect, type Problem } from "./layout-check";
 
 /**
  * The Classic audit (docs/ALPHA.md, criterion A1): every player-facing feature of the Classic
@@ -27,7 +28,7 @@ const stripCodes = (text: string): string => text.replace(/`f\d|`./g, "");
 const escapeRx = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** A pack template as a pattern: placeholders match anything, any run of space matches any space. */
-export function rx(template: string, flags = ""): RegExp {
+function rx(template: string, flags = ""): RegExp {
   const source = stripCodes(template)
     .split(/(\{[A-Za-z]+\})/)
     .map((part) => (/^\{[A-Za-z]+\}$/.test(part) ? ".*?" : escapeRx(part)))
@@ -41,7 +42,7 @@ const lineTemplates = (line: Line): string[] =>
   typeof line === "string" ? [line] : [line.loved, line.notLoved];
 
 /** Any one of a list of templates (a line of the original that is picked at random). */
-export function anyOf(...lists: (Line | readonly Line[])[]): RegExp {
+function anyOf(...lists: (Line | readonly Line[])[]): RegExp {
   const all = lists.flatMap((l) => (Array.isArray(l) ? (l as readonly Line[]) : [l as Line]));
   return new RegExp(
     all
@@ -63,18 +64,35 @@ const chatLog = (page: Page): Locator => page.getByRole("list", { name: "Convers
 
 /** A plaque or desk icon by its exact label. */
 const btn = (page: Page, label: string): Locator =>
-  page
-    .locator(".fq-plaque, .fq-orb")
-    .filter({ has: page.locator(".fq-plaque-label, .fq-orb-label").getByText(label, { exact: true }) });
+  page.locator(".fq-plaque, .fq-orb").filter({
+    has: page.locator(".fq-plaque-label, .fq-orb-label").getByText(label, { exact: true }),
+  });
 
 /** Waits until no action is in flight (a button pressed meanwhile would be dropped). */
 const settle = async (page: Page): Promise<void> => {
   await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'));
 };
 
+/**
+ * Clicks, and if a letter was pushed to an idle desk and now covers the page (the original's
+ * desk polled for mail), reads it away and clicks again.
+ */
+const clickClear = async (page: Page, target: Locator): Promise<void> => {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      await target.click({ timeout: attempt < 3 ? 3_000 : 10_000 });
+      return;
+    } catch (error) {
+      if (attempt >= 3 || !(await dialog(page).isVisible())) throw error;
+      await dialog(page).getByRole("button").first().click();
+      await settle(page);
+    }
+  }
+};
+
 /** Presses a plaque and waits for the server's answer to be drawn. */
 const press = async (page: Page, label: string): Promise<void> => {
-  await btn(page, label).click();
+  await clickClear(page, btn(page, label));
   await settle(page);
 };
 
@@ -135,9 +153,24 @@ async function toDesk(page: Page): Promise<void> {
 
 /** From any screen with the map reachable: to the desk's map and into a place. */
 async function goTo(page: Page, place: RegExp): Promise<void> {
-  await toDesk(page);
-  await btn(page, "Town Map").click();
-  await page.getByRole("button", { name: place }).click();
+  // A letter can be pushed to an idle desk between the look and the click: close it and go on.
+  for (let attempt = 0; ; attempt++) {
+    await toDesk(page);
+    try {
+      await btn(page, "Town Map").click({ timeout: 3_000 });
+      break;
+    } catch (error) {
+      if (attempt >= 3) throw error;
+      await closeAnything(page);
+    }
+  }
+  // The map's building on the cabinet layouts, its list of places on the phone.
+  const spot = page.getByRole("button", { name: place });
+  if (await spot.first().isVisible()) await spot.first().click();
+  else
+    await page
+      .getByRole("button", { name: place.source.replace(/^Go to /, ""), exact: true })
+      .click();
 }
 
 const PLACE = {
@@ -157,14 +190,16 @@ async function readStats(page: Page): Promise<Record<string, string>> {
   await btn(page, "Stats").click();
   const sheet = page.getByRole("region", { name: "Your stats and inventory" });
   await expect(sheet).toBeVisible();
-  const stats = await sheet.locator("[data-stat]").evaluateAll((rows) =>
-    Object.fromEntries(
-      rows.map((row) => [
-        row.getAttribute("data-stat") ?? "",
-        (row.querySelector("dd")?.textContent ?? row.textContent ?? "").trim(),
-      ]),
-    ),
-  );
+  const stats = await sheet
+    .locator("[data-stat]")
+    .evaluateAll((rows) =>
+      Object.fromEntries(
+        rows.map((row) => [
+          row.getAttribute("data-stat") ?? "",
+          (row.querySelector("dd")?.textContent ?? row.textContent ?? "").trim(),
+        ]),
+      ),
+    );
   await press(page, "Back");
   await expect(btn(page, "Wait for Customer")).toBeVisible();
   return stats;
@@ -276,7 +311,12 @@ async function waitOnce(page: Page): Promise<Outcome> {
   const before = norm(await well(page).textContent());
   await press(page, "Wait for Customer");
   await expect
-    .poll(async () => (await customer.isVisible()) || norm(await well(page).textContent()) !== before || (await dialog(page).isVisible()))
+    .poll(
+      async () =>
+        (await customer.isVisible()) ||
+        norm(await well(page).textContent()) !== before ||
+        (await dialog(page).isVisible()),
+    )
     .toBe(true);
   if (await customer.isVisible()) return "customer";
   return "event";
@@ -366,46 +406,10 @@ async function farmGold(page: Page, gold: number): Promise<number> {
   return sales;
 }
 
-export const audit = {
-  T,
-  S,
-  well,
-  paper,
-  dialog,
-  chatLog,
-  btn,
-  press,
-  settle,
-  pressText,
-  seeText,
-  seeDialog,
-  submitNotepad,
-  answer,
-  toDesk,
-  goTo,
-  PLACE,
-  readStats,
-  num,
-  TOWNS,
-  makeTown,
-  dropTowns,
-  openDoor,
-  logOn,
-  join,
-  sitDown,
-  waitOnce,
-  meet,
-  closeAnything,
-  totalOf,
-  finishSale,
-  farmGold,
-  norm,
-};
-
 test.describe.configure({ mode: "serial" });
 
-let alice: Who;
-let bob: Who;
+let alice!: Who;
+let bob!: Who;
 
 /**
  * Development aid: with `AUDIT_RESUME=<file>` the run keeps the server and the audit town between
@@ -473,7 +477,15 @@ test("a new parlor: the paper, the welcome and the desk", async ({ browser }) =>
   // The town's own notice that this player moved in, with the server's clock in front (the
   // original queued it for every player online, the newcomer included).
   await seeText(page, rx(`{time}:${T.newPlayer.movedIn.replace("{name}", player.name)}`));
-  for (const label of ["Wait for Customer", "Town Map", "Read Paper", "Stats", "Rankings", "Write Letter", "Exit"]) {
+  for (const label of [
+    "Wait for Customer",
+    "Town Map",
+    "Read Paper",
+    "Stats",
+    "Rankings",
+    "Write Letter",
+    "Exit",
+  ]) {
     await expect(btn(page, label)).toBeVisible();
   }
 });
@@ -506,8 +518,22 @@ test("the stats sheet shows every stat of a new parlor, and the rating line", as
 });
 
 const MOODS = [
-  "In Shock", "Dazed", "Confused", "Crying", "Numb", "Disturbed", "Frustrated", "Irked", "Angry",
-  "Pissed", "Chipper", "In a hurry", "Natural", "Tight Lipped", "Nervous", "Annoyed",
+  "In Shock",
+  "Dazed",
+  "Confused",
+  "Crying",
+  "Numb",
+  "Disturbed",
+  "Frustrated",
+  "Irked",
+  "Angry",
+  "Pissed",
+  "Chipper",
+  "In a hurry",
+  "Natural",
+  "Tight Lipped",
+  "Nervous",
+  "Annoyed",
 ];
 
 test("a customer: the arrival, the readout, and every button of the negotiation", async () => {
@@ -519,11 +545,29 @@ test("a customer: the arrival, the readout, and every button of the negotiation"
   const customer = page.getByRole("region", { name: "The customer" });
   // Which texts an action may answer with (one of these always shows).
   const answers: Record<string, RegExp> = {
-    "Soft Sell": anyOf(N.softPitch, N.softRefuse, N.softAccept, N.softOverLimit, N.leavePissed, N.pissedOverLimit),
+    "Soft Sell": anyOf(
+      N.softPitch,
+      N.softRefuse,
+      N.softAccept,
+      N.softOverLimit,
+      N.leavePissed,
+      N.pissedOverLimit,
+    ),
     "Hard Sell": anyOf(
-      N.hardPitchWood, N.hardPitchSilver, N.upgradePitch, N.hardRefuse, N.hardAccept, N.hardAcceptAngry,
-      N.hardOverLimit, N.upgradeRefuse, N.upgradeAccept, N.upgradeAcceptAngry, N.upgradeOverLimit,
-      N.upgradeNothingLeft, N.leavePissed, N.pissedOverLimit,
+      N.hardPitchWood,
+      N.hardPitchSilver,
+      N.upgradePitch,
+      N.hardRefuse,
+      N.hardAccept,
+      N.hardAcceptAngry,
+      N.hardOverLimit,
+      N.upgradeRefuse,
+      N.upgradeAccept,
+      N.upgradeAcceptAngry,
+      N.upgradeOverLimit,
+      N.upgradeNothingLeft,
+      N.leavePissed,
+      N.pissedOverLimit,
     ),
     Guilt: anyOf(N.interrupted, N.guiltPitch, N.guiltLoved, N.guiltNotLoved),
     Sympathy: anyOf(N.interrupted, N.sympathyPitch, N.sympathyNotLoved, N.sympathyLoved),
@@ -531,16 +575,26 @@ test("a customer: the arrival, the readout, and every button of the negotiation"
   for (let round = 0; round < 12 && seen.size < 3; round++) {
     await meet(page);
     // The arrival: the request, then the casket the customer needs (the pack's own words).
-    await expect(well(page)).toContainText(rx(N.arrivalRequest.slice(0, N.arrivalRequest.indexOf("{dRelation}"))));
+    await expect(well(page)).toContainText(
+      rx(N.arrivalRequest.slice(0, N.arrivalRequest.indexOf("{dRelation}"))),
+    );
     await expect(well(page)).toContainText(rx(N.arrivalNeed));
     await expect(well(page)).toContainText(/Total:\s*\$[\d,]+/);
     // The readout: the customer's mood, the running total, and the class on the picture.
     const mood = (await customer.locator(".fq-readout-mood strong").textContent()) ?? "";
     expect(MOODS).toContain(mood);
-    await expect(page.locator(".fq-overlay-tags")).toContainText(/Class:? ?(Poor|Average|Rich|Super Rich)/);
+    await expect(page.locator(".fq-overlay-tags")).toContainText(
+      /Class:? ?(Poor|Average|Rich|Super Rich)/,
+    );
     const price0 = await totalOf(page);
     expect([800, 2600, 5300]).toContain(price0);
-    for (const label of [N.buttons.guilt, N.buttons.sympathy, N.buttons.hard, N.buttons.soft, N.buttons.done]) {
+    for (const label of [
+      N.buttons.guilt,
+      N.buttons.sympathy,
+      N.buttons.hard,
+      N.buttons.soft,
+      N.buttons.done,
+    ]) {
       await expect(btn(page, label)).toBeVisible();
     }
     // Each of the four sales buttons, until the customer leaves or the sale is done.
@@ -565,7 +619,10 @@ test("a rival joins, and both parlors earn gold tags by selling", async ({ brows
   test.setTimeout(900_000);
   const resume = saved();
   if (resume) {
-    for (const [name, player] of [["alice", resume.alice], ["bob", resume.bob]] as const) {
+    for (const [name, player] of [
+      ["alice", resume.alice],
+      ["bob", resume.bob],
+    ] as const) {
       const context = await browser.newContext();
       const page = await context.newPage();
       await openDoor(page, TOWNS.main);
@@ -576,7 +633,10 @@ test("a rival joins, and both parlors earn gold tags by selling", async ({ brows
     }
     await alice.page.request.fetch(`/admin/towns/${TOWNS.main.id}/rollback`, {
       method: "POST",
-      headers: { authorization: "Bearer e2e-admin-token-0123456789abcdef", "content-type": "application/json" },
+      headers: {
+        authorization: "Bearer e2e-admin-token-0123456789abcdef",
+        "content-type": "application/json",
+      },
       data: JSON.stringify({ snapshotId: resume.snapshot }),
     });
     for (const who of [alice, bob]) {
@@ -588,14 +648,19 @@ test("a rival joins, and both parlors earn gold tags by selling", async ({ brows
   bob = await join(browser, TOWNS.main, "bob");
   await sitDown(bob.page);
   const started = Date.now();
-  const sales = await Promise.all([farmGold(alice.page, 120), farmGold(bob.page, 36)]);
-  console.log(`farmed ${sales.join(" and ")} sales in ${Math.round((Date.now() - started) / 1000)} s`);
-  expect(num((await readStats(alice.page)).gold)).toBeGreaterThanOrEqual(120);
+  const sales = await Promise.all([farmGold(alice.page, 130), farmGold(bob.page, 36)]);
+  console.log(
+    `farmed ${sales.join(" and ")} sales in ${Math.round((Date.now() - started) / 1000)} s`,
+  );
+  expect(num((await readStats(alice.page)).gold)).toBeGreaterThanOrEqual(130);
   expect(num((await readStats(bob.page)).gold)).toBeGreaterThanOrEqual(36);
   if (RESUME) {
     const res = await alice.page.request.fetch(`/admin/towns/${TOWNS.main.id}/snapshots`, {
       method: "POST",
-      headers: { authorization: "Bearer e2e-admin-token-0123456789abcdef", "content-type": "application/json" },
+      headers: {
+        authorization: "Bearer e2e-admin-token-0123456789abcdef",
+        "content-type": "application/json",
+      },
       data: JSON.stringify({ reason: "audit" }),
     });
     const { id } = (await res.json()) as { id: number };
@@ -617,7 +682,10 @@ test("Spirit University: psychology to level 5 with its skills, PE and strength"
     await expect(btn(page, label)).toBeVisible();
   }
   // The schedule gives the prices: PSY 4 + 2 x level, PE 12 for 10 hit points, ST 9 for strength 3.
-  await seeText(page, rx(U.schedule.replace("{psych}", "4").replace("{hp}", "12").replace("{strength}", "9")));
+  await seeText(
+    page,
+    rx(U.schedule.replace("{psych}", "4").replace("{hp}", "12").replace("{strength}", "9")),
+  );
 
   const gold0 = await stat(page, "gold");
   await goTo(page, PLACE.university);
@@ -679,14 +747,32 @@ test("the bank: exchange in both directions, the checks on the count, All to woo
 
   // Gold to silver: each gold is 2 silver.
   let text = await exchange("Gold", "Silver", "3");
-  expect(text).toMatch(rx(B.done.replace("{lost}", "3").replace("{from}", "gold").replace("{gained}", "6").replace("{to}", "silver"), "i"));
+  expect(text).toMatch(
+    rx(
+      B.done
+        .replace("{lost}", "3")
+        .replace("{from}", "gold")
+        .replace("{gained}", "6")
+        .replace("{to}", "silver"),
+      "i",
+    ),
+  );
   await press(page, "Continue").catch(() => undefined);
   // The checks, in the original's order: a negative count, more than owned, too few for one tag.
   text = await exchange("Gold", "Silver", "-5");
   expect(text).toMatch(rx(B.amusing));
   // Silver to wood: 6 silver is 12 wood.
   text = await exchange("Silver", "Wood", "6");
-  expect(text).toMatch(rx(B.done.replace("{lost}", "6").replace("{from}", "silver").replace("{gained}", "12").replace("{to}", "wood"), "i"));
+  expect(text).toMatch(
+    rx(
+      B.done
+        .replace("{lost}", "6")
+        .replace("{from}", "silver")
+        .replace("{gained}", "12")
+        .replace("{to}", "wood"),
+      "i",
+    ),
+  );
   await press(page, "Continue").catch(() => undefined);
   // Too few for one tag (3 wood is less than a gold), and more than owned.
   text = await exchange("Wood", "Gold", "9999");
@@ -708,7 +794,16 @@ test("the bank: exchange in both directions, the checks on the count, All to woo
   await seeText(page, rx(B.which));
   // Seven wood to gold turns four of them into one gold and keeps the other three.
   text = await exchange("Wood", "Gold", "7");
-  expect(text).toMatch(rx(B.done.replace("{lost}", "4").replace("{from}", "wood").replace("{gained}", "1").replace("{to}", "gold"), "i"));
+  expect(text).toMatch(
+    rx(
+      B.done
+        .replace("{lost}", "4")
+        .replace("{from}", "wood")
+        .replace("{gained}", "1")
+        .replace("{to}", "gold"),
+      "i",
+    ),
+  );
   await press(page, "Continue").catch(() => undefined);
 
   // All to wood, then All to gold: the value never changes.
@@ -745,8 +840,21 @@ test("Di-Mart hearses: the showroom, the trade-in price, buying, no downgrade, n
   await press(page, "Hearses");
   await seeText(page, rx(D.hearseIntro));
   // Four hearses for sale (the bicycle you start with is not), at 12, 30, 50 and 80 gold tags.
-  for (const [n, price] of [[1, 12], [2, 30], [3, 50], [4, 80]] as const) {
-    await seeText(page, rx(D.hearseLine.replace("{n}", String(n)).replace("{name}", hearse(n)).replace("{price}", String(price))));
+  for (const [n, price] of [
+    [1, 12],
+    [2, 30],
+    [3, 50],
+    [4, 80],
+  ] as const) {
+    await seeText(
+      page,
+      rx(
+        D.hearseLine
+          .replace("{n}", String(n))
+          .replace("{name}", hearse(n))
+          .replace("{price}", String(price)),
+      ),
+    );
   }
   const before = await readStats(page);
   expect(before.ride).toBe(hearse(0));
@@ -755,10 +863,26 @@ test("Di-Mart hearses: the showroom, the trade-in price, buying, no downgrade, n
   await goTo(page, PLACE.store);
   await press(page, "Hearses");
   await press(page, "View #1");
-  await seeText(page, rx(D.look.replace("{name}", hearse(1)).replace("{description}", T.hearseDescriptions[1] as string).replace("{bonus}", "2")));
-  await seeText(page, rx(D.lookTrade.replace("{current}", hearse(0)).replace("{credit}", "2").replace("{cost}", "10")));
+  await seeText(
+    page,
+    rx(
+      D.look
+        .replace("{name}", hearse(1))
+        .replace("{description}", T.hearseDescriptions[1] as string)
+        .replace("{bonus}", "2"),
+    ),
+  );
+  await seeText(
+    page,
+    rx(
+      D.lookTrade.replace("{current}", hearse(0)).replace("{credit}", "2").replace("{cost}", "10"),
+    ),
+  );
   await press(page, "Buy it");
-  await seeText(page, rx(D.bought.replace("{old}", hearse(0)).replace("{new}", hearse(1)).replace("{bonus}", "2")));
+  await seeText(
+    page,
+    rx(D.bought.replace("{old}", hearse(0)).replace("{new}", hearse(1)).replace("{bonus}", "2")),
+  );
   const after = await readStats(page);
   expect(after.ride).toBe(hearse(1));
   expect(num(before.gold) - num(after.gold)).toBe(10);
@@ -768,7 +892,10 @@ test("Di-Mart hearses: the showroom, the trade-in price, buying, no downgrade, n
   await goTo(page, PLACE.store);
   await press(page, "Hearses");
   await press(page, "View #1");
-  await seeText(page, rx(D.lookNoUpgrade.replace("{current}", hearse(1)).replace("{name}", hearse(1))));
+  await seeText(
+    page,
+    rx(D.lookNoUpgrade.replace("{current}", hearse(1)).replace("{name}", hearse(1))),
+  );
   await press(page, "Buy it");
   await seeText(page, rx(D.noUpgrade.replace("{current}", hearse(1)).replace("{name}", hearse(1))));
   expect((await readStats(page)).gold).toBe(after.gold);
@@ -777,9 +904,17 @@ test("Di-Mart hearses: the showroom, the trade-in price, buying, no downgrade, n
   await goTo(page, PLACE.store);
   await press(page, "Hearses");
   await press(page, "View #2");
-  await seeText(page, rx(D.lookTrade.replace("{current}", hearse(1)).replace("{credit}", "6").replace("{cost}", "24")));
+  await seeText(
+    page,
+    rx(
+      D.lookTrade.replace("{current}", hearse(1)).replace("{credit}", "6").replace("{cost}", "24"),
+    ),
+  );
   await press(page, "Buy it");
-  await seeText(page, rx(D.bought.replace("{old}", hearse(1)).replace("{new}", hearse(2)).replace("{bonus}", "4")));
+  await seeText(
+    page,
+    rx(D.bought.replace("{old}", hearse(1)).replace("{new}", hearse(2)).replace("{bonus}", "4")),
+  );
   const last = await readStats(page);
   expect(last.ride).toBe(hearse(2));
   expect(num(after.gold) - num(last.gold)).toBe(24);
@@ -788,7 +923,12 @@ test("Di-Mart hearses: the showroom, the trade-in price, buying, no downgrade, n
   await goTo(bob.page, PLACE.store);
   await press(bob.page, "Hearses");
   await press(bob.page, "View #4");
-  await seeText(bob.page, rx(D.lookTrade.replace("{current}", hearse(0)).replace("{credit}", "2").replace("{cost}", "78")));
+  await seeText(
+    bob.page,
+    rx(
+      D.lookTrade.replace("{current}", hearse(0)).replace("{credit}", "2").replace("{cost}", "78"),
+    ),
+  );
   await press(bob.page, "Buy it");
   await seeText(bob.page, rx(D.cannotAfford.replace("{name}", hearse(4))));
   expect((await readStats(bob.page)).ride).toBe(hearse(0));
@@ -862,7 +1002,11 @@ test("Di-Mart security: padlock, smoke detector and safe once each; lockpicks by
 /** The luck meter's value (out of 100) on the current screen. */
 const luckOf = async (page: Page): Promise<number> => {
   await toDesk(page);
-  const label = (await page.getByRole("meter", { name: /Luck meter/ }).first().getAttribute("aria-label")) ?? "";
+  const label =
+    (await page
+      .getByRole("meter", { name: /Luck meter/ })
+      .first()
+      .getAttribute("aria-label")) ?? "";
   return Number(/(\d+) out of/.exec(label)?.[1] ?? "NaN");
 };
 
@@ -884,6 +1028,8 @@ async function readLetters(page: Page, reply: "Yes" | "No" = "No"): Promise<stri
     }
   };
   await settle(page);
+  // Logging on shows the paper first.
+  if (await page.locator(".fq-news").isVisible()) await press(page, "Continue");
   await drain();
   // Letters wait for a visit to the desk: if the player is somewhere else, go there.
   if (texts.length === 0) {
@@ -904,8 +1050,20 @@ test("Yang's: the three dishes, custom and random fortunes, the allowance and th
   await goTo(a, PLACE.yangs);
   await expect(a.getByText(stripCodes(Y.note))).toBeVisible();
   await expect(a.getByRole("status").filter({ hasText: Y.statusReady })).toBeVisible();
-  await seeText(a, rx(Y.menu.replace("{dragonLuck}", "10").replace("{dragonCost}", "5").replace("{sparrowLuck}", "5").replace("{sparrowCost}", "20").replace("{tigerLuck}", "10").replace("{tigerCost}", "20")));
-  for (const label of ["Order #1", "Order #2", "Order #3", "Leave"]) await expect(btn(a, label)).toBeVisible();
+  await seeText(
+    a,
+    rx(
+      Y.menu
+        .replace("{dragonLuck}", "10")
+        .replace("{dragonCost}", "5")
+        .replace("{sparrowLuck}", "5")
+        .replace("{sparrowCost}", "20")
+        .replace("{tigerLuck}", "10")
+        .replace("{tigerCost}", "20"),
+    ),
+  );
+  for (const label of ["Order #1", "Order #2", "Order #3", "Leave"])
+    await expect(btn(a, label)).toBeVisible();
 
   // The Lucky Dragon is for the down on their luck: at 50 it is refused and nothing is spent.
   const bp0 = num((await readStats(a)).bpToday);
@@ -921,11 +1079,15 @@ test("Yang's: the three dishes, custom and random fortunes, the allowance and th
     await goTo(a, PLACE.yangs);
     await press(a, order);
     const picker = dialog(a);
-    await expect(picker).toContainText(order === "Order #2" ? "Who's the lucky person?" : "Who would this unlucky person be?");
+    await expect(picker).toContainText(
+      order === "Order #2" ? "Who's the lucky person?" : "Who would this unlucky person be?",
+    );
     await picker.getByRole("radio", { name: who }).check({ force: true });
     await picker.getByRole("button", { name: "Choose" }).click();
     await settle(a);
-    await expect(dialog(a)).toContainText("If you would like to write a custom fortune, enter it now.");
+    await expect(dialog(a)).toContainText(
+      "If you would like to write a custom fortune, enter it now.",
+    );
     await submitNotepad(a, fortune);
     await seeText(a, rx(Y.leaves));
     await press(a, "Continue");
@@ -947,8 +1109,17 @@ test("Yang's: the three dishes, custom and random fortunes, the allowance and th
   // Bob finds the letters: sparrow (named, +5), then the tigers (anonymous, -10 each).
   const letters = await readLetters(b);
   const all = letters.join(" | ");
-  expect(all).toMatch(rx(Y.sparrowMail.replace("{name}", alice.player.name).replace("{fortune}", "Many thanks for the business.").replace("{luck}", "5")));
-  expect(all).toMatch(rx(Y.tigerMail.replace("{fortune}", "May your caskets rust.").replace("{luck}", "10")));
+  expect(all).toMatch(
+    rx(
+      Y.sparrowMail
+        .replace("{name}", alice.player.name)
+        .replace("{fortune}", "Many thanks for the business.")
+        .replace("{luck}", "5"),
+    ),
+  );
+  expect(all).toMatch(
+    rx(Y.tigerMail.replace("{fortune}", "May your caskets rust.").replace("{luck}", "10")),
+  );
   expect(all).toMatch(rx(Y.tigerMail.replace("{luck}", "10")));
   // The tiger never signs its name.
   for (const letter of letters.filter((l) => l.includes("Some delicious"))) {
@@ -1002,8 +1173,16 @@ test("Yang's: the three dishes, custom and random fortunes, the allowance and th
 test("the church and the hospital's front desk greet the player by name", async () => {
   const { page, player } = alice;
   await goTo(page, PLACE.church);
-  await seeText(page, `Father Smyth: "Why hello there, ${player.name}.  Isn't it a wonderfully fantastic day today?  Praise the Lord."`.replace(/\s+/g, " "));
-  await expect(page.getByText("Father Smyth greets you warmly, a little too warmly.")).toBeVisible();
+  await seeText(
+    page,
+    `Father Smyth: "Why hello there, ${player.name}.  Isn't it a wonderfully fantastic day today?  Praise the Lord."`.replace(
+      /\s+/g,
+      " ",
+    ),
+  );
+  await expect(
+    page.getByText("Father Smyth greets you warmly, a little too warmly."),
+  ).toBeVisible();
   await expect(btn(page, "Leave")).toBeVisible();
   await press(page, "Leave");
   await expect(page.getByRole("button", { name: /Go to Your Parlor/ })).toBeVisible();
@@ -1085,22 +1264,68 @@ test("changing the name: the checks in order, the swear filter, the paper's NAME
   // The paper has the line, and nobody but the player's new name shows in the rankings.
   await toDesk(page);
   await press(page, "Read Paper");
-  await expect(paper(page)).toContainText(rx(O.news.replace("{old}", player.name).replace("{his}", "his").replace("{new}", "Alice shoot")));
+  await expect(paper(page)).toContainText(
+    rx(
+      O.news.replace("{old}", player.name).replace("{his}", "his").replace("{new}", "Alice shoot"),
+    ),
+  );
   await press(page, "Continue");
+});
+
+// ------------------------------------------------------------------ psychology and the bonus
+
+test("psychology reads the customer, and a bill near the limit earns a bonus", async () => {
+  test.setTimeout(300_000);
+  const a = alice.page;
+  const N = T.negotiation;
+  const customer = a.getByRole("region", { name: "The customer" });
+  const seen = { resistance: false, estimate: false, mood: false };
+  let bonusText = "";
+  for (let n = 0; n < 150 && !bonusText; n++) {
+    await meet(a);
+    const text = norm(await well(a).textContent());
+    if (await customer.locator(".fq-readout-resist").isVisible()) seen.resistance = true;
+    if (/seems (heartbroken|guilty)\./.test(text)) seen.mood = true;
+    const limit = /worth about \$([\d,]+)/.exec(text)?.[1];
+    if (limit === undefined) {
+      await finishSale(a);
+      continue;
+    }
+    seen.estimate = true;
+    // The estimate is the limit itself (doubled, if that skill fired): pad the bill with soft sells
+    // until it is within $100 of it.
+    for (let i = 0; i < 10; i++) {
+      const remaining = num(limit) - (await totalOf(a));
+      if (remaining <= 150) break;
+      await press(a, "Soft Sell");
+      if (!(await customer.isVisible())) break;
+    }
+    if (await customer.isVisible()) {
+      const done = await finishSale(a);
+      if (/EXCELLENT|GREAT|NICE/.test(done)) bonusText = done;
+    } else await closeAnything(a);
+    await toDesk(a);
+  }
+  expect(seen.estimate).toBe(true);
+  expect(seen.resistance).toBe(true);
+  expect(bonusText, "no bonus came up").not.toBe("");
+  expect(bonusText).toMatch(anyOf(N.done.perfect, N.done.great, N.done.nice));
+  expect(bonusText).toMatch(rx(N.done.success));
 });
 
 // ------------------------------------------------------------------ visits and battle
 
 /** Logs a player off with the round Exit button, and back on from the front door's welcome. */
 async function logOff(who: Who): Promise<void> {
-  await who.page.locator(".fq-exit").click();
+  await clickClear(who.page, who.page.locator(".fq-exit"));
   await who.page.getByRole("button", { name: "Leave" }).click();
   await expect(who.page.getByText(`Welcome back, ${who.player.name}.`)).toBeVisible();
 }
 
 async function logBackOn(who: Who): Promise<void> {
   await who.page.getByRole("button", { name: "Open the parlor" }).click();
-  await expect(who.page.locator(".fq-scene")).toBeVisible();
+  await expect(who.page.getByRole("button", { name: "Open the parlor" })).toBeHidden();
+  await expect(who.page.locator(".fq-cabinet")).toBeVisible();
   await settle(who.page);
 }
 
@@ -1134,7 +1359,51 @@ async function sellSome(page: Page, count: number): Promise<void> {
   }
 }
 
-let carl: Who;
+/** Attacks round after round until one fighter is down; returns whether the player won. */
+async function fightToTheEnd(page: Page): Promise<boolean> {
+  const B = S.battle;
+  for (let round = 0; round < 60; round++) {
+    await press(page, "Attack");
+    const text = norm(await well(page).textContent());
+    // Every round says who hit, who dodged or who stepped aside, with the damage.
+    expect(text).toMatch(/damage|dodges|sidestep|You have won|You fall down/);
+    if (
+      !(await btn(page, "Attack")
+        .isVisible()
+        .catch(() => false))
+    ) {
+      const won = rx(B.won).test(text);
+      expect(won || rx(B.lost).test(text), text).toBe(true);
+      return won;
+    }
+  }
+  throw new Error("the fight never ended");
+}
+
+/**
+ * After a fight: Continue opens the notepad for a last word (`quote` null cancels it); the winner
+ * goes back to the row of parlors, the loser wakes up in the hospital.
+ */
+async function lastWords(page: Page, won: boolean, quote: string | null): Promise<void> {
+  const B = S.battle;
+  await press(page, "Continue");
+  await expect(dialog(page)).toContainText(rx(won ? B.yellWinPrompt : B.yellLostPrompt));
+  if (quote === null) {
+    await dialog(page).getByRole("button", { name: "Cancel" }).click();
+    await settle(page);
+  } else await submitNotepad(page, quote);
+  if (won) {
+    await seeText(page, /You look at your watch/);
+    await press(page, "Leave");
+  } else {
+    await seeText(page, rx(T.places.hospital.roomText));
+    await press(page, "Leave");
+    await seeText(page, rx(T.places.hospital.wakeUp));
+    await press(page, "Leave");
+  }
+}
+
+let carl!: Who;
 
 /** Opens today's paper at a section ("Front Page", "Crime", "Yesterday", "Today"); returns its body text. */
 async function openPaper(page: Page, section?: string): Promise<string> {
@@ -1165,7 +1434,9 @@ test("rival parlors with a rival online: Look lists everyone, a visit is refused
   const before = await visitsLeft(page);
   await findParlor(page, bob.player.name.slice(0, 7));
   await seeText(page, rx(V.online.replace("{name}", bob.player.name)));
-  await expect(page.getByRole("region", { name: "Notes" })).toContainText(rx(V.frontNote.replace("{parlor}", bob.player.parlor)));
+  await expect(page.getByRole("region", { name: "Notes" })).toContainText(
+    rx(V.frontNote.replace("{parlor}", bob.player.parlor)),
+  );
   await press(page, "Leave");
   // Your own parlor: "strangely familiar", and no visit used.
   await findParlor(page, player.name.slice(0, 6));
@@ -1189,7 +1460,8 @@ test("logging off and back on keeps the parlor; a rival logging off can be visit
   await logBackOn(bob);
   await toDesk(bob.page);
   const after = await readStats(bob.page);
-  expect(after.bpTotal).toBe(before.bpTotal);
+  // The same parlor (letters waiting at the desk may add Bury Points when they are read).
+  expect(num(after.bpTotal)).toBeGreaterThanOrEqual(num(before.bpTotal));
   expect(after.gold).toBe(before.gold);
   await logOff(bob);
 });
@@ -1200,11 +1472,19 @@ test("visiting an offline rival: the door, a padlock, a lockpick, the safe, the 
   const visits0 = await visitsLeft(page);
   const picks0 = num((await readStats(page)).lockpicks);
   await findParlor(page, bob.player.name.slice(0, 7));
-  await seeText(page, rx(V.outside.replace("{name}", bob.player.name).replace("{ride}", T.hearseNames[0] as string)));
-  await expect(page.getByRole("region", { name: "Notes" })).toContainText(rx(V.frontNote.replace("{parlor}", bob.player.parlor)));
+  await seeText(
+    page,
+    rx(V.outside.replace("{name}", bob.player.name).replace("{ride}", T.hearseNames[0] as string)),
+  );
+  await expect(page.getByRole("region", { name: "Notes" })).toContainText(
+    rx(V.frontNote.replace("{parlor}", bob.player.parlor)),
+  );
   // Try the door: a heavy padlock at full strength, and the lockpicks in hand.
   await press(page, "Try Door");
-  await seeText(page, rx(V.padlockWithPicks.replace("{strength}", "100").replace("{picks}", String(picks0))));
+  await seeText(
+    page,
+    rx(V.padlockWithPicks.replace("{strength}", "100").replace("{picks}", String(picks0))),
+  );
   await expect(btn(page, "Pick Lock")).toBeVisible();
   // Pick the lock: 5 to 10 points of damage, the pick breaks, Continue leads inside.
   await press(page, "Pick Lock");
@@ -1219,7 +1499,9 @@ test("visiting an offline rival: the door, a padlock, a lockpick, the safe, the 
   await seeText(page, rx(V.hitpoints.replace("{name}", bob.player.name).replace("{hp}", "10")));
   await expect(btn(page, "Attack")).toBeVisible();
   await expect(btn(page, "Steal")).toHaveCount(0);
-  await expect(page.getByRole("region", { name: "Notes" })).toContainText(rx(V.insideNote.replace("{parlor}", bob.player.parlor)));
+  await expect(page.getByRole("region", { name: "Notes" })).toContainText(
+    rx(V.insideNote.replace("{parlor}", bob.player.parlor)),
+  );
 
   // Inside there is no way out but through (the original offers Attack and Steal only): attack,
   // and run away. The picture says the fight is on, with both fighters' hit points.
@@ -1264,9 +1546,16 @@ test("stealing from a parlor without a safe, then a whole battle, the quote and 
   await expect(btn(page, "Steal")).toBeVisible();
   await expect(well(page)).not.toContainText("Safe");
   await press(page, "Steal");
-  const stolen = anyOf(V.stealNothing, V.stealNone, V.stealOne.replace("{type}", "wooden"), V.stealOne.replace("{type}", "silver"), V.stealOne.replace("{type}", "gold"), V.stealMany);
+  const stolen = anyOf(
+    V.stealNothing,
+    V.stealNone,
+    V.stealOne.replace("{type}", "wooden"),
+    V.stealOne.replace("{type}", "silver"),
+    V.stealOne.replace("{type}", "gold"),
+    V.stealMany,
+  );
   await seeText(page, stolen);
-  await seeText(page, rx(V.caught.replace("{name}", carl.player.name).replace("{clothes}", "")));
+  await seeText(page, rx(V.caught.replace("{name}", carl.player.name)));
   await press(page, "Leave");
 
   // Again, and this time a fight to the end: Alice has the plots, so she swings first.
@@ -1274,41 +1563,21 @@ test("stealing from a parlor without a safe, then a whole battle, the quote and 
   await press(page, "Try Door");
   await press(page, "Attack");
   await seeText(page, rx(B.firstSwing.replace("{name}", carl.player.name)));
-  const fight = page.getByRole("region", { name: "The fight" });
-  const hits = anyOf(B.verbsMe.map((v) => `You ${v} {name} for {damage} damage.`));
-  let ended = false;
-  for (let round = 0; round < 40 && !ended; round++) {
-    await press(page, "Attack");
-    const text = norm(await well(page).textContent());
-    expect(text).toMatch(/damage|dodges|sidestep/);
-    if (await btn(page, "Attack").isVisible().catch(() => false)) continue;
-    ended = true;
-  }
-  expect(ended).toBe(true);
-  void fight;
-  void hits;
-  const text = norm(await well(page).textContent());
-  const won = rx(B.won).test(text);
-  const lost = rx(B.lost).test(text);
-  expect(won || lost, text).toBe(true);
-  // Continue: the notepad asks for a last word.
-  await press(page, "Continue");
-  await expect(dialog(page)).toContainText(rx(won ? B.yellWinPrompt : B.yellLostPrompt));
-  await submitNotepad(page, "Mind the gap.");
-  if (won) {
-    await seeText(page, /You look at your watch/);
-    await press(page, "Leave");
-  } else {
-    // The loser wakes up in the hospital.
-    await seeText(page, rx(T.places.hospital.roomText));
-    await press(page, "Leave");
-    await seeText(page, rx(T.places.hospital.wakeUp));
-    await press(page, "Leave");
-  }
+  const won = await fightToTheEnd(page);
+  await lastWords(page, won, "Mind the gap.");
   // The Crime section of today's paper has the line and the quote.
-  const [winner, loser] = won ? [alice.player.name, carl.player.name] : [carl.player.name, alice.player.name];
+  const [winner, loser] = won
+    ? [alice.player.name, carl.player.name]
+    : [carl.player.name, alice.player.name];
   const crime = (await openPaper(page, "Crime")).replace(/\s+/g, " ");
-  expect(crime).toMatch(rx(won ? B.crimeWinQuote : B.crimeLostQuote.replace("{loser}", loser).replace("{winner}", winner).replace("{quote}", "Mind the gap.")));
+  expect(crime).toMatch(
+    rx(
+      (won ? B.crimeWinQuote : B.crimeLostQuote)
+        .replaceAll("{winner}", winner)
+        .replaceAll("{loser}", loser)
+        .replace("{quote}", "Mind the gap."),
+    ),
+  );
   expect(crime).toContain("Mind the gap.");
   await press(page, "Continue");
 });
@@ -1319,9 +1588,9 @@ test("the victims log back on and read what happened to them", async () => {
   // Bob: a prowler weakened his padlock, and someone broke in and ran away.
   await logBackOn(bob);
   const bobLetters = (await readLetters(bob.page)).join(" | ");
-  expect(bobLetters).toMatch(rx(V.lockPickedMail.replace("{damage}", "").replace("{strength}", "")));
+  expect(bobLetters).toMatch(rx(V.lockPickedMail));
   expect(bobLetters).toMatch(rx(B.attackedMail.replace("{name}", alice.player.name)));
-  expect(bobLetters).toMatch(rx(B.ranOffMail.replace("{HeCap}", "")));
+  expect(bobLetters).toMatch(rx(B.ranOffMail));
   // Carl: the burglar was seen, and then beaten, or won (a letter either way), with the last words.
   await logBackOn(carl);
   const carlLetters = (await readLetters(carl.page)).join(" | ");
@@ -1331,3 +1600,1044 @@ test("the victims log back on and read what happened to them", async () => {
   await toDesk(carl.page);
   await toDesk(bob.page);
 });
+
+test("a weaker rival breaks into a sleeping parlor without a pick, then with one, loses, and wakes up in the hospital", async () => {
+  test.setTimeout(180_000);
+  const V = S.visit;
+  const B = S.battle;
+  const b = bob.page;
+  // Alice goes to bed: her padlock and safe stand.
+  await logOff(alice);
+  // Without a lockpick the padlock holds: "you attempt to pick the lock with your finger".
+  await findParlor(b, alice.player.name.slice(0, 7));
+  await press(b, "Try Door");
+  await seeText(b, rx(V.padlock.replace("{strength}", "100")));
+  await press(b, "Pick Lock");
+  await seeText(b, rx(V.noPick));
+  await press(b, "Leave");
+  // One gold tag buys a pick.
+  await goTo(b, PLACE.store);
+  await press(b, "Supplies");
+  await press(b, "View #1");
+  await press(b, "Buy one");
+  await press(b, "Continue");
+  await press(b, "Back");
+  await press(b, "Back");
+  await findParlor(b, alice.player.name.slice(0, 7));
+  await press(b, "Try Door");
+  await seeText(b, rx(V.padlockWithPicks.replace("{strength}", "100").replace("{picks}", "1")));
+  await press(b, "Pick Lock");
+  await press(b, "Continue");
+  await seeText(b, rx(V.safe));
+  await press(b, "Attack");
+  await seeText(b, rx(B.scream));
+  // Bob has fewer plots: the sleeper wakes and strikes first.
+  await seeText(b, rx(B.theyKnew.replace("{name}", alice.player.name)));
+  const won = await fightToTheEnd(b);
+  await lastWords(b, won, null);
+  // The paper's Crime section has the plain line (no quote was given).
+  const [winner, loser] = won
+    ? [bob.player.name, alice.player.name]
+    : [alice.player.name, bob.player.name];
+  const crime = (await openPaper(b, "Crime")).replace(/\s+/g, " ");
+  expect(crime).toMatch(
+    rx((won ? B.crimeWin : B.crimeLost).replace("{winner}", winner).replace("{loser}", loser)),
+  );
+  await press(b, "Continue");
+  // Alice wakes up to the news.
+  await logBackOn(alice);
+  const letters = (await readLetters(alice.page)).join(" | ");
+  expect(letters).toMatch(rx(B.attackedMail.replace("{name}", bob.player.name)));
+  expect(letters).toMatch(rx(V.lockPickedMail));
+  await toDesk(alice.page);
+});
+
+// ------------------------------------------------------------------ the Pale Horse Cafe
+
+const chatBox = (page: Page): Locator => page.getByRole("textbox", { name: "Say something" });
+
+/** Types a line (or several, joined with `|`) in the cafe and sends it. */
+async function say(page: Page, text: string): Promise<void> {
+  await chatBox(page).fill(text);
+  await chatBox(page).press("Enter");
+  await expect(chatBox(page)).toHaveValue("");
+}
+
+async function chatSees(page: Page, pattern: RegExp | string): Promise<void> {
+  await expect(chatLog(page)).toContainText(pattern);
+}
+
+test("the cafe: arrivals, help, who, info, all, talk, /me, /yell, unknown commands, leaving", async () => {
+  const C = S.cafe;
+  const a = alice.page;
+  const c = carl.page;
+  await toDesk(a);
+  await toDesk(c);
+  // Alice goes in first: she is the only one there.
+  await goTo(a, PLACE.cafe);
+  await expect(chatBox(a)).toBeVisible();
+  await seeText(a, rx(C.intro.replace("{names}", C.onlyOne)));
+  // Carl comes in: Alice hears it, and Carl is told who is here.
+  await goTo(c, PLACE.cafe);
+  await chatSees(a, rx(C.saunters.replace("{name}", carl.player.name)));
+  await seeText(c, rx(C.othersHere));
+  await seeText(c, alice.player.name);
+
+  // Talk: everyone in the room reads it, after the original's swear filter.
+  await say(a, "hello Carl");
+  await chatSees(c, rx(C.say.replace("{name}", alice.player.name).replace("{text}", "hello Carl")));
+  await chatSees(a, rx(C.say.replace("{name}", alice.player.name).replace("{text}", "hello Carl")));
+  await say(c, "what the fuck is this");
+  await chatSees(a, `${carl.player.name}: what the fudge is this`);
+  // Several lines in one go, separated by a bar.
+  await say(a, "one|two|three");
+  for (const word of ["one", "two", "three"])
+    await chatSees(c, rx(C.say.replace("{name}", alice.player.name).replace("{text}", word)));
+
+  // /? and its help text; /who; /info with her own numbers; /all.
+  await say(a, "/?");
+  await chatSees(a, "Cafe chat help");
+  await chatSees(a, "/yell to send a message to everyone");
+  await chatSees(a, "/give name tag_type to give a tag");
+  await say(a, "/who");
+  await chatSees(a, rx(C.othersHere));
+  const stats = await readStats(a);
+  await goTo(a, PLACE.cafe);
+  await say(a, "/info");
+  const st = (id: string) => stats[id] ?? "";
+  await chatSees(
+    a,
+    rx(
+      C.info
+        .replace("{turns}", st("turns"))
+        .replace("{visits}", st("visits"))
+        .replace("{bpToday}", st("bpToday"))
+        .replace("{bp}", st("bpTotal"))
+        .replace("{wood}", st("wood"))
+        .replace("{silver}", st("silver"))
+        .replace("{gold}", st("gold")),
+    ),
+  );
+  await say(a, "/all");
+  await chatSees(a, "Name                 Status            Last hit");
+  await chatSees(a, new RegExp(`${escapeRx(alice.player.name)}\\s+in cafe`));
+  await chatSees(a, new RegExp(`${escapeRx(carl.player.name)}\\s+in cafe`));
+  // /me and /yell (Bob, at his desk, is told about the yell too).
+  await say(a, "/me tips her hat");
+  await chatSees(c, `${alice.player.name} tips her hat`);
+  await say(a, "/yell is anybody out there");
+  await chatSees(
+    c,
+    rx(C.yell.replace("{name}", alice.player.name).replace("{text}", "is anybody out there")),
+  );
+  await say(a, "/dance");
+  await chatSees(a, rx(C.unknown));
+
+  // Carl leaves through the map; Alice sees him step out.
+  await btn(c, "Town Map")
+    .isVisible()
+    .catch(() => false);
+  await toDesk(c);
+  await chatSees(a, rx("{name} steps outside.".replace("{name}", carl.player.name)));
+});
+
+/** Walks into the cafe (from wherever the player is). A walk in starts the transcript afresh. */
+async function enterCafe(who: Who): Promise<void> {
+  await goTo(who.page, PLACE.cafe);
+  await expect(chatBox(who.page)).toBeVisible();
+}
+
+test("the cafe: /give with every check, the town's one TV, and a Yang's commercial on it", async () => {
+  const C = S.cafe;
+  const a = alice.page;
+  const b = bob.page;
+  const c = carl.page;
+  const carlPart = carl.player.name.slice(4);
+  const bobPart = bob.player.name.slice(4);
+  const mine = alice.player.name;
+  // No silver in the pockets (the teller turns it all to gold), so a silver gift comes up empty.
+  await goTo(a, PLACE.bank);
+  await press(a, "All to gold");
+  await closeAnything(a);
+  expect(await stat(a, "silver")).toBe(0);
+  const gold0 = await stat(a, "gold");
+  const carlGold0 = await stat(c, "gold");
+  for (const who of [alice, bob, carl]) await enterCafe(who);
+  const gave = (target: string) =>
+    rx(C.gave.replace("{name}", mine).replace("{target}", target).replace("{casket}", "Gold"));
+
+  // The checks, in the original's order: nobody there by that name, a tag that is not a tag,
+  // none of that kind in the pocket, yourself.
+  await say(a, "/give zzzzzz gold");
+  await chatSees(a, rx(C.giveNobody.replace("{search}", "zzzzzz")));
+  await say(a, `/give ${carlPart} platinum`);
+  await chatSees(a, rx(C.giveBadType));
+  await say(a, `/give ${carlPart} silver`);
+  await chatSees(c, rx(C.giveEmpty.replace("{name}", mine).replace("{casket}", "Silver")));
+  await say(a, `/give ${mine.slice(-5)} gold`);
+  await chatSees(c, rx(C.giveSelf.replace("{name}", mine).replace("{casket}", "Gold")));
+  // A real gift: the whole room hears it.
+  await say(a, `/give ${carlPart} gold`);
+  await chatSees(c, gave(carl.player.name));
+  await chatSees(b, gave(carl.player.name));
+  // One a day may be received (the sysop's setting): the second is refused, told to the room.
+  await setSettings(a, TOWNS.main, { tagsReceivablePerDay: 1 });
+  await say(a, `/give ${carlPart} gold`);
+  await chatSees(
+    b,
+    rx(
+      C.giveLimit
+        .replace("{name}", mine)
+        .replace("{target}", carl.player.name)
+        .replace("{casket}", "Gold")
+        .replace("{count}", "1"),
+    ),
+  );
+  // And with the transfer switched off (0), a rival who has had none is told it is disabled.
+  await setSettings(a, TOWNS.main, { tagsReceivablePerDay: 0 });
+  await say(a, `/give ${bobPart} gold`);
+  await chatSees(
+    b,
+    rx(
+      C.giveDisabled
+        .replace("{name}", mine)
+        .replace("{target}", bob.player.name)
+        .replace("{casket}", "Gold"),
+    ),
+  );
+  await setSettings(a, TOWNS.main, { tagsReceivablePerDay: 100 });
+
+  // The TV: one switch for the town. /tv says how it stands; "on" in any capitals turns it on,
+  // any other word turns it off.
+  await say(a, "/tv");
+  await chatSees(a, rx(C.tvIsOn));
+  await say(a, "/tv off");
+  await chatSees(a, rx(C.tvTurnedOff));
+  await say(a, "/tv");
+  await chatSees(a, rx(C.tvIsOff));
+  await say(b, "/tv");
+  await chatSees(b, rx(C.tvIsOff));
+  // A Yang's commercial (for Carl's parlor) while it is off does not reach the cafe...
+  const commercial = rx(T.places.yangs.tv.replace("{parlor}", carl.player.parlor));
+  const sendSparrow = async (fortune: string) => {
+    await goTo(b, PLACE.yangs);
+    await press(b, "Order #2");
+    const picker = dialog(b);
+    await picker.getByRole("radio", { name: carl.player.name }).check({ force: true });
+    await picker.getByRole("button", { name: "Choose" }).click();
+    await settle(b);
+    await submitNotepad(b, fortune);
+    await press(b, "Continue");
+  };
+  await sendSparrow("off the air");
+  // ...and with it on, it does (Bob walked out; Alice and Carl are still in).
+  await say(c, "/tv ON");
+  await chatSees(c, rx(C.tvTurnedOn));
+  await sendSparrow("on the air");
+  await expect(chatLog(a)).toContainText(commercial);
+  const lines = await chatLog(a).locator("li").allTextContents();
+  expect(lines.filter((l) => commercial.test(l.replace(/\s+/g, " ")))).toHaveLength(1);
+  await say(a, "/tv please stop");
+  await chatSees(a, rx(C.tvTurnedOff));
+  await say(a, "/tv on");
+  await chatSees(a, rx(C.tvTurnedOn));
+  // The tags changed hands: one gold from Alice to Carl, nothing else.
+  expect(await stat(a, "gold")).toBe(gold0 - 1);
+  expect(await stat(c, "gold")).toBe(carlGold0 + 1);
+});
+
+// ------------------------------------------------------------------ letters
+
+/** Writes a letter: the name search (answering No until the name asked for comes up), then the notepad. */
+async function writeLetter(
+  page: Page,
+  search: string,
+  wanted: string,
+  text: string,
+): Promise<void> {
+  await toDesk(page);
+  await press(page, "Write Letter");
+  await expect(dialog(page)).toContainText(rx(S.mail.whoPrompt));
+  await expect(dialog(page)).toContainText(S.mail.nameHint);
+  await submitNotepad(page, search);
+  for (let i = 0; i < 8; i++) {
+    await expect(dialog(page)).toContainText(rx(S.mail.doYouMean));
+    if (norm(await dialog(page).textContent()).includes(`Do you mean ${wanted}?`)) {
+      await answer(page, "Yes");
+      break;
+    }
+    await answer(page, "No");
+  }
+  await expect(dialog(page)).toContainText(rx(S.mail.composePrompt));
+  await submitNotepad(page, text);
+}
+
+test("letters: the name search, a letter, the reply with its quote, the cafe's notice, cancelling", async () => {
+  const M = S.mail;
+  const a = alice.page;
+  const c = carl.page;
+  await enterCafe(carl);
+  // Nobody by that name, and cancelling the name prompt, send nothing.
+  await toDesk(a);
+  await press(a, "Write Letter");
+  await submitNotepad(a, "zzzzzz");
+  await seeDialog(a, rx(M.noName));
+  await dialog(a).getByRole("button").first().click();
+  await settle(a);
+  await expect(btn(a, "Wait for Customer")).toBeVisible();
+  await press(a, "Write Letter");
+  await dialog(a).getByRole("button", { name: "Cancel" }).click();
+  await settle(a);
+  await expect(btn(a, "Wait for Customer")).toBeVisible();
+
+  // A partial name matches everyone: "Do you mean ...?" goes through them until Carl.
+  const body = "Dear Carl,\nthe wake is at six.\nBring flowers.";
+  await writeLetter(a, "Ned", carl.player.name, body);
+  await expect(btn(a, "Wait for Customer")).toBeVisible();
+  // Carl, in the cafe, is told; his desk's indicator counts the letter.
+  await chatSees(c, rx(M.waiting));
+  await expect(c.getByRole("status").filter({ hasText: /letter/ })).toContainText(
+    "1 letter is waiting at your desk",
+  );
+
+  // He steps out to the desk: the letter, with the question whether to reply.
+  await press(c, "Leave");
+  await c.getByRole("button", { name: /Go to Your Parlor/ }).click();
+  await settle(c);
+  const letter = dialog(c);
+  await expect(letter).toContainText(
+    rx(M.received.replace("{name}", alice.player.name).replace("{text}", "")),
+  );
+  await expect(letter).toContainText("Dear Carl,");
+  await expect(letter).toContainText("the wake is at six.");
+  await expect(letter).toContainText(rx(M.replyPrompt));
+  await answer(c, "Yes");
+  // The notepad opens with the letter quoted, line by line.
+  const pad = dialog(c).getByRole("textbox");
+  await expect(pad).toHaveValue(/>Dear Carl,\n>the wake is at six\.\n>Bring flowers\./);
+  await pad.press("End");
+  await pad.pressSequentially("\nI will, thank you.");
+  await dialog(c).getByRole("button", { name: "Submit" }).click();
+  await settle(c);
+  await expect(btn(c, "Wait for Customer")).toBeVisible();
+
+  // Alice reads the answer: Carl's words under the quote of her own letter.
+  // (An idle desk is pushed the letter; otherwise a visit to the desk delivers it.)
+  const pushed = await dialog(a)
+    .waitFor({ state: "visible", timeout: 4_000 })
+    .then(
+      () => true,
+      () => false,
+    );
+  if (!pushed) {
+    await press(a, "Town Map");
+    await a.getByRole("button", { name: /Go to Your Parlor/ }).click();
+    await settle(a);
+  }
+  const reply = dialog(a);
+  await expect(reply).toContainText(
+    rx(M.received.replace("{name}", carl.player.name).replace("{text}", "")),
+  );
+  await expect(reply).toContainText("I will, thank you.");
+  await expect(reply).toContainText(">the wake is at six.");
+  await answer(a, "No");
+  await expect(btn(a, "Wait for Customer")).toBeVisible();
+});
+
+// ------------------------------------------------------------------ the paper
+
+test("the paper: front page, crime page, yesterday and today, announcements with links", async () => {
+  const N = S.news;
+  const a = alice.page;
+  // Today's front page: the new parlors, the top seller of the day (the day's most Bury Points).
+  const front = await openPaper(a);
+  expect(front).toContain(`A new parlor (${alice.player.parlor}) run by`);
+  await expect(a.getByRole("heading", { name: "Top Seller Of The Day" })).toBeVisible();
+  await expect(a.getByRole("heading", { name: "Yesterday's Top Seller" })).toBeVisible();
+  await expect(a.locator(".fq-news")).toContainText(rx(T.news.topToday));
+  await expect(a.locator(".fq-news")).toContainText(T.news.noTopYesterday);
+  // The sections: Crime has the day's crimes (the burglaries and fights above), Front Page comes back.
+  await press(a, "Crime");
+  await expect(paper(a).first()).toContainText(/assaulted/);
+  await press(a, "Front Page");
+  // Yesterday's edition on day 1 is the day before the game: nothing happened. The button turns into Today.
+  await press(a, "Yesterday");
+  await expect(a.locator(".fq-edition")).toBeVisible();
+  await expect(paper(a).first()).toContainText(T.news.nothingToday);
+  await expect(btn(a, "Today")).toBeVisible();
+  await press(a, "Today");
+  await expect(btn(a, "Yesterday")).toBeVisible();
+
+  // An announcement: the swear filter, backticks removed, [text] made a link when it is an address.
+  await press(a, "Make Announcement");
+  await expect(dialog(a)).toContainText(N.announcePrompt);
+  await submitNotepad(
+    a,
+    "Sale on shit caskets!\nSee [example.com/caskets] or [not a link] today `4now",
+  );
+  const body = paper(a).first();
+  await expect(body).toContainText(
+    rx(
+      N.announcementHeader
+        .replace("{name}", alice.player.name)
+        .replace("{parlor}", alice.player.parlor),
+    ),
+  );
+  await expect(body).toContainText("Sale on shoot caskets!");
+  await expect(body).toContainText("4now");
+  const link = body.getByRole("link", { name: "example.com/caskets" });
+  await expect(link).toHaveAttribute("href", "http://example.com/caskets");
+  await expect(link).toHaveAttribute("target", "_blank");
+  await expect(link).toHaveAttribute("rel", /noopener/);
+  await expect(body.getByRole("link")).toHaveCount(1);
+  await expect(body.getByText("not a link")).toBeVisible();
+  // Another player sees it on the same page.
+  const theirs = await openPaper(carl.page);
+  expect(theirs).toContain("Sale on shoot caskets!");
+  await press(carl.page, "Continue");
+  await press(a, "Continue");
+});
+
+// ------------------------------------------------------------------ rankings
+
+/** The rankings sheet: the rows in order, each as { name, bp, status, title }. */
+async function readRankings(
+  page: Page,
+): Promise<{ name: string; bp: number; status: string; text: string }[]> {
+  await toDesk(page);
+  await press(page, "Rankings");
+  const table = page.getByRole("table");
+  await expect(table).toBeVisible();
+  const rows = await table.locator("tbody tr").evaluateAll((trs) =>
+    trs.map((tr) => ({
+      name: tr.querySelector(".fq-rank-name")?.firstChild?.textContent?.trim() ?? "",
+      bp: Number((tr.querySelector(".fq-rank-bp")?.textContent ?? "0").replace(/,/g, "")),
+      status: tr.querySelector(".fq-rank-chip")?.textContent?.trim() ?? "",
+      text: (tr.textContent ?? "").replace(/\s+/g, " ").trim(),
+    })),
+  );
+  await press(page, "Continue");
+  return rows;
+}
+
+test("rankings: every parlor by Bury Points, with its rating line and who is on", async () => {
+  const a = alice.page;
+  const rows = await readRankings(a);
+  const names = [alice, bob, carl].map((w) => w.player.name);
+  for (const name of names) expect(rows.map((r) => r.name)).toContain(name);
+  // Sorted by total Bury Points, the best first, and every place numbered.
+  const bps = rows.map((r) => r.bp);
+  expect(bps).toEqual([...bps].sort((x, y) => y - x));
+  await toDesk(a);
+  await press(a, "Rankings");
+  const table = a.getByRole("table");
+  await expect(table.locator("tbody tr").first().locator(".fq-rank-place")).toHaveText("1");
+  // The rating title is a line of the original's ratings.txt (each row has one).
+  for (const row of rows) expect(row.text.length).toBeGreaterThan(row.name.length + 6);
+  // Online players say so: Alice is on, Bob is on.
+  const mine = rows.find((r) => r.name === alice.player.name);
+  expect(mine?.status).toMatch(/on now|in cafe/);
+  await press(a, "Continue");
+});
+
+// ------------------------------------------------------------------ a new day
+
+/** The top seller of the day as the paper's notice names it, and the rank order of the parlors. */
+async function topSellerToday(page: Page): Promise<string> {
+  await openPaper(page);
+  const notice = page
+    .locator("section")
+    .filter({ has: page.getByRole("heading", { name: "Top Seller Of The Day" }) });
+  const text = norm(await notice.textContent());
+  await press(page, "Continue");
+  const name = /Top Seller Of The Day\s*(.*?) from /.exec(text)?.[1];
+  if (!name) throw new Error(`no top seller in "${text}"`);
+  return name;
+}
+
+test("a new day: the banner, the wake-up at the desk, the morning screen, the daily rewards, yesterday's paper", async () => {
+  const M = T.maintenance;
+  const a = alice.page;
+  const b = bob.page;
+  const day0 = (
+    (await (await a.request.get(`/api/towns/${TOWNS.main.id}`)).json()) as { day: number }
+  ).day;
+
+  // Who sold the most today, and how the parlors rank: the mail below goes by these.
+  const top = await topSellerToday(a);
+  const rank = (await readRankings(a)).map((r) => r.name);
+  const bpToday = num((await readStats(a)).bpToday);
+  expect(bpToday).toBeGreaterThan(0);
+  // Carl goes to bed; Alice and Bob are at their desks when midnight comes.
+  await logOff(carl);
+  await toDesk(a);
+  await toDesk(b);
+  await admin(a, "POST", `/admin/towns/${TOWNS.main.id}/new-day`);
+  for (const page of [a, b]) {
+    await expect(page.getByText(`A new day has dawned. It is day ${day0 + 1}.`)).toBeVisible();
+  }
+
+  // Alice's next desk visit says the night passed at the desk, with the Medalist's four extra turns.
+  await press(a, "Town Map");
+  await a.getByRole("button", { name: /Go to Your Parlor/ }).click();
+  await settle(a);
+  const letters: Record<string, string> = { alice: "", bob: "" };
+  const wake = rx(T.desk.newDayAtDesk.replace("{parlor}", alice.player.parlor));
+  // The letters (the daily rewards) are read as overlays first, then the wake-up text.
+  const read = async (who: "alice" | "bob", page: Page) => {
+    const found: string[] = [];
+    for (let i = 0; i < 10 && (await dialog(page).isVisible()); i++) {
+      found.push(norm(await dialog(page).textContent()));
+      await dialog(page).getByRole("button").first().click();
+      await settle(page);
+    }
+    letters[who] = found.join(" | ");
+  };
+  await read("alice", a);
+  await seeText(a, wake);
+  await seeText(
+    a,
+    rx(T.desk.hearseBonus.replace("{ride}", T.hearseNames[2] as string).replace("{turns}", "4")),
+  );
+  const stats = await readStats(a);
+  expect(num(stats.turns)).toBe(404);
+  // Today's Bury Points start again at zero, plus the rewards the letters just paid.
+  expect(num(stats.bpToday)).toBeLessThanOrEqual(60);
+  expect(num(stats.bpToday)).toBeLessThan(bpToday);
+  expect(num(stats.visits)).toBe(8);
+
+  // The rewards: the top seller of the day and the top three parlors, by mail.
+  const rewards = rx(M.topSeller);
+  if (top === alice.player.name) expect(letters.alice).toMatch(rewards);
+  const place = rank.indexOf(alice.player.name);
+  expect(letters.alice).toMatch(rx([M.topParlor, M.secondParlor, M.thirdParlor][place] as string));
+  await press(b, "Town Map");
+  await b.getByRole("button", { name: /Go to Your Parlor/ }).click();
+  await settle(b);
+  await read("bob", b);
+  const bobPlace = rank.indexOf(bob.player.name);
+  expect(letters.bob).toMatch(rx([M.topParlor, M.secondParlor, M.thirdParlor][bobPlace] as string));
+  if (top === bob.player.name) expect(letters.bob).toMatch(rewards);
+
+  // Carl, who was in bed, logs on to the morning screen: the new day's welcome, and the police
+  // that watched his parlor overnight after he was beaten.
+  await logBackOn(carl);
+  await sitDownAfterLogon(carl.page);
+  // Yesterday's paper: the day before has its news, the top seller's notice names the same player.
+  await openPaper(a);
+  await press(a, "Yesterday");
+  await expect(a.locator(".fq-edition")).toBeVisible();
+  await expect(paper(a).first()).toContainText("Sale on shoot caskets!");
+  await expect(a.locator(".fq-news")).toContainText(top);
+  await press(a, "Continue");
+
+  // Yang's door is open again for the player thrown out yesterday.
+  await goTo(a, PLACE.yangs);
+  await seeText(a, rx(T.places.yangs.menu));
+  await press(a, "Leave");
+  // The library: the old papers now reach day 1.
+  await goTo(a, PLACE.university);
+  await press(a, "Library");
+  await press(a, "Old Papers");
+  await expect(dialog(a)).toContainText(
+    rx(T.places.university.paperPrompt.replace("{max}", String(day0))),
+  );
+  await submitNotepad(a, String(day0));
+  await seeText(a, rx(T.places.university.paperFound.replace("{day}", String(day0))));
+  await seeText(a, "A new parlor (");
+  await press(a, "Back");
+  await press(a, "Back");
+  await press(a, "Leave");
+});
+
+/** Logging on after a night away: the morning screen, then the desk. */
+async function sitDownAfterLogon(page: Page): Promise<void> {
+  // The paper first, then the morning at the desk with its coffee and a Continue.
+  if (await page.locator(".fq-news").isVisible()) await press(page, "Continue");
+  const morning = well(page);
+  await expect(morning).toContainText("You unlock the front door and enter your beloved");
+  await expect(morning).toContainText("Funeral Parlor.");
+  await expect(morning).toContainText("There are police patrolling your parlor.");
+  await press(page, "Continue");
+  await toDesk(page);
+}
+
+// ------------------------------------------------------------------ events, risks, scripts
+
+/** Sets the odds of the three things that can happen instead of a customer (the sysop's Game Settings). */
+const odds = (page: Page, normal: number, luck: number, script: number) =>
+  setSettings(page, TOWNS.main, { normalOdds: normal, luckOdds: luck, scriptOdds: script });
+
+test("a random event and a risk come in place of a customer, and use no turn", async () => {
+  const a = alice.page;
+  const W = T.wait;
+  // Every wait is a special event (the original's 8 percent, turned up).
+  await odds(a, 1, 0, 0);
+  await press(a, "Wait for Customer");
+  await seeText(a, rx(W.eventHeader));
+  // The gains and losses are told in the original's words, and the player stays at the desk.
+  await expect(btn(a, "Wait for Customer")).toBeVisible();
+  const event = norm(await well(a).textContent());
+  expect(event).toMatch(/SPECIAL EVENT/);
+  await press(a, "Wait for Customer");
+  await seeText(a, rx(W.eventHeader));
+
+  // Every wait is a risk (a woman's ring, a finger in the dirt...): decline, then take it. A risk
+  // uses no turn (an event may give or take some of its own).
+  const turns0 = num((await readStats(a)).turns);
+  await odds(a, 0, 1, 0);
+  for (const choice of ["risk:decline", "risk:take"]) {
+    await press(a, "Wait for Customer");
+    const take = a.locator('[data-button-id="risk:take"]');
+    const decline = a.locator('[data-button-id="risk:decline"]');
+    await expect(take).toBeVisible();
+    await expect(decline).toBeVisible();
+    await a.locator(`[data-button-id="${choice}"]`).click();
+    await settle(a);
+    const text = norm(await well(a).textContent());
+    if (choice === "risk:decline") expect(text).toMatch(anyOf(T.risk.earnedOne, T.risk.earned));
+    else expect(text).toMatch(anyOf(T.risk.won, T.risk.lost));
+    await press(a, "Continue");
+  }
+  await odds(a, 0, 0, 0);
+  expect(num((await readStats(a)).turns)).toBe(turns0);
+});
+
+test("a script event: a bonus tag, or the Twins and their fire (smoke detector and safe, a rival at the window)", async () => {
+  test.setTimeout(240_000);
+  const b = bob.page;
+  const c = carl.page;
+  await toDesk(b);
+  await toDesk(c);
+  await logOff(alice);
+  await odds(b, 0, 0, 1);
+  let bonus = 0;
+  let declined = false;
+  let burned = false;
+  for (let step = 0; step < 80 && !(bonus > 0 && burned); step++) {
+    await press(b, "Wait for Customer");
+    if (await btn(b, "Hire Twins").isVisible()) {
+      await expect(well(b)).toContainText(
+        rx(
+          "The Twins: \"We like to play with fire. We'll discreetly pay a 'visit' to any funeral parlor in town for only 6 gold tags.",
+        ),
+      );
+      if (!declined) {
+        declined = true;
+        await press(b, "No Thanks");
+        await expect(btn(b, "Wait for Customer")).toBeVisible();
+        continue;
+      }
+      await press(b, "Hire Twins");
+      const pick = async (name: string) => {
+        const picker = dialog(b);
+        await expect(picker).toContainText("Who would you like the Twins to pay a visit to?");
+        await picker.getByRole("radio", { name }).check({ force: true });
+        await picker.getByRole("button", { name: "Choose" }).click();
+        await settle(b);
+      };
+      // Not yourself, not someone who is up and about (the Twins saw them in the yard)...
+      await pick(bob.player.name);
+      await seeText(
+        b,
+        "Even as a joke you don't think you should suggest the twins burn down your own building.",
+      );
+      await press(b, "Hire Twins");
+      await pick(carl.player.name);
+      await seeText(
+        b,
+        `The twins shake their heads vigorously.  Apparently they saw ${carl.player.name} working in the yard.`.replace(
+          /\s+/g,
+          " ",
+        ),
+      );
+      // ...but Alice, asleep, with a smoke detector and a safe.
+      await press(b, "Hire Twins");
+      await pick(alice.player.name);
+      const text = norm(await well(b).textContent());
+      expect(text).toMatch(
+        /The fire is put out before it can do any serious damage!|A fire engulfs/,
+      );
+      if (text.includes("A fire engulfs"))
+        expect(text).toContain("You see a shiny safe through a window.");
+      burned = true;
+      await press(b, "Continue");
+      continue;
+    }
+    if (await btn(b, "Continue").isVisible()) {
+      const text = norm(await well(b).textContent());
+      expect(text).toMatch(
+        /While cleaning behind the .+ you find a (wooden|silver|gold|Wood|Silver|Gold) tag\./,
+      );
+      bonus++;
+      await press(b, "Continue");
+    }
+  }
+  await odds(b, 0, 0, 0);
+  expect(burned).toBe(true);
+  expect(bonus).toBeGreaterThan(0);
+  // Alice wakes to the letter about the fire.
+  await logBackOn(alice);
+  const letters = (await readLetters(alice.page)).join(" | ");
+  expect(letters).toMatch(/A mysterious fire was started on your property\./);
+  await toDesk(alice.page);
+});
+
+// ------------------------------------------------------------------ limits and the tournament
+
+const newDay = (page: Page, town: { id: string }) =>
+  admin(page, "POST", `/admin/towns/${town.id}/new-day`);
+
+test("limits: out of turns, no visits left, no name changes, too poor for a class", async ({
+  browser,
+}) => {
+  test.setTimeout(240_000);
+  const V = S.visit;
+  await makeTown(alice.page, TOWNS.limits, {
+    turnsPerDay: 2,
+    visitsPerDay: 1,
+    nameChangeCost: 0,
+    normalOdds: 0,
+    luckOdds: 0,
+    scriptOdds: 0,
+  });
+  const p = await join(browser, TOWNS.limits, "pauper");
+  await sitDown(p.page);
+  const q = await join(browser, TOWNS.limits, "sleeper");
+  await sitDown(q.page);
+  await logOff(q);
+  const page = p.page;
+
+  // Too poor for Spirit University: no gold tags, "you fumble through your pockets".
+  await goTo(page, PLACE.university);
+  await press(page, "Take PSY");
+  await seeText(page, rx(T.places.university.cantAfford));
+  await press(page, "Continue");
+  await press(page, "Leave");
+  // The sysop switched name changes off: the Name button says so.
+  await toDesk(page);
+  await press(page, "Stats");
+  await press(page, "Name");
+  await seeText(page, rx(T.places.options.noChange));
+  await press(page, "Continue");
+  await press(page, "Back");
+
+  // One visit a day: the row says so, the visit uses it, and the next is "look at everyone's parlor day".
+  await goTo(page, PLACE.rivals);
+  await seeText(page, rx(V.watchOne));
+  await press(page, "Leave");
+  await findParlor(page, q.player.name.slice(4));
+  await press(page, "Try Door");
+  await press(page, "Steal");
+  await press(page, "Leave");
+  await seeText(page, rx(V.watchNone));
+  await press(page, "Visit");
+  await seeText(page, rx(V.noVisitsLeft));
+  await press(page, "Continue");
+  await press(page, "Leave");
+
+  // Two turns a day: two customers, then the closing-time line (one of the three) and the shut door.
+  await sellSome(page, 2);
+  await press(page, "Wait for Customer");
+  await seeText(page, anyOf(T.wait.noTurns));
+  expect(num((await readStats(page)).turns)).toBe(0);
+  await p.context.close();
+  await q.context.close();
+});
+
+test("the tournament: the countdown, the final day, the winner and the meteor, the Book of Deeds, the reset", async ({
+  browser,
+}) => {
+  test.setTimeout(240_000);
+  const N = T.news;
+  const L = S.lobby;
+  const a = alice.page;
+  await makeTown(a, TOWNS.cup, {
+    tournamentActive: true,
+    tournamentDays: 3,
+    normalOdds: 0,
+    luckOdds: 0,
+    scriptOdds: 0,
+  });
+  // The front door shows the tournament's day.
+  const door = await (await browser.newContext()).newPage();
+  await openDoor(door, TOWNS.cup);
+  await expect(
+    door.getByText(rx(L.tournament.replace("{day}", "1").replace("{days}", "3"))),
+  ).toBeVisible();
+  await door.context().close();
+
+  const z = await join(browser, TOWNS.cup, "zed", { male: false });
+  await sitDown(z.page);
+  await sellSome(z.page, 4);
+  const zp = z.page;
+  // Day 1 of 3: two days left on the front page's top.
+  expect(await openPaper(zp)).toMatch(rx(N.daysLeft.replace("{days}", "2")));
+  await press(zp, "Continue");
+  // Day 2: tomorrow is the last day.
+  await newDay(a, TOWNS.cup);
+  await expect(zp.getByText("A new day has dawned. It is day 2.")).toBeVisible();
+  expect(await openPaper(zp)).toMatch(rx(N.lastDayTomorrow));
+  await press(zp, "Continue");
+  // Day 3: the final day, a winner at midnight.
+  await newDay(a, TOWNS.cup);
+  await expect(zp.getByText("A new day has dawned. It is day 3.")).toBeVisible();
+  expect(await openPaper(zp)).toMatch(rx(N.finalDay));
+  await press(zp, "Continue");
+  // Day 4 is past the end: the winner, the meteor, the universe's top seller; nobody can play.
+  await newDay(a, TOWNS.cup);
+  await expect(zp.getByText("A new day has dawned. It is day 4.")).toBeVisible();
+  const final = await openPaper(zp);
+  expect(final).toMatch(rx(N.winnerHeadline));
+  expect(final).toMatch(rx(N.winnerBody.replace("{name}", z.player.name)));
+  expect(final).toMatch(rx(N.meteorHeadline));
+  expect(final).toMatch(rx(N.meteorBody));
+  await expect(zp.locator(".fq-news")).toContainText(
+    rx(N.universeTop.replace("{name}", z.player.name)),
+  );
+  await press(zp, "Continue");
+  await seeText(zp, rx(T.desk.newDayAtDesk));
+  await press(zp, "Wait for Customer");
+  await seeText(zp, anyOf(T.wait.noTurns));
+  await goTo(zp, PLACE.rivals);
+  await press(zp, "Visit");
+  await seeText(zp, rx(S.visit.noVisitsLeft));
+  await press(zp, "Continue");
+  await press(zp, "Leave");
+  // The Book of Deeds has the winner already.
+  await goTo(zp, PLACE.university);
+  await press(zp, "Library");
+  await press(zp, "View Deeds");
+  await seeText(zp, rx(N.deed.replace("{name}", z.player.name)));
+  await press(zp, "Back");
+  await press(zp, "Back");
+  await press(zp, "Leave");
+  // The front door: the tournament is over, and new parlors are refused until tomorrow.
+  const door2 = await (await browser.newContext()).newPage();
+  await openDoor(door2, TOWNS.cup);
+  await expect(door2.getByText(rx(L.over.replace("{name}", z.player.name)))).toBeVisible();
+  await expect(door2.getByText(rx(L.closedOver))).toBeVisible();
+  await door2.context().close();
+
+  // Midnight: the game is reset. Everyone is told, the town starts over on day 1.
+  await newDay(a, TOWNS.cup);
+  const ended = zp.getByRole("alert").filter({ hasText: "Your session has ended" });
+  await expect(ended).toBeVisible();
+  await expect(ended).toContainText(`The tournament is over. ${z.player.name} won.`);
+  await zp.getByRole("button", { name: "Back to the front door" }).click();
+  await expect(
+    zp.getByText(
+      rx(L.endless.replace("{day}", "1").replace("{online}", "0").replace("{players}", "0")),
+    ),
+  ).toBeVisible();
+  // The parlor is gone, the account is not: she opens a new one, and the Book of Deeds remembers.
+  await expect(zp.getByRole("button", { name: "Get started" })).toBeVisible();
+  await zp.getByRole("button", { name: "Get started" }).click();
+  await createParlor(zp, z.player, false);
+  await sitDown(zp);
+  await goTo(zp, PLACE.university);
+  await press(zp, "Library");
+  await press(zp, "View Deeds");
+  await seeText(zp, rx(N.deed.replace("{name}", z.player.name)));
+  await z.context.close();
+});
+
+// ------------------------------------------------------------------ a second log-in
+
+test("a second log-in elsewhere ends the first session", async ({ browser }) => {
+  const first = bob.page;
+  await toDesk(first);
+  const elsewhere = await (await browser.newContext()).newPage();
+  await openDoor(elsewhere, TOWNS.main);
+  await logOn(elsewhere, bob.player);
+  await expect(elsewhere.getByRole("button", { name: "Log on" })).toBeHidden();
+  await expect(elsewhere.locator(".fq-cabinet")).toBeVisible();
+  const ended = first.getByRole("alert").filter({ hasText: "Your session has ended" });
+  await expect(ended).toBeVisible();
+  await expect(ended).toContainText("logged on somewhere else");
+  await expect(first.locator(".fq-plaque")).toHaveCount(0);
+  // The parlor goes on in the new window; the old one can come back to the door.
+  await first.getByRole("button", { name: "Back to the front door" }).click();
+  await expect(first.getByText(`Welcome back, ${bob.player.name}.`)).toBeVisible();
+  await elsewhere.context().close();
+});
+
+// ------------------------------------------------------------------ the three layouts
+
+const SIZES = [
+  { name: "classic", width: 1024, height: 745 },
+  { name: "wide", width: 1280, height: 720 },
+  { name: "phone", width: 390, height: 844 },
+] as const;
+
+for (const size of SIZES) {
+  test(`every Classic screen fits its cabinet at ${size.name} (${size.width}x${size.height})`, async ({
+    browser,
+  }, testInfo) => {
+    test.setTimeout(300_000);
+    const phone = size.name === "phone";
+    const me = await join(browser, TOWNS.main, `lay${size.name.slice(0, 2)}`);
+    await me.page.setViewportSize({ width: size.width, height: size.height });
+    const page = me.page;
+    await sitDown(page);
+    const problems: Problem[] = [];
+    let shot = 0;
+    const check = async (screen: string) => {
+      await page.waitForTimeout(200);
+      problems.push(...(await inspect(page, `${screen} / ${size.name}`, phone)));
+      // Nothing makes the page wider than the screen, and an open dialog fits inside it.
+      const extra = await page.evaluate(() => {
+        const out: string[] = [];
+        const de = document.documentElement;
+        if (de.scrollWidth > window.innerWidth + 1)
+          out.push(`the page scrolls sideways (${de.scrollWidth} > ${window.innerWidth})`);
+        for (const d of document.querySelectorAll('[role="dialog"]')) {
+          const r = d.getBoundingClientRect();
+          if (
+            r.left < -1 ||
+            r.right > window.innerWidth + 1 ||
+            r.top < -1 ||
+            r.bottom > window.innerHeight + 1
+          ) {
+            out.push(
+              `a dialog leaves the screen (${Math.round(r.left)},${Math.round(r.top)}-${Math.round(r.right)},${Math.round(r.bottom)})`,
+            );
+          }
+        }
+        return out;
+      });
+      for (const what of extra) problems.push({ screen: `${screen} / ${size.name}`, what });
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `${size.name}-${String(++shot).padStart(2, "0")}-${screen.replace(/\W+/g, "-")}.png`,
+        ),
+      });
+    };
+
+    await check("the desk");
+    await meet(page);
+    await check("a customer");
+    await press(page, "Soft Sell");
+    await check("soft sell answered");
+    await finishSale(page).catch(async () => closeAnything(page));
+    await toDesk(page);
+    await press(page, "Stats");
+    await check("the stats sheet");
+    await press(page, "Name");
+    await check("name change");
+    await press(page, "No");
+    await press(page, "Back");
+    await press(page, "Rankings");
+    await check("the rankings");
+    await press(page, "Continue");
+    await press(page, "Read Paper");
+    await check("the paper, front page");
+    await press(page, "Crime");
+    await check("the paper, crime");
+    await press(page, "Make Announcement");
+    await check("the announcement notepad");
+    await dialog(page).getByRole("button", { name: "Cancel" }).click();
+    await settle(page);
+    await press(page, "Continue");
+    await press(page, "Write Letter");
+    await check("the letter's name notepad");
+    await dialog(page).getByRole("button", { name: "Cancel" }).click();
+    await settle(page);
+    await btn(page, "Town Map").click();
+    await check("the town map");
+    for (const [name, place, inside] of [
+      [
+        "the bank",
+        PLACE.bank,
+        async () => {
+          await press(page, "Exchange");
+          await check("the bank's exchange menu");
+          await press(page, "Gold");
+          await press(page, "Silver");
+          await check("the bank's count notepad");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
+        },
+      ],
+      [
+        "Di-Mart",
+        PLACE.store,
+        async () => {
+          await press(page, "Hearses");
+          await check("the hearse showroom");
+          await press(page, "View #1");
+          await check("a hearse");
+          await press(page, "Back");
+          await press(page, "Back");
+          await press(page, "Security");
+          await check("the security shelf");
+          await press(page, "View #1");
+          await check("the padlock");
+          await press(page, "Back");
+          await press(page, "Back");
+          await press(page, "Supplies");
+          await check("the supplies shelf");
+          await press(page, "Back");
+        },
+      ],
+      [
+        "Spirit University",
+        PLACE.university,
+        async () => {
+          await press(page, "Library");
+          await check("the library");
+          await press(page, "Old Papers");
+          await check("the old papers notepad");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
+          await press(page, "View Deeds");
+          await check("the Book of Deeds");
+          await press(page, "Back");
+          await press(page, "Back");
+        },
+      ],
+      [
+        "Yang's",
+        PLACE.yangs,
+        async () => {
+          await press(page, "Order #3");
+          await check("Yang's name picker");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
+        },
+      ],
+      ["the church", PLACE.church, async () => undefined],
+      ["the hospital", PLACE.hospital, async () => undefined],
+      [
+        "the row of parlors",
+        PLACE.rivals,
+        async () => {
+          await press(page, "Look");
+          await check("the parlors' look list");
+          await press(page, "Continue");
+          await press(page, "Visit");
+          await check("the visit name notepad");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
+        },
+      ],
+    ] as const) {
+      await goTo(page, place);
+      await check(name);
+      await inside();
+      await toDesk(page);
+      await btn(page, "Town Map").click();
+    }
+    // The cafe with some talk in it.
+    await goTo(page, PLACE.cafe);
+    await say(page, "/?");
+    await say(
+      page,
+      "a line of talk in the cafe, long enough to wrap around the edge of the window at a phone's width",
+    );
+    await check("the cafe");
+    await toDesk(page);
+    expect(problems, JSON.stringify(problems, null, 1)).toEqual([]);
+    await me.context.close();
+  });
+}

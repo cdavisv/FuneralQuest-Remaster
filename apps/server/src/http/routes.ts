@@ -10,6 +10,7 @@ import type { TownRuntime } from "../game/town.js";
 import { blocklistedText } from "../moderation/service.js";
 import { MUSEUM_PATH } from "../museum/path.js";
 import { museumStatus } from "../museum/target.js";
+import { serverVersion } from "../version.js";
 import type {
   AuthResponse,
   DailyChallengeActionResponse,
@@ -39,7 +40,6 @@ import {
   TownParams,
   UpgradeBody,
 } from "./schemas.js";
-import { serverVersion } from "../version.js";
 
 function bearer(request: FastifyRequest): string | undefined {
   const header = request.headers.authorization;

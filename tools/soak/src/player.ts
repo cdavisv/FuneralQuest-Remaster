@@ -338,12 +338,26 @@ export class SoakPlayer {
       });
       ws.on("close", (code) => {
         this.world.transcript.write({ kind: "socket", player: this.label, event: "close", code });
-        if (this.socket === ws) {
+        const mine = this.socket === ws;
+        if (mine) {
           this.socket = null;
           this.socketReady = false;
         }
         clearTimeout(timer);
         done();
+        // Like the web client's transport: a socket that drops while the player is still in the
+        // game (the server restarted) reconnects, with a short wait, once the server answers.
+        // 4000 means the session ended and 44xx are refusals: those do not come back.
+        if (mine && this.inSession && code !== 4000 && (code < 4400 || code > 4499)) {
+          this.world.transcript.write({ kind: "socket", player: this.label, event: "reconnect" });
+          setTimeout(() => {
+            if (this.inSession && !this.socket) {
+              void this.world.gate
+                .pass()
+                .then(() => (this.inSession ? this.openSocket() : undefined));
+            }
+          }, 300);
+        }
       });
       ws.on("error", () => undefined);
     });
@@ -682,10 +696,14 @@ export class SoakPlayer {
       const next = await this.api.act(this.world.townId, action);
       this.stats.accepted++;
       if (action.type === "submitText" && action.text && /announce/i.test(action.overlayId)) {
-        this.world.announcements.push({ player: this.label, text: action.text, day: this.world.day() });
+        this.world.announcements.push({
+          player: this.label,
+          text: action.text,
+          day: this.world.day(),
+        });
       }
       this.acceptedActions++;
-      if (action.type === "exit") this.inSession = false;
+      if (action.type === "exit" || next.scene === "lobby") this.inSession = false;
       this.took(next);
       if (this.viewPushesSinceSend > 0) {
         // A push crossed this request; the push may be older or newer than the answer.

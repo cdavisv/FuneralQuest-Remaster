@@ -120,7 +120,10 @@ describe("backups through the admin API", () => {
     expect(existsSync(path)).toBe(false);
     expect(existsSync(`${path}.json`)).toBe(false);
 
-    const audit = await admin<{ entries: { kind: string }[] }>("GET", "/admin/audit?kind=admin:backup");
+    const audit = await admin<{ entries: { kind: string }[] }>(
+      "GET",
+      "/admin/audit?kind=admin:backup",
+    );
     expect(audit.body.entries.map((e) => e.kind).sort()).toEqual([
       "admin:backup",
       "admin:backup:delete",
@@ -131,9 +134,9 @@ describe("backups through the admin API", () => {
   it("refuses without the admin token", async () => {
     h = await startServer();
     expect((await admin("POST", "/admin/backups", {}, null)).status).toBe(401);
-    expect((await admin("GET", "/admin/backups", undefined, "wrong-token-wrong-token-xx")).status).toBe(
-      401,
-    );
+    expect(
+      (await admin("GET", "/admin/backups", undefined, "wrong-token-wrong-token-xx")).status,
+    ).toBe(401);
   });
 
   it("keeps the newest FQ_BACKUP_KEEP and makes automatic ones every FQ_BACKUP_INTERVAL_HOURS", async () => {
@@ -174,7 +177,10 @@ describe("restore", () => {
     const restored = await startServer({ dir: join(target, ".."), clock: h.clock });
     try {
       const r = await new TestPlayer(restored, "restorer").logIn();
-      const me = await r.request<{ parlors: { townId: string; playerId: number }[] }>("GET", "/api/me");
+      const me = await r.request<{ parlors: { townId: string; playerId: number }[] }>(
+        "GET",
+        "/api/me",
+      );
       expect(me.body.parlors).toEqual([expect.objectContaining({ townId: "main", playerId: 0 })]);
       expect(restored.server.host.get("main")?.player(0)).toEqual(before);
       // The token from before the backup still works there too.
@@ -223,6 +229,8 @@ describe("restore", () => {
     n.exec(`PRAGMA user_version = ${SCHEMA_VERSION + 1}`);
     n.close();
     expect(checkBackup(newer).problems.join(" ")).toMatch(/newer server/);
+    // A server refuses to open a database a newer server wrote, rather than misread it.
+    expect(() => openDatabase(newer)).toThrow(/written by a newer server/);
   });
 
   it("makeBackup numbers a second backup in the same second", () => {
@@ -297,9 +305,10 @@ describe("the maintenance pause (soak tests only)", () => {
       },
     } as unknown as import("fastify").FastifyBaseLogger;
     h = await startServer({ config: { testMaintenanceDelayMs: 150 }, logger });
+    const server = h.server;
     const read = () =>
       (
-        h?.server.db.prepare("SELECT json_extract(state_json, '$.day') AS d FROM towns").get() as {
+        server.db.prepare("SELECT json_extract(state_json, '$.day') AS d FROM towns").get() as {
           d: number;
         }
       ).d;

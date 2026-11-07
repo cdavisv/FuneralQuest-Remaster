@@ -9,7 +9,7 @@ You need a machine that stays on (a small VPS, a home server, a Raspberry Pi 4 o
 ### With Docker (simplest)
 
 ```sh
-git clone https://github.com/cdavisv/FuneralQuest-Remaster.git
+git clone <this repository>
 cd FuneralQuest-Remaster
 cp apps/server/.env.example apps/server/.env
 # edit apps/server/.env: set FQ_ADMIN_TOKEN (openssl rand -hex 32) and FQ_BACKUP_INTERVAL_HOURS=24
@@ -22,7 +22,7 @@ Open `http://<your machine>:8080`. Everything the server keeps lives in the Dock
 ### With Node.js
 
 ```sh
-git clone https://github.com/cdavisv/FuneralQuest-Remaster.git
+git clone <this repository>
 cd FuneralQuest-Remaster
 corepack enable && pnpm install
 pnpm --filter @fq/client build                      # the web client, into apps/client/dist-build

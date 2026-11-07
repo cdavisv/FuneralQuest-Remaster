@@ -35,7 +35,12 @@ export function formatReport(r: SoakReport): string {
   if (r.expandedLife && r.expandedLife.length > 0) {
     const l = r.expandedLife;
     lines.push(
-      `  expanded town: bingo cards sold ${l.reduce((n, d) => n + d.bingoCardsSold, 0)}, days with an ordinance ballot ${l.filter((d) => d.ordinance || d.ballot).length}, election candidates ${Math.max(...l.map((d) => d.candidates))}, election held ${l.some((d) => d.electionHeld)}, mayor ${l.map((d) => d.mayor).filter((m) => m !== null).at(-1) ?? "none"}, chains ${Math.max(...l.map((d) => d.chains))}, players with loans ${Math.max(...l.map((d) => d.loans))}, with savings ${Math.max(...l.map((d) => d.savings))}`,
+      `  expanded town: bingo cards sold ${l.reduce((n, d) => n + d.bingoCardsSold, 0)}, days with an ordinance ballot ${l.filter((d) => d.ordinance || d.ballot).length}, election candidates ${Math.max(...l.map((d) => d.candidates))}, election held ${l.some((d) => d.electionHeld)}, mayor ${
+        l
+          .map((d) => d.mayor)
+          .filter((m) => m !== null)
+          .at(-1) ?? "none"
+      }, chains ${Math.max(...l.map((d) => d.chains))}, players with loans ${Math.max(...l.map((d) => d.loans))}, with savings ${Math.max(...l.map((d) => d.savings))}`,
     );
   }
   const last = r.dbGrowth.at(-1);

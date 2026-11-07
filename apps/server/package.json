@@ -14,6 +14,9 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "start": "node dist/server.mjs",
+    "backup": "tsx src/main.ts backup",
+    "check-backup": "tsx src/main.ts check",
+    "restore": "tsx src/main.ts restore",
     "build": "node build.mjs",
     "typecheck": "tsc --noEmit",
     "blocklist:hash": "tsx src/moderation/blocklistCli.ts",

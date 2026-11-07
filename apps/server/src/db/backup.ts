@@ -66,8 +66,17 @@ export function isBackupName(name: string): boolean {
 
 /** `fq-20300101T120000Z.sqlite` for a time (UTC). */
 export function backupName(at: number, label = ""): string {
-  const iso = new Date(at).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-  const suffix = label === "" ? "" : `-${label.toLowerCase().replace(/[^a-z0-9-]/g, "-").slice(0, 32)}`;
+  const iso = new Date(at)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}/, "");
+  const suffix =
+    label === ""
+      ? ""
+      : `-${label
+          .toLowerCase()
+          .replace(/[^a-z0-9-]/g, "-")
+          .slice(0, 32)}`;
   return `fq-${iso}${suffix}.sqlite`;
 }
 
@@ -141,7 +150,13 @@ export function backupDatabase(db: Db, dest: string, source: string, at: number)
 export function checkBackup(path: string): BackupCheck {
   const problems: string[] = [];
   if (!existsSync(path)) {
-    return { ok: false, problems: [`${path} does not exist`], schemaVersion: 0, towns: [], accounts: 0 };
+    return {
+      ok: false,
+      problems: [`${path} does not exist`],
+      schemaVersion: 0,
+      towns: [],
+      accounts: 0,
+    };
   }
   let db: DatabaseSync | null = null;
   try {
@@ -158,9 +173,11 @@ export function checkBackup(path: string): BackupCheck {
       );
     }
     const tables = new Set(
-      (db.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all() as { name: string }[]).map(
-        (r) => r.name,
-      ),
+      (
+        db.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all() as {
+          name: string;
+        }[]
+      ).map((r) => r.name),
     );
     for (const t of ["accounts", "sessions", "towns", "parlors", "town_snapshots", "audit_log"]) {
       if (!tables.has(t)) problems.push(`missing table ${t}`);
@@ -221,7 +238,10 @@ export function restoreDatabase(backup: string, dbPath: string, at: number): Res
   const check = checkBackup(resolve(backup));
   if (!check.ok) throw new Error(`not a usable backup: ${check.problems.join("; ")}`);
   mkdirSync(dirname(target), { recursive: true });
-  const stamp = new Date(at).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const stamp = new Date(at)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}/, "");
   const setAside: string[] = [];
   for (const suffix of ["", "-wal", "-shm"]) {
     const file = `${target}${suffix}`;
@@ -238,7 +258,9 @@ export function restoreDatabase(backup: string, dbPath: string, at: number): Res
 }
 
 /** Backups in a directory, newest first, with their manifests when present. */
-export function listBackups(dir: string): { name: string; bytes: number; manifest: BackupManifest | null }[] {
+export function listBackups(
+  dir: string,
+): { name: string; bytes: number; manifest: BackupManifest | null }[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter(isBackupName)

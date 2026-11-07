@@ -64,12 +64,19 @@ jobs:
         if: matrix.group == 'tools'
         run: g++ --version
       - run: pnpm --filter "${{ matrix.filter }}" test
-      # The soak harness's short mode belongs here, after the server's tests. Its README
-      # (tools/soak/README.md) had no command yet when this was written: replace the line below
-      # with the command it names, then uncomment the step.
-      # - name: Soak harness, short mode
-      #   if: matrix.group == 'server'
-      #   run: pnpm --filter @fq/soak soak --short
+      # The soak harness plays two game days on the real server with hard restarts and a
+      # backup restore (tools/soak/README.md); about a minute.
+      - name: Soak harness, short mode
+        if: matrix.group == 'server'
+        run: pnpm --filter @fq/soak run soak -- --short
+      - name: Upload the soak transcript
+        if: failure() && matrix.group == 'server'
+        uses: actions/upload-artifact@v4
+        with:
+          name: soak-results
+          path: tools/soak/results
+          if-no-files-found: ignore
+          retention-days: 14
       # Desktop and mobile have no unit tests; their scripts are syntax-checked.
       - name: Wrappers
         if: matrix.group == 'client'

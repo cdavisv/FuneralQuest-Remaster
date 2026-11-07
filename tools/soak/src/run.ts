@@ -22,7 +22,7 @@ import {
 } from "./admin.js";
 import { Checks, diffJson } from "./checks.js";
 import { auditActionCounts, type DbSize, dbSize, readTown, snapshotCounts } from "./dbread.js";
-import { hudFacts, type PlayerSpec, SoakPlayer } from "./player.js";
+import { type PlayerSpec, SoakPlayer } from "./player.js";
 import { freePort, ServerProcess } from "./serverProcess.js";
 import { Transcript } from "./transcript.js";
 import { Gate, type World } from "./world.js";
@@ -189,6 +189,16 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
   const dbGrowth: SoakReport["dbGrowth"] = [];
   const expandedLife: NonNullable<SoakReport["expandedLife"]> = [];
   const plan = schedule(o.days, o);
+  type EventKey =
+    | "backup"
+    | "killQuiet"
+    | "adminMidPlay"
+    | "killInFlight"
+    | "settings"
+    | "rollback"
+    | "restore"
+    | "killMaintenance";
+  const doneEvents = new Set<EventKey>();
   const startedGame = GAME_START;
   transcript.write({ kind: "event", what: "start", data: { options: o, plan, speed, port } });
   const log = (text: string) => {
@@ -211,7 +221,6 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
     serverNews: "Soak test town.",
   });
   adminActions.push({ what: "create town", day: 1, ok: true });
-  const settingsAtStart = (await admin.settings(TOWN)).settings;
   log(
     `town created (${ruleset}, ${o.days}-day tournament, ${o.players} players, ${o.daySeconds} s per day)`,
   );
@@ -401,8 +410,9 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
         rec.accountId === p.accountId,
         `${what}: ${p.label}'s parlor belongs to account ${rec.accountId}, not ${p.accountId}`,
       );
-      if (p.lastHud) {
-        const h = p.lastHud.facts;
+      const seen = p.lastHud;
+      if (seen) {
+        const h = seen.facts;
         const same =
           h.bp === rec.bp &&
           h.bpToday === rec.bpToday &&
@@ -410,7 +420,7 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
           h.tags.every((x, i) => x === rec.tags[i]);
         if (!same) {
           const cause = lastAnyCause.find(
-            (c) => c.at >= p.lastHud!.at - 5 && (c.account !== p.accountId || c.kind !== "action"),
+            (c) => c.at >= seen.at - 5 && (c.account !== p.accountId || c.kind !== "action"),
           );
           newestCause.set(p.label, cause?.at ?? -1);
           checks.ok(
@@ -462,10 +472,13 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
       }
     }
     // Expanded: what the town's life did (Bingo, ballots, the election, chains), from the state.
-    const life = (state?.state as unknown as { expanded?: { life?: Record<string, unknown> } } | undefined)
-      ?.expanded?.life;
+    const life = (
+      state?.state as unknown as { expanded?: { life?: Record<string, unknown> } } | undefined
+    )?.expanded?.life;
     if (life) {
-      const election = life.election as { candidates?: unknown[]; held?: boolean; mayor?: number | null } | undefined;
+      const election = life.election as
+        | { candidates?: unknown[]; held?: boolean; mayor?: number | null }
+        | undefined;
       const bingo = life.bingo as { cards?: number[]; paid?: number } | undefined;
       expandedLife.push({
         day: t.day,
@@ -788,6 +801,12 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
       t.day === live.day,
       `restored town is on day ${t.day}; the live town was on day ${live.day} (the missed midnights should run at start)`,
     );
+    // A settings change made after the backup is undone by the restore, as everything else is.
+    const restoredTurns = Number((await admin.settings(TOWN)).settings.turnsPerDay);
+    if (settingsState.changed && restoredTurns !== settingsState.changed.turnsPerDay) {
+      checks.note("settings-change-undone-by-restore", { turnsPerDay: restoredTurns });
+      settingsState.changed = null;
+    }
     // The audit log in the restore is the truth now: actions after the backup are gone.
     const counts = auditActionCounts(freshDb, TOWN);
     for (const p of players) {
@@ -803,9 +822,17 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
       const valid = p.tokenIssuedAt <= b.takenAt;
       try {
         await p.refreshAccount();
-        checks.ok("restore-sessions", valid, `${p.label}'s token from after the backup still works`);
+        checks.ok(
+          "restore-sessions",
+          valid,
+          `${p.label}'s token from after the backup still works`,
+        );
       } catch (error) {
-        checks.ok("restore-sessions", !valid, `${p.label}'s token from before the backup does not work after the restore: ${String(error)}`);
+        checks.ok(
+          "restore-sessions",
+          !valid,
+          `${p.label}'s token from before the backup does not work after the restore: ${String(error)}`,
+        );
         if (!p.spec.guest) {
           await p.logIn();
           await p.refreshAccount();
@@ -914,9 +941,14 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
     }
     const t1 = await townInfo();
     // Exactly one maintenance was saved for this midnight, killed or not.
-    const rows = (await admin.audit({ townId: TOWN, kind: "maintenance" })).filter((r) => r.at >= startedGame);
+    const rows = (await admin.audit({ townId: TOWN, kind: "maintenance" })).filter(
+      (r) => r.at >= startedGame,
+    );
     const saved = rows.filter((r) => {
-      const d = (typeof r.data === "string" ? JSON.parse(r.data) : r.data) as { day?: number; source?: string };
+      const d = (typeof r.data === "string" ? JSON.parse(r.data) : r.data) as {
+        day?: number;
+        source?: string;
+      };
       return d.source === "schedule" && r.at > nightStartGame;
     });
     checks.ok(
@@ -955,21 +987,33 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
       currentDay = t2.day;
       checks.day = currentDay;
     }
+    // An event runs on its planned day, or on the first day after it that is played (a forced new
+    // day skips one).
+    const done = doneEvents;
+    const due = (key: EventKey) => {
+      const day = plan[key];
+      if (typeof day !== "number" || day > currentDay || done.has(key)) return false;
+      done.add(key);
+      return true;
+    };
     const events: { at: number; name: string; run: () => Promise<void> }[] = [];
-    if (plan.backup === currentDay)
-      events.push({ at: 0.25, name: "backup during play", run: backupDuringPlay });
-    if (plan.killQuiet === currentDay)
-      events.push({ at: 0.4, name: "kill (quiet)", run: killQuiet });
-    if (plan.adminMidPlay === currentDay)
+    if (due("backup")) events.push({ at: 0.25, name: "backup during play", run: backupDuringPlay });
+    if (due("killQuiet")) events.push({ at: 0.4, name: "kill (quiet)", run: killQuiet });
+    if (due("adminMidPlay"))
       events.push({ at: 0.55, name: "sysop: broadcast, kick, ban, upgrade", run: adminMidPlay });
-    if (plan.killInFlight === currentDay)
+    if (due("killInFlight"))
       events.push({ at: 0.6, name: "kill (requests in flight)", run: killInFlight });
     await playDay(currentDay, events);
     gameDaysPlayed++;
     // Players that left idle are logged off by the sweep within a quarter of a day.
     lastCheckpoint = await checkpoint(`end of day ${currentDay}`);
     const settingsChanged = settingsState.changed;
-    if (o.rules === "classic" && settingsChanged && currentDay >= settingsChanged.fromDay && currentDay <= o.days) {
+    if (
+      o.rules === "classic" &&
+      settingsChanged &&
+      currentDay >= settingsChanged.fromDay &&
+      currentDay <= o.days
+    ) {
       for (const p of players) {
         const f = p.firstHud.get(currentDay);
         if (!f) continue;
@@ -980,9 +1024,9 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
         );
       }
     }
-    if (plan.settings === currentDay) await changeSettings();
-    if (plan.rollback === currentDay && !rollbackDone) await snapshotRollback();
-    if (plan.restore === currentDay && backupMade) await restoreDisaster();
+    if (due("settings")) await changeSettings();
+    if (due("rollback") && !rollbackDone) await snapshotRollback();
+    if (backupMade && due("restore")) await restoreDisaster();
     // The original's calendar (maint.cpp:99-113): days 1..N are played, the midnight after day N
     // names the winner in the paper and the Book of Deeds, day N+1 is the closing day (no turns),
     // and the midnight after it resets the town.
@@ -993,7 +1037,7 @@ export async function runSoak(o: SoakOptions): Promise<SoakReport> {
     const killKind =
       finalDay && plan.killReset
         ? "reset"
-        : plan.killMaintenance === currentDay
+        : !finalDay && due("killMaintenance")
           ? "maintenance"
           : null;
     const night = await passMidnight(killKind);

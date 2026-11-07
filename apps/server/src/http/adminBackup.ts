@@ -34,7 +34,12 @@ export function registerBackupAdmin(
 
   admin.post("/backups", async (request, reply) => {
     const body = z
-      .strictObject({ label: z.string().regex(/^[A-Za-z0-9-]{1,32}$/).optional() })
+      .strictObject({
+        label: z
+          .string()
+          .regex(/^[A-Za-z0-9-]{1,32}$/)
+          .optional(),
+      })
       .parse(request.body ?? {});
     const manifest = makeBackup(ctx.db, dirOf(), {
       at: ctx.clock.now(),

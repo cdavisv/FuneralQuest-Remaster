@@ -26,7 +26,8 @@ function command(args: string[]): number {
   const [name, file] = args;
   const config = loadConfig();
   if (name === "backup") {
-    if (config.dbPath === ":memory:") throw new Error("FQ_DB_PATH is in memory; nothing to back up");
+    if (config.dbPath === ":memory:")
+      throw new Error("FQ_DB_PATH is in memory; nothing to back up");
     // A second connection: SQLite gives it a consistent read of the live, WAL-mode file.
     const db = openDatabase(config.dbPath);
     try {
