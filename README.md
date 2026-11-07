@@ -17,7 +17,7 @@ The original 2001 server, Flash client and content are kept untouched in [`legac
 - **Expect rough edges.** Expanded's balance is still being tuned; the sound has been measured but nobody has listened to it all; the new portraits in the Remastered art pack need an illustrator; the Docker image, Windows, macOS, iOS and any real phone have never been tried; there is no public server. [docs/STATUS.md](docs/STATUS.md) lists what was run, what was only tested and what is missing, honestly.
 - **Saves and settings may change between alpha versions.** Export a Solo career to a file if you want to keep it. Do not run a public server on an alpha.
 
-The alpha builds (web, Linux desktop, Android, server) are on the [Releases page](https://github.com/cdavisv/FuneralQuest-Remaster/releases). The checklist that decides when alpha is over is [docs/ALPHA.md](docs/ALPHA.md); what changed in each version is in the [changelog](CHANGELOG.md). Found a bug or something that felt wrong? See [Report a bug](#report-a-bug).
+**Play it now, solo, in your browser:** https://cdavisv.github.io/FuneralQuest-Remaster/ (nothing to install; your careers stay on your device). The alpha builds (web, Linux desktop, Android, server) are on the [Releases page](https://github.com/cdavisv/FuneralQuest-Remaster/releases). The checklist that decides when alpha is over is [docs/ALPHA.md](docs/ALPHA.md); what changed in each version is in the [changelog](CHANGELOG.md). Found a bug or something that felt wrong? See [Report a bug](#report-a-bug).
 
 ## Play it in five minutes
 

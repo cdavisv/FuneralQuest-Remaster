@@ -22,7 +22,6 @@ Things that are waiting on the owner, or on something outside the repository. De
 
 | Item | Waiting on |
 |---|---|
-| **Publish the solo-only web build on GitHub Pages.** Pages is enabled (Source: GitHub Actions, 2026-11-07, decision 21); the workflow `.github/workflows/pages.yml` is started by hand (Actions, "Pages (solo-only web build)", Run workflow) once the rename is on `master`, and the site is then at https://cdavisv.github.io/FuneralQuest-Remaster/. Details in [release/checklist-web-pwa.md](release/checklist-web-pwa.md) | Pull request 7 being merged |
 | Run the solo-only Android app on a device (the debug APK is built and its contents checked, nothing more); build iOS, Windows and macOS | Hardware, Xcode, and CI runs with signing set up |
 | Expanded balance: two play styles still win more than twice their share, three less than a third | Playtesting, and a decision on the proposals in `docs/balance/expanded-baseline.md` that change how the game feels |
 | Replace the nine new portraits | An illustrator |
