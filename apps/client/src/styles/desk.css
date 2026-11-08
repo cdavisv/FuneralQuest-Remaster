@@ -16,20 +16,32 @@
 .fq-deskmenu-before,
 .fq-deskmenu-after {
   display: flex;
-  min-width: 0;
+  /* Never squeezed below their plaques: a plaque spilling out of a squeezed container lands on
+     the orbs (Firefox gave the orb buttons an inflated intrinsic width and did exactly that). */
+  flex: 0 0 auto;
 }
 
+/* The plaque lists are grids of definite tracks: a container's intrinsic width is then the tracks'
+   sum in every browser. (Firefox sizes a flex container's intrinsic width from its items' content,
+   "Exit" at about 50px, not from their 96px flex-basis, then squeezes the container and lets the
+   plaque spill onto the orbs.) */
 .fq-deskmenu .fq-plaques ul {
-  flex-wrap: nowrap;
+  display: grid;
+  grid-auto-flow: column;
+  /* A definite minimum (the intrinsic width every browser agrees on), and room to grow for a
+     label that stays on one line ("End the Day"), as a flex item's min-content clamp gave it. */
+  grid-auto-columns: minmax(calc(var(--u) * 142), max-content);
+  justify-content: end;
+  align-items: end;
   gap: calc(var(--u) * 8);
 }
 
-.fq-cabinet[data-cab] .fq-deskmenu-before .fq-plaque-item {
-  flex: 0 0 calc(var(--u) * 144);
+.fq-cabinet[data-cab] .fq-deskmenu-before ul {
+  grid-auto-columns: minmax(calc(var(--u) * 144), max-content);
 }
 
-.fq-cabinet[data-cab] .fq-deskmenu-after .fq-plaque-item {
-  flex: 0 0 calc(var(--u) * 96);
+.fq-cabinet[data-cab] .fq-deskmenu-after ul {
+  grid-auto-columns: minmax(calc(var(--u) * 96), max-content);
 }
 
 /* The row sits inside the text well, above its bezel. */
@@ -37,17 +49,21 @@
   bottom: calc(var(--u) * (var(--btn-bottom) + 14));
 }
 
-.fq-deskmenu .fq-plaques ul {
-  align-items: flex-end;
-}
-
+/* The orbs too: one definite track per orb, whatever a browser thinks a grid button's intrinsic
+   width is. */
 .fq-orbs ul {
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(var(--u) * 74);
+  align-items: start;
   gap: calc(var(--u) * 8);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.fq-orbs li {
+  min-width: 0;
 }
 
 /* The button strip lets clicks through (see door.css); the round buttons take their own. */
@@ -63,7 +79,8 @@
   justify-items: center;
   align-content: start;
   gap: 1px;
-  width: calc(var(--u) * 74);
+  width: 100%;
+  min-width: 0;
   min-height: 44px;
   padding: 0;
   border: 0;
@@ -87,6 +104,7 @@
 }
 
 .fq-orb-label {
+  max-width: 100%;
   text-shadow: 0 1px 2px #000;
 }
 
@@ -119,6 +137,8 @@
 
 .fq-cabinet[data-layout="phone"] .fq-orbs ul {
   display: grid;
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
   grid-template-columns: repeat(5, 1fr);
   gap: 4px;
   padding: 8px 4px 6px;
@@ -136,6 +156,9 @@
 .fq-cabinet[data-layout="phone"] .fq-deskmenu .fq-plaques,
 .fq-cabinet[data-layout="phone"] .fq-deskmenu .fq-plaques ul {
   display: grid;
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
+  justify-content: stretch;
   width: 100%;
 }
 

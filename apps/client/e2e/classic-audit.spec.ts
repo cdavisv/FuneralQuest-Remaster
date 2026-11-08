@@ -2281,7 +2281,10 @@ test("a script event: a bonus tag, or the Twins and their fire (smoke detector a
           "The Twins: \"We like to play with fire. We'll discreetly pay a 'visit' to any funeral parlor in town for only 6 gold tags.",
         ),
       );
-      if (!declined) {
+      // Decline once to see the refusal, and decline again once the fire has been set: every
+      // hire costs six gold tags, and the Twins may call several times before the bonus-tag
+      // script turns up.
+      if (!declined || burned) {
         declined = true;
         await press(b, "No Thanks");
         await expect(btn(b, "Wait for Customer")).toBeVisible();
