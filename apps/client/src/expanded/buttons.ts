@@ -1,4 +1,4 @@
-import type { Button, UpgradeRow } from "@fq/protocol";
+import type { Button, UpgradeRow, View } from "@fq/protocol";
 
 /**
  * Expanded layouts (docs/expanded-rules.md 11.2, 11.3): the main row is the buttons without a
@@ -70,4 +70,45 @@ export function cardState(button: Button, upgrade?: { state: UpgradeRow["state"]
 export function cardFamily(id: string): { family: string; arg: string } {
   const at = id.lastIndexOf(":");
   return at < 0 ? { family: id, arg: "" } : { family: id.slice(0, at), arg: id.slice(at + 1) };
+}
+
+/**
+ * Removes the original's backtick colour codes from a plain string (the rules of
+ * `stripLegacyCodes` in @fq/core, legacy/source/funeral_util.cpp:499-575): a code is a backtick
+ * and one character, `` `fN `` a backtick, `f` and a digit.
+ */
+export function stripCodes(text: string): string {
+  if (!text.includes("`")) return text;
+  let out = "";
+  for (let i = 0; i < text.length; i++) {
+    const ch = text.charAt(i);
+    if (ch !== "`" || i + 1 >= text.length) {
+      out += ch;
+      continue;
+    }
+    i += text.charAt(i + 1) === "f" && i + 2 < text.length ? 2 : 1;
+  }
+  return out;
+}
+
+/**
+ * A button's `hint` and `detail` are plain strings (docs/expanded-rules.md 11.2, 26), drawn as
+ * they come. Some reach the client with the original's colour codes still in them (the black
+ * market's reward summaries, `rewardSummary` in packages/core/src/expanded/players.ts), which
+ * would show as stray backticks; they are taken out here. Classic Views carry neither field.
+ */
+export function plainButtons(view: View): View {
+  const dirty = view.buttons.some(
+    (b) => (b.hint?.includes("`") ?? false) || (b.detail?.includes("`") ?? false),
+  );
+  if (!dirty) return view;
+  return {
+    ...view,
+    buttons: view.buttons.map((b) => {
+      const next: Button = { ...b };
+      if (b.hint !== undefined) next.hint = stripCodes(b.hint);
+      if (b.detail !== undefined) next.detail = stripCodes(b.detail);
+      return next;
+    }),
+  };
 }

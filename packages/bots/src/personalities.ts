@@ -281,6 +281,8 @@ const P: Record<PersonalityId, Personality> = {
         { item: "psych", upTo: 8 },
         { item: "hearse", upTo: 3 },
       ],
+      // Balance round 17 (tuning log): the alarm, the Night Watchman and the Memorial Garden
+      // just before the embalming lab, not after it (they were bought on day 26).
       upgrades: [
         "paint",
         "coffee-machine",
@@ -288,10 +290,10 @@ const P: Record<PersonalityId, Personality> = {
         "viewing-room",
         "storeroom",
         "florist-cooler",
-        "embalming-lab",
         "alarm",
         "night-watchman",
         "memorial-garden",
+        "embalming-lab",
         "incinerator",
         "chapel",
         "mausoleum",
@@ -448,6 +450,8 @@ const P: Record<PersonalityId, Personality> = {
         { item: "hearse", upTo: 2 },
         { item: "strength", upTo: 12 },
       ],
+      // Balance round 17 (tuning log): the Night Watchman just before the embalming lab, not after
+      // it (it was bought on day 26).
       upgrades: [
         "paint",
         "coffee-machine",
@@ -456,8 +460,8 @@ const P: Record<PersonalityId, Personality> = {
         "storeroom",
         "florist-cooler",
         "viewing-room",
-        "embalming-lab",
         "night-watchman",
+        "embalming-lab",
         "incinerator",
         "chapel",
         "mausoleum",
@@ -512,6 +516,8 @@ const P: Record<PersonalityId, Personality> = {
         { item: "hearse", upTo: 3 },
         { item: "psych", upTo: 8 },
       ],
+      // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
+      // it (it was bought on day 26).
       upgrades: [
         "paint",
         "storeroom",
@@ -519,12 +525,12 @@ const P: Record<PersonalityId, Personality> = {
         "viewing-room",
         "chapel",
         "florist-cooler",
+        "memorial-garden",
         "embalming-lab",
         "incinerator",
         "mausoleum",
         "billboard",
         "crematorium",
-        "memorial-garden",
       ],
       reserve: 2500,
       stock: [4, 3, 2],
@@ -565,15 +571,17 @@ const P: Record<PersonalityId, Personality> = {
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
       protect: true,
+      // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
+      // it (it was bought on day 26).
       upgrades: [
         "paint",
         "coffee-machine",
         "storeroom",
         "florist-cooler",
         "viewing-room",
+        "memorial-garden",
         "embalming-lab",
         "billboard",
-        "memorial-garden",
         "incinerator",
         "chapel",
         "mausoleum",
@@ -617,14 +625,16 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: true,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
+      // it (it was bought on day 26).
       upgrades: [
         "paint",
         "coffee-machine",
         "storeroom",
         "viewing-room",
         "florist-cooler",
-        "embalming-lab",
         "memorial-garden",
+        "embalming-lab",
         "billboard",
         "incinerator",
         "chapel",
@@ -819,17 +829,19 @@ const P: Record<PersonalityId, Personality> = {
     social: { announce: 0.4, cafe: 0.4, letter: 0 },
     expanded: xs({
       protect: true,
+      // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
+      // it (it was bought on day 26).
       upgrades: [
         "paint",
         "coffee-machine",
         "storeroom",
         "florist-cooler",
         "viewing-room",
+        "memorial-garden",
         "embalming-lab",
         "billboard",
         "incinerator",
         "chapel",
-        "memorial-garden",
         "mausoleum",
       ],
       chain: "found",

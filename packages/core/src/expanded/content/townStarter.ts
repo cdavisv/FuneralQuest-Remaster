@@ -809,6 +809,7 @@ export const TOWN_STARTER: ExpandedTownContent = {
         "`7ELECTION CANCELLED\n`^Nobody ran for mayor. The old Mayor stays on, and frankly she's relieved.\n\n",
       mayorMorning: "\n`$Your mayoral chauffeur saves you time all over town. `w+{turns}`$ turn.",
       votesDetail: "{votes} votes",
+      votesDetailOne: "{votes} vote",
     },
 
     chains: {

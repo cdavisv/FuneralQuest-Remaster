@@ -852,7 +852,7 @@ function offer(turn: Turn, accept: boolean): View {
   const summary = rewardSummary(choice.effects);
   return endView(
     turn,
-    `${fill(choice.text, vars(turn))}${summary ? `\n\n${summary}` : ""}`,
+    `${fill(choice.text, vars(turn))}${summary ? `\n\n\`5${summary}\`$` : ""}`,
     "stuff/money_bag_2",
   );
 }

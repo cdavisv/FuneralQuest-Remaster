@@ -129,7 +129,7 @@ export function applyReward(turn: Turn, player: PlayerState, reward: Reward): vo
   }
 }
 
-/** A short "+3 karma, +$400" summary of a reward, for result screens. */
+/** A short "(+3 karma, +$400)" summary of a reward: plain text, for hints, details and (coloured by the caller) result screens. */
 export function rewardSummary(reward: Reward): string {
   const parts: string[] = [];
   const signed = (n: number) => (n > 0 ? `+${n}` : `${n}`);
@@ -142,5 +142,5 @@ export function rewardSummary(reward: Reward): string {
   if (reward.gold)
     parts.push(`${signed(reward.gold)} gold tag${Math.abs(reward.gold) === 1 ? "" : "s"}`);
   if (reward.protection) parts.push("police protection tonight");
-  return parts.length === 0 ? "" : `\`5(${parts.join(", ")})\`$`;
+  return parts.length === 0 ? "" : `(${parts.join(", ")})`;
 }

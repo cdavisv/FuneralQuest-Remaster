@@ -25,6 +25,15 @@ export function MonumentLadder({
 }) {
   const t = useT();
   const art = useArtMaybe();
+  // The stonecutter's screen names the next tier on its card; the graveyard's other screens have
+  // no card, so the next tier comes from the View's own record of what stands (11.5).
+  const coming =
+    monuments && monuments.built < monuments.tiers.length
+      ? monuments.tiers[monuments.built]
+      : undefined;
+  const nextName = next ?? coming?.name;
+  const nextPrice =
+    next !== undefined ? price : coming ? `$${coming.price.toLocaleString("en-US")}` : undefined;
   return (
     <section
       className="fq-npanel fq-monuments fq-surface-light"
@@ -65,10 +74,10 @@ export function MonumentLadder({
           );
         })}
       </ol>
-      {next ? (
+      {nextName ? (
         <p className="fq-monument-next">
-          {t("x.monument.next")} <b>{next}</b>
-          {price && <span> {price}</span>}
+          {t("x.monument.next")} <b>{nextName}</b>
+          {nextPrice && <span> {nextPrice}</span>}
         </p>
       ) : (
         <p className="fq-monument-next">{t("x.monument.allBuilt")}</p>

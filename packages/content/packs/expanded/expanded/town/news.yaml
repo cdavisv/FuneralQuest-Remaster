@@ -913,3 +913,31 @@
     - key: 'customer.incomeShift'
       op: 'add'
       value: -5
+- id: 'mourne-price-war'
+  title: 'MOURNE & SONS SLASHES PRICES'
+  message: '"Why pay more to be put in less?" asks the new Mourne & Sons billboard on Elm Street. Families are arriving with the flyer in one hand and a red pen in the other.'
+  effect: 'customers haggle harder today'
+  minDay: 3
+  modifiers:
+    - key: 'customer.cheapness'
+      op: 'add'
+      value: 0.3
+- id: 'coroner-fishing'
+  title: 'CORONER GONE FISHING'
+  message: 'Dr. Ignatius Grimble is at Lake Bleak for the week. In his absence the county has authorized "anyone with a clipboard" to sign death certificates. Paperwork is quick, confident and occasionally signed by Morty.'
+  effect: '+1 turn today, more risky offers'
+  modifiers:
+    - key: 'turns.daily'
+      op: 'add'
+      value: 1
+    - key: 'wait.riskOdds'
+      op: 'mul'
+      value: 1.2
+- id: 'mudge-flashlight'
+  title: 'INSPECTOR MUDGE BUYS A NEW FLASHLIGHT'
+  message: '"It has three settings," says Inspector Mudge. "Bright, brighter and closed by order of the county." To give businesses no excuse, City Hall has cut permit fees for the day. Nobody feels better.'
+  effect: 'permits 20% cheaper today'
+  modifiers:
+    - key: 'city.permitPrice'
+      op: 'mul'
+      value: 0.8

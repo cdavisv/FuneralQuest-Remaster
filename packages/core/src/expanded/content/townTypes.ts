@@ -424,6 +424,8 @@ export interface CityHallText {
   mayorMorning: string;
   /** `{votes}` shown on a ballot button */
   votesDetail: string;
+  /** `{votes}` shown on a ballot button when the count is exactly one */
+  votesDetailOne: string;
 }
 
 export interface ChainText {

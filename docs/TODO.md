@@ -22,7 +22,6 @@ Things that are waiting on the owner, or on something outside the repository. De
 | Item | Waiting on |
 |---|---|
 | Run the solo-only Android app on a device (the debug APK is built and its contents checked, nothing more); build iOS, Windows and macOS | Hardware, Xcode, and CI runs with signing set up |
-| Expanded balance: two play styles still win more than twice their share, three less than a third | Playtesting, and a decision on the proposals in `docs/balance/expanded-baseline.md` that change how the game feels |
+| Expanded balance: two play styles (the politician 2.38x, the necromancer 2.33x) still win more than twice their share; since round 17 none wins less than a third | Playtesting, and the owner's decisions on the proposals in `docs/balance/expanded-baseline.md`: judge by mean place and BP instead of win share, the Memorial Garden's return (about twice a monument), and the changes to how the game feels (shorter days) |
 | Replace the nine new portraits | An illustrator |
 | Online play on mobile (the first release is solo-only, decision 11): restore `INTERNET` and the `funeralquest://` link in the Android manifest, build with `FQ_SOLO_ONLY=0`, and do everything the store checklists mark "applies again when online play is added" | The owner's decision to add it, a moderator and a contact address |
-| Remove the stale `NOT_IN_PORT` entry for `funeral.cpp:191` in `tools/oracle/src/textAudit.ts` (the museum banner is now the original's) | Whoever next works in `tools/oracle` |

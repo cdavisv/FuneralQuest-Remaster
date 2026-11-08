@@ -175,7 +175,8 @@ export class LegacyBridge {
       const id = session.playerId;
       if (id === null) continue;
       await this.queue(async () => {
-        await this.leave(id);
+        // The idle time-out announces the kick first (user_list.cpp:160-171).
+        await this.leave(id, { inactive: true });
       });
     }
     return count;
@@ -249,8 +250,8 @@ export class LegacyBridge {
     return result;
   }
 
-  private async leave(playerId: number): Promise<void> {
-    await this.apply((town, ctx) => leaveGame(town, playerId, ctx));
+  private async leave(playerId: number, options: { inactive?: boolean } = {}): Promise<void> {
+    await this.apply((town, ctx) => leaveGame(town, playerId, ctx, options));
     this.chatInbox.delete(playerId);
   }
 

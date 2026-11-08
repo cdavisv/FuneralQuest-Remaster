@@ -75,17 +75,21 @@ const settle = async (page: Page): Promise<void> => {
 
 /**
  * Clicks, and if a letter was pushed to an idle desk and now covers the page (the original's
- * desk polled for mail), reads it away and clicks again.
+ * desk polled for mail), reads it away and clicks again. There may be many: every customer a
+ * rival drives away walks over here with a "stealing this sale" letter, and a long negotiation
+ * test on the other page can queue a dozen.
  */
 const clickClear = async (page: Page, target: Locator): Promise<void> => {
-  for (let attempt = 0; ; attempt++) {
+  let slow = 0;
+  for (let letters = 0; ; ) {
     try {
-      await target.click({ timeout: attempt < 3 ? 3_000 : 10_000 });
+      await target.click({ timeout: slow < 3 ? 3_000 : 10_000 });
       return;
     } catch (error) {
-      if (attempt >= 3) throw error;
-      // A letter covering the page is read away and the click tried again.
+      // A letter covering the page is read away and the click tried again, as often as letters
+      // keep coming (within reason).
       if (await dialog(page).isVisible()) {
+        if (++letters > 60) throw error;
         await dialog(page).getByRole("button").first().click();
         await settle(page);
         continue;
@@ -94,6 +98,7 @@ const clickClear = async (page: Page, target: Locator): Promise<void> => {
       // again with more time; a button that is not on the screen fails at once (callers that
       // press an optional Continue rely on that).
       if ((await target.count()) === 0) throw error;
+      if (++slow >= 3) throw error;
     }
   }
 };
@@ -2281,7 +2286,10 @@ test("a script event: a bonus tag, or the Twins and their fire (smoke detector a
           "The Twins: \"We like to play with fire. We'll discreetly pay a 'visit' to any funeral parlor in town for only 6 gold tags.",
         ),
       );
-      if (!declined) {
+      // Decline once to see the refusal, and decline again once the fire has been set: every
+      // hire costs six gold tags, and the Twins may call several times before the bonus-tag
+      // script turns up.
+      if (!declined || burned) {
         declined = true;
         await press(b, "No Thanks");
         await expect(btn(b, "Wait for Customer")).toBeVisible();

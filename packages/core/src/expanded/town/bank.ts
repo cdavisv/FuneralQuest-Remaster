@@ -134,7 +134,7 @@ function savingsView(turn: Turn, message = ""): View {
   const l = life(turn);
   let text = fill(t.savingsIntro, {
     savings: intToCash(l.savings),
-    rate: Math.round(savingsRate(turn) * 1000) / 10,
+    rate: Math.round(savingsRate(turn) * 10000) / 100,
     cash: intToCash(p.money),
     cap: intToCash(s.capBase),
   });

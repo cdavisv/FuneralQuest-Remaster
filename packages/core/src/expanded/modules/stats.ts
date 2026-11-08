@@ -9,6 +9,7 @@ import { Custom } from "../../state/types.js";
 import { intToCash } from "../../text/format.js";
 import { buildingLevel, perksOf } from "../parlor.js";
 import { xc, xp, xr } from "../players.js";
+import { bonusVisits } from "../pvp.js";
 import { karmaTitle } from "./office.js";
 
 /**
@@ -22,11 +23,20 @@ export function expandedStatLines(turn: Turn): StatLine[] {
   const rules = xr(turn);
   const t = xc(turn).text;
   const l = t.stats.labels;
-  const lines = statLines(turn).map((line) =>
-    line.id === "rating"
-      ? { ...line, value: `${p.rating} (${ratingTitle(turn.content, Math.max(1, p.rating))})` }
-      : line,
-  );
+  const lines = statLines(turn).map((line) => {
+    if (line.id === "rating")
+      return {
+        ...line,
+        value: `${p.rating} (${ratingTitle(turn.content, Math.max(1, p.rating))})`,
+      };
+    // 9.3: a cutthroat parlor's extra visits count here as they do on the row of parlors.
+    if (line.id === "visits")
+      return {
+        ...line,
+        value: intToCash(turn.settings.visitsPerDay + bonusVisits(turn) - p.playerFights),
+      };
+    return line;
+  });
   const perks = perksOf(rules, p.karma).map((id) => t.perks[id]?.name ?? id);
   const extra: [string, string, string][] = [
     ["karma", l.karma, `${p.karma} (${karmaTitle(turn)})`],

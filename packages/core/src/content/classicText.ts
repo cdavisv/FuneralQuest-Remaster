@@ -55,6 +55,12 @@ export interface ClassicText {
      * still load; the engine falls back to the original wording.
      */
     parlorLocked?: string;
+    /**
+     * `broadcast` when the idle time-out logs a player off
+     * (legacy/source/user_list.cpp:167). {name}. Optional for packs written before it existed: the
+     * engine falls back to the original's wording kept in `classic/session.ts`.
+     */
+    kickedForInactivity?: string;
   };
   desk: {
     title: string;
@@ -507,6 +513,8 @@ export const CLASSIC_TEXT: ClassicText = {
     loggedOff: "{name} logged off.",
     parlorLocked:
       "Someone is currently poking around your parlor...please log back on in a few minutes!",
+    // user_list.cpp:167, broadcast before the idle player is deleted.
+    kickedForInactivity: "{name} got kicked for inactivity",
   },
   desk: {
     title: "At Home",

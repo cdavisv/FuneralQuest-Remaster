@@ -1035,8 +1035,9 @@ textarea {
   padding-bottom: calc(var(--u) * 10);
   border-bottom: 1px solid rgba(255, 220, 160, 0.18);
   line-height: 1.4;
-  color: var(--fq-c-default);
-  opacity: 0.88;
+  /* Dimmed through the colour, not opacity: a tinted span (a purple number) inside an entry keeps
+     its full contrast against the panel. */
+  color: color-mix(in srgb, var(--fq-c-default) 88%, transparent);
 }
 
 .fq-sidelog-empty {
