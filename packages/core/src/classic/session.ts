@@ -59,6 +59,25 @@ export function endSession(turn: Turn, reason: "quit" | "timeout" | "replaced"):
   turn.effects.push({ kind: "sessionEnded", playerId: turn.playerId, reason });
 }
 
+/** `user_list.cpp:167`, kept here until the Classic pack carries the line (see `ClassicText`). */
+const KICKED_FOR_INACTIVITY = "{name} got kicked for inactivity";
+
+/**
+ * The idle time-out (`CFqDlg::user_list_update_time`,
+ * legacy/source/user_list.cpp:160-171): the server tells everyone "<name> got
+ * kicked for inactivity" and then deletes the online record as
+ * `online_delete_guy` does (sale finished and mailed, parlor released). The
+ * notice goes out first, so the player's own queue still holds it and drops it
+ * with the other normal-importance mail. Not announced for a not-logged-on
+ * connection (`:173-179`), which has no player.
+ */
+export function kickForInactivity(turn: Turn): void {
+  if (!turn.town.sessions[String(turn.playerId)]) return;
+  const text = turn.text.session.kickedForInactivity ?? KICKED_FOR_INACTIVITY;
+  broadcast(turn, fill(text, { name: turn.player.name }));
+  endSession(turn, "timeout");
+}
+
 /** `command_quit` (legacy/source/commands_misc.cpp:50-60). */
 export function quit(turn: Turn): View {
   broadcast(turn, fill(turn.text.session.loggedOff, { name: turn.player.name }));

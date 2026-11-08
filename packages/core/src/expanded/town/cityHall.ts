@@ -410,11 +410,7 @@ function ordinanceView(turn: Turn, message = ""): View {
       const def = ordinanceDef(turn, id);
       if (!def) continue;
       text += `\n\`w${def.title}\`$: ${def.text} \`5(${def.effect})\`$`;
-      let b = card(
-        `${CITY_HALL}:vote:${id}`,
-        def.title,
-        fill(t.votesDetail, { votes: tally[id] ?? 0 }),
-      );
+      let b = card(`${CITY_HALL}:vote:${id}`, def.title, votesText(t, tally[id] ?? 0));
       if (mine === id) b = { ...off(b, yourVote(turn)), selected: true };
       buttons.push(b);
     }
@@ -572,11 +568,7 @@ function electionView(turn: Turn, message = ""): View {
     for (const id of el.ballot.options) {
       const who = turn.town.players[Number(id)];
       if (!who) continue;
-      let b = card(
-        `${CITY_HALL}:elect:${id}`,
-        who.name,
-        fill(t.votesDetail, { votes: tally[id] ?? 0 }),
-      );
+      let b = card(`${CITY_HALL}:elect:${id}`, who.name, votesText(t, tally[id] ?? 0));
       if (mine === id) b = { ...off(b, yourVote(turn)), selected: true };
       buttons.push(b);
     }
@@ -734,3 +726,8 @@ export const cityHallModule: LocationModule = {
     return invite(turn, playerId);
   },
 };
+
+/** `{votes} votes`, or the singular line for exactly one. */
+function votesText(t: { votesDetail: string; votesDetailOne: string }, votes: number): string {
+  return fill(votes === 1 ? t.votesDetailOne : t.votesDetail, { votes });
+}

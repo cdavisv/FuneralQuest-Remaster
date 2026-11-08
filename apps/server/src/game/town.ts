@@ -716,7 +716,14 @@ export class TownRuntime {
 
   // ------------------------------------------------------------- presence
 
-  /** Logs off players who have been idle too long. Returns how many. */
+  /**
+   * Logs off players who have been idle too long. Returns how many. The original did this in
+   * `CFqDlg::user_list_update_time` (legacy/source/user_list.cpp:160-171, every 5 s from
+   * `window_timer.cpp:30-44`): "<name> got kicked for inactivity" to everyone, then
+   * `online_delete_guy` (a sale in progress is finished and mailed, the parlor is released). The
+   * limit was the sysop's `i_player_kick_minutes` (default 4, `file_system.cpp:27`); here it is
+   * `FQ_IDLE_TIMEOUT_MINUTES` (default 15).
+   */
   sweepIdle(): Promise<number> {
     return this.enqueue(async () => {
       const now = this.deps.clock.now();
@@ -733,7 +740,7 @@ export class TownRuntime {
           this.startedAt,
         );
         if (now - last >= this.deps.idleTimeoutMs) {
-          await this.leaveInternal(playerId, "timeout", "idle");
+          await this.leaveInternal(playerId, "timeout", "idle", { inactive: true });
           count++;
         }
       }
@@ -746,9 +753,14 @@ export class TownRuntime {
     return this.enqueue(() => this.leaveInternal(playerId, reason, why));
   }
 
-  private async leaveInternal(playerId: number, reason: EndReason, why: string): Promise<boolean> {
+  private async leaveInternal(
+    playerId: number,
+    reason: EndReason,
+    why: string,
+    options: { inactive?: boolean } = {},
+  ): Promise<boolean> {
     if (!this.state.sessions[String(playerId)]) return false;
-    const r = leaveGame(this.state, playerId, this.ctx());
+    const r = leaveGame(this.state, playerId, this.ctx(), options);
     this.activeAt.delete(playerId);
     await this.commit({
       kind: `leave:${why}`,

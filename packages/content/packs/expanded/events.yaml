@@ -115,6 +115,20 @@ ranges:
       - message: 'A man in a hurry asks if you do drive-through viewings. You do now.'
         modBp: [ 4, 8 ]
         modLuck: [ 1, 3 ]
+      - message: 'Augustus Mourne of Mourne & Sons leaves a fruit basket on your step. The card says "Welcome to the business. It won''t last." The fruit is wax.'
+        modLuck: [ -2, -1 ]
+      - message: 'Dr. Grimble, the county coroner, starts sending you his overflow. Most of it comes with a sticky note: "Sorry about the smell."'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Inspector Mudge peers through your front window, writes something down and leaves. You don''t sleep for two nights.'
+        modLuck: [ -2, -1 ]
+        picture: 'people/inspector-mudge'
+      - message: 'Lucius Vane sends over a bottle of something dark from the Reaper Club, with a note: "For later." You decide later can wait.'
+        modLuck: [ 1, 3 ]
+        picture: 'people/lucius-vane'
+      - message: 'You catch Ned and Rollo Mourne going through your trash for client lists. They find your "gag" photographs instead and run.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 2 ]
   - low: 1000
     high: 4999
     entries:
@@ -225,6 +239,23 @@ ranges:
         modBp: [ 4, 8 ]
         modLuck: [ 1, 3 ]
         picture: 'stuff/red_rose'
+      - message: '`4Mourne & Sons runs a newspaper ad: "Our caskets have bottoms." `$Business dips while people wonder about yours.'
+        modBp: [ -10, -5 ]
+        modLuck: [ -2, -1 ]
+      - message: 'Dr. Grimble rules a death "natural causes, eventually" and sends the family straight to you. You send him a ham.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Inspector Mudge fails Mourne & Sons for "excessive smiling in a mortuary". You frame the clipping.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 3 ]
+        picture: 'people/inspector-mudge'
+      - message: 'Nurse Gertie lets slip that the Mournes tip her twice what you do. You start tipping her three times what you do.'
+        modBp: [ 3, 6 ]
+        modLuck: [ 1, 2 ]
+        picture: 'people/nurse-gertie'
+      - message: '`4You lose a hand of cards to Lucius Vane at the Reaper Club. `$He lets you keep the hand. He keeps your watch.'
+        modLuck: [ -3, -1 ]
+        picture: 'people/lucius-vane'
   - low: 5000
     high: 299999999
     entries:
@@ -336,3 +367,20 @@ ranges:
       - message: 'Cousin Sal shows up in a new sports car and wants to "go into business". You do not ask which business.'
         modLuck: [ -2, -1 ]
         picture: 'people/m_doctor'
+      - message: 'Augustus Mourne offers to buy your parlor "for the land". You tell him the land is full. He laughs for the first time since 1958.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Dr. Grimble takes a week off. His stand-in rules everything "a bit of a mystery". Families come to you for answers. You sell them caskets.'
+        modBp: [ 5, 10 ]
+        modLuck: [ 1, 2 ]
+      - message: '`4Inspector Mudge finds your second basement. `$You didn''t know you had a second basement either.'
+        modBp: [ -15, -10 ]
+        modLuck: [ -2, -1 ]
+        picture: 'people/inspector-mudge'
+      - message: 'The Mourne boys race you down Dead Man''s Curve in their hearse. You win. They meet the Curve. You get the funerals.'
+        modBp: [ 8, 12 ]
+        modLuck: [ 1, 3 ]
+      - message: 'Lucius Vane asks you to "look after" a sealed casket for a week. It hums at night. You charge him storage.'
+        modBp: [ 4, 8 ]
+        modLuck: [ 1, 2 ]
+        picture: 'people/lucius-vane'

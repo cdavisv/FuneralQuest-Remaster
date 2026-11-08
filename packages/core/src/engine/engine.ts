@@ -12,7 +12,7 @@ import {
 } from "../classic/newPlayer.js";
 import { addToNews } from "../classic/news.js";
 import { killScript } from "../classic/scripts/runtime.js";
-import { endSession, lobbyView, logOn, quit } from "../classic/session.js";
+import { endSession, kickForInactivity, lobbyView, logOn, quit } from "../classic/session.js";
 import { newPlayersClosed } from "../classic/tournament.js";
 import { CLASSIC_TEXT } from "../content/classicText.js";
 import type { ContentPack } from "../content/types.js";
@@ -200,10 +200,18 @@ export function enterGame(town: TownState, playerId: number, ctx: EngineContext)
  * legacy/source/online_util.cpp:112-177). A sale in progress is completed
  * and mailed, as in the original.
  */
-export function leaveGame(town: TownState, playerId: number, ctx: EngineContext): StepResult {
+export function leaveGame(
+  town: TownState,
+  playerId: number,
+  ctx: EngineContext,
+  options: { inactive?: boolean } = {},
+): StepResult {
   if (!town.sessions[String(playerId)]) return { town, view: lobbyView(), effects: [] };
   const turn = new Turn(clone(town), ctx, playerId);
-  endSession(turn, "timeout");
+  // The idle time-out announces the kick first (user_list.cpp:160-171); a dropped connection or a
+  // sysop's Kick (dlg_edit_choose.cpp:257-278, user_list.cpp:307-335) is silent.
+  if (options.inactive) kickForInactivity(turn);
+  else endSession(turn, "timeout");
   turn.commit();
   return { town: turn.town, view: lobbyView(), effects: turn.effects };
 }

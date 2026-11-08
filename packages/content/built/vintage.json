@@ -1340,7 +1340,8 @@
     "session": {
       "loggedOn": "{name} logged on.",
       "loggedOff": "{name} logged off.",
-      "parlorLocked": "Someone is currently poking around your parlor...please log back on in a few minutes!"
+      "parlorLocked": "Someone is currently poking around your parlor...please log back on in a few minutes!",
+      "kickedForInactivity": "{name} got kicked for inactivity"
     },
     "desk": {
       "title": "At Home",

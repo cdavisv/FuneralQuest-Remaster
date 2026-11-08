@@ -723,6 +723,7 @@ function buildTownSchema(mode: SchemaMode, reward: z.ZodType<Reward>) {
     noElectionNews: text,
     mayorMorning: text,
     votesDetail: text,
+    votesDetailOne: text,
   });
 
   const chains = obj({

@@ -51,6 +51,29 @@ describe("Expanded personalities", () => {
   });
 });
 
+describe("7.2 and 28: the late upgrades come early (balance round 17)", () => {
+  // docs/expanded-rules.md section 28 ("Late upgrades") and expanded-tuning-log.md round 17:
+  // the Night Watchman and the Memorial Garden return BP once owned, but listed after the
+  // embalming lab they were bought on day 26. Every personality that buys them lists them
+  // after the storeroom and before the lab (the Watchman needs the alarm, listed before it).
+  it("lists the Night Watchman and the Memorial Garden before the embalming lab", () => {
+    let buyers = 0;
+    for (const p of ALL_PERSONALITIES) {
+      const list = p.expanded?.upgrades ?? [];
+      for (const id of ["night-watchman", "memorial-garden"]) {
+        const at = list.indexOf(id);
+        if (at < 0) continue;
+        buyers++;
+        expect(at, `${p.id} ${id}`).toBeGreaterThan(list.indexOf("storeroom"));
+        expect(at, `${p.id} ${id}`).toBeLessThan(list.indexOf("embalming-lab"));
+      }
+      if (list.includes("night-watchman"))
+        expect(list.indexOf("alarm")).toBeLessThan(list.indexOf("night-watchman"));
+    }
+    expect(buyers).toBe(7);
+  });
+});
+
 describe("a whole Expanded season", () => {
   for (const seed of [41, 42, 43]) {
     it(`town ${seed}: eight bots play 30 days with no stuck screen, rejection or error`, () => {

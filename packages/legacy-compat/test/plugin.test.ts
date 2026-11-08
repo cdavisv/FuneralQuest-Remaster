@@ -130,6 +130,25 @@ describe("sessions", () => {
     expect(late.body).toContain("i_sent=-1&");
   });
 
+  it("announces the idle time-out to the town, as the original's kick did (user_list.cpp:167), and a quit with the usual line", async () => {
+    const host = await createDevHost({ seed: 5, rivals: 0 });
+    let now = 1_000;
+    const bridge = new LegacyBridge({
+      host,
+      assets: loadAssets(resolve(REPO_ROOT, "assets/manifest.json")),
+      now: () => now,
+      idleMs: 60_000,
+    });
+    await bridge.handle(
+      undefined,
+      "new&logon=idler&password=pw&password_v=pw&name=Idle+Ivan&f_name=Idle+Rest&b_male=1&email=i%40b.cc",
+    );
+    now += 70_000;
+    await bridge.sweep();
+    const said = host.effects.flatMap((e) => (e.kind === "broadcast" ? [e.text] : []));
+    expect(said).toContain("Idle Ivan got kicked for inactivity");
+  });
+
   it("serialises overlapping requests", async () => {
     const host = await createDevHost({ seed: 4, rivals: 0 });
     const bridge = new LegacyBridge({

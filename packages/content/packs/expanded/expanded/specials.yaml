@@ -524,3 +524,146 @@
       text: '`$You show them out. On the way to their van one of them swears Morty waved. Morty did not wave. Probably.'
       effects:
         karma: 1
+- id: 'coroner'
+  label: 'The Coroner'
+  weight: 1
+  minDay: 3
+  person:
+    first: 'Ignatius'
+    surname: 'Grimble'
+    male: true
+  portrait: 'people/m_old_5'
+  intro: '`$Dr. Ignatius Grimble, the county coroner, comes in smelling of formaldehyde and peppermint, which is how you know he has been working.
+
+
+    `wDr. Grimble: `$"Four unclaimed this week, and my freezer is full of picnic leftovers. Take them at the county rate and you go to the top of my morning list. Say no and you go to the bottom. In pencil."'
+  offer:
+    accept:
+      label: 'Take All Four'
+      text: '`$You fit four strangers into two days of work. Dr. Grimble signs the forms without looking up and writes your parlor at the top of his list, in ink.'
+      effects:
+        bp: 10
+        money: 400
+        karma: 1
+    decline:
+      label: 'Not Today'
+      text: '`$Dr. Grimble shrugs and writes something down. It is your name, at the bottom, in pencil. He has a very sharp pencil.'
+      effects:
+        reviews: -1
+- id: 'the-mournes'
+  label: 'Augustus Mourne'
+  weight: 1
+  minDay: 4
+  person:
+    first: 'Augustus'
+    surname: 'Mourne'
+    male: true
+  portrait: 'people/m_adult_3'
+  intro: '`$Augustus Mourne of Mourne & Sons, Deathville''s other undertakers since 1931, sits down and opens a notebook to a page with your name at the top.
+
+
+    {customer}"My {dRelation} {dFirst} has died, and my own family won''t touch the body. Professional courtesy, they call it. A grudge, I call it. A {casket} casket. I''ll be taking notes."'
+  incomeAtLeast: 2
+  traits:
+    - 'know-it-all'
+    - 'rivalry'
+  effects:
+    cheapness: 1
+    patience: -1
+    guilt: 0
+  onHappy:
+    rating: 1
+    reviews: 2
+  onWalkout:
+    rating: -1
+    reviews: -3
+  lines:
+    happy: '{customer}"Annoyingly competent. I''ll tell the boys to raise our prices. From a Mourne, that''s a compliment."'
+    walkout: '`$Augustus Mourne closes his notebook with a snap. By Friday every family in town has a Mourne & Sons flyer promising "none of that nonsense from across the street".'
+- id: 'inspector-mudge'
+  label: 'Inspector Mudge'
+  weight: 1
+  minDay: 3
+  person:
+    first: 'Inspector'
+    surname: 'Mudge'
+    male: true
+  portrait: 'people/inspector-mudge'
+  intro: '`$Inspector Mudge from City Hall stands in your doorway with a clipboard, a flashlight and the face of a man who has already found something.
+
+
+    `wInspector Mudge: `$"Surprise inspection. I could spend all afternoon in your basement, or I could accept a modest gift to the Inspectors'' Widows Fund. I am, technically, its only member."'
+  offer:
+    accept:
+      label: 'Make a Gift'
+      text: '`$You hand over an envelope. Inspector Mudge glances at the basement door, writes SPOTLESS on his clipboard and leaves whistling.'
+      effects:
+        money: -400
+        karma: -1
+        rating: 1
+    decline:
+      label: 'Open the Basement'
+      text: '`$Mudge spends three hours in your basement. He finds the old embalming fluid, the raccoon and Morty''s other leg. The fine stings, but the paper calls you "honest, if damp".'
+      effects:
+        money: -200
+        karma: 2
+        reviews: 1
+- id: 'lucius-vane'
+  label: 'Lucius Vane'
+  weight: 1
+  minDay: 5
+  person:
+    first: 'Lucius'
+    surname: 'Vane'
+    male: true
+  portrait: 'people/lucius-vane'
+  intro: '`$The lights flicker. Lucius Vane, who owns the Reaper Club and possibly the night, is sitting across from you. You did not see him sit down.
+
+
+    {customer}"A business associate of mine, {dFirst}, had an accident with {aFridge}. A {casket} casket and a closed lid. A very closed lid. Money is not the issue. Questions are."'
+  incomeAtLeast: 2
+  traits:
+    - 'tight-lipped'
+  effects:
+    limitMult: 1.3
+    cheapness: -0.5
+    patience: -1
+  onHappy:
+    luck: 4
+    karma: -1
+  onWalkout:
+    luck: -4
+  lines:
+    happy: '{customer}"Discreet. I like discreet. If you ever find yourself at my club, the house will remember you. Fondly. Mostly."'
+    walkout: '`$Lucius Vane rises without a sound. For a week, every card you are dealt in this town is the two of clubs. Every single one.'
+- id: 'june'
+  label: 'June from Yang''s'
+  weight: 1
+  minDay: 2
+  person:
+    first: 'June'
+    surname: 'Yang'
+    male: false
+  portrait: 'people/yangsgirl'
+  pet:
+    - 'cat'
+    - 'goldfish'
+    - 'parakeet'
+    - 'turtle'
+  intro: '`$June from Yang''s comes in still wearing her apron. She looks at the floor, then at you, then at the floor again.
+
+
+    {customer}"It''s {dFirst}. Our {pet}. {dFirst} lived behind the counter for eleven years. Dad says it''s silly. Dad also cried in the walk-in freezer. A {casket} casket, please. A small one."'
+  casketPriceMult: 0.25
+  effects:
+    loved: true
+    sympathy: 1.3
+    cheapness: -0.5
+  onHappy:
+    luck: 3
+    reviews: 1
+  onWalkout:
+    luck: -2
+  lines:
+    happy: '{customer}"That was... really nice. Thank you." For once, neither of you pretends it didn''t happen.'
+    walkout: '`$June leaves without a word. The next time you eat at Yang''s, your fortune cookie is empty.'

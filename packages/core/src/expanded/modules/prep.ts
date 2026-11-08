@@ -91,7 +91,7 @@ function start(turn: Turn): View {
     if (!canPay(turn.player, cost))
       return { ...b, enabled: false, hint: fill(xc(turn).text.hints.needsMoney, { money: cost }) };
     const summary = rewardSummary(prepEffects(turn, option, option.effects));
-    return summary ? { ...b, detail: summary.replace(/`./g, "") } : b;
+    return summary ? { ...b, detail: summary } : b;
   });
   return {
     scene: "location",
@@ -125,7 +125,7 @@ function choose(turn: Turn, index: number): View {
   return {
     scene: "location",
     title: turn.session.location,
-    text: legacy(`${t.header}${text}${summary ? `\n\n${summary}` : ""}`),
+    text: legacy(`${t.header}${text}${summary ? `\n\n\`5${summary}\`$` : ""}`),
     picture: prepScene(def),
     hud: hud(turn.player),
     buttons: [continueButton(turn)],

@@ -1,5 +1,6 @@
 import type { Action, View } from "@fq/protocol";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { plainButtons } from "../expanded/buttons.js";
 import { SendError, type SendFailure, type Transport } from "../transport/types.js";
 import { emptyTranscript, foldChat } from "./transcript.js";
 
@@ -40,7 +41,7 @@ export function useGame(transport: Transport): GameApi {
   /** The cafe's talk so far (`state/transcript.ts`): a View's `chat` is only what is new. */
   const talk = useRef(emptyTranscript());
   const fold = useCallback((view: View, kind: "response" | "push"): View => {
-    const folded = foldChat(talk.current, view, kind);
+    const folded = foldChat(talk.current, plainButtons(view), kind);
     talk.current = folded.transcript;
     return folded.view;
   }, []);

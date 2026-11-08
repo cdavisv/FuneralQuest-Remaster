@@ -583,6 +583,51 @@
               1,
               3
             ]
+          },
+          {
+            "message": "Augustus Mourne of Mourne & Sons leaves a fruit basket on your step. The card says \"Welcome to the business. It won't last.\" The fruit is wax.",
+            "modLuck": [
+              -2,
+              -1
+            ]
+          },
+          {
+            "message": "Dr. Grimble, the county coroner, starts sending you his overflow. Most of it comes with a sticky note: \"Sorry about the smell.\"",
+            "modBp": [
+              4,
+              8
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Inspector Mudge peers through your front window, writes something down and leaves. You don't sleep for two nights.",
+            "modLuck": [
+              -2,
+              -1
+            ],
+            "picture": "people/inspector-mudge"
+          },
+          {
+            "message": "Lucius Vane sends over a bottle of something dark from the Reaper Club, with a note: \"For later.\" You decide later can wait.",
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "people/lucius-vane"
+          },
+          {
+            "message": "You catch Ned and Rollo Mourne going through your trash for client lists. They find your \"gag\" photographs instead and run.",
+            "modBp": [
+              3,
+              6
+            ],
+            "modLuck": [
+              1,
+              2
+            ]
           }
         ]
       },
@@ -1149,6 +1194,60 @@
               3
             ],
             "picture": "stuff/red_rose"
+          },
+          {
+            "message": "`4Mourne & Sons runs a newspaper ad: \"Our caskets have bottoms.\" `$Business dips while people wonder about yours.",
+            "modBp": [
+              -10,
+              -5
+            ],
+            "modLuck": [
+              -2,
+              -1
+            ]
+          },
+          {
+            "message": "Dr. Grimble rules a death \"natural causes, eventually\" and sends the family straight to you. You send him a ham.",
+            "modBp": [
+              5,
+              10
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Inspector Mudge fails Mourne & Sons for \"excessive smiling in a mortuary\". You frame the clipping.",
+            "modBp": [
+              4,
+              8
+            ],
+            "modLuck": [
+              1,
+              3
+            ],
+            "picture": "people/inspector-mudge"
+          },
+          {
+            "message": "Nurse Gertie lets slip that the Mournes tip her twice what you do. You start tipping her three times what you do.",
+            "modBp": [
+              3,
+              6
+            ],
+            "modLuck": [
+              1,
+              2
+            ],
+            "picture": "people/nurse-gertie"
+          },
+          {
+            "message": "`4You lose a hand of cards to Lucius Vane at the Reaper Club. `$He lets you keep the hand. He keeps your watch.",
+            "modLuck": [
+              -3,
+              -1
+            ],
+            "picture": "people/lucius-vane"
           }
         ]
       },
@@ -1738,6 +1837,63 @@
               -1
             ],
             "picture": "people/m_doctor"
+          },
+          {
+            "message": "Augustus Mourne offers to buy your parlor \"for the land\". You tell him the land is full. He laughs for the first time since 1958.",
+            "modBp": [
+              5,
+              10
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Dr. Grimble takes a week off. His stand-in rules everything \"a bit of a mystery\". Families come to you for answers. You sell them caskets.",
+            "modBp": [
+              5,
+              10
+            ],
+            "modLuck": [
+              1,
+              2
+            ]
+          },
+          {
+            "message": "`4Inspector Mudge finds your second basement. `$You didn't know you had a second basement either.",
+            "modBp": [
+              -15,
+              -10
+            ],
+            "modLuck": [
+              -2,
+              -1
+            ],
+            "picture": "people/inspector-mudge"
+          },
+          {
+            "message": "The Mourne boys race you down Dead Man's Curve in their hearse. You win. They meet the Curve. You get the funerals.",
+            "modBp": [
+              8,
+              12
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "message": "Lucius Vane asks you to \"look after\" a sealed casket for a week. It hums at night. You charge him storage.",
+            "modBp": [
+              4,
+              8
+            ],
+            "modLuck": [
+              1,
+              2
+            ],
+            "picture": "people/lucius-vane"
           }
         ]
       }
@@ -2042,6 +2198,18 @@
           {
             "title": "FIRST FROST KILLS DAISIES, TWO GARDENERS",
             "message": "\"They wouldn't come in without the daisies,\" says a neighbor. The daisies have been composted. The gardeners are still being discussed."
+          },
+          {
+            "title": "MOURNE & SONS MARKS 70 YEARS",
+            "message": "\"Three generations of Mournes have buried this town, and we intend to bury the rest of it,\" says Augustus Mourne, cutting a black ribbon with a shovel. His sons Ned and Rollo handed out free thermometers."
+          },
+          {
+            "title": "CORONER MOVES OFFICE, AGAIN",
+            "message": "Dr. Ignatius Grimble has moved the county morgue from the Di-Mart freezer aisle to the back of the bowling alley. \"Better ventilation, worse shoes,\" he says."
+          },
+          {
+            "title": "INSPECTOR MUDGE NAMED EMPLOYEE OF THE MONTH",
+            "message": "City Hall honors Inspector Mudge for closing eleven restaurants, two daycares and a lemonade stand. \"The lemonade had pulp,\" he said. \"Unlabeled pulp.\""
           }
         ]
       },
@@ -2362,6 +2530,28 @@
           {
             "title": "BILL'S BIG BURGER FIGHTS BACK WITH FREE REFILLS",
             "message": "\"Unlimited gravy,\" says Bill. \"We're not saying it's safe. We're saying it's unlimited.\""
+          },
+          {
+            "title": "MOURNE BOYS COME TO BLOWS AT CHURCH",
+            "message": "Ned and Rollo Mourne fought on Sunday over who would carry the front of a casket. The deceased, a Mr. Harold Pine, was dropped twice. Father Smyth has asked both boys to \"find another God\".",
+            "giveRandom": "`wThe phone rings - It's the Pine family.\\n\\n`$\"Can you bury Harold properly? Nobody has dropped him in a while and we'd like to keep it that way.\"",
+            "addLog": "`7PINE FAMILY SWITCHES PARLORS\\n`^*NAME* of *HOME* has reburied Harold Pine. He was not dropped once.",
+            "modBp": [
+              20,
+              40
+            ],
+            "modLuck": [
+              1,
+              3
+            ]
+          },
+          {
+            "title": "CORONER: \"IT'S ALWAYS THE APPLIANCES\"",
+            "message": "Dr. Grimble's annual report names household appliances the county's leading cause of death for the ninth year running. \"Lock your freezers,\" he advises. \"And never turn your back on a toaster.\""
+          },
+          {
+            "title": "LUCIUS VANE DENIES OWNING THE NIGHT",
+            "message": "\"I simply keep late hours,\" says the owner of the Reaper Club, who was photographed at noon casting no shadow. City Hall has renewed his liquor license \"for as long as he likes\"."
           },
           {
             "title": "ST. MORTIMER'S BELLS DROWN OUT WITHERS' NOISE COMPLAINT",
@@ -2915,6 +3105,28 @@
             "title": "YANG'S NAMES FORTUNE COOKIE OF THE YEAR",
             "message": "\"This year's winner: You will be buried by someone cheap,\" says Mr. Yang. \"Very popular. People keep it in their wallet, for the funeral.\"",
             "picture": "chinese_takeout"
+          },
+          {
+            "title": "MOURNE & SONS OPENS DRIVE-THRU VIEWING",
+            "message": "\"Grief on the go,\" says Augustus Mourne of the new window on Elm Street. Mourners pay their respects without leaving the car. Three have already rear-ended the hearse.",
+            "giveRandom": "`wThe phone rings - It's the Elm Street traffic office.\\n\\n`$\"There's been a pile-up at the Mourne window. They don't take walk-ins. Or crash-ins.\"",
+            "addLog": "`7DRIVE-THRU PILE-UP\\n`^*NAME* of *HOME* buries the victims of the Mourne & Sons drive-thru. Augustus Mourne sent a coupon.",
+            "modBp": [
+              30,
+              60
+            ],
+            "modLuck": [
+              1,
+              4
+            ]
+          },
+          {
+            "title": "HEALTH INSPECTOR FAILS HIMSELF",
+            "message": "Inspector Mudge has cited himself for \"unsanitary sandwich storage\" in his own desk drawer. \"Nobody is above the code,\" he said, and paid the fine to himself."
+          },
+          {
+            "title": "CORONER WRITES MEMOIR",
+            "message": "Dr. Ignatius Grimble's book, \"Cause Unknown, Probably Cheese\", is on sale at Di-Mart. Elijah has read it six times without blinking and says the ending \"is very accurate\"."
           },
           {
             "title": "CURE PARADE RETURNS FOR A SECOND LAP",
@@ -4402,6 +4614,42 @@
       "failPicture": "stuff/money_bag",
       "successMessage": "`$You swing your pocket watch in front of the next customer and murmur \"gold casket... gold casket...\"\\n\\nShe buys the gold casket, the plot, a statue and a ferret. You don't sell ferrets. You'll figure that out later.",
       "successPicture": "stuff/money_bag_2"
+    },
+    {
+      "startMessage": "`$Inspector Mudge has left his clipboard on your counter while he inspects the basement.\\n\\nYour name is on the top sheet. Most of the boxes say FAIL. A pencil with a good eraser is lying right next to it.",
+      "startPicture": "people/inspector-mudge",
+      "normalLabel": "Leave It",
+      "riskLabel": "Erase It",
+      "normalMessage": "`$You leave the clipboard alone. Mudge comes back up, reads his own notes and sighs. \"Honest, at least,\" he writes at the bottom.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You erase three FAILs and pencil in PASS.\\n\\nMudge comes back up and holds the sheet to the light. \"This is my handwriting,\" he says, \"if I were a liar.\" The fine has a second page.",
+      "failPicture": "stuff/money_bag",
+      "successMessage": "`$You erase three FAILs and pencil in PASS.\\n\\nMudge comes back up, glances at the sheet and nods. \"Better than I remembered,\" he says. Your parlor gets a gold star for the window.",
+      "successPicture": "stuff/money_bag_2"
+    },
+    {
+      "startMessage": "`$Ned and Rollo Mourne have parked the Mourne & Sons hearse across your driveway and gone into Yang's for lunch.\\n\\nThe keys are in the ignition. Your own hearse is boxed in, and a family is waiting at the cemetery.",
+      "startPicture": "hearse/hearse3",
+      "normalLabel": "Wait",
+      "riskLabel": "Move It",
+      "normalMessage": "`$You wait. Forty minutes later the boys stroll out, apologize with their mouths full and move the hearse. The family at the cemetery has grown quite close in the meantime.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You hop in to move it.\\n\\nThe hearse is not empty. Rollo comes out of Yang's just in time to see you drive off with his client. The police are confused, and so is the widow.",
+      "failPicture": "places/funeral_enemy_police",
+      "successMessage": "`$You hop in and park it neatly. In front of a fire hydrant. Under a no-parking sign. Facing the wrong way.\\n\\nThe Mourne boys spend the afternoon at the impound lot. You make the cemetery with time to spare.",
+      "successPicture": "stuff/money_bag_2"
+    },
+    {
+      "startMessage": "`$Dr. Grimble, the county coroner, needs a second signature on a death certificate, and you happen to be in his office.\\n\\nThe cause of death reads \"unclear\". If it read \"natural causes\", the family could skip the inquest and come straight to *PARLOR* this afternoon.",
+      "startPicture": "people/m_old_5",
+      "normalLabel": "Sign It",
+      "riskLabel": "Fix It",
+      "normalMessage": "`$You sign it as written. Dr. Grimble nods and offers you a peppermint from a jar labeled EVIDENCE. You decline the peppermint.",
+      "normalPicture": "people/jesus_happy",
+      "failMessage": "`$You cross out \"unclear\" and write \"natural causes\".\\n\\nThe inquest happens anyway. Your handwriting is Exhibit A. Dr. Grimble testifies that you \"seemed very keen\". The family takes the body to Mourne & Sons.",
+      "failPicture": "stuff/money_bag",
+      "successMessage": "`$You cross out \"unclear\" and write \"natural causes\".\\n\\nDr. Grimble squints at it, shrugs and stamps it. The family is at your door by three, grateful and ready to spend.",
+      "successPicture": "stuff/money_bag_2"
     }
   ],
   "softSell": [
@@ -5650,7 +5898,8 @@
     "session": {
       "loggedOn": "{name} logged on.",
       "loggedOff": "{name} logged off.",
-      "parlorLocked": "Someone is currently poking around your parlor...please log back on in a few minutes!"
+      "parlorLocked": "Someone is currently poking around your parlor...please log back on in a few minutes!",
+      "kickedForInactivity": "{name} got kicked for inactivity"
     },
     "desk": {
       "title": "At Home",
@@ -6045,7 +6294,19 @@
         "{customer}\"I came in sad and I'm leaving furious. Congratulations.\"\n",
         "{customer}\"You should be ashamed of yourself. I'm leaving.\"\n",
         "{customer}\"No. No more. I'm out.\"\n",
-        "{customer}\"I'd rather deal with Elijah at Di-Mart. And he's terrifying.\"\n"
+        "{customer}\"I'd rather deal with Elijah at Di-Mart. And he's terrifying.\"\n",
+        "{customer}\"I'm going to the Mournes. At least they pretend to care.\"\n",
+        "{customer}\"You're the reason people ask to be scattered at sea. Goodbye.\"\n",
+        "{customer}\"My {dRelation} would have punched you. I'm just going to leave.\"\n",
+        "{customer}\"I've buried three relatives and I never wanted to bury the undertaker until now. Bye.\"\n",
+        "{customer}\"That's enough. I'll ask Father Smyth to do it with a shovel.\"\n",
+        "{customer}\"Don't get up. I'll find the door. It's the thing I'm walking through.\"\n",
+        "{customer}\"Every word out of your mouth costs money. I'm leaving before you say goodbye.\"\n",
+        "{customer}\"I'd rather leave {dHim} on the porch. At least the porch doesn't talk.\"\n",
+        "{customer}\"You've got the bedside manner of a {dFridge}. Goodbye.\"\n",
+        "{customer}\"I'm going to tell everyone at bingo about you. Everyone.\"\n",
+        "{customer}\"Keep your casket. Keep your coffee. Keep your face away from me.\"\n",
+        "{customer}\"I'm going. And I'm taking the pen.\"\n"
       ],
       "pissedOverLimit": [
         "{customer}\"That would put me over my limit.. I don't have time for this, bye.\"\n",
@@ -6060,7 +6321,19 @@
         "{customer}\"I said ${limit} tops. I'm going somewhere that can count.\"\n",
         "{customer}\"That would bankrupt me. I'm leaving before you sell me a second one.\"\n",
         "{customer}\"Nope. Too rich for my blood. Goodbye.\"\n",
-        "{customer}\"My bank card would laugh at that. I'm going.\"\n"
+        "{customer}\"My bank card would laugh at that. I'm going.\"\n",
+        "{customer}\"I said ${limit}. You heard ${limit} plus whatever you like. I'm leaving.\"\n",
+        "{customer}\"I'm not mortgaging the house for a box. Goodbye.\"\n",
+        "{customer}\"You keep adding. I keep subtracting. I've subtracted myself. Bye.\"\n",
+        "{customer}\"${limit} was my number. It's still my number. You're not my undertaker.\"\n",
+        "{customer}\"I'd have to die too, for the insurance, to pay that. No thanks.\"\n",
+        "{customer}\"That's more than my {dRelation} earned in a year. I'm out.\"\n",
+        "{customer}\"Do I look like I've got that kind of money? Don't answer. I'm leaving.\"\n",
+        "{customer}\"I'll bury {dHim} in the yard before I pay that. The yard is free.\"\n",
+        "{customer}\"You've priced me right out the door. Here I go.\"\n",
+        "{customer}\"Only rich people die here, I see. I'll find somewhere poor people die.\"\n",
+        "{customer}\"I told you my limit. You treated it like a suggestion. Goodbye.\"\n",
+        "{customer}\"I can't afford you. I'm not sure anyone can. Bye.\"\n"
       ],
       "walkoutTv": "\"A {income} {young} {man} just left {parlor} looking pissed,\" a reporter says.",
       "rivalWatch": "\n`$You watch {cHim} through the window after {cHe} leaves.  You see {cHim} go into {rivalParlor} to see {rivalName}!",
@@ -7196,6 +7469,17 @@
             "price": 2500,
             "tags": [
               "embalming",
+              "prestige"
+            ],
+            "requires": "embalming-lab"
+          },
+          {
+            "article": "a",
+            "name": "Lifelike Pose (Seated, Waving)",
+            "price": 3500,
+            "tags": [
+              "embalming",
+              "vanity",
               "prestige"
             ],
             "requires": "embalming-lab"
@@ -11570,6 +11854,174 @@
             }
           }
         }
+      },
+      {
+        "id": "coroner",
+        "label": "The Coroner",
+        "weight": 1,
+        "minDay": 3,
+        "person": {
+          "first": "Ignatius",
+          "surname": "Grimble",
+          "male": true
+        },
+        "portrait": "people/m_old_5",
+        "intro": "`$Dr. Ignatius Grimble, the county coroner, comes in smelling of formaldehyde and peppermint, which is how you know he has been working.\n\n`wDr. Grimble: `$\"Four unclaimed this week, and my freezer is full of picnic leftovers. Take them at the county rate and you go to the top of my morning list. Say no and you go to the bottom. In pencil.\"",
+        "offer": {
+          "accept": {
+            "label": "Take All Four",
+            "text": "`$You fit four strangers into two days of work. Dr. Grimble signs the forms without looking up and writes your parlor at the top of his list, in ink.",
+            "effects": {
+              "bp": 10,
+              "money": 400,
+              "karma": 1
+            }
+          },
+          "decline": {
+            "label": "Not Today",
+            "text": "`$Dr. Grimble shrugs and writes something down. It is your name, at the bottom, in pencil. He has a very sharp pencil.",
+            "effects": {
+              "reviews": -1
+            }
+          }
+        }
+      },
+      {
+        "id": "the-mournes",
+        "label": "Augustus Mourne",
+        "weight": 1,
+        "minDay": 4,
+        "person": {
+          "first": "Augustus",
+          "surname": "Mourne",
+          "male": true
+        },
+        "portrait": "people/m_adult_3",
+        "intro": "`$Augustus Mourne of Mourne & Sons, Deathville's other undertakers since 1931, sits down and opens a notebook to a page with your name at the top.\n\n{customer}\"My {dRelation} {dFirst} has died, and my own family won't touch the body. Professional courtesy, they call it. A grudge, I call it. A {casket} casket. I'll be taking notes.\"",
+        "incomeAtLeast": 2,
+        "traits": [
+          "know-it-all",
+          "rivalry"
+        ],
+        "effects": {
+          "cheapness": 1,
+          "patience": -1,
+          "guilt": 0
+        },
+        "onHappy": {
+          "rating": 1,
+          "reviews": 2
+        },
+        "onWalkout": {
+          "rating": -1,
+          "reviews": -3
+        },
+        "lines": {
+          "happy": "{customer}\"Annoyingly competent. I'll tell the boys to raise our prices. From a Mourne, that's a compliment.\"",
+          "walkout": "`$Augustus Mourne closes his notebook with a snap. By Friday every family in town has a Mourne & Sons flyer promising \"none of that nonsense from across the street\"."
+        }
+      },
+      {
+        "id": "inspector-mudge",
+        "label": "Inspector Mudge",
+        "weight": 1,
+        "minDay": 3,
+        "person": {
+          "first": "Inspector",
+          "surname": "Mudge",
+          "male": true
+        },
+        "portrait": "people/inspector-mudge",
+        "intro": "`$Inspector Mudge from City Hall stands in your doorway with a clipboard, a flashlight and the face of a man who has already found something.\n\n`wInspector Mudge: `$\"Surprise inspection. I could spend all afternoon in your basement, or I could accept a modest gift to the Inspectors' Widows Fund. I am, technically, its only member.\"",
+        "offer": {
+          "accept": {
+            "label": "Make a Gift",
+            "text": "`$You hand over an envelope. Inspector Mudge glances at the basement door, writes SPOTLESS on his clipboard and leaves whistling.",
+            "effects": {
+              "money": -400,
+              "karma": -1,
+              "rating": 1
+            }
+          },
+          "decline": {
+            "label": "Open the Basement",
+            "text": "`$Mudge spends three hours in your basement. He finds the old embalming fluid, the raccoon and Morty's other leg. The fine stings, but the paper calls you \"honest, if damp\".",
+            "effects": {
+              "money": -200,
+              "karma": 2,
+              "reviews": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "lucius-vane",
+        "label": "Lucius Vane",
+        "weight": 1,
+        "minDay": 5,
+        "person": {
+          "first": "Lucius",
+          "surname": "Vane",
+          "male": true
+        },
+        "portrait": "people/lucius-vane",
+        "intro": "`$The lights flicker. Lucius Vane, who owns the Reaper Club and possibly the night, is sitting across from you. You did not see him sit down.\n\n{customer}\"A business associate of mine, {dFirst}, had an accident with {aFridge}. A {casket} casket and a closed lid. A very closed lid. Money is not the issue. Questions are.\"",
+        "incomeAtLeast": 2,
+        "traits": [
+          "tight-lipped"
+        ],
+        "effects": {
+          "limitMult": 1.3,
+          "cheapness": -0.5,
+          "patience": -1
+        },
+        "onHappy": {
+          "luck": 4,
+          "karma": -1
+        },
+        "onWalkout": {
+          "luck": -4
+        },
+        "lines": {
+          "happy": "{customer}\"Discreet. I like discreet. If you ever find yourself at my club, the house will remember you. Fondly. Mostly.\"",
+          "walkout": "`$Lucius Vane rises without a sound. For a week, every card you are dealt in this town is the two of clubs. Every single one."
+        }
+      },
+      {
+        "id": "june",
+        "label": "June from Yang's",
+        "weight": 1,
+        "minDay": 2,
+        "person": {
+          "first": "June",
+          "surname": "Yang",
+          "male": false
+        },
+        "portrait": "people/yangsgirl",
+        "pet": [
+          "cat",
+          "goldfish",
+          "parakeet",
+          "turtle"
+        ],
+        "intro": "`$June from Yang's comes in still wearing her apron. She looks at the floor, then at you, then at the floor again.\n\n{customer}\"It's {dFirst}. Our {pet}. {dFirst} lived behind the counter for eleven years. Dad says it's silly. Dad also cried in the walk-in freezer. A {casket} casket, please. A small one.\"",
+        "casketPriceMult": 0.25,
+        "effects": {
+          "loved": true,
+          "sympathy": 1.3,
+          "cheapness": -0.5
+        },
+        "onHappy": {
+          "luck": 3,
+          "reviews": 1
+        },
+        "onWalkout": {
+          "luck": -2
+        },
+        "lines": {
+          "happy": "{customer}\"That was... really nice. Thank you.\" For once, neither of you pretends it didn't happen.",
+          "walkout": "`$June leaves without a word. The next time you eat at Yang's, your fortune cookie is empty."
+        }
       }
     ],
     "tells": {
@@ -11590,7 +12042,15 @@
         "{customer}\"Can {dHe} have {dHis} reading glasses? {dHeCap} hated not being able to see.\"",
         "{customerName} hasn't slept. It's written all over {cHis} face, along with a lot of smeared eyeliner.",
         "{customer}\"I found {dHis} grocery list. Milk, eggs, call {cFirst}. I'm {cFirst}.\"",
-        "{customerName} smiles at something only {cHe} remembers, then stops smiling."
+        "{customerName} smiles at something only {cHe} remembers, then stops smiling.",
+        "{customerName} has brought {dFirst}'s favorite mug and holds it in {cHis} lap the whole time.",
+        "{customer}\"{dHeCap} used to hum when {dHe} cooked. The kitchen is so quiet now I can hear the clock.\"",
+        "{customerName} stops mid-sentence to blow {cHis} nose, then apologizes to the tissue box.",
+        "{customer}\"We were going to Lake Bleak this summer. I already bought the bait. I can't throw out the bait.\"",
+        "{customerName} keeps saying \"we\", then correcting it to \"I\", and it hurts every time.",
+        "{customer}\"I don't want {dHim} to be cold. Is it cold down there? Don't answer. Just make it warm.\"",
+        "{customerName} has {dFirst}'s name written on the back of {cHis} hand, as if {cHe} might forget it.",
+        "{customer}\"I left {dHis} porch light on last night. I know. I know. I just did.\""
       ],
       "notLoved": [
         "{customerName} checks {cHis} phone. Twice. While you're talking.",
@@ -11608,7 +12068,16 @@
         "{customerName} has already measured {dFirst}'s living room for a pool table.",
         "{customer}\"We weren't close. We weren't anything. We were people who shared a Thanksgiving once.\"",
         "{customerName} glances at the clock on your wall, then at {cHis} watch, to check the clock.",
-        "{customer}\"Is it bad that I'm a little relieved? Don't answer that. It's not bad.\""
+        "{customer}\"Is it bad that I'm a little relieved? Don't answer that. It's not bad.\"",
+        "{customerName} asks if {dFirst} can be buried \"somewhere out of the way\". Like a basement.",
+        "{customer}\"{dHeCap} owed me forty dollars. Can that come off the bill?\"",
+        "{customerName} calls {dFirst} \"that one\" twice before you've finished your coffee.",
+        "{customer}\"I'm told I have to pick a hymn. Pick whatever's shortest.\"",
+        "{customerName} has already put {dFirst}'s car up for sale. It's parked outside with the sign in the window.",
+        "{customer}\"Last time I saw {dHim} was at a wedding. {dHeCap} sat on the cake. I'm still not over the cake.\"",
+        "{customerName}'s black outfit still has the price tag on it. {cHeCap} plans to return it Monday.",
+        "{customer}\"Will this take long? I've got a racquetball court at three, and frankly that matters more.\"",
+        "{customerName} asks whether the viewing can be \"optional\", \"brief\" or \"skipped\"."
       ],
       "cheapLow": [
         "{customerName} tips the umbrella stand a dollar.",
@@ -11625,7 +12094,17 @@
         "{customer}\"Money's for spending. That's what {dFirst} always said, and then {dHe} spent all of {dHis}.\"",
         "{customerName} brought a checkbook and a fancy pen and seems eager to use both.",
         "{customer}\"Don't show me the cheap stuff. I'll feel bad for the cheap stuff.\"",
-        "{customerName} has the relaxed shoulders of someone who never balances a checkbook."
+        "{customerName} has the relaxed shoulders of someone who never balances a checkbook.",
+        "{customerName} brushes your price list aside like a crumb.",
+        "{customer}\"Is there a gold-plated option? Is there a solid-gold option? Find out.\"",
+        "{customerName} tells you to keep the change from a sale that hasn't happened yet.",
+        "{customer}\"I don't do anything halfway. Ask my exes.\"",
+        "{customerName} orders the most expensive coffee you have. You only have one coffee.",
+        "{customer}\"Whatever the Mayor got for his mother, I want one better.\"",
+        "{customerName} signs things without reading them. Your favorite kind of person.",
+        "{customer}\"Cheap is for people who plan to live forever.\"",
+        "{customerName} drops a cufflink worth more than your car and doesn't bother to pick it up.",
+        "{customer}\"I don't look at prices. My accountant looks at prices. My accountant is on a boat.\""
       ],
       "cheapMid": [
         "{customerName} squints at the price list but doesn't flinch.",
@@ -11642,7 +12121,17 @@
         "{customer}\"I'll pay for what makes sense. Convince me it makes sense.\"",
         "{customerName} keeps one hand on {cHis} wallet, but loosely.",
         "{customer}\"I'm happy to spend. I'm not happy to be stupid about it.\"",
-        "{customerName} bargains over the brochure fee, then laughs when you say there isn't one."
+        "{customerName} bargains over the brochure fee, then laughs when you say there isn't one.",
+        "{customerName} asks what the difference is between the silver and the gold, and actually listens.",
+        "{customer}\"I don't mind spending. I mind wasting. There's a line, and you're near it.\"",
+        "{customerName} turns a page of the brochure back, then forward, then back again.",
+        "{customer}\"{dFirst} was careful with money. I'm careful with money. We'll see who wins.\"",
+        "{customerName} sets a budget out loud, then mutters a second, higher one under {cHis} breath.",
+        "{customer}\"Show me the nice things you'd buy yourself, not the ones you'd sell me.\"",
+        "{customerName} haggles politely, the way people do when they expect to lose a little.",
+        "{customer}\"I've got some money put by. Some. Not \"gold handles\" some.\"",
+        "{customerName} picks up the pen, puts it down, and asks for a minute to think.",
+        "{customer}\"I want it to look expensive. I don't want it to BE expensive. Can you do that?\""
       ],
       "cheapHigh": [
         "{customerName} asks if you take expired coupons.",
@@ -11659,7 +12148,17 @@
         "{customer}\"We could just do the funeral in the backyard. People do that. I've read about it.\"",
         "{customerName} has a calculator watch and is not afraid to use it.",
         "{customer}\"I'm not cheap. I'm thrifty. Thrifty people live longer. Ask {dFirst}. Actually, don't.\"",
-        "{customerName} takes the free pen. Then the pen holder."
+        "{customerName} takes the free pen. Then the pen holder.",
+        "{customerName} asks whether {dFirst} can be buried standing up, to save on the plot.",
+        "{customer}\"How much for just the hole? I've got a shovel.\"",
+        "{customerName} has cut your newspaper ad out and holds it like a weapon.",
+        "{customer}\"Can we reuse a casket? Gently used? Somebody must be done with one.\"",
+        "{customerName} brought sandwiches so {cHe} won't have to buy lunch during the viewing.",
+        "{customer}\"The Mournes do a pine box for half. Pine is a tree. Trees are free.\"",
+        "{customerName} asks if the flowers from somebody else's funeral are still fresh.",
+        "{customer}\"I'm not paying for embalming. {dHeCap} was preserved enough. {dHeCap} drank.\"",
+        "{customerName} reads the fine print, then the finer print, then the back of the brochure, where there's no print.",
+        "{customer}\"Is there a senior discount? A grieving discount? A walked-in-on-a-Tuesday discount?\""
       ],
       "limitHigh": [
         "{customer}\"Good news is there was a life insurance policy. Bad news is the ferret was the beneficiary. I'm the ferret's guardian.\"",
@@ -11676,7 +12175,17 @@
         "{customerName} has a gold card, a platinum card, and a card you've never even heard of.",
         "{customer}\"{dFirst} was a saver. A big saver. Under the mattress, in the freezer, inside the dog.\"",
         "{customerName} asks whether you take wire transfers, like {cHe} does it a lot.",
-        "{customer}\"The {dFridge} people's lawyers are very, very sorry. About this sorry.\" {customerName} holds {cHis} hands wide."
+        "{customer}\"The {dFridge} people's lawyers are very, very sorry. About this sorry.\" {customerName} holds {cHis} hands wide.",
+        "{customer}\"{dFirst} owned half the laundromats in the county. Now I do. I'm not used to it yet.\"",
+        "{customerName} tips the coat rack. You're not sure how, but the coat rack is now richer than you.",
+        "{customer}\"The insurance man cried when he wrote the check. Not from sadness. From the size.\"",
+        "{customerName} is wearing a fur coat in July and doesn't seem to notice.",
+        "{customer}\"I won't need to work again. I wasn't working much before, but now it's official.\"",
+        "{customerName}'s driver is waiting outside with the engine running and a newspaper.",
+        "{customer}\"{dFirst} left me the house, the boat and the other boat. Don't ask about the third boat.\"",
+        "{customerName} mentions {cHis} \"little place by the lake\" the way other people mention a mansion.",
+        "{customer}\"The lawsuit settled this morning. My lawyer said, and I quote, \"Go nuts.\"\"",
+        "{customerName} pays for the coffee you were giving away free. With a fifty."
       ],
       "limitLow": [
         "{customer}\"Money's tight. The {dFridge} wasn't insured.\"",
@@ -11693,7 +12202,17 @@
         "{customerName} brought a jar of loose change and is very protective of it.",
         "{customer}\"Rent's due Friday. {dFirst} would want me to pay rent. Probably.\"",
         "{customerName} asks if the free mints are free, then takes one and saves it.",
-        "{customer}\"{dFirst} left me everything. Everything turns out to be a recliner and some debt.\""
+        "{customer}\"{dFirst} left me everything. Everything turns out to be a recliner and some debt.\"",
+        "{customer}\"I borrowed the bus fare to get here. I'll walk home. It's good for grief.\"",
+        "{customerName} asks how much a funeral costs, then sits down before you answer.",
+        "{customer}\"{dFirst} didn't leave a will. {dHeCap} didn't leave anything to put in one.\"",
+        "{customerName}'s coat is held together with two safety pins and hope.",
+        "{customer}\"I've been skipping lunch for a week to afford today. I can skip more lunches.\"",
+        "{customerName} reads every price with {cHis} lips moving, then very quietly says \"oh\".",
+        "{customer}\"Can I pay you in casseroles? I make a lot of casseroles. People keep dying.\"",
+        "{customerName} has rolled {cHis} coins in paper sleeves by hand, the way people do when there's time and no money.",
+        "{customer}\"The pawn shop gave me eighty dollars for {dHis} watch. It was a nice watch. It's a nice eighty dollars.\"",
+        "{customerName} asks if you have anything in \"used\"."
       ]
     },
     "text": {
@@ -11762,7 +12281,20 @@
           "{customer}\"My {dRelation} is dead and the {dFridge} is fine. Life isn't fair. I need a {casket} casket.\"",
           "{customer}\"We need to bury {dFirst}. The family voted on a {casket} casket. The vote was close. There was shouting.\"",
           "{customer}\"{dFirst} {surname}. That's who. {AFridge}. That's how. {casket}. That's the casket.\"",
-          "{customer}\"I'll be honest, I don't know what I'm doing. {dFirst} handled everything. Now I need a {casket} casket for {dHim}.\""
+          "{customer}\"I'll be honest, I don't know what I'm doing. {dFirst} handled everything. Now I need a {casket} casket for {dHim}.\"",
+          "{customer}\"The county signed the papers. Cause of death: {aFridge}. They underlined it twice. I need a {casket} casket for {dFirst}.\"",
+          "{customer}\"The Mournes across town quoted me a price for {dFirst}. Then they quoted it again, higher, because I looked sad. A {casket} casket. What's yours?\"",
+          "{customer}\"My {dRelation} {dFirst} was {dSmashed} {aFridge}. The police took a photo of the {dFridge}. Nobody took a photo of {dHim}. A {casket} casket, please.\"",
+          "{customer}\"Nurse Gertie gave me your card and a lollipop. I've eaten the lollipop. I need a {casket} casket for my {dRelation}.\"",
+          "{customer}\"{dFirst} left a note: \"{casket}, and don't let them talk you up.\" So. {casket}. Don't talk me up.\"",
+          "{customer}\"I need a {casket} casket. It's for {dFirst}. It was {aFridge}. I've said that sentence eleven times today and it doesn't get better.\"",
+          "{customer}\"We're burying my {dRelation}. {AFridge}, of all the ways to go. {dHeCap} always said it would be the cigarettes. A {casket} casket.\"",
+          "{customer}\"The {surname} family would like a {casket} casket for {dFirst}. The {surname} family would also like to know why your doorbell plays a funeral march.\"",
+          "{customer}\"Inspector Mudge says yours is the only parlor in town that passed. He said \"barely.\" A {casket} casket for {dFirst}.\"",
+          "{customer}\"It's about {dFirst}. {dHeCap} was {dSmashed} {aFridge} at the church picnic. Father Smyth says it was God's will. The {dFridge} was the church's. A {casket} casket.\"",
+          "{customer}\"I'm told you're cheaper than the cemetery and nicer than the landfill. {dFirst} needs a {casket} casket.\"",
+          "{customer}\"My {dRelation} has passed on. Dr. Grimble at the county was very sure about it. I'd like a {casket} casket, in case he's right.\"",
+          "{customer}\"{dFirst} is dead and I'm in charge of the arrangements. I've never been in charge of anything. A {casket} casket, I think?\""
         ],
         "petRequest": [
           "{customer}\"{dFirst} needs a proper send-off. A {casket} casket. A small one. Unless {pet}s come in medium?\"",
@@ -11773,7 +12305,23 @@
           "{customer}\"I know it's a {pet}. I know. But {dFirst} was family. {casket}, please. And a little headstone. You don't do headstones? Fine.\"",
           "{customer}\"Please don't make the shoebox joke. Everyone makes the shoebox joke. {dFirst} deserves a {casket} casket.\"",
           "{customer}\"{dFirst} was the best {pet} in Deathville. Ask anyone. Ask the mailman, actually, don't. A {casket} casket, please.\"",
-          "{customer}\"The whole family wants a real funeral for {dFirst}. My wallet wants a shoebox. Let's say {casket} and see who wins.\""
+          "{customer}\"The whole family wants a real funeral for {dFirst}. My wallet wants a shoebox. Let's say {casket} and see who wins.\"",
+          "{customer}\"{dFirst} was a {pet}. {dHeCap} was also my best friend, which says a lot about me. A {casket} casket, please.\"",
+          "{customer}\"I need a {casket} casket for {dFirst}. {dHeCap} was a {pet}. Before you ask: yes, I'm serious, and yes, I've been crying in the car.\"",
+          "{customer}\"My kids think {dFirst} went to live on a farm. I need a {casket} casket, and you need to never tell them.\"",
+          "{customer}\"The vet said there was nothing more to do. Then the vet sent a bill. Now I'm here. A {casket} casket for {dFirst}, please.\"",
+          "{customer}\"{dFirst} the {pet} had a better life than most people I know. A {casket} casket. Small. Dignified. No jokes.\"",
+          "{customer}\"Can a {pet} have a {casket} casket? Good. Don't tell me if the answer is no. {dFirst} deserves it.\"",
+          "{customer}\"I buried a goldfish in a matchbox once. I've learned since. {dFirst} the {pet} gets a {casket} casket.\"",
+          "{customer}\"My husband says it's \"just a {pet}.\" My husband can sleep in the shed. A {casket} casket for {dFirst}, please.\"",
+          "{customer}\"{dFirst} always slept at the foot of the bed. I'd like a {casket} casket {dHe} can stretch out in, for once.\"",
+          "{customer}\"Old Man Withers says he buried his {pet} in 1952 and it came back. I don't want {dFirst} coming back. A good {casket} casket. Heavy lid.\"",
+          "{customer}\"The neighbors have stopped asking where {dFirst} is. I haven't stopped answering. A {casket} casket, please. With a window, if you have one.\"",
+          "{customer}\"{dFirst} was fourteen. That's a hundred in {pet} years, the vet says. A {casket} casket, please.\"",
+          "{customer}\"I've got {dFirst} in a cooler in the car. I didn't know what else to do. A {casket} casket, and maybe some ice.\"",
+          "{customer}\"My daughter has drawn {dFirst} forty times since breakfast. I need a {casket} casket and something to tell her.\"",
+          "{customer}\"I don't care what it costs. Within reason. {dFirst} was a {pet}, not a senator. A {casket} casket.\"",
+          "{customer}\"{dFirst} ate my shoes, my homework and one of my teeth. I miss {dHim} terribly. A {casket} casket, please.\""
         ],
         "selfRequest": [
           "{customer}\"Put me down for a {casket} casket. I'll be using it eventually, so don't skimp.\"",
@@ -11795,7 +12343,24 @@
             "{customer}\"The {surname} family is back. Don't look so surprised, we die a lot.\"",
             "{customer}\"You did right by us last time. The whole {surname} clan still talks about the punch and cookies.\"",
             "{customer}\"We've told everyone about you. Well, everyone who's still alive. That's fewer people every week.\"",
-            "{customer}\"Last time you made Aunt Bev cry the good kind of tears. Let's do that again.\""
+            "{customer}\"Last time you made Aunt Bev cry the good kind of tears. Let's do that again.\"",
+            "{customer}\"The {surname}s are back. You did Aunt Dot so nicely she looked like she was about to ask for the check.\"",
+            "{customer}\"Last time you remembered all our names. Even the cousins' names. Nobody remembers the cousins' names.\"",
+            "{customer}\"We liked you so much we nearly died sooner. Well. One of us did.\"",
+            "{customer}\"Mom keeps your card on the fridge. Next to the coupons. That's high praise in our house.\"",
+            "{customer}\"You buried Grandpa {surname} and nobody fought at the wake. That's a first for us. Do it again.\"",
+            "{customer}\"The {surname} family has decided you're our undertaker now. It's in the will. Several wills.\"",
+            "{customer}\"Last time the casket didn't squeak. You don't know what that meant to us.\"",
+            "{customer}\"You let Uncle Mel wear his bowling shirt in the casket. We're a loyal family. We're back.\"",
+            "{customer}\"We went to the Mournes once. Never again. You're ours now.\"",
+            "{customer}\"Father Smyth said you were \"adequate\" at our last service. From him, that's a blessing.\"",
+            "{customer}\"You made Cousin Pete look peaceful. Cousin Pete never looked peaceful in his life.\"",
+            "{customer}\"We're back. The {surname} family is a lot of people, and they all die eventually.\"",
+            "{customer}\"We still talk about the doves at Grandma's service. One of them lives on our porch now.\"",
+            "{customer}\"My aunt said, \"If I die, call that nice one.\" She died. I called. Here I am.\"",
+            "{customer}\"Last time you cried at our funeral. Real tears. We checked. We've told everyone.\"",
+            "{customer}\"The {surname}s don't trust anyone. Except you, apparently. It came up at Christmas.\"",
+            "{customer}\"You did Grandpa {surname} and he still looks good. We dug him up to check. Kidding. Mostly.\""
           ],
           "ok": [
             "{customer}\"You buried my other relative. It was fine. I suppose you'll do.\"",
@@ -11805,7 +12370,24 @@
             "{customer}\"My cousin said you were \"okay, I guess\". That's a strong review from a {surname}.\"",
             "{customer}\"You did the {surname} funeral last time. It happened. That's all I remember about it.\"",
             "{customer}\"Back again. Same family, different corpse.\"",
-            "{customer}\"Your parlor came up at dinner. Someone said \"fine\". Someone else said \"fine, I suppose\". So here I am.\""
+            "{customer}\"Your parlor came up at dinner. Someone said \"fine\". Someone else said \"fine, I suppose\". So here I am.\"",
+            "{customer}\"The {surname}s again. Last time was fine. We've had worse. We've had better. Mostly worse.\"",
+            "{customer}\"You buried my cousin. He stayed buried. That's all I ask.\"",
+            "{customer}\"We're back because you're on the way home from the hospital.\"",
+            "{customer}\"Last funeral was alright. The organist knew most of the song.\"",
+            "{customer}\"My mother said you were \"not the worst.\" She meant it as a compliment. I think.\"",
+            "{customer}\"We came here last time. I don't remember much. I remember a ham.\"",
+            "{customer}\"The {surname} family gave you three stars last time. Out of five. Out of ten, actually.\"",
+            "{customer}\"Last time you spelled Grandpa's name right on the second try. That's progress.\"",
+            "{customer}\"You look familiar. Did you do my uncle? Fine. You'll do again.\"",
+            "{customer}\"We're here because you were cheaper than the Mournes. Don't make me regret it.\"",
+            "{customer}\"Last time was okay. The flowers were nice. The coffee was a crime.\"",
+            "{customer}\"Same family, different {dRelation}. Let's get it over with.\"",
+            "{customer}\"You did a decent job on Aunt Ruth. She'd have complained, but she complained about everything.\"",
+            "{customer}\"I wasn't going to come back. Then I remembered your parking lot is free.\"",
+            "{customer}\"My sister picked you. My sister picks everything. Don't take it personally.\"",
+            "{customer}\"Last time the hearse was only a little late. We noticed. We've forgiven you. Mostly.\"",
+            "{customer}\"The {surname}s have a saying about you: \"Well, it's open.\" Shall we?\""
           ],
           "sour": [
             "{customer}\"Last time you sold us {aFridge}-proof casket. It wasn't. We're watching you.\"",
@@ -11815,7 +12397,24 @@
             "{customer}\"I'm only here because everyone in Blaine is booked solid. Behave.\"",
             "{customer}\"Last funeral, your hearse got lost. With Grandpa in it. For three hours.\"",
             "{customer}\"We still have the bill from last time framed in the hallway. As a warning.\"",
-            "{customer}\"You're on thin ice, pal. The {surname}s talk. Mostly about you, lately.\""
+            "{customer}\"You're on thin ice, pal. The {surname}s talk. Mostly about you, lately.\"",
+            "{customer}\"Last time you buried Uncle Gus facing the wrong way. He's staring at the highway. Forever.\"",
+            "{customer}\"The {surname}s remember the \"small handling fee\". It was not small. We know what handling means now.\"",
+            "{customer}\"You sold my mother a wreath that said CONGRATULATIONS. We're only here because it's raining.\"",
+            "{customer}\"We're watching your hands this time. Both of them. My brother is watching your feet.\"",
+            "{customer}\"Last time the organist played \"Happy Birthday\". You said it was \"a requested tradition\". It was not.\"",
+            "{customer}\"Grandpa's headstone said REST IN PIECE. There was only one piece. That's not the point.\"",
+            "{customer}\"The {surname}s are giving you one more chance. That's one more than we give each other.\"",
+            "{customer}\"Don't think we've forgotten the extra charge for \"eternal parking\". There's no such thing.\"",
+            "{customer}\"Last time Morty fell out of the closet during the eulogy. We still have questions.\"",
+            "{customer}\"You're the reason my aunt doesn't trust funerals any more. She's skipping her own.\"",
+            "{customer}\"We're here under protest. My mother is outside in the car, protesting.\"",
+            "{customer}\"Last time you called Grandma by the wrong name the whole service. Her name was on the casket.\"",
+            "{customer}\"I've brought a lawyer. He's in the car. He's not a real lawyer, but he has a briefcase.\"",
+            "{customer}\"The {surname}s don't like being here. You don't like us being here. Let's keep it short.\"",
+            "{customer}\"Last time the casket handle came off on the church steps. We had to roll him the rest of the way.\"",
+            "{customer}\"Inspector Mudge told my cousin about your basement. We'd like to not hear about the basement.\"",
+            "{customer}\"We almost went to the Mournes. They smile too much. You only smile when you count.\""
           ],
           "walked": [
             "{customer}\"The {surname}s don't forget. You treated us like garbage. Convince me otherwise. Fast.\"",
@@ -11825,7 +12424,24 @@
             "{customer}\"The {surname}s have a list. You're on it. Top half.\"",
             "{customer}\"My mother walked out of here in tears last time. Not the sad kind. The furious kind.\"",
             "{customer}\"Every {surname} at Thanksgiving had a story about you. None of them were nice. Start talking.\"",
-            "{customer}\"I'll give you exactly one chance, because I promised my aunt. She's dead, so she won't check.\""
+            "{customer}\"I'll give you exactly one chance, because I promised my aunt. She's dead, so she won't check.\"",
+            "{customer}\"Last time you made my mother storm out. She hadn't stormed anywhere since 1971. Impressive. Now behave.\"",
+            "{customer}\"The {surname}s walked out of here once. We kept walking. We walked to Blaine. Blaine was worse.\"",
+            "{customer}\"I'm only here because the Mournes have a waiting list. You have one chance and a very short leash.\"",
+            "{customer}\"My uncle still talks about how you treated him. He talks about it at funerals. Other people's funerals.\"",
+            "{customer}\"You remember us. I can tell. You've gone pale, and you were already pale.\"",
+            "{customer}\"We left in a hurry last time and forgot an umbrella. I'd like it back, and then we'll see.\"",
+            "{customer}\"The last {surname} in here said you were a ghoul with a calculator. Prove him half wrong.\"",
+            "{customer}\"I promised myself I'd never come back. Then my {dRelation} died. Promises are cheap. So am I, today.\"",
+            "{customer}\"You pushed my sister so hard she buried our father in the backyard. He's still there. Under the swing set.\"",
+            "{customer}\"We've told the whole church about you. Father Smyth prayed for you. Not in a nice way.\"",
+            "{customer}\"The {surname}s hold grudges. Yours has its own chair at Thanksgiving.\"",
+            "{customer}\"You've got about ninety seconds before I remember why we left. Start selling. Gently.\"",
+            "{customer}\"When we left last time, my aunt keyed your hearse. I'm not saying sorry. I'm saying we're even. Mostly.\"",
+            "{customer}\"My mother said, \"Anywhere but there.\" My mother is dead. I'm choosing to read that loosely.\"",
+            "{customer}\"I'm back. Don't smile. The smile is what made us leave last time.\"",
+            "{customer}\"We walked out on you once. We'll do it again. We've been practicing.\"",
+            "{customer}\"The {surname} family has voted. You lost. But every other parlor is closed, so you win by default.\""
           ]
         },
         "estimate": "`wYou figure {cHe} can spend between ${low} and ${high}.`$",
@@ -12269,7 +12885,16 @@
           "{customer}\"My Uncle Lou got thirty percent off his. And he wasn't even dead yet.\"",
           "{customer}\"Lovely. Now throw in the guest book.\"",
           "{customer}\"Is that your final discount? Because it shouldn't be.\"",
-          "{customer}\"You're good at this. I'm better. Again.\""
+          "{customer}\"You're good at this. I'm better. Again.\"",
+          "{customerName} writes the new number down and circles it twice, like a vulture circling a smaller vulture.",
+          "{customer}\"I've haggled with Elijah at Di-Mart. He blinked. Once. You're nothing.\"",
+          "{customer}\"Good. Now knock off the bit for the hearse. {dFirst} can ride in my trunk.\"",
+          "{customer}\"And the flowers? Discount the flowers. They're going to die anyway. Everything here does.\"",
+          "{customerName} pulls a pocket calculator out of {cHis} coat. It has been waiting all day for this.",
+          "{customer}\"A discount? For me? Don't stop now, you're on a roll.\"",
+          "{customer}\"My {dRelation} would be proud. {dHeCap} never paid full price for anything in {dHis} life. I'm not starting now.\"",
+          "{customer}\"Is this the cash price or the crying price? Because I can cry.\"",
+          "{customer}\"That's a nice round number. Make it a nicer, rounder, smaller one.\""
         ],
         "packagePitch": [
           "`w{player}: `$\"I'd feel terrible if I didn't mention {article} {upgrade}. ${price}.\"\n\n",
@@ -15937,6 +16562,51 @@
               "value": -5
             }
           ]
+        },
+        {
+          "id": "mourne-price-war",
+          "title": "MOURNE & SONS SLASHES PRICES",
+          "message": "\"Why pay more to be put in less?\" asks the new Mourne & Sons billboard on Elm Street. Families are arriving with the flyer in one hand and a red pen in the other.",
+          "effect": "customers haggle harder today",
+          "minDay": 3,
+          "modifiers": [
+            {
+              "key": "customer.cheapness",
+              "op": "add",
+              "value": 0.3
+            }
+          ]
+        },
+        {
+          "id": "coroner-fishing",
+          "title": "CORONER GONE FISHING",
+          "message": "Dr. Ignatius Grimble is at Lake Bleak for the week. In his absence the county has authorized \"anyone with a clipboard\" to sign death certificates. Paperwork is quick, confident and occasionally signed by Morty.",
+          "effect": "+1 turn today, more risky offers",
+          "modifiers": [
+            {
+              "key": "turns.daily",
+              "op": "add",
+              "value": 1
+            },
+            {
+              "key": "wait.riskOdds",
+              "op": "mul",
+              "value": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mudge-flashlight",
+          "title": "INSPECTOR MUDGE BUYS A NEW FLASHLIGHT",
+          "message": "\"It has three settings,\" says Inspector Mudge. \"Bright, brighter and closed by order of the county.\" To give businesses no excuse, City Hall has cut permit fees for the day. Nobody feels better.",
+          "effect": "permits 20% cheaper today",
+          "modifiers": [
+            {
+              "key": "city.permitPrice",
+              "op": "mul",
+              "value": 0.8
+            }
+          ]
         }
       ],
       "ordinances": [
@@ -16706,7 +17376,8 @@
           "electedMail": "`$You won the election! The ribbon cuttings will do your rating good and your vote on ordinances counts double. The statue fund is yours now. Spend it wisely, or on a statue.",
           "noElectionNews": "`7ELECTION CANCELLED\n`^Nobody ran for mayor. Mayor Hollis Grubb stays on, and has commissioned a statue to mark the occasion.\n\n",
           "mayorMorning": "\n`$Your mayoral chauffeur whisks you all over town, running two red lights in your honour. `w+{turns}`$ turn.",
-          "votesDetail": "{votes} votes"
+          "votesDetail": "{votes} votes",
+          "votesDetailOne": "{votes} vote"
         },
         "club": {
           "title": "The Reaper Club",

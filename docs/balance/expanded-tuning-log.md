@@ -292,3 +292,47 @@ Result: worse. Politician 3.11 (+4.3%), necromancer 2.03, gambler 1.38, tycoon a
 | `customer.ratingDiv` | 6 | 6 (tried 7, reverted) |
 
 The 200-town baseline with these numbers is `docs/balance/expanded-baseline.md` (1,865 s, checks passed), with its reading. Against the targets: win / fair politician 2.67, necromancer 2.45, pacifist 1.35, tycoon 1.24, shark 0.92, gambler 0.84, saint 0.72, builder 0.62, Soft Touch 0.44, saboteur 0.29, scholar 0.28, organiser 0.17 (before: necromancer 2.51, tycoon 2.15 ... Soft Touch 0.06): still two above 2 and three below a third. Mean final BP 17,897 to 20,486 (sd of the means 678, was 642); mean place 2.75 to 6.26. Paths: evil 1.29 (was 1.42), good 1.23, neutral 0.70. Purchases: Billboard 0.009 BP a dollar (was 0.031), Night Watchman 0.010, Memorial Garden 0.007, monuments 0.009. Day-10 starter 5.10 of 9 (was 5.95). Hard bots 16.7% above easy ones.
+
+## Balance round 17 (the proposals that do not change how the game feels)
+
+Runs: `pnpm --filter @fq/sim run sim -- --days 30 --towns 60 --players 8 --rules expanded --seed 1 --challenges 0` (60 towns, about 7 minutes), then the 200-town baseline. The content pack gained new material during the round (five special customers, 15 events, 9 news blurbs, 3 risks, more arrival, tell and walkout lines), which changes every town's draws, so "before" is a fresh 60-town run of the round-16 numbers and bots with the new pack. At 60 towns a personality has 36 to 45 seats: one win moves its share by about 0.2, so the BP against the town mean is the figure to read.
+
+Before (60 towns, new pack): tycoon 2.67 (+4.8% of its town's mean BP), politician 2.40 (+4.7%), pacifist 1.78, necromancer 1.44 (-5.1%, sd 12.1%), Soft Touch 1.26, shark 1.00, saint 0.67 (+2.4%), gambler 0.40, builder 0.21 (+2.4%), saboteur 0.21 (-10.1%), scholar 0.19 (+0.6%), organiser 0 (-0.6%). Night Watchman bought on day 25.8, Memorial Garden on day 25.7 (8% of seats).
+
+### Round 17a
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| Memorial Garden in the bots' upgrade lists (`XStyle.upgrades`: Soft Touch, builder, scholar, saint, organiser) | after the embalming lab (the builder: last) | straight after the storeroom | it returns BP once owned (+43 a day) but was bought on day 26 |
+| Night Watchman (Soft Touch with its alarm, saboteur) | after the embalming lab | straight after the storeroom | the same |
+
+Result: organiser 1.24 (+2.1%), scholar 0.74 (+1.5%), builder 0.62 (+2.5%), politician 2.60 (+4.2%), pacifist 2.13, necromancer 1.64, tycoon 1.56, shark 0.60, gambler 0.40, saint 0.22 (+2.0%), Soft Touch 0 (0.0%), saboteur 0 (-9.7%). The Garden bought by 30% of seats on day 15.2 and returning 0.028 BP a dollar: three times a monument, a dominant purchase by the round-13 standard. The Watchman on day 21.9, -40 BP a day against peers who bought the florist cooler and the lab with that money instead.
+
+### Round 17b
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| Memorial Garden, Night Watchman (and Soft Touch's alarm) in the lists | straight after the storeroom | just before the embalming lab | 17a made the Garden three times a monument and the early Watchman a loss |
+
+Result: politician 2.60 (+4.0%), tycoon 2.22, necromancer 1.85 (-5.6%), shark 1.20, scholar 1.12 (+1.7%), pacifist 1.07, gambler 0.60, saint 0.44 (+2.3%), builder 0.41 (+2.1%), Soft Touch 0.21, saboteur 0.21 (-9.6%), organiser 0.18 (+0.8%). Garden on day 20.1, 0.020 BP a dollar; Watchman on day 24.8, within noise of zero. Kept.
+
+### Round 17c
+
+| change | from | to | why |
+| --- | --- | --- | --- |
+| `scoring.exact.share` | 0.5 | 0.4 | the last baseline's lever for the politician (it lands 29% exact); applied only if it brings the politician down without costing a neutral seller more than a point |
+
+Result (against 17b): the politician's BP a day -0.3%, but the town mean fell 1.2%, so against its towns it rose (+4.0% -> +5.0%); the scholar fell 2.0 points (+1.7% -> -0.3%), the saint 1.9, the builder 0.4, the organiser 0.2. Fails the condition. Reverted.
+
+Finding (a per-day cap on parlor-fight BP gained, about 150, for the necromancer's spread): every bot-day of 12 towns counted, with the current numbers and pack. The necromancer's parlor-fight BP never passes 109 a day (one win at the curve's cap of 95 x1.15; median fight day 106), the gambler's 95; the saboteur's median fight day is 136, its 90th percentile 218. A cap of 150 removes 0 BP a season from the necromancer and about 470 from the saboteur (already last, -7.8%); a cap of 100 removes 49 and 1,217. The necromancer's spread is in how many days it fights and wins (its season's fight BP: sd 729, correlation 0.76 with its BP against the town mean), not in lucky single days. Not applied, and no engine change was needed for it.
+
+## Shipped (round 17)
+
+| change | from | to |
+| --- | --- | --- |
+| Memorial Garden in the upgrade lists of Soft Touch, builder, scholar, saint, organiser (`packages/bots`) | after the embalming lab (builder: last) | just before the embalming lab |
+| Night Watchman (and Soft Touch's alarm) in the lists of Soft Touch and the saboteur | after the embalming lab | just before the embalming lab |
+| `scoring.exact.share` | 0.5 | 0.5 (tried 0.4, reverted) |
+| per-day cap on parlor-fight BP | none | none (measured: would hit only the saboteur) |
+
+No rules number changed; Classic's simulator report (60 towns, seed 7) is byte-identical except its run time. The 200-town baseline with these bots and the new pack is `docs/balance/expanded-baseline.md` (1,853 s, checks passed), with its reading. Against the targets: win / fair politician 2.38, necromancer 2.33, tycoon 1.56, pacifist 1.18, shark 0.86, scholar 0.72, gambler 0.60, builder 0.56, saint 0.52, organiser 0.46, Soft Touch 0.44, saboteur 0.35 (was politician 2.67, necromancer 2.45 ... organiser 0.17): still two above 2, none below a third (was three). Mean final BP 17,727 to 20,483 (sd of the means 712, was 678), -7.8% to +4.0% of the town mean; mean place 2.92 to 6.38. Paths: evil 1.29, good 1.08, neutral 0.82 (was 1.29, 1.23, 0.70). Purchases: Memorial Garden 0.022 BP a dollar (bought on day 20.2 by 27% of seats, was day 26.0 and 8%), Billboard 0.010, Night Watchman -0.002 (day 24.7, within noise), monuments 0.010, tithes 0.009.

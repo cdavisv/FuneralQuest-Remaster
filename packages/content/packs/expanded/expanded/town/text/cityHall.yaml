@@ -84,3 +84,4 @@ mayorMorning: '
 
   `$Your mayoral chauffeur whisks you all over town, running two red lights in your honour. `w+{turns}`$ turn.'
 votesDetail: '{votes} votes'
+votesDetailOne: '{votes} vote'

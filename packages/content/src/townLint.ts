@@ -88,6 +88,7 @@ export const TOWN_TEXT_TOKENS: Readonly<Record<string, readonly string[]>> = {
   "cityHall.electedNews": ["name", "votes"],
   "cityHall.mayorMorning": ["turns"],
   "cityHall.votesDetail": ["votes"],
+  "cityHall.votesDetailOne": ["votes"],
   "chains.intro": ["fee", "join", "dues", "max"],
   "chains.line": ["name", "members", "score"],
   "chains.yours": ["name"],

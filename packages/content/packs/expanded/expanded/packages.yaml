@@ -35,6 +35,14 @@
         - 'embalming'
         - 'prestige'
       requires: 'embalming-lab'
+    - article: 'a'
+      name: 'Lifelike Pose (Seated, Waving)'
+      price: 3500
+      tags:
+        - 'embalming'
+        - 'vanity'
+        - 'prestige'
+      requires: 'embalming-lab'
   pitch:
     - "`w{player}: `$\"Embalming is, uh, required by the state for, uh, disease reasons. Yeah. Required. {upgrade} is only ${price}.\"\n\n"
     - "`w{player}: `$\"You want people to remember {dHim} looking peaceful, not looking like {aFridge} fell on {dHim}. {upgrade}, ${price}.\"\n\n"

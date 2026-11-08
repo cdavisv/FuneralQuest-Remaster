@@ -11,7 +11,7 @@ import { CustomerFile } from "../components/CustomerFile.js";
 import { Deck, deckExtra, deckRows, MAX_CARD_ROW, Shelf } from "../components/Deck.js";
 import { DeskMenu, splitDesk } from "../components/DeskMenu.js";
 import { GameBoard } from "../components/GameBoard.js";
-import { Note, StatsStrip } from "../components/Hud.js";
+import { LuckMeter, Note, StatsStrip } from "../components/Hud.js";
 import { InjuryPanel } from "../components/InjuryPanel.js";
 import { KarmaScale, MoralChoices } from "../components/KarmaMoment.js";
 import { Ledger } from "../components/Ledger.js";
@@ -213,7 +213,40 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
   // Structured stats and rankings replace the plain-text version of the same sheet.
   const statsSheet = view.scene === "stats" && view.stats && view.stats.length > 0;
   const rankTable = view.scene === "rankings" && view.rankings && view.rankings.length > 0;
-  const wellText = grouped ? trimLead(view.text) : view.text;
+  // A place's panel (the bank's books, the ballots, the monuments...) takes the parchment where the
+  // place's note was written. The note is still the place's own words (at the bank, the 2001
+  // original's), so it follows the screen's text in the well instead of disappearing.
+  const panelSlot = Boolean(
+    bingo ||
+      ballots ||
+      bank ||
+      injuries ||
+      monuments ||
+      prep ||
+      upgradeShelf ||
+      shelf ||
+      games.length > 0 ||
+      hasOfficePanel ||
+      (tip?.kind === "tour" && tip.page) ||
+      view.board,
+  );
+  // (A tour page's note is its page count, which the tour's own parchment shows.)
+  const movedNote =
+    panelSlot && !file && tip?.kind !== "tour" && view.note && view.note.length > 0
+      ? view.note
+      : null;
+  const baseText = grouped ? trimLead(view.text) : view.text;
+  const wellText = movedNote ? [...baseText, { text: "\n\n" }, ...movedNote] : baseText;
+  // The luck tube is part of a place's parchment art; a panel written on that paper (one that is
+  // not its own sheet, `useCover`) leaves the tube showing, so its level is drawn there too.
+  const luckUnderPanel =
+    panelSlot &&
+    !file &&
+    !phone &&
+    view.hud !== undefined &&
+    cab !== null &&
+    cab.variant !== "main" &&
+    cab.spec.regions.luck !== undefined;
 
   const noteSlot = bingo ? (
     <BingoSheet bingo={bingo} />
@@ -259,6 +292,7 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
           {phone && view.hud && <StatsStrip hud={view.hud} />}
           {(parchment || (phone ? view.note : view.note || view.hud)) && (
             <div className="fq-r-note" data-x={parchment ? "" : undefined}>
+              {luckUnderPanel && view.hud && <LuckMeter luck={view.hud.luck} />}
               {noteSlot}
             </div>
           )}

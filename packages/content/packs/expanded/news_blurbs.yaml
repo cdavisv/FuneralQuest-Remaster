@@ -72,6 +72,12 @@ ranges:
         modLuck: [ 1, 5 ]
       - title: 'FIRST FROST KILLS DAISIES, TWO GARDENERS'
         message: '"They wouldn''t come in without the daisies," says a neighbor. The daisies have been composted. The gardeners are still being discussed.'
+      - title: 'MOURNE & SONS MARKS 70 YEARS'
+        message: '"Three generations of Mournes have buried this town, and we intend to bury the rest of it," says Augustus Mourne, cutting a black ribbon with a shovel. His sons Ned and Rollo handed out free thermometers.'
+      - title: 'CORONER MOVES OFFICE, AGAIN'
+        message: 'Dr. Ignatius Grimble has moved the county morgue from the Di-Mart freezer aisle to the back of the bowling alley. "Better ventilation, worse shoes," he says.'
+      - title: 'INSPECTOR MUDGE NAMED EMPLOYEE OF THE MONTH'
+        message: 'City Hall honors Inspector Mudge for closing eleven restaurants, two daycares and a lemonade stand. "The lemonade had pulp," he said. "Unlabeled pulp."'
   - low: 8
     high: 22
     entries:
@@ -149,6 +155,16 @@ ranges:
         picture: 'people/f_old_2'
       - title: 'BILL''S BIG BURGER FIGHTS BACK WITH FREE REFILLS'
         message: '"Unlimited gravy," says Bill. "We''re not saying it''s safe. We''re saying it''s unlimited."'
+      - title: 'MOURNE BOYS COME TO BLOWS AT CHURCH'
+        message: 'Ned and Rollo Mourne fought on Sunday over who would carry the front of a casket. The deceased, a Mr. Harold Pine, was dropped twice. Father Smyth has asked both boys to "find another God".'
+        giveRandom: '`wThe phone rings - It''s the Pine family.\n\n`$"Can you bury Harold properly? Nobody has dropped him in a while and we''d like to keep it that way."'
+        addLog: '`7PINE FAMILY SWITCHES PARLORS\n`^*NAME* of *HOME* has reburied Harold Pine. He was not dropped once.'
+        modBp: [ 20, 40 ]
+        modLuck: [ 1, 3 ]
+      - title: 'CORONER: "IT''S ALWAYS THE APPLIANCES"'
+        message: 'Dr. Grimble''s annual report names household appliances the county''s leading cause of death for the ninth year running. "Lock your freezers," he advises. "And never turn your back on a toaster."'
+      - title: 'LUCIUS VANE DENIES OWNING THE NIGHT'
+        message: '"I simply keep late hours," says the owner of the Reaper Club, who was photographed at noon casting no shadow. City Hall has renewed his liquor license "for as long as he likes".'
       - title: 'ST. MORTIMER''S BELLS DROWN OUT WITHERS'' NOISE COMPLAINT'
         message: 'Old Man Withers filed a complaint about the rebuilt bells, and the bells rang through the hearing. "I could not hear myself being right," he said. The complaint has been filed under B, for Bells.'
         when:
@@ -329,6 +345,16 @@ ranges:
       - title: 'YANG''S NAMES FORTUNE COOKIE OF THE YEAR'
         message: '"This year''s winner: You will be buried by someone cheap," says Mr. Yang. "Very popular. People keep it in their wallet, for the funeral."'
         picture: 'chinese_takeout'
+      - title: 'MOURNE & SONS OPENS DRIVE-THRU VIEWING'
+        message: '"Grief on the go," says Augustus Mourne of the new window on Elm Street. Mourners pay their respects without leaving the car. Three have already rear-ended the hearse.'
+        giveRandom: '`wThe phone rings - It''s the Elm Street traffic office.\n\n`$"There''s been a pile-up at the Mourne window. They don''t take walk-ins. Or crash-ins."'
+        addLog: '`7DRIVE-THRU PILE-UP\n`^*NAME* of *HOME* buries the victims of the Mourne & Sons drive-thru. Augustus Mourne sent a coupon.'
+        modBp: [ 30, 60 ]
+        modLuck: [ 1, 4 ]
+      - title: 'HEALTH INSPECTOR FAILS HIMSELF'
+        message: 'Inspector Mudge has cited himself for "unsanitary sandwich storage" in his own desk drawer. "Nobody is above the code," he said, and paid the fine to himself.'
+      - title: 'CORONER WRITES MEMOIR'
+        message: 'Dr. Ignatius Grimble''s book, "Cause Unknown, Probably Cheese", is on sale at Di-Mart. Elijah has read it six times without blinking and says the ending "is very accurate".'
       - title: 'CURE PARADE RETURNS FOR A SECOND LAP'
         message: 'The Mayor''s cure parade went around the square a second time "for the people at the back". Attendance was higher on the second lap, owing to the free cough drops.'
         when:
