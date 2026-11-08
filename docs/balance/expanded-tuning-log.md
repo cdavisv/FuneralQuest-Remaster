@@ -336,3 +336,18 @@ Finding (a per-day cap on parlor-fight BP gained, about 150, for the necromancer
 | per-day cap on parlor-fight BP | none | none (measured: would hit only the saboteur) |
 
 No rules number changed; Classic's simulator report (60 towns, seed 7) is byte-identical except its run time. The 200-town baseline with these bots and the new pack is `docs/balance/expanded-baseline.md` (1,853 s, checks passed), with its reading. Against the targets: win / fair politician 2.38, necromancer 2.33, tycoon 1.56, pacifist 1.18, shark 0.86, scholar 0.72, gambler 0.60, builder 0.56, saint 0.52, organiser 0.46, Soft Touch 0.44, saboteur 0.35 (was politician 2.67, necromancer 2.45 ... organiser 0.17): still two above 2, none below a third (was three). Mean final BP 17,727 to 20,483 (sd of the means 712, was 678), -7.8% to +4.0% of the town mean; mean place 2.92 to 6.38. Paths: evil 1.29, good 1.08, neutral 0.82 (was 1.29, 1.23, 0.70). Purchases: Memorial Garden 0.022 BP a dollar (bought on day 20.2 by 27% of seats, was day 26.0 and 8%), Billboard 0.010, Night Watchman -0.002 (day 24.7, within noise), monuments 0.010, tithes 0.009.
+
+## Balance round 18 (the Memorial Garden's return; measured, not applied)
+
+Round 17 left the Memorial Garden returning about twice a monument per dollar (0.022 BP a dollar at 200 towns), the level at which round 13 cut the Billboard. Tried: income roll +4 -> +2, at 60 towns, seed 1, against round 17b.
+
+| | 17b (+4) | +2 |
+| --- | --- | --- |
+| Garden bought by | 30% of seats, day 20.1 | 27%, day 20.1 |
+| Garden's return | 0.020 BP a dollar | 0.017 (+40.0 BP a day, se 5.9) |
+| Garden buyers against the town mean | scholar +1.7%, saint +2.3%, builder +2.1%, organiser +0.8% | +1.2%, +2.4%, +1.6%, +0.9% |
+| Win / fair, top | politician 2.60, tycoon 2.22, necromancer 1.85 | 2.80, 2.44, 2.05 (one win is 0.2 at this size) |
+| Checks | passed | passed |
+
+Halving the income bonus took 15% off the return and about half a point off its buyers: the Garden's worth is its patience (+2 on every sale), not the income roll, and round 13 raised the patience from +1 because at +1 the Garden returned nothing. Reverted; +4 stands. The lever, if the return must come down, is the price ($20,000 -> about $30,000, which round 13 cut from), not the income; left for a round with a 200-town baseline behind it.
+
