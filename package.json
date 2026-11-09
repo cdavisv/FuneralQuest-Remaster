@@ -10,7 +10,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "lint": "biome check .",
+    "lint": "biome check --max-diagnostics=200 .",
     "format": "biome check --write .",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",

@@ -108,15 +108,20 @@ describe("import-legacy", () => {
       await mort.logIn();
       const view = await mort.enter("old", undefined);
       expect(view).toBeDefined();
+      // Mort's record came across as the original had it (read before anything is played: the
+      // town's seed is random, and one Wait for Customer may roll an event that pays a tag or BP).
+      const loaded = h.server.host.get("old")?.snapshotState.players[0];
+      expect(loaded?.name).toBe("Mort");
+      expect(loaded?.bp).toBe(77);
+      expect(loaded?.tags).toEqual([5, 2, 0]);
       const desk = await toDesk(mort, "old");
       expect(buttonIds(desk)).toContain("desk:wait");
       const waited = await mort.press("desk:wait", "old");
       expect(waited).toBeDefined();
       const after = h.server.host.get("old")?.snapshotState.players[0];
       expect(after?.name).toBe("Mort");
-      expect(after?.bp).toBe(77);
-      expect(after?.tags).toEqual([5, 2, 0]);
-      // The old day was kept: nothing ran at start.
+      expect(after?.bp).toBeGreaterThanOrEqual(77);
+      // The old day was kept: nothing ran at start, and playing a step did not advance it.
       expect(h.server.host.get("old")?.snapshotState.day).toBe(42);
     } finally {
       await h.stop();
