@@ -9,10 +9,17 @@
 # include its sounds, into the image; those sounds are licensed only for Funeral Quest (see the
 # README's licence notes), so the default image leaves them out.
 
+#
+# Build argument FQ_BUILD (default "dev") is the build id the server reports on /health and the
+# client shows in Settings (the short commit). .git is not in the build context, so pass it in:
+#   docker build -f apps/server/Dockerfile --build-arg FQ_BUILD=$(git rev-parse --short=7 HEAD) -t funeral-quest .
+#   FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose build
+
 ARG INCLUDE_MUSEUM=0
 
 # ---- build: install the workspace, build the web client, bundle the server --------------
 FROM node:24-slim AS build
+ARG FQ_BUILD=dev
 RUN npm install --global pnpm@12.18.0
 WORKDIR /repo
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
@@ -48,6 +55,7 @@ COPY assets/voice assets/voice
 COPY CREDITS.md ./
 COPY apps/server apps/server
 COPY apps/client apps/client
+# FQ_BUILD (the ARG above) is read by the client's vite config and the server's build.mjs.
 RUN pnpm --filter @fq/client run build \
  && pnpm --filter @fq/server run typecheck \
  && pnpm --filter @fq/server run build

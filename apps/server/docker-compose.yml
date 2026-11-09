@@ -4,6 +4,9 @@
 #   open http://localhost:8080
 # The game state lives in the named volume "fq-data" and survives rebuilds and restarts.
 #
+# The build id on /health and in the client is the short commit; the image has no .git, so pass it:
+#   FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose up -d --build     (unset: "dev")
+#
 # Museum mode (the original 2001 client at /museum): set FQ_INCLUDE_MUSEUM=1 for the build and
 # FQ_LEGACY_CLIENT=1 in .env. See the README before doing so: the original sounds are in those files.
 services:
@@ -13,6 +16,7 @@ services:
       dockerfile: apps/server/Dockerfile
       args:
         INCLUDE_MUSEUM: ${FQ_INCLUDE_MUSEUM:-0}
+        FQ_BUILD: ${FQ_BUILD:-dev}
     image: funeral-quest
     restart: unless-stopped
     init: true

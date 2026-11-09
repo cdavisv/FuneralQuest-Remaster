@@ -13,7 +13,8 @@ git clone <this repository>
 cd FuneralQuest-Remaster
 cp apps/server/.env.example apps/server/.env
 # edit apps/server/.env: set FQ_ADMIN_TOKEN (openssl rand -hex 32) and FQ_BACKUP_INTERVAL_HOURS=24
-docker compose up -d --build
+# FQ_BUILD puts the commit on /health and in the game's Settings (the image has no .git); without it: "dev"
+FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose up -d --build
 curl localhost:8080/health          # {"status":"ok","version":"0.1.0-alpha.1",...}
 ```
 
@@ -133,8 +134,36 @@ These paths are exercised by the soak test (`tools/soak`): a backup taken while 
 # 1. back up (admin page, or: node dist/server.mjs backup backups/before-update.sqlite) and copy it off the machine
 git pull
 pnpm install && pnpm --filter @fq/client build && pnpm --filter @fq/server build
-# restart the service           (Docker: docker compose up -d --build)
+# restart the service           (Docker: FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose up -d --build)
 curl localhost:8080/health      # the new version and build
 ```
 
 The server upgrades the database's schema by itself at start. There is no downgrade: an older server refuses a database a newer one has written (`check` says "made by a newer server"); to go back, restore the backup you took before updating. Read the release notes for anything that changes a rule in the middle of a season.
+
+## 9. Bringing a 2001 town across
+
+If you ran the original Funeral Quest server (FQServer 1.0, 2001-2011), you can bring your players into a Classic town on this server. The importer reads the three files the old program saved and builds a new town from them; the old files are never changed.
+
+What you need from the old machine: the program folder with `system.dat` in it and the `data` folder with `player.dat` and `config.dat` (the importer also takes the three files loose in one folder, in any letter case). Copy them somewhere on the new machine and keep the originals.
+
+```bash
+# 1. stop the server (the importer refuses to run under a live one) and take a backup
+# 2. look first: reads everything, prints the report, writes nothing
+node dist/server.mjs import-legacy --dir /path/to/old-server --town oldtown --dry-run
+# 3. do it (Docker: docker compose run --rm --no-deps -v /path/to/old-server:/old fq node server.mjs import-legacy --dir /old --town oldtown)
+node dist/server.mjs import-legacy --dir /path/to/old-server --town oldtown --name "Our Old Town" --time-zone America/New_York
+# 4. start the server
+```
+
+The town id and name work as in section 3; the town is Classic, with the Classic pack. `--time-zone` is where its days begin at midnight (the old server used the machine's own time).
+
+**What comes across, exactly as it was:** every player record (name, log-on name, parlor name, e-mail, sex, money, Bury Points and today's points, turns, karma, rating, luck, tags, plots, transportation, hit points, strength, Psych, visits and Yangs used, the store upgrades and every other script value, last log-on); the day the game was on; the tournament switch and length; every Game Setting the old dialogs had (turns per day, starting values, casket points, risk, odds, name-change price and so on, plus maximum players, idle-account purge and swear filter from `system.dat`); the log-on screen message; yesterday's top seller. Names and parlor names are not edited: the 2001 text is read as the Windows code page it was written in, so accents and curly quotes come out right. A deleted player's slot stays empty, as in the old file. Nobody is online after an import, and each player gets their new day's turns the first time they log on, as before.
+
+**Passwords.** The old server kept passwords as plain text in `player.dat`. The default is to carry none of them: each player's account gets a new random 12-character password, and the importer writes the list to `legacy-import-<town>-passwords.csv` (owner-only, never overwritten; change the place with `--passwords-file`). Give each player theirs;. Delete the file when you are done. If you would rather players walk straight back in with the old password, add `--keep-passwords`: the old passwords are hashed like any other account's and the plain text is not stored anywhere on the new server. Players with an empty old password get a random one either way.
+
+**Log-in names.** An account name is 3 to 20 letters, digits, `_`, `.` or `-`. A 2001 log-on name that does not fit (a space, a `!`) is changed to the nearest name that does, and a second player with the same name (in any letter case) or a name already on this server gets a number; the report lists each. The player's shown name and parlor name stay as they were.
+
+**What does not come across**, and what the report says about it: the karma and rating titles in `config.dat` (the pack supplies them), the admin e-mail, the port, kick and auto-save times, licence settings and statistics in `system.dat`; IP addresses and the per-IP log-on rule (dropped by design); saved mail in `data\mail`; the Funeral Times pages, the Book of Deeds and your own word lists. The importer prints these in the JSON report (`unmapped` and `notes`), none silently. The new server's idle time-out is `FQ_IDLE_TIMEOUT_MINUTES`, not the old 4 minutes.
+
+If something looks wrong, restore the backup from step 1 (section 6) and import again; importing into an existing town id is refused.
+
