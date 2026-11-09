@@ -11,6 +11,7 @@ import {
   runningServer,
 } from "./db/backup.js";
 import { openDatabase } from "./db/database.js";
+import { importLegacyTown, LegacyImportError } from "./legacyImport.js";
 import { createServer } from "./server.js";
 
 const USAGE = `Usage:
@@ -19,7 +20,58 @@ const USAGE = `Usage:
                                        default: a new file in FQ_BACKUP_DIR (or ./backups next to the database)
   node server.mjs check <file>         check a backup: integrity, schema, towns
   node server.mjs restore <file>       replace FQ_DB_PATH with a backup (the server must be stopped;
-                                       the old files are kept as *.before-restore-<time>)`;
+                                       the old files are kept as *.before-restore-<time>)
+  node server.mjs import-legacy --dir <old server folder> --town <id> [--name <name>] [--time-zone <zone>]
+                       [--keep-passwords] [--passwords-file <file>] [--dry-run]
+                                       create a Classic town from a 2001 server's player.dat, config.dat and
+                                       system.dat (the server must be stopped; docs/sysop-guide.md)`;
+
+/** `import-legacy`: the sysop's way to bring a 2001 town across. */
+async function importLegacy(args: string[]): Promise<number> {
+  const flags = new Map<string, string | true>();
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i] as string;
+    if (!arg.startsWith("--")) throw new Error(`unexpected argument "${arg}"`);
+    const key = arg.slice(2);
+    if (key === "keep-passwords" || key === "dry-run") flags.set(key, true);
+    else {
+      const value = args[++i];
+      if (value === undefined) throw new Error(`--${key} needs a value`);
+      flags.set(key, value);
+    }
+  }
+  const text = (key: string): string | undefined => {
+    const v = flags.get(key);
+    return typeof v === "string" ? v : undefined;
+  };
+  const dir = text("dir");
+  const town = text("town");
+  if (!dir || !town)
+    throw new Error("import-legacy needs --dir <old server folder> and --town <id>");
+  try {
+    const result = await importLegacyTown(
+      loadConfig(),
+      {
+        dir,
+        townId: town,
+        townName: text("name"),
+        timeZone: text("time-zone"),
+        keepPasswords: flags.has("keep-passwords"),
+        passwordsFile: text("passwords-file"),
+        dryRun: flags.has("dry-run"),
+      },
+      Date.now(),
+    );
+    console.log(JSON.stringify(result, null, 2));
+    return 0;
+  } catch (error) {
+    if (error instanceof LegacyImportError) {
+      console.error(error.message);
+      return 2;
+    }
+    throw error;
+  }
+}
 
 /** `backup`, `check` and `restore`: the sysop's commands (docs/sysop-guide.md). */
 function command(args: string[]): number {
@@ -64,6 +116,7 @@ function command(args: string[]): number {
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
+  if (args[0] === "import-legacy") process.exit(await importLegacy(args.slice(1)));
   if (args.length > 0) {
     process.exit(command(args));
   }

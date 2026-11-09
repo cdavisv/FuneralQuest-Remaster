@@ -25,6 +25,10 @@ node dist/server.mjs restore <file>     # with the server stopped: put a backup 
 
 The same three from source: `pnpm --filter @fq/server backup`, `check-backup <file>`, `restore <file>`.
 
+### Importing a 2001 town (`import-legacy`)
+
+`node dist/server.mjs import-legacy --dir <old server folder> --town <id> [--name <name>] [--time-zone <zone>] [--keep-passwords] [--passwords-file <file>] [--dry-run]` reads the old server's `player.dat`, `data\config.dat` and `system.dat` and creates a new Classic town (the server must be stopped). Players come across in their old slots with everything the engine has; each active player gets an account named after their old log-on name and a link to their parlor. The old files stored passwords in plain text, so by default none is carried: every account gets a new random password, written to a CSV (mode 0600, never overwritten) for the sysop to hand out. `--keep-passwords` hashes the old ones instead. What did not map (the sysop's karma/rating strings, ports, licence data, IP addresses, saved mail, news pages) is listed in the JSON report the command prints; `--dry-run` prints it without writing. The reader is `packages/legacy-compat/src/saves.ts`, the import `src/legacyImport.ts`, the test `test/legacyImport.test.ts`. Walkthrough: `docs/sysop-guide.md`, "Bringing a 2001 town across".
+
 ### Soak-test clock
 
 `FQ_TEST_CLOCK_SPEED`, `FQ_TEST_CLOCK_START` and `FQ_TEST_CLOCK_ANCHOR` run game time faster than real time (`ScaledClock` in `src/clock.ts`; the same three values give the same clock after a restart, so a killed server carries on), and `FQ_TEST_MAINTENANCE_DELAY_MS` pauses each midnight after computing the new day and before saving it, logging a line, so a test can kill the process there. They exist for the soak test (`tools/soak`), which plays whole tournaments against this server; the server logs a warning when they are set and **refuses to start with them when `NODE_ENV=production`** (the Docker image sets it).
@@ -37,9 +41,11 @@ One image holds the game server and the web client, so one port gives a complete
 
 ```sh
 cp apps/server/.env.example apps/server/.env     # set FQ_ADMIN_TOKEN (optional but wise)
-docker compose up -d --build                      # from the repository root (or from apps/server)
+FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose up -d --build   # from the repository root (or from apps/server)
 curl localhost:8080/health                        # then open http://localhost:8080
 ```
+
+**The build id.** The image has no `.git`, so the commit comes in as the build argument `FQ_BUILD` (default `dev`): `FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose build`, or `docker build -f apps/server/Dockerfile --build-arg FQ_BUILD=$(git rev-parse --short=7 HEAD) -t funeral-quest .`. It becomes `build` on `/health` and the build shown in the client's Settings. Without it both say `dev`.
 
 `apps/server/Dockerfile` is built from the repository root (`Dockerfile.dockerignore` keeps `legacy/`, the animation frames of the art and every `node_modules` out of the build context). Its build stage installs the workspace, runs `pnpm --filter @fq/client build` (art derivation, type check, Vite, the PWA files) and bundles the server; the runtime stage holds only `server.mjs`, the server's npm dependencies and the built client, with `FQ_CLIENT_DIR=/app/client` already set. Game state lives in the named volume `fq-data` mounted at `/data`. A fresh volume starts with the two default towns (an Expanded flagship and a Classic one); `FQ_DEFAULT_TOWNS` in `.env` changes that. To create towns from a file, copy `towns.example.json` to `towns.json` and uncomment the two marked lines in `docker-compose.yml`.
 

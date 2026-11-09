@@ -30,3 +30,4 @@ export { rufflePage } from "./page.js";
 export { type LegacyCompatOptions, legacyCompat, REPO_ROOT } from "./plugin.js";
 export { renderView } from "./render.js";
 export { LEGACY_COLORS, richTextToLegacyHtml } from "./richText.js";
+export * from "./saves.js";

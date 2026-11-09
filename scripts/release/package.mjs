@@ -206,8 +206,8 @@ sqlite3 fq.sqlite ".backup copy.sqlite", not with cp.
 
 Docker: Dockerfile, Dockerfile.dockerignore and docker-compose.yml are the repository's own
 and build from a checkout of the source at this tag (git checkout v${v.version}), not from this
-tarball: docker compose up -d --build, from the repository root. The image has not been built or
-run by the project yet (it needs the owner's Docker group; docs/TODO.md).
+tarball: FQ_BUILD=<commit> docker compose up -d --build (FQ_BUILD is the build id shown on /health; "dev" without it), from the repository root. The image has been built and run
+(docs/ALPHA.md, A10); no tournament has been played through it yet.
 
 Hosting a private town, the admin page, bans, backups and restores are covered in
 docs/sysop-guide.md and apps/server/README.md in the source tree.
