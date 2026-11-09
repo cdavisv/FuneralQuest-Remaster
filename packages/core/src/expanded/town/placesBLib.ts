@@ -82,15 +82,16 @@ export function priceDetail(price: number): string {
 }
 
 export function vars(turn: Turn, extra: Record<string, string | number> = {}) {
-  const c = btext(turn).cast;
+  const c = xt(turn).cast;
   return {
     player: turn.player.name,
     parlor: turn.player.parlor,
     coroner: c.coroner,
-    pawnbroker: c.pawnbroker,
-    mourne: c.mournes,
+    pawnbroker: btext(turn).cast.pawnbroker,
+    mourne: c.mourne,
+    mournes: c.mournes,
     sons: c.sons,
-    inspector: xt(turn).cast.inspector,
+    inspector: c.inspector,
     ...extra,
   };
 }

@@ -14,7 +14,13 @@ import { bannedTerms } from "./banned.js";
 import { classicPack } from "./builtin.js";
 import type { PackIssue } from "./check.js";
 import { EXPANDED_KEY, TABLE_FILE, type TableKey } from "./tables.js";
-import { lintNewsWhen, lintTown, townFieldRule, townStructural } from "./townLint.js";
+import {
+  lintNewsWhen,
+  lintTown,
+  placesFieldRule,
+  townFieldRule,
+  townStructural,
+} from "./townLint.js";
 
 /**
  * Content rules beyond the schema, for packs that add new writing (the built-in Expanded pack is
@@ -252,6 +258,7 @@ const TEXT_TOKENS: Record<string, readonly string[]> = {
 /** Rules for `expanded`, by normalized path. First match wins. */
 function expandedRule(path: string): FieldRule {
   if (path.startsWith("town.")) return townFieldRule(path);
+  if (path.startsWith("placesA.") || path.startsWith("placesB.")) return placesFieldRule(path);
   const rules: [RegExp, FieldRule][] = [
     [/^names\./, { tokens: NONE, max: 16 }],
     [/^traits\[\]\.lines\[\]$/, { tokens: X, max: 200 }],
@@ -389,6 +396,9 @@ function fileOf(table: TableKey | typeof EXPANDED_KEY, path: Path): { file: stri
   if (key === "text" && typeof sub === "string") {
     return { file: `expanded/text/${sub}.yaml`, path: rest };
   }
+  if ((key === "placesA" || key === "placesB") && typeof sub === "string") {
+    return { file: `expanded/${key}.yaml`, path: [sub, ...rest] };
+  }
   return { file: `expanded/${String(key)}.yaml`, path: sub === undefined ? [] : [sub, ...rest] };
 }
 
@@ -515,7 +525,8 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
     for (const leaf of leaves(value)) {
       const path = normal(leaf.path);
       const key = leaf.path.at(-1);
-      const townPicture = table === EXPANDED_KEY && path.startsWith("town.pictures.");
+      const townPicture =
+        table === EXPANDED_KEY && /^(town|placesA|placesB)\.pictures\./.test(path);
       if ((typeof key === "string" && PICTURE_KEY.test(key)) || townPicture) {
         if (/^(ui|music)\//.test(leaf.value)) {
           push(table, leaf.path, `'${leaf.value}' is interface art, not a scene picture`);
@@ -775,6 +786,20 @@ export function lintPack(pack: ContentPack, options: LintOptions = {}): PackIssu
       (path, message, entry) => push(EXPANDED_KEY, ["town", ...path], message, entry),
     );
   }
+  // The places' pictures (`fg`/`bg`): known asset ids.
+  for (const key of ["placesA", "placesB"] as const) {
+    const pictures = pack.expanded?.[key]?.pictures as
+      | Record<string, { fg?: string; bg: string }>
+      | undefined;
+    if (!pictures || !options.assetIds) continue;
+    for (const [place, pic] of Object.entries(pictures)) {
+      for (const layer of ["fg", "bg"] as const) {
+        const id = pic[layer];
+        if (id !== undefined && !options.assetIds.has(id))
+          push(EXPANDED_KEY, [key, "pictures", place, layer], `unknown asset '${id}'`, id);
+      }
+    }
+  }
   return issues;
 }
 
@@ -786,6 +811,8 @@ function isStructural(table: TableKey | typeof EXPANDED_KEY, path: string): bool
   if (table === "newsBlurbs") return /\.when\./.test(path);
   if (table === EXPANDED_KEY) {
     if (path.startsWith("town.")) return /\.id$/.test(path) || townStructural(path);
+    // Button labels, hints, cast names and the short repeated words of the places.
+    if (/^places[AB]\.(cast|hints|pictures)\.|\.buttons\.|\.(leave|back)$/.test(path)) return true;
     return /(\.id|\.pool|\.article|\.tags\[\]|\.track|\.requires|\.excludes\[\]|\.traits\[\]|\.pet\[\]|\.perk|\.label|\.portrait|\.picture|\.person\.\w+)$/.test(
       path,
     );

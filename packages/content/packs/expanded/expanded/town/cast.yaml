@@ -1,9 +1,17 @@
-# The town's own people (ExpandedTownContent.cast), filled into text as {mayor}, {owner}, {nurse}.
+# The town's own people (ExpandedTownContent.cast), filled into text as {mayor}, {owner}, {nurse},
+# {coroner}, {mourne}, {sons} and {mournes}.
 # The Mayor is the NPC until a player wins the election; the Teller is the Prudence Ledbetter of
-# the specials. Lines elsewhere name them literally, so rename them everywhere at once.
+# the specials. {coroner} and the Mournes are filled in the town's news and arc stories and in the
+# batch-B places' text (placesB.yaml). The events, news blurbs, risks, specials, tells and
+# negotiation lines are not filled with the cast, so they name Dr. Grimble and the Mournes
+# literally: rename them there too (grep for Grimble and Mourne).
 
 mayor: 'Mayor Hollis Grubb'
 clubOwner: 'Lucius Vane'
 nurse: 'Nurse Gertie'
 inspector: 'Inspector Mudge'
 teller: 'Prudence Ledbetter'
+coroner: 'Dr. Ignatius Grimble'
+mourne: 'Augustus Mourne'
+sons: 'Ned and Rollo'
+mournes: 'Mourne & Sons'

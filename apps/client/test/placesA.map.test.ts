@@ -2,11 +2,26 @@ import type { View } from "@fq/protocol";
 import { describe, expect, it } from "vitest";
 import classicPack from "../src/art/packs/classic/pack.json";
 import { expandedScreen } from "../src/expanded/places.js";
-import { HOTSPOTS, MAP_H, MAP_W, mapRects, overlappingPairs } from "../src/scenes/mapData.js";
+import {
+  HOTSPOTS,
+  MAP_H,
+  MAP_W,
+  mapRects,
+  overlappingPairs,
+  rectsOverlap,
+} from "../src/scenes/mapData.js";
 
 const A = ["police-station", "crematorium", "florist", "gazette"];
 
 describe("the batch-A places on the map", () => {
+  it("no spot covers the Deathville Map title", () => {
+    const title = { x: 20, y: 13, w: 152, h: 30 }; // base map units
+    for (const id of A) {
+      const r = classicPack.map.expanded[id as keyof typeof classicPack.map.expanded];
+      expect(r && rectsOverlap(r, title), id).toBe(false);
+    }
+  });
+
   it("the hand-drawn map gives each a spot, and no spot covers another", () => {
     for (const id of A) expect(HOTSPOTS[id], id).toBeDefined();
     expect(overlappingPairs(HOTSPOTS)).toEqual([]);

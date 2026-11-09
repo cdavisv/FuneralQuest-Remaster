@@ -444,7 +444,7 @@ describe("the Town Gazette", () => {
     const t = midnight(s.town, ctx);
     s = seat(t, ctx, 0);
     expect(player(s.town, 0).expanded?.life?.leads).toBe(1);
-    expect(s.seen).toMatch(/new customer is waiting/);
+    expect(s.seen).toMatch(/new customer\(s\) waiting/);
   });
 
   it("the advert's customer is delivered once and respects the lead limit", () => {
@@ -513,7 +513,7 @@ describe("the Town Gazette", () => {
       if (rival === R.gazette.smear.targetReviews) {
         ran = true;
         expect(me.money).toBe(20_000 - R.gazette.smear.price);
-        expect(frontPage(s.town)).toMatch(/rumours/);
+        expect(frontPage(s.town)).toMatch(/rumors/);
       } else {
         failed = true;
         expect(me.money).toBe(20_000 - R.gazette.smear.price - R.gazette.smear.fine);

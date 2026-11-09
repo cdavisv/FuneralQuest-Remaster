@@ -282,7 +282,11 @@ describe("the pack's follow-up news", () => {
         applyNews(turn, n);
         turn.commit();
         const page = frontPage(turn.town);
+        if (n.id === "coroner-fishing") expect(page).toContain(T.cast.coroner);
+        if (n.id === "mourne-price-war") expect(page).toContain(T.cast.mournes);
         expect(page, n.id).not.toContain("{mayor}");
+        // The cast (coroner, the Mournes) is filled in too.
+        expect(page, n.id).not.toMatch(/\{(coroner|mourne|sons|mournes)\}/);
         expect(page, n.id).toContain(name);
       }
     }

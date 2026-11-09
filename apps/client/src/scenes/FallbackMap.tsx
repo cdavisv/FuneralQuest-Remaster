@@ -169,8 +169,8 @@ const BUILDINGS: BoxSpec[] = [
   // Batch B places (stand-ins).
   {
     id: "coroner",
-    x: 618,
-    y: 700,
+    x: 258,
+    y: 632,
     w: 62,
     d: 20,
     h: 40,
@@ -180,8 +180,8 @@ const BUILDINGS: BoxSpec[] = [
   },
   {
     id: "health-department",
-    x: 714,
-    y: 700,
+    x: 538,
+    y: 612,
     w: 62,
     d: 20,
     h: 40,
@@ -191,8 +191,8 @@ const BUILDINGS: BoxSpec[] = [
   },
   {
     id: "pawn-shop",
-    x: 810,
-    y: 700,
+    x: 648,
+    y: 612,
     w: 62,
     d: 20,
     h: 40,
@@ -202,8 +202,8 @@ const BUILDINGS: BoxSpec[] = [
   },
   {
     id: "mournes",
-    x: 906,
-    y: 700,
+    x: 608,
+    y: 200,
     w: 62,
     d: 20,
     h: 40,

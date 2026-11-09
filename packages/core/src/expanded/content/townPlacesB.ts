@@ -1,4 +1,4 @@
-// biome-ignore-all lint/suspicious/noTemplateCurlyInString: "${price}" here is a dollar sign before a {price} placeholder, not a template.
+// biome-ignore-all lint/suspicious/noTemplateCurlyInString: "`${coroner}" is a colour code followed by a {placeholder}, not a template.
 /**
  * ============================================================================
  *  EXPANDED STARTER CONTENT: THE BATCH-B PLACES
@@ -26,7 +26,8 @@ interface PlaceText {
 }
 
 export interface PlacesBContent {
-  cast: { coroner: string; pawnbroker: string; mournes: string; sons: string };
+  /** The coroner and the Mournes are `town.cast` (`{coroner}`, `{mourne}`, `{sons}`, `{mournes}`); the pawnbroker is `{pawnbroker}`. */
+  cast: { pawnbroker: string };
   pictures: { coroner: Picture; health: Picture; pawn: Picture; mournes: Picture };
   hints: {
     tipHeld: string;
@@ -94,17 +95,14 @@ export interface PlacesBContent {
 
 export const PLACES_B_STARTER: PlacesBContent = {
   cast: {
-    coroner: "Dr. Ignatius Grimble",
     pawnbroker: "Cousin Sal",
-    mournes: "Augustus Mourne",
-    sons: "Ned and Rollo",
   },
 
   pictures: {
-    coroner: { fg: "people/m_old_7", bg: "places/prep-table" },
-    health: { fg: "people/inspector-mudge", bg: "places/city-hall" },
-    pawn: { fg: "people/morty", bg: "places/black-market" },
-    mournes: { fg: "people/m_adult_5", bg: "places/parlor-3" },
+    coroner: { fg: "people/dr-grimble", bg: "places/coroner" },
+    health: { fg: "people/inspector-mudge", bg: "places/health-department" },
+    pawn: { fg: "people/cousin-sal", bg: "places/pawn-shop" },
+    mournes: { fg: "people/augustus-mourne", bg: "places/mournes" },
   },
 
   hints: {
@@ -130,12 +128,12 @@ export const PLACES_B_STARTER: PlacesBContent = {
     buttons: {
       tip: "Buy a Tip on Tomorrow's Deceased",
       certificate: "Fast-Track a Death Certificate",
-      favour: "Ask About a Favour",
+      favour: "Ask About a Favor",
       burial: "Give Them a Proper Burial",
       quiet: "Sign Them Over, No Questions",
     },
     tipBought:
-      "`${coroner} slides a folded note across the desk. \"Next family through your door. I've read the file. You didn't get it from me.\" `5(-${price})`$",
+      "`${coroner} slides a folded note across the desk. \"Next family through your door. I've read the file. You didn't get it from me.\" `5(-{price})`$",
     tipLoved: "`8The note says: {loved}`$",
     tipTrait: "`8The note adds: {trait}.`$",
     tipCheap: "`8Scrawled in the margin: {cheap}`$",
@@ -146,7 +144,7 @@ export const PLACES_B_STARTER: PlacesBContent = {
     burialDone:
       "`$You pay for a plain pine box and a plot with a view of the dumpster. A handful of strangers turn up. It was the least you could do. `5(+{karma} karma, +{luck} luck)`$",
     quietDone:
-      '`${coroner} signs a form without reading it. "Wonderful. Nobody will ever ask." You are paid, in cash, promptly. `5(+${money}, {karma} karma)`$',
+      '`${coroner} signs a form without reading it. "Wonderful. Nobody will ever ask." You are paid, in cash, promptly. `5(+{money}, {karma} karma)`$',
     quietTalk:
       "`4Somebody noticed the paperwork. The whole town is now talking about the way you do business.`$",
   },
@@ -167,19 +165,19 @@ export const PLACES_B_STARTER: PlacesBContent = {
     passed:
       "`${inspector} walks through your parlor in six minutes and signs. A framed certificate goes up by your door for `w{days}`$ days. `5(+{reviews} reputation)`$",
     failed:
-      '`4{inspector} finds a finger in the coffee maker. "That is not on the menu." A citation for `w${fine}`4 goes on file, and the neighbours hear about it. `5(-{reviews} reputation)`$',
+      '`4{inspector} finds a finger in the coffee maker. "That is not on the menu." A citation for `w{fine}`4 goes on file, and the neighbors hear about it. `5(-{reviews} reputation)`$',
     bought:
       '`${inspector} counts the envelope without looking at it. "Spotless. Truly." The certificate hangs by your door for `w{days}`$ days. `5({karma} karma, +{reviews} reputation)`$',
     finePaid:
       "`$You pay the citation in small bills. The clerk pins a receipt to it and, a few days later, the town forgets. `5(+{reviews} reputation)`$",
     complaintPrompt:
-      "Which parlor has been breaking the rules? It will cost `w${price}`$ to be heard.",
+      "Which parlor has been breaking the rules? It will cost `w{price}`$ to be heard.",
     complaintFiled:
       '`${inspector} takes your complaint and files it where complaints are filed. "I will look into {name}\'s kitchen." `5({karma} karma)`$',
     complaintDismissed:
-      "`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The ${price} stays in his drawer.",
+      "`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The {price} stays in his drawer.",
     complaintBackfired:
-      "`4The complaint is traced straight back to you. Citation for `w${fine}`4 for wasting an inspector's time. `5({reviews} reputation)`$",
+      "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5({reviews} reputation)`$",
     complaintMail:
       "`4A complaint was filed against {parlor} with the Health Department. Somebody in town does not like you. Your reputation dipped.`$",
     complaintNews:
@@ -201,13 +199,13 @@ export const PLACES_B_STARTER: PlacesBContent = {
       silver: "Second-Hand Silver Lot",
     },
     lootSold:
-      '`${pawnbroker} turns the pieces over under a lamp and counts out `w${money}`$. "No receipts, no names, no problem."',
+      '`${pawnbroker} turns the pieces over under a lamp and counts out `w{money}`$. "No receipts, no names, no problem."',
     lotGood:
-      '`${pawnbroker} loads {count} "gently used" caskets into your trunk. They are, for once, exactly as described. `5(-${price})`$',
+      '`${pawnbroker} loads {count} "gently used" caskets into your trunk. They are, for once, exactly as described. `5(-{price})`$',
     lotBad:
-      '`4The bottom of the lot is water-damaged. Only {count} of them is worth putting a body in. "No refunds," says {pawnbroker}. `5(-${price})`$',
+      '`4The bottom of the lot is water-damaged. Only {count} casket(s) in the lot are worth putting a body in. "No refunds," says {pawnbroker}. `5(-{price})`$',
     lotLine:
-      "`w{name}`$, `w${price}`$: {count} caskets at {percent}% of the Di-Mart price. {risk}% of lots turn out bad.\n",
+      "`w{name}`$, `w{price}`$: {count} caskets at {percent}% of the Di-Mart price. {risk}% of lots turn out bad.\n",
   },
 
   mournes: {
@@ -224,19 +222,19 @@ export const PLACES_B_STARTER: PlacesBContent = {
       truce: "Offer a Truce",
     },
     spyOk:
-      "`$You wander through their showroom with a clipboard and nobody stops you. Ned's price list is plain as day. Next time you meet a family, you will know what they will pay for. `5(-${price})`$",
+      "`$You wander through their showroom with a clipboard and nobody stops you. Their price list is plain as day. Next time you meet a family, you will know what they will pay for. `5(-{price})`$",
     spyCaught:
-      '`4Rollo catches you copying prices out of the back of the brochure. "Gentlemen!" says {mourne}. "We have a visitor." You leave the way you came: loudly. `5(-${price}, {karma} karma, {reviews} reputation)`$',
+      '`4{sons} catch you copying prices out of the back of the brochure. "Gentlemen!" says {mourne}. "We have a visitor." You leave the way you came: loudly. `5(-{price}, {karma} karma, {reviews} reputation)`$',
     undercutWin:
-      "`$You put a banner over the door: FUNERALS, FOR LESS. The Mournes cannot match it without losing money, and by supper the whole town knows. `5(-${price}, +{reviews} reputation, +{luck} luck)`$",
+      "`$You put a banner over the door: FUNERALS, FOR LESS. {mournes} cannot match it without losing money, and by supper the whole town knows. `5(-{price}, +{reviews} reputation, +{luck} luck)`$",
     undercutLose:
-      "`4The Mournes match your price, then beat it, and their sons stand at the end of your road handing out coupons. `5(-${price}, {reviews} reputation)`$",
+      "`4{mournes} match your price, then beat it, and their sons stand at the end of your road handing out coupons. `5(-{price}, {reviews} reputation)`$",
     holdDone:
       '`$You keep your prices where they are. {mourne} nods across the street, one professional to another. "Admirable." `5(+{karma} karma)`$',
     truceDone:
-      "`$You and {mourne} shake on it in the middle of the street. For `w{days}`$ days neither of you will undercut the other. `5(+{karma} karma, -${price})`$",
+      "`$You and {mourne} shake on it in the middle of the street. For `w{days}`$ days neither of you will undercut the other. `5(+{karma} karma, -{price})`$",
     truceLead:
-      "`$As a gesture, the Mournes send you a family they are too busy to take. `5(+{leads} lead)`$",
+      "`$As a gesture, {mournes} send you a family they are too busy to take. `5(+{leads} lead(s))`$",
     truceActive: "`$The truce holds through day `w{until}`$.",
   },
 };

@@ -182,10 +182,10 @@ export const PLACES_A_STARTER: PlacesAContent = {
   },
 
   pictures: {
-    police: { bg: "places/funeral_enemy_police" },
+    police: { fg: "people/sergeant-bixby", bg: "places/funeral_enemy_police" },
     crematorium: { bg: "places/creamation_oven" },
-    florist: { fg: "stuff/red_rose", bg: "places/store" },
-    gazette: { fg: "people/man_prowl", bg: "places/desk" },
+    florist: { fg: "people/marigold-thorne", bg: "places/florist" },
+    gazette: { fg: "people/hal-pennywhistle", bg: "places/gazette" },
   },
 
   hints: {
@@ -261,9 +261,9 @@ export const PLACES_A_STARTER: PlacesAContent = {
     bulkBought:
       '`w{keeper}: `$"Bulk rate. Nobody ever bought in bulk and complained. That makes {slots} slots."',
     scattered:
-      "`$You take {count} to the lake at dawn and let the wind do the talking. It is very quiet. The town thinks better of you.",
+      "`$You take {count} urn(s) to the lake at dawn and let the wind do the talking. It is very quiet. The town thinks better of you.",
     pressed:
-      "`$Urns pressed: {count}. They go into the press behind the shed. A jeweller with no questions pays `w{money}`$. You try not to look at the jewellery counter again.",
+      "`$Urns pressed: {count}. They go into the press behind the shed. A jeweler with no questions pays `w{money}`$. You try not to look at the display case again.",
   },
 
   florist: {
@@ -288,7 +288,7 @@ export const PLACES_A_STARTER: PlacesAContent = {
     },
     specialNone: "The price is whatever it is today.",
     shelfFull: "Your cooler is full.",
-    bought: '`w{florist}: `$"{count} added to your cooler. Sell them before they wilt."',
+    bought: '`w{florist}: `$"{count} bouquet(s) added to your cooler. Sell them before they wilt."',
     wreathDone: "Already sent flowers today.",
     wardSent:
       "`$A hundred stems go to {nurse}'s ward. A patient cries. A visitor steals a rose. Everyone is a bit luckier.",
@@ -317,7 +317,7 @@ export const PLACES_A_STARTER: PlacesAContent = {
       '`w{editor}: `$"Three lines in the back, between a missing cat and a pie sale. Nobody will read it. Nobody ever does."',
     displayBooked:
       '`w{editor}: `$"Half a page, with a border. Tomorrow the whole town sees your name, and your phone number."',
-    adMorning: "\n`$Somebody read the Gazette ad: {count} new customer is waiting for you.",
+    adMorning: "\n`$Somebody read the Gazette ad: {count} new customer(s) waiting for you.",
     puffPrinted:
       '`w{editor}: `$"Front page, above the fold, your face six columns wide. Try to look like you deserve it."',
     puffNews:
@@ -327,9 +327,9 @@ export const PLACES_A_STARTER: PlacesAContent = {
     smearDone2:
       '`w{editor}: `$"Done. {name} will read about themselves in the morning. I took the liberty of spelling their name right."',
     smearNews:
-      "`$The Gazette hears rumours about {name}'s parlor. Nobody will say what the rumours are. They are, however, everywhere.\r\n",
+      "`$The Gazette hears rumors about {name}'s parlor. Nobody will say what the rumors are. They are, however, everywhere.\r\n",
     smearMail:
-      "`$The Gazette printed rumours about your parlor. Your word of mouth took a hit. Somebody paid for that.\n",
+      "`$The Gazette printed rumors about your parlor. Your word of mouth took a hit. Somebody paid for that.\n",
     smearBackfire:
       '`w{editor}: `$"{name} has a lawyer, an alibi and a nephew in the print room. The piece is pulled, you are fined `w{fine}`$, and I never met you."',
     smearBackfireNews:

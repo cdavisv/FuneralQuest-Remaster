@@ -2,14 +2,34 @@ import type { View } from "@fq/protocol";
 import { describe, expect, it } from "vitest";
 import classicPack from "../src/art/packs/classic/pack.json";
 import { expandedScreen } from "../src/expanded/places.js";
-import { HOTSPOTS, MAP_H, MAP_W, mapRects, overlappingPairs } from "../src/scenes/mapData.js";
+import {
+  HOTSPOTS,
+  MAP_H,
+  MAP_W,
+  mapRects,
+  overlappingPairs,
+  rectsOverlap,
+} from "../src/scenes/mapData.js";
 
 const B = ["coroner", "health-department", "pawn-shop", "mournes"];
 
 const viewWith = (id: string) =>
   ({ scene: "location", buttons: [{ id, label: "x" }] }) as unknown as View;
 
+/** The "Deathville Map" title: baked into the Classic base map, drawn over the hand-drawn one. */
+const CLASSIC_TITLE = { x: 20, y: 13, w: 152, h: 30 }; // base map units, measured on the render
+const FALLBACK_TITLE = { x: 600, y: 620, w: 362, h: 66 }; // 1024 by 745 map pixels
+
 describe("the batch-B places on the map", () => {
+  it("no spot covers the Deathville Map title, on either map", () => {
+    for (const id of B) {
+      const h = HOTSPOTS[id];
+      expect(h && rectsOverlap(h, FALLBACK_TITLE), `${id} on the hand-drawn map`).toBe(false);
+      const r = classicPack.map.expanded[id as keyof typeof classicPack.map.expanded];
+      expect(r && rectsOverlap(r, CLASSIC_TITLE), `${id} on the Classic map`).toBe(false);
+    }
+  });
+
   it("the hand-drawn map gives each a spot on the map that covers no other", () => {
     for (const id of B) {
       const r = HOTSPOTS[id];

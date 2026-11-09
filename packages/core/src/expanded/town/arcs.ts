@@ -16,8 +16,8 @@ import { applyReward, karmaMod, moneyMod, roll } from "../players.js";
 import {
   activePlayers,
   applyModifiers,
+  castVars,
   life,
-  mayorName,
   mayorOf,
   off,
   spent,
@@ -85,7 +85,7 @@ function fireBeat(turn: Turn, arc: StoryArcDef, beat: ArcBeatDef, state: ArcStat
   const leading = state.counters.good >= state.counters.evil ? "good" : "evil";
   const topId = topGiver(state);
   const top = topId === null ? "" : (town.players[topId]?.name ?? "");
-  const vars = { mayor: mayorName(turn), top: top === "" ? "nobody" : top, side: leading };
+  const vars = { ...castVars(turn), top: top === "" ? "nobody" : top, side: leading };
   addToNews(town, `\`7${fill(beat.headline, vars)}\r\n`);
   addToNews(town, `\`^${fill(beat.story, vars)}\r\n\r\n`);
   applyModifiers(town, beat.modifiers, beat.days ?? 1, `arc:${arc.id}:${beat.id}`);

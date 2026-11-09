@@ -19,6 +19,24 @@ import { FIXTURES } from "../src/mock/fixtures.js";
 import { SettingsProvider } from "../src/settings/settings.js";
 import { renderGame, ScriptedTransport } from "./helpers.js";
 
+/** The Classic pieces the Remastered pack draws itself (stand-ins in Classic, which has no art for them). */
+const BUILDINGS_8 = [
+  "building-police-station",
+  "building-crematorium",
+  "building-florist",
+  "building-gazette",
+  "building-coroner",
+  "building-health-department",
+  "building-pawn-shop",
+  "building-mournes",
+] as const;
+const REMASTERED_STANDINS: string[] = [
+  "building-city-hall",
+  "building-reaper-club",
+  "capsule-parlor",
+  ...BUILDINGS_8,
+];
+
 const classic = getPack("classic");
 const remastered = getPack("remastered");
 
@@ -44,12 +62,7 @@ describe("the Remastered pack", () => {
 
   it("keeps the original chrome: every Classic piece, cabinet, fit, map and newspaper is inherited", () => {
     for (const [name, url] of Object.entries(classic.pieces)) {
-      if (
-        name === "building-city-hall" ||
-        name === "building-reaper-club" ||
-        name === "capsule-parlor"
-      )
-        continue;
+      if (REMASTERED_STANDINS.includes(name)) continue;
       expect(remastered.pieces[name as keyof typeof classic.pieces], name).toBe(url);
     }
     expect(remastered.cabinets).toEqual(classic.cabinets);
@@ -59,7 +72,7 @@ describe("the Remastered pack", () => {
   });
 
   it("replaces the Classic stand-ins with its own drawings, so none is left a placeholder", () => {
-    for (const name of ["building-city-hall", "building-reaper-club", "capsule-parlor"] as const) {
+    for (const name of REMASTERED_STANDINS as (keyof typeof classic.pieces)[]) {
       expect(remastered.pieces[name], name).toBeTruthy();
       // Classic has no stand-in left either: it borrows the Remastered piece.
       expect(classic.pieces[name]).toBe(remastered.pieces[name]);

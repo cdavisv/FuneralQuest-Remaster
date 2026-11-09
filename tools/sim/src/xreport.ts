@@ -229,6 +229,11 @@ export function upgradeReturn(r: XReport, id: string): UpgradeReturn {
   const rule = EXPANDED.upgrades.find((u) => u.id === id);
   const cost =
     (rule?.price ?? 0) + (rule?.permit ? (EXPANDED.town.cityHall.permits[rule.permit] ?? 0) : 0);
+  return diffReturn(r, id, cost);
+}
+
+/** The same difference of differences for any key of `XSeat.bought` (an upgrade id, or `place.<name>`). */
+export function diffReturn(r: XReport, id: string, cost: number): UpgradeReturn {
   // Control means by day, from every seat that does not own `id` that day (so the personalities
   // that never buy it, and the buyers before they do, are the comparison).
   const sums = new Map<string, { total: number; n: number }>();
@@ -272,6 +277,91 @@ export function upgradeReturn(r: XReport, id: string): UpgradeReturn {
     se: diffs.length > 1 ? sd(diffs) / Math.sqrt(diffs.length) : 0,
     daysOwned: mean(days),
   };
+}
+
+const PLACE_ROWS: { name: string; id: string }[] = [
+  { name: "police", id: "police-station" },
+  { name: "crematorium", id: "crematorium" },
+  { name: "florist", id: "florist" },
+  { name: "gazette", id: "gazette" },
+  { name: "coroner", id: "coroner" },
+  { name: "health dept", id: "health-department" },
+  { name: "pawn", id: "pawn-shop" },
+  { name: "mournes", id: "mournes" },
+];
+
+/** What each of the eight newer places costs, gives and returns (balance round 19). */
+export function placesSection(r: XReport, seats: number): string[] {
+  const out: string[] = [];
+  const T = r.town;
+  const P = r.byPersonality;
+  const sum = (key: string) => Object.values(P).reduce((a, c) => a + (c[key] ?? 0), 0);
+  out.push("## Expanded: the eight newer places (sections 30 and 31)");
+  out.push("");
+  const rows = PLACE_ROWS.map(({ name, id }) => {
+    const users = r.seats.filter((s) => s.bought[`place.${name}`] !== undefined);
+    const spent = sum(`money.out.${name}`);
+    const paid = sum(`money.in.${name}`);
+    const userDays = users.reduce((a, s) => a + Math.max(1, s.daily.length), 0);
+    const perUser = div(spent, users.length);
+    // The oven's saved wholesale and the bouquets' payouts arrive through sales, not at the counter.
+    const extra =
+      name === "crematorium" ? sum("oven.saved") : name === "florist" ? sum("flowers.earned") : 0;
+    const net = div(paid + extra - spent, users.length);
+    return [
+      name,
+      pct(div(T[`users.place:${id}`] ?? 0, seats)),
+      pct(div(users.length, seats)),
+      f2(div(sum(`press.${name}`), userDays)),
+      f0(perUser),
+      f0(div(paid + extra, users.length)),
+      f0(net),
+      f0(div(sum(`karma.${name}`), users.length)),
+      f1(div(sum(`luck.${name}`), users.length)),
+      f1(div(sum(`reviews.${name}`), users.length)),
+    ];
+  });
+  out.push(
+    table(
+      [
+        "place",
+        "visited by (share of seats)",
+        "used (share of seats)",
+        "presses per user-day",
+        "$ out per user",
+        "$ back per user (incl. sale extras)",
+        "net $ per user",
+        "karma per user",
+        "luck per user",
+        "word of mouth per user",
+      ],
+      rows,
+    ),
+  );
+  out.push("");
+  out.push(
+    `Sale extras: oven slots used ${f0(sum("oven.used"))} (saved $${f0(sum("oven.saved"))}); bouquets used ${f0(sum("flowers.used"))} (earned $${f0(sum("flowers.earned"))}); attacks recorded on the police blotter ${f0(sum("attacked"))}.`,
+  );
+  out.push("");
+  const names = PLACE_ROWS.map((p) => p.id).join("|");
+  const pattern = new RegExp(
+    `^use\\.(${names}|police|gazette|coroner|health-department|pawn-shop|mournes):`,
+  );
+  const actions = Object.entries(T)
+    .filter(([k]) => pattern.test(k))
+    .sort((a, b) => b[1] - a[1]);
+  out.push(
+    table(
+      ["action", "presses", "seats that used it"],
+      actions.map(([k, v]) => [k.slice(4), v, T[`users.${k.slice(4)}`] ?? 0]),
+    ),
+  );
+  out.push("");
+  out.push(
+    "Net dollars are what a user took in at the counter, plus the oven's saved wholesale and the bouquets' payouts, minus what it paid there (the second-hand caskets' value is not counted: they replace Di-Mart stock). A dollar buys about 0.010 BP at the monuments, so a place that nets money is a source of points, and a place that costs money has to give back karma, luck, word of mouth or a rival's loss. Karma, luck and word of mouth are totals per user over the season. The BP return of a place cannot be read as it is for an upgrade (most users start on day 2 to 3, so there is no control), so a place's effect on its users is measured by leaving it out (`--places-off`), see `docs/balance/expanded-tuning-log.md` round 19.",
+  );
+  out.push("");
+  return out;
 }
 
 export function xMarkdown(r: XReport): string[] {
@@ -660,6 +750,8 @@ export function xMarkdown(r: XReport): string[] {
     }.`,
   );
   out.push("");
+
+  out.push(...placesSection(r, seats));
 
   out.push("## Expanded: PvP, duels and hits");
   out.push("");

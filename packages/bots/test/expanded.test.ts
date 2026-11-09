@@ -74,6 +74,76 @@ describe("7.2 and 28: the late upgrades come early (balance round 17)", () => {
   });
 });
 
+describe("the eight newer places (balance round 19)", () => {
+  // docs/expanded-rules.md sections 30 and 31: every personality has a committed, in-character habit.
+  const style = (id: PersonalityId) => ALL_PERSONALITIES.find((p) => p.id === id)?.expanded?.places;
+
+  it("each personality uses them in character", () => {
+    for (const p of ALL_PERSONALITIES) expect(p.expanded?.places, p.id).toBeDefined();
+    // The cutthroat and evil styles smear, complain, press the ashes and settle in private.
+    for (const id of ["necromancer", "saboteur", "shark"] as const) {
+      expect(style(id)?.police, id).toBe("settle");
+      expect(style(id)?.coroner.favour, id).toBe("quiet");
+    }
+    expect(style("necromancer")?.smear).toBe(true);
+    expect(style("shark")?.smear).toBe(true);
+    expect(style("necromancer")?.ashes).toBe("press");
+    expect(style("necromancer")?.complaint).toBe(true);
+    expect(style("necromancer")?.pawn.loot).toBe(true);
+    // The good styles scatter the ashes or send wreaths, and file reports.
+    expect(style("saint")?.ashes).toBe("scatter");
+    expect(style("saint")?.wreath).toBe("church");
+    expect(style("saint")?.police).toBe("report");
+    expect(style("saint")?.smear).toBe(false);
+    expect(style("politician")?.puff).toBe(true);
+    // Only a parlor that sells many cremations rents oven time.
+    expect(style("shark")?.ovens).toBe(true);
+    expect(style("saint")?.ovens).toBe(false);
+    // Nobody smears or complains without being cutthroat, and the peaceful pacifist never calls the police.
+    for (const p of ALL_PERSONALITIES) {
+      const x = p.expanded;
+      if (x?.places.smear || x?.places.complaint)
+        expect(x.path === "evil" || x.rivalry === "cutthroat").toBe(true);
+    }
+    expect(style("pacifist")?.police).toBe("none");
+    expect(style("pacifist")?.patrol).toBe("never");
+  });
+
+  it("a season walks into every one of the eight places and uses their counters", () => {
+    const visited = new Set<string>();
+    const pressed = new Set<string>();
+    const all = ALL_PERSONALITY_IDS.map((p) => ({ personality: p, difficulty: "hard" as const }));
+    const run = playXTown(45, all, 18, {
+      onStep: (e) => {
+        const a = e.action;
+        if (a.type === "visit") visited.add(a.placeId);
+        if (a.type === "press") pressed.add(a.buttonId);
+      },
+    });
+    for (const id of [
+      "police-station",
+      "crematorium",
+      "florist",
+      "gazette",
+      "coroner",
+      "health-department",
+      "pawn-shop",
+      "mournes",
+    ])
+      expect([...visited], id).toContain(id);
+    for (const id of [
+      "coroner:certificate",
+      "health-department:inspect",
+      "mournes:hold",
+      "pawn-shop:lot:wood",
+    ])
+      expect([...pressed], id).toContain(id);
+    expect(run.stuck).toEqual([]);
+    expect(run.rejections).toEqual([]);
+    expect(run.errors).toEqual([]);
+  }, 240_000);
+});
+
 describe("a whole Expanded season", () => {
   for (const seed of [41, 42, 43]) {
     it(`town ${seed}: eight bots play 30 days with no stuck screen, rejection or error`, () => {

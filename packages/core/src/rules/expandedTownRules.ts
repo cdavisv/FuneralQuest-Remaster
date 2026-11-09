@@ -441,23 +441,23 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
   // batch B locations (docs/expanded-rules.md section 31)
   placesB: {
     coroner: {
-      tip: { price: 600, perDay: 1, traits: 1 },
-      certificate: { price: 800, reviews: 2, cooldownDays: 3 },
+      tip: { price: 300, perDay: 1, traits: 1 },
+      certificate: { price: 1600, reviews: 2, cooldownDays: 4 },
       favour: {
         burialCost: 300,
         burialKarma: 2,
         burialLuck: 1,
-        quietPay: 700,
+        quietPay: 300,
         quietKarma: -3,
-        quietLuckWeight: 0.6,
-        quietFailReviews: -2,
+        quietLuckWeight: 0.5,
+        quietFailReviews: -3,
       },
     },
     health: {
-      inspect: { price: 700, reviews: 3, days: 5, fine: 500, failReviews: -2 },
-      buy: { price: 1500, reviews: 3, days: 5, karma: -2 },
+      inspect: { price: 700, reviews: 3, days: 8, fine: 500, failReviews: -2 },
+      buy: { price: 1200, reviews: 3, days: 8, karma: -2 },
       complaint: {
-        price: 500,
+        price: 1500,
         karmaAtMost: 30,
         karma: -3,
         targetReviews: -2,
@@ -467,10 +467,10 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       },
     },
     pawn: {
-      loot: { price: 300, evilBonus: 100, max: 5 },
+      loot: { price: 200, evilBonus: 100, max: 5 },
       lots: [
-        { id: "wood", tier: 0, count: 3, share: 0.65 },
-        { id: "silver", tier: 1, count: 2, share: 0.65 },
+        { id: "wood", tier: 0, count: 3, share: 0.8 },
+        { id: "silver", tier: 1, count: 2, share: 0.8 },
       ],
       bad: { base: 30, perTenLuck: 5, min: 5, max: 50, keep: 1 },
       perDay: 1,
@@ -485,8 +485,8 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
   // batch A locations (docs/expanded-rules.md section 30)
   placesA: {
     police: {
-      report: { perDay: 1, windowDays: 3, fine: 800, share: 0.5, karma: 1 },
-      settle: { amount: 500, karma: -1 },
+      report: { perDay: 1, windowDays: 3, fine: 600, share: 0.5, karma: 1 },
+      settle: { amount: 400, karma: -1 },
       patrol: { price: 3500 },
       backdoor: { price: 1500, chance: 70, karma: -3 },
       maxAttacks: 8,
@@ -510,12 +510,12 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       },
     },
     gazette: {
-      classified: { price: 800, luckWeight: 0.5 },
-      display: { price: 2000 },
+      classified: { price: 750, luckWeight: 0.5 },
+      display: { price: 1800 },
       adsPerDay: 1,
       puff: { price: 2500, reviews: 2 },
       smear: {
-        price: 3000,
+        price: 2500,
         karma: -3,
         chance: 65,
         targetReviews: -2,

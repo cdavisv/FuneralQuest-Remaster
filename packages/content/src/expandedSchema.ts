@@ -421,6 +421,7 @@ export function buildExpandedSchema(mode: SchemaMode) {
   });
 
   const town = buildTownSchema(mode, reward);
+  const places = buildPlacesSchema(mode);
 
   return obj({
     names: obj({
@@ -449,11 +450,184 @@ export function buildExpandedSchema(mode: SchemaMode) {
     upgrades: z.record(z.string(), obj({ name: z.string().min(1), description: text })),
     text: textSection,
     town: town.exactOptional(),
-    // Batch A places (core townPlacesA.ts): typed by core, text-checked by the lint below.
-    placesA: z.custom<PlacesAContent>().exactOptional(),
-    // Batch B places (core townPlacesB.ts): typed by core.
-    placesB: z.custom<PlacesBContent>().exactOptional(),
+    // The eight places of docs/expanded-rules.md sections 30 and 31 (core townPlacesA.ts, townPlacesB.ts).
+    placesA: places.a.exactOptional(),
+    placesB: places.b.exactOptional(),
   });
+}
+
+/**
+ * `ExpandedContent.placesA` and `placesB` (packages/core/src/expanded/content/townPlacesA.ts and
+ * townPlacesB.ts): the words and pictures of the Police Station, Crematorium, Florist, Town Gazette
+ * and of the Coroner, Health Department, Pawn Shop and Mourne & Sons. Shapes only; placeholders and
+ * lengths are the lint's job (lint.ts `placesFieldRule`).
+ */
+function buildPlacesSchema(mode: SchemaMode) {
+  const obj = <S extends z.core.$ZodLooseShape>(shape: S) =>
+    mode === "strict" ? z.strictObject(shape) : z.looseObject(shape);
+  const place = obj({ fg: pictureSchema.exactOptional(), bg: pictureSchema });
+  const id = z.string().min(1);
+
+  const a = obj({
+    cast: obj({ sergeant: id, ovenKeeper: id, florist: id, editor: id }),
+    pictures: obj({ police: place, crematorium: place, florist: place, gazette: place }),
+    hints: obj({ notEnoughCash: text, doneToday: text, alreadyHave: text, noRivals: text }),
+    saleNotes: obj({ oven: text, flowers: text }),
+    police: obj({
+      title: text,
+      note: text,
+      intro: text,
+      introPatrolled: text,
+      buttons: obj({ report: text, settle: text, patrol: text, backdoor: text, leave: text }),
+      reportPrompt: text,
+      settlePrompt: text,
+      noGrievances: text,
+      alreadyPatrolled: text,
+      peacefulSafe: text,
+      reported: text,
+      reportedBroke: text,
+      settled: text,
+      settledBroke: text,
+      fineMail: text,
+      settleMail: text,
+      fineNews: text,
+      patrolBought: text,
+      backdoorWorked: text,
+      backdoorFailed: text,
+      grievanceRow: text,
+    }),
+    crematorium: obj({
+      title: text,
+      note: text,
+      intro: text,
+      permitNote: text,
+      buttons: obj({ rent: text, bulk: text, scatter: text, diamonds: text, leave: text }),
+      ovenFull: text,
+      noAshes: text,
+      rented: text,
+      bulkBought: text,
+      scattered: text,
+      pressed: text,
+    }),
+    florist: obj({
+      title: text,
+      note: text,
+      intro: text,
+      buttons: obj({ buy: text, bundle: text, church: text, ward: text, leave: text }),
+      special: z.record(z.string(), text),
+      specialNone: text,
+      shelfFull: text,
+      bought: text,
+      wreathDone: text,
+      wardSent: text,
+      churchSent: text,
+    }),
+    gazette: obj({
+      title: text,
+      note: text,
+      intro: text,
+      buttons: obj({ classified: text, display: text, puff: text, smear: text, leave: text }),
+      adBooked: text,
+      puffDone: text,
+      smearDone: text,
+      classifiedBooked: text,
+      classifiedFlop: text,
+      displayBooked: text,
+      adMorning: text,
+      puffPrinted: text,
+      puffNews: text,
+      smearPrompt: text,
+      smearDone2: text,
+      smearNews: text,
+      smearMail: text,
+      smearBackfire: text,
+      smearBackfireNews: text,
+      smearBackfireMail: text,
+      smearPeaceful: text,
+      smearChain: text,
+    }),
+  });
+
+  /** What every one of the four batch-B places names the same way (townPlacesB.ts `PlaceText`). */
+  const named = {
+    title: text,
+    note: text,
+    greeting: text,
+    leave: text,
+    back: text,
+  };
+  const b = obj({
+    cast: obj({ pawnbroker: id }),
+    pictures: obj({ coroner: place, health: place, pawn: place, mournes: place }),
+    hints: obj({
+      tipHeld: text,
+      certWait: text,
+      noLoot: text,
+      boostOn: text,
+      citationOpen: text,
+      noCitation: text,
+      truceOn: text,
+      karmaTooLow: text,
+      stanceChosen: text,
+      noRivals: text,
+    }),
+    coroner: obj({
+      ...named,
+      buttons: obj({
+        tip: text,
+        certificate: text,
+        favour: text,
+        burial: text,
+        quiet: text,
+      }),
+      tipBought: text,
+      tipLoved: text,
+      tipTrait: text,
+      tipCheap: text,
+      certBought: text,
+      favourIntro: text,
+      burialDone: text,
+      quietDone: text,
+      quietTalk: text,
+    }),
+    health: obj({
+      ...named,
+      buttons: obj({ inspect: text, buy: text, fine: text, complaint: text }),
+      passed: text,
+      failed: text,
+      bought: text,
+      finePaid: text,
+      complaintPrompt: text,
+      complaintFiled: text,
+      complaintDismissed: text,
+      complaintBackfired: text,
+      complaintMail: text,
+      complaintNews: text,
+      boostEnded: text,
+    }),
+    pawn: obj({
+      ...named,
+      buttons: obj({ loot: text, wood: text, silver: text }),
+      lootSold: text,
+      lotGood: text,
+      lotBad: text,
+      lotLine: text,
+    }),
+    mournes: obj({
+      ...named,
+      buttons: obj({ spy: text, undercut: text, hold: text, truce: text }),
+      spyOk: text,
+      spyCaught: text,
+      undercutWin: text,
+      undercutLose: text,
+      holdDone: text,
+      truceDone: text,
+      truceLead: text,
+      truceActive: text,
+    }),
+  });
+
+  return { a, b };
 }
 
 /**
@@ -893,7 +1067,17 @@ function buildTownSchema(mode: SchemaMode, reward: z.ZodType<Reward>) {
     arcs: z.array(arc),
     monuments: words,
     permits: z.record(z.string(), obj({ name: id, description: text })),
-    cast: obj({ mayor: id, clubOwner: id, nurse: id, inspector: id, teller: id }),
+    cast: obj({
+      mayor: id,
+      clubOwner: id,
+      nurse: id,
+      inspector: id,
+      teller: id,
+      coroner: id,
+      mourne: id,
+      sons: id,
+      mournes: id,
+    }),
     pictures,
     text: obj({
       hints,
@@ -928,6 +1112,14 @@ void contentIsParsed;
 
 /** The town section's own check (townTypes.ts), both ways, so a mismatch names the town. */
 type ParsedTown = NonNullable<Parsed["town"]>;
+const placesAIsParsed = (x: PlacesAContent): NonNullable<Parsed["placesA"]> => x;
+const parsedIsPlacesA = (x: NonNullable<Parsed["placesA"]>): PlacesAContent => x;
+const placesBIsParsed = (x: PlacesBContent): NonNullable<Parsed["placesB"]> => x;
+const parsedIsPlacesB = (x: NonNullable<Parsed["placesB"]>): PlacesBContent => x;
+void placesAIsParsed;
+void parsedIsPlacesA;
+void placesBIsParsed;
+void parsedIsPlacesB;
 const parsedIsTown = (x: ParsedTown): ExpandedTownContent => x;
 const townIsParsed = (x: ExpandedTownContent): ParsedTown => x;
 void parsedIsTown;

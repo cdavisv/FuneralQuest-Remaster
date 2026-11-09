@@ -2,7 +2,7 @@
 
 The Remastered pack is new vector art for FuneralQuest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, and adds the Expanded ruleset's places, people and icons. It replaces no original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
 
-- **Files:** `assets/remastered/<id>.svg` (77 SVGs, 1.3 MB in all, largest 131 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
+- **Files:** `assets/remastered/<id>.svg` (96 SVGs, 1.5 MB in all, largest 131 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
 - **Sheets:** `assets/remastered/contact-sheet.png` and `.html` (every piece with its grade); `assets/remastered/comparisons.png` and `comparisons/*.png` (each traced original beside its redraw).
 - **Credit:** "FuneralQuest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. No original portrait is overridden: every original person picture is used unchanged under every art pack.
 
@@ -69,7 +69,15 @@ A ships; B is an acceptable placeholder that holds up beside the originals; C ne
 
 **UI and icons:** `ui/capsule-parlor` **A**; `ui/building-city-hall` and `ui/building-reaper-club` **B**; 20 ledger and town-strip icons, `icons/karma-balance`, `icons/parlor-1` to `-5` and `icons/monument-1` to `-5`: **B**.
 
-Totals: 1 A, 66 B, 9 C.
+**The eight batch A and B places** (docs/expanded-rules.md sections 30 and 31):
+
+- **Map buildings** (`ui/building-police-station`, `-crematorium`, `-florist`, `-gazette`, `-coroner`, `-health-department`, `-pawn-shop`, `-mournes`; **B**): the oblique projection, 1.3 unit black outline, translucent shadow and two-tone gradient faces of the City Hall and Reaper Club. Police: blue-grey stone, POLICE band, globe lamps, beacon, flag. Crematorium: brick, iron oven door, tall chimney and smoke. Florist: pink cottage, green gable, striped awnings, blooms. Gazette: tall tan office, red masthead, water tank. Coroner: pale green-grey block, green lamps, hearse bay. Health Department: white clinic, green band and cross, clipboard board. Pawn Shop: brownstone, PAWN banner, three gold balls. Mourne & Sons: charcoal Victorian, white porch, wreathed black door. They are drawn smaller than the original buildings (about 60% of the City Hall's footprint) because the base map has little free ground; their hot-spots also left the bottom edge, where the baked-in "Deathville Map" title sits (`apps/client/src/art/packs/classic/pack.json` `map.expanded`, `src/scenes/mapData.ts`). `tools/art/placeholders.mjs` writes the same buildings flat (plain fills, no texture lines) as the Classic pack's stand-ins.
+- **Scenes** (`places/florist`, `places/gazette`, `places/coroner`, `places/health-department`, `places/pawn-shop`, `places/mournes`; **B**): flat interiors in the manner of `places/parlor-office` and `places/prep-table`, the middle third left calm for the portrait. The Police Station keeps the original `places/funeral_enemy_police` (a squad car at a funeral home) and the Crematorium the original `places/creamation_oven`; both already fit.
+- **Portraits** (`people/sergeant-bixby`, `marigold-thorne`, `hal-pennywhistle`, `dr-grimble`, `cousin-sal`, `augustus-mourne`; **C**): the same parametric head as the other new portraits, with the same limits. The Health Department keeps `people/inspector-mudge`.
+- **Sheets:** `assets/remastered/places-comparison.png` (the Classic map with every building in place, then the new buildings beside the originals) and `places-scenes-comparison.png` (new scenes beside existing ones, each new portrait in front of its scene). Sources: `tools/art/pieces/buildings8.mjs`, `places8.mjs`, `people3.mjs`; `fit8.mjs` measures each building's fit; `places8_sheet.py` makes the sheets.
+- **Grade:** the buildings match the City Hall and Reaper Club closely (projection, line, gradients) and sit well beside the original hospital, store and church, but are plainer than the originals' painted detail and smaller on the map (B, not A). The scenes are flat and tidy beside the Di-Mart and bank redraws. The portraits are C like the rest.
+
+Totals: 1 A, 80 B, 15 C.
 
 ## Compared and corrected
 
@@ -129,3 +137,16 @@ These belong to the content and engine owners (`packages/content`, `packages/cor
 - The portraits are attempts, graded C, as said above.
 - The karma balance icon was checked as a render and in the unit tests, not on a live body-preparation screen.
 - There is no art for a graveyard building on the map (the README suggests `ui/building-graveyard.svg`); the base map's own crosses serve.
+
+**Picture fields for the batch A and B places** (`packages/core/src/expanded/content/townPlacesA.ts` and `townPlacesB.ts`; not changed by the art work):
+
+| Field | Now | Proposed |
+| --- | --- | --- |
+| `pictures.police` | bg `places/funeral_enemy_police` | keep the bg; add fg `people/sergeant-bixby` |
+| `pictures.crematorium` | bg `places/creamation_oven` | unchanged (the original ovens fit) |
+| `pictures.florist` | fg `stuff/red_rose`, bg `places/store` | fg `people/marigold-thorne`, bg `places/florist` |
+| `pictures.gazette` | fg `people/man_prowl`, bg `places/desk` | fg `people/hal-pennywhistle`, bg `places/gazette` |
+| `pictures.coroner` | fg `people/m_old_7`, bg `places/prep-table` | fg `people/dr-grimble`, bg `places/coroner` |
+| `pictures.health` | fg `people/inspector-mudge`, bg `places/city-hall` | keep the fg, bg `places/health-department` |
+| `pictures.pawn` | fg `people/morty`, bg `places/black-market` | fg `people/cousin-sal`, bg `places/pawn-shop` |
+| `pictures.mournes` | fg `people/m_adult_5`, bg `places/parlor-3` | fg `people/augustus-mourne`, bg `places/mournes` |

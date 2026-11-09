@@ -6,6 +6,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { PLACES_B_STARTER } from "../src/expanded/content/townPlacesB.js";
+import { TOWN_STARTER } from "../src/expanded/content/townStarter.js";
 import { PLACES_B } from "../src/expanded/town/placesB.js";
 import { newPlacesB, type PlacesBState } from "../src/expanded/town/placesBState.js";
 import { EXPANDED_TOWN, type TownState } from "../src/index.js";
@@ -78,8 +79,8 @@ describe("B0 the map", () => {
   });
 
   it("the starter text names the cast and is plain content (no literals in the engine)", () => {
-    expect(PLACES_B_STARTER.cast.coroner).toMatch(/Grimble/);
-    expect(PLACES_B_STARTER.cast.mournes).toMatch(/Mourne/);
+    expect(TOWN_STARTER.cast.coroner).toMatch(/Grimble/);
+    expect(TOWN_STARTER.cast.mourne).toMatch(/Mourne/);
     expect(PLACES_B_STARTER.cast.pawnbroker).toMatch(/Sal/);
   });
 });

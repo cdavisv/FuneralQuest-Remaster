@@ -24,6 +24,10 @@ export const TOWN_STARTER: ExpandedTownContent = {
     nurse: "Nurse Gertie",
     inspector: "Inspector Pratt",
     teller: "the teller",
+    coroner: "Dr. Ignatius Grimble",
+    mourne: "Augustus Mourne",
+    sons: "Ned and Rollo",
+    mournes: "Mourne & Sons",
   },
 
   // The Remastered pack's art (assets/remastered/manifest.json, docs/art/remastered-notes.md).

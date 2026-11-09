@@ -23,6 +23,118 @@ import {
 
 const NONE: readonly string[] = [];
 
+/** Cast placeholders filled in town stories (`castVars`, expanded/town/life.ts). */
+const CAST_TOKENS = ["coroner", "mourne", "sons", "mournes"] as const;
+
+/**
+ * Placeholders the engine fills in for each `placesA` / `placesB` text field (engine audit of
+ * expanded/town/{police,crematorium,florist,gazette,coroner,health,pawn,mournes}.ts and
+ * placesBLib.ts `vars`). Amounts (`{price}`, `{fine}`, `{money}`) arrive already formatted as
+ * "$1,000", so no text puts a dollar sign next to them. A field not listed takes none. The batch-B
+ * greeting and prompts also take the town cast (`BATCH_B_CAST`).
+ */
+export const PLACES_TEXT_TOKENS: Readonly<Record<string, readonly string[]>> = {
+  "placesA.saleNotes.oven": ["money"],
+  "placesA.saleNotes.flowers": ["count", "money"],
+  "placesA.police.intro": ["inspector"],
+  "placesA.police.reportPrompt": ["inspector"],
+  "placesA.police.settlePrompt": ["inspector"],
+  "placesA.police.reported": ["name", "fine", "share"],
+  "placesA.police.reportedBroke": ["name"],
+  "placesA.police.settled": ["name", "amount"],
+  "placesA.police.settledBroke": ["name"],
+  "placesA.police.fineMail": ["fine", "name"],
+  "placesA.police.settleMail": ["name", "amount"],
+  "placesA.police.fineNews": ["name", "fine"],
+  "placesA.police.patrolBought": ["inspector"],
+  "placesA.police.backdoorWorked": ["inspector"],
+  "placesA.police.backdoorFailed": ["inspector"],
+  "placesA.police.grievanceRow": ["rival", "day"],
+  "placesA.crematorium.intro": ["keeper", "slots", "until", "ashes"],
+  "placesA.crematorium.rented": ["keeper", "slots"],
+  "placesA.crematorium.bulkBought": ["keeper", "slots"],
+  "placesA.crematorium.scattered": ["count"],
+  "placesA.crematorium.pressed": ["count", "money"],
+  "placesA.florist.intro": ["florist", "stock", "special"],
+  "placesA.florist.bought": ["florist", "count"],
+  "placesA.florist.wardSent": ["nurse"],
+  "placesA.gazette.intro": ["editor", "mayor"],
+  "placesA.gazette.classifiedBooked": ["editor"],
+  "placesA.gazette.classifiedFlop": ["editor"],
+  "placesA.gazette.displayBooked": ["editor"],
+  "placesA.gazette.adMorning": ["count"],
+  "placesA.gazette.puffPrinted": ["editor"],
+  "placesA.gazette.puffNews": ["name"],
+  "placesA.gazette.smearPrompt": ["editor", "price"],
+  "placesA.gazette.smearDone2": ["editor", "name"],
+  "placesA.gazette.smearNews": ["name"],
+  "placesA.gazette.smearBackfire": ["editor", "name", "fine"],
+  "placesA.gazette.smearBackfireNews": ["target", "name"],
+  "placesA.gazette.smearBackfireMail": ["name"],
+  "placesA.gazette.smearPeaceful": ["name"],
+  "placesA.gazette.smearChain": ["name"],
+  "placesB.coroner.greeting": ["coroner", "player"],
+  "placesB.coroner.tipBought": ["coroner", "price"],
+  "placesB.coroner.tipLoved": ["loved"],
+  "placesB.coroner.tipTrait": ["trait"],
+  "placesB.coroner.tipCheap": ["cheap"],
+  "placesB.coroner.certBought": ["coroner", "reviews"],
+  "placesB.coroner.favourIntro": ["coroner"],
+  "placesB.coroner.burialDone": ["karma", "luck"],
+  "placesB.coroner.quietDone": ["coroner", "money", "karma"],
+  "placesB.health.greeting": ["inspector", "player", "parlor"],
+  "placesB.health.passed": ["inspector", "days", "reviews"],
+  "placesB.health.failed": ["inspector", "fine", "reviews"],
+  "placesB.health.bought": ["inspector", "days", "karma", "reviews"],
+  "placesB.health.finePaid": ["reviews"],
+  "placesB.health.complaintPrompt": ["price"],
+  "placesB.health.complaintFiled": ["inspector", "name", "karma"],
+  "placesB.health.complaintDismissed": ["inspector", "name", "price"],
+  "placesB.health.complaintBackfired": ["fine", "reviews"],
+  "placesB.health.complaintMail": ["parlor"],
+  "placesB.health.complaintNews": ["parlor", "name"],
+  "placesB.pawn.greeting": ["pawnbroker", "player"],
+  "placesB.pawn.lootSold": ["pawnbroker", "money"],
+  "placesB.pawn.lotGood": ["pawnbroker", "count", "price"],
+  "placesB.pawn.lotBad": ["count", "pawnbroker", "price"],
+  "placesB.pawn.lotLine": ["name", "price", "count", "percent", "risk"],
+  "placesB.mournes.greeting": ["mourne", "player", "sons"],
+  "placesB.mournes.spyOk": ["price"],
+  "placesB.mournes.spyCaught": ["sons", "mourne", "price", "karma", "reviews"],
+  "placesB.mournes.undercutWin": ["price", "reviews", "luck"],
+  "placesB.mournes.undercutLose": ["price", "reviews"],
+  "placesB.mournes.holdDone": ["mourne", "karma"],
+  "placesB.mournes.truceDone": ["mourne", "days", "karma", "price"],
+  "placesB.mournes.truceLead": ["leads"],
+  "placesB.mournes.truceActive": ["until"],
+};
+
+/** Filled in every batch-B line (`vars` in placesBLib.ts): the cast and the player. */
+const BATCH_B_CAST = [
+  "coroner",
+  "mourne",
+  "sons",
+  "mournes",
+  "inspector",
+  "pawnbroker",
+  "player",
+  "parlor",
+] as const;
+
+/** Placeholders and length of one `placesA` / `placesB` string, by normalized path. */
+export function placesFieldRule(path: string): { tokens: readonly string[]; max: number } {
+  const listed = PLACES_TEXT_TOKENS[path.replace(/\[\]/g, "")] ?? NONE;
+  const tokens = path.startsWith("placesB.") ? [...new Set([...listed, ...BATCH_B_CAST])] : listed;
+  if (/\.cast\./.test(path)) return { tokens: NONE, max: 30 };
+  if (/\.buttons\./.test(path)) return { tokens: NONE, max: 32 };
+  if (/\.(leave|back)$/.test(path)) return { tokens: NONE, max: 32 };
+  if (/\.hints\./.test(path)) return { tokens, max: 60 };
+  if (/\.(title|grievanceRow|lotLine|truceActive|smearChain|smearPeaceful)$/.test(path))
+    return { tokens, max: 120 };
+  if (/\.note$/.test(path)) return { tokens, max: 200 };
+  return { tokens, max: 700 };
+}
+
 /** Placeholders the engine fills in for each `town.text` field (engine audit of expanded/town/*.ts). */
 export const TOWN_TEXT_TOKENS: Readonly<Record<string, readonly string[]>> = {
   "hints.limitReached": ["limit"],
@@ -181,8 +293,8 @@ export function townFieldRule(path: string): { tokens: readonly string[]; max: n
   }
   const rules: [RegExp, { tokens: readonly string[]; max: number }][] = [
     // {mayor} is the mayor's name on the front page, the desk strip and the morning screen (22.5).
-    [/^news\[\]\.title$/, { tokens: ["mayor"], max: 64 }],
-    [/^news\[\]\.message$/, { tokens: ["mayor"], max: 400 }],
+    [/^news\[\]\.title$/, { tokens: ["mayor", ...CAST_TOKENS], max: 64 }],
+    [/^news\[\]\.message$/, { tokens: ["mayor", ...CAST_TOKENS], max: 400 }],
     [/^news\[\]\.effect$/, { tokens: NONE, max: 80 }],
     [/^weather\[\]\.label$/, { tokens: NONE, max: 24 }],
     [/^weather\[\]\.morning\[\]$/, { tokens: NONE, max: 120 }],
@@ -197,7 +309,10 @@ export function townFieldRule(path: string): { tokens: readonly string[]; max: n
     [/^arcs\[\]\.title$/, { tokens: NONE, max: 48 }],
     // The desk strip and the morning screen show the latest headline with nothing filled in.
     [/^arcs\[\]\.beats\[\]\.headline$/, { tokens: NONE, max: 64 }],
-    [/^arcs\[\]\.beats\[\]\.story$/, { tokens: ["mayor", "top", "side"], max: 480 }],
+    [
+      /^arcs\[\]\.beats\[\]\.story$/,
+      { tokens: ["mayor", "top", "side", ...CAST_TOKENS], max: 480 },
+    ],
     [/^arcs\[\]\.beats\[\]\.appeals\[\]\.label$/, { tokens: NONE, max: 36 }],
     [/^arcs\[\]\.beats\[\]\.appeals\[\]\.thanks$/, { tokens: ["money"], max: 200 }],
     [/^monuments\[\]$/, { tokens: NONE, max: 64 }],

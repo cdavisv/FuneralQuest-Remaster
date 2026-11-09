@@ -15,6 +15,7 @@ import {
   personality as personalityById,
   runBotDay,
   safeAction,
+  setPlacesOff,
 } from "@fq/bots";
 import { createOraclePolicy } from "@fq/bots/oracle";
 import {
@@ -59,6 +60,8 @@ export interface SimOptions {
   lateJoin?: number;
   /** Expanded: Daily Challenge runs per difficulty and personality (default 6; 0 skips). */
   challenges?: number;
+  /** Expanded: errands to the eight newer places left out for every bot (an ablation run). */
+  placesOff?: string[];
 }
 
 export function rulesByName(name: RulesName): ClassicRules {
@@ -98,6 +101,7 @@ export function townSeed(base: number, index: number): number {
  * shuffled order, then maintenance) and returns its report.
  */
 export function simulateTown(index: number, options: SimOptions, content: ContentPack): TownReport {
+  setPlacesOff(options.placesOff ?? []);
   const rules = rulesByName(options.rules);
   const seed = townSeed(options.seed, index);
   const ctx = simContext(options, content);

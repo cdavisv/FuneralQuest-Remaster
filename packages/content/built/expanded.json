@@ -7874,6 +7874,264 @@
         ]
       }
     ],
+    "placesA": {
+      "cast": {
+        "sergeant": "Sergeant Bixby",
+        "ovenKeeper": "Old Cinder Pete",
+        "florist": "Marigold Thorne",
+        "editor": "Hal Pennywhistle"
+      },
+      "pictures": {
+        "police": {
+          "fg": "people/sergeant-bixby",
+          "bg": "places/funeral_enemy_police"
+        },
+        "crematorium": {
+          "bg": "places/creamation_oven"
+        },
+        "florist": {
+          "fg": "people/marigold-thorne",
+          "bg": "places/florist"
+        },
+        "gazette": {
+          "fg": "people/hal-pennywhistle",
+          "bg": "places/gazette"
+        }
+      },
+      "hints": {
+        "notEnoughCash": "You can't afford that.",
+        "doneToday": "Already done today.",
+        "alreadyHave": "You already have it.",
+        "noRivals": "There is nobody to pick."
+      },
+      "saleNotes": {
+        "oven": "\n`$Your rented oven slot saves you `w{money}`$ on the cremation.",
+        "flowers": "\n`$Fresh bouquets from the florist ({count}) add `w{money}`$."
+      },
+      "police": {
+        "title": "Police Station",
+        "note": "Deathville's finest. Mostly they are finest at doughnuts.",
+        "intro": "`w{inspector}: `$\"Break-in? Assault? Lost cat? Pick one, sign here, and try not to lean on the desk. It is the only desk we have.\"",
+        "introPatrolled": "\n\n`$A patrol car idles at the curb, pointed at your parlor. It is on your tab.",
+        "buttons": {
+          "report": "File a Report",
+          "settle": "Take a Settlement",
+          "patrol": "Hire a Patrol",
+          "backdoor": "The Back Door",
+          "leave": "Leave"
+        },
+        "reportPrompt": "`w{inspector}: `$\"Who broke in on you? Pick a name and I will write it down.\"",
+        "settlePrompt": "`w{inspector}: `$\"You want the money, not the paperwork? Name the culprit.\"",
+        "noGrievances": "Nobody has hit your parlor lately.",
+        "alreadyPatrolled": "Tonight is already covered.",
+        "peacefulSafe": "Peaceful parlors are off the rota already.",
+        "reported": "`$The report is filed. {name} is fined `w{fine}`$ and the town pays you `w{share}`$ for the trouble. Your name is on the right side of a form for once.",
+        "reportedBroke": "`$The report is filed. {name} has nothing worth fining, so the form goes in a drawer, but you feel better.",
+        "settled": "`$You and {name} reach an understanding in the parking lot. They hand over `w{amount}`$ and the form is never filed.",
+        "settledBroke": "`$You and {name} reach an understanding. They hand over lint and the form is never filed.",
+        "fineMail": "`$The police fined you `4{fine}`$ for roughing up {name}'s parlor. The officer said it with a straight face.\n",
+        "settleMail": "`$You were cornered by {name} about the break-in. To keep it off the record you paid `4{amount}`$.\n",
+        "fineNews": "`$Police fined {name} `w{fine}`$ after a complaint about a break-in.\r\n",
+        "patrolBought": "`w{inspector}: `$\"One patrol car, parked outside all night. Nobody gets in, nobody gets out, nobody asks.\"",
+        "backdoorWorked": "`w{inspector}: `$\"Funny, I never saw an envelope. A car will be outside tonight. I will not remember why.\"",
+        "backdoorFailed": "`w{inspector}: `$\"That envelope was for the fund. The fund thanks you. No car, and I would not call a lawyer.\"",
+        "grievanceRow": "{rival} (day {day})"
+      },
+      "crematorium": {
+        "title": "Crematorium",
+        "note": "The oven runs hot and the owner runs hotter.",
+        "intro": "`w{keeper}: `$\"Oven time by the slot, no questions, no inspections. You have `w{slots}`$ slots reserved until day `w{until}`$ and `w{ashes}`$ urns on the shelf.\"",
+        "permitNote": "\n`$The crematory permit on your wall knocks the price down.",
+        "buttons": {
+          "rent": "Rent Oven Time",
+          "bulk": "Rent a Week's Worth",
+          "scatter": "Scatter the Ashes",
+          "diamonds": "Press the Ashes",
+          "leave": "Leave"
+        },
+        "ovenFull": "The oven rack is full.",
+        "noAshes": "No urns are waiting.",
+        "rented": "`w{keeper}: `$\"Slot reserved. That makes {slots} on your tab. Bring me a body and a bad attitude.\"",
+        "bulkBought": "`w{keeper}: `$\"Bulk rate. Nobody ever bought in bulk and complained. That makes {slots} slots.\"",
+        "scattered": "`$You take {count} urn(s) to the lake at dawn and let the wind do the talking. It is very quiet. The town thinks better of you.",
+        "pressed": "`$Urns pressed: {count}. They go into the press behind the shed. A jeweler with no questions pays `w{money}`$. You try not to look at the display case again."
+      },
+      "florist": {
+        "title": "Florist",
+        "note": "Roses are red, violets are blue, that is a lot of stems for a funeral or two.",
+        "intro": "`w{florist}: `$\"Fresh stems for your funeral packages. You have `w{stock}`$ in the cooler. {special}\"",
+        "buttons": {
+          "buy": "Buy a Bouquet",
+          "bundle": "Buy a Bundle",
+          "church": "Wreath for Father Smyth",
+          "ward": "Flowers for the Ward",
+          "leave": "Leave"
+        },
+        "special": {
+          "clear": "Nothing special today. Roses are on the shelf.",
+          "rain": "It is raining, so lilies are in season and cheaper.",
+          "fog": "The fog hurts the deliveries, but not the prices.",
+          "storm": "The storm smashed the front window, so everything is on clearance.",
+          "heat": "It is hot, and flowers in the heat cost double to keep alive.",
+          "snow": "The snow shut the growers, so hothouse stems cost extra."
+        },
+        "specialNone": "The price is whatever it is today.",
+        "shelfFull": "Your cooler is full.",
+        "bought": "`w{florist}: `$\"{count} bouquet(s) added to your cooler. Sell them before they wilt.\"",
+        "wreathDone": "Already sent flowers today.",
+        "wardSent": "`$A hundred stems go to {nurse}'s ward. A patient cries. A visitor steals a rose. Everyone is a bit luckier.",
+        "churchSent": "`$A large wreath goes to Father Smyth's pulpit. He mentions your name in the sermon, which is the best thing he has ever said about anyone."
+      },
+      "gazette": {
+        "title": "Town Gazette",
+        "note": "All the news that is fit to print, and some that is not.",
+        "intro": "`w{editor}: `$\"The Gazette goes everywhere in Deathville that {mayor} goes, which is a surprising amount of places. Ad copy, a feature on you, or a hatchet job on somebody else. What can I do?\"",
+        "buttons": {
+          "classified": "Run a Classified",
+          "display": "Buy a Display Ad",
+          "puff": "Front-Page Puff Piece",
+          "smear": "Run a Smear",
+          "leave": "Leave"
+        },
+        "adBooked": "You already booked an ad today.",
+        "puffDone": "You already own the front page today.",
+        "smearDone": "The Gazette has printed one smear for you today.",
+        "classifiedBooked": "`w{editor}: `$\"Three lines in the back, between a missing cat and a pie sale. People will read it tomorrow. Some of them.\"",
+        "classifiedFlop": "`w{editor}: `$\"Three lines in the back, between a missing cat and a pie sale. Nobody will read it. Nobody ever does.\"",
+        "displayBooked": "`w{editor}: `$\"Half a page, with a border. Tomorrow the whole town sees your name, and your phone number.\"",
+        "adMorning": "\n`$Somebody read the Gazette ad: {count} new customer(s) waiting for you.",
+        "puffPrinted": "`w{editor}: `$\"Front page, above the fold, your face six columns wide. Try to look like you deserve it.\"",
+        "puffNews": "`w{name}: `$A beloved parlor. The Gazette says {name} is a pillar of the community, and not a single pillar was asked.\r\n",
+        "smearPrompt": "`w{editor}: `$\"A smear costs {price}. Who is the unlucky one? I will find the adjectives.\"",
+        "smearDone2": "`w{editor}: `$\"Done. {name} will read about themselves in the morning. I took the liberty of spelling their name right.\"",
+        "smearNews": "`$The Gazette hears rumors about {name}'s parlor. Nobody will say what the rumors are. They are, however, everywhere.\r\n",
+        "smearMail": "`$The Gazette printed rumors about your parlor. Your word of mouth took a hit. Somebody paid for that.\n",
+        "smearBackfire": "`w{editor}: `$\"{name} has a lawyer, an alibi and a nephew in the print room. The piece is pulled, you are fined `w{fine}`$, and I never met you.\"",
+        "smearBackfireNews": "`$The Gazette retracts its piece on {target}, after a complaint. It will not say who paid for the first one, and the whole town knows it was {name}.\r\n",
+        "smearBackfireMail": "`$Word is {name} tried to smear you in the Gazette. The piece was pulled and your good name is clean.\n",
+        "smearPeaceful": "{name} is a Peaceful parlor and off limits to the Gazette.",
+        "smearChain": "{name} is in your chain. Run it past them first."
+      }
+    },
+    "placesB": {
+      "cast": {
+        "pawnbroker": "Cousin Sal"
+      },
+      "pictures": {
+        "coroner": {
+          "fg": "people/dr-grimble",
+          "bg": "places/coroner"
+        },
+        "health": {
+          "fg": "people/inspector-mudge",
+          "bg": "places/health-department"
+        },
+        "pawn": {
+          "fg": "people/cousin-sal",
+          "bg": "places/pawn-shop"
+        },
+        "mournes": {
+          "fg": "people/augustus-mourne",
+          "bg": "places/mournes"
+        }
+      },
+      "hints": {
+        "tipHeld": "You already hold a tip",
+        "certWait": "Paperwork needs a few days to pile up again",
+        "noLoot": "Nothing to pawn",
+        "boostOn": "A clean bill of health is already posted",
+        "citationOpen": "Pay the fine first",
+        "noCitation": "No fine outstanding",
+        "truceOn": "There is a truce",
+        "karmaTooLow": "Too respectable for this",
+        "stanceChosen": "You have taken your stand today",
+        "noRivals": "No rival parlors to complain about"
+      },
+      "coroner": {
+        "title": "County Coroner's Office",
+        "note": "The Coroner's Office smells of formaldehyde and instant coffee. Both are strong.",
+        "greeting": "`w{coroner}: `y\"{player}. Sit. Not there, that one is occupied. Business is always brisk: people keep dying, and I keep being the first to know.\"",
+        "leave": "Leave",
+        "back": "Back",
+        "buttons": {
+          "tip": "Buy a Tip on Tomorrow's Deceased",
+          "certificate": "Fast-Track a Death Certificate",
+          "favour": "Ask About a Favor",
+          "burial": "Give Them a Proper Burial",
+          "quiet": "Sign Them Over, No Questions"
+        },
+        "tipBought": "`${coroner} slides a folded note across the desk. \"Next family through your door. I've read the file. You didn't get it from me.\" `5(-{price})`$",
+        "tipLoved": "`8The note says: {loved}`$",
+        "tipTrait": "`8The note adds: {trait}.`$",
+        "tipCheap": "`8Scrawled in the margin: {cheap}`$",
+        "certBought": "`${coroner} stamps a stack of certificates before the ink on the last one is dry. Families hear that you get paperwork done fast. `5(+{reviews} reputation)`$",
+        "favourIntro": "`$Down the hall a cooler door is open. \"Unclaimed,\" says {coroner}. \"Nobody has asked after this one in nine days. The county pays for a pauper's plot, or the body could be made useful to someone with fewer questions.\" He waits.",
+        "burialDone": "`$You pay for a plain pine box and a plot with a view of the dumpster. A handful of strangers turn up. It was the least you could do. `5(+{karma} karma, +{luck} luck)`$",
+        "quietDone": "`${coroner} signs a form without reading it. \"Wonderful. Nobody will ever ask.\" You are paid, in cash, promptly. `5(+{money}, {karma} karma)`$",
+        "quietTalk": "`4Somebody noticed the paperwork. The whole town is now talking about the way you do business.`$"
+      },
+      "health": {
+        "title": "Health Department",
+        "note": "The Health Department's waiting room has a poster about handwashing. It has been there since the poster was new.",
+        "greeting": "`w{inspector}: `y\"{player}. I look at {parlor}, I write what I see. Or I write what I am paid to see. It is a very flexible profession.\"",
+        "leave": "Leave",
+        "back": "Back",
+        "buttons": {
+          "inspect": "Request an Inspection",
+          "buy": "Buy a Clean Bill of Health",
+          "fine": "Pay the Fine",
+          "complaint": "File a Complaint"
+        },
+        "passed": "`${inspector} walks through your parlor in six minutes and signs. A framed certificate goes up by your door for `w{days}`$ days. `5(+{reviews} reputation)`$",
+        "failed": "`4{inspector} finds a finger in the coffee maker. \"That is not on the menu.\" A citation for `w{fine}`4 goes on file, and the neighbors hear about it. `5(-{reviews} reputation)`$",
+        "bought": "`${inspector} counts the envelope without looking at it. \"Spotless. Truly.\" The certificate hangs by your door for `w{days}`$ days. `5({karma} karma, +{reviews} reputation)`$",
+        "finePaid": "`$You pay the citation in small bills. The clerk pins a receipt to it and, a few days later, the town forgets. `5(+{reviews} reputation)`$",
+        "complaintPrompt": "Which parlor has been breaking the rules? It will cost `w{price}`$ to be heard.",
+        "complaintFiled": "`${inspector} takes your complaint and files it where complaints are filed. \"I will look into {name}'s kitchen.\" `5({karma} karma)`$",
+        "complaintDismissed": "`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The {price} stays in his drawer.",
+        "complaintBackfired": "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5({reviews} reputation)`$",
+        "complaintMail": "`4A complaint was filed against {parlor} with the Health Department. Somebody in town does not like you. Your reputation dipped.`$",
+        "complaintNews": "`7COMPLAINT AT {parlor}\n`^The Health Department has received a complaint about {name}'s parlor. Nobody will say who made it.\n\n",
+        "boostEnded": "`$The health certificate by your door has gone yellow and fallen off. Your reputation slips back with it."
+      },
+      "pawn": {
+        "title": "Cousin Sal's Pawn",
+        "note": "Cousin Sal's Pawn: Cash for Anything, Especially Things With Names Engraved On Them.",
+        "greeting": "`w{pawnbroker}: `y\"{player}! Family. What have you got for me, and where did you get it? Actually, never mind the second part.\"",
+        "leave": "Leave",
+        "back": "Back",
+        "buttons": {
+          "loot": "Pawn Your Loot",
+          "wood": "Second-Hand Wood Lot",
+          "silver": "Second-Hand Silver Lot"
+        },
+        "lootSold": "`${pawnbroker} turns the pieces over under a lamp and counts out `w{money}`$. \"No receipts, no names, no problem.\"",
+        "lotGood": "`${pawnbroker} loads {count} \"gently used\" caskets into your trunk. They are, for once, exactly as described. `5(-{price})`$",
+        "lotBad": "`4The bottom of the lot is water-damaged. Only {count} casket(s) in the lot are worth putting a body in. \"No refunds,\" says {pawnbroker}. `5(-{price})`$",
+        "lotLine": "`w{name}`$, `w{price}`$: {count} caskets at {percent}% of the Di-Mart price. {risk}% of lots turn out bad.\n"
+      },
+      "mournes": {
+        "title": "Mourne & Sons, Funeral Directors",
+        "note": "Mourne & Sons, Deathville's other undertakers since 1931. The brass is polished. The prices are printed. They have been waiting for you.",
+        "greeting": "`w{mourne}: `y\"{player}. Do come in, and mind the carpet. My sons {sons} are out on a call, which means they will hear about this.\"",
+        "leave": "Leave",
+        "back": "Back",
+        "buttons": {
+          "spy": "Spy on the Mournes",
+          "undercut": "Undercut Their Prices",
+          "hold": "Hold Your Prices",
+          "truce": "Offer a Truce"
+        },
+        "spyOk": "`$You wander through their showroom with a clipboard and nobody stops you. Their price list is plain as day. Next time you meet a family, you will know what they will pay for. `5(-{price})`$",
+        "spyCaught": "`4{sons} catch you copying prices out of the back of the brochure. \"Gentlemen!\" says {mourne}. \"We have a visitor.\" You leave the way you came: loudly. `5(-{price}, {karma} karma, {reviews} reputation)`$",
+        "undercutWin": "`$You put a banner over the door: FUNERALS, FOR LESS. {mournes} cannot match it without losing money, and by supper the whole town knows. `5(-{price}, +{reviews} reputation, +{luck} luck)`$",
+        "undercutLose": "`4{mournes} match your price, then beat it, and their sons stand at the end of your road handing out coupons. `5(-{price}, {reviews} reputation)`$",
+        "holdDone": "`$You keep your prices where they are. {mourne} nods across the street, one professional to another. \"Admirable.\" `5(+{karma} karma)`$",
+        "truceDone": "`$You and {mourne} shake on it in the middle of the street. For `w{days}`$ days neither of you will undercut the other. `5(+{karma} karma, -{price})`$",
+        "truceLead": "`$As a gesture, {mournes} send you a family they are too busy to take. `5(+{leads} lead(s))`$",
+        "truceActive": "`$The truce holds through day `w{until}`$."
+      }
+    },
     "prep": [
       {
         "id": "ring",
@@ -14635,7 +14893,11 @@
         "clubOwner": "Lucius Vane",
         "nurse": "Nurse Gertie",
         "inspector": "Inspector Mudge",
-        "teller": "Prudence Ledbetter"
+        "teller": "Prudence Ledbetter",
+        "coroner": "Dr. Ignatius Grimble",
+        "mourne": "Augustus Mourne",
+        "sons": "Ned and Rollo",
+        "mournes": "Mourne & Sons"
       },
       "injuries": [
         {
@@ -16565,8 +16827,8 @@
         },
         {
           "id": "mourne-price-war",
-          "title": "MOURNE & SONS SLASHES PRICES",
-          "message": "\"Why pay more to be put in less?\" asks the new Mourne & Sons billboard on Elm Street. Families are arriving with the flyer in one hand and a red pen in the other.",
+          "title": "{mournes} SLASHES PRICES",
+          "message": "\"Why pay more to be put in less?\" asks the new {mournes} billboard on Elm Street. Families are arriving with the flyer in one hand and a red pen in the other.",
           "effect": "customers haggle harder today",
           "minDay": 3,
           "modifiers": [
@@ -16580,7 +16842,7 @@
         {
           "id": "coroner-fishing",
           "title": "CORONER GONE FISHING",
-          "message": "Dr. Ignatius Grimble is at Lake Bleak for the week. In his absence the county has authorized \"anyone with a clipboard\" to sign death certificates. Paperwork is quick, confident and occasionally signed by Morty.",
+          "message": "{coroner} is at Lake Bleak for the week. In his absence the county has authorized \"anyone with a clipboard\" to sign death certificates. Paperwork is quick, confident and occasionally signed by Morty.",
           "effect": "+1 turn today, more risky offers",
           "modifiers": [
             {
