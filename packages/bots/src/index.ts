@@ -1,5 +1,6 @@
 export { decideExpanded, isExpandedView } from "./expanded/day.js";
 export { type Guide, guideFrom, templatePattern } from "./expanded/guide.js";
+export { setPlacesOff } from "./expanded/places.js";
 export {
   chooseX,
   isXNegotiation,
@@ -37,10 +38,12 @@ export {
   type Difficulty,
   EXPANDED_ONLY_IDS,
   type ExpandedPersonalityId,
+  NO_PLACES,
   PERSONALITIES,
   PERSONALITY_IDS,
   type Personality,
   type PersonalityId,
+  type PlacesStyle,
   personality,
   type SalesStyle,
   type ShopItem,

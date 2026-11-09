@@ -7,6 +7,8 @@ import { cityHallModule } from "./cityHall.js";
 import { clubModule } from "./club.js";
 import { graveyardModule } from "./graveyard.js";
 import { expandedBattleModule, expandedHospitalModule } from "./hospital.js";
+import { PLACES_A, registerPlacesA } from "./placesA.js";
+import { PLACES_B, registerPlacesB } from "./placesB.js";
 import { townMidnight, townMorning, townPanel } from "./world.js";
 
 /**
@@ -18,6 +20,8 @@ export const TOWN_PLACES = [
   { id: "graveyard", label: "Town Graveyard", module: "graveyard" },
   { id: "city-hall", label: "City Hall", module: "city-hall" },
   { id: "reaper-club", label: "The Reaper Club", module: "reaper-club" },
+  ...PLACES_A,
+  ...PLACES_B,
 ] as const;
 
 /** The town map with today's town strip (section 26). */
@@ -32,7 +36,7 @@ const expandedMapModule: LocationModule = {
 };
 
 export function registerTown(registry: Registry): Registry {
-  return registry
+  return registerPlacesB(registerPlacesA(registry))
     .register(graveyardModule)
     .register(expandedChurchModule)
     .register(cityHallModule)

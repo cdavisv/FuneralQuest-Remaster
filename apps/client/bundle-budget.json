@@ -10,7 +10,7 @@
     "maxGzipBytes": 476160
   },
   "dev-town.js": {
-    "maxGzipBytes": 376832
+    "maxGzipBytes": 441344
   },
   "other-chunks.js": {
     "maxGzipBytes": 65536

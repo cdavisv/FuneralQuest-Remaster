@@ -2,7 +2,7 @@
 
 How much content the built-in Expanded pack carries, measured against the targets in
 `docs/REMASTER_PLAN.md` section 3.3 (the end of the section, and item A's "25 or more" lines per
-action). Measured on 2026-11-07 from `packages/content/built/expanded.json`, before and after the
+action). Measured on 2026-11-07 (the places and cast notes at the end are of 2026-11-08) from `packages/content/built/expanded.json`, before and after the
 content pass of that day.
 
 ## How it is counted
@@ -57,7 +57,7 @@ content pass of that day.
 | Tells: cheapness high | 15 | 25 | 25 |
 | Tells: limit high | 15 | 25 | 25 |
 | Tells: limit low | 15 | 25 | 25 |
-| Map locations | 12 | 12 | 20 |
+| Map locations | 12 | 20 | 20 |
 
 Lines per negotiation moment (target 25 each):
 
@@ -123,18 +123,40 @@ Nurse Gertie into events and news.
 
 ## Not reached, and why
 
-- **Map locations: 12 of 20.** A location is an engine module and a map entry
-  (`packages/core/src/classic/modules/index.ts:32-42`, `packages/core/src/expanded/town/index.ts:17-21`),
-  not content. Reaching 20 needs eight new `LocationModule`s in `packages/core`.
-- **The coroner and the rival family are named literally.** `town.cast` has slots only for the
-  mayor, club owner, nurse, inspector and teller (`packages/core/src/expanded/content/townTypes.ts:25`,
-  mirrored in `packages/content/src/expandedSchema.ts:884`), so there is no `{coroner}` placeholder.
-  Adding cast slots is an engine change.
+- **Map locations: reached 20 of 20 on 2026-11-08.** Eight new `LocationModule`s (the Police Station,
+  Crematorium, Florist, Town Gazette, Coroner, Health Department, Pawn Shop and Mourne & Sons;
+  `docs/expanded-rules.md` sections 30 and 31). Their text is in the Expanded pack like the town's:
+  `packs/expanded/expanded/placesA.yaml` and `placesB.yaml` (`ExpandedContent.placesA` / `placesB`,
+  real zod schemas in `expandedSchema.ts`, placeholder and length lint in `townLint.ts`
+  `placesFieldRule`). The engine's `PLACES_A_STARTER` / `PLACES_B_STARTER` remain the fallback for a
+  pack without them (as `TOWN_STARTER` is for the town); a content test keeps the pack and the
+  starters word for word equal. The places still have no building art of their own.
+- **The coroner and the rival family now have cast slots** (`town.cast.coroner`, `mourne`, `sons`,
+  `mournes`: "Dr. Ignatius Grimble", "Augustus Mourne", "Ned and Rollo", "Mourne & Sons";
+  `townTypes.ts`, `town/cast.yaml`). The placeholders `{coroner}`, `{mourne}`, `{sons}` and
+  `{mournes}` are filled in the places' text (batch B) and in the town's news and arc stories
+  (`castVars`, `expanded/town/life.ts`); `coroner-fishing` and `mourne-price-war` use them. The other
+  Expanded text still names them literally, because the engine does not fill the cast there and
+  those lines are drawn by code that knows only its own placeholders: events, news blurbs, risks,
+  special customers (also the customers' own `person` names), tells and the negotiation pools
+  (`events.yaml`, `news_blurbs.yaml`, `risks.yaml`, `expanded/specials.yaml`, `expanded/tells.yaml`,
+  `expanded/text/negotiation.yaml`). Renaming either family means a search for "Grimble" and
+  "Mourne" there too (`town/cast.yaml` says so). Filling the cast in those pools would touch every
+  fill site in `negotiation.ts`, `customer.ts` and the event and news mail code.
 - **Parlor upgrades stay at 15.** The upgrade list is a ruleset (`packages/core/src/rules/expandedRules.ts:278`);
   the pack only names them.
-- **Two Expanded text pools are never read**: `negotiation.selfRequest` (9 lines) and
-  `negotiation.listenNothing` (13) are in the types (`packages/core/src/expanded/content/types.ts:339`
-  and `:389`) but `expanded/negotiation.ts` does not draw from them (arrival uses `request` for
-  every customer, line 388-391; Listen throws when there is nothing to learn, line 679). No lines
-  were added to them; the engine has to start reading them first.
+- **Two Expanded text pools are never read, and stay unwired on purpose**:
+  `negotiation.selfRequest` (9 lines) and `negotiation.listenNothing` (13) are in the types
+  (`packages/core/src/expanded/content/types.ts`) but `expanded/negotiation.ts` does not draw from
+  them. Neither can be wired as a small content-only change:
+  - `selfRequest` is for a customer planning their own funeral, but those customers are special
+    customers (`selfFuneral: true`) and a special's `intro` replaces the arrival request
+    (`arriveX`, the `if (special)` branch), so the pool would only be reached by adding a draw
+    after the intro. That draw changes the random stream for those specials, and the intro already
+    carries the request, so the line would repeat it. Left alone.
+  - `listenNothing` is the line for pressing Listen when there is nothing left to learn. The engine
+    disables the button in that case (`canListen`, hint `nothingToLearn`) and `listen` throws, so
+    wiring it means letting the player spend two patience for nothing. That is a rules decision
+    (`docs/expanded-rules.md` 3.4), not a content one. Left alone.
+  No lines were added to either pool.
 - **Soft Sell acceptance** is five Classic lines indexed by mood band and cannot take more.

@@ -82,7 +82,7 @@ Checked by CI (`pnpm --filter @fq/client bundle:check`, after the build; the cei
 | `app.js` | 206 KB |
 | `app.css` | 30 KB |
 | `solo-worker.js` | 465 KB |
-| `dev-town.js` | 368 KB |
+| `dev-town.js` | 431 KB (raised from 368 KB on 2026-11-09: the eight Expanded places, `docs/expanded-rules.md` sections 30 and 31, took the development town's bundle to 375 KB gzip) |
 | any other chunk, together | 64 KB |
 | fonts (`.woff2`) | 337 KB |
 | pictures | 1.6 MB |

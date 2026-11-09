@@ -21,8 +21,23 @@ export interface ExpandedTownContent {
   monuments: string[];
   /** Names of City Hall permits by permit id (`rules.town.cityHall.permits`). */
   permits: Record<string, { name: string; description: string }>;
-  /** The town's own people, used in text as `{mayor}` and so on. */
-  cast: { mayor: string; clubOwner: string; nurse: string; inspector: string; teller: string };
+  /**
+   * The town's own people, used in text as `{mayor}` and so on (`{owner}` is `clubOwner`).
+   * `coroner` is `{coroner}`; the rival family is `{mourne}` (its head), `{sons}` (his sons) and
+   * `{mournes}` (the firm, "Mourne & Sons"). Filled in the town's news and arc stories and in the
+   * batch-B places' text.
+   */
+  cast: {
+    mayor: string;
+    clubOwner: string;
+    nurse: string;
+    inspector: string;
+    teller: string;
+    coroner: string;
+    mourne: string;
+    sons: string;
+    mournes: string;
+  };
   pictures: TownPictures;
   text: TownText;
 }

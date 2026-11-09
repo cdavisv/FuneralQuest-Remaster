@@ -1,3 +1,5 @@
+import type { PlacesAState } from "./town/placesAState.js";
+import type { PlacesBState } from "./town/placesBState.js";
 import type { ChallengeState, PlayerLife, TownLife } from "./town/state.js";
 
 /**
@@ -75,6 +77,10 @@ export interface ExpandedPlayer {
   record: ExpandedRecord;
   /** The town's places and living world (town/state.ts, section 2.5). Created on first use. */
   life?: PlayerLife;
+  /** The batch-B places: coroner, health department, pawn shop, the Mournes (town/placesBState.ts). Created on first use. */
+  placesB?: PlacesBState;
+  /** The batch-A places: police, crematorium, florist, gazette (town/placesAState.ts). Created on first use. */
+  placesA?: PlacesAState;
 }
 
 /** Which screen of the negotiation is showing (section 3.4). */

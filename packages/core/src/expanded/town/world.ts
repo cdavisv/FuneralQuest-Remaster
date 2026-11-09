@@ -18,13 +18,13 @@ import { clubMidnight } from "./club.js";
 import {
   activePlayers,
   applyModifiers,
+  castVars,
   injuryDef,
   injuryTurns,
   isMayor,
   life,
   lifeOf,
   line,
-  mayorName,
   mayorOf,
   newTownLife,
   TOWN_MODIFIER_KEYS,
@@ -64,8 +64,8 @@ export function rollNews(turn: Turn): NewsEventDef | undefined {
 
 export function applyNews(turn: Turn, news: NewsEventDef): void {
   const town = turn.town;
-  // Section 22.5: `{mayor}` in a story is the mayor's name (elected, or the town's NPC).
-  const vars = { mayor: mayorName(turn) };
+  // Section 22.5: `{mayor}` in a story is the mayor's name (elected, or the town's NPC); `{coroner}`, `{mourne}`, `{sons}`, `{mournes}` are the cast.
+  const vars = castVars(turn);
   addToNews(town, `\`7${fill(news.title, vars)}\r\n`);
   addToNews(town, `\`^${fill(news.message, vars)}\r\n\r\n`);
   applyModifiers(town, news.modifiers, news.days ?? 1, `news:${news.id}`);
@@ -132,7 +132,7 @@ export function todayInTown(turn: Turn): { weather?: WeatherDef; news?: NewsEven
   if (weather) out.weather = weather;
   const news = content.news.find((n) => n.id === today.news);
   if (news) {
-    const vars = { mayor: mayorName(turn) };
+    const vars = castVars(turn);
     out.news = { ...news, title: fill(news.title, vars), message: fill(news.message, vars) };
   }
   return out;
@@ -144,7 +144,7 @@ export function arcHeadline(turn: Turn): string {
   if (!state) return "";
   const arc = arcDef(xt(turn), state.id);
   const beat = arc ? beatDef(arc, state.beat) : undefined;
-  return beat ? fill(beat.headline, { mayor: "", top: "", side: "" }) : "";
+  return beat ? fill(beat.headline, { ...castVars(turn), mayor: "", top: "", side: "" }) : "";
 }
 
 /**

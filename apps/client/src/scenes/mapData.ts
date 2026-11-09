@@ -3,7 +3,7 @@
  * pixels, for the hand-drawn fallback map. The protocol sends only `{ id, label }` per place, so
  * the geometry is client-owned. The ids are fixed by the game: funeral-home, bank, store, cafe,
  * yangs, competitors, church, hospital, spirit-university, and in Expanded towns graveyard,
- * city-hall and reaper-club. (The Classic art pack keeps its own
+ * city-hall, reaper-club and the eight batch A and B places. (The Classic art pack keeps its own
  * building positions in its pack.json.) Ids the server sends that are not listed get a
  * visible pin along the bottom edge and a row in the place list, so a new building never
  * breaks the screen.
@@ -32,6 +32,17 @@ export const HOTSPOTS: Record<string, Hotspot> = {
   graveyard: { x: 695, y: 85, w: 185, h: 158 },
   "city-hall": { x: 752, y: 492, w: 112, h: 108 },
   "reaper-club": { x: 870, y: 500, w: 115, h: 100 },
+  // Batch A places, along the top edge between the university and the graveyard.
+  "police-station": { x: 280, y: 20, w: 92, h: 84 },
+  crematorium: { x: 380, y: 20, w: 92, h: 84 },
+  florist: { x: 480, y: 20, w: 92, h: 84 },
+  gazette: { x: 580, y: 20, w: 92, h: 84 },
+  // Batch B places. Not along the bottom edge: the base map's "Deathville Map" title sits there
+  // (bottom right, x 600 to 960, y 625 to 690), so they go beside the buildings they relate to.
+  coroner: { x: 250, y: 560, w: 92, h: 78 },
+  "health-department": { x: 530, y: 550, w: 92, h: 70 },
+  "pawn-shop": { x: 640, y: 550, w: 92, h: 70 },
+  mournes: { x: 600, y: 128, w: 92, h: 78 },
 };
 
 export interface HotspotBox {

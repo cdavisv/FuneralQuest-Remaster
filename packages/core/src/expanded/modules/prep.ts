@@ -9,6 +9,7 @@ import { karmaScale, rewardFacts } from "../panels.js";
 import { hasPerk, prepPicture, refreshRating } from "../parlor.js";
 import { applyReward, rewardSummary, xc, xr } from "../players.js";
 import { canPay } from "../sale.js";
+import { addLoot } from "../town/placesBLib.js";
 
 /**
  * Preparing the body (docs/expanded-rules.md section 8.2): after some sales
@@ -119,6 +120,8 @@ function choose(turn: Turn, index: number): View {
     effects = option.risk.failEffects;
   }
   applyReward(turn, turn.player, effects);
+  // Batch B: a piece taken from the body can be pawned at Cousin Sal's.
+  if (option.evil && (option.effects.money ?? 0) > 0) addLoot(turn);
   refreshRating(turn.rules, turn.player);
   if (turn.session.expanded) turn.session.expanded.prep = null;
   const summary = rewardSummary(effects);

@@ -10,6 +10,7 @@ import type { PlayerState } from "../state/types.js";
 import { generateCustomer } from "./customer.js";
 import { MODIFIER_KEYS, modValue } from "./modifiers.js";
 import { arriveX } from "./negotiation.js";
+import { applyNextTip } from "./town/placesBLib.js";
 
 /**
  * Wait for Customer under Expanded rules (docs/expanded-rules.md section
@@ -78,7 +79,10 @@ function waitBody(turn: Turn, practice: boolean, frozen?: PlayerState): View {
     return startScript(turn, "script_event");
   }
   p.turns--;
+  // Batch B: a tip from the coroner or the Mournes' price list reveals facts about this family.
+  const tip = practice || frozen ? "" : applyNextTip(turn);
   const view = arriveX(turn);
+  if (tip !== "") view.text = [...legacy(`${tip}\n`), ...view.text];
   if (lead) {
     const text = turn.content.expanded?.town?.text.hospital.leadArrives ?? "";
     if (text !== "") view.text = [...legacy(`${text}\n`), ...view.text];

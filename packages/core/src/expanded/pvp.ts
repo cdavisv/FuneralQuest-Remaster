@@ -6,6 +6,7 @@ import { defenceLevel, hasPerk } from "./parlor.js";
 import { xr } from "./players.js";
 import { pvpGain } from "./scoring.js";
 import { TOWN_MODIFIER_KEYS } from "./town/life.js";
+import { recordAttack } from "./town/placesAHooks.js";
 
 /**
  * PvP under Expanded rules (docs/expanded-rules.md section 9). The Classic
@@ -55,6 +56,8 @@ export function expandedBattleBp(
   const lost = Math.floor(won * p.lossShare);
   expModForceTotal(loser, -lost);
   expModForceTotal(winner, won);
+  // Batch A: the police station can hear about an attack that won.
+  if (!selfDefense) recordAttack(turn, winner, loser);
   return { won, lost };
 }
 

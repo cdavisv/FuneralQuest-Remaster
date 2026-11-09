@@ -119,7 +119,7 @@ describe("the town lint", () => {
     }, /church\.yaml: greeting\[9\].*\{customer\}/);
     catches((t) => {
       if (t.news[0]) t.news[0].message = "The {player} felt nothing.";
-    }, /town\/news\.yaml: \[0\]\.message.*\{player\} is not filled in here \(allowed: \{mayor\}\)/);
+    }, /town\/news\.yaml: \[0\]\.message.*\{player\} is not filled in here \(allowed: \{mayor\}/);
     catches((t) => {
       beat(t, "cough", "credit").headline = "{mayor} TAKES CREDIT";
     }, /arcs\.yaml: \[1\]\.beats\[4\]\.headline.*\{mayor\}/);

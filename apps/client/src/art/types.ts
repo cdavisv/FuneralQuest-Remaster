@@ -67,6 +67,15 @@ export const PIECE_NAMES = [
   // folder draws stand-ins, and the graveyard is already on the base map (no piece).
   "building-city-hall",
   "building-reaper-club",
+  // Batch A and B places (docs/expanded-rules.md sections 30 and 31).
+  "building-police-station",
+  "building-crematorium",
+  "building-florist",
+  "building-gazette",
+  "building-coroner",
+  "building-health-department",
+  "building-pawn-shop",
+  "building-mournes",
   // Newspaper, notepad and dialogs.
   "newspaper",
   "brick-wall",

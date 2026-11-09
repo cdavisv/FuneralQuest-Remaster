@@ -22,6 +22,8 @@ const HELP = `Usage: pnpm --filter @fq/sim run sim -- [options]
                     Expanded adds the rest of ${ALL_PERSONALITY_IDS.join(",")})
   --latejoin D      Expanded: one more bot joins on game day D
   --challenges N    Expanded: Daily Challenge runs per personality and difficulty (6)
+  --places-off L    Expanded: comma list of newer places the bots skip (police, crematorium,
+                    florist, gazette, coroner, health, pawn, mournes), to measure them by ablation
   --oracle          seat the hidden-state oracle instead of fair bots
   --seed N          base seed (1)
   --workers N       worker threads (cores - 1; 0 = this thread)
@@ -72,6 +74,7 @@ function parse(argv: string[]): { options: SimOptions; workers?: number; out: st
     ...(personalities ? { personalities } : {}),
     ...(args.has("oracle") ? { oracle: true } : {}),
     ...(args.has("latejoin") ? { lateJoin: int("latejoin", 10) } : {}),
+    ...(args.has("places-off") ? { placesOff: (args.get("places-off") ?? "").split(",") } : {}),
     ...(args.has("challenges") ? { challenges: int("challenges", 6) } : {}),
   };
   const workers = args.has("workers") ? int("workers", 0) : undefined;

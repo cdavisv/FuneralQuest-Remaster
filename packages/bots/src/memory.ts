@@ -59,6 +59,20 @@ export interface XMemory {
   customer: XCustomer | null;
   /** The tour is finished or skipped. */
   toured: boolean;
+  /** What it remembers of the eight newer places (expanded/places.ts). */
+  places?: PlacesMemory;
+}
+
+export interface PlacesMemory {
+  /** Game day oven time was last rented (a lot lasts two days). */
+  ovenDay: number;
+  /** The rival it last reported or settled with, and the day. */
+  reported: { id: number; day: number } | null;
+  /** Attackers named by the last police picker. */
+  grievances: number;
+  /** Game day of the last coroner certificate and the last Health Department request. */
+  certDay: number;
+  healthDay: number;
 }
 
 export interface XPlan {
@@ -107,7 +121,16 @@ export type ErrandKind =
   | "graveyard"
   | "club"
   | "bankout"
-  | "bankin";
+  | "bankin"
+  // The eight places of sections 30 and 31 (expanded/places.ts).
+  | "police"
+  | "crematorium"
+  | "florist"
+  | "gazette"
+  | "coroner"
+  | "health"
+  | "pawn"
+  | "mournes";
 
 export interface SessionMemory {
   /** Errands still to run, in order. `morning` ones run before the turns are spent. */

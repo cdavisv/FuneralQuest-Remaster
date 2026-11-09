@@ -16,6 +16,7 @@ import { moneyMod, xc, xp, xr } from "../players.js";
 import { isPeaceful } from "../pvp.js";
 import { roundUp, wholesalePrice } from "../scoring.js";
 import { chainSheltered, injuryHp, sameChain, xt } from "../town/life.js";
+import { recordAttack } from "../town/placesAHooks.js";
 
 /**
  * The Classic town places with the Expanded additions wrapped around them
@@ -211,6 +212,8 @@ export const expandedVisitModule: LocationModule = {
       }
     }
     const view = visitModule.press(turn, command);
+    // Batch A: a break-in is something the police station can be told about.
+    if (command === "steal" && him) recordAttack(turn, turn.player, him);
     if (command === "steal" && him && (him.custom[Custom.Safe] ?? 0) === 0) {
       const amount = Math.min(
         rules.pvp.cashSteal.max,

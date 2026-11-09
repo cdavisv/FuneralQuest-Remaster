@@ -2,11 +2,13 @@ import type { Difficulty, PersonalityId, StepEvent } from "@fq/bots";
 import {
   type ClassicRules,
   type ContentPack,
+  type CustomerState,
   type ExpandedRules,
   type PlayerState,
   pvpGain,
   stockCapacity,
   type TownState,
+  wholesalePrice,
 } from "@fq/core";
 import type { View } from "@fq/protocol";
 import type { Issue, Tally } from "./metrics.js";
@@ -44,8 +46,11 @@ export interface XSeat {
   monuments: number;
   /** BP gained over each of the player's own days (index = game day - 1), for the upgrade returns. */
   daily: number[];
-  /** The game day each upgrade was bought. */
+  /** The game day each upgrade was bought, and the first day each new place was used (`place.<name>`). */
   bought: Record<string, number>;
+  /** Net dollars (in minus out) and dollars out at each new place over the season. */
+  placeNet: Record<string, number>;
+  placeOut: Record<string, number>;
 }
 
 export interface XTownReport {
@@ -96,6 +101,21 @@ export function buttonKey(id: string): string | null {
   return id;
 }
 
+/** The eight places of docs/expanded-rules.md sections 30 and 31 (balance round 19), by button or picker id. */
+export const PLACE_SYSTEMS: [RegExp, string][] = [
+  [/(^|:)police:/, "police"],
+  [/(^|:)crematorium:/, "crematorium"],
+  [/(^|:)florist:/, "florist"],
+  [/(^|:)gazette:/, "gazette"],
+  [/(^|:)coroner:/, "coroner"],
+  [/(^|:)health-department:/, "health dept"],
+  [/(^|:)pawn-shop:/, "pawn"],
+  [/(^|:)mournes:/, "mournes"],
+];
+
+/** The system names of those places. */
+export const PLACE_NAMES = PLACE_SYSTEMS.map(([, n]) => n);
+
 /** Which system an action belongs to, for money, BP and turns. */
 export function systemOf(e: StepEvent): string {
   const a = e.action;
@@ -136,6 +156,7 @@ export function systemOf(e: StepEvent): string {
   if (/reaper-club:bodyguard/.test(id)) return "bodyguard";
   if (/reaper-club:seance/.test(id)) return "seance";
   if (/reaper-club:pay/.test(id)) return "club cover";
+  for (const [pattern, name] of PLACE_SYSTEMS) if (pattern.test(id)) return name;
   if (/bank:(deposit|withdraw)/.test(id)) return "savings";
   if (/bank:(borrow|repay)/.test(id)) return "loans";
   if (/bank:(tcount|tpick|ttier|transfer)/.test(id)) return "transfers";
@@ -232,6 +253,8 @@ export class XCollector {
   /** BP a player gained each game day of their own (index day - 1), and the day each upgrade was bought. */
   private dailyBp = new Map<number, number[]>();
   private boughtDay = new Map<number, Record<string, number>>();
+  private placeNet = new Map<number, Record<string, number>>();
+  private placeOut = new Map<number, Record<string, number>>();
   private before: TownState | null = null;
   private dayStart = new Map<
     number,
@@ -240,7 +263,7 @@ export class XCollector {
 
   constructor(
     private readonly rules: ClassicRules,
-    _content: ContentPack,
+    private readonly content: ContentPack,
     private readonly seatOf: (playerId: number) => {
       personality: PersonalityId;
       difficulty: Difficulty;
@@ -353,6 +376,29 @@ export class XCollector {
     if (dbp !== 0) this.both(id, `bp.${sys}`, dbp);
     const dt = now.turns - was.turns;
     if (dt < 0) this.both(id, `turns.${sys}`, -dt);
+    // The new places: what each press moved besides money (karma, luck, word of mouth).
+    if (PLACE_NAMES.includes(sys)) {
+      const first = this.boughtDay.get(id) ?? {};
+      if (first[`place.${sys}`] === undefined && action.type === "press") {
+        first[`place.${sys}`] = day;
+        this.boughtDay.set(id, first);
+      }
+      const net = this.placeNet.get(id) ?? {};
+      net[sys] = (net[sys] ?? 0) + dm;
+      this.placeNet.set(id, net);
+      if (dm < 0) {
+        const out = this.placeOut.get(id) ?? {};
+        out[sys] = (out[sys] ?? 0) - dm;
+        this.placeOut.set(id, out);
+      }
+      if (action.type === "press") this.both(id, `press.${sys}`);
+      const dk = now.karma - was.karma;
+      const dl = now.luck - was.luck;
+      const dr = (now.expanded?.reviews ?? 0) - (was.expanded?.reviews ?? 0);
+      if (dk !== 0) this.both(id, `karma.${sys}`, dk);
+      if (dl !== 0) this.both(id, `luck.${sys}`, dl);
+      if (dr !== 0) this.both(id, `reviews.${sys}`, dr);
+    }
     const xw = was.expanded;
     const xn = now.expanded;
     const lw = xw?.life;
@@ -415,6 +461,7 @@ export class XCollector {
           if (cx.raised) this.both(id, "salesRaised");
         }
         if (c?.expanded?.practice) this.both(id, "practiceSales");
+        this.saleExtras(id, was, now, c);
       }
       if (rn.walkouts > rw.walkouts) {
         tally.walkouts++;
@@ -518,6 +565,11 @@ export class XCollector {
       const prev = before.players[other.id];
       if (!prev) continue;
       const d = other.bp - prev.bp;
+      if (
+        (other.expanded?.placesA?.attacks.length ?? 0) >
+        (prev.expanded?.placesA?.attacks.length ?? 0)
+      )
+        this.both(other.id, "attacked");
       if (d < 0 && sys === "parlor PvP") this.lose(other.id, -d, "fight");
       if (d > 0 && sys === "sales") this.both(other.id, "bp.walkout gifts", d);
       const m = other.money - prev.money;
@@ -529,6 +581,44 @@ export class XCollector {
     if (sys === "parlor PvP" && dbp < 0) this.lose(id, -dbp, "fight");
 
     this.checkStep(e, sys, day);
+  }
+
+  /** What a rented oven slot and the florist's bouquets added to this sale (section 30). */
+  private saleExtras(
+    id: number,
+    was: PlayerState,
+    now: PlayerState,
+    c: CustomerState | undefined,
+  ): void {
+    const a0 = was.expanded?.placesA;
+    const a1 = now.expanded?.placesA;
+    if (!a0 || !a1) return;
+    const ovens = a0.oven.slots - a1.oven.slots;
+    const fee = this.content.expanded?.cremation.fee ?? 0;
+    if (ovens > 0 && fee > 0) {
+      this.both(id, "oven.used", ovens);
+      this.both(id, "oven.saved", ovens * wholesalePrice(this.x, fee));
+    }
+    const used = a0.flowers.stock - a1.flowers.stock;
+    const ex = this.content.expanded;
+    if (used > 0 && c?.expanded && ex) {
+      const pay = this.x.town.placesA.florist.payout;
+      const lines: number[] = [];
+      for (const cat of ex.packages) {
+        const i = c.expanded.packages[cat.id];
+        const tier = i === undefined || i < 1 ? undefined : cat.tiers[i];
+        if (tier?.tags.includes("flowers")) lines.push(tier.price);
+      }
+      for (const i of c.expanded.bought) {
+        const item = ex.softSell[i];
+        if (item?.tags.includes("flowers")) lines.push(item.price);
+      }
+      let earned = 0;
+      for (const price of lines.slice(0, used))
+        earned += Math.min(pay.max, Math.round(price * pay.share));
+      this.both(id, "flowers.used", used);
+      this.both(id, "flowers.earned", earned);
+    }
   }
 
   private lose(id: number, bp: number, how: string): void {
@@ -762,6 +852,8 @@ export class XCollector {
         monuments: p.expanded?.life?.monuments ?? 0,
         daily: this.dailyBp.get(s.playerId) ?? [],
         bought: this.boughtDay.get(s.playerId) ?? {},
+        placeNet: this.placeNet.get(s.playerId) ?? {},
+        placeOut: this.placeOut.get(s.playerId) ?? {},
       });
       for (const key of this.seatOffered.get(s.playerId) ?? []) add(r.town, `capable.${key}`);
       for (const key of this.seatUsed.get(s.playerId) ?? []) add(r.town, `users.${key}`);

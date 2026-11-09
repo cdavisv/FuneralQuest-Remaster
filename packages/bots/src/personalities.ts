@@ -186,6 +186,66 @@ export interface XStyle {
    * Reaper Club that day, or failing that by buying Tiny or the vest on the black market.
    */
   protect?: boolean;
+  /** The eight places of docs/expanded-rules.md sections 30 and 31 (balance round 19). */
+  places: PlacesStyle;
+}
+
+/**
+ * How a personality uses the eight newer places. Each field is a committed habit in
+ * the personality's character, not a cheat: it only decides which buttons the bot
+ * presses when it is already standing at the counter (`expanded/places.ts`).
+ */
+export interface PlacesStyle {
+  /** Police Station: answer an attack with a report (clean, public) or a settlement (quick, dirty). */
+  police: "report" | "settle" | "none";
+  /** After repeat attacks: the sure patrol, the cheap Back Door, or nothing. */
+  patrol: "patrol" | "backdoor" | "never";
+  /** Crematorium: rent a bulk lot of oven time while cremation sales are common. */
+  ovens: boolean;
+  /** What it does with the urns after its cremations. */
+  ashes: "scatter" | "press" | "none";
+  /** Florist: keep fresh bouquets in the cooler for flowers lines. */
+  flowers: boolean;
+  /** One wreath a day: for the church (karma, word of mouth), the ward (luck), or none. */
+  wreath: "church" | "ward" | "none";
+  /** Town Gazette: a customer lead by advert (a luck gamble or a sure one). */
+  advert: "classified" | "display" | "none";
+  /** The front-page puff piece. */
+  puff: boolean;
+  /** Smears the leader. */
+  smear: boolean;
+  /** Coroner: the tip, the certificate, the favour (proper burial or quiet). */
+  coroner: { tip: boolean; certificate: boolean; favour: "burial" | "quiet" | "none" };
+  /** Health Department: ask for an inspection, or buy the clean bill. */
+  health: "inspect" | "buy" | "none";
+  /** Files a complaint against the leader (karma 30 or less). */
+  complaint: boolean;
+  /** Cousin Sal: pawn loot; buy second-hand caskets for the storeroom. */
+  pawn: { loot: boolean; lots: boolean };
+  /** Mourne & Sons: spy, take a stand in the price war, or offer a truce. */
+  mournes: { spy: boolean; stand: "undercut" | "hold" | "none"; truce: boolean };
+}
+
+/** Uses none of the eight places. */
+export const NO_PLACES: PlacesStyle = {
+  police: "none",
+  patrol: "never",
+  ovens: false,
+  ashes: "none",
+  flowers: false,
+  wreath: "none",
+  advert: "none",
+  puff: false,
+  smear: false,
+  coroner: { tip: false, certificate: false, favour: "none" },
+  health: "none",
+  complaint: false,
+  pawn: { loot: false, lots: false },
+  mournes: { spy: false, stand: "none", truce: false },
+};
+
+function pl(over: Partial<PlacesStyle>): PlacesStyle {
+  return { ...NO_PLACES, ...over };
 }
 
 const STANDARD_UPGRADES = [
@@ -233,6 +293,7 @@ function xs(over: Partial<XStyle>): XStyle {
     graves: false,
     appeals: 0,
     charity: false,
+    places: NO_PLACES,
     ...over,
   };
 }
@@ -274,6 +335,15 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: true,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        patrol: "patrol",
+        wreath: "church",
+        coroner: { tip: false, certificate: true, favour: "burial" },
+        health: "inspect",
+        pawn: { loot: false, lots: true },
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       path: "good",
       tags: [
         { item: "psych", upTo: 5 },
@@ -335,6 +405,18 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.3, cafe: 0.2, letter: 0.2 },
     expanded: xs({
+      places: pl({
+        police: "settle",
+        patrol: "backdoor",
+        ovens: true,
+        ashes: "press",
+        advert: "display",
+        smear: true,
+        coroner: { tip: true, certificate: false, favour: "quiet" },
+        complaint: true,
+        pawn: { loot: true, lots: true },
+        mournes: { spy: true, stand: "undercut", truce: false },
+      }),
       rivalry: "cutthroat",
       markup: 20,
       tags: [
@@ -379,6 +461,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.2, cafe: 0.5, letter: 0.1 },
     expanded: xs({
+      places: pl({
+        police: "settle",
+        advert: "classified",
+        coroner: { tip: false, certificate: false, favour: "none" },
+        health: "inspect",
+        pawn: { loot: true, lots: false },
+        mournes: { spy: false, stand: "undercut", truce: false },
+      }),
       hits: true,
       upgrades: [
         "paint",
@@ -441,6 +531,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.3, cafe: 0.4, letter: 0.4 },
     expanded: xs({
+      places: pl({
+        police: "settle",
+        patrol: "backdoor",
+        ashes: "press",
+        coroner: { tip: false, certificate: false, favour: "quiet" },
+        pawn: { loot: true, lots: false },
+        mournes: { spy: true, stand: "none", truce: false },
+      }),
       path: "evil",
       rivalry: "cutthroat",
       tags: [
@@ -509,6 +607,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.15, cafe: 0.2, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        flowers: true,
+        coroner: { tip: false, certificate: true, favour: "none" },
+        health: "inspect",
+        pawn: { loot: false, lots: true },
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       protect: true,
       tags: [
         { item: "hearse", upTo: 2 },
@@ -570,6 +676,13 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        coroner: { tip: true, certificate: true, favour: "none" },
+        health: "inspect",
+        pawn: { loot: false, lots: true },
+        mournes: { spy: true, stand: "hold", truce: false },
+      }),
       protect: true,
       // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
       // it (it was bought on day 26).
@@ -625,6 +738,16 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: true,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        patrol: "patrol",
+        ashes: "scatter",
+        flowers: true,
+        wreath: "church",
+        coroner: { tip: false, certificate: true, favour: "burial" },
+        health: "inspect",
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
       // it (it was bought on day 26).
       upgrades: [
@@ -688,6 +811,17 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.2, cafe: 0.3, letter: 0.2 },
     expanded: xs({
+      places: pl({
+        police: "settle",
+        patrol: "backdoor",
+        ashes: "press",
+        advert: "classified",
+        smear: true,
+        coroner: { tip: false, certificate: false, favour: "quiet" },
+        complaint: true,
+        pawn: { loot: true, lots: true },
+        mournes: { spy: true, stand: "none", truce: false },
+      }),
       hits: true,
       path: "evil",
       tags: [
@@ -733,6 +867,17 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.2, cafe: 0.2, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        patrol: "patrol",
+        ovens: true,
+        ashes: "scatter",
+        flowers: true,
+        coroner: { tip: false, certificate: true, favour: "none" },
+        health: "inspect",
+        pawn: { loot: false, lots: true },
+        mournes: { spy: true, stand: "hold", truce: false },
+      }),
       protect: true,
       markup: 10,
       tags: [
@@ -788,6 +933,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.6, cafe: 0.5, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        wreath: "church",
+        puff: true,
+        coroner: { tip: false, certificate: true, favour: "burial" },
+        health: "inspect",
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       protect: true,
       path: "good",
       mayor: 3,
@@ -828,6 +981,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: false,
     social: { announce: 0.4, cafe: 0.4, letter: 0 },
     expanded: xs({
+      places: pl({
+        police: "report",
+        flowers: true,
+        coroner: { tip: false, certificate: true, favour: "none" },
+        health: "inspect",
+        pawn: { loot: false, lots: true },
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       protect: true,
       // Balance round 17 (tuning log): the Memorial Garden just before the embalming lab, not after
       // it (it was bought on day 26).
@@ -878,6 +1039,14 @@ const P: Record<PersonalityId, Personality> = {
     sparrow: true,
     social: { announce: 0.1, cafe: 0.3, letter: 0 },
     expanded: xs({
+      places: pl({
+        ashes: "scatter",
+        flowers: true,
+        wreath: "church",
+        coroner: { tip: false, certificate: true, favour: "burial" },
+        health: "inspect",
+        mournes: { spy: false, stand: "hold", truce: false },
+      }),
       path: "good",
       rivalry: "peaceful",
       holyWater: 1,

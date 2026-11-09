@@ -1,7 +1,7 @@
 import { EXPANDED, EXPANDED_RULES } from "@fq/core";
 import type { Action, Button, View } from "@fq/protocol";
 import type { ErrandKind, XMemory } from "../memory.js";
-import type { XStyle, XTagWant } from "../personalities.js";
+import { NO_PLACES, type XStyle, type XTagWant } from "../personalities.js";
 import {
   battle,
   type Ctx,
@@ -31,6 +31,16 @@ import {
 import { offered } from "../runner.js";
 import { duelOutlook, duelTable } from "./duel.js";
 import type { Guide } from "./guide.js";
+import {
+  eveningPlaces,
+  morningPlaces,
+  PLACE_IDS,
+  PLACE_PICKERS,
+  PLACE_PREFIXES,
+  placePicker,
+  placeWorth,
+  runPlace,
+} from "./places.js";
 import { chooseX, isXNegotiation, meetX, type SellContext, watchX } from "./sell.js";
 
 /**
@@ -73,6 +83,7 @@ const STYLE_FALLBACK: XStyle = {
   graves: false,
   appeals: 0,
   charity: false,
+  places: NO_PLACES,
 };
 
 const PLACE: Partial<Record<ErrandKind, string>> = {
@@ -89,6 +100,7 @@ const PLACE: Partial<Record<ErrandKind, string>> = {
   church: "church",
   graveyard: "graveyard",
   club: "reaper-club",
+  ...PLACE_IDS,
 };
 
 /** Button-id prefixes that say which place a screen belongs to. */
@@ -112,6 +124,7 @@ const PREFIX: Record<string, string> = {
   "arc:give:church": "church",
   "arc:give:city-hall": "city-hall",
   "arc:give:reaper-club": "reaper-club",
+  ...PLACE_PREFIXES,
 };
 
 const HEARSE_PRICES = [4, 12, 30, 50, 80];
@@ -340,7 +353,9 @@ function plan(c: Ctx): void {
   x.plan = { morning: [], evening: [], done: {} };
   const morning: ErrandKind[] = ["stats"];
   if (c.rng.chance(c.me.social.announce)) morning.unshift("announce");
-  morning.push("office", "bankout", "hospital", "store", "university");
+  morning.push("office", "bankout", "hospital");
+  morning.push(...morningPlaces(c));
+  morning.push("store", "university");
   if (karma(c) >= EXPANDED.karma.good[1] || style.holyWater > 0 || style.bingo > 0)
     morning.push("church");
   if (style.graves || style.duel) morning.push("graveyard");
@@ -352,6 +367,7 @@ function plan(c: Ctx): void {
   if (visiting) evening.push("visit");
   evening.push("club", "hospital", "yangs");
   evening.push("store", "office", "university");
+  evening.push(...eveningPlaces(c));
   if (c.rng.chance(c.me.social.cafe)) evening.push("cafe");
   evening.push("bankin");
   x.plan.morning = morning;
@@ -567,6 +583,15 @@ function worthIt(c: Ctx, e: ErrandKind, morning: boolean): boolean {
         ((hud.luck < 40 && hud.bpToday >= 5) ||
           ((c.me.tiger || c.me.sparrow) && hud.bpToday >= 20 && c.memory.known.yangsLeft > 0))
       );
+    case "police":
+    case "crematorium":
+    case "florist":
+    case "gazette":
+    case "coroner":
+    case "health":
+    case "pawn":
+    case "mournes":
+      return placeWorth(c, e, morning);
     default:
       return true;
   }
@@ -740,6 +765,15 @@ function place(c: Ctx): Action {
         return visit(c);
       case "yangs":
         return yangsX(c);
+      case "police":
+      case "crematorium":
+      case "florist":
+      case "gazette":
+      case "coroner":
+      case "health":
+      case "pawn":
+      case "mournes":
+        return runPlace(c, s.current, turns(c) > 0) ?? done(c);
     }
   }
   if (s.current === "cafe" && c.view.scene === "cafe") return cafe(c);
@@ -782,6 +816,9 @@ function overlayX(c: Ctx): Action {
         o.players.filter((p) => p.id !== c.memory.self.playerId),
       );
       return { type: "pickPlayer", overlayId: o.id, playerId: id };
+    }
+    if (PLACE_PICKERS.includes(o.id)) {
+      return { type: "pickPlayer", overlayId: o.id, playerId: placePicker(c, o.id, o.players) };
     }
     if (
       o.id === "graveyard:pick" ||

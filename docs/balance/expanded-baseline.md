@@ -2,55 +2,51 @@
 
 ## What it says about the Expanded design
 
-*Hand-written reading of the generated tables below (regenerating with `pnpm --filter @fq/sim run sim -- --days 30 --towns 200 --players 8 --rules expanded --seed 1 --challenges 6 --out docs/balance/expanded-baseline` overwrites this file; keep this section, or rebuild the tables alone with `pnpm --filter @fq/sim exec tsx src/remark.ts ../../docs/balance/expanded-baseline`, which keeps it). 200 towns of 8 hard bots drawn from the twelve `@fq/bots` personalities, a 30-day season with the built-in `expandedPack`. This is the run after balance round 17 of `expanded-tuning-log.md`, and it is also the first run with the content pack's new material (five special customers, 15 events, 9 news blurbs, 3 risks, more arrival, tell and walkout lines), which changes every town's random draws: "before" is the round-16 baseline this file replaced, so a difference smaller than the noise of the previous rounds (a personality's win share moves by 0.1 to 0.2 for one win) is not a result. The late-joiner, mixed-difficulty, oracle and no-fighter comparisons were not re-run (readings 5 and 9 keep the older figures and say so).*
+*Hand-written reading of the generated tables below (regenerating with `pnpm --filter @fq/sim run sim -- --days 30 --towns 200 --players 8 --rules expanded --seed 1 --challenges 6 --out docs/balance/expanded-baseline` overwrites this file; keep this section, or rebuild the tables alone with `pnpm --filter @fq/sim exec tsx src/remark.ts ../../docs/balance/expanded-baseline`, which keeps it). 200 towns of 8 hard bots drawn from the twelve `@fq/bots` personalities, a 30-day season with the built-in `expandedPack`. This is the run after balance round 19 of `expanded-tuning-log.md`: for the first time the bots visit the eight places of `expanded-rules.md` sections 30 and 31 (Police Station, Crematorium, Florist, Town Gazette, Coroner, Health Department, Cousin Sal's Pawn, Mourne & Sons), each in character, and a new table below ("the eight newer places") reports what each costs, gives back and how often it is used. "Before" is the round-17 baseline this file replaced; with the bots not visiting the new places the same 200 towns reproduce it exactly (the new content and places change no random draw a bot does not trigger), so the difference is the places and nothing else. A personality's win share moves by 0.2 to 0.4 for a couple of wins at this size (see reading 2), so read BP against the town mean first.*
 
-**Checks: all passed**: no invariant breaks, no offered button rejected, no stuck bot-day, no error, none of the conservation signatures. Classic's simulator report for a fixed seed (60 towns, seed 7) is byte-identical before and after this round except its run time.
+**Checks: all passed**: no invariant breaks, no offered button rejected, no stuck bot-day, no error, none of the conservation signatures (the money, tag and BP checks now also watch the eight places).
 
 ### The targets
 
-| target | before (round 16) | after (round 17) | met? |
+| target | before (round 17) | after (round 19) | met? |
 | --- | --- | --- | --- |
-| no personality above about 2x its fair share of wins, none below a third | politician 2.67, necromancer 2.45, pacifist 1.35, tycoon 1.24, shark 0.92, gambler 0.84, saint 0.72, builder 0.62, Soft Touch 0.44, saboteur 0.29, scholar 0.28, organiser 0.17 | politician 2.38, necromancer 2.33, tycoon 1.56, pacifist 1.18, shark 0.86, scholar 0.72, gambler 0.60, builder 0.56, saint 0.52, organiser 0.46, Soft Touch 0.44, saboteur 0.35 | **no, half of it**: still two above 2 (both a little lower); **none below a third** for the first time (was three); see 1 |
-| the same field read by mean place and mean BP (reported alongside, not a new target) | mean place 2.75 to 6.26; means 17,897 to 20,486 (2,589 BP, sd 678), -7.0% to +4.3% of the town mean; nine of twelve within 3%, eleven within 4.3% | mean place 2.92 to 6.38; means 17,727 to 20,483 (2,757 BP, sd 712), -7.8% to +4.0%; eight of twelve within 3%, eleven within 4.0% (the saboteur outside) | the sellers closer together (organiser -0.8% -> +0.7%, scholar -0.1% -> +0.8%), the necromancer and the saboteur a little lower |
-| good and evil within a few percent | BP against the town mean: good +1.0%, neutral +0.8%, evil -3.8%; wins: evil 1.29, good 1.23, neutral 0.70 | good +1.0%, neutral +1.2%, evil -4.7%; wins: evil 1.29, good 1.08, neutral 0.82 | on wins closer (neutral 0.70 -> 0.82, good 1.23 -> 1.08); on BP evil is the two fighters (see 4) |
-| no single purchase dominant, no system dead | Billboard 0.009 BP a dollar, Night Watchman 0.010, Memorial Garden 0.007, monuments 0.009, tithes 0.009 | Billboard 0.010, Memorial Garden **0.022**, Night Watchman -0.002 (se of its daily figure 5.8), monuments 0.010, tithes 0.009 | **borderline**: the Garden, now bought on day 20, returns about twice a monument (see 3) |
-| skill worth clearly more than luck | mixed towns: hard +16.7%, easy never wins; Daily Challenge hard 420, easy 364 against a day-to-day luck of about 44 | Daily Challenge hard 419, easy 365 against a day-to-day luck of 44 (mixed towns not re-run) | yes |
-| a day-10 starter reaches mid-table (5.0 of 9) | 5.10, 58% in the top half | not re-run (no rule it depends on changed) | yes (round 16) |
-| the leader's margin over the median stays moderate | 1.07x | 1.07x | yes |
-| PvP-heavy play viable, peaceful play not miserable | fighters -2.9% of their towns' mean, 1.11x their share; most-targeted peaceful parlor loses 4.1% (worst town 8.2%), finishes 2.71st | fighters -3.3%, 1.03x their share; most-targeted peaceful parlor loses 4.2% (worst town 8.0%), finishes 2.68th | yes |
-| a small house edge | slots 0.796 / 0.696 / 0.858 at $100 / $1,000 / $500 | slots 0.870 / 0.939 / 0.896 over 15,269 plays | the exact return (0.976) is tested in core; no house rule changed |
-| loans cannot be turned into points | 2,669 loans, none defaulted | 2,689 loans (builder, tycoon), none defaulted | yes |
-| a full but not grindy day | 351 screens, 191 choices, 16.1 customers | 352 screens, 191 choices, 16.1 customers | see 7 |
+| no personality above about 2x its fair share of wins, none below a third | politician 2.38, necromancer 2.33, tycoon 1.56, pacifist 1.18, shark 0.86, scholar 0.72, gambler 0.60, builder 0.56, saint 0.52, organiser 0.46, Soft Touch 0.44, saboteur 0.35 | tycoon **3.25**, necromancer 2.33, politician 1.57, pacifist 1.35, shark 1.05, saint 0.72, builder 0.56, gambler 0.48, saboteur 0.29, organiser 0.29, Soft Touch 0.19, scholar 0.11 | **no, worse**: two above 2 (the tycoon now the first), three below a third (was none); see 1 and 2 |
+| the same field read by mean place and mean BP (reported alongside, not a new target) | mean place 2.92 to 6.38; means 17,727 to 20,483 (sd 712), -7.8% to +4.0% of the town mean | mean place 2.33 to 6.64; means 17,435 to 20,814 (sd 803), -8.8% to +6.6%; ten of twelve within 4%; the town's mean BP -0.7% (19,566 to 19,437) | the tycoon's lead and the saboteur's trail both grew by about 1 to 2 points (see 1) |
+| good and evil within a few percent | BP against the town mean: good +1.0%, neutral +1.2%, evil -4.7%; wins: evil 1.29, good 1.08, neutral 0.82 | good +1.2%, neutral +1.4%, evil -3.8%; wins: evil 1.22, good 1.03, neutral 0.82 | unchanged (evil a point closer on BP) |
+| no single purchase dominant, no system dead | Billboard 0.010 BP a dollar, Garden 0.022, Night Watchman -0.002, monuments 0.010 | upgrades not re-measured (no number changed); the eight places: none returns BP a dollar as a monument does, three pay money back (see 4), one is dead (the church wreath) | **mostly**: see 4 |
+| skill worth clearly more than luck | Daily Challenge hard 419, easy 365 | hard 418.5, easy 365.4 (72 runs each) | yes |
+| PvP-heavy play viable, peaceful play not miserable | 11,112 parlor attacks, 6,694 break-ins, 8,618 duels, 609 hits landed | 10,982 attacks, 6,654 break-ins, 8,452 duels, 529 hits landed | yes: the patrol is no lock (see 5) |
+| loans cannot be turned into points; a small house edge | 2,689 loans, none defaulted; slots 0.870 / 0.939 / 0.896 | no loan or house rule changed; no default | yes |
+| a full but not grindy day | 352 screens, 191 choices, 16.1 customers | 364 screens a bot-day (the eight places add about 12) | see the previous baseline's 7 |
 
 ### Reading
 
-1. **The win-share target is still missed at the top; the bottom is now met.** Round 17 applied the one proposal of the last baseline that only changes what the bots buy: the personalities that buy the Memorial Garden (Soft Touch, builder, scholar, saint, organiser) and the Night Watchman (Soft Touch, saboteur) list it just before the embalming lab instead of after it. The steady neutral sellers gained most: the organiser from 0.17 to 0.46 of its share (-0.8% to +0.7% of its towns' mean BP), the scholar from 0.28 to 0.72 (-0.1% to +0.8%); with the saboteur at 0.35 nobody is below a third. At the top the politician (2.38, +3.9%, sd 4.6%) and the necromancer (2.33, -3.3%, sd 12.4%) are both a little lower but still above 2, for the reasons of the last round: the politician is the best seller (sale BP per turn 35.4, 29% exact) with a small spread, and the necromancer wins on its spread, not its mean. The new content's draws are mixed into these figures (see the italic note), so read the top two as unchanged.
-2. **Is win share the right target?** Read by mean place and BP against the town mean the field is fair and slightly tighter at the sellers' end: eleven of twelve personalities are within 4% of their towns' mean (the politician and the tycoon at +3.9% and +4.0% the highest, the saboteur alone outside at -7.8%), and mean places run from 2.92 to 6.38. Win share in an eight-seat field rewards the top of a distribution, so it punishes low variance as much as a low mean. The target is kept as written and reported as missed; the proposal to judge Expanded by mean place and BP stands (below).
-3. **The late upgrades.** The Garden is now bought by 27% of seats on day 20.2 (was 8% on day 26.0) and returns +54 BP a day once owned (se 3.3), 0.022 BP a dollar over the season: about twice a monument, the level at which round 14 still cut the Billboard. Measured at 60 towns, listing it straight after the storeroom (day 15) lifted the organiser further (+2.1% of its towns' mean) but made the Garden 0.028 BP a dollar, three times a monument, so the shipped lists put it just before the lab. If the owner wants it at a monument's rate, its income shift (+4) or price ($20,000 with a $4,000 permit) is the lever (rules doc 7.2, not changed here). The Night Watchman moved only from day 25.7 to 24.7 (13% of seats): it needs the guard dog and the $16,000 alarm, which only Soft Touch and the saboteur buy, and its daily return is now within noise of zero (-5.5 BP a day, se 5.8; measured against the same personality's seats that bought the florist cooler or the lab instead). Moving it ahead of the florist cooler at 60 towns made that worse (-40 BP a day), so it stays a defence buy. The Billboard 0.010, monuments 0.010, tithes 0.009.
-4. **Karma paths.** On wins: evil 1.29, good 1.08, neutral 0.82 (was 1.29, 1.23, 0.70). On BP against the town mean: good +1.0%, neutral +1.2%, evil -4.7%. Evil is the necromancer and the saboteur: the lowest mean and the widest spread.
-5. **Late starters** (round 16, not re-run): with `underdog.late.money` a day-10 parlor finished 5.10th of 9, 58% in the top half.
-6. **Hits.** 787 resolved, 609 landed (77%); 329 vests and 114 bodyguards bought on a rumour. Hits return 0.004 BP of the victim's per dollar: a grudge, not a points engine.
-7. **The day is still long.** 352 screens a bot-day, 191 of them choices, for 16.1 customers. Nothing here shortens it; the proposals that would are below, not applied, because they change how the game feels.
-8. **Two levers tried and not applied.** (a) *A per-day cap on parlor-fight BP gained* (the last baseline's idea for the necromancer's spread). Counting every bot-day of 12 towns: the necromancer's parlor-fight BP never passes 109 a day (one win at the 95-BP curve cap x1.15), the gambler's 95 to 118; the saboteur's median fight day is 136 and its 90th percentile 218. A cap of 150 would take nothing from the necromancer and about 470 BP a season (13% of its fight BP, about 2.5% of its season) from the saboteur, already last; a cap of 100 takes 30 to 50 from the necromancer and 1,200 from the saboteur. The necromancer's spread comes from how many days it fights and wins (its season's fight BP has an sd of 400 to 730 and correlates 0.55 to 0.76 with its place against the town mean), not from lucky single days, so no daily cap reaches it without hitting the saboteur harder. Not applied. (b) *`scoring.exact.share` 0.5 -> 0.4* (60 towns, against the same run at 0.5): the politician's BP a day fell 0.3% but the town's mean fell 1.2%, so it rose against its towns (+4.0% -> +5.0%); the scholar fell 2.0 points against its towns (+1.7% -> -0.3%), the saint 1.9, the builder 0.4. It fails the condition (bring the politician down without costing a neutral seller more than a point). Not applied; `scoring.exact.share` stays 0.5.
-9. **Hidden information and no-fighter towns** (previous baselines, not re-run): the oracle makes about 13% more a customer and finishes 11.6% higher; without fighters the same parlors finish about 4% higher.
+1. **The places are money sinks for most, a small gain for the tycoon.** Over a season a bot pays $1,700 (Mourne & Sons) to $27,000 (the pawn shop's second-hand caskets, which replace Di-Mart stock) at the new counters and the town's mean BP falls 0.7%. Only the tycoon comes out even: its oven slots (+$8,600 saved wholesale against $7,600 paid), its bouquets (+$7,900 earned against $4,900) and its patrol (the fights it loses fall from 323 to 246 BP) pay back, and the rest of the field loses the same ground, so it moves from +4.0% to +6.6% of its town's BP and from 1.56 to 3.25 of its share. Leaving out the pawn shop (200 towns, `--places-off pawn`) leaves it at +7.2%; leaving out the oven and the florist, +6.0%: no single place explains it, the places together lift the one parlor that sells many cremations, stocks the most and pays the most for protection. Not tuned further this round: every number that would lower it (oven price, bouquet payout) also lowers the shark, the other cremation seller, which sits at -0.2%.
+2. **Win share is noise at this size, BP against the mean is the measure.** The same personality's wins moved by up to 20 (the politician 41 -> 21 -> 25 -> 27 over the three round-19 runs) while its BP against the mean stayed at +3.5 to +3.9%. The seats below a third (Soft Touch 0.19, scholar 0.11, saboteur 0.29) are at -0.6%, -0.4% and -8.8% of the town mean; the first two are inside the spread the places themselves add; the saboteur is the only one that really fell (-7.8% -> -8.8%), because it is the parlor that gets reported (the Police Station's fine, now $600, comes out of its cash). The proposal to judge Expanded by mean place and BP stands.
+3. **The politician and the necromancer.** The politician: 2.38 -> 1.57 wins of its share but BP +3.9% -> +3.9% of its town (unchanged); it buys the puff piece (+2 word of mouth, $2,500) every few days and a church wreath never, and the places neither help nor hurt it. The necromancer: 2.33 -> 2.33, -3.3% -> -2.4%; it is the heaviest user of the new places (complaint, smear, pawned loot, the quiet favour and the settlements) and they cost it about $36,000 a season, $11,000 of it stock that replaces Di-Mart's, and its BP against the town mean rose from -3.3% to -2.4%. Neither pending proposal in this file was applied; the new places move neither number enough to change the recommendation.
+4. **The eight places one by one** (the table below the system tables). Used by seats / net dollars a season: Police Station 88% of seats, -$3,900 (a patrol or back door after repeat attacks; reports and settlements pay back $3,600); Crematorium 29%, **+$3,100** (the oven pays for the two parlors with many cremations, ashes are small change); Florist 41%, **+$1,800** (bouquets: 21,427 used, earned $3.4M against about $2.2M paid; the wreath for the church is the **one dead choice**, 9 presses in 200 towns, because the good parlors are already above its karma line); Town Gazette 33%, -$11,300 (adverts and smears: the only place whose spend buys nothing measurable for the payer); Coroner 85%, -$6,100 (the certificate: +5.9 word of mouth a user; the tip; the quiet favour is now a small, rating-gated income for the evil path); Health Department 91%, -$3,300 (+3.9 word of mouth a user); Pawn 75%, -$21,800 of which most is stock that replaces Di-Mart's (loot pays back $5,600); Mourne & Sons 92%, -$1,700 and +15 karma a user: the **free** "hold your prices" (+1 karma a day) is the one action that costs nothing and was pressed 35,467 times; it is why Mournes users gain karma a season, not a BP source. None returns BP a dollar like a monument (0.010): the three that return money (oven, florist, pawned loot) return $1.5 to $1.9 a dollar to the parlors they suit and nothing to the others, and the places that cost money give back word of mouth, karma, luck or a rival's loss.
+5. **No anti-PvP lock.** A patrol or the back door was bought on 5,004 of 48,000 seat-nights (10%, by 337 and 389 seats); parlor attacks (11,112 -> 10,982), break-ins (6,694 -> 6,654) and duels (8,618 -> 8,452) barely moved, and hits that landed fell 13% (609 -> 529) because a patrol foils a hit. The police blotter recorded 16,304 attacks, 14,655 of them answered with a report or a settlement (a rival is fined at most $600 and pays at most $400 in a settlement, so at most $7.5M changed hands in 200 towns, against about $500M of sales). The report and the settlement are the cost of fighting, not an engine for BP.
+6. **Second-hand caskets are not a money pump.** At 80% of Di-Mart's price for 80% to 90% of the caskets (the bad-lot chance falls with luck) the saving is 0% at luck 50 and 11% at luck 100; no check flagged money, tags or BP from the pawn shop, and the shark and the tycoon, the biggest buyers, finish at -0.2% and +6.6% with it and +7.2% (tycoon) without.
+7. **Coroner's quiet favour and the gazette's smear were the two free-griefing risks, and both are gated.** In the first run the favour (+$700 a day, -2 word of mouth 40% of the time) paid the evil styles $20,000 a season and pushed the necromancer to 3.49 of its share (60 towns) and the saboteur's word of mouth to the floor (-24 a season in round 19a); it now pays $300 (50% to cost 3 word of mouth) and a bot only signs a body over while its rating is 45 or more and not two days running. A smear costs $2,500 and -3 karma for -2 word of mouth on a rival 65% of the time, a complaint $1,500 (karma 30 or less): 898 smears and 1,038 complaints in 200 towns (about 10 a town), used by the evil and cutthroat styles that pick a grudge or the leader.
+8. **Late starters, hidden information, the oracle, no-fighter towns, the late joiner** (previous baselines, not re-run): nothing in the eight places depends on them.
 
 ### Recommended next tuning and proposals (for the owner to decide; nothing here was applied)
 
 | proposal | evidence |
 | --- | --- |
-| Accept win share as missed for a tight field and judge the Expanded balance on mean place and BP against the town mean (both within the bands above), or widen the sellers' variance by design (for example a larger closeness bonus with a smaller base, so a careful seller's best seasons stand out) | reading 1 and 2: the bottom is now met, the top two are a low-spread seller and a high-spread fighter |
-| The Memorial Garden at a monument's rate: income shift +4 -> +2, or its price up, now that the bots buy it on day 20 | reading 3: 0.022 BP a dollar, +54 BP a day once owned |
-| The necromancer's spread: not a daily cap (reading 8a); if it must come down, the levers are the number of fights it can win in a season or its duel stake, both of which also reach the saboteur, or accepting it as the fighter's character | reading 8a |
-| The politician: neither office nor `scoring.exact.share` brings it down (reading 8b); its lead is its selling on the good path's calm customers. Leave it, or look at the good path's customer calm (`customer.calm`) with the saint and the pacifist in mind | readings 1 and 8b |
-| Shorter days without less depth (changes how the game feels; not applied): a standing order at Di-Mart (keep the storeroom at a chosen mix each morning: about 11 store screens a day become one choice a season), a default for body preparation that follows the player's karma path (one press instead of a choice after 40% of sales, with the full choice one tap away), the hand of soft-sell cards and the packages shown on the negotiation screen instead of separate panes (about 5 pane changes a customer), and reading all mail on one screen | 352 screens, 191 choices for 16 customers a day |
+| Stop the free karma: Mourne & Sons' "hold your prices" gives +1 karma a day for nothing (35,467 presses, +15 karma a user). A price (even $100), a once-a-week limit, or +1 only when it was the cheaper stand would make it a choice, not a free action | reading 4 |
+| The tycoon: the eight places lifted it +2.6 points of its town's BP (1.56 -> 3.25 of its share). The levers are the oven slot price ($900, saves about $1,125) and the bouquet payout (60% of the line, at most $300), both of which also reach the shark; or accept it as the character that sells the most cremations and carries the biggest storeroom | reading 1 |
+| The church wreath is dead (9 presses): lower its price, or give the good styles a reason (the ward wreath's luck for the gambler) | reading 4 |
+| Accept win share as missed for a tight field and judge the Expanded balance on mean place and BP against the town mean (both within the bands above), or widen the sellers' variance by design | reading 2; unchanged since the last baseline |
+| The Memorial Garden at a monument's rate; the necromancer's spread; the politician; shorter days without less depth | unchanged since the round-17 baseline (not re-measured here): see that round's entries in `expanded-tuning-log.md` |
 
 ### What the bots cannot tell us
 
-See the last section of the generated tables, "What only human playtesting can answer".
+See the last section of the generated tables, "What only human playtesting can answer". The eight new places add three questions for people: whether the Gazette's smear and the Health Department's complaint feel like sport or like griefing to the parlor on the end of them, whether a free +1 karma a day at the Mournes feels like a loophole, and whether the Police Station's report (a public fine) is satisfying after a beating.
 
 ---
 
-Generated by `@fq/sim`: 200 towns of 8 bots, 30 days each, difficulty hard, base seed 1. 16,872,159 actions in 1853 s.
+Generated by `@fq/sim`: 200 towns of 8 bots, 30 days each, difficulty hard, base seed 1. 17,461,726 actions in 1751 s.
 
 **Checks: passed.** No invariant breaks, rejected offered buttons, exploit signatures or stuck bots.
 
@@ -58,18 +54,18 @@ Generated by `@fq/sim`: 200 towns of 8 bots, 30 days each, difficulty hard, base
 
 | personality | seats | wins | win rate | fair share | mean final BP | mean place |
 | --- | --- | --- | --- | --- | --- | --- |
-| politician | 138 | 41 | 29.7% | 12.5% | 20344.7 | 3.04 |
-| necromancer | 134 | 39 | 29.1% | 12.5% | 18916.3 | 4.76 |
-| tycoon | 123 | 24 | 19.5% | 12.5% | 20483.2 | 2.92 |
-| pacifist | 142 | 21 | 14.8% | 12.5% | 20047.9 | 4.00 |
-| shark | 130 | 14 | 10.8% | 12.5% | 19427.7 | 4.67 |
-| scholar | 145 | 13 | 9.0% | 12.5% | 19793.1 | 4.52 |
-| gambler | 133 | 10 | 7.5% | 12.5% | 19120.2 | 5.30 |
-| builder | 128 | 9 | 7.0% | 12.5% | 19946.0 | 4.22 |
-| saint | 122 | 8 | 6.6% | 12.5% | 19865.7 | 4.27 |
-| organiser | 140 | 8 | 5.7% | 12.5% | 19803.8 | 4.56 |
-| mourner | 128 | 7 | 5.5% | 12.5% | 19383.1 | 5.27 |
-| saboteur | 137 | 6 | 4.4% | 12.5% | 17726.7 | 6.38 |
+| tycoon | 123 | 50 | 40.7% | 12.5% | 20813.8 | 2.33 |
+| necromancer | 134 | 39 | 29.1% | 12.5% | 18964.6 | 4.54 |
+| politician | 138 | 27 | 19.6% | 12.5% | 20200.6 | 3.07 |
+| pacifist | 142 | 24 | 16.9% | 12.5% | 19987.9 | 3.88 |
+| shark | 130 | 17 | 13.1% | 12.5% | 19289.2 | 4.50 |
+| saint | 122 | 11 | 9.0% | 12.5% | 19762.7 | 4.01 |
+| builder | 128 | 9 | 7.0% | 12.5% | 19705.7 | 4.27 |
+| gambler | 133 | 8 | 6.0% | 12.5% | 18779.1 | 5.75 |
+| saboteur | 137 | 5 | 3.6% | 12.5% | 17435.3 | 6.64 |
+| organiser | 140 | 5 | 3.6% | 12.5% | 19716.4 | 4.54 |
+| mourner | 128 | 3 | 2.3% | 12.5% | 19303.2 | 5.16 |
+| scholar | 145 | 2 | 1.4% | 12.5% | 19409.2 | 5.08 |
 
 ## BP by personality
 
@@ -77,44 +73,44 @@ BP/turn counts only turns spent on customers; BP/day includes risks, events, mai
 
 | personality | player-days | BP/day | BP/turn | sale BP/turn | fight BP/day | turns/day | sales/day | walkouts | exact | within 3% | within 8% | bonus share of sale BP | price/limit | risks taken | risk BP/day |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| tycoon | 3690 | 690.0 | 41.33 | 34.98 | 0.0 | 16.7 | 16.3 | 0.0% | 24.1% | 17.0% | 9.8% | 23.7% | 0.74 | 94.3% | 66.3 |
-| politician | 4140 | 673.9 | 42.65 | 35.42 | 0.0 | 15.8 | 15.5 | 0.0% | 29.3% | 18.5% | 10.4% | 26.6% | 0.78 | 92.2% | 61.6 |
-| builder | 3840 | 667.8 | 39.20 | 33.76 | 0.0 | 17.0 | 16.6 | 0.0% | 21.1% | 15.6% | 9.5% | 21.9% | 0.72 | 94.1% | 65.8 |
-| organiser | 4200 | 663.8 | 39.61 | 33.97 | 0.0 | 16.8 | 16.4 | 0.0% | 23.4% | 16.4% | 10.0% | 23.5% | 0.74 | 93.2% | 65.6 |
-| scholar | 4350 | 663.4 | 39.71 | 34.08 | 0.0 | 16.7 | 16.3 | 0.0% | 24.8% | 16.5% | 9.7% | 24.8% | 0.74 | 93.4% | 66.4 |
-| shark | 3900 | 660.5 | 37.79 | 34.07 | 0.0 | 17.5 | 17.0 | 0.4% | 22.5% | 15.8% | 9.5% | 23.3% | 0.72 | 81.1% | 50.8 |
-| saint | 3660 | 659.7 | 42.65 | 34.25 | 0.0 | 15.5 | 15.1 | 0.0% | 27.8% | 17.2% | 9.8% | 26.0% | 0.76 | 91.6% | 59.0 |
-| pacifist | 4260 | 656.8 | 41.16 | 33.71 | 0.0 | 16.0 | 15.6 | 0.0% | 28.5% | 17.8% | 10.3% | 27.4% | 0.77 | 88.1% | 58.3 |
-| gambler | 3990 | 640.5 | 40.66 | 33.43 | 21.2 | 15.8 | 15.4 | 0.1% | 26.1% | 18.1% | 11.7% | 25.5% | 0.77 | 75.0% | 44.4 |
-| mourner | 3840 | 640.2 | 40.53 | 33.96 | 0.0 | 15.8 | 15.5 | 0.0% | 26.5% | 17.4% | 9.9% | 25.2% | 0.75 | 85.1% | 56.2 |
-| necromancer | 4020 | 629.0 | 40.12 | 32.61 | 31.4 | 15.7 | 15.4 | 0.2% | 25.0% | 17.6% | 11.8% | 25.2% | 0.77 | 64.1% | 36.5 |
-| saboteur | 4110 | 580.3 | 39.61 | 25.56 | 131.0 | 14.6 | 14.4 | 0.0% | 15.6% | 11.8% | 9.5% | 20.2% | 0.66 | 68.2% | 39.2 |
+| tycoon | 3690 | 695.3 | 41.66 | 35.32 | 0.0 | 16.7 | 16.3 | 0.0% | 24.9% | 17.1% | 9.6% | 24.0% | 0.75 | 93.4% | 65.8 |
+| politician | 4140 | 670.5 | 42.54 | 35.47 | 0.0 | 15.8 | 15.4 | 0.0% | 29.1% | 18.7% | 10.4% | 26.5% | 0.78 | 92.4% | 62.1 |
+| builder | 3840 | 663.5 | 39.02 | 33.55 | 0.0 | 17.0 | 16.6 | 0.0% | 21.5% | 15.9% | 9.6% | 22.2% | 0.72 | 93.5% | 65.9 |
+| organiser | 4200 | 662.1 | 39.56 | 34.04 | 0.0 | 16.7 | 16.4 | 0.0% | 23.5% | 16.3% | 9.9% | 23.4% | 0.74 | 93.4% | 63.3 |
+| saint | 3660 | 656.0 | 42.47 | 34.37 | 0.0 | 15.4 | 15.1 | 0.0% | 27.5% | 17.5% | 10.0% | 25.8% | 0.76 | 91.5% | 58.8 |
+| pacifist | 4260 | 654.6 | 41.06 | 33.69 | 0.0 | 15.9 | 15.6 | 0.0% | 28.7% | 18.0% | 10.2% | 27.5% | 0.77 | 88.3% | 57.8 |
+| shark | 3900 | 651.6 | 37.26 | 33.79 | 0.0 | 17.5 | 17.0 | 0.4% | 22.8% | 15.9% | 9.6% | 23.5% | 0.73 | 79.0% | 48.8 |
+| scholar | 4350 | 651.5 | 39.06 | 33.62 | 0.0 | 16.7 | 16.3 | 0.0% | 24.9% | 16.4% | 9.6% | 24.9% | 0.74 | 93.7% | 64.5 |
+| mourner | 3840 | 638.1 | 40.44 | 33.76 | 0.0 | 15.8 | 15.4 | 0.0% | 26.4% | 16.9% | 9.9% | 25.2% | 0.75 | 88.4% | 58.9 |
+| gambler | 3990 | 632.2 | 40.21 | 33.27 | 21.1 | 15.7 | 15.4 | 0.1% | 26.2% | 18.0% | 11.9% | 25.6% | 0.78 | 72.9% | 42.9 |
+| necromancer | 4020 | 627.2 | 39.95 | 32.44 | 32.6 | 15.7 | 15.3 | 0.1% | 25.2% | 17.4% | 11.9% | 25.2% | 0.77 | 66.0% | 36.6 |
+| saboteur | 4110 | 571.0 | 38.98 | 25.41 | 126.9 | 14.6 | 14.4 | 0.0% | 15.6% | 11.7% | 9.6% | 20.2% | 0.66 | 67.7% | 38.5 |
 
 ## BP by psych level (as the stats sheet shows it, at the start of the day)
 
 | psych | player-days | BP/day | BP/turn | sale BP/turn | fight BP/day | turns/day | sales/day | walkouts | exact | within 3% | within 8% | bonus share of sale BP | price/limit | risks taken | risk BP/day |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 6703 | 491.2 | 32.79 | 25.59 | 63.5 | 15.0 | 14.9 | 0.1% | 16.4% | 11.7% | 9.8% | 20.7% | 0.67 | 60.2% | 31.8 |
-| 2 | 1663 | 443.1 | 29.35 | 26.14 | 12.2 | 15.1 | 14.8 | 0.1% | 17.4% | 12.3% | 10.8% | 21.1% | 0.69 | 60.0% | 26.5 |
-| 3 | 3005 | 518.8 | 34.10 | 28.27 | 30.8 | 15.2 | 14.9 | 0.0% | 20.6% | 13.7% | 10.7% | 23.0% | 0.71 | 76.8% | 38.1 |
-| 4 | 7727 | 567.4 | 35.43 | 30.15 | 6.0 | 16.0 | 15.6 | 0.1% | 22.7% | 15.4% | 10.8% | 24.3% | 0.73 | 86.1% | 51.7 |
-| 5 | 4294 | 599.3 | 36.82 | 31.50 | 2.3 | 16.3 | 15.9 | 0.1% | 24.4% | 16.0% | 10.6% | 25.0% | 0.74 | 91.2% | 61.2 |
-| 6 | 4736 | 656.9 | 39.68 | 33.46 | 7.8 | 16.6 | 16.1 | 0.1% | 26.7% | 17.6% | 10.7% | 25.9% | 0.76 | 86.0% | 62.5 |
-| 7 | 4174 | 714.7 | 42.84 | 35.80 | 7.4 | 16.7 | 16.2 | 0.1% | 28.0% | 18.8% | 10.3% | 26.0% | 0.78 | 91.3% | 66.7 |
-| 8 | 15698 | 805.8 | 48.26 | 39.26 | 5.5 | 16.7 | 16.3 | 0.0% | 28.5% | 19.5% | 9.5% | 25.2% | 0.78 | 95.3% | 68.3 |
+| 1 | 6651 | 487.0 | 32.54 | 25.50 | 61.5 | 15.0 | 14.9 | 0.1% | 16.2% | 11.6% | 9.8% | 20.5% | 0.67 | 59.9% | 31.5 |
+| 2 | 1668 | 440.2 | 29.13 | 26.02 | 11.2 | 15.1 | 14.8 | 0.1% | 17.5% | 12.1% | 10.7% | 21.1% | 0.69 | 60.4% | 28.1 |
+| 3 | 3072 | 518.3 | 34.11 | 28.34 | 30.5 | 15.2 | 14.9 | 0.0% | 20.8% | 13.9% | 10.6% | 23.2% | 0.71 | 75.7% | 38.2 |
+| 4 | 7718 | 567.1 | 35.39 | 30.13 | 6.2 | 16.0 | 15.6 | 0.1% | 23.0% | 15.5% | 10.8% | 24.5% | 0.73 | 86.2% | 51.6 |
+| 5 | 4301 | 594.9 | 36.53 | 31.29 | 2.5 | 16.3 | 15.9 | 0.1% | 24.5% | 16.0% | 10.5% | 25.1% | 0.74 | 92.3% | 60.4 |
+| 6 | 4769 | 651.2 | 39.42 | 33.38 | 8.0 | 16.5 | 16.1 | 0.1% | 26.3% | 17.6% | 10.9% | 25.6% | 0.76 | 85.2% | 60.6 |
+| 7 | 4087 | 709.3 | 42.58 | 35.81 | 7.9 | 16.7 | 16.2 | 0.1% | 28.5% | 18.6% | 10.3% | 26.2% | 0.78 | 91.0% | 64.2 |
+| 8 | 15734 | 799.0 | 47.92 | 39.10 | 5.5 | 16.7 | 16.2 | 0.0% | 28.7% | 19.5% | 9.6% | 25.3% | 0.78 | 95.7% | 68.1 |
 
 ## The exact match
 
-186134 of 757649 sales (24.6%) hit the spending limit exactly: 116.33 per player per 30 days. All closeness bonuses (exact, within 3%, within 8%) are the "bonus share" column above.
+186863 of 756874 sales (24.7%) hit the spending limit exactly: 116.79 per player per 30 days. All closeness bonuses (exact, within 3%, within 8%) are the "bonus share" column above.
 
 ## Wait for Customer outcomes
 
 | outcome | count | share |
 | --- | --- | --- |
-| customer | 774997 | 80.5% |
-| event | 75108 | 7.8% |
-| risk | 73283 | 7.6% |
-| script | 39651 | 4.1% |
+| customer | 774284 | 80.5% |
+| event | 75015 | 7.8% |
+| risk | 72338 | 7.5% |
+| script | 39688 | 4.1% |
 | noTurns | 0 | 0.0% |
 
 ## Tags
@@ -123,74 +119,74 @@ Income by source:
 
 | category | gold-tag equivalents | share |
 | --- | --- | --- |
-| sales | 445482.5 | 93.6% |
-| theft | 15484.8 | 3.3% |
-| bonus tag | 11599.0 | 2.4% |
-| other | 1660.0 | 0.3% |
-| received | 1023.0 | 0.2% |
-| black market | 565.0 | 0.1% |
+| sales | 444103.0 | 93.7% |
+| theft | 15199.0 | 3.2% |
+| bonus tag | 11577.3 | 2.4% |
+| other | 1643.5 | 0.3% |
+| received | 1003.5 | 0.2% |
+| black market | 589.0 | 0.1% |
 
 Spending and losses by use:
 
 | category | gold-tag equivalents | share |
 | --- | --- | --- |
-| psych | 165048.0 | 51.7% |
-| hearse | 83370.0 | 26.1% |
-| strength | 23520.0 | 7.4% |
-| stolen | 15484.8 | 4.9% |
-| hp | 14885.0 | 4.7% |
-| club cover | 6973.5 | 2.2% |
-| arson | 4560.0 | 1.4% |
-| bingo | 2481.3 | 0.8% |
-| transfers | 1364.0 | 0.4% |
-| burned | 1258.0 | 0.4% |
+| psych | 165052.0 | 51.9% |
+| hearse | 83559.0 | 26.3% |
+| strength | 23709.0 | 7.5% |
+| stolen | 15199.0 | 4.8% |
+| hp | 14947.0 | 4.7% |
+| club cover | 6373.0 | 2.0% |
+| arson | 4302.0 | 1.4% |
+| bingo | 2462.8 | 0.8% |
+| transfers | 1338.0 | 0.4% |
+| burned | 1193.3 | 0.4% |
 
 | personality | arson | bingo | burned | club cover | hearse | hp | psych | stolen | strength | transfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| gambler | 0.0 | 2422.0 | 127.0 | 1005.8 | 9077.0 | 0.0 | 14896.0 | 1584.5 | 4788.0 | 0.0 |
-| shark | 0.0 | 0.0 | 363.0 | 1624.0 | 16120.0 | 0.0 | 14232.0 | 1768.5 | 0.0 | 0.0 |
-| saint | 0.0 | 59.3 | 20.8 | 1071.0 | 4148.0 | 0.0 | 13664.0 | 1354.8 | 0.0 | 594.0 |
-| scholar | 0.0 | 0.0 | 36.8 | 1443.5 | 10005.0 | 0.0 | 16240.0 | 849.8 | 0.0 | 0.0 |
-| mourner | 0.0 | 0.0 | 33.5 | 0.0 | 8832.0 | 0.0 | 14336.0 | 691.8 | 0.0 | 770.0 |
-| politician | 0.0 | 0.0 | 101.3 | 23.5 | 4692.0 | 0.0 | 15456.0 | 2073.0 | 0.0 | 0.0 |
-| organiser | 0.0 | 0.0 | 105.0 | 11.8 | 4760.0 | 0.0 | 15680.0 | 1067.5 | 0.0 | 0.0 |
-| builder | 0.0 | 0.0 | 50.0 | 3.3 | 8832.0 | 0.0 | 14336.0 | 958.3 | 0.0 | 0.0 |
+| gambler | 0.0 | 2406.8 | 91.0 | 983.8 | 9136.0 | 0.0 | 14896.0 | 1852.3 | 4788.0 | 0.0 |
+| shark | 0.0 | 0.0 | 392.8 | 1030.3 | 16120.0 | 0.0 | 14148.0 | 1409.5 | 0.0 | 0.0 |
+| saint | 0.0 | 56.0 | 16.0 | 1102.8 | 4148.0 | 0.0 | 13664.0 | 1288.5 | 0.0 | 571.0 |
+| scholar | 0.0 | 0.0 | 13.5 | 1438.8 | 10005.0 | 0.0 | 16240.0 | 1061.8 | 0.0 | 0.0 |
+| mourner | 0.0 | 0.0 | 34.5 | 0.0 | 8832.0 | 0.0 | 14336.0 | 815.5 | 0.0 | 767.0 |
+| politician | 0.0 | 0.0 | 87.5 | 39.8 | 4692.0 | 0.0 | 15456.0 | 2261.8 | 0.0 | 0.0 |
+| organiser | 0.0 | 0.0 | 71.5 | 13.3 | 4760.0 | 0.0 | 15680.0 | 1271.5 | 0.0 | 0.0 |
+| builder | 0.0 | 0.0 | 48.8 | 5.3 | 8832.0 | 0.0 | 14336.0 | 1104.5 | 0.0 | 0.0 |
 | pacifist | 0.0 | 0.0 | 0.0 | 0.0 | 4828.0 | 0.0 | 15904.0 | 0.0 | 0.0 | 0.0 |
-| necromancer | 0.0 | 0.0 | 397.0 | 104.8 | 4556.0 | 0.0 | 15008.0 | 1996.3 | 7236.0 | 0.0 |
-| tycoon | 0.0 | 0.0 | 23.8 | 1540.3 | 4182.0 | 0.0 | 13776.0 | 1098.8 | 0.0 | 0.0 |
-| saboteur | 4560.0 | 0.0 | 0.0 | 145.8 | 3338.0 | 14885.0 | 1520.0 | 2041.8 | 11496.0 | 0.0 |
+| necromancer | 0.0 | 0.0 | 403.5 | 94.5 | 4556.0 | 0.0 | 15008.0 | 1682.5 | 7236.0 | 0.0 |
+| tycoon | 0.0 | 0.0 | 34.3 | 1538.0 | 4182.0 | 0.0 | 13776.0 | 850.3 | 0.0 | 0.0 |
+| saboteur | 4302.0 | 0.0 | 0.0 | 126.8 | 3468.0 | 14947.0 | 1608.0 | 1601.0 | 11685.0 | 0.0 |
 
 ## PvP
 
 | measure | value |
 | --- | --- |
-| visits (doors reached) | 18919 |
+| visits (doors reached) | 18559 |
 | visits per player-day | 0.39 |
-| refused at the door (online, police, locked) | 1113 |
-| thefts | 6694 |
-| tags per theft | 1.43 |
-| battles started | 11112 |
-| attacker wins / losses | 9690 / 1128 (89.6%) |
-| BP won by winning attackers | 793403 |
-| BP lost by losing attackers | 44417 |
-| arsons hired / stopped by a smoke detector | 760 / 0 |
-| Cursed Tigers / Lucky Sparrows / Lucky Dragons | 8010 / 896 / 2532 |
+| refused at the door (online, police, locked) | 923 |
+| thefts | 6654 |
+| tags per theft | 1.41 |
+| battles started | 10982 |
+| attacker wins / losses | 9651 / 1049 (90.2%) |
+| BP won by winning attackers | 777716 |
+| BP lost by losing attackers | 41041 |
+| arsons hired / stopped by a smoke detector | 717 / 0 |
+| Cursed Tigers / Lucky Sparrows / Lucky Dragons | 8010 / 896 / 2474 |
 
 BP lost to other parlors' attacks, per player-day, by the victim's personality:
 
 | personality | BP lost per day |
 | --- | --- |
-| shark | 20.2 |
-| necromancer | 13.7 |
-| gambler | 12.4 |
-| tycoon | 10.8 |
-| politician | 8.8 |
-| organiser | 8.6 |
-| builder | 7.8 |
-| scholar | 7.2 |
-| saint | 6.8 |
-| mourner | 2.6 |
-| saboteur | 0.4 |
+| shark | 16.2 |
+| gambler | 14.4 |
+| necromancer | 10.9 |
+| builder | 10.6 |
+| organiser | 9.6 |
+| politician | 9.4 |
+| scholar | 8.6 |
+| tycoon | 8.1 |
+| saint | 6.1 |
+| mourner | 3.0 |
+| saboteur | 0.3 |
 
 ## Snowball
 
@@ -198,198 +194,198 @@ At the end the leader has 1.07x the median parlor's BP.
 
 | after day | leader went on to win |
 | --- | --- |
-| 1 | 21.0% |
+| 1 | 22.0% |
 | 3 | 23.5% |
-| 5 | 22.5% |
-| 10 | 38.5% |
-| 15 | 50.5% |
-| 20 | 56.5% |
-| 25 | 67.0% |
+| 5 | 30.0% |
+| 10 | 38.0% |
+| 15 | 44.5% |
+| 20 | 53.5% |
+| 25 | 71.5% |
 
 | leader after day | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 19 | 16 | 10 | 29 | 30 | 10 | 18 | 13 | 10 | 12 | 18 | 15 |
-| 5 | 17 | 10 | 12 | 18 | 20 | 18 | 35 | 8 | 20 | 10 | 11 | 21 |
-| 10 | 10 | 3 | 9 | 14 | 9 | 22 | 66 | 8 | 30 | 8 | 6 | 15 |
-| 15 | 7 | 3 | 14 | 24 | 5 | 22 | 66 | 8 | 29 | 5 | 5 | 12 |
-| 20 | 7 | 6 | 11 | 28 | 5 | 31 | 56 | 9 | 27 | 7 | 8 | 5 |
-| 25 | 7 | 10 | 6 | 37 | 9 | 28 | 37 | 7 | 16 | 7 | 8 | 28 |
-| 30 | 9 | 10 | 7 | 39 | 8 | 21 | 41 | 6 | 8 | 13 | 14 | 24 |
+| 5 | 13 | 9 | 11 | 14 | 16 | 17 | 42 | 9 | 21 | 10 | 17 | 21 |
+| 10 | 10 | 5 | 12 | 11 | 8 | 25 | 56 | 10 | 28 | 5 | 8 | 22 |
+| 15 | 4 | 4 | 14 | 19 | 4 | 29 | 62 | 7 | 29 | 1 | 4 | 23 |
+| 20 | 2 | 6 | 13 | 28 | 5 | 28 | 59 | 5 | 27 | 0 | 9 | 18 |
+| 25 | 4 | 8 | 7 | 30 | 8 | 30 | 41 | 5 | 14 | 2 | 12 | 39 |
+| 30 | 9 | 8 | 3 | 39 | 5 | 24 | 27 | 5 | 11 | 2 | 17 | 50 |
 
 | day | leader BP | runner-up | median | leader / median | lead over runner-up |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 534.0 | 466.5 | 400.8 | 1.34 | 67.5 |
-| 5 | 2663.1 | 2475.0 | 2208.6 | 1.21 | 188.1 |
-| 10 | 5756.2 | 5427.3 | 4997.8 | 1.15 | 328.9 |
-| 15 | 9174.7 | 8731.3 | 8189.5 | 1.12 | 443.5 |
-| 20 | 12946.3 | 12452.5 | 11815.3 | 1.10 | 493.8 |
-| 25 | 17054.5 | 16518.0 | 15821.1 | 1.08 | 536.6 |
-| 30 | 21290.8 | 20638.8 | 19966.6 | 1.07 | 652.0 |
+| 5 | 2683.5 | 2481.5 | 2225.2 | 1.21 | 202.0 |
+| 10 | 5779.9 | 5421.6 | 5011.5 | 1.15 | 358.3 |
+| 15 | 9179.2 | 8707.1 | 8151.7 | 1.13 | 472.2 |
+| 20 | 12969.3 | 12406.9 | 11752.6 | 1.10 | 562.4 |
+| 25 | 17052.6 | 16428.8 | 15724.5 | 1.09 | 623.8 |
+| 30 | 21288.0 | 20597.2 | 19828.3 | 1.07 | 690.8 |
 
 ## Expanded: win rate by personality
 
 | personality | seats | wins | win rate | fair share | win / fair | mean final BP | mean place | BP vs town mean | sd of that |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| politician | 138 | 41 | 29.7% | 12.5% | 2.38 | 20,345 | 3.04 | +3.9% | 4.6% |
-| necromancer | 134 | 39 | 29.1% | 12.5% | 2.33 | 18,916 | 4.76 | -3.3% | 12.4% |
-| tycoon | 123 | 24 | 19.5% | 12.5% | 1.56 | 20,483 | 2.92 | +4.0% | 3.9% |
-| pacifist | 142 | 21 | 14.8% | 12.5% | 1.18 | 20,048 | 4.00 | +2.3% | 5.4% |
-| shark | 130 | 14 | 10.8% | 12.5% | 0.86 | 19,428 | 4.67 | -0.3% | 7.1% |
-| scholar | 145 | 13 | 9.0% | 12.5% | 0.72 | 19,793 | 4.52 | +0.8% | 4.4% |
-| gambler | 133 | 10 | 7.5% | 12.5% | 0.60 | 19,120 | 5.30 | -2.4% | 7.3% |
-| builder | 128 | 9 | 7.0% | 12.5% | 0.56 | 19,946 | 4.22 | +1.5% | 4.0% |
-| saint | 122 | 8 | 6.6% | 12.5% | 0.52 | 19,866 | 4.27 | +1.5% | 4.1% |
-| organiser | 140 | 8 | 5.7% | 12.5% | 0.46 | 19,804 | 4.56 | +0.7% | 4.5% |
-| mourner | 128 | 7 | 5.5% | 12.5% | 0.44 | 19,383 | 5.27 | -0.9% | 5.0% |
-| saboteur | 137 | 6 | 4.4% | 12.5% | 0.35 | 17,727 | 6.38 | -7.8% | 9.4% |
+| tycoon | 123 | 50 | 40.7% | 12.5% | 3.25 | 20,814 | 2.33 | +6.6% | 5.0% |
+| necromancer | 134 | 39 | 29.1% | 12.5% | 2.33 | 18,965 | 4.54 | -2.4% | 11.9% |
+| politician | 138 | 27 | 19.6% | 12.5% | 1.57 | 20,201 | 3.07 | +3.9% | 4.3% |
+| pacifist | 142 | 24 | 16.9% | 12.5% | 1.35 | 19,988 | 3.88 | +2.5% | 4.9% |
+| shark | 130 | 17 | 13.1% | 12.5% | 1.05 | 19,289 | 4.50 | -0.2% | 8.1% |
+| saint | 122 | 11 | 9.0% | 12.5% | 0.72 | 19,763 | 4.01 | +1.8% | 4.2% |
+| builder | 128 | 9 | 7.0% | 12.5% | 0.56 | 19,706 | 4.27 | +1.0% | 4.2% |
+| gambler | 133 | 8 | 6.0% | 12.5% | 0.48 | 18,779 | 5.75 | -3.6% | 7.4% |
+| saboteur | 137 | 5 | 3.6% | 12.5% | 0.29 | 17,435 | 6.64 | -8.8% | 8.6% |
+| organiser | 140 | 5 | 3.6% | 12.5% | 0.29 | 19,716 | 4.54 | +0.9% | 4.1% |
+| mourner | 128 | 3 | 2.3% | 12.5% | 0.19 | 19,303 | 5.16 | -0.6% | 4.7% |
+| scholar | 145 | 2 | 1.4% | 12.5% | 0.11 | 19,409 | 5.08 | -0.4% | 4.3% |
 
-Spread: mean final BP from 17,727 to 20,483 (2,757 BP, sd 712 around 19,572); mean place from 2.92 to 6.38.
+Spread: mean final BP from 17,435 to 20,814 (3,378 BP, sd 803 around 19,447); mean place from 2.33 to 6.64.
 
 ## Expanded: win rate by karma path (at the end of the season)
 
 | path | seats | wins | win rate | fair share | win / fair | mean final BP | mean place | BP vs town mean | sd of that |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| evil | 305 | 49 | 16.1% | 12.5% | 1.29 | 18,503 | 5.40 | -4.7% | 11.0% |
-| good | 573 | 77 | 13.4% | 12.5% | 1.08 | 19,747 | 4.37 | +1.0% | 5.8% |
-| neutral | 722 | 74 | 10.2% | 12.5% | 0.82 | 19,872 | 4.22 | +1.2% | 5.3% |
+| evil | 400 | 61 | 15.3% | 12.5% | 1.22 | 18,555 | 5.24 | -3.8% | 10.4% |
+| good | 632 | 81 | 12.8% | 12.5% | 1.03 | 19,666 | 4.22 | +1.2% | 6.0% |
+| neutral | 568 | 58 | 10.2% | 12.5% | 0.82 | 19,805 | 4.29 | +1.4% | 5.2% |
 
 | rivalry tier | seats | wins | win rate | fair share | win / fair | mean final BP | mean place | BP vs town mean | sd of that |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| peaceful | 142 | 21 | 14.8% | 12.5% | 1.18 | 20,048 | 4.00 | +2.3% | 5.4% |
-| standard | 1191 | 159 | 13.4% | 12.5% | 1.07 | 19,736 | 4.32 | +0.6% | 6.6% |
-| cutthroat | 267 | 20 | 7.5% | 12.5% | 0.60 | 18,555 | 5.55 | -4.1% | 9.2% |
+| peaceful | 142 | 24 | 16.9% | 12.5% | 1.35 | 19,988 | 3.88 | +2.5% | 4.9% |
+| standard | 1191 | 154 | 12.9% | 12.5% | 1.03 | 19,618 | 4.33 | +0.7% | 6.8% |
+| cutthroat | 267 | 22 | 8.2% | 12.5% | 0.66 | 18,338 | 5.60 | -4.6% | 9.4% |
 
 | PvP | seats | wins | win rate | fair share | win / fair | mean final BP | mean place | BP vs town mean | sd of that |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| fights (parlor, duel or hit) | 519 | 67 | 12.9% | 12.5% | 1.03 | 18,825 | 5.26 | -3.3% | 9.6% |
-| never fights | 1081 | 133 | 12.3% | 12.5% | 0.98 | 19,922 | 4.14 | +1.6% | 5.1% |
+| fights (parlor, duel or hit) | 519 | 65 | 12.5% | 12.5% | 1.00 | 18,626 | 5.36 | -3.7% | 9.6% |
+| never fights | 1081 | 135 | 12.5% | 12.5% | 1.00 | 19,827 | 4.09 | +1.8% | 5.3% |
 
 ## Expanded: the parlors at the end of the season
 
 | personality | final BP | cash | savings | karma | good / evil | upgrades | monuments | in a chain | mayor | BP lost to PvP | decisions / day | turns / day |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| builder | 19,946 | 8,510 | 0 | 49 | 1.6% / 0.0% | 8.1 | 2.9 | 65.6% | 0.0% | 414 | 346 | 17.1 |
-| gambler | 19,120 | 8,543 | 0 | 60 | 25.6% / 0.0% | 6.9 | 2.7 | 0.0% | 0.0% | 595 | 363 | 16.6 |
-| mourner | 19,383 | 4,744 | 0 | 100 | 100.0% / 0.0% | 7.9 | 2.3 | 70.3% | 0.0% | 196 | 342 | 16.7 |
-| necromancer | 18,916 | 13,200 | 0 | 1 | 0.0% / 100.0% | 6.7 | 3.3 | 0.0% | 0.0% | 721 | 363 | 17.2 |
-| organiser | 19,804 | 14,882 | 0 | 51 | 1.4% / 0.0% | 8.8 | 3.1 | 100.0% | 0.0% | 456 | 340 | 16.8 |
-| pacifist | 20,048 | 19,162 | 0 | 100 | 100.0% / 0.0% | 7.0 | 3.2 | 0.0% | 0.0% | 0 | 353 | 16.9 |
-| politician | 20,345 | 4,277 | 0 | 100 | 100.0% / 0.0% | 5.1 | 2.4 | 68.1% | 92.0% | 525 | 361 | 16.7 |
-| saboteur | 17,727 | 8,669 | 0 | 1 | 0.0% / 100.0% | 8.5 | 2.8 | 0.0% | 0.0% | 115 | 303 | 16.2 |
-| saint | 19,866 | 2,834 | 0 | 100 | 100.0% / 0.0% | 3.2 | 1.7 | 0.0% | 0.0% | 407 | 346 | 16.4 |
-| scholar | 19,793 | 7,796 | 0 | 50 | 2.1% / 0.0% | 8.1 | 2.9 | 0.0% | 0.0% | 395 | 339 | 16.7 |
-| shark | 19,428 | 42,526 | 0 | 35 | 0.0% / 26.2% | 8.4 | 4.3 | 0.0% | 0.0% | 737 | 404 | 17.5 |
-| tycoon | 20,483 | 66,463 | 0 | 48 | 1.6% / 0.0% | 8.0 | 5.0 | 0.0% | 0.0% | 661 | 360 | 16.7 |
+| builder | 19,706 | 7,511 | 0 | 60 | 5.5% / 0.0% | 7.7 | 2.8 | 65.6% | 0.0% | 516 | 356 | 17.0 |
+| gambler | 18,779 | 5,917 | 0 | 64 | 31.6% / 0.0% | 6.4 | 2.5 | 0.0% | 0.0% | 665 | 374 | 16.5 |
+| mourner | 19,303 | 3,494 | 0 | 100 | 100.0% / 0.0% | 6.9 | 2.2 | 70.3% | 0.0% | 196 | 350 | 16.7 |
+| necromancer | 18,965 | 15,920 | 0 | 1 | 0.0% / 100.0% | 6.3 | 3.2 | 0.0% | 0.0% | 611 | 379 | 17.2 |
+| organiser | 19,716 | 13,777 | 0 | 61 | 7.1% / 0.0% | 8.7 | 3.0 | 100.0% | 0.0% | 483 | 350 | 16.8 |
+| pacifist | 19,988 | 10,335 | 0 | 100 | 100.0% / 0.0% | 6.7 | 3.0 | 0.0% | 0.0% | 0 | 364 | 16.9 |
+| politician | 20,201 | 3,256 | 0 | 100 | 100.0% / 0.0% | 4.2 | 2.0 | 68.1% | 92.0% | 558 | 371 | 16.7 |
+| saboteur | 17,435 | 8,065 | 0 | 1 | 0.0% / 100.0% | 8.0 | 2.5 | 0.0% | 0.0% | 89 | 314 | 16.2 |
+| saint | 19,763 | 1,518 | 0 | 100 | 100.0% / 0.0% | 2.5 | 1.4 | 0.0% | 0.0% | 381 | 358 | 16.4 |
+| scholar | 19,409 | 7,452 | 0 | 57 | 2.8% / 0.0% | 7.7 | 2.7 | 0.0% | 0.0% | 408 | 346 | 16.7 |
+| shark | 19,289 | 44,478 | 0 | 3 | 0.0% / 99.2% | 8.2 | 4.3 | 0.0% | 0.0% | 599 | 429 | 17.9 |
+| tycoon | 20,814 | 47,466 | 0 | 66 | 31.7% / 0.0% | 8.0 | 4.9 | 0.0% | 0.0% | 531 | 378 | 16.7 |
 
-Decisions per bot-day across the town: 352 screens answered from log on to log off (the newspaper, every look at the hand of cards, every Back and every walk across the map included), of which 191 are choices (a pitch, a purchase, a vote: anything but looking and walking), for 16.1 customers a day.
+Decisions per bot-day across the town: 364 screens answered from log on to log off (the newspaper, every look at the hand of cards, every Back and every walk across the map included), of which 193 are choices (a pitch, a purchase, a vote: anything but looking and walking), for 16.1 customers a day.
 
 ## Expanded: selling
 
 | personality | sales / day | walkouts | exact | within 3% | within 8% | bonus share of sale BP | sale BP / customer | money / sale | actions / sale | cremations | listened | coffee | blessed | happy families | sour families |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| builder | 16.6 | 0.0% | 21.1% | 15.6% | 9.5% | 21.9% | 33.8 | 863 | 7.2 | 0.2% | 81.7% | 67.7% | 0.2% | 30.3% | 38.6% |
-| gambler | 15.4 | 0.1% | 26.1% | 18.1% | 11.7% | 25.5% | 33.4 | 695 | 7.4 | 0.7% | 86.6% | 72.4% | 2.8% | 33.2% | 34.5% |
-| mourner | 15.5 | 0.0% | 26.5% | 17.4% | 9.9% | 25.2% | 34.0 | 602 | 8.0 | 0.0% | 78.1% | 64.7% | 66.0% | 48.7% | 24.7% |
-| necromancer | 15.4 | 0.2% | 25.0% | 17.6% | 11.8% | 25.2% | 32.6 | 888 | 7.4 | 2.3% | 86.5% | 72.3% | 0.7% | 30.3% | 36.5% |
-| organiser | 16.4 | 0.0% | 23.4% | 16.4% | 10.0% | 23.5% | 34.0 | 781 | 7.2 | 0.6% | 80.1% | 64.9% | 0.2% | 31.0% | 39.2% |
-| pacifist | 15.6 | 0.0% | 28.5% | 17.8% | 10.3% | 27.4% | 33.7 | 834 | 8.4 | 1.7% | 81.5% | 68.5% | 70.5% | 48.5% | 32.2% |
-| politician | 15.5 | 0.0% | 29.3% | 18.5% | 10.4% | 26.6% | 35.4 | 490 | 8.6 | 0.0% | 85.1% | 75.2% | 75.6% | 48.5% | 29.8% |
-| saboteur | 14.4 | 0.0% | 15.6% | 11.8% | 9.5% | 20.2% | 25.6 | 705 | 5.8 | 0.4% | 76.2% | 62.4% | 0.0% | 27.8% | 44.8% |
-| saint | 15.1 | 0.0% | 27.8% | 17.2% | 9.8% | 26.0% | 34.3 | 601 | 8.0 | 0.0% | 79.3% | 70.0% | 69.4% | 45.7% | 31.0% |
-| scholar | 16.3 | 0.0% | 24.8% | 16.5% | 9.7% | 24.8% | 34.1 | 709 | 7.2 | 0.2% | 77.8% | 63.1% | 0.2% | 28.3% | 46.0% |
-| shark | 17.0 | 0.4% | 22.5% | 15.8% | 9.5% | 23.3% | 34.1 | 1,670 | 7.8 | 11.6% | 92.4% | 78.5% | 0.0% | 32.4% | 35.2% |
-| tycoon | 16.3 | 0.0% | 24.1% | 17.0% | 9.8% | 23.7% | 35.0 | 1,541 | 7.6 | 3.9% | 83.2% | 70.1% | 0.0% | 31.9% | 39.0% |
+| builder | 16.6 | 0.0% | 21.5% | 15.9% | 9.6% | 22.2% | 33.5 | 814 | 7.2 | 0.1% | 82.1% | 68.2% | 0.8% | 31.0% | 38.4% |
+| gambler | 15.4 | 0.1% | 26.2% | 18.0% | 11.9% | 25.6% | 33.3 | 636 | 7.4 | 0.3% | 87.0% | 73.1% | 4.0% | 33.5% | 34.6% |
+| mourner | 15.4 | 0.0% | 26.4% | 16.9% | 9.9% | 25.2% | 33.8 | 565 | 7.9 | 0.0% | 77.7% | 64.9% | 66.3% | 48.4% | 25.3% |
+| necromancer | 15.3 | 0.1% | 25.2% | 17.4% | 11.9% | 25.2% | 32.4 | 879 | 7.4 | 1.6% | 86.5% | 72.9% | 0.7% | 30.2% | 36.7% |
+| organiser | 16.4 | 0.0% | 23.5% | 16.3% | 9.9% | 23.4% | 34.0 | 755 | 7.2 | 0.6% | 80.5% | 65.5% | 0.8% | 31.5% | 38.8% |
+| pacifist | 15.6 | 0.0% | 28.7% | 18.0% | 10.2% | 27.5% | 33.7 | 719 | 8.4 | 0.8% | 81.8% | 69.3% | 71.2% | 48.5% | 32.3% |
+| politician | 15.4 | 0.0% | 29.1% | 18.7% | 10.4% | 26.5% | 35.5 | 454 | 8.6 | 0.0% | 85.1% | 75.8% | 76.2% | 48.3% | 29.9% |
+| saboteur | 14.4 | 0.0% | 15.6% | 11.7% | 9.6% | 20.2% | 25.4 | 666 | 5.8 | 0.3% | 76.4% | 62.9% | 0.0% | 28.0% | 44.4% |
+| saint | 15.1 | 0.0% | 27.5% | 17.5% | 10.0% | 25.8% | 34.4 | 560 | 8.0 | 0.0% | 79.6% | 70.1% | 70.0% | 45.7% | 30.8% |
+| scholar | 16.3 | 0.0% | 24.9% | 16.4% | 9.6% | 24.9% | 33.6 | 671 | 7.1 | 0.1% | 78.0% | 63.7% | 0.7% | 28.6% | 45.6% |
+| shark | 17.0 | 0.4% | 22.8% | 15.9% | 9.6% | 23.5% | 33.8 | 1,621 | 7.8 | 10.4% | 92.3% | 78.3% | 0.0% | 31.7% | 35.0% |
+| tycoon | 16.3 | 0.0% | 24.9% | 17.1% | 9.6% | 24.0% | 35.3 | 1,528 | 7.7 | 3.9% | 84.1% | 71.1% | 1.3% | 32.8% | 37.8% |
 
 Walkouts by trait (all customers who had the trait, hidden or shown):
 
 | trait | customers | walkouts | rate |
 | --- | --- | --- | --- |
-| hurry | 42792 | 63 | 0.1% |
-| nervous | 43681 | 63 | 0.1% |
-| hothead | 43981 | 52 | 0.1% |
-| executor | 42111 | 49 | 0.1% |
-| grudge | 42513 | 49 | 0.1% |
-| heir | 44517 | 46 | 0.1% |
-| relieved | 42417 | 37 | 0.1% |
-| devout | 45171 | 38 | 0.1% |
-| estranged | 42300 | 34 | 0.1% |
-| germophobe | 43756 | 34 | 0.1% |
-| traditionalist | 43037 | 33 | 0.1% |
-| music-lover | 44870 | 34 | 0.1% |
-| animal-lover | 44654 | 33 | 0.1% |
-| superstitious | 43786 | 32 | 0.1% |
-| shutterbug | 44788 | 32 | 0.1% |
-| loudmouth | 43755 | 30 | 0.1% |
-| new-age | 42503 | 29 | 0.1% |
-| rivalry | 47180 | 31 | 0.1% |
-| sentimental | 44447 | 29 | 0.1% |
-| foodie | 44814 | 29 | 0.1% |
-| gossip | 44573 | 28 | 0.1% |
-| no-nonsense | 43563 | 27 | 0.1% |
-| country-club | 43723 | 25 | 0.1% |
-| collector | 46400 | 25 | 0.1% |
-| windfall | 42771 | 23 | 0.1% |
-| pushover | 45024 | 24 | 0.1% |
-| death-fan | 46697 | 24 | 0.1% |
-| skeptic | 46336 | 23 | 0.0% |
-| showoff | 46714 | 23 | 0.0% |
-| tight-lipped | 44277 | 21 | 0.0% |
-| been-here | 46755 | 22 | 0.0% |
-| know-it-all | 46841 | 22 | 0.0% |
-| litigious | 44877 | 21 | 0.0% |
-| minimalist | 42777 | 20 | 0.0% |
-| broke | 43062 | 17 | 0.0% |
-| accountant | 46027 | 18 | 0.0% |
-| pincher | 42603 | 15 | 0.0% |
-| haggler | 46839 | 15 | 0.0% |
-| green | 41894 | 13 | 0.0% |
-| heartbroken | 40074 | 12 | 0.0% |
-| conspiracy | 44388 | 13 | 0.0% |
-| chatterbox | 42859 | 12 | 0.0% |
-| prodigal | 40253 | 11 | 0.0% |
-| serene | 42088 | 7 | 0.0% |
+| nervous | 43524 | 61 | 0.1% |
+| hurry | 42734 | 49 | 0.1% |
+| heir | 44323 | 50 | 0.1% |
+| grudge | 42125 | 38 | 0.1% |
+| relieved | 42339 | 34 | 0.1% |
+| devout | 45048 | 35 | 0.1% |
+| estranged | 42129 | 32 | 0.1% |
+| conspiracy | 44776 | 34 | 0.1% |
+| loudmouth | 43964 | 33 | 0.1% |
+| germophobe | 43762 | 32 | 0.1% |
+| hothead | 44059 | 32 | 0.1% |
+| traditionalist | 42910 | 28 | 0.1% |
+| music-lover | 44762 | 29 | 0.1% |
+| executor | 42093 | 27 | 0.1% |
+| sentimental | 44670 | 28 | 0.1% |
+| gossip | 44239 | 27 | 0.1% |
+| windfall | 42946 | 26 | 0.1% |
+| no-nonsense | 43611 | 26 | 0.1% |
+| foodie | 44326 | 26 | 0.1% |
+| showoff | 46499 | 27 | 0.1% |
+| haggler | 46852 | 27 | 0.1% |
+| rivalry | 46939 | 27 | 0.1% |
+| green | 42025 | 24 | 0.1% |
+| skeptic | 46069 | 26 | 0.1% |
+| broke | 42590 | 24 | 0.1% |
+| new-age | 43050 | 23 | 0.1% |
+| country-club | 43824 | 23 | 0.1% |
+| heartbroken | 40020 | 21 | 0.1% |
+| accountant | 45948 | 23 | 0.1% |
+| death-fan | 46661 | 23 | 0.0% |
+| minimalist | 42853 | 21 | 0.0% |
+| tight-lipped | 44113 | 21 | 0.0% |
+| shutterbug | 44330 | 21 | 0.0% |
+| superstitious | 43973 | 20 | 0.0% |
+| been-here | 46882 | 21 | 0.0% |
+| litigious | 44621 | 18 | 0.0% |
+| animal-lover | 45023 | 18 | 0.0% |
+| collector | 46162 | 18 | 0.0% |
+| chatterbox | 42592 | 15 | 0.0% |
+| prodigal | 40052 | 14 | 0.0% |
+| know-it-all | 46730 | 16 | 0.0% |
+| pushover | 44905 | 13 | 0.0% |
+| pincher | 42975 | 11 | 0.0% |
+| serene | 42068 | 5 | 0.0% |
 
 | special customer | met | sales | walkouts |
 | --- | --- | --- | --- |
-| county-contract | 2534 | 0 | 0 |
-| celebrity | 2614 | 2612 | 2 |
-| pre-need | 5221 | 5220 | 1 |
-| clown-family | 2710 | 2710 | 0 |
-| jackpot | 2394 | 2375 | 19 |
-| pet | 5129 | 5126 | 3 |
-| teller | 2441 | 2440 | 1 |
-| nurse-referral | 2496 | 0 | 0 |
-| june | 2388 | 2387 | 1 |
-| cousin-sal | 2445 | 0 | 0 |
-| zookeeper | 2292 | 2291 | 1 |
-| mob-boss | 2298 | 2296 | 2 |
-| black-widow | 2442 | 2440 | 2 |
-| blaine-director | 2256 | 2255 | 1 |
-| old-man-withers | 2614 | 2614 | 0 |
-| lucius-vane | 2148 | 2145 | 3 |
-| father-smyth | 2466 | 2464 | 2 |
-| inspector-mudge | 2304 | 0 | 0 |
-| coroner | 2208 | 0 | 0 |
-| elijah | 2204 | 2204 | 0 |
-| the-mayor | 2208 | 2206 | 2 |
-| the-count | 2051 | 2051 | 0 |
+| county-contract | 2506 | 0 | 0 |
+| celebrity | 2636 | 2631 | 5 |
+| pre-need | 5178 | 5177 | 1 |
+| clown-family | 2642 | 2641 | 1 |
+| jackpot | 2353 | 2340 | 13 |
+| pet | 5043 | 5038 | 5 |
+| teller | 2475 | 2474 | 1 |
+| nurse-referral | 2522 | 0 | 0 |
+| june | 2361 | 2356 | 5 |
+| cousin-sal | 2449 | 0 | 0 |
+| inspector-mudge | 2325 | 0 | 0 |
+| zookeeper | 2314 | 2312 | 2 |
+| mob-boss | 2345 | 2345 | 0 |
+| coroner | 2255 | 0 | 0 |
+| black-widow | 2406 | 2406 | 0 |
+| lucius-vane | 2206 | 2205 | 1 |
+| father-smyth | 2396 | 2395 | 1 |
+| old-man-withers | 2604 | 2604 | 0 |
 | fake-death | 2225 | 0 | 0 |
-| the-twins | 2106 | 0 | 0 |
-| ghost-crew | 2146 | 0 | 0 |
-| the-mournes | 2282 | 2282 | 0 |
+| the-twins | 2120 | 0 | 0 |
+| the-mournes | 2220 | 2220 | 0 |
+| blaine-director | 2253 | 2252 | 1 |
+| ghost-crew | 2163 | 0 | 0 |
+| the-mayor | 2202 | 2200 | 2 |
+| the-count | 2039 | 2039 | 0 |
+| elijah | 2224 | 2224 | 0 |
 
 Packages sold (share of all sales reaching each tier or higher bought on that sale):
 
 | package | tier 1 | tier 2 | tier 3 | tier 4 | tier 5 |
 | --- | --- | --- | --- | --- | --- |
-| plot | 10.1% | 3.2% | 6.1% | 0.0% | 0.0% |
+| plot | 10.2% | 3.2% | 6.0% | 0.0% | 0.0% |
 | service | 1.8% | 0.3% | 0.1% | 0.1% | 0.0% |
-| embalming | 3.0% | 1.9% | 0.2% | 0.2% | 0.5% |
+| embalming | 3.0% | 2.0% | 0.2% | 0.2% | 0.4% |
 | headstone | 2.2% | 0.2% | 0.1% | 0.0% | 0.0% |
 | flowers | 1.3% | 0.2% | 0.0% | 0.0% | 0.0% |
 | urn | 0.1% | 0.0% | 0.0% | 0.0% | 0.0% |
 
-Soft-sell cards bought: 2.24 per sale.
+Soft-sell cards bought: 2.23 per sale.
 
 ## Expanded: money by system
 
@@ -397,62 +393,74 @@ Dollars earned per player-day:
 
 | income | share | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sales | 82.5% | 14,368 | 10,721 | 9,310 | 13,643 | 12,792 | 13,000 | 7,581 | 10,131 | 9,096 | 11,586 | 28,404 | 25,147 |
-| new day and mail | 5.5% | 982 | 854 | 887 | 854 | 960 | 939 | 937 | 687 | 900 | 921 | 1,003 | 1,015 |
-| savings | 4.5% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9,785 |
-| body prep | 2.4% | 439 | 344 | 73 | 1,106 | 424 | 71 | 77 | 1,033 | 74 | 418 | 169 | 429 |
-| loans | 2.1% | 2,351 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2,000 |
-| special offers | 1.3% | 346 | 285 | 34 | 235 | 331 | 36 | 34 | 219 | 34 | 327 | 359 | 355 |
-| rob graves | 0.6% | 0 | 0 | 0 | 540 | 0 | 0 | 0 | 590 | 0 | 0 | 0 | 0 |
-| gambling | 0.5% | 0 | 1,055 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| parlor PvP | 0.4% | 0 | 217 | 0 | 89 | 0 | 0 | 0 | 27 | 0 | 0 | 395 | 0 |
-| dig | 0.3% | 0 | 0 | 0 | 275 | 0 | 0 | 0 | 287 | 0 | 0 | 0 | 0 |
+| sales | 81.2% | 13,520 | 9,799 | 8,732 | 13,491 | 12,364 | 11,203 | 6,990 | 9,568 | 8,468 | 10,939 | 27,618 | 24,900 |
+| new day and mail | 5.7% | 965 | 861 | 886 | 852 | 961 | 937 | 931 | 691 | 894 | 907 | 1,008 | 1,016 |
+| savings | 3.4% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 7,157 |
+| body prep | 2.6% | 466 | 351 | 77 | 1,099 | 464 | 72 | 79 | 1,052 | 70 | 453 | 271 | 480 |
+| loans | 2.3% | 2,670 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2,021 |
+| special offers | 1.3% | 340 | 273 | 36 | 262 | 329 | 33 | 35 | 219 | 33 | 339 | 330 | 349 |
+| pawn | 0.9% | 0 | 243 | 0 | 672 | 0 | 0 | 0 | 634 | 0 | 0 | 107 | 0 |
+| police | 0.7% | 87 | 185 | 61 | 166 | 86 | 0 | 146 | 142 | 97 | 74 | 146 | 71 |
+| rob graves | 0.6% | 0 | 0 | 0 | 573 | 0 | 0 | 0 | 583 | 0 | 0 | 0 | 0 |
+| gambling | 0.5% | 0 | 989 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| parlor PvP | 0.3% | 0 | 191 | 0 | 82 | 0 | 0 | 0 | 27 | 0 | 0 | 372 | 0 |
+| dig | 0.3% | 0 | 0 | 0 | 278 | 0 | 0 | 0 | 286 | 0 | 0 | 0 | 0 |
+| crematorium | 0.1% | 0 | 0 | 0 | 49 | 0 | 0 | 0 | 8 | 0 | 0 | 212 | 0 |
+| coroner | 0.1% | 0 | 0 | 0 | 34 | 0 | 0 | 0 | 15 | 0 | 0 | 90 | 0 |
 
 Dollars spent per player-day:
 
 | spending | share | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| stock | 46.8% | 8,726 | 6,618 | 5,200 | 6,990 | 7,408 | 8,164 | 3,836 | 5,860 | 5,272 | 7,050 | 12,687 | 13,221 |
-| upgrades | 18.1% | 4,186 | 2,481 | 2,456 | 2,428 | 3,653 | 2,532 | 1,348 | 2,757 | 594 | 3,140 | 5,267 | 4,175 |
-| monuments | 9.2% | 934 | 854 | 575 | 1,517 | 1,143 | 1,314 | 614 | 891 | 288 | 971 | 3,526 | 5,509 |
-| tithe | 4.8% | 638 | 626 | 582 | 644 | 651 | 656 | 578 | 607 | 2,567 | 629 | 667 | 667 |
-| savings | 4.6% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9,738 |
-| black market | 2.5% | 0 | 532 | 0 | 1,367 | 0 | 0 | 0 | 969 | 33 | 408 | 927 | 529 |
-| hearse upkeep | 2.2% | 602 | 293 | 394 | 223 | 310 | 311 | 310 | 25 | 217 | 404 | 862 | 300 |
-| loans | 2.2% | 2,421 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2,060 |
-| leads | 2.1% | 0 | 0 | 0 | 1,185 | 0 | 0 | 0 | 0 | 0 | 0 | 2,907 | 0 |
-| hits | 1.4% | 0 | 213 | 0 | 569 | 0 | 0 | 0 | 416 | 0 | 0 | 1,617 | 0 |
-| story appeals | 1.2% | 0 | 0 | 388 | 485 | 0 | 334 | 286 | 449 | 365 | 0 | 0 | 0 |
-| treatment | 1.1% | 123 | 210 | 128 | 418 | 134 | 0 | 260 | 135 | 208 | 119 | 201 | 195 |
-| gambling | 0.6% | 0 | 1,174 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| permits | 0.5% | 195 | 50 | 134 | 0 | 183 | 0 | 0 | 0 | 183 | 184 | 0 | 0 |
-| body prep | 0.4% | 54 | 68 | 102 | 43 | 51 | 103 | 102 | 34 | 97 | 56 | 102 | 45 |
-| stolen | 0.4% | 31 | 73 | 20 | 118 | 35 | 0 | 44 | 239 | 30 | 24 | 55 | 45 |
+| stock | 39.2% | 6,455 | 5,905 | 3,946 | 5,705 | 5,723 | 6,680 | 3,406 | 5,487 | 4,671 | 5,259 | 9,344 | 10,610 |
+| upgrades | 17.2% | 3,953 | 2,150 | 2,007 | 2,175 | 3,589 | 2,318 | 901 | 2,518 | 344 | 2,899 | 4,886 | 4,175 |
+| monuments | 8.8% | 932 | 685 | 471 | 1,389 | 1,093 | 1,085 | 387 | 727 | 198 | 863 | 3,479 | 5,363 |
+| tithe | 4.8% | 614 | 590 | 570 | 643 | 647 | 639 | 549 | 598 | 2,317 | 627 | 667 | 667 |
+| pawn | 4.4% | 1,266 | 0 | 710 | 1,054 | 1,042 | 0 | 0 | 0 | 0 | 1,104 | 1,458 | 1,645 |
+| savings | 3.5% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 7,118 |
+| black market | 2.6% | 0 | 520 | 0 | 1,388 | 0 | 0 | 1 | 949 | 31 | 404 | 977 | 512 |
+| loans | 2.5% | 2,750 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2,081 |
+| hearse upkeep | 2.3% | 601 | 286 | 395 | 224 | 310 | 311 | 309 | 28 | 218 | 401 | 866 | 301 |
+| leads | 2.2% | 0 | 0 | 0 | 1,199 | 0 | 0 | 0 | 0 | 0 | 0 | 2,900 | 0 |
+| police | 1.4% | 0 | 0 | 361 | 444 | 0 | 0 | 0 | 369 | 300 | 0 | 500 | 753 |
+| hits | 1.4% | 0 | 194 | 0 | 498 | 0 | 0 | 0 | 287 | 0 | 0 | 1,627 | 0 |
+| story appeals | 1.3% | 0 | 0 | 387 | 502 | 0 | 334 | 307 | 463 | 368 | 0 | 0 | 0 |
+| coroner | 1.2% | 268 | 0 | 220 | 0 | 262 | 255 | 155 | 0 | 257 | 360 | 129 | 302 |
+| treatment | 1.1% | 156 | 240 | 116 | 381 | 147 | 0 | 278 | 132 | 213 | 115 | 164 | 164 |
+| gazette | 0.8% | 0 | 175 | 0 | 411 | 0 | 0 | 453 | 0 | 0 | 0 | 461 | 0 |
+| health dept | 0.7% | 109 | 97 | 70 | 223 | 100 | 81 | 61 | 0 | 79 | 104 | 187 | 107 |
+| gambling | 0.6% | 0 | 1,140 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| permits | 0.5% | 190 | 49 | 134 | 0 | 186 | 0 | 0 | 0 | 178 | 184 | 0 | 0 |
+| body prep | 0.4% | 46 | 69 | 103 | 41 | 45 | 103 | 101 | 35 | 99 | 47 | 102 | 39 |
 | chains | 0.4% | 109 | 0 | 117 | 0 | 333 | 0 | 114 | 0 | 0 | 0 | 0 | 0 |
-| ordinances | 0.3% | 0 | 0 | 0 | 0 | 0 | 0 | 575 | 0 | 0 | 0 | 0 | 0 |
-| rob graves | 0.2% | 0 | 0 | 0 | 259 | 0 | 0 | 0 | 213 | 0 | 0 | 0 | 0 |
-| special offers | 0.2% | 41 | 31 | 37 | 40 | 38 | 41 | 37 | 40 | 39 | 39 | 40 | 37 |
-| inspection | 0.2% | 138 | 0 | 0 | 0 | 0 | 0 | 99 | 72 | 131 | 0 | 0 | 0 |
-| midnight (fines, collection) | 0.2% | 4 | 36 | 8 | 83 | 23 | 11 | 1 | 47 | 3 | 30 | 119 | 36 |
-| chain dues | 0.1% | 60 | 0 | 63 | 0 | 101 | 0 | 57 | 0 | 0 | 0 | 0 | 0 |
-| election | 0.1% | 0 | 0 | 0 | 0 | 0 | 0 | 199 | 0 | 0 | 0 | 0 | 0 |
-| holy water | 0.1% | 0 | 0 | 7 | 0 | 0 | 6 | 58 | 0 | 47 | 0 | 0 | 0 |
-| bodyguard | 0.0% | 5 | 0 | 0 | 0 | 16 | 0 | 34 | 0 | 0 | 3 | 0 | 26 |
+| stolen | 0.4% | 38 | 81 | 21 | 102 | 49 | 0 | 45 | 177 | 32 | 32 | 39 | 42 |
+| mournes | 0.3% | 0 | 168 | 0 | 25 | 0 | 0 | 0 | 10 | 0 | 58 | 297 | 88 |
+| ordinances | 0.3% | 0 | 0 | 0 | 0 | 0 | 0 | 571 | 0 | 0 | 0 | 0 | 0 |
+| florist | 0.3% | 131 | 0 | 1 | 0 | 117 | 100 | 0 | 0 | 49 | 0 | 0 | 164 |
+| rob graves | 0.3% | 0 | 0 | 0 | 247 | 0 | 0 | 0 | 224 | 0 | 0 | 0 | 0 |
+| special offers | 0.3% | 40 | 32 | 36 | 42 | 34 | 44 | 38 | 39 | 40 | 41 | 38 | 42 |
+| inspection | 0.2% | 139 | 0 | 0 | 0 | 0 | 0 | 101 | 72 | 132 | 0 | 0 | 0 |
+| midnight (fines, collection) | 0.2% | 3 | 30 | 9 | 82 | 21 | 9 | 1 | 44 | 3 | 25 | 137 | 31 |
+| crematorium | 0.2% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 150 | 252 |
+| chain dues | 0.1% | 57 | 0 | 60 | 0 | 96 | 0 | 56 | 0 | 0 | 0 | 0 | 0 |
+| election | 0.1% | 0 | 0 | 0 | 0 | 0 | 0 | 200 | 0 | 0 | 0 | 0 | 0 |
+| bodyguard | 0.1% | 9 | 0 | 0 | 0 | 19 | 0 | 53 | 0 | 0 | 5 | 0 | 23 |
+| holy water | 0.1% | 0 | 0 | 6 | 0 | 0 | 4 | 53 | 0 | 46 | 0 | 0 | 0 |
 | confession | 0.0% | 0 | 0 | 2 | 0 | 0 | 2 | 0 | 0 | 2 | 0 | 0 | 0 |
 
 ## Expanded: BP by system (per player-day)
 
 | source | share | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sales | 80.5% | 575 | 527 | 537 | 511 | 569 | 538 | 560 | 374 | 530 | 569 | 595 | 584 |
-| risks | 8.3% | 66 | 44 | 56 | 37 | 66 | 58 | 62 | 39 | 59 | 66 | 51 | 66 |
-| parlor PvP | 2.3% | 0 | 21 | 0 | 31 | 0 | 0 | 0 | 131 | 0 | 0 | 0 | 0 |
-| monuments | 2.1% | 14 | 12 | 9 | 16 | 15 | 16 | 10 | 13 | 5 | 14 | 22 | 26 |
-| service | 1.5% | 0 | 1 | 30 | 0 | 0 | 30 | 29 | 0 | 28 | 0 | 0 | 0 |
-| midnight | 1.4% | 8 | 6 | 8 | 10 | 8 | 11 | 16 | 7 | 12 | 7 | 8 | 11 |
-| tithe | 1.1% | 5 | 6 | 7 | 3 | 5 | 8 | 7 | 2 | 31 | 5 | 5 | 5 |
-| duels | 1.1% | 0 | 23 | 0 | 26 | 0 | 0 | 0 | 36 | 0 | 0 | 0 | 0 |
-| wait (events, scripts) | 0.7% | 5 | 5 | 4 | 4 | 5 | 5 | 5 | 4 | 4 | 5 | 4 | 5 |
+| sales | 80.7% | 570 | 523 | 533 | 509 | 570 | 537 | 559 | 372 | 531 | 561 | 591 | 589 |
+| risks | 8.3% | 66 | 43 | 59 | 37 | 63 | 58 | 62 | 38 | 59 | 65 | 49 | 66 |
+| parlor PvP | 2.3% | 0 | 21 | 0 | 33 | 0 | 0 | 0 | 127 | 0 | 0 | 0 | 0 |
+| monuments | 2.0% | 13 | 10 | 8 | 16 | 15 | 15 | 7 | 11 | 4 | 13 | 22 | 26 |
+| service | 1.5% | 0 | 1 | 30 | 0 | 0 | 30 | 29 | 0 | 28 | 0 | 0 | 1 |
+| midnight | 1.4% | 8 | 6 | 8 | 11 | 8 | 12 | 16 | 7 | 11 | 7 | 8 | 13 |
+| duels | 1.1% | 0 | 21 | 0 | 26 | 0 | 0 | 0 | 36 | 0 | 0 | 0 | 0 |
+| tithe | 1.0% | 5 | 5 | 7 | 3 | 5 | 8 | 7 | 2 | 28 | 5 | 3 | 6 |
+| wait (events, scripts) | 0.7% | 5 | 5 | 5 | 4 | 5 | 5 | 5 | 4 | 4 | 5 | 4 | 5 |
 | yangs | 0.6% | -0 | -1 | -5 | -1 | -0 | -0 | -0 | -21 | -0 | -0 | -20 | -0 |
 | special offers | 0.2% | 2 | 2 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 2 | 2 |
 | new day and mail | 0.2% | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
@@ -462,147 +470,203 @@ Dollars spent per player-day:
 
 | use | share | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| wait (events, scripts) | 96.1% | 17 | 16 | 16 | 16 | 17 | 16 | 16 | 15 | 15 | 17 | 17 | 17 |
+| wait (events, scripts) | 95.9% | 17 | 16 | 16 | 16 | 17 | 16 | 16 | 15 | 15 | 17 | 17 | 17 |
 | service | 1.8% | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
-| duels | 1.1% | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| seance | 0.8% | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| duels | 1.0% | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| seance | 1.0% | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | tour | 0.2% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Expanded: time by place (decisions per player-day)
 
 | scene | share | builder | gambler | mourner | necromancer | organiser | pacifist | politician | saboteur | saint | scholar | shark | tycoon |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| neg | 78.9% | 282 | 274 | 275 | 272 | 279 | 292 | 295 | 202 | 271 | 278 | 319 | 291 |
-| desk | 7.9% | 29 | 28 | 27 | 28 | 28 | 26 | 28 | 27 | 27 | 28 | 30 | 29 |
-| store | 3.0% | 11 | 11 | 9 | 11 | 11 | 11 | 8 | 10 | 9 | 11 | 13 | 13 |
-| map | 2.6% | 7 | 10 | 9 | 12 | 7 | 8 | 9 | 12 | 11 | 7 | 9 | 8 |
+| neg | 76.2% | 281 | 274 | 273 | 271 | 279 | 292 | 294 | 202 | 271 | 275 | 321 | 294 |
+| desk | 7.8% | 29 | 29 | 27 | 29 | 29 | 27 | 28 | 28 | 27 | 28 | 30 | 28 |
+| map | 3.9% | 11 | 14 | 14 | 19 | 11 | 12 | 13 | 16 | 16 | 11 | 19 | 14 |
+| store | 2.6% | 9 | 10 | 8 | 10 | 9 | 10 | 8 | 10 | 9 | 9 | 11 | 11 |
 | competitors | 0.9% | 0 | 8 | 0 | 8 | 0 | 0 | 0 | 13 | 0 | 0 | 9 | 0 |
-| church | 0.9% | 1 | 6 | 5 | 1 | 1 | 6 | 6 | 1 | 9 | 1 | 1 | 1 |
-| risk | 0.9% | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 |
-| reaper-club | 0.8% | 0 | 8 | 0 | 6 | 0 | 0 | 0 | 5 | 3 | 3 | 4 | 4 |
+| church | 0.8% | 1 | 6 | 5 | 1 | 1 | 6 | 6 | 1 | 8 | 1 | 1 | 1 |
+| risk | 0.8% | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 |
+| reaper-club | 0.7% | 0 | 8 | 0 | 6 | 0 | 0 | 0 | 5 | 3 | 3 | 5 | 4 |
 | graveyard | 0.7% | 1 | 6 | 1 | 6 | 1 | 1 | 1 | 7 | 4 | 1 | 1 | 1 |
-| city-hall | 0.6% | 5 | 1 | 3 | 1 | 4 | 1 | 5 | 2 | 2 | 1 | 1 | 1 |
-| parlor | 0.5% | 1 | 1 | 1 | 4 | 1 | 1 | 1 | 4 | 1 | 1 | 1 | 1 |
+| city-hall | 0.6% | 5 | 1 | 3 | 1 | 4 | 1 | 6 | 2 | 2 | 1 | 1 | 1 |
+| mournes | 0.5% | 2 | 2 | 2 | 1 | 2 | 2 | 2 | 1 | 2 | 3 | 3 | 3 |
+| parlor | 0.4% | 1 | 1 | 1 | 4 | 1 | 1 | 1 | 4 | 0 | 1 | 1 | 1 |
+| police | 0.4% | 2 | 2 | 1 | 2 | 2 | 0 | 2 | 2 | 2 | 1 | 2 | 2 |
 | bank | 0.4% | 3 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 6 |
 | yangs | 0.4% | 0 | 0 | 2 | 1 | 0 | 1 | 0 | 5 | 1 | 0 | 5 | 0 |
-| hospital | 0.3% | 1 | 1 | 1 | 3 | 1 | 0 | 1 | 1 | 1 | 1 | 4 | 1 |
+| pawn-shop | 0.4% | 1 | 2 | 1 | 3 | 1 | 0 | 0 | 2 | 0 | 1 | 3 | 2 |
+| coroner | 0.3% | 1 | 0 | 1 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 3 | 1 |
+| hospital | 0.3% | 1 | 1 | 1 | 3 | 1 | 0 | 1 | 1 | 1 | 1 | 3 | 1 |
 | news | 0.3% | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 | stats | 0.3% | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| battle | 0.2% | 0 | 1 | 0 | 2 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 |
+| battle | 0.2% | 0 | 1 | 0 | 2 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 |
 | spirit-university | 0.2% | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| florist | 0.2% | 1 | 0 | 1 | 0 | 1 | 2 | 0 | 0 | 2 | 0 | 0 | 2 |
 | cafe | 0.2% | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 |
+| health-department | 0.1% | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| crematorium | 0.1% | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 2 | 1 |
+| gazette | 0.1% | 0 | 1 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 |
 | tutorial | 0.1% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Expanded: what each choice returns
 
 | choice | measure | return | volume (turns, $ or uses) |
 | --- | --- | --- | --- |
-| a customer (Wait for Customer) | BP per turn | 33.363 | 774997 |
-| leading the service | BP per turn | 32.992 | 14280 |
-| a graveyard duel (challenger) | BP per turn | 40.177 | 8618 |
-| robbing a grave | $ per try | 377.301 | 7103 |
-| digging at the office | $ per try | 321.538 | 7103 |
-| tending the graves | uses | - | 6782 |
-| the seance | turns used | - | 6741 |
-| monuments | BP per $ | 0.010 | 71261000 |
-| tithes | BP per $ | 0.009 | 37368000 |
-| hits (BP the victim lost per $) | BP per $ | 0.004 | 11156050 |
-| special offers | BP per offer | 3.643 | 12894 |
-| body prep choices | BP per choice | 0.000 | 319742 |
-| risks taken | BP per risk | 42.732 | 62725 |
+| a customer (Wait for Customer) | BP per turn | 33.267 | 774284 |
+| leading the service | BP per turn | 32.829 | 14627 |
+| a graveyard duel (challenger) | BP per turn | 39.842 | 8452 |
+| robbing a grave | $ per try | 390.830 | 7129 |
+| digging at the office | $ per try | 321.699 | 7129 |
+| tending the graves | uses | - | 6802 |
+| the seance | turns used | - | 8400 |
+| monuments | BP per $ | 0.010 | 65344000 |
+| tithes | BP per $ | 0.009 | 35924000 |
+| hits (BP the victim lost per $) | BP per $ | 0.003 | 10298600 |
+| special offers | BP per offer | 3.622 | 12918 |
+| body prep choices | BP per choice | 0.000 | 321114 |
+| risks taken | BP per risk | 42.866 | 61908 |
 
-A lead from the nurse ($1,500) brings a sure, richer customer: 23,847 lead customers were met. Sale BP per customer over all customers: 33.36.
+A lead from the nurse ($1,500) brings a sure, richer customer: 26,076 lead customers were met. Sale BP per customer over all customers: 33.27.
 
 Parlor upgrades (share of seats that bought each, and the mean day bought):
 
 | upgrade | bought | share of seats | mean day |
 | --- | --- | --- | --- |
 | paint | 1600 | 100.0% | 2.5 |
-| coffee-machine | 1600 | 100.0% | 3.8 |
-| storeroom | 1593 | 99.6% | 9.8 |
-| florist-cooler | 1488 | 93.0% | 13.0 |
-| viewing-room | 1433 | 89.6% | 15.4 |
-| embalming-lab | 1195 | 74.7% | 18.2 |
-| incinerator | 724 | 45.3% | 22.2 |
-| memorial-garden | 426 | 26.6% | 20.2 |
-| chapel | 407 | 25.4% | 20.9 |
-| billboard | 352 | 22.0% | 24.5 |
-| guard-dog | 265 | 16.6% | 6.3 |
-| alarm | 256 | 16.0% | 17.8 |
-| night-watchman | 205 | 12.8% | 24.7 |
-| mausoleum | 55 | 3.4% | 26.4 |
+| coffee-machine | 1600 | 100.0% | 3.9 |
+| storeroom | 1536 | 96.0% | 11.1 |
+| florist-cooler | 1449 | 90.6% | 14.3 |
+| viewing-room | 1320 | 82.5% | 16.1 |
+| embalming-lab | 1067 | 66.7% | 18.9 |
+| incinerator | 610 | 38.1% | 22.5 |
+| memorial-garden | 403 | 25.2% | 21.4 |
+| chapel | 389 | 24.3% | 21.9 |
+| billboard | 291 | 18.2% | 25.7 |
+| guard-dog | 265 | 16.6% | 6.7 |
+| alarm | 219 | 13.7% | 18.2 |
+| night-watchman | 123 | 7.7% | 25.2 |
+| mausoleum | 40 | 2.5% | 26.4 |
 
 The three late upgrades the engine pass made cheaper and better, and what they return:
 
 | upgrade | bought | share of seats | mean day | cost with permit ($) | BP / day vs peers (after - before) | days owned | BP over the season | BP per $ |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| night-watchman | 205 | 12.8% | 24.7 | 12,000 | -5.5 (se 5.8) | 5.3 | -29 | -0.002 |
-| billboard | 352 | 22.0% | 24.5 | 21,500 | +38.6 (se 4.2) | 5.5 | 213 | 0.010 |
-| memorial-garden | 426 | 26.6% | 20.2 | 24,000 | +54.2 (se 3.3) | 9.8 | 529 | 0.022 |
+| night-watchman | 123 | 7.7% | 25.2 | 12,000 | -2.3 (se 7.9) | 4.8 | -11 | -0.001 |
+| billboard | 291 | 18.2% | 25.7 | 21,500 | +28.4 (se 5.7) | 4.3 | 123 | 0.006 |
+| memorial-garden | 403 | 25.2% | 21.4 | 24,000 | +48.5 (se 3.2) | 8.6 | 415 | 0.017 |
 
 BP per day is measured against the same personality's seats on the same day that did not yet own the upgrade, so the season's rise in income cancels; the standard error is across buyers. The monuments return about 0.010 BP a dollar, so an upgrade that returns less is not worth buying for points alone.
 
-Monument tiers built: tier 1: 1600, tier 2: 1562, tier 3: 1166, tier 4: 351, tier 5: 165 (of 1600 seats).
+Monument tiers built: tier 1: 1600, tier 2: 1513, tier 3: 1018, tier 4: 310, tier 5: 157 (of 1600 seats).
 
-Permits bought: signage 804, zoning 799, crematory 133. Black-market buys: rabbit-foot 329, morty-rib 861, testimonials 592, clover 357, coroner-list 1769, monster-scale 282, tap-water 300, hot-casket 1821, filed-tag 565, riot-shield 344, sal-pad 494, haunted-casket 373, real-water 459, cop-day-off 263, bruno 395, used-wreaths 516, forged-permit 223, mayor-key 174, vest 329.
+Permits bought: signage 805, zoning 792, crematory 120. Black-market buys: morty-rib 877, rabbit-foot 308, coroner-list 1818, clover 356, testimonials 614, monster-scale 290, riot-shield 342, hot-casket 1838, sal-pad 513, tap-water 287, haunted-casket 368, real-water 471, cop-day-off 248, filed-tag 589, bruno 372, used-wreaths 495, forged-permit 215, mayor-key 172, vest 314, tiny 1.
+
+## Expanded: the eight newer places (sections 30 and 31)
+
+| place | visited by (share of seats) | used (share of seats) | presses per user-day | $ out per user | $ back per user (incl. sale extras) | net $ per user | karma per user | luck per user | word of mouth per user |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| police | 91.1% | 87.6% | 0.47 | 7,499 | 3,591 | -3,908 | -2 | 0.0 | 0.0 |
+| crematorium | 49.3% | 28.6% | 0.21 | 3,301 | 6,367 | 3,066 | -4 | 0.9 | 0.0 |
+| florist | 57.6% | 41.1% | 0.57 | 3,354 | 5,158 | 1,804 | 0 | 0.0 | 0.0 |
+| gazette | 33.4% | 33.4% | 0.22 | 11,259 | 0 | -11,259 | -2 | 0.0 | -0.5 |
+| coroner | 91.7% | 84.6% | 0.31 | 6,519 | 406 | -6,114 | -1 | 0.3 | 5.9 |
+| health dept | 91.4% | 91.2% | 0.14 | 3,328 | 0 | -3,328 | -0 | 0.0 | 3.9 |
+| pawn | 74.9% | 74.9% | 0.75 | 27,348 | 5,588 | -21,761 | 0 | 0.0 | 0.0 |
+| mournes | 100.0% | 92.3% | 0.95 | 1,726 | 0 | -1,726 | 15 | 0.7 | -0.0 |
+
+Sale extras: oven slots used 1,621 (saved $1,864,150); bouquets used 21,427 (earned $3,393,780); attacks recorded on the police blotter 16,304.
+
+| action | presses | seats that used it |
+| --- | --- | --- |
+| mournes:hold | 35467 | 1329 |
+| pawn-shop:loot | 11137 | 534 |
+| pawn-shop:lot:wood | 8875 | 928 |
+| police:report | 8245 | 885 |
+| pawn-shop:lot:silver | 7037 | 904 |
+| florist:buy | 6952 | 653 |
+| police:settle | 6410 | 517 |
+| coroner:certificate | 4805 | 1066 |
+| florist:bundle | 4258 | 653 |
+| health-department:inspect | 3687 | 1199 |
+| police:backdoor | 3500 | 389 |
+| mournes:spy | 3367 | 544 |
+| coroner:tip | 3272 | 275 |
+| mournes:undercut | 3074 | 262 |
+| coroner:favour | 2332 | 704 |
+| coroner:quiet | 1829 | 286 |
+| gazette:classified | 1744 | 267 |
+| police:patrol | 1504 | 337 |
+| crematorium:diamonds | 1442 | 233 |
+| health-department:fine | 1297 | 806 |
+| health-department:complaint | 1038 | 260 |
+| gazette:smear | 898 | 257 |
+| crematorium:scatter | 833 | 225 |
+| gazette:puff | 750 | 138 |
+| crematorium:bulk | 630 | 234 |
+| coroner:burial | 503 | 418 |
+| gazette:display | 157 | 105 |
+| florist:church | 9 | 9 |
+
+Net dollars are what a user took in at the counter, plus the oven's saved wholesale and the bouquets' payouts, minus what it paid there (the second-hand caskets' value is not counted: they replace Di-Mart stock). A dollar buys about 0.010 BP at the monuments, so a place that nets money is a source of points, and a place that costs money has to give back karma, luck, word of mouth or a rival's loss. Karma, luck and word of mouth are totals per user over the season. The BP return of a place cannot be read as it is for an upgrade (most users start on day 2 to 3, so there is no control), so a place's effect on its users is measured by leaving it out (`--places-off`), see `docs/balance/expanded-tuning-log.md` round 19.
 
 ## Expanded: PvP, duels and hits
 
 | measure | value |
 | --- | --- |
-| duels started | 8618 |
-| challenger won / lost / yielded | 7202 / 965 / 451 |
-| BP won by duel winners / lost by losers | 425,418 / 210,173 |
-| duels with a Shove: share of duels / challenger won, lost, yielded / mean BP | 5.4% / 128, 305, 33 / -2.0 |
-| duels without a Shove: challenger won, lost, yielded / mean BP | 7074, 660, 418 / 42.6 |
-| Shove pressed (times) | 471 |
-| hits resolved / landed | 787 / 609 |
-| BP taken from hit victims | 41,138 |
-| cash stolen in burglaries | 2,869,032 |
+| duels started | 8452 |
+| challenger won / lost / yielded | 7046 / 937 / 469 |
+| BP won by duel winners / lost by losers | 413,595 / 204,344 |
+| duels with a Shove: share of duels / challenger won, lost, yielded / mean BP | 5.7% / 144, 307, 30 / -1.7 |
+| duels without a Shove: challenger won, lost, yielded / mean BP | 6902, 630, 439 / 42.4 |
+| Shove pressed (times) | 488 |
+| hits resolved / landed | 743 / 529 |
+| BP taken from hit victims | 35,688 |
+| cash stolen in burglaries | 2,649,080 |
 
 Hits by the parlor that hired them:
 
 | personality | hired | landed | hirer behind the target | $ spent | BP taken from targets | BP per $ |
 | --- | --- | --- | --- | --- | --- | --- |
-| gambler | 63 | 51 | 95.2% | 848,600 | 3,457 | 0.004 |
-| necromancer | 173 | 133 | 90.2% | 2,288,700 | 8,903 | 0.004 |
-| saboteur | 137 | 115 | 97.8% | 1,711,500 | 7,527 | 0.004 |
-| shark | 414 | 310 | 98.1% | 6,307,250 | 21,251 | 0.003 |
+| gambler | 52 | 43 | 98.1% | 772,550 | 2,956 | 0.004 |
+| necromancer | 156 | 112 | 94.2% | 2,002,750 | 7,493 | 0.004 |
+| saboteur | 106 | 84 | 93.4% | 1,179,900 | 5,403 | 0.005 |
+| shark | 429 | 290 | 97.7% | 6,343,400 | 19,836 | 0.003 |
 
 BP lost to other parlors per player-day, by victim and venue:
 
 | personality | parlor fights | duels | hits | total | share of final BP |
 | --- | --- | --- | --- | --- | --- |
-| builder | 7.8 | 4.9 | 1.0 | 13.8 | 2.1% |
-| gambler | 14.9 | 4.6 | 0.4 | 19.8 | 3.1% |
-| mourner | 2.6 | 3.1 | 0.8 | 6.5 | 1.0% |
-| necromancer | 19.8 | 3.3 | 0.9 | 24.0 | 3.8% |
-| organiser | 8.6 | 5.7 | 0.9 | 15.2 | 2.3% |
+| builder | 10.6 | 6.1 | 0.5 | 17.2 | 2.6% |
+| gambler | 16.9 | 4.6 | 0.6 | 22.2 | 3.5% |
+| mourner | 3.0 | 2.7 | 0.8 | 6.5 | 1.0% |
+| necromancer | 16.6 | 3.0 | 0.7 | 20.4 | 3.2% |
+| organiser | 9.6 | 5.8 | 0.7 | 16.1 | 2.5% |
 | pacifist | 0.0 | 0.0 | 0.0 | 0.0 | 0.0% |
-| politician | 8.8 | 6.7 | 2.0 | 17.5 | 2.6% |
-| saboteur | 2.8 | 0.6 | 0.4 | 3.8 | 0.6% |
-| saint | 6.8 | 5.2 | 1.5 | 13.6 | 2.0% |
-| scholar | 7.2 | 5.2 | 0.7 | 13.2 | 2.0% |
-| shark | 20.2 | 4.2 | 0.2 | 24.6 | 3.8% |
-| tycoon | 10.8 | 9.7 | 1.5 | 22.0 | 3.2% |
+| politician | 9.4 | 7.2 | 2.1 | 18.6 | 2.8% |
+| saboteur | 2.2 | 0.6 | 0.1 | 3.0 | 0.5% |
+| saint | 6.1 | 4.9 | 1.7 | 12.7 | 1.9% |
+| scholar | 8.6 | 4.5 | 0.6 | 13.6 | 2.1% |
+| shark | 16.2 | 3.6 | 0.2 | 20.0 | 3.1% |
+| tycoon | 8.1 | 8.6 | 1.0 | 17.7 | 2.6% |
 
-The most-targeted peaceful parlor in each town (never fights) lost on average 898 BP over the season, 4.2% of what it would otherwise have had (worst town: 8.0%); it finished at mean place 2.68.
+The most-targeted peaceful parlor in each town (never fights) lost on average 824 BP over the season, 3.9% of what it would otherwise have had (worst town: 8.4%); it finished at mean place 2.92.
 
 ## Expanded: the house
 
 | game and stake | plays | staked | returned | return per $ |
 | --- | --- | --- | --- | --- |
-| slots.100 | 8824 | 882,400 | 768,000 | 0.870 |
-| slots.1000 | 2618 | 2,618,000 | 2,459,000 | 0.939 |
-| slots.500 | 3827 | 1,913,500 | 1,714,500 | 0.896 |
+| slots.100 | 8573 | 857,300 | 648,200 | 0.756 |
+| slots.1000 | 2571 | 2,571,000 | 2,167,000 | 0.843 |
+| slots.500 | 3790 | 1,895,000 | 1,904,500 | 1.005 |
 
-Gamblers' net: gambler -118 $/day on 1,357 $/day staked.
+Gamblers' net: gambler -151 $/day on 1,334 $/day staked.
 
 ## Expanded: the bank
 
 | personality | loans taken | borrowed $ | repaid $ | collected | defaulted | written off $ | default BP | savings interest $ |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| builder | 1321 | 9,298,016 | 9,298,016 | 0 | 0 | 0 | 0 | 0 |
+| builder | 1441 | 10,561,620 | 10,561,620 | 0 | 0 | 0 | 0 | 0 |
 | gambler | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | mourner | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | necromancer | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -613,7 +677,7 @@ Gamblers' net: gambler -118 $/day on 1,357 $/day staked.
 | saint | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | scholar | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | shark | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| tycoon | 1368 | 7,602,945 | 7,602,945 | 0 | 0 | 0 | 0 | 175,427 |
+| tycoon | 1377 | 7,679,371 | 7,679,371 | 0 | 0 | 0 | 0 | 141,479 |
 
 ## Expanded: City Hall and chains
 
@@ -621,19 +685,19 @@ Gamblers' net: gambler -118 $/day on 1,357 $/day staked.
 | --- | --- |
 | ordinance ballots counted | 800 |
 | votes per ballot / players | 8.00 / 8.00 |
-| lobbying votes bought | 953 |
+| lobbying votes bought | 945 |
 | elections held (of towns) | 200 of 200 |
 | candidates per election | 0.64 |
 | votes per election / players | 5.08 / 8.00 |
-| campaign ads bought | 12 |
+| campaign ads bought | 13 |
 | mayors by personality | politician 127 |
 | chains founded / joined | 140 / 268 |
 | chains alive at the end, mean members | 140, 2.91 |
 
 | chain | seats | wins | win rate | fair share | win / fair | mean final BP | mean place | BP vs town mean | sd of that |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| no chain | 1192 | 150 | 12.6% | 12.5% | 1.01 | 19,448 | 4.57 | -0.3% | 7.9% |
-| in a chain | 408 | 50 | 12.3% | 12.5% | 0.98 | 19,912 | 4.30 | +1.0% | 4.9% |
+| no chain | 1192 | 164 | 13.8% | 12.5% | 1.10 | 19,318 | 4.57 | -0.4% | 8.2% |
+| in a chain | 408 | 36 | 8.8% | 12.5% | 0.71 | 19,787 | 4.29 | +1.0% | 4.6% |
 
 ## Expanded: the Daily Challenge
 
@@ -661,9 +725,12 @@ Choices offered to at least 20 seats but used by fewer than 2% of them. Bots fol
 | bank:all-wood | 1600 | 0 | 0.0% | 0 |
 | bank:exchange | 1600 | 0 | 0.0% | 0 |
 | spirit-university:library | 1600 | 0 | 0.0% | 0 |
+| mournes:truce | 1600 | 0 | 0.0% | 0 |
+| florist:ward | 921 | 0 | 0.0% | 0 |
+| health-department:buy | 1462 | 0 | 0.0% | 0 |
 | city-hall:leavechain | 408 | 0 | 0.0% | 0 |
 | graveyard:look | 1600 | 0 | 0.0% | 0 |
-| reaper-club:buy:tiny | 900 | 0 | 0.0% | 0 |
+| crematorium:rent | 788 | 0 | 0.0% | 0 |
 | reaper-club:draw | 133 | 0 | 0.0% | 0 |
 | reaper-club:shots | 133 | 0 | 0.0% | 0 |
 | parlor:markup:-10 | 253 | 0 | 0.0% | 0 |
@@ -671,172 +738,211 @@ Choices offered to at least 20 seats but used by fewer than 2% of them. Bots fol
 | parlor:markup:0 | 253 | 0 | 0.0% | 0 |
 | bank:depositall | 123 | 0 | 0.0% | 0 |
 | bank:withdraw | 123 | 0 | 0.0% | 0 |
-| city-hall:permit:crematory | 796 | 8 | 1.0% | 8 |
+| reaper-club:buy:tiny | 889 | 1 | 0.1% | 1 |
+| city-hall:permit:crematory | 796 | 4 | 0.5% | 4 |
+| florist:church | 921 | 9 | 1.0% | 9 |
 
 Usage of every choice (seats that used it at least once among seats that were offered it):
 
 | choice | uses | per seat | seats offered | share of them that used it |
 | --- | --- | --- | --- | --- |
-| neg:soft | 3196727 | 1998.0 | 1600 | 100.0% |
-| neg:card | 2571483 | 1607.2 | 1600 | 100.0% |
-| neg:packages | 1082445 | 676.5 | 1600 | 100.0% |
-| neg:listen | 1039102 | 649.4 | 1600 | 100.0% |
-| desk:wait | 963039 | 601.9 | 1600 | 100.0% |
-| neg:done | 757649 | 473.5 | 1600 | 100.0% |
-| neg:hard | 548793 | 343.0 | 1600 | 100.0% |
-| neg:coffee | 524110 | 327.6 | 1600 | 100.0% |
-| neg:pkg:plot | 370994 | 231.9 | 1600 | 100.0% |
-| prep:start | 319742 | 199.8 | 1600 | 100.0% |
-| prep:choice | 319742 | 199.8 | 1600 | 100.0% |
-| store:casket:0 | 182773 | 114.2 | 1600 | 100.0% |
-| neg:bless | 175408 | 109.6 | 689 | 100.0% |
-| neg:discount | 149094 | 93.2 | 1600 | 100.0% |
-| neg:pkg:embalming | 106323 | 66.5 | 1600 | 100.0% |
-| store:casket:1 | 103142 | 64.5 | 1600 | 100.0% |
-| place:funeral-home | 99332 | 62.1 | 1600 | 100.0% |
-| place:store | 89943 | 56.2 | 1600 | 100.0% |
-| neg:guilt | 79568 | 49.7 | 1600 | 100.0% |
-| risk:take | 62725 | 39.2 | 1600 | 99.0% |
+| neg:soft | 3191813 | 1994.9 | 1600 | 100.0% |
+| neg:card | 2564286 | 1602.7 | 1600 | 100.0% |
+| neg:packages | 1081744 | 676.1 | 1600 | 100.0% |
+| neg:listen | 1038253 | 648.9 | 1600 | 100.0% |
+| desk:wait | 961325 | 600.8 | 1600 | 100.0% |
+| neg:done | 756874 | 473.0 | 1600 | 100.0% |
+| neg:hard | 550476 | 344.0 | 1600 | 100.0% |
+| neg:coffee | 527390 | 329.6 | 1600 | 100.0% |
+| neg:pkg:plot | 370607 | 231.6 | 1600 | 100.0% |
+| prep:start | 321114 | 200.7 | 1600 | 100.0% |
+| prep:choice | 321114 | 200.7 | 1600 | 100.0% |
+| neg:bless | 179180 | 112.0 | 717 | 100.0% |
+| store:casket:0 | 155483 | 97.2 | 1600 | 100.0% |
+| neg:discount | 150322 | 94.0 | 1600 | 100.0% |
+| place:funeral-home | 103330 | 64.6 | 1600 | 100.0% |
+| neg:pkg:embalming | 102835 | 64.3 | 1600 | 100.0% |
+| place:store | 90301 | 56.4 | 1600 | 100.0% |
+| store:casket:1 | 81046 | 50.7 | 1600 | 100.0% |
+| neg:guilt | 76439 | 47.8 | 1600 | 100.0% |
+| risk:take | 61908 | 38.7 | 1600 | 99.1% |
+| place:mournes | 53349 | 33.3 | 1600 | 100.0% |
 | desk:quit | 48000 | 30.0 | 1600 | 100.0% |
 | store:caskets | 47968 | 30.0 | 1600 | 100.0% |
-| neg:pkg:headstone | 38718 | 24.2 | 1600 | 100.0% |
-| place:church | 37894 | 23.7 | 1600 | 100.0% |
-| neg:pkg:service | 37651 | 23.5 | 1600 | 100.0% |
-| church:tithe | 37368 | 23.4 | 1600 | 100.0% |
-| neg:pkg:flowers | 36634 | 22.9 | 1600 | 100.0% |
-| place:reaper-club | 30958 | 19.3 | 1600 | 61.4% |
-| place:hospital | 30143 | 18.8 | 1600 | 86.3% |
-| place:graveyard | 29418 | 18.4 | 1600 | 100.0% |
-| place:yangs | 24514 | 15.3 | 1600 | 55.1% |
-| place:bank | 23189 | 14.5 | 1600 | 100.0% |
-| church:bingo-card | 21669 | 13.5 | 667 | 100.0% |
-| neg:sympathy | 21099 | 13.2 | 1600 | 99.9% |
-| reaper-club:market | 20356 | 12.7 | 981 | 94.8% |
-| competitors:visit | 20130 | 12.6 | 534 | 100.0% |
-| place:city-hall | 19684 | 12.3 | 1600 | 100.0% |
-| battle:attack | 19386 | 12.1 | 404 | 100.0% |
-| neg:cremation | 19202 | 12.0 | 720 | 98.9% |
-| parlor:upgrades | 18943 | 11.8 | 1600 | 100.0% |
-| competitors:trydoor | 18919 | 11.8 | 534 | 100.0% |
-| place:competitors | 17148 | 10.7 | 1600 | 33.4% |
-| store:casket:2 | 16735 | 10.5 | 1600 | 92.4% |
+| place:coroner | 42397 | 26.5 | 1600 | 91.7% |
+| place:police-station | 41927 | 26.2 | 1600 | 91.1% |
+| neg:pkg:headstone | 39125 | 24.5 | 1600 | 100.0% |
+| place:church | 38185 | 23.9 | 1600 | 100.0% |
+| place:pawn-shop | 37740 | 23.6 | 1600 | 74.9% |
+| neg:pkg:service | 37442 | 23.4 | 1600 | 100.0% |
+| neg:pkg:flowers | 36803 | 23.0 | 1600 | 100.0% |
+| church:tithe | 35924 | 22.5 | 1600 | 100.0% |
+| mournes:hold | 35467 | 22.2 | 1600 | 83.1% |
+| place:reaper-club | 32631 | 20.4 | 1600 | 62.4% |
+| place:hospital | 30423 | 19.0 | 1600 | 86.7% |
+| place:graveyard | 29490 | 18.4 | 1600 | 100.0% |
+| place:yangs | 24460 | 15.3 | 1600 | 55.3% |
+| place:florist | 23310 | 14.6 | 1600 | 57.6% |
+| place:bank | 23233 | 14.5 | 1600 | 100.0% |
+| church:bingo-card | 21662 | 13.5 | 681 | 100.0% |
+| reaper-club:market | 20606 | 12.9 | 998 | 93.3% |
+| competitors:visit | 20119 | 12.6 | 534 | 100.0% |
+| neg:sympathy | 19817 | 12.4 | 1600 | 99.8% |
+| place:city-hall | 19807 | 12.4 | 1600 | 100.0% |
+| battle:attack | 19591 | 12.2 | 404 | 100.0% |
+| competitors:trydoor | 18559 | 11.6 | 534 | 100.0% |
+| parlor:upgrades | 18386 | 11.5 | 1600 | 100.0% |
+| place:competitors | 17069 | 10.7 | 1600 | 33.4% |
+| place:crematorium | 16999 | 10.6 | 1600 | 49.3% |
+| neg:cremation | 16107 | 10.1 | 605 | 99.0% |
 | competitors:look | 16020 | 10.0 | 534 | 100.0% |
-| church:bingo | 15797 | 9.9 | 1600 | 41.7% |
-| bank:all-gold | 15783 | 9.9 | 1600 | 100.0% |
+| bank:all-gold | 15800 | 9.9 | 1600 | 100.0% |
+| church:bingo | 15793 | 9.9 | 1600 | 42.6% |
 | place:cafe | 15568 | 9.7 | 1600 | 100.0% |
-| graveyard:swing | 15484 | 9.7 | 404 | 100.0% |
-| reaper-club:slots | 15269 | 9.5 | 133 | 100.0% |
-| church:serve | 14280 | 8.9 | 553 | 100.0% |
-| reaper-club:pay | 13842 | 8.7 | 957 | 100.0% |
-| graveyard:monuments | 13638 | 8.5 | 1600 | 100.0% |
-| neg:offer:accept | 12894 | 8.1 | 1600 | 99.8% |
-| place:spirit-university | 12651 | 7.9 | 1600 | 100.0% |
-| city-hall:chains | 12119 | 7.6 | 1600 | 33.4% |
-| yangs:menu | 11438 | 7.1 | 557 | 100.0% |
+| graveyard:swing | 15278 | 9.5 | 404 | 99.8% |
+| reaper-club:slots | 14934 | 9.3 | 133 | 100.0% |
+| place:health-department | 14813 | 9.3 | 1600 | 91.4% |
+| church:serve | 14627 | 9.1 | 581 | 100.0% |
+| store:casket:2 | 14060 | 8.8 | 1600 | 89.9% |
+| graveyard:monuments | 13710 | 8.6 | 1600 | 100.0% |
+| neg:offer:accept | 12918 | 8.1 | 1600 | 99.8% |
+| reaper-club:pay | 12711 | 7.9 | 970 | 100.0% |
+| place:spirit-university | 12668 | 7.9 | 1600 | 100.0% |
+| place:gazette | 12370 | 7.7 | 1600 | 33.4% |
+| city-hall:chains | 12292 | 7.7 | 1600 | 33.4% |
+| yangs:menu | 11380 | 7.1 | 551 | 100.0% |
 | tutorial:next | 11200 | 7.0 | 1600 | 100.0% |
-| competitors:attack | 11112 | 6.9 | 534 | 75.7% |
-| hospital:lead | 10734 | 6.7 | 1380 | 19.1% |
-| risk:decline | 10558 | 6.6 | 1600 | 82.9% |
-| graveyard:duel | 10550 | 6.6 | 526 | 76.8% |
-| spirit-university:psych | 10484 | 6.6 | 1600 | 99.6% |
-| battle:yellwin | 9690 | 6.1 | 404 | 100.0% |
-| city-hall:ordinance | 8879 | 5.5 | 1600 | 100.0% |
-| hospital:treat | 8480 | 5.3 | 1374 | 94.9% |
-| city-hall:inspection | 8128 | 5.1 | 1600 | 32.8% |
-| yangs:tiger | 8010 | 5.0 | 882 | 30.3% |
-| store:hearse | 7838 | 4.9 | 1600 | 98.7% |
-| parlor:dig | 7103 | 4.4 | 302 | 89.7% |
-| graveyard:rob | 7103 | 4.4 | 307 | 88.3% |
-| graveyard:tend | 6782 | 4.2 | 613 | 19.9% |
-| reaper-club:seance | 6741 | 4.2 | 288 | 100.0% |
-| competitors:steal | 6694 | 4.2 | 534 | 100.0% |
+| pawn-shop:loot | 11137 | 7.0 | 1183 | 45.1% |
+| competitors:attack | 10982 | 6.9 | 534 | 75.7% |
+| hospital:lead | 10753 | 6.7 | 1387 | 19.0% |
+| graveyard:duel | 10577 | 6.6 | 526 | 76.8% |
+| spirit-university:psych | 10495 | 6.6 | 1600 | 99.9% |
+| risk:decline | 10430 | 6.5 | 1600 | 82.4% |
+| battle:yellwin | 9651 | 6.0 | 404 | 100.0% |
+| city-hall:ordinance | 8924 | 5.6 | 1600 | 100.0% |
+| pawn-shop:lot:wood | 8875 | 5.5 | 1198 | 77.5% |
+| hospital:treat | 8407 | 5.3 | 1382 | 94.8% |
+| reaper-club:seance | 8400 | 5.3 | 397 | 100.0% |
+| city-hall:inspection | 8305 | 5.2 | 1600 | 32.8% |
+| police:report | 8245 | 5.2 | 1402 | 63.1% |
+| yangs:tiger | 8010 | 5.0 | 885 | 30.2% |
+| store:hearse | 7900 | 4.9 | 1600 | 99.3% |
+| graveyard:rob | 7129 | 4.5 | 397 | 68.3% |
+| parlor:dig | 7129 | 4.5 | 395 | 68.6% |
+| pawn-shop:lot:silver | 7037 | 4.4 | 1198 | 75.5% |
+| florist:buy | 6952 | 4.3 | 921 | 70.9% |
+| graveyard:tend | 6802 | 4.3 | 683 | 17.9% |
+| competitors:steal | 6654 | 4.2 | 534 | 100.0% |
+| police:settle | 6410 | 4.0 | 1402 | 36.9% |
 | city-hall:vote | 6400 | 4.0 | 1600 | 100.0% |
-| neg:offer:decline | 5570 | 3.5 | 1600 | 87.9% |
-| arc:give:church | 5162 | 3.2 | 827 | 55.4% |
-| graveyard:monument | 4844 | 3.0 | 1600 | 100.0% |
-| arc:give:reaper-club | 4107 | 2.6 | 965 | 28.1% |
-| store:hearse-look | 3919 | 2.4 | 1579 | 100.0% |
-| store:buy | 3919 | 2.4 | 1579 | 100.0% |
-| bank:savings | 2809 | 1.8 | 1600 | 7.7% |
-| bank:loan | 2689 | 1.7 | 1600 | 15.7% |
-| bank:borrow | 2689 | 1.7 | 251 | 100.0% |
-| bank:repay | 2689 | 1.7 | 251 | 100.0% |
-| yangs:dragon | 2532 | 1.6 | 882 | 27.4% |
-| neg:raise | 2414 | 1.5 | 289 | 99.0% |
-| neg:pkg:urn | 2258 | 1.4 | 707 | 64.5% |
-| bank:deposit | 2155 | 1.3 | 123 | 100.0% |
-| reaper-club:games | 2025 | 1.3 | 981 | 13.6% |
-| reaper-club:buy:hot-casket | 1821 | 1.1 | 914 | 42.0% |
-| reaper-club:buy:coroner-list | 1769 | 1.1 | 913 | 43.9% |
-| arc:give:city-hall | 1745 | 1.1 | 972 | 34.1% |
-| city-hall:election | 1723 | 1.1 | 1600 | 64.2% |
-| spirit-university:strength | 1670 | 1.0 | 1600 | 25.3% |
+| neg:offer:decline | 5647 | 3.5 | 1600 | 87.1% |
+| arc:give:church | 5306 | 3.3 | 838 | 55.1% |
+| coroner:certificate | 4805 | 3.0 | 1467 | 72.7% |
+| graveyard:monument | 4598 | 2.9 | 1600 | 100.0% |
+| florist:bundle | 4258 | 2.7 | 921 | 70.9% |
+| arc:give:reaper-club | 4180 | 2.6 | 982 | 27.6% |
+| store:hearse-look | 3964 | 2.5 | 1589 | 100.0% |
+| store:buy | 3936 | 2.5 | 1589 | 100.0% |
+| health-department:inspect | 3687 | 2.3 | 1462 | 82.0% |
+| neg:raise | 3649 | 2.3 | 397 | 99.2% |
+| police:backdoor | 3500 | 2.2 | 1458 | 26.7% |
+| mournes:spy | 3367 | 2.1 | 1600 | 34.0% |
+| coroner:tip | 3272 | 2.0 | 1467 | 18.7% |
+| mournes:undercut | 3074 | 1.9 | 1600 | 16.4% |
+| bank:loan | 2818 | 1.8 | 1600 | 15.7% |
+| bank:borrow | 2818 | 1.8 | 251 | 100.0% |
+| bank:repay | 2818 | 1.8 | 251 | 100.0% |
+| bank:savings | 2654 | 1.7 | 1600 | 7.7% |
+| yangs:dragon | 2474 | 1.5 | 885 | 27.3% |
+| coroner:favour | 2332 | 1.5 | 1467 | 48.0% |
+| neg:pkg:urn | 2150 | 1.3 | 598 | 66.9% |
+| bank:deposit | 2029 | 1.3 | 123 | 100.0% |
+| reaper-club:games | 2001 | 1.3 | 998 | 13.3% |
+| reaper-club:buy:hot-casket | 1838 | 1.1 | 915 | 42.1% |
+| coroner:quiet | 1829 | 1.1 | 704 | 40.6% |
+| reaper-club:buy:coroner-list | 1818 | 1.1 | 907 | 43.9% |
+| gazette:classified | 1744 | 1.1 | 535 | 49.9% |
+| arc:give:city-hall | 1725 | 1.1 | 987 | 33.7% |
+| city-hall:election | 1707 | 1.1 | 1600 | 64.2% |
+| spirit-university:strength | 1677 | 1.0 | 1600 | 25.3% |
 | tutorial:start | 1600 | 1.0 | 1600 | 100.0% |
 | parlor:buy:paint | 1600 | 1.0 | 1600 | 100.0% |
 | parlor:buy:coffee-machine | 1600 | 1.0 | 1600 | 100.0% |
-| parlor:buy:storeroom | 1593 | 1.0 | 1593 | 100.0% |
-| parlor:buy:florist-cooler | 1488 | 0.9 | 1593 | 93.4% |
-| city-hall:certify | 1472 | 0.9 | 525 | 84.4% |
-| parlor:buy:viewing-room | 1433 | 0.9 | 1447 | 99.0% |
-| bank:transferhome | 1364 | 0.9 | 1600 | 15.6% |
-| bank:transfer | 1364 | 0.9 | 250 | 100.0% |
-| bank:transfer-tier | 1364 | 0.9 | 250 | 100.0% |
-| city-hall:permits | 1339 | 0.8 | 1600 | 49.8% |
-| parlor:buy:embalming-lab | 1195 | 0.7 | 1552 | 77.0% |
-| battle:yelllost | 1128 | 0.7 | 304 | 100.0% |
-| hospital:leave-room | 1128 | 0.7 | 304 | 100.0% |
+| parlor:buy:storeroom | 1536 | 1.0 | 1539 | 99.8% |
+| police:patrol | 1504 | 0.9 | 1458 | 23.1% |
+| city-hall:certify | 1486 | 0.9 | 525 | 83.6% |
+| parlor:buy:florist-cooler | 1449 | 0.9 | 1539 | 94.2% |
+| crematorium:diamonds | 1442 | 0.9 | 458 | 50.9% |
+| bank:transferhome | 1338 | 0.8 | 1600 | 15.6% |
+| bank:transfer | 1338 | 0.8 | 250 | 100.0% |
+| bank:transfer-tier | 1338 | 0.8 | 250 | 100.0% |
+| city-hall:permits | 1330 | 0.8 | 1600 | 49.8% |
+| parlor:buy:viewing-room | 1320 | 0.8 | 1355 | 97.4% |
+| health-department:fine | 1297 | 0.8 | 806 | 100.0% |
+| parlor:buy:embalming-lab | 1067 | 0.7 | 1488 | 71.7% |
+| battle:yelllost | 1049 | 0.7 | 314 | 100.0% |
+| hospital:leave-room | 1049 | 0.7 | 314 | 100.0% |
+| health-department:complaint | 1038 | 0.6 | 263 | 98.9% |
 | city-hall:elect | 1016 | 0.6 | 1016 | 100.0% |
-| reaper-club:hit | 981 | 0.6 | 981 | 36.8% |
-| city-hall:invite | 975 | 0.6 | 303 | 46.2% |
-| city-hall:lobby | 953 | 0.6 | 1600 | 8.6% |
-| yangs:sparrow | 896 | 0.6 | 882 | 14.5% |
-| reaper-club:buy:morty-rib | 861 | 0.5 | 906 | 29.7% |
-| church:water | 774 | 0.5 | 923 | 35.5% |
-| parlor:buy:incinerator | 724 | 0.5 | 1065 | 68.0% |
-| spirit-university:hp | 672 | 0.4 | 1600 | 8.6% |
+| city-hall:invite | 969 | 0.6 | 320 | 43.8% |
+| reaper-club:hit | 951 | 0.6 | 998 | 34.6% |
+| city-hall:lobby | 945 | 0.6 | 1600 | 8.6% |
+| gazette:smear | 898 | 0.6 | 535 | 48.0% |
+| yangs:sparrow | 896 | 0.6 | 885 | 14.5% |
+| reaper-club:buy:morty-rib | 877 | 0.5 | 906 | 29.4% |
+| crematorium:scatter | 833 | 0.5 | 458 | 49.1% |
+| gazette:puff | 750 | 0.5 | 535 | 25.8% |
+| church:water | 716 | 0.4 | 1122 | 28.5% |
+| spirit-university:hp | 674 | 0.4 | 1600 | 8.6% |
 | city-hall:permit:signage | 668 | 0.4 | 796 | 83.9% |
-| city-hall:permit:zoning | 663 | 0.4 | 796 | 83.3% |
-| bank:withdrawall | 654 | 0.4 | 123 | 100.0% |
-| reaper-club:buy:testimonials | 592 | 0.4 | 906 | 14.1% |
-| reaper-club:buy:filed-tag | 565 | 0.4 | 866 | 27.9% |
-| reaper-club:buy:used-wreaths | 516 | 0.3 | 900 | 14.9% |
-| reaper-club:buy:sal-pad | 494 | 0.3 | 882 | 14.6% |
-| city-hall:bribe | 480 | 0.3 | 137 | 100.0% |
-| graveyard:shove | 471 | 0.3 | 404 | 63.1% |
-| reaper-club:buy:real-water | 459 | 0.3 | 873 | 14.8% |
-| graveyard:yield | 451 | 0.3 | 404 | 58.4% |
-| parlor:buy:memorial-garden | 426 | 0.3 | 654 | 65.1% |
+| city-hall:permit:zoning | 658 | 0.4 | 796 | 82.7% |
+| crematorium:bulk | 630 | 0.4 | 788 | 29.7% |
+| bank:withdrawall | 625 | 0.4 | 123 | 100.0% |
+| reaper-club:buy:testimonials | 614 | 0.4 | 915 | 14.1% |
+| parlor:buy:incinerator | 610 | 0.4 | 965 | 63.2% |
+| reaper-club:buy:filed-tag | 589 | 0.4 | 876 | 28.9% |
+| reaper-club:buy:sal-pad | 513 | 0.3 | 893 | 14.4% |
+| coroner:burial | 503 | 0.3 | 704 | 59.4% |
+| reaper-club:buy:used-wreaths | 495 | 0.3 | 901 | 15.2% |
+| city-hall:bribe | 489 | 0.3 | 137 | 100.0% |
+| graveyard:shove | 488 | 0.3 | 404 | 63.6% |
+| reaper-club:buy:real-water | 471 | 0.3 | 867 | 14.8% |
+| graveyard:yield | 469 | 0.3 | 404 | 58.7% |
 | parlor:rivalry | 409 | 0.3 | 1600 | 25.6% |
-| parlor:buy:chapel | 407 | 0.3 | 412 | 98.8% |
-| reaper-club:buy:bruno | 395 | 0.2 | 880 | 15.0% |
-| reaper-club:buy:haunted-casket | 373 | 0.2 | 860 | 14.9% |
-| reaper-club:buy:clover | 357 | 0.2 | 912 | 13.7% |
-| parlor:buy:billboard | 352 | 0.2 | 667 | 52.8% |
-| reaper-club:buy:riot-shield | 344 | 0.2 | 834 | 24.7% |
-| reaper-club:buy:rabbit-foot | 329 | 0.2 | 900 | 13.9% |
-| reaper-club:buy:vest | 329 | 0.2 | 905 | 14.4% |
-| reaper-club:buy:tap-water | 300 | 0.2 | 908 | 13.1% |
-| battle:run | 294 | 0.2 | 404 | 44.8% |
-| reaper-club:buy:monster-scale | 282 | 0.2 | 888 | 12.3% |
+| parlor:buy:memorial-garden | 403 | 0.3 | 632 | 63.8% |
+| parlor:buy:chapel | 389 | 0.2 | 391 | 99.5% |
+| reaper-club:buy:bruno | 372 | 0.2 | 883 | 14.7% |
+| reaper-club:buy:haunted-casket | 368 | 0.2 | 868 | 14.6% |
+| reaper-club:buy:clover | 356 | 0.2 | 911 | 13.8% |
+| reaper-club:buy:riot-shield | 342 | 0.2 | 855 | 24.9% |
+| reaper-club:buy:vest | 314 | 0.2 | 901 | 14.3% |
+| reaper-club:buy:rabbit-foot | 308 | 0.2 | 903 | 13.5% |
+| parlor:buy:billboard | 291 | 0.2 | 639 | 45.5% |
+| reaper-club:buy:monster-scale | 290 | 0.2 | 899 | 13.0% |
+| reaper-club:buy:tap-water | 287 | 0.2 | 907 | 13.0% |
+| battle:run | 282 | 0.2 | 404 | 45.3% |
 | city-hall:join | 268 | 0.2 | 268 | 100.0% |
 | parlor:rivalry:cutthroat | 267 | 0.2 | 409 | 65.3% |
-| parlor:buy:guard-dog | 265 | 0.2 | 1593 | 16.6% |
-| reaper-club:buy:cop-day-off | 263 | 0.2 | 781 | 13.1% |
-| parlor:buy:alarm | 256 | 0.2 | 265 | 96.6% |
+| parlor:buy:guard-dog | 265 | 0.2 | 1540 | 17.2% |
 | parlor:markup | 253 | 0.2 | 1600 | 15.8% |
-| reaper-club:buy:forged-permit | 223 | 0.1 | 861 | 13.9% |
-| parlor:buy:night-watchman | 205 | 0.1 | 237 | 86.5% |
-| reaper-club:buy:mayor-key | 174 | 0.1 | 827 | 13.2% |
+| reaper-club:buy:cop-day-off | 248 | 0.2 | 797 | 13.4% |
+| parlor:buy:alarm | 219 | 0.1 | 264 | 83.0% |
+| reaper-club:buy:forged-permit | 215 | 0.1 | 850 | 14.2% |
+| reaper-club:buy:mayor-key | 172 | 0.1 | 833 | 13.1% |
+| gazette:display | 157 | 0.1 | 535 | 19.6% |
+| reaper-club:bodyguard | 145 | 0.1 | 997 | 10.3% |
 | parlor:rivalry:peaceful | 142 | 0.1 | 409 | 34.7% |
-| city-hall:found | 140 | 0.1 | 477 | 29.4% |
+| city-hall:found | 140 | 0.1 | 469 | 29.9% |
 | parlor:markup:20 | 130 | 0.1 | 253 | 51.4% |
 | city-hall:file | 127 | 0.1 | 127 | 100.0% |
+| parlor:buy:night-watchman | 123 | 0.1 | 162 | 75.9% |
 | parlor:markup:10 | 123 | 0.1 | 253 | 48.6% |
-| reaper-club:bodyguard | 114 | 0.1 | 980 | 8.8% |
-| church:confess | 61 | 0.0 | 1229 | 4.4% |
-| parlor:buy:mausoleum | 55 | 0.0 | 97 | 56.7% |
-| city-hall:ads | 12 | 0.0 | 99 | 12.1% |
-| city-hall:permit:crematory | 8 | 0.0 | 796 | 1.0% |
+| church:confess | 61 | 0.0 | 1040 | 5.2% |
+| parlor:buy:mausoleum | 40 | 0.0 | 51 | 78.4% |
+| city-hall:ads | 13 | 0.0 | 97 | 13.4% |
+| florist:church | 9 | 0.0 | 921 | 1.0% |
+| city-hall:permit:crematory | 4 | 0.0 | 796 | 0.5% |
+| reaper-club:buy:tiny | 1 | 0.0 | 889 | 0.1% |
 | news:crime | 0 | 0.0 | 1600 | 0.0% |
 | news:yesterday | 0 | 0.0 | 1600 | 0.0% |
 | news:announce | 0 | 0.0 | 1600 | 0.0% |
@@ -847,9 +953,12 @@ Usage of every choice (seats that used it at least once among seats that were of
 | bank:all-wood | 0 | 0.0 | 1600 | 0.0% |
 | bank:exchange | 0 | 0.0 | 1600 | 0.0% |
 | spirit-university:library | 0 | 0.0 | 1600 | 0.0% |
+| mournes:truce | 0 | 0.0 | 1600 | 0.0% |
+| florist:ward | 0 | 0.0 | 921 | 0.0% |
+| health-department:buy | 0 | 0.0 | 1462 | 0.0% |
 | city-hall:leavechain | 0 | 0.0 | 408 | 0.0% |
 | graveyard:look | 0 | 0.0 | 1600 | 0.0% |
-| reaper-club:buy:tiny | 0 | 0.0 | 900 | 0.0% |
+| crematorium:rent | 0 | 0.0 | 788 | 0.0% |
 | reaper-club:draw | 0 | 0.0 | 133 | 0.0% |
 | reaper-club:shots | 0 | 0.0 | 133 | 0.0% |
 | parlor:markup:-10 | 0 | 0.0 | 253 | 0.0% |
@@ -862,11 +971,11 @@ Usage of every choice (seats that used it at least once among seats that were of
 
 The bots play every system from the same committed strategies each season, so these numbers say how often the game offers something, not whether a person enjoys it. Drawn from this run:
 
-- **Is a day too long?** A bot answers 352 screens a day, 191 of them choices, for 16.1 customers. A person reads faster than a bot looks but also hesitates; only a playtest says whether 191 choices a day is fun or a chore, and whether the hand and package panes should be on the main screen.
-- **Walkout pacing.** 0.1% of 774,997 customers walked out. Bots stop pushing before the mood does, so this is the floor; a person who misreads a customer, or is greedy for the exact match (24.6% of the bots' sales), will see far more. Whether a walkout feels like a fair lesson or a punishment is not measurable here.
-- **How often the town speaks.** News changed the rules on 57.2% of days, a weather set on 100.0%, and a story arc was running on 62.8% of days (3.0 arcs and 6.2 story beats a town a season). Bots read none of it as a story; whether that is too much, too little, or repeats itself by day 20 needs readers.
+- **Is a day too long?** A bot answers 364 screens a day, 193 of them choices, for 16.1 customers. A person reads faster than a bot looks but also hesitates; only a playtest says whether 193 choices a day is fun or a chore, and whether the hand and package panes should be on the main screen.
+- **Walkout pacing.** 0.1% of 774,284 customers walked out. Bots stop pushing before the mood does, so this is the floor; a person who misreads a customer, or is greedy for the exact match (24.7% of the bots' sales), will see far more. Whether a walkout feels like a fair lesson or a punishment is not measurable here.
+- **How often the town speaks.** News changed the rules on 57.1% of days, a weather set on 100.0%, and a story arc was running on 62.7% of days (3.0 arcs and 6.2 story beats a town a season). Bots read none of it as a story; whether that is too much, too little, or repeats itself by day 20 needs readers.
 - **Is the election a contest?** 0.64 candidates stood in each of 200 elections and 8.0 parlors voted: the bots vote by a preference list. Whether people campaign, lobby or bluff is a social question.
-- **Ordinances and arcs by effect, not by rote.** The bots rank ordinances from a fixed list (800 ballots, 8.00 votes each, 953 lobbying votes bought). Do players read the effects and choose, or click the first?
-- **Grudges and bluffing.** 8,618 duels and 787 hits happened with no memory of who did what to whom. Retaliation, alliances and the Peace Pledge as a social contract are for people.
+- **Ordinances and arcs by effect, not by rote.** The bots rank ordinances from a fixed list (800 ballots, 8.00 votes each, 945 lobbying votes bought). Do players read the effects and choose, or click the first?
+- **Grudges and bluffing.** 8,452 duels and 743 hits happened with no memory of who did what to whom. Retaliation, alliances and the Peace Pledge as a social contract are for people.
 - **Wording.** The bots read panels and button ids, and `packages/bots/test/scrambled.test.ts` plays a season with every pack string reworded and sees no stuck day; that proves the text does not carry rules, not that it is funny, clear or tonally right.
 

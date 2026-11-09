@@ -307,6 +307,18 @@ export function mayorName(turn: Turn): string {
   return mayorOf(turn.town)?.name ?? xt(turn).cast.mayor;
 }
 
+/** The placeholders of a town story: the mayor's name and the cast (`{coroner}`, `{mourne}`, `{sons}`, `{mournes}`). */
+export function castVars(turn: Turn): Record<string, string> {
+  const c = xt(turn).cast;
+  return {
+    mayor: mayorName(turn),
+    coroner: c.coroner,
+    mourne: c.mourne,
+    sons: c.sons,
+    mournes: c.mournes,
+  };
+}
+
 // ---------------------------------------------------------------- screens
 
 export interface TownScreen {

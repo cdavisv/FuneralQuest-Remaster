@@ -994,3 +994,136 @@ What a block does (the blocker no longer receives the blocked player's text; it 
 - **Public text is not filtered per reader.** An announcement or a crime-page quote that names the blocker stays in the paper for everyone, the blocker included. Decided because the Funeral Times is one shared page (Classic stores each day's paper as one text and every reader sees the same), hiding it from the person named alone does nothing about everyone else reading it, and per-reader papers would let readers see different news. Announcements and quotes are always swear-filtered; abuse is handled by the host's report and `removePlayerText`.
 
 `removePlayerText` (account deletion, a moderator's takedown) removes the player's letters still queued for others (text, quote and Reply packets), their announcements on every stored front page (header and body), their battle quotes (queued quote mails; crime-page entries keep the fight and lose the quote) and their queued Lucky Sparrow fortunes. Matching uses the content's templates with the player's name; `names` adds earlier names (the engine keeps no rename history). In an Expanded town it also renames the chains the player founded (`Chain.founder`, or the first member for chains from older saves) to the pack's `chains.removedName` (`{n}` the chain's number; the starter's is "Parlor Chain No. {n}"; the chain id when a pack has none), also where the old chain name stands in stored text, and reports `removed.chains` (absent in a Classic town). Not reachable: chat (never stored) and the Cursed Tiger's fortunes (anonymous by design, so not traceable). `renamePlayer` is a moderator's rename: the creation length rules and a unique name, no fee, no announcement, and the old name and parlor replaced as whole words in the stored paper, queued mail, the mayor's name and the Book of Deeds, so a later takedown still finds the player's text. Tests: `test/blocking.test.ts`.
+
+## 30. More locations, batch A: Police Station, Crematorium, Florist, Town Gazette
+
+Four more places on the Expanded map (the plan's content target is 20; batch B adds four others in section 31). Code: `packages/core/src/expanded/town/{police,crematorium,florist,gazette}.ts`, registered by `town/placesA.ts`. Numbers: `rules.town.placesA` (`rules/expandedTownRules.ts`, "batch A locations"). Text and pictures: the Expanded pack's `expanded/placesA.yaml` (`ExpandedContent.placesA`, types in `expanded/content/townPlacesA.ts`; a pack without it plays with `PLACES_A_STARTER`, kept word for word equal by a content test). State: `ExpandedPlayer.placesA` (`town/placesAState.ts`), created on first use, so old saves load unchanged. Money costs are checked before a button is shown enabled; a disabled button always carries a reason. Nothing here pays BP directly: money, karma, luck, word of mouth, leads and protection only, so no place competes with a monument (about 0.010 BP a dollar, `docs/balance/expanded-baseline.md`).
+
+Three small seams outside `town/`: `pvp.ts` (`expandedBattleBp`) and `modules/town.ts` (a `steal` visit) call `recordAttack`, and `sale.ts` (`settleSale`) calls `placesASaleExtras`, both in `town/placesAHooks.ts`. Neither draws random numbers, so Classic and old Expanded streams are unchanged.
+
+### A1. The Police Station (`police-station`, module `police`)
+
+Desk: Sergeant Bixby (`placesA.cast.sergeant`; the health inspector, Inspector Pratt, stays at the Health Department). Art: `places/funeral_enemy_police`. The place remembers the attacks on your parlor: a parlor fight the attacker won, or a break-in (`steal` visit), up to 8, kept with the day.
+
+| Action | Rule |
+|---|---|
+| File a Report | Pick one rival who attacked you in the last 3 days (one row per rival). They are fined $600 (what they have, if less); you are paid half of it, +1 karma; the rival is mailed and the crime page prints it. One report or settlement a day. |
+| Take a Settlement | Same picker. The rival pays you $400 (or what they have) in private, -1 karma for you, nothing printed; the rival is mailed. Shares the daily limit. |
+| Hire a Patrol | $3,500. Sets the Classic police protection tonight: nobody can visit you (Classic) or land a hit (Reaper Club, 20.4). Disabled for Peaceful parlors and when tonight is covered. |
+| The Back Door | $1,500 and -3 karma either way; 70% (`random(100) < 70`) the patrol is set, otherwise the money is gone and you may try again. |
+
+The choice: money against karma and certainty (report is clean and public; settlement is quick, private and dirty; the back door is cheaper than the patrol but not sure). Fairness: the police only help a victim, an attack is reported once, and a rival is fined at most $600, far below what a won fight gains, so it is a deterrent, not a BP engine. Peaceful parlors are never offered the patrol (they cannot be visited anyway).
+
+### A2. The Crematorium (`crematorium`)
+
+Keeper: Old Cinder Pete. Art: `places/creamation_oven`.
+
+| Action | Rule |
+|---|---|
+| Rent Oven Time | $900 for one slot (85% with a City Hall Crematory Emissions Permit). At most 4 held; slots are good today and tomorrow. |
+| Rent a Week's Worth | Three slots for $2,400 (85% with the permit); same cap. |
+| Scatter the Ashes | Up to 3 urns from cremations you have done and not yet handled: +1 karma and +1 luck each. |
+| Press the Ashes | Same urns: $250 and -2 karma each. |
+
+A rented slot is used by the next cremation sale (`settleSale`): the sale keeps the wholesale cost it would have paid ($1,125 on the $1,500 fee), so a slot used is worth about $225 over its price ($1,125 against $900), $325 in bulk; an unused slot is lost after two days. Ash is counted from `record.cremations`, so it only exists after real cremations; the choice is karma and luck against a little cash.
+
+### A3. The Florist (`florist`)
+
+Florist: Marigold Thorne. Art: `stuff/red_rose` on `places/store`.
+
+| Action | Rule |
+|---|---|
+| Buy a Bouquet | $100 times the day's weather (rain 0.8, storm 0.7, heat 1.25, snow 1.25, others 1). The shelf holds 6; bouquets are fresh today and tomorrow. |
+| Buy a Bundle | 4 bouquets at 90% of the price. |
+| Wreath for Father Smyth | $600: +2 karma, +1 word of mouth. |
+| Flowers for the Ward | $600: +2 luck (Nurse Gertie's ward). One of the two wreaths a day. |
+
+Each fresh bouquet in the cooler pays when a sale includes a flowers package tier or a soft-sell item tagged "flowers": 60% of that line's price, at most $300, one bouquet per line (so a $250 Floral Arrangement pays $150 against a $100 bouquet, and a Wall of Lilies pays $300). The weather text is shown on the screen ("It is raining, so lilies are in season and cheaper").
+
+### A4. The Town Gazette (`gazette`)
+
+Editor: Hal Pennywhistle (the mayor is named in the intro). Art: `people/man_prowl` on `places/desk`.
+
+| Action | Rule |
+|---|---|
+| Run a Classified | $750: a luck draw (`randomYesNo(luck, 0.5)`); on a hit one customer lead arrives at your next new day. |
+| Buy a Display Ad | $1,800: the lead always arrives. One advert (either kind) a day. |
+| Front-Page Puff Piece | $2,500: +2 word of mouth, and a line about you on today's front page. Once a day. |
+| Run a Smear | $2,500 and -3 karma. Pick a non-Peaceful rival who is not in your chain. 65% (`random(100) < 65`): they lose 2 word of mouth, are mailed, and the rumour is on the front page. Otherwise it backfires: you pay $1,000, lose 2 word of mouth and the Gazette prints a retraction naming you. Once a day. |
+
+An advert's customer is a Classic-style lead (the next Wait for Customer is a sure, richer customer), capped by `hospital.lead.max` with the nurse's and the club's. At $1,800 a lead the display advert costs more than the nurse's lead ($1,500 and -2 karma, twice a day) and has no karma cost, so it is a convenience, not a better source. The smear is a nuisance next to a hit (it moves reputation, never BP, and can backfire).
+
+### Balance (round 19)
+
+The bots now use all four places (`packages/bots/src/expanded/places.ts`) and the simulator reports them (`docs/balance/expanded-baseline.md`, "the eight newer places"). Numbers changed: the police fine $800 -> $600 and the settlement $500 -> $400 (the parlor that is reported fell furthest); the Gazette's classified $800 -> $750, display advert $2,000 -> $1,800, smear $3,000 -> $2,500. Measured over 200 towns: the Crematorium's oven pays the parlors that sell cremations (+$3,100 a season) and nobody else, the Florist's bouquets return about $1.5 a dollar to the parlors that sell flowers, the patrol and back door were bought on 10% of seat-nights without changing the number of attacks (no lock), the church wreath is rarely worth its $600, and the Gazette is the dearest place and buys no measured BP.
+
+### Verification
+
+`packages/core/test/placesA.test.ts` (34 tests): every action, the cost checks before the buttons are enabled, the daily limits, deterministic draws (a save round trip mid-flow, and both outcomes of the back door, the classified and the smear), the weather price, the sale extras and the two attack seams. `packages/content/test/placesA.test.ts`: the new text passes the banned-terms check. `apps/client/test/placesA.map.test.ts`: the map spots (hand-drawn and Classic art) overlap nothing, and the places are recognised.
+
+## 31. More locations, batch B: Coroner, Health Department, Pawn Shop, Mourne & Sons
+
+Four Expanded-only map locations: the Coroner's Office, the Health Department, Cousin Sal's Pawn and Mourne & Sons. Same conventions as `expanded-rules.md` sections 16 to 21: every number is in `rules.town.placesB` (`packages/core/src/rules/expandedTownRules.ts`), every line of text in the Expanded pack's `expanded/placesB.yaml` (`ExpandedContent.placesB`; types and the `PLACES_B_STARTER` fallback in `packages/core/src/expanded/content/townPlacesB.ts`; the coroner and the Mournes are the cast slots `{coroner}`, `{mourne}`, `{sons}`, `{mournes}`), and the code is in `packages/core/src/expanded/town/` (`coroner.ts`, `health.ts`, `pawn.ts`, `mournes.ts`, shared helpers in `placesBLib.ts`, state in `placesBState.ts`, registration in `placesB.ts`). Tests: `packages/core/test/placesB.test.ts` and `apps/client/test/placesB.map.test.ts`.
+
+### B0. Shared rules
+
+- State is `ExpandedPlayer.placesB` (`PlacesBState`): `today` (ids done today, reset when the game day moves on), `tip`, `certDay`, `loot`, `boost`, `citation`, `truceUntil`. It is created on first use, so old saves load unchanged.
+- Money costs are checked before a button is shown enabled; a disabled button carries the reason as its hint. Every action is also refused by the module if pressed anyway.
+- Random draws come from the player's stream: `rng.random(100)` for chances in percent, and `randomYesNo(luck, weight)` where luck should matter (as the Reaper Club's seance). A save round trip replays them identically (`pressRT` in the tests).
+- **The next-customer tip** (coroner tip, successful Mournes spy): `waitX` calls `applyNextTip` just before the arrival screen, after the risk and script checks, so a tip is never spent on a screen that skips the customer. It marks the facts as told (so the panel shows them), adds the lines to the customer's notes and puts them at the top of the arrival text. The practice customer and the Daily Challenge never use it. One tip is held at a time.
+- **The health boost**: word of mouth (`reviews`) is added at once, the amount actually applied (after the cap) is remembered with its last day, and a morning hook (`placesBMorning`, `onPlayerNewDay`) takes it back on the first desk visit after the last day. One boost at a time.
+- **Loot**: `modules/prep.ts` calls `addLoot` when a body-preparation choice is dishonest (`evil`) and pays money (the ring). The piece stays in the player's record (at most `pawn.loot.max`) until pawned.
+- BP: none of the four gives BP directly. Their value is cash, word of mouth (1 reputation point = 1 rating point), karma, luck, leads and information, so none can compete with the monuments' 0.010 BP a dollar (`docs/balance/expanded-baseline.md`).
+
+### B1. The Coroner's Office (`coroner`)
+
+Dr. Ignatius Grimble (`cast.coroner`). Button ids `coroner:tip`, `:certificate`, `:favour`, `:burial`, `:quiet`, `:main`.
+
+| action | cost | effect | limits |
+| --- | --- | --- | --- |
+| Buy a tip on tomorrow's deceased | $300 | the next family's "loved the deceased" fact is told, plus one more trait shown | once a day, and not while a tip is held |
+| Fast-track a death certificate | $1,600 | +2 word of mouth (permanent, like any review) | once every 4 days |
+| Favour, proper burial (choice) | $300 | +2 karma, +1 luck | one favour a day |
+| Favour, sign the body over (choice) | pays $300 | -3 karma; a luck-weighted draw (`randomYesNo(luck, 0.5)`) decides whether it goes unnoticed, otherwise -3 word of mouth | shares the favour limit |
+
+The favour is the choice: $600 apart in cash, 5 karma apart, and a risk on one side. A tip is worth roughly the difference a told "loved" flag makes to one negotiation, which is small on purpose.
+
+### B2. The Health Department (`health-department`)
+
+The inspector (`cast.inspector`, the town's existing Inspector). Button ids `health-department:inspect`, `:buy`, `:fine`, `:complaint` (picker `health-department:complaintpick`), `:main`.
+
+| action | cost | effect | limits |
+| --- | --- | --- | --- |
+| Request an inspection | $700 | pass chance is City Hall's (`passChance`: 30 + rating x 0.5 + (karma - 50) x 0.5, clamped 10 to 90): +3 word of mouth for 8 days. Fail: a $500 citation on file and -2 word of mouth | no boost running, no unpaid citation |
+| Buy a clean bill of health | $1,200 | sure: +3 word of mouth for 8 days, -2 karma | no boost running, no unpaid citation |
+| Pay the fine | the citation ($500) | gives back the 2 word of mouth the failed inspection took | needs a citation |
+| File a complaint | $1,500 | needs karma 30 or less. -3 karma. A luck-weighted draw (`randomYesNo(luck, 0.7)`): the target loses 2 word of mouth, is mailed and the crime page reports it. A backfire fines the filer $500 and costs 1 word of mouth. A target with a current City Hall certificate (`certifiedUntil`) is untouched, the money is lost | once a day; targets are active Expanded parlors that are not peaceful, not chain-mates, not you |
+
+Buying the certificate costs $150 a day of boost for +3 rating, which is far under a monument's rate of return.
+
+### B3. Cousin Sal's Pawn (`pawn-shop`)
+
+Cousin Sal (`cast.pawnbroker`). Button ids `pawn-shop:loot`, `:lot:<id>`, `:main`.
+
+| action | cost | effect | limits |
+| --- | --- | --- | --- |
+| Pawn your loot | pays $200 a piece, $300 for a Grave Robber (karma at or under the evil line) | sells all loot held | needs loot (taken at body preparation) |
+| Second-hand wood lot | 80% of Di-Mart's price for 3 | 3 wood caskets | one lot a day, room in the storeroom, cash |
+| Second-hand silver lot | 80% of Di-Mart's price for 2 | 2 silver caskets | same |
+
+Each lot is a bad one with a chance of 30%, 5 points less for each full 10 luck above 50 (clamped 5 to 50): only 1 casket is delivered and the money is not refunded. Expected value is about 80% of the goods (90% at luck 100) for 80% of the price: a saving of 0% (luck 50) to 11% (luck 100) with a variance, and the price follows Di-Mart's (karma and chain discounts and the stock-price modifier included).
+
+### B4. Mourne & Sons (`mournes`)
+
+Augustus Mourne and his sons Ned and Rollo (`cast.mournes`, `cast.sons`). The family has no state of its own: the actions are the player's moves in the rivalry. Button ids `mournes:spy`, `:undercut`, `:hold`, `:truce`, `:main`.
+
+| action | cost | effect | limits |
+| --- | --- | --- | --- |
+| Spy on the Mournes | $300 | `randomYesNo(luck, 0.6)`: success gives a tip (the next family's cheapness is told); caught: -1 karma, -1 word of mouth | once a day, not while a tip is held, not in a truce |
+| Undercut their prices (choice) | $500 | `randomYesNo(luck, 0.5)`: +2 word of mouth and +1 luck; otherwise -2 word of mouth | one stand a day, not in a truce |
+| Hold your prices (choice) | free | +1 karma | shares the stand limit |
+| Offer a truce | $2,000 | 7 days (today included): +2 karma and one customer lead (capped at the hospital's lead maximum), and spying, undercutting and holding are closed | not while one runs |
+
+### Balance (round 19)
+
+Numbers changed in round 19 (`docs/balance/expanded-tuning-log.md`), all in the tables above: the tip $600 -> $300; the certificate $800 -> $1,600, every 4 days; the quiet favour $700 -> $300 with a 50% chance (it was a $20,000-a-season pump for the evil path); the inspection and the clean bill last 8 days (clean bill $1,200); the complaint $500 -> $1,500; second-hand lots 65% -> 80% of Di-Mart's price; loot $300 -> $200. Watch items, not changed: Mourne & Sons' "hold your prices" gives +1 karma a day for nothing (it was pressed 35,467 times in 200 towns).
