@@ -24,6 +24,7 @@ import type { FamilyMemory } from "./state.js";
 import { tally } from "./town/arcs.js";
 import { chainScore } from "./town/chains.js";
 import { chainOf } from "./town/life.js";
+import { placesASaleExtras } from "./town/placesAHooks.js";
 
 /**
  * The end of a negotiation: Done (docs/expanded-rules.md section 3.7), the
@@ -280,6 +281,10 @@ export function settleSale(turn: Turn): { result: SaleResult; text: string } {
       casketNote = fill(t.rushOrder, { tier: tierName, cost: intToCash(cost) });
     }
   }
+  // Batch A: rented oven time and fresh bouquets from the town pay extra.
+  const extras = placesASaleExtras(turn, c);
+  money += extras.money;
+  casketNote += extras.note;
   money = moneyMod(me, Math.max(0, money));
 
   me.bpToday += bp;

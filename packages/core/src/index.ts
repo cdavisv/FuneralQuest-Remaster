@@ -91,6 +91,8 @@ export { type Effect, type EngineContext, Turn } from "./engine/turn.js";
 export { assetId, button, goButton, hud } from "./engine/view.js";
 export { checkExpandedContent, checkNewsCondition } from "./expanded/content/check.js";
 export { EXPANDED_STARTER } from "./expanded/content/starter.js";
+export { PLACES_A_STARTER, type PlacesAContent } from "./expanded/content/townPlacesA.js";
+export { PLACES_B_STARTER, type PlacesBContent } from "./expanded/content/townPlacesB.js";
 export { TOWN_STARTER } from "./expanded/content/townStarter.js";
 // Expanded ruleset (docs/expanded-rules.md).
 export type * from "./expanded/content/types.js";

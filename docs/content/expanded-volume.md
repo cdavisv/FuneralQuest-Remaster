@@ -57,7 +57,7 @@ content pass of that day.
 | Tells: cheapness high | 15 | 25 | 25 |
 | Tells: limit high | 15 | 25 | 25 |
 | Tells: limit low | 15 | 25 | 25 |
-| Map locations | 12 | 12 | 20 |
+| Map locations | 12 | 20 | 20 |
 
 Lines per negotiation moment (target 25 each):
 
@@ -123,9 +123,10 @@ Nurse Gertie into events and news.
 
 ## Not reached, and why
 
-- **Map locations: 12 of 20.** A location is an engine module and a map entry
-  (`packages/core/src/classic/modules/index.ts:32-42`, `packages/core/src/expanded/town/index.ts:17-21`),
-  not content. Reaching 20 needs eight new `LocationModule`s in `packages/core`.
+- **Map locations: reached 20 of 20 on 2026-11-08.** Eight new `LocationModule`s (the Police Station,
+  Crematorium, Florist, Town Gazette, Coroner, Health Department, Pawn Shop and Mourne & Sons;
+  `docs/expanded-rules.md` sections 30 and 31). Their text sits in the engine's starter content
+  (`townPlacesA.ts`, `townPlacesB.ts`), not yet in the YAML pack, and they have no building art.
 - **The coroner and the rival family are named literally.** `town.cast` has slots only for the
   mayor, club owner, nurse, inspector and teller (`packages/core/src/expanded/content/townTypes.ts:25`,
   mirrored in `packages/content/src/expandedSchema.ts:884`), so there is no `{coroner}` placeholder.

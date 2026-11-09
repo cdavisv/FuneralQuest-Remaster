@@ -167,6 +167,116 @@ export interface ExpandedTownRules {
       karma: number;
     };
   };
+  // batch B locations (docs/expanded-rules.md section 31)
+  placesB: {
+    coroner: {
+      tip: { price: number; perDay: number; traits: number };
+      certificate: { price: number; reviews: number; cooldownDays: number };
+      favour: {
+        burialCost: number;
+        burialKarma: number;
+        burialLuck: number;
+        quietPay: number;
+        quietKarma: number;
+        /** `randomYesNo` weight of the quiet favour going unnoticed. */
+        quietLuckWeight: number;
+        quietFailReviews: number;
+      };
+    };
+    health: {
+      inspect: { price: number; reviews: number; days: number; fine: number; failReviews: number };
+      buy: { price: number; reviews: number; days: number; karma: number };
+      complaint: {
+        price: number;
+        karmaAtMost: number;
+        karma: number;
+        targetReviews: number;
+        luckWeight: number;
+        fine: number;
+        backfireReviews: number;
+      };
+    };
+    pawn: {
+      loot: { price: number; evilBonus: number; max: number };
+      /** `share` of the Di-Mart price for `count` caskets of `tier`; a bad lot leaves `badKeep`. */
+      lots: { id: string; tier: number; count: number; share: number }[];
+      bad: { base: number; perTenLuck: number; min: number; max: number; keep: number };
+      perDay: number;
+    };
+    mournes: {
+      spy: { price: number; luckWeight: number; failReviews: number; failKarma: number };
+      undercut: {
+        price: number;
+        luckWeight: number;
+        reviews: number;
+        luck: number;
+        failReviews: number;
+      };
+      hold: { karma: number };
+      truce: { price: number; days: number; karma: number; leads: number };
+    };
+  };
+  // batch A locations (docs/expanded-rules.md section 30)
+  placesA: {
+    police: {
+      /** Reports or settlements a day, how many days back an attack can be reported, the fine, the player's share of it, karma. */
+      report: { perDay: number; windowDays: number; fine: number; share: number; karma: number };
+      /** A settlement: what the rival pays you (up to their cash), karma. */
+      settle: { amount: number; karma: number };
+      /** A patrol outside tonight: nobody can visit or hit you. */
+      patrol: { price: number };
+      /** The cheap way: percent chance it holds, and karma either way. */
+      backdoor: { price: number; chance: number; karma: number };
+      /** Attacks remembered. */
+      maxAttacks: number;
+    };
+    crematorium: {
+      /** One oven slot; a bulk lot of `bulkCount` for `bulkPrice`; at most `max` held; good for `days` days (today and the next). */
+      oven: {
+        price: number;
+        bulkCount: number;
+        bulkPrice: number;
+        max: number;
+        days: number;
+        permitMult: number;
+      };
+      /** Per urn scattered: karma and luck. Per urn pressed: money and karma. At most `max` urns an action. */
+      ashes: {
+        max: number;
+        scatter: { karma: number; luck: number };
+        press: { money: number; karma: number };
+      };
+    };
+    florist: {
+      /** Dollars per bouquet, shelf size, days fresh, bundle size and its share of the price. */
+      bouquet: { price: number; max: number; days: number; bundle: number; bundleShare: number };
+      /** What a bouquet earns on a flowers line of a bill: this share of the line, at most `payoutMax`. */
+      payout: { share: number; max: number };
+      /** Price multiplier by weather id (1 when absent). */
+      weather: Record<string, number>;
+      /** One of the two wreaths a day. */
+      wreath: {
+        price: number;
+        church: { karma: number; reviews: number };
+        ward: { luck: number };
+      };
+    };
+    gazette: {
+      classified: { price: number; luckWeight: number };
+      display: { price: number };
+      adsPerDay: number;
+      puff: { price: number; reviews: number };
+      smear: {
+        price: number;
+        karma: number;
+        /** Percent chance the piece runs. */
+        chance: number;
+        targetReviews: number;
+        backfireReviews: number;
+        fine: number;
+      };
+    };
+  };
   /** Section 22. */
   world: { newsChance: number; newsFromDay: number; arcChance: number };
   /** Section 24. */
@@ -326,6 +436,92 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       defaultDollarsPerBp: 40,
       reviews: -10,
       karma: -5,
+    },
+  },
+  // batch B locations (docs/expanded-rules.md section 31)
+  placesB: {
+    coroner: {
+      tip: { price: 600, perDay: 1, traits: 1 },
+      certificate: { price: 800, reviews: 2, cooldownDays: 3 },
+      favour: {
+        burialCost: 300,
+        burialKarma: 2,
+        burialLuck: 1,
+        quietPay: 700,
+        quietKarma: -3,
+        quietLuckWeight: 0.6,
+        quietFailReviews: -2,
+      },
+    },
+    health: {
+      inspect: { price: 700, reviews: 3, days: 5, fine: 500, failReviews: -2 },
+      buy: { price: 1500, reviews: 3, days: 5, karma: -2 },
+      complaint: {
+        price: 500,
+        karmaAtMost: 30,
+        karma: -3,
+        targetReviews: -2,
+        luckWeight: 0.7,
+        fine: 500,
+        backfireReviews: -1,
+      },
+    },
+    pawn: {
+      loot: { price: 300, evilBonus: 100, max: 5 },
+      lots: [
+        { id: "wood", tier: 0, count: 3, share: 0.65 },
+        { id: "silver", tier: 1, count: 2, share: 0.65 },
+      ],
+      bad: { base: 30, perTenLuck: 5, min: 5, max: 50, keep: 1 },
+      perDay: 1,
+    },
+    mournes: {
+      spy: { price: 300, luckWeight: 0.6, failReviews: -1, failKarma: -1 },
+      undercut: { price: 500, luckWeight: 0.5, reviews: 2, luck: 1, failReviews: -2 },
+      hold: { karma: 1 },
+      truce: { price: 2000, days: 7, karma: 2, leads: 1 },
+    },
+  },
+  // batch A locations (docs/expanded-rules.md section 30)
+  placesA: {
+    police: {
+      report: { perDay: 1, windowDays: 3, fine: 800, share: 0.5, karma: 1 },
+      settle: { amount: 500, karma: -1 },
+      patrol: { price: 3500 },
+      backdoor: { price: 1500, chance: 70, karma: -3 },
+      maxAttacks: 8,
+    },
+    crematorium: {
+      oven: { price: 900, bulkCount: 3, bulkPrice: 2400, max: 4, days: 2, permitMult: 0.85 },
+      ashes: {
+        max: 3,
+        scatter: { karma: 1, luck: 1 },
+        press: { money: 250, karma: -2 },
+      },
+    },
+    florist: {
+      bouquet: { price: 100, max: 6, days: 2, bundle: 4, bundleShare: 0.9 },
+      payout: { share: 0.6, max: 300 },
+      weather: { rain: 0.8, storm: 0.7, heat: 1.25, snow: 1.25 },
+      wreath: {
+        price: 600,
+        church: { karma: 2, reviews: 1 },
+        ward: { luck: 2 },
+      },
+    },
+    gazette: {
+      classified: { price: 800, luckWeight: 0.5 },
+      display: { price: 2000 },
+      adsPerDay: 1,
+      puff: { price: 2500, reviews: 2 },
+      smear: {
+        price: 3000,
+        karma: -3,
+        chance: 65,
+        targetReviews: -2,
+        backfireReviews: -2,
+        fine: 1000,
+      },
     },
   },
   world: { newsChance: 0.6, newsFromDay: 2, arcChance: 0.35 },

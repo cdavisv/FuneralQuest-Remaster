@@ -20,8 +20,16 @@ export type ExpandedScreen =
   | "market"
   | "hospital"
   | "bank"
+  | "police"
+  | "crematorium"
+  | "florist"
+  | "gazette"
   | "store"
   | "chains"
+  | "coroner"
+  | "health-department"
+  | "pawn-shop"
+  | "mournes"
   | null;
 
 const has = (view: View, prefix: string) => view.buttons.some((b) => b.id.startsWith(prefix));
@@ -41,8 +49,16 @@ export function expandedScreen(view: View): ExpandedScreen {
   if (has(view, "graveyard:")) return "graveyard";
   if (has(view, "church:")) return "church";
   if (has(view, "city-hall:")) return "city-hall";
+  if (has(view, "coroner:")) return "coroner";
+  if (has(view, "health-department:")) return "health-department";
+  if (has(view, "pawn-shop:")) return "pawn-shop";
+  if (has(view, "mournes:")) return "mournes";
   if (has(view, "hospital:")) return "hospital";
   if (has(view, "bank:")) return "bank";
+  if (has(view, "police:")) return "police";
+  if (has(view, "crematorium:")) return "crematorium";
+  if (has(view, "florist:")) return "florist";
+  if (has(view, "gazette:")) return "gazette";
   if (has(view, "store:casket")) return "store";
   return null;
 }

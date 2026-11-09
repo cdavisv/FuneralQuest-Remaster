@@ -1,4 +1,11 @@
-import type { AgedPool, ExpandedContent, ExpandedTownContent, Reward } from "@fq/core";
+import type {
+  AgedPool,
+  ExpandedContent,
+  ExpandedTownContent,
+  PlacesAContent,
+  PlacesBContent,
+  Reward,
+} from "@fq/core";
 import { z } from "zod";
 import { pictureSchema } from "./pictures.js";
 
@@ -442,6 +449,10 @@ export function buildExpandedSchema(mode: SchemaMode) {
     upgrades: z.record(z.string(), obj({ name: z.string().min(1), description: text })),
     text: textSection,
     town: town.exactOptional(),
+    // Batch A places (core townPlacesA.ts): typed by core, text-checked by the lint below.
+    placesA: z.custom<PlacesAContent>().exactOptional(),
+    // Batch B places (core townPlacesB.ts): typed by core.
+    placesB: z.custom<PlacesBContent>().exactOptional(),
   });
 }
 

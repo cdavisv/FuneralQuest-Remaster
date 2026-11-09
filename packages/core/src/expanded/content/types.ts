@@ -1,5 +1,7 @@
 import type { AssetId } from "@fq/protocol";
 import type { SaleItem } from "../../content/types.js";
+import type { PlacesAContent } from "./townPlacesA.js";
+import type { PlacesBContent } from "./townPlacesB.js";
 import type { ExpandedTownContent } from "./townTypes.js";
 
 export type * from "./townTypes.js";
@@ -46,6 +48,16 @@ export interface ExpandedContent {
    * when a pack has none.
    */
   town?: ExpandedTownContent;
+  /**
+   * Text of the batch-B places (townPlacesB.ts). Optional: the engine falls back to
+   * `PLACES_B_STARTER` when a pack has none.
+   */
+  placesB?: PlacesBContent;
+  /**
+   * Text of the batch-A places (townPlacesA.ts). Optional: the engine falls back to
+   * `PLACES_A_STARTER` when a pack has none.
+   */
+  placesA?: PlacesAContent;
 }
 
 export interface NameLists {

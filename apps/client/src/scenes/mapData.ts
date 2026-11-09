@@ -32,6 +32,16 @@ export const HOTSPOTS: Record<string, Hotspot> = {
   graveyard: { x: 695, y: 85, w: 185, h: 158 },
   "city-hall": { x: 752, y: 492, w: 112, h: 108 },
   "reaper-club": { x: 870, y: 500, w: 115, h: 100 },
+  // Batch A places, along the top edge between the university and the graveyard.
+  "police-station": { x: 280, y: 20, w: 92, h: 84 },
+  crematorium: { x: 380, y: 20, w: 92, h: 84 },
+  florist: { x: 480, y: 20, w: 92, h: 84 },
+  gazette: { x: 580, y: 20, w: 92, h: 84 },
+  // Batch B places, along the bottom edge.
+  coroner: { x: 609, y: 620, w: 92, h: 84 },
+  "health-department": { x: 707, y: 620, w: 92, h: 84 },
+  "pawn-shop": { x: 804, y: 620, w: 92, h: 84 },
+  mournes: { x: 901, y: 620, w: 92, h: 84 },
 };
 
 export interface HotspotBox {

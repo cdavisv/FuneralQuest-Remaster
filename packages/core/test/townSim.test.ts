@@ -24,7 +24,7 @@ describe("the Expanded town over many days (expanded-rules.md 27)", () => {
   const used = new Map<string, number>();
   let staked = 0;
   let returned = 0;
-  for (const seed of [21, 22, 23]) {
+  for (const seed of [21, 22, 23, 24]) {
     it(`an exercise player keeps every invariant (seed ${seed})`, () => {
       const { town, ctx } = makeXTown(seed * 13, 4);
       const r = townWalk(town, ctx, {
