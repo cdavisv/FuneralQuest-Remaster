@@ -69,7 +69,7 @@ health:
   complaintPrompt: 'Which parlor has been breaking the rules? It will cost `w{price}`$ to be heard.'
   complaintFiled: '`${inspector} takes your complaint and files it where complaints are filed. "I will look into {name}''s kitchen." `5({karma} karma)`$'
   complaintDismissed: '`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The {price} stays in his drawer.'
-  complaintBackfired: '`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector''s time. `5({reviews} reputation)`$'
+  complaintBackfired: '`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector''s time. `5(-{reviews} reputation)`$'
   complaintMail: '`4A complaint was filed against {parlor} with the Health Department. Somebody in town does not like you. Your reputation dipped.`$'
   complaintNews: '`7COMPLAINT AT {parlor}
 

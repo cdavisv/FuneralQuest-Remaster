@@ -11,7 +11,7 @@ The original 2001 server, Flash client and content are kept untouched in [`legac
 
 ## Alpha
 
-**This is an alpha (version 0.1.0-alpha.1, shown in the game as "Alpha 0.1.0").** For this project that means three things:
+**This is an alpha (version 0.1.0-alpha.2, shown in the game as "Alpha 0.1.0").** For this project that means three things:
 
 - **It is complete enough to play, and not yet proven on people.** Classic is feature-complete against the [rules specification](docs/classic-rules.md) and was checked step by step against the original game's own code; Solo, online play and museum mode all run. What has _not_ happened is real players: nobody outside the project has played a full tournament, and the alpha is "done" when a private town of 5 to 10 people finishes a 14-day tournament with no lost data and no blocker bugs.
 - **Expect rough edges.** Expanded's balance is still being tuned; the sound has been measured but nobody has listened to it all; the new portraits in the Remastered art pack need an illustrator; the Docker image, Windows, macOS, iOS and any real phone have never been tried; there is no public server. [docs/STATUS.md](docs/STATUS.md) lists what was run, what was only tested and what is missing, honestly.
@@ -121,6 +121,7 @@ Read [`CLAUDE.md`](CLAUDE.md) first: it holds the ground rules (strict TypeScrip
 ### Where the plan and the rules are
 
 - [`docs/ALPHA.md`](docs/ALPHA.md): what alpha means here and the checklist that ends it.
+- [`docs/BETA.md`](docs/BETA.md): what beta means here and its checklist.
 - [`docs/STATUS.md`](docs/STATUS.md): what is finished, what is only tested, what has never been run, and what needs a human.
 - [`docs/REMASTER_PLAN.md`](docs/REMASTER_PLAN.md): what the remaster is, what the review of the original found, the phases and the decisions.
 - [`docs/classic-rules.md`](docs/classic-rules.md): the Classic rules specification, each section marked Reviewed or Ported against the original source, and whether the oracle verified it; section 9 lists the gameplay fixes.

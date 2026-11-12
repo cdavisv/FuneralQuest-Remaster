@@ -304,6 +304,11 @@ export interface FeaturesResponse {
     /** The public page that explains how to ask for deletion without logging in. */
     deletionPath: string;
   };
+  /**
+   * Who may come in. `inviteRequired`: a new account or guest needs an invite code (`invite` in
+   * the sign-up and guest bodies); a guest upgrading to a full account does not. Always sent.
+   */
+  access?: { signup: boolean; guests: boolean; inviteRequired: boolean };
 }
 
 /** One problem a refused request body had (`invalid_request`). Never carries the value sent. */

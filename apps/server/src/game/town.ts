@@ -33,6 +33,7 @@ import type {
 import { eraseParlorFrom, type NameHistory } from "../moderation/erase.js";
 import type { ModerationService } from "../moderation/service.js";
 import type { EndReason, ParlorForm, ParlorInfo, RankingRow, TownInfo } from "../wire.js";
+import type { ActivityRecorder } from "./activity.js";
 import { RejectedActionThrottle } from "./auditThrottle.js";
 import { diffPushes, type EffectPlan, notice, type Outbound, planEffects } from "./effects.js";
 import { buildHallEntry } from "./hall.js";
@@ -50,6 +51,8 @@ export interface TownDeps {
   parlors: ParlorStore;
   audit: AuditStore;
   hall: HallStore;
+  /** The activity record: called once an action is committed (see `game/activity.ts`). */
+  activity: ActivityRecorder;
   clock: Clock;
   content: ContentSource;
   hub: Hub;
@@ -371,6 +374,20 @@ export class TownRuntime {
       connectPlayers: served,
       ...(actor !== undefined ? { playerId: actor } : {}),
     });
+    // A museum step that moved exactly one player is that player's action.
+    if (actor !== undefined) {
+      const link = this.deps.parlors.byPlayer(this.row.id, actor);
+      if (link) this.recordActivity(link.account_id);
+    }
+  }
+
+  /** The day's activity row; a failure is logged and never undoes the committed action. */
+  private recordActivity(accountId: number): void {
+    try {
+      this.deps.activity.record(accountId, this.row.id);
+    } catch (error) {
+      this.deps.log.error({ err: error, townId: this.row.id }, "activity record failed");
+    }
   }
 
   /**
@@ -617,6 +634,7 @@ export class TownRuntime {
         connectActor: this.state.presence?.[String(playerId)] === false,
         redact: action.type === "chat",
       });
+      this.recordActivity(account.id);
       return { kind: "ok", view: r.view } as const;
     });
   }

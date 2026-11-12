@@ -2,7 +2,7 @@ import { ApiError } from "@fq/server/client";
 import type { MessageKey } from "../i18n/messages.js";
 
 /** Which form field an error belongs to (null: the form as a whole). */
-export type FieldName = "login" | "password" | "name" | "parlor" | "sex" | null;
+export type FieldName = "login" | "password" | "name" | "parlor" | "sex" | "invite" | null;
 
 export interface FormProblem {
   field: FieldName;
@@ -66,6 +66,14 @@ export function describeError(error: unknown, context: "login" | "signup" | "ent
       return describeIssues(error, context);
     case "no_such_town":
       return { field: null, key: "form.err.noTown" };
+    case "invite_required":
+      return { field: "invite", key: "form.err.inviteRequired" };
+    case "invite_invalid":
+      return { field: "invite", key: "form.err.inviteInvalid" };
+    case "invite_used_up":
+      return { field: "invite", key: "form.err.inviteUsedUp" };
+    case "invite_expired":
+      return { field: "invite", key: "form.err.inviteExpired" };
     case "forbidden":
     case "signup_disabled":
     case "guest_disabled":
@@ -94,6 +102,8 @@ function fieldOfPath(path: string): FieldName {
       return "parlor";
     case "parlor.male":
       return "sex";
+    case "invite":
+      return "invite";
     default:
       return null;
   }

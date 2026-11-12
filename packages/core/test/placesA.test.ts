@@ -284,7 +284,16 @@ describe("the Crematorium", () => {
     t = s.town;
     t = midnight(t, ctx, R.crematorium.oven.days);
     s = visit(seat(t, ctx, 0), "crematorium");
-    expect(text(s.view)).toMatch(/0\s+slots/);
+    // No slot is held any more, so no count and no day are named (docs/expanded-audit.md).
+    expect(text(s.view)).toMatch(/no slots reserved/);
+    expect(text(s.view)).not.toMatch(/until day/);
+  });
+
+  it("a parlor that never rented is not told about day 0", () => {
+    const { town, ctx } = funded();
+    const s = visit(seat(town, ctx, 0), "crematorium");
+    expect(text(s.view)).toMatch(/no slots reserved/);
+    expect(text(s.view)).not.toMatch(/until day/);
   });
 
   it("scattering ashes gives karma and luck per urn; pressing them gives cash and bad karma", () => {

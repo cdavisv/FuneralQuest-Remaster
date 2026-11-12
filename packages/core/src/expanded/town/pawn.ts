@@ -2,7 +2,7 @@ import type { Button, View } from "@fq/protocol";
 import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
-import { fill, intToCash } from "../../text/format.js";
+import { fill } from "../../text/format.js";
 import { stockPrice } from "../modules/town.js";
 import { stockCapacity, stockTotal } from "../parlor.js";
 import { clamp, moneyMod, xc, xp, xr } from "../players.js";
@@ -91,7 +91,7 @@ function main(turn: Turn, message = ""): View {
     const label = t.buttons[lot.id as "wood" | "silver"] ?? lot.id;
     text += `\n${fill(t.lotLine, {
       name: label,
-      price: intToCash(price),
+      price: cash(price),
       count: lot.count,
       percent: Math.round(lot.share * 100),
       risk: badChance(turn),
@@ -108,7 +108,7 @@ function sellLoot(turn: Turn): View {
   const money = s.loot * lootPrice(turn);
   moneyMod(turn.player, money);
   s.loot = 0;
-  return main(turn, say(turn, btext(turn).pawn.lootSold, { money: intToCash(money) }));
+  return main(turn, say(turn, btext(turn).pawn.lootSold, { money: cash(money) }));
 }
 
 function buyLot(turn: Turn, id: string): View {
@@ -125,7 +125,7 @@ function buyLot(turn: Turn, id: string): View {
   const bad = turn.rng.random(100) < badChance(turn);
   const count = bad ? Math.min(lot.count, r.bad.keep) : lot.count;
   xp(turn).stock[lot.tier] = (xp(turn).stock[lot.tier] ?? 0) + count;
-  return main(turn, say(turn, bad ? t.lotBad : t.lotGood, { count, price: intToCash(price) }));
+  return main(turn, say(turn, bad ? t.lotBad : t.lotGood, { count, price: cash(price) }));
 }
 
 export const pawnModule: LocationModule = {

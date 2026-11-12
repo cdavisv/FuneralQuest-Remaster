@@ -94,6 +94,8 @@ export interface CrematoriumText {
   note: string;
   /** `{keeper}`, `{slots}`, `{until}`, `{ashes}` */
   intro: string;
+  /** The greeting for a parlor that holds no oven slot today. `{keeper}`, `{ashes}` */
+  introNone: string;
   /** Added when the Crematory Emissions Permit gives the discount. */
   permitNote: string;
   buttons: { rent: string; bulk: string; scatter: string; diamonds: string; leave: string };
@@ -246,6 +248,8 @@ export const PLACES_A_STARTER: PlacesAContent = {
     note: "The oven runs hot and the owner runs hotter.",
     intro:
       '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have `w{slots}`$ slots reserved until day `w{until}`$ and `w{ashes}`$ urns on the shelf."',
+    introNone:
+      '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have no slots reserved and `w{ashes}`$ urns on the shelf."',
     permitNote: "\n`$The crematory permit on your wall knocks the price down.",
     buttons: {
       rent: "Rent Oven Time",
@@ -283,7 +287,7 @@ export const PLACES_A_STARTER: PlacesAContent = {
       rain: "It is raining, so lilies are in season and cheaper.",
       fog: "The fog hurts the deliveries, but not the prices.",
       storm: "The storm smashed the front window, so everything is on clearance.",
-      heat: "It is hot, and flowers in the heat cost double to keep alive.",
+      heat: "It is hot, and flowers in the heat cost extra to keep alive.",
       snow: "The snow shut the growers, so hothouse stems cost extra.",
     },
     specialNone: "The price is whatever it is today.",

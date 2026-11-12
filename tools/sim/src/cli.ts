@@ -23,7 +23,9 @@ const HELP = `Usage: pnpm --filter @fq/sim run sim -- [options]
   --latejoin D      Expanded: one more bot joins on game day D
   --challenges N    Expanded: Daily Challenge runs per personality and difficulty (6)
   --places-off L    Expanded: comma list of newer places the bots skip (police, crematorium,
-                    florist, gazette, coroner, health, pawn, mournes), to measure them by ablation
+                    florist, gazette, coroner, health, pawn, mournes) or single buttons they
+                    never press (crematorium:bulk, florist:bundle, police:patrol, mournes:hold),
+                    to measure them by ablation
   --oracle          seat the hidden-state oracle instead of fair bots
   --seed N          base seed (1)
   --workers N       worker threads (cores - 1; 0 = this thread)

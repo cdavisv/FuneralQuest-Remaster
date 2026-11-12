@@ -165,7 +165,10 @@ export function createMuseumHost(deps: MuseumHostDeps): MuseumHost {
           if (error instanceof AuthError) {
             return {
               field: "logon",
-              message: error.code === "signup_disabled" ? MESSAGES.closed : MESSAGES.taken,
+              message:
+                error.code === "signup_disabled" || error.code === "invite_required"
+                  ? MESSAGES.closed
+                  : MESSAGES.taken,
             };
           }
           throw error;

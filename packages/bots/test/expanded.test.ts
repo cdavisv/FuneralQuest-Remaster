@@ -133,6 +133,7 @@ describe("the eight newer places (balance round 19)", () => {
       expect([...visited], id).toContain(id);
     for (const id of [
       "coroner:certificate",
+      "florist:church",
       "health-department:inspect",
       "mournes:hold",
       "pawn-shop:lot:wood",

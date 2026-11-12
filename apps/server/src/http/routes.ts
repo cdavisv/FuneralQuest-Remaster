@@ -1,8 +1,8 @@
 import { richTextToPlain } from "@fq/core";
 import type { FastifyInstance, FastifyRequest } from "fastify";
-import { type Account, AuthError } from "../auth/accounts.js";
+import { type Account, AuthError, INVITE_FAILURES } from "../auth/accounts.js";
 import { addressKey } from "../auth/ip.js";
-import { SlidingCounter } from "../auth/throttle.js";
+import { LoginThrottle, SlidingCounter } from "../auth/throttle.js";
 import { AlreadyPlayed, InvalidEntry, isChallengeDay, NotPlaying } from "../game/challenge.js";
 import { hallEntryOf } from "../game/hall.js";
 import { checkNames } from "../game/names.js";
@@ -56,6 +56,10 @@ const AUTH_MESSAGES: Record<string, [number, string]> = {
   signup_disabled: [403, "Sign-up is closed on this server."],
   guest_disabled: [403, "Guest accounts are not allowed on this server."],
   not_guest: [409, "This account is already a full account."],
+  invite_required: [403, "This server is invite-only for now. Enter your invite code."],
+  invite_invalid: [403, "That invite code is not recognised. Check it and try again."],
+  invite_used_up: [403, "That invite code has already been used as many times as it allows."],
+  invite_expired: [403, "That invite code has expired or been withdrawn."],
 };
 
 function asHttpError(error: unknown): unknown {
@@ -127,6 +131,28 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
     }
     newAccounts.hit(key);
   };
+  // Wrong invite codes per address, counted like wrong passwords per login: ten in fifteen minutes
+  // and the address may not try another code until the window passes.
+  const inviteGuesses = new LoginThrottle(ctx.clock);
+  /** Runs an account-making call that may take an invite code, counting wrong codes. */
+  const withInvite = async <T>(request: FastifyRequest, work: () => Promise<T>): Promise<T> => {
+    const key = addressKey(request.ip);
+    if (accounts.inviteRequired && inviteGuesses.isLocked(key)) {
+      throw new HttpError(
+        429,
+        "rate_limited",
+        "Too many wrong invite codes from your address. Try again later.",
+      );
+    }
+    try {
+      return await work();
+    } catch (error) {
+      if (error instanceof AuthError && INVITE_FAILURES.has(error.code)) {
+        inviteGuesses.recordFailure(key);
+      }
+      throw asHttpError(error);
+    }
+  };
   /** Refuses new work for a town whose queue is already long: it is slow, not broken. */
   const assertTownNotSwamped = (town: TownRuntime): void => {
     if (town.pendingOperations >= config.maxQueuedPerTown) {
@@ -177,6 +203,11 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
         contactEmail: config.contactEmail === "" ? null : config.contactEmail,
         deletionPath: "/account/delete",
       },
+      access: {
+        signup: config.signupEnabled,
+        guests: config.guestEnabled,
+        inviteRequired: config.inviteRequired,
+      },
     }),
   );
 
@@ -222,18 +253,16 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
       throw asHttp(error);
     }
     takeSignupSlot(request);
-    try {
-      const made = await accounts.signUp(body.login, body.password, request.ip);
-      ctx.host.audit.append({
-        at: ctx.clock.now(),
-        accountId: made.account.id,
-        kind: "account:signup",
-        data: { login: made.account.login },
-      });
-      return reply.status(201).send(authResponse(made));
-    } catch (error) {
-      throw asHttpError(error);
-    }
+    const made = await withInvite(request, () =>
+      accounts.signUp(body.login, body.password, request.ip, body.invite),
+    );
+    ctx.host.audit.append({
+      at: ctx.clock.now(),
+      accountId: made.account.id,
+      kind: "account:signup",
+      data: { login: made.account.login },
+    });
+    return reply.status(201).send(authResponse(made));
   });
 
   app.post("/api/auth/login", { config: { rateLimit: authLimit } }, async (request) => {
@@ -254,14 +283,10 @@ export function registerRoutes(app: FastifyInstance, ctx: AppContext): void {
   });
 
   app.post("/api/auth/guest", { config: { rateLimit: authLimit } }, async (request, reply) => {
-    GuestBody.parse(request.body ?? {});
+    const body = GuestBody.parse(request.body ?? {});
     takeSignupSlot(request);
-    try {
-      const made = await accounts.createGuest(request.ip);
-      return reply.status(201).send(authResponse(made));
-    } catch (error) {
-      throw asHttpError(error);
-    }
+    const made = await withInvite(request, () => accounts.createGuest(request.ip, body.invite));
+    return reply.status(201).send(authResponse(made));
   });
 
   // A guest becomes a full account and keeps the parlor (decision 7: free text needs one).

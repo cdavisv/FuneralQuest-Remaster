@@ -2060,6 +2060,16 @@ textarea.fq-notepad-input {
   min-height: 44px;
 }
 
+/*
+ * An Expanded town's twenty places are too close together on a phone's map for 44px spots: grown
+ * to that size they cover each other. There the spots keep their drawn size and the list of
+ * places under the map, with its 44px rows, is the touch target (docs/expanded-audit.md).
+ */
+.fq-cabinet[data-layout="phone"] .fq-hotspots[data-many] li {
+  min-width: 0;
+  min-height: 0;
+}
+
 .fq-cabinet[data-layout="phone"] .fq-map-list,
 .fq-cabinet[data-layout="phone"] .fq-map-buttons,
 .fq-cabinet[data-layout="phone"] .fq-map-caption {

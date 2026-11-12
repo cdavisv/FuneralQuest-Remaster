@@ -80,6 +80,7 @@ describe("museum mode is off by default", () => {
       },
       dailyChallenge: { enabled: true },
       safety: expect.objectContaining({ reports: true, blocks: true, accountDeletion: true }),
+      access: { signup: true, guests: true, inviteRequired: false },
     });
     // The client directory's single-page fallback must not answer for /museum either.
     for (const url of ["/flash/welcome.swf", "/request.xp?checklogon", "/ruffle/ruffle.js"]) {
@@ -115,6 +116,7 @@ describe("museum mode is on", () => {
       museum: { enabled: true, path: "/museum/", available: true, reason: null },
       dailyChallenge: { enabled: true },
       safety: expect.objectContaining({ reports: true, blocks: true, accountDeletion: true }),
+      access: { signup: true, guests: true, inviteRequired: false },
     });
   });
 

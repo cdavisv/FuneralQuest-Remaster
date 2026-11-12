@@ -51,6 +51,7 @@ export const PLACES_TEXT_TOKENS: Readonly<Record<string, readonly string[]>> = {
   "placesA.police.backdoorFailed": ["inspector"],
   "placesA.police.grievanceRow": ["rival", "day"],
   "placesA.crematorium.intro": ["keeper", "slots", "until", "ashes"],
+  "placesA.crematorium.introNone": ["keeper", "ashes"],
   "placesA.crematorium.rented": ["keeper", "slots"],
   "placesA.crematorium.bulkBought": ["keeper", "slots"],
   "placesA.crematorium.scattered": ["count"],

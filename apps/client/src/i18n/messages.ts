@@ -225,6 +225,7 @@ export const en = {
   "door.guest": "Play as guest",
   "door.guest.note":
     "No password. Your guest parlor lives only in this browser. Guests can play and read, but chat, letters and announcements need a free account.",
+  "door.guest.start": "Start as guest",
   "door.guest.warning": "You are a guest: this browser is the only key to your parlor.",
   "door.welcomeBack": "Welcome back, {name}.",
   "door.welcomeBack.parlor": "Your parlor is waiting.",
@@ -261,6 +262,9 @@ export const en = {
   "form.sex.hint": "Click an icon below.",
   "form.sex.male": "Male",
   "form.sex.female": "Female",
+  "form.invite": "Invite code",
+  "form.invite.hint":
+    "This server is invite-only for now. Type the code you were given; dashes and spaces do not matter.",
 
   "form.err.required": "Please fill this in.",
   "form.err.login": "Use 3 to 20 letters, digits, dots, dashes or underscores.",
@@ -280,6 +284,10 @@ export const en = {
   "form.err.sessionExpired": "Your sign-in has expired. Please log on again.",
   "form.err.server": "The server had a problem. Please try again in a moment.",
   "form.err.network": "Could not reach the server. Check your connection and try again.",
+  "form.err.inviteRequired": "This server is invite-only for now. Please enter your invite code.",
+  "form.err.inviteInvalid": "That invite code is not recognised. Please check it and try again.",
+  "form.err.inviteUsedUp": "That invite code has already been used up.",
+  "form.err.inviteExpired": "That invite code has expired or been withdrawn.",
 
   "newuser.account.title":
     "So you would like to enter the death care industry, would you? To get your mortuary license you will need to fill out these forms.",

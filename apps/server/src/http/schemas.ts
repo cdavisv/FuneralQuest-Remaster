@@ -19,20 +19,28 @@ export const safeText = (min: number, max: number) =>
 
 const id = safeText(1, 128);
 
+const LoginField = z
+  .string()
+  .regex(LOGIN_PATTERN, "3 to 20 letters, digits, dot, dash or underscore");
+const PasswordField = z.string().min(8).max(128);
+/** An invite code as typed (spaces and dashes allowed); used only while invites are required. */
+const InviteField = z.string().max(40).optional();
+
 export const SignUpBody = z.strictObject({
-  login: z.string().regex(LOGIN_PATTERN, "3 to 20 letters, digits, dot, dash or underscore"),
-  password: z.string().min(8).max(128),
+  login: LoginField,
+  password: PasswordField,
+  invite: InviteField,
 });
 
-/** A guest making their account a full one: the same fields as a sign-up. */
-export const UpgradeBody = SignUpBody;
+/** A guest making their account a full one: a log-in name and a password, no second invite. */
+export const UpgradeBody = z.strictObject({ login: LoginField, password: PasswordField });
 
 export const LogInBody = z.strictObject({
   login: z.string().min(1).max(64),
   password: z.string().min(1).max(128),
 });
 
-export const GuestBody = z.strictObject({});
+export const GuestBody = z.strictObject({ invite: InviteField });
 
 export const TownParams = z.strictObject({ townId: z.string().regex(TOWN_ID) });
 

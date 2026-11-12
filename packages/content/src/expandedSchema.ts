@@ -500,6 +500,7 @@ function buildPlacesSchema(mode: SchemaMode) {
       title: text,
       note: text,
       intro: text,
+      introNone: text,
       permitNote: text,
       buttons: obj({ rent: text, bulk: text, scatter: text, diamonds: text, leave: text }),
       ovenFull: text,

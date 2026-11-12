@@ -2,7 +2,6 @@ import type { Button, View } from "@fq/protocol";
 import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
-import { intToCash } from "../../text/format.js";
 import { refreshRating } from "../parlor.js";
 import { applyReward, moneyMod, xr } from "../players.js";
 import { life, xt } from "./life.js";
@@ -101,11 +100,11 @@ function spy(turn: Turn): View {
   let text: string;
   if (turn.rng.randomYesNo(p.luck, r.luckWeight)) {
     pb(turn).tip = { loved: false, cheap: true, traits: 0 };
-    text = say(turn, t.spyOk, { price: intToCash(r.price) });
+    text = say(turn, t.spyOk, { price: cash(r.price) });
   } else {
     applyReward(turn, p, { karma: r.failKarma, reviews: r.failReviews });
     text = say(turn, t.spyCaught, {
-      price: intToCash(r.price),
+      price: cash(r.price),
       karma: r.failKarma,
       reviews: r.failReviews,
     });
@@ -126,13 +125,13 @@ function undercut(turn: Turn): View {
   if (turn.rng.randomYesNo(p.luck, r.luckWeight)) {
     applyReward(turn, p, { reviews: r.reviews, luck: r.luck });
     text = say(turn, t.undercutWin, {
-      price: intToCash(r.price),
+      price: cash(r.price),
       reviews: r.reviews,
       luck: r.luck,
     });
   } else {
     applyReward(turn, p, { reviews: r.failReviews });
-    text = say(turn, t.undercutLose, { price: intToCash(r.price), reviews: r.failReviews });
+    text = say(turn, t.undercutLose, { price: cash(r.price), reviews: r.failReviews });
   }
   refreshRating(turn.rules, p);
   return main(turn, text);
@@ -161,7 +160,7 @@ function truce(turn: Turn): View {
   const leads = Math.max(0, Math.min(r.leads, room));
   l.leads += leads;
   refreshRating(turn.rules, p);
-  let text = say(turn, t.truceDone, { days: r.days, karma: r.karma, price: intToCash(r.price) });
+  let text = say(turn, t.truceDone, { days: r.days, karma: r.karma, price: cash(r.price) });
   if (leads > 0) text += `\n${say(turn, t.truceLead, { leads })}`;
   return main(turn, text);
 }

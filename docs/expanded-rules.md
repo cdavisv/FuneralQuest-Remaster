@@ -489,7 +489,7 @@ The numbers in this document are now tuned against whole seasons of the `@fq/bot
 
 ### What remains to tune
 
-- **Win shares.** Half met after round 17: nobody is below a third of its fair share any more (the lowest is the saboteur at 0.35; the organiser rose from 0.17 to 0.46 and the scholar from 0.28 to 0.72 once the bots bought the Memorial Garden earlier), but the politician (2.38x) and the necromancer (2.33x) are still above 2: a strong seller with a small spread, and a fighter whose season swings three times as wide as a seller's. Read by mean place and BP against the town mean the field is fair. Both levers the last baseline named were measured and not applied: a per-day cap on parlor-fight BP never reaches the necromancer (its fight days stop at 109 BP) and only costs the saboteur, and `scoring.exact.share` 0.4 raised the politician against its towns while costing the scholar two points. The baseline's proposals for the owner: judge Expanded by mean place and BP, and decide on the proposals that change how the game feels (shorter days).
+- **Win shares.** Not met since the eight newer places (sections 30 and 31) entered the bots' play in round 19: the tycoon wins 3.38x its share (+6.5% of its towns' BP) and the necromancer 2.33x (-2.1%); five personalities are under a third (Soft Touch 0.31, saboteur 0.29, saint 0.26, organiser 0.23, scholar 0.22), all but the saboteur (-8.7%) within 1.7% of their towns' mean BP. Round 20 found that what the places give the tycoon is protection (the patrol, about 2 points) and karma (Mourne & Sons' free hold, about 1.8 points), and that no number of the places reaches it: its money has no other use, so dearer patrols, oven time or bouquets cost it nothing and land on the poorer parlors instead. The levers left need engine logic (a price or cooldown for the hold; a patrol priced against the buyer's BP, or a nightly limit), listed for the owner in `docs/balance/expanded-baseline.md`. The necromancer's share above 2 predates the places (its seasons swing three times as wide as a seller's). Read by mean place and BP against the town mean the field is within the bands; the baseline's proposals for the owner: judge Expanded by mean place and BP, and decide on the proposals that change how the game feels (shorter days).
 - **Walkouts.** Bots almost never let a customer walk (0.06% of customers). Mood pacing, patience and the generosity of Coffee and Discount need human play.
 - **The exact match** lands on a quarter of a careful seller's sales and the closeness bonuses are a quarter of sale BP; that rewards reading, but pinning the limit with small cards is the grindiest play there is. Playtest whether it feels like skill or chores.
 - **Numbers the bots exercise but cannot judge:** trait strengths and tell frequency (bots read tells perfectly at hard), special customers' rewards, the content's prep choices (karma still moves fast: both paths reach their second perk within a few days), hearse upkeep.
@@ -963,6 +963,7 @@ The table above is from the numbers before the simulator tuning; `townBalance` r
 - **The election** draws one candidate (the politician) in most towns and nobody runs against it; the mayor's perks are now +1 rating and a double vote (the extra turn was worth about 700 BP a season). Contested elections need people.
 - **Story arcs, news and weather** are exercised (every seat lives through them) but not measured against each other; their frequency (news 60% of days, arcs 35% a day in their windows) needs human play.
 - **Late upgrades:** since round 17 the bots that buy them list the Memorial Garden and the Night Watchman before the embalming lab. The Garden is bought by 27% of seats on day 20 (was 8% on day 26) and returns 0.022 BP a dollar, about twice a monument (0.010); if it should match a monument, its income shift or price (7.2) is the lever, an owner's call. The Watchman moved only to day 25 (it needs the guard dog and the $16,000 alarm) and its return is within noise of zero; the Billboard returns 0.010.
+- **Money the rich cannot spend.** The tycoon ends a season with about $46,000 in cash (the shark about $41,000): five monuments and the tithe limit are its only late sinks. That is why no price reaches it: in round 20 a patrol at $6,000 and then $9,000 (section 30) was still bought six times a season with no change in its BP, while the poorer good parlors stopped. Any lever on the leading sellers has to be something other than a flat price (a cost that grows with BP, a limit), or a new late sink.
 - The black market's gold tag is the only money-to-tag path; watch it if tags get scarce.
 - The Remastered art pack now draws the places, the duel and two map buildings (25.4); there is still no `ui/building-graveyard`.
 
@@ -1003,7 +1004,7 @@ Three small seams outside `town/`: `pvp.ts` (`expandedBattleBp`) and `modules/to
 
 ### A1. The Police Station (`police-station`, module `police`)
 
-Desk: Sergeant Bixby (`placesA.cast.sergeant`; the health inspector, Inspector Pratt, stays at the Health Department). Art: `places/funeral_enemy_police`. The place remembers the attacks on your parlor: a parlor fight the attacker won, or a break-in (`steal` visit), up to 8, kept with the day.
+Desk: Sergeant Bixby (`placesA.cast.sergeant`; the health inspector, Inspector Mudge, stays at the Health Department). Art: `people/sergeant-bixby` on `places/funeral_enemy_police`. The place remembers the attacks on your parlor: a parlor fight the attacker won, or a break-in (`steal` visit), up to 8, kept with the day.
 
 | Action | Rule |
 |---|---|
@@ -1029,7 +1030,7 @@ A rented slot is used by the next cremation sale (`settleSale`): the sale keeps 
 
 ### A3. The Florist (`florist`)
 
-Florist: Marigold Thorne. Art: `stuff/red_rose` on `places/store`.
+Florist: Marigold Thorne. Art: `people/marigold-thorne` on `places/florist`.
 
 | Action | Rule |
 |---|---|
@@ -1042,7 +1043,7 @@ Each fresh bouquet in the cooler pays when a sale includes a flowers package tie
 
 ### A4. The Town Gazette (`gazette`)
 
-Editor: Hal Pennywhistle (the mayor is named in the intro). Art: `people/man_prowl` on `places/desk`.
+Editor: Hal Pennywhistle (the mayor is named in the intro). Art: `people/hal-pennywhistle` on `places/gazette`.
 
 | Action | Rule |
 |---|---|
@@ -1056,6 +1057,10 @@ An advert's customer is a Classic-style lead (the next Wait for Customer is a su
 ### Balance (round 19)
 
 The bots now use all four places (`packages/bots/src/expanded/places.ts`) and the simulator reports them (`docs/balance/expanded-baseline.md`, "the eight newer places"). Numbers changed: the police fine $800 -> $600 and the settlement $500 -> $400 (the parlor that is reported fell furthest); the Gazette's classified $800 -> $750, display advert $2,000 -> $1,800, smear $3,000 -> $2,500. Measured over 200 towns: the Crematorium's oven pays the parlors that sell cremations (+$3,100 a season) and nobody else, the Florist's bouquets return about $1.5 a dollar to the parlors that sell flowers, the patrol and back door were bought on 10% of seat-nights without changing the number of attacks (no lock), the church wreath is rarely worth its $600, and the Gazette is the dearest place and buys no measured BP.
+
+### Balance (round 20)
+
+No number in this section changed. Round 20 (`docs/balance/expanded-tuning-log.md`) measured each place by leaving it out: of the 3.3 points of BP the places add to the tycoon at 60 towns, the patrol is about 2 (it keeps the leader out of the fights it would lose) and the oven and the bouquets about half a point each. A dearer patrol ($6,000, $9,000), a bulk lot without its discount ($2,700) and a smaller bouquet share (45%) were tried and put back: the tycoon ends a season with about $46,000 it cannot spend, so none of them reached it, and each landed on the poorer parlors that share the purchase. The church wreath was dead because the bots sent it only when short of karma; they now also send it every fourth day for its word of mouth (1,793 wreaths in 200 towns, about $600 a point of word of mouth, under the certificate's $800). The back door feeds the necromancer about 1.4 points (nine a season cut its fight losses; without the police it falls from -3.2% to -4.6% of its towns' BP), but its share above 2 predates the places, so it was left alone.
 
 ### Verification
 
@@ -1072,7 +1077,7 @@ Four Expanded-only map locations: the Coroner's Office, the Health Department, C
 - Random draws come from the player's stream: `rng.random(100)` for chances in percent, and `randomYesNo(luck, weight)` where luck should matter (as the Reaper Club's seance). A save round trip replays them identically (`pressRT` in the tests).
 - **The next-customer tip** (coroner tip, successful Mournes spy): `waitX` calls `applyNextTip` just before the arrival screen, after the risk and script checks, so a tip is never spent on a screen that skips the customer. It marks the facts as told (so the panel shows them), adds the lines to the customer's notes and puts them at the top of the arrival text. The practice customer and the Daily Challenge never use it. One tip is held at a time.
 - **The health boost**: word of mouth (`reviews`) is added at once, the amount actually applied (after the cap) is remembered with its last day, and a morning hook (`placesBMorning`, `onPlayerNewDay`) takes it back on the first desk visit after the last day. One boost at a time.
-- **Loot**: `modules/prep.ts` calls `addLoot` when a body-preparation choice is dishonest (`evil`) and pays money (the ring). The piece stays in the player's record (at most `pawn.loot.max`) until pawned.
+- **Loot**: `modules/prep.ts` calls `addLoot` when a body-preparation choice is dishonest (`evil`) and pays money (the ring). The piece stays in the player's record (at most `pawn.loot.max`) until pawned. The piece is taken whether or not the family notices: a gamble that fails loses the money and costs the karma and reputation its `failEffects` name, and the piece is still in the drawer.
 - BP: none of the four gives BP directly. Their value is cash, word of mouth (1 reputation point = 1 rating point), karma, luck, leads and information, so none can compete with the monuments' 0.010 BP a dollar (`docs/balance/expanded-baseline.md`).
 
 ### B1. The Coroner's Office (`coroner`)
@@ -1127,3 +1132,7 @@ Augustus Mourne and his sons Ned and Rollo (`cast.mournes`, `cast.sons`). The fa
 ### Balance (round 19)
 
 Numbers changed in round 19 (`docs/balance/expanded-tuning-log.md`), all in the tables above: the tip $600 -> $300; the certificate $800 -> $1,600, every 4 days; the quiet favour $700 -> $300 with a 50% chance (it was a $20,000-a-season pump for the evil path); the inspection and the clean bill last 8 days (clean bill $1,200); the complaint $500 -> $1,500; second-hand lots 65% -> 80% of Di-Mart's price; loot $300 -> $200. Watch items, not changed: Mourne & Sons' "hold your prices" gives +1 karma a day for nothing (it was pressed 35,467 times in 200 towns).
+
+### Balance (round 20)
+
+No number in this section changed. Leaving the hold out (60 towns, `--places-off mournes:hold`) takes 1.8 points of BP off the tycoon: its +27 karma a season carries a neutral parlor into the good path in a third of its seats. `hold` has only its karma, so it cannot be priced or slowed by a number; the proposal (engine logic, not built) is a small price checked in `standRefusal` or karma only every few days.

@@ -48,8 +48,10 @@ export const PLACE_PICKERS = [
 ];
 
 /**
- * Errands a balance experiment switches off for every bot (the simulator's `--places-off`), to
- * measure what a place does to the town by leaving it out. Empty in play.
+ * Errands (`crematorium`) or single buttons (`crematorium:bulk`) a balance experiment switches
+ * off for every bot (the simulator's `--places-off`), to measure what a place or one of its
+ * actions does to the town by leaving it out. A switched-off button reads as disabled. Empty in
+ * play.
  */
 let off: ReadonlySet<string> = new Set();
 
@@ -108,7 +110,7 @@ function did(c: Ctx, key: string): void {
 }
 
 function enabled(view: View, id: string): Button | undefined {
-  if (view.overlay) return undefined;
+  if (view.overlay || off.has(id)) return undefined;
   return view.buttons.find((b) => b.id === id && b.enabled !== false);
 }
 
@@ -345,8 +347,10 @@ function florist(c: Ctx, morning: boolean): Action | null {
     return null;
   }
   if (p.wreath === "none" || !investing(c)) return null;
-  // A church wreath buys karma and word of mouth: only a parlor short of the good path needs it.
-  if (p.wreath === "church" && karma(c) >= EXPANDED.karma.good[1] + 5) return null;
+  // A church wreath buys karma and a point of word of mouth: a parlor short of the good path
+  // sends one whenever it can, one already there every fourth day for the word of mouth.
+  if (p.wreath === "church" && karma(c) >= EXPANDED.karma.good[1] + 5 && day(c) % 4 !== 2)
+    return null;
   const id = p.wreath === "church" ? "florist:church" : "florist:ward";
   const b = enabled(v, id);
   if (b && afford(c, dollars(b.detail), 1500) && count(c, "wreath") === 0) {

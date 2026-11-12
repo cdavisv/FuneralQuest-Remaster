@@ -177,7 +177,7 @@ export const PLACES_B_STARTER: PlacesBContent = {
     complaintDismissed:
       "`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The {price} stays in his drawer.",
     complaintBackfired:
-      "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5({reviews} reputation)`$",
+      "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5(-{reviews} reputation)`$",
     complaintMail:
       "`4A complaint was filed against {parlor} with the Health Department. Somebody in town does not like you. Your reputation dipped.`$",
     complaintNews:

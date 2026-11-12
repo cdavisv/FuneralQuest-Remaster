@@ -7,6 +7,7 @@ import type { ContentSource } from "../content/index.js";
 import { backupDirOf, makeBackup } from "../db/backup.js";
 import type { Db } from "../db/database.js";
 import {
+  ActivityStore,
   AuditStore,
   ChallengeStore,
   HallStore,
@@ -16,6 +17,7 @@ import {
 } from "../db/stores.js";
 import { ModerationService } from "../moderation/service.js";
 import type { TownInfo } from "../wire.js";
+import { ActivityRecorder, addDays, utcDay } from "./activity.js";
 import { ChallengeService } from "./challenge.js";
 import { Hub } from "./hub.js";
 import { checkTownSetup, TownConfigError } from "./setup.js";
@@ -65,6 +67,9 @@ export class GameHost {
   readonly parlorStore: ParlorStore;
   readonly audit: AuditStore;
   readonly hall: HallStore;
+  /** The activity record (one row per account, town and UTC day played), for `GET /admin/stats`. */
+  readonly activityStore: ActivityStore;
+  readonly activity: ActivityRecorder;
   /** The Daily Challenge: one private run per account per day. */
   readonly challenge: ChallengeService;
   /** Blocks, reports, mutes, the strict word list and the short cafe window kept for reports. */
@@ -85,6 +90,8 @@ export class GameHost {
     this.parlorStore = new ParlorStore(db);
     this.audit = new AuditStore(db);
     this.hall = new HallStore(db);
+    this.activityStore = new ActivityStore(db);
+    this.activity = new ActivityRecorder(this.activityStore, () => clock.now());
     this.moderation = new ModerationService({
       db,
       clock,
@@ -110,6 +117,7 @@ export class GameHost {
       parlors: this.parlorStore,
       audit: this.audit,
       hall: this.hall,
+      activity: this.activity,
       clock,
       content,
       hub: this.hub,
@@ -296,6 +304,7 @@ export class GameHost {
         this.log.info({ guests }, "unused guest accounts removed");
         // Their blocks went with them (cascade); an id may be reused, so rebuild the index.
         this.moderation.reloadBlocks();
+        this.activity.reset();
       }
       const reports = this.moderation.pruneReports();
       if (reports > 0) this.log.info({ reports }, "old closed reports removed");
@@ -303,6 +312,11 @@ export class GameHost {
         const cutoff = this.clock.now() - this.config.auditRetentionDays * 86_400_000;
         const removed = this.audit.prune(cutoff, 50_000);
         if (removed > 0) this.log.info({ removed }, "old audit rows removed");
+      }
+      if (this.config.activityRetentionDays > 0) {
+        const before = addDays(utcDay(this.clock.now()), -this.config.activityRetentionDays);
+        const removed = this.activityStore.prune(before);
+        if (removed > 0) this.log.info({ removed }, "old activity rows removed");
       }
     });
   }

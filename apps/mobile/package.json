@@ -1,6 +1,6 @@
 {
   "name": "@fq/mobile",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "private": true,
   "description": "Funeral Quest mobile app (Capacitor 8): wraps the @fq/client bundle for Android and iOS.",
   "type": "module",

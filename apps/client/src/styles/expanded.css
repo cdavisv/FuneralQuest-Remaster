@@ -949,6 +949,18 @@
   max-width: calc(var(--u) * var(--plaque-w, 142) * 1.3);
 }
 
+/*
+ * A short label of several words on a narrow priced plaque ("Run a Smear", one of five at the
+ * Gazette) breaks into two lines at the full size and runs out of the plaque at the bottom: it
+ * takes the long labels' size instead (docs/expanded-audit.md).
+ */
+@container (max-width: 174.99px) {
+  .fq-app .fq-deck .fq-plaque[data-has-detail] .fq-plaque-label[data-len="normal"] {
+    font-size: 0.76em;
+    line-height: 0.95;
+  }
+}
+
 @container (min-width: 175px) {
   .fq-app .fq-deck .fq-plaque-label[data-len="long"] {
     font-size: 0.8em;
@@ -1341,11 +1353,30 @@
 
 /* ---------- The map ---------- */
 
+/* On the map the strip rides on the frame's top edge, in one row, so it covers no building: the
+   Gazette and the pawn shop stand along the top of the picture (docs/expanded-audit.md). A long
+   strip shortens its labels; each chip's tip still says it all. (On a phone the strip sits above
+   the map and wraps, as on the desk.) */
 .fq-map > .fq-townstrip[data-variant="map"] {
   left: calc(var(--u) * 250);
   right: auto;
-  top: calc(var(--u) * 33);
+  top: calc(var(--u) * 1);
   max-width: calc(var(--u) * 735);
+  padding: calc(var(--u) * 2) calc(var(--u) * 6);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] .fq-strip-item {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] .fq-strip-tip,
+.fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] .fq-tipped-btn {
+  min-width: 0;
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] .fq-strip-label {
+  max-width: calc(var(--u) * 170);
 }
 
 .fq-hotspot-area:hover,
@@ -1366,6 +1397,11 @@
 .fq-map-list[data-many] .fq-listbtn {
   min-height: 40px;
   font-size: max(15px, calc(var(--u) * 19));
+}
+
+/* (The map strip's one row, with the rules above.) */
+.fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] ul {
+  flex-wrap: nowrap;
 }
 
 /* ---------- The clerk ---------- */

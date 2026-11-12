@@ -54,7 +54,11 @@ export function MapScene({ view, layout, onPress, onAction }: SceneProps) {
               {t("map.title")}
             </p>
           )}
-          <ul className="fq-hotspots" aria-label={t("map.places")}>
+          <ul
+            className="fq-hotspots"
+            aria-label={t("map.places")}
+            data-many={places.length > 10 ? "" : undefined}
+          >
             {places.map((p, i) => {
               const rect = rects[p.id];
               const building = rect ? art.piece(`building-${p.id}` as PieceName) : undefined;

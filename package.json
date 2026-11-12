@@ -1,7 +1,7 @@
 {
   "name": "funeral-quest-remastered",
   "private": true,
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Remaster of Funeral Quest (Robinson Technologies, 2001): Classic and Expanded rulesets on one TypeScript engine.",
   "license": "SEE LICENSE IN license.txt",
   "type": "module",

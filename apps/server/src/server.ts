@@ -66,6 +66,7 @@ export async function createServer(
       sessionTtlMs: config.sessionTtlDays * 86_400_000,
       signupEnabled: config.signupEnabled,
       guestEnabled: config.guestEnabled,
+      inviteRequired: config.inviteRequired,
     },
   );
   const host = new GameHost(db, config, clock, content, accounts, logger);

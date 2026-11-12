@@ -50,9 +50,11 @@ function main(turn: Turn, message = ""): View {
   const t = tx(turn).crematorium;
   const c = ra(turn).crematorium;
   const state = pa(turn);
-  let text = fill(t.intro, {
+  const slots = liveSlots(turn.town, state);
+  // A parlor that holds no slot is told so, not "0 slots reserved until day 0".
+  let text = fill(slots > 0 ? t.intro : t.introNone, {
     keeper: tx(turn).cast.ovenKeeper,
-    slots: liveSlots(turn.town, state),
+    slots,
     until: state.oven.until,
     ashes: Math.max(0, xp(turn).record.cremations - state.ashes),
   });

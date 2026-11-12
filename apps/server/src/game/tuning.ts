@@ -33,6 +33,9 @@ const ALLOWED_PREFIXES = [
   "town.bank.",
   "town.world.",
   "town.graveyard.",
+  // The eight places of docs/expanded-rules.md sections 30 and 31.
+  "town.placesA.",
+  "town.placesB.",
 ];
 const ALLOWED_EXACT = new Set(["newPlayerGraceDays", "turns.bankMax", "money.plotIncome"]);
 
@@ -42,6 +45,7 @@ const STRUCTURAL = new Set([
   "town.club.shots.glasses",
   "town.club.market.slots",
   "town.chains.maxMembers",
+  "town.placesA.police.maxAttacks",
   "town.cityHall.election.fileUntil",
   "town.cityHall.election.voteUntil",
   "town.cityHall.ordinance.every",

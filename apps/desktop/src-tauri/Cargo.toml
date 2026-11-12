@@ -1,6 +1,6 @@
 [package]
 name = "funeral-quest"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 description = "Funeral Quest: a daily-turn game about rival funeral parlors, remastered."
 authors = ["FuneralQuest Remastered contributors"]
 license-file = "../../../license.txt"

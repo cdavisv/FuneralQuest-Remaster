@@ -40,7 +40,7 @@ h1{font-size:1.5rem}mark{background:#ffe08a;padding:0 .3rem}
 
 <h2>What deletion does</h2>
 <ul>
-<li>Removes your account, log-in sessions, block list, mutes and Daily Challenge entries.</li>
+<li>Removes your account, log-in sessions, block list, mutes, Daily Challenge entries and the record of which days you played.</li>
 <li>Closes your parlor in every town: your name and parlor name are taken out of the rankings, the newspaper, other players' letters, the hall of fame and rollback copies, and the letters, announcements, battle quotes and fortunes you wrote that are still waiting or printed are removed.</li>
 <li>Deletes the reports you filed that were settled, and the records of what you typed.</li>
 </ul>

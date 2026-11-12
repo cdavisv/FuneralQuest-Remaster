@@ -774,3 +774,139 @@ export class ChallengeStore {
     return row?.n ?? 0;
   }
 }
+
+// ------------------------------------------------------------ activity
+
+/** One day on which an account played in a town (`day` is the UTC date, `YYYY-MM-DD`). */
+export interface ActivityDayRow {
+  account_id: number;
+  town_id: string;
+  day: string;
+}
+
+/**
+ * The activity record behind `GET /admin/stats`: which account played in which town on which UTC
+ * day, and nothing more. Written through `ActivityRecorder`, which keeps the hot path to one map
+ * lookup per action.
+ */
+export class ActivityStore {
+  private readonly sql: Statements;
+  constructor(db: Db) {
+    this.sql = new Statements(db);
+  }
+
+  /** Records the day; true when the row is new. */
+  record(accountId: number, townId: string, day: string): boolean {
+    const r = this.sql
+      .get("INSERT OR IGNORE INTO activity_days (account_id, town_id, day) VALUES (?, ?, ?)")
+      .run(accountId, townId, day);
+    return Number(r.changes) > 0;
+  }
+
+  forAccount(accountId: number): ActivityDayRow[] {
+    return all<ActivityDayRow>(
+      this.sql.get("SELECT * FROM activity_days WHERE account_id = ? ORDER BY day, town_id"),
+      accountId,
+    );
+  }
+
+  /** The distinct (account, day) pairs, of one town or of the whole server. */
+  accountDays(townId?: string): { account_id: number; day: string }[] {
+    return townId === undefined
+      ? all<{ account_id: number; day: string }>(
+          this.sql.get("SELECT DISTINCT account_id, day FROM activity_days"),
+        )
+      : all<{ account_id: number; day: string }>(
+          this.sql.get("SELECT account_id, day FROM activity_days WHERE town_id = ?"),
+          townId,
+        );
+  }
+
+  eraseAccount(accountId: number): number {
+    return Number(
+      this.sql.get("DELETE FROM activity_days WHERE account_id = ?").run(accountId).changes,
+    );
+  }
+
+  /** Retention: deletes the rows of days before `day` (`YYYY-MM-DD`). */
+  prune(day: string): number {
+    return Number(this.sql.get("DELETE FROM activity_days WHERE day < ?").run(day).changes);
+  }
+}
+
+// -------------------------------------------------------------- invites
+
+/** One invite code. `code` is stored normalised (upper case, no spaces or dashes). */
+export interface InviteRow {
+  id: number;
+  code: string;
+  label: string;
+  max_uses: number;
+  used: number;
+  expires_at: number | null;
+  created_at: number;
+  revoked_at: number | null;
+}
+
+/**
+ * Invite codes for a closed beta (`FQ_INVITE_REQUIRED`). A code counts the accounts it made and
+ * nothing else: which accounts used it is not recorded.
+ */
+export class InviteStore {
+  private readonly sql: Statements;
+  constructor(db: Db) {
+    this.sql = new Statements(db);
+  }
+
+  /** Adds a code; null when the code already exists (the caller draws another). */
+  add(
+    code: string,
+    label: string,
+    maxUses: number,
+    expiresAt: number | null,
+    at: number,
+  ): InviteRow | null {
+    const r = this.sql
+      .get(
+        "INSERT OR IGNORE INTO invites (code, label, max_uses, expires_at, created_at) VALUES (?, ?, ?, ?, ?)",
+      )
+      .run(code, label, maxUses, expiresAt, at);
+    return Number(r.changes) > 0 ? (this.get(Number(r.lastInsertRowid)) ?? null) : null;
+  }
+
+  get(id: number): InviteRow | undefined {
+    return one<InviteRow>(this.sql.get("SELECT * FROM invites WHERE id = ?"), id);
+  }
+
+  byCode(code: string): InviteRow | undefined {
+    return one<InviteRow>(this.sql.get("SELECT * FROM invites WHERE code = ?"), code);
+  }
+
+  /** Newest first. */
+  list(): InviteRow[] {
+    return all<InviteRow>(this.sql.get("SELECT * FROM invites ORDER BY id DESC"));
+  }
+
+  /**
+   * Takes one use of the code if it is open at `now` (not revoked, not expired, not used up). One
+   * statement, so two redemptions of the last use cannot both succeed. True when a use was taken.
+   */
+  redeem(code: string, now: number): boolean {
+    const r = this.sql
+      .get(
+        `UPDATE invites SET used = used + 1
+         WHERE code = ? AND used < max_uses AND revoked_at IS NULL
+           AND (expires_at IS NULL OR expires_at > ?)`,
+      )
+      .run(code, now);
+    return Number(r.changes) > 0;
+  }
+
+  /** Marks the code revoked; false when there is no such code or it was revoked already. */
+  revoke(id: number, at: number): boolean {
+    const r = this.sql
+      .get("UPDATE invites SET revoked_at = ? WHERE id = ? AND revoked_at IS NULL")
+      .run(at, id);
+    return Number(r.changes) > 0;
+  }
+}

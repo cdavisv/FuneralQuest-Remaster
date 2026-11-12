@@ -1,6 +1,6 @@
 # Status
 
-Where the project stands, for someone arriving cold and for the owner. Updated 2026-11-07 on the branch `dev/alpha` (on top of pull requests 1 to 3 and the owner's decisions in [DECISIONS.md](DECISIONS.md)); the project is at version `0.1.0-alpha.1`, and [ALPHA.md](ALPHA.md) is the checklist that ends alpha. "Run" means somebody started it and watched it work; "tested" means a test suite passes and nobody has looked at the real thing.
+Where the project stands, for someone arriving cold and for the owner. Updated 2026-11-12 on the branch `dev/alpha2` (on top of pull requests 1 to 11 and the owner's decisions in [DECISIONS.md](DECISIONS.md)); the project is at version `0.1.0-alpha.2`, [ALPHA.md](ALPHA.md) is the checklist that ends alpha and [BETA.md](BETA.md) the one for beta. "Run" means somebody started it and watched it work; "tested" means a test suite passes and nobody has looked at the real thing.
 
 ## In one paragraph
 
@@ -20,7 +20,7 @@ The game is playable in a browser, online against the server and solo with compu
 | Security review of the server | [security.md](security.md) |
 | Performance budget, with a bundle-size check in CI | [performance.md](performance.md) |
 | CI: lint, typecheck, the version and workflow-file checks, unit tests in four groups, client build and bundle budget, Playwright in three browsers, dependency audit | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) |
-| Versioning: one version (root `package.json`, `0.1.0-alpha.1`) read by the web client (shown as "Alpha 0.1.0 (build abc1234)" in Settings and on the front door), the desktop and Android apps and the server tarball and reported by the running server on `/health` | [../CHANGELOG.md](../CHANGELOG.md), [release/BUILDING.md](release/BUILDING.md) |
+| Versioning: one version (root `package.json`, `0.1.0-alpha.2`) read by the web client (shown as "Alpha 0.1.0 (build abc1234)" in Settings and on the front door), the desktop and Android apps and the server tarball and reported by the running server on `/health` | [../CHANGELOG.md](../CHANGELOG.md), [release/BUILDING.md](release/BUILDING.md) |
 | Feedback: "Send feedback" in Settings and on the front door opens a prefilled report (version, build, ruleset, browser, screen title, free text) to copy. The destination is GitHub Issues (decision 22, 2026-11-07; repository variable `FQ_FEEDBACK_DESTINATION`). The alpha.1 builds were made before it was set and show a marked blank | [DECISIONS.md](DECISIONS.md) |
 | Alpha release workflow (`release.yml`): web bundles (online-capable and solo-only), Linux `.deb` and AppImage, Android debug and unsigned release APKs, server tarball, `SHA256SUMS`; draft pre-release on a tag; publishes nothing to a store, Pages or a registry | [release/BUILDING.md](release/BUILDING.md) |
 
@@ -32,7 +32,7 @@ The game is playable in a browser, online against the server and solo with compu
 - The alpha release files, built locally with the same scripts the release workflow calls (2026-11-06): both web zips, the server tarball (unpacked, `npm install --omit=dev`, started: `/health` answered and the client was served), the Linux `.deb` and AppImage (the release binary started and stayed up for 8 seconds), and the Android debug and unsigned release APKs (`aapt2`: version `0.1.0-alpha.1+<build>`, code 100001, `POST_NOTIFICATIONS` only). **The release workflow has run on GitHub** (tag `v0.1.0-alpha.1`, 2026-11-07): the first run's Android job failed in the SDK set-up action (it asked for the obsolete `tools` package; fixed in pull request 5), and the re-run built all seven files and attached them to a draft pre-release. The files were downloaded and checked against `SHA256SUMS`; the web bundle, the server tarball and the APK carry version `0.1.0-alpha.1` and build `b7b071e`, and the APK asks for no internet permission. **The owner published it on 2026-11-07** as the pre-release "FuneralQuest Remastered 0.1.0-alpha.1" (https://github.com/cdavisv/FuneralQuest-Remaster/releases/tag/v0.1.0-alpha.1).
 - The version line and the "Send feedback" dialog, in a browser at 1024x745 and 390x844 (front door and Settings; Escape closes the dialog on top of Settings); the report was read off the screen, not sent anywhere.
 - The solo-only web build, built for a sub-path (`/fq-pages/`) and served from it by a plain file host in Chromium and Firefox through the Playwright suite (`e2e/pages.spec.ts`): a solo day played, no request left the sub-path. **Published on 2026-11-07** at https://cdavisv.github.io/FuneralQuest-Remaster/ (the workflow's first run, on `master` at cd23040): a solo career was started there in Chromium, the paper and the desk rendered, the Synth pack loaded from the sub-path and no request left it; the Studio, remaster and voice packs were 404 there by design until the terms were confirmed (decision 24, 2026-11-07); the site now ships all of them.
-- Every player-facing Expanded feature in the web client against the real server, by the Expanded audit (`apps/client/e2e/expanded-audit.spec.ts`, 26 tests in one serial run, Chromium, 2026-11-07; the table is in [expanded-audit.md](expanded-audit.md)): four client defects and four engine or pack defects found and fixed the same day.
+- Every player-facing Expanded feature in the web client against the real server, by the Expanded audit (`apps/client/e2e/expanded-audit.spec.ts`, 38 tests in one serial run, Chromium and Firefox, 2026-11-12; the table is in [expanded-audit.md](expanded-audit.md)). The first round (26 tests, 2026-11-07) found and fixed four client defects and four engine or pack defects; the round for the eight newer places found and fixed four client defects and six in the engine, the pack, the server and the documents.
 - Museum mode's log-on screen against what the C++ builds: looked at in the original client (see [classic-fidelity.md](classic-fidelity.md)).
 - The server under a town of 800 parlors (timings in [performance.md](performance.md)).
 
@@ -42,7 +42,8 @@ The game is playable in a browser, online against the server and solo with compu
 
 - Everything in the server's hardening (limits, origin checks, token handling, compression): unit and integration tests, not a hostile human.
 - The Playwright suites in all three browsers on the Linux machine they were written on. WebKit there is Playwright's own build, not Safari; the sound test is skipped on a host without the GStreamer plug-ins it needs.
-- The Expanded ruleset's balance, by simulation ([balance/](balance/)).
+- The Expanded ruleset's balance, by simulation ([balance/](balance/)): 20 rounds. Two styles still win more than twice their fair share and five less than a third, though all but one are within 1.7% of their towns' mean in points ([BETA.md](BETA.md) B5).
+- Invite codes and the activity statistics (who comes back): server tests, a browser test of the sign-up with a code, and the admin page's tabs read in a browser. No real cohort has been measured.
 - The wrappers' server-address dialog, links to the system browser, notifications and the Android back button: written to the Tauri and Capacitor documentation, not exercised on a device.
 - The accessibility checks (axe and a contrast measurement) are automatic; they do not replace a screen-reader pass.
 
@@ -73,6 +74,6 @@ The game is playable in a browser, online against the server and solo with compu
 ## Where to start
 
 - To play, host a town or report a bug: the root [README](../README.md) (and [sysop-guide.md](sysop-guide.md) for running a town).
-- To see what alpha means and what is left: [ALPHA.md](ALPHA.md); what changed: [../CHANGELOG.md](../CHANGELOG.md).
+- To see what alpha and beta mean and what is left: [ALPHA.md](ALPHA.md) and [BETA.md](BETA.md); what changed: [../CHANGELOG.md](../CHANGELOG.md).
 - To change the rules: [REMASTER_PLAN.md](REMASTER_PLAN.md), then [classic-rules.md](classic-rules.md) or [expanded-rules.md](expanded-rules.md). Original content is never altered ([../CLAUDE.md](../CLAUDE.md)).
 - To release: [release/README.md](release/README.md) and [release/BUILDING.md](release/BUILDING.md).

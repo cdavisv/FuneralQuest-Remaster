@@ -64,6 +64,11 @@ describe("the admin page", () => {
       'base + "/reset"',
       '"/admin/backups"',
       '["backups", "Backups"]',
+      '["activity", "Activity"]',
+      '"/admin/stats?days="',
+      '["invites", "Invites"]',
+      '"/admin/invites"',
+      '"/admin/invites/" + inv.id + "/revoke"',
     ]) {
       expect(html, needle).toContain(needle);
     }

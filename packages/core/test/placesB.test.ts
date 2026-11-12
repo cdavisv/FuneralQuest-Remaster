@@ -387,10 +387,29 @@ describe("B2 the health department", () => {
         overlayId: "health-department:complaintpick",
         playerId: target,
       });
-      if (player(q.town, 0).money === 100_000 - R.health.complaint.price - R.health.complaint.fine)
+      if (
+        player(q.town, 0).money ===
+        100_000 - R.health.complaint.price - R.health.complaint.fine
+      ) {
         backfired++;
+        // The point lost reads as a loss, and the fine as money (docs/expanded-audit.md).
+        expect(text(q.view)).toContain(
+          `(-${Math.abs(R.health.complaint.backfireReviews)} reputation)`,
+        );
+        expect(text(q.view)).toMatch(/Citation for \$[\d,]+ /);
+      }
     }
     expect(backfired).toBeGreaterThan(0);
+  });
+
+  it("B0 amounts in the text are money, with the dollar sign", () => {
+    // The pack's lines take {price}, {money} and {fine} already formatted as "$1,000".
+    const pawn = at("pawn-shop");
+    expect(text(pawn.view)).toMatch(/, \$[\d,]+: \d+ caskets at/);
+    const lot = press(pawn, "pawn-shop:lot:wood");
+    expect(text(lot.view)).toMatch(/\(-\$[\d,]+\)/);
+    const spy = press(at("mournes"), "mournes:spy");
+    expect(text(spy.view)).toMatch(/\(-\$[\d,]+[,)]/);
   });
 
   it("B2.4 the target is told by mail and the paper reports it", () => {
