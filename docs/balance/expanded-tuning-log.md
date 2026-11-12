@@ -602,7 +602,7 @@ Town mean BP 19,440 -> 19,383 (-0.25%); the parlors other than the tycoon 19,317
 
 ### Findings
 
-- **Both targets nearly met.** No personality is below a third of its share any more (five were); the tycoon is at 2.34 and +5.3% against the targets of about 2x and +4.5%, and the politician at 2.03 is the other style a little over 2x. The wins the tycoon no longer takes went to the field, not to one style.
+- **Both targets nearly met, and accepted (decision 29, 2026-11-12).** No personality is below a third of its share any more (five were); the tycoon is at 2.34 and +5.3% against the targets of about 2x and +4.5%, and the politician at 2.03 is the other style a little over 2x. The wins the tycoon no longer takes went to the field, not to one style.
 - **The changes reach the leader only.** The field's BP is unchanged and a parlor at or below the town's average pays the listed price; what the leader keeps is its unspendable money (about $40,000 a season), which is section 28's question and not a number of the places.
 - **Evil lost a point** (-3.9% -> -4.8%): the back door takes the same extra, so an evil leader pays or goes without (the shark went without). Within a few percent; watch it with people.
 - No Classic rule, number, pack line or recorded playthrough changed (`classicRegression.test.ts`, the new `classicIsolation.test.ts`, the oracle comparison).

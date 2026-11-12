@@ -10,8 +10,8 @@
 
 | target | before (round 20) | after (round 21) | met? |
 | --- | --- | --- | --- |
-| no personality above about 2x its fair share of wins, none below a third | tycoon 3.38, necromancer 2.33, politician 1.68, pacifist 1.41, shark 0.98, builder 0.62, gambler 0.42, Soft Touch 0.31, saboteur 0.29, saint 0.26, organiser 0.23, scholar 0.22 | tycoon 2.34, politician 2.03, pacifist 1.80, necromancer 1.67, builder 1.06, gambler 0.60, saint 0.59, shark 0.49, scholar 0.39, Soft Touch 0.38, saboteur 0.35, organiser 0.34 | **nearly**: none below a third (five were); the tycoon at 2.34 and the politician at 2.03 are a little over 2x (see 1) |
-| round 20's own target: the tycoon within about 2x on wins and under about +4.5% of its towns' BP | 3.38, +6.5% | 2.34, +5.3% | **close**: both changes landed on it and on nobody else (see 1); what is left is its unspendable money (see 3) |
+| no personality above about 2x its fair share of wins, none below a third | tycoon 3.38, necromancer 2.33, politician 1.68, pacifist 1.41, shark 0.98, builder 0.62, gambler 0.42, Soft Touch 0.31, saboteur 0.29, saint 0.26, organiser 0.23, scholar 0.22 | tycoon 2.34, politician 2.03, pacifist 1.80, necromancer 1.67, builder 1.06, gambler 0.60, saint 0.59, shark 0.49, scholar 0.39, Soft Touch 0.38, saboteur 0.35, organiser 0.34 | **met by decision 29** (2026-11-12): none below a third (five were); the tycoon at 2.34 and the politician at 2.03 are a little over 2x and the owner accepted that as "about 2x" (see 1) |
+| round 20's own target: the tycoon within about 2x on wins and under about +4.5% of its towns' BP | 3.38, +6.5% | 2.34, +5.3% | **closed by decision 29**: both changes landed on it and on nobody else (see 1); what is left is its unspendable money (see 3), a design question kept for after a playtest |
 | the same field read by mean place and mean BP (reported alongside, not a new target) | mean place 2.28 to 6.61; -8.7% to +6.5% of the town mean; town mean 19,440 | mean place 2.51 to 6.59; -8.9% to +5.3%; town mean 19,383 | the spread narrowed at the top |
 | the rest of the field's cost of the places under 1% of BP | -0.6% (19,440 against 19,566 without the places) | the town's mean BP -0.25% against round 20 (19,383); the parlors other than the tycoon -0.1% (19,291 against 19,317) | yes |
 | good and evil within a few percent | good +1.2%, neutral +1.5%, evil -3.9%; wins: evil 1.20, good 1.06, neutral 0.79 | good +1.5%, neutral +1.7%, evil -4.8%; wins: good 1.21, neutral 0.91, evil 0.84 | yes; evil lost a point (the back door is dearer for a leader, see 4) |
@@ -31,12 +31,12 @@
 6. **The church wreath, the no-lock check, second-hand caskets, the quiet favour and the smear** are as in the round-20 reading (nothing they depend on changed): 566 hits landed (was 499, the leader has fewer cars), 8,701 duels, no chain of smears, the wreath still alive.
 7. **Late starters, hidden information, the oracle, no-fighter towns, the late joiner** (previous baselines, not re-run): nothing in round 21 depends on them.
 
-### Recommended next tuning and proposals (for the owner to decide; nothing here was applied)
+### Proposals kept for after a playtest (decision 29 closed tuning by simulation; nothing here was applied)
 
 | proposal | evidence |
 | --- | --- |
 | The tycoon's capped money sinks (section 28): it ends with $40,000 a season it cannot spend, and that is now the whole of its remaining edge. A late sink that pays no BP (a season-end charity, a dearer top monument), or a sale's money falling off for a parlor far ahead | reading 3 |
-| Accept 2.34 and 2.03 as "about 2x" for a field of twelve styles over 200 towns, and keep judging Expanded by mean place and BP against the town mean | readings 1 and 2; unchanged since round 17 |
+| Accepted (decision 29, 2026-11-12): 2.34 and 2.03 are "about 2x" for a field of twelve styles over 200 towns; Expanded is judged by mean place and BP against the town mean | readings 1 and 2; unchanged since round 17 |
 | The patrol rate: 25 was the best of 10, 25 and 50 at 60 towns (round 21); a rate the leader never pays (50) gave its edge back. Leave it unless people say the car is never worth it | round 21 |
 | The Memorial Garden at a monument's rate; the necromancer's spread; the politician; shorter days without less depth | unchanged since the round-17 baseline: see that round's entries in `expanded-tuning-log.md` |
 
