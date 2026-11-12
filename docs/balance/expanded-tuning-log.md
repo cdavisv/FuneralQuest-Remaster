@@ -548,3 +548,61 @@ Mean BP 19,437 -> 19,440. Church wreath 9 -> 1,793 presses (529 seats); every ot
 | Rules numbers | | none (patrol $6,000 and $9,000, oven bulk $2,700, bouquet share 45%, scattered ashes without karma: tried, reverted) |
 
 The 200-town baseline is `docs/balance/expanded-baseline.md` (2,406 s, checks passed).
+
+## Balance round 21 (the two rule changes of round 20, built and measured)
+
+The owner said yes (2026-11-12, decisions 25 and 26) to the two levers round 20 found and could not build with a number: a patrol priced against the leader, and a limit on Mourne & Sons' free hold. Both are engine logic in the Expanded modules only; no Classic file, number or playthrough changed (decision 27, `classicIsolation.test.ts`).
+
+**The rules** (`expanded-rules.md` sections 30 and 31):
+
+- `police.aheadPerBp` (25): the patrol and the back door cost $25 more for each BP the buyer is ahead of the average BP of the town's other open parlors, rounded up to $100. A parlor at or below the average, or alone in town, pays the listed price. Both buttons show the price the buyer pays and Sergeant Bixby says how much is extra (`placesA.police.introAhead`). No random draw is added, so the oracle comparison and the saved-game round trips are untouched.
+- `mournes.hold.everyDays` (3): once held, the hold opens again three game days later, shown disabled with that day (`placesB.hints.holdRecent`, `PlacesBState.holdDay`); undercutting stays open. Older saves hold at once.
+
+**Simulator** (`tools/sim`): `--set path=value,...` changes Expanded rule numbers for one run without editing the source (`town.placesA.police.aheadPerBp=10`); the report's heading names what was set.
+
+### The rate, chosen at 60 towns
+
+Runs: `pnpm --filter @fq/sim run sim -- --days 30 --towns 60 --players 8 --rules expanded --seed 1 --challenges 0 [--set town.placesA.police.aheadPerBp=N]`, the same 60 towns and seeds as round 20's ablations. The hold limit (3 days) is on in every run. "Field" is the mean final BP of every seat but the tycoon's.
+
+| run | tycoon BP against the mean (wins / fair) | tycoon patrols a season | its parlor-fight losses (BP) | its good path | field |
+| --- | --- | --- | --- | --- | --- |
+| round 20, all eight places, no change | +7.8% (4.44) | 7 | 262 | 36% | 19,339 |
+| hold limit only (`aheadPerBp` 0) | +6.5% (3.33) | 460 patrols in all | 550 | 8% | 19,341 |
+| hold limit and rate 10 | +6.2% (1.78) | 233 in all | 589 | 8% | 19,338 |
+| **hold limit and rate 25** | **+5.1% (1.78)** | 158 in all | 683 | 6% | 19,328 |
+| hold limit and rate 50 | +6.7% (3.56) | 77 in all | 759 | 11% | 19,357 |
+
+(One standard error of the tycoon's BP against the mean is about 0.8 points at this size; patrols are the town's total, 1,502 in 200 towns at round 20, about 450 per 60.)
+
+- The hold limit alone takes the tycoon's good path from 36% to 8% of its seats (karma 67 -> 62) and about 1.3 points of its BP, in line with round 20's 1.8-point ablation.
+- Rate 25 is the one that works: the leader's car costs it $3,500 plus $25 a BP of lead (a 500-BP lead is $16,000 a night), the town's patrols fall by two thirds, the leader's parlor-fight losses go from 262 to 683 BP a season, and it ends at +5.1% and 1.78x its share, against the targets of about +4.5% and 2x. The field's BP does not move (19,328 against 19,341), so the extra lands on the leader only.
+- Rate 10 leaves the leader buying (233 patrols) and most of its edge. Rate 50 stops it buying altogether (77 patrols, $60,000 unspent) and its BP comes back (+6.7%): with no car at all the attacks it loses are the ones it would have lost anyway, and the ones it wins pay it. A price the leader sometimes pays beats one it never pays.
+- The necromancer's share (2.46, 3.08, 2.26, 1.85 across the four runs) is noise at 39 seats and predates the places (round 20).
+
+### At 200 towns (the new baseline)
+
+The baseline was run again with both changes (`docs/balance/expanded-baseline.md`, 2,591 s, checks passed). Against round 20, same 200 towns and seeds:
+
+| personality | win / fair before -> after | mean place before -> after | BP against the town mean before -> after |
+| --- | --- | --- | --- |
+| tycoon | 3.38 -> 2.34 | 2.28 -> 2.51 | +6.5% -> +5.3% |
+| necromancer | 2.33 -> 1.67 | 4.66 -> 4.90 | -2.1% -> -3.2% |
+| politician | 1.68 -> 2.03 | 3.05 -> 2.96 | +3.9% -> +4.3% |
+| pacifist | 1.41 -> 1.80 | 3.85 -> 3.77 | +2.4% -> +2.8% |
+| shark | 0.98 -> 0.49 | 4.71 -> 5.28 | -0.6% -> -2.0% |
+| builder | 0.62 -> 1.06 | 4.38 -> 4.12 | +0.8% -> +1.8% |
+| gambler | 0.42 -> 0.60 | 5.57 -> 5.69 | -3.6% -> -3.1% |
+| Soft Touch | 0.31 -> 0.38 | 5.11 -> 4.97 | -0.4% -> -0.0% |
+| saboteur | 0.29 -> 0.35 | 6.61 -> 6.59 | -8.7% -> -8.9% |
+| saint | 0.26 -> 0.59 | 4.16 -> 3.97 | +1.7% -> +2.0% |
+| organiser | 0.23 -> 0.34 | 4.49 -> 4.34 | +0.6% -> +1.2% |
+| scholar | 0.22 -> 0.39 | 4.96 -> 4.77 | -0.1% -> +0.3% |
+
+Town mean BP 19,440 -> 19,383 (-0.25%); the parlors other than the tycoon 19,317 -> 19,291. Patrols 1,502 -> 490 (185 seats), back doors 3,454 -> 2,038, holds 35,453 -> 12,522; the Police Station now takes $9,780 a user a season (was $3,800), all of it from leaders' extras. The tycoon's good path 28% -> 13% of its seats, its cash $46,300 -> $40,200, its parlor-fight losses 539 -> 619 BP a season.
+
+### Findings
+
+- **Both targets nearly met.** No personality is below a third of its share any more (five were); the tycoon is at 2.34 and +5.3% against the targets of about 2x and +4.5%, and the politician at 2.03 is the other style a little over 2x. The wins the tycoon no longer takes went to the field, not to one style.
+- **The changes reach the leader only.** The field's BP is unchanged and a parlor at or below the town's average pays the listed price; what the leader keeps is its unspendable money (about $40,000 a season), which is section 28's question and not a number of the places.
+- **Evil lost a point** (-3.9% -> -4.8%): the back door takes the same extra, so an evil leader pays or goes without (the shark went without). Within a few percent; watch it with people.
+- No Classic rule, number, pack line or recorded playthrough changed (`classicRegression.test.ts`, the new `classicIsolation.test.ts`, the oracle comparison).

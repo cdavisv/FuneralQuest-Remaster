@@ -478,6 +478,7 @@ function buildPlacesSchema(mode: SchemaMode) {
       note: text,
       intro: text,
       introPatrolled: text,
+      introAhead: text,
       buttons: obj({ report: text, settle: text, patrol: text, backdoor: text, leave: text }),
       reportPrompt: text,
       settlePrompt: text,
@@ -570,6 +571,7 @@ function buildPlacesSchema(mode: SchemaMode) {
       truceOn: text,
       karmaTooLow: text,
       stanceChosen: text,
+      holdRecent: text,
       noRivals: text,
     }),
     coroner: obj({

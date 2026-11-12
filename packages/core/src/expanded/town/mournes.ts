@@ -2,6 +2,7 @@ import type { Button, View } from "@fq/protocol";
 import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
+import { fill } from "../../text/format.js";
 import { refreshRating } from "../parlor.js";
 import { applyReward, moneyMod, xr } from "../players.js";
 import { life, xt } from "./life.js";
@@ -57,7 +58,17 @@ export function standRefusal(turn: Turn, stand: "undercut" | "hold"): string {
   const h = btext(turn).hints;
   if (truceActive(turn)) return h.truceOn;
   if (did(turn, "undercut") || did(turn, "hold")) return h.stanceChosen;
-  return stand === "undercut" ? cashShort(turn, brules(turn).mournes.undercut.price) : "";
+  if (stand === "undercut") return cashShort(turn, brules(turn).mournes.undercut.price);
+  // The hold is free, so it pays its karma only every few days (balance round 21): a daily
+  // hold carried a neutral parlor into the good path for nothing.
+  const again = holdAgainDay(turn);
+  return turn.town.day < again ? fill(h.holdRecent, { day: again }) : "";
+}
+
+/** The first game day the prices can be held again (0 when they never were). */
+export function holdAgainDay(turn: Turn): number {
+  const last = pb(turn).holdDay ?? 0;
+  return last > 0 ? last + brules(turn).mournes.hold.everyDays : 0;
 }
 
 /** Why a truce cannot be offered now, or "". */
@@ -142,6 +153,7 @@ function hold(turn: Turn): View {
   const r = brules(turn).mournes.hold;
   applyReward(turn, turn.player, { karma: r.karma });
   mark(turn, "hold");
+  pb(turn).holdDay = turn.town.day;
   refreshRating(turn.rules, turn.player);
   return main(turn, say(turn, btext(turn).mournes.holdDone, { karma: r.karma }));
 }

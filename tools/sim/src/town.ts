@@ -62,6 +62,32 @@ export interface SimOptions {
   challenges?: number;
   /** Expanded: errands to the eight newer places left out for every bot (an ablation run). */
   placesOff?: string[];
+  /**
+   * Expanded: rule numbers changed for this run only (`--set`), by their dotted path from
+   * `EXPANDED_RULES.expanded` (for example `town.placesA.police.aheadPerBp`), to measure a
+   * number without editing the source.
+   */
+  set?: Record<string, number>;
+}
+
+/**
+ * Writes the run's `set` numbers into this process's `EXPANDED_RULES` (the bots read the same
+ * object, so they see the same rule book). The simulator's own process only: a town on a server
+ * is tuned through a copy (`apps/server/src/game/tuning.ts`).
+ */
+export function applyRuleSet(set: Record<string, number> | undefined): void {
+  for (const [path, value] of Object.entries(set ?? {})) {
+    const keys = path.split(".");
+    const leaf = keys.pop() as string;
+    let node = EXPANDED_RULES.expanded as unknown as Record<string, unknown>;
+    for (const key of keys) {
+      const next = node[key];
+      if (typeof next !== "object" || next === null) throw new Error(`--set: no rule ${path}`);
+      node = next as Record<string, unknown>;
+    }
+    if (typeof node[leaf] !== "number") throw new Error(`--set: ${path} is not a rule number`);
+    node[leaf] = value;
+  }
 }
 
 export function rulesByName(name: RulesName): ClassicRules {
@@ -102,6 +128,7 @@ export function townSeed(base: number, index: number): number {
  */
 export function simulateTown(index: number, options: SimOptions, content: ContentPack): TownReport {
   setPlacesOff(options.placesOff ?? []);
+  applyRuleSet(options.set);
   const rules = rulesByName(options.rules);
   const seed = townSeed(options.seed, index);
   const ctx = simContext(options, content);

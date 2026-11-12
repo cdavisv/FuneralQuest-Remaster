@@ -42,7 +42,7 @@ The game is playable in a browser, online against the server and solo with compu
 
 - Everything in the server's hardening (limits, origin checks, token handling, compression): unit and integration tests, not a hostile human.
 - The Playwright suites in all three browsers on the Linux machine they were written on. WebKit there is Playwright's own build, not Safari; the sound test is skipped on a host without the GStreamer plug-ins it needs.
-- The Expanded ruleset's balance, by simulation ([balance/](balance/)): 20 rounds. Two styles still win more than twice their fair share and five less than a third, though all but one are within 1.7% of their towns' mean in points ([BETA.md](BETA.md) B5).
+- The Expanded ruleset's balance, by simulation ([balance/](balance/)): 21 rounds. After round 21 (the patrol priced against the leader, the hold rationed; decisions 25 and 26) the richest style wins 2.34 times its fair share (+5.3% of its towns' BP; the target is about 2x and +4.5%), one other style 2.03, and none less than a third. Classic is untouched (decision 27, `classicIsolation.test.ts`). What is left is a design question (the leader's unspendable money) and real playtesters.
 - Invite codes and the activity statistics (who comes back): server tests, a browser test of the sign-up with a code, and the admin page's tabs read in a browser. No real cohort has been measured.
 - The wrappers' server-address dialog, links to the system browser, notifications and the Android back button: written to the Tauri and Capacitor documentation, not exercised on a device.
 - The accessibility checks (axe and a contrast measurement) are automatic; they do not replace a screen-reader pass.

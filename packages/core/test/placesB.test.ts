@@ -592,6 +592,48 @@ describe("B4 Mourne & Sons", () => {
     expect(enabled(s.view, "mournes:undercut")).toBe(false);
   });
 
+  it("B4.2b the hold opens again only every few game days; undercutting stays open", () => {
+    const every = R.mournes.hold.everyDays;
+    expect(every).toBeGreaterThan(1);
+    let s = at("mournes", (t) => {
+      player(t, 0).karma = 50;
+    });
+    const held = s.town.day;
+    s = pressRT(s, "mournes:hold");
+    expect(pbOfPlayer(s.town).holdDay).toBe(held);
+
+    // The days in between: the hold is shown disabled with the day it opens; the price war is not closed.
+    for (let d = 1; d < every; d++) {
+      s = visit(seat(midnight(s.town, s.ctx), s.ctx, 0), "mournes");
+      expect(s.town.day).toBe(held + d);
+      expect(enabled(s.view, "mournes:hold")).toBe(false);
+      expect(button(s.view, "mournes:hold")?.hint).toContain(`day ${held + every}`);
+      expect(enabled(s.view, "mournes:undercut")).toBe(true);
+      expect(() => press(s, "mournes:hold")).toThrow();
+    }
+    expect(player(s.town, 0).karma).toBe(50 + R.mournes.hold.karma);
+
+    // The day it opens: karma again.
+    s = visit(seat(midnight(s.town, s.ctx), s.ctx, 0), "mournes");
+    expect(s.town.day).toBe(held + every);
+    expect(enabled(s.view, "mournes:hold")).toBe(true);
+    const before = player(s.town, 0).karma;
+    s = pressRT(s, "mournes:hold");
+    expect(player(s.town, 0).karma).toBe(before + R.mournes.hold.karma);
+    expect(pbOfPlayer(s.town).holdDay).toBe(held + every);
+  });
+
+  it("B4.2c a save from before the limit (no hold day) can hold at once", () => {
+    // A record as older builds made it: `newPlacesB` leaves the hold day out.
+    const s = at("mournes", (t) => {
+      withState(t, (b) => {
+        expect("holdDay" in b).toBe(false);
+      });
+    });
+    expect(pbOfPlayer(s.town).holdDay).toBeUndefined();
+    expect(enabled(s.view, "mournes:hold")).toBe(true);
+  });
+
   it("B4.3 a truce costs money, gives karma and a lead, and closes the war and the spying", () => {
     const poor = at("mournes", undefined, R.mournes.truce.price - 1);
     expect(enabled(poor.view, "mournes:truce")).toBe(false);

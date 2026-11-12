@@ -39,6 +39,8 @@ export interface PlacesBContent {
     truceOn: string;
     karmaTooLow: string;
     stanceChosen: string;
+    /** On the hold button while the last hold is too recent. `{day}`: the game day it opens again. */
+    holdRecent: string;
     noRivals: string;
   };
   coroner: PlaceText & {
@@ -115,6 +117,7 @@ export const PLACES_B_STARTER: PlacesBContent = {
     truceOn: "There is a truce",
     karmaTooLow: "Too respectable for this",
     stanceChosen: "You have taken your stand today",
+    holdRecent: "Your last stand still counts. Try again on day {day}",
     noRivals: "No rival parlors to complain about",
   },
 

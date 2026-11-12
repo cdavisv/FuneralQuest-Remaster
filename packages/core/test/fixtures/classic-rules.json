@@ -1,0 +1,486 @@
+{
+  "classic": {
+    "ruleset": "classic",
+    "settings": {
+      "turnsPerDay": 15,
+      "startingMoney": 500,
+      "experiencePerDay": 5,
+      "startingKarma": 50,
+      "startingRating": 40,
+      "startingLuck": 50,
+      "startingHp": 10,
+      "startingStrength": 3,
+      "startingWood": 5,
+      "startingSilver": 2,
+      "startingGold": 0,
+      "startingPlots": 0,
+      "casketSp": [1, 2, 3],
+      "plotSp": 1,
+      "yangsPerDay": 1,
+      "risk": 50,
+      "tournamentActive": false,
+      "tournamentDays": 30,
+      "bonusExp": 20,
+      "bonusLuck": 25,
+      "tradeBonus": 25,
+      "visitsPerDay": 2,
+      "normalOdds": 0.08,
+      "luckOdds": 0.08,
+      "scriptOdds": 0.05,
+      "tagsReceivablePerDay": 1,
+      "nameChangeCost": 1,
+      "maintDelete": true,
+      "maxPlayers": 800,
+      "inactiveDays": 15,
+      "swearFilter": true
+    },
+    "casketPrices": [800, 2600, 5300],
+    "bpMultiplier": 0.0064,
+    "perfectSaleBonus": 200,
+    "closeBonusExtra": 10,
+    "closeness": 100,
+    "bigSaleTv": 69,
+    "walkoutMood": 10,
+    "overLimitLeaveMood": 9,
+    "softRefuseMood": {
+      "base": 0.4,
+      "range": 0.7
+    },
+    "overLimitMood": {
+      "base": 0.4,
+      "range": 1
+    },
+    "hardRefuseMood": {
+      "base": 0.6,
+      "range": 1
+    },
+    "upgradeRefuseMood": {
+      "base": 0.7,
+      "range": 1
+    },
+    "hardRefuseCheapness": 8,
+    "softAcceptMoods": [2, 4, 7, 9],
+    "calmAcceptBelow": 7,
+    "guiltMood": {
+      "base": 0,
+      "range": 1
+    },
+    "guiltLovedMood": {
+      "base": 1,
+      "range": 2
+    },
+    "guiltCheapness": {
+      "base": 0.7,
+      "range": 2
+    },
+    "sympathyMood": {
+      "base": 0.4,
+      "range": 1
+    },
+    "sympathyNotLovedMood": {
+      "base": 1,
+      "range": 2
+    },
+    "sympathyCheapness": {
+      "base": 0.7,
+      "range": 2
+    },
+    "rivalBp": {
+      "min": 5,
+      "range": 5
+    },
+    "psychWeight": 0.98,
+    "psych": {
+      "resistance": {
+        "minAbove": -1,
+        "perLevel": 13,
+        "base": 20
+      },
+      "mood": {
+        "minAbove": 0,
+        "perLevel": 14,
+        "base": 0
+      },
+      "doubleLimit": {
+        "minAbove": 4,
+        "perLevel": 15,
+        "base": -65
+      },
+      "estimate": {
+        "minAbove": 1,
+        "perLevel": 15,
+        "base": -25
+      },
+      "halveResistance": {
+        "minAbove": 2,
+        "perLevel": 15,
+        "base": -35
+      },
+      "halveMood": {
+        "minAbove": 3,
+        "perLevel": 15,
+        "base": -50
+      }
+    },
+    "riskDecline": {
+      "min": 4,
+      "max": 10
+    },
+    "riskLuckWeight": 0.9,
+    "luckMin": 1,
+    "luckMax": 100,
+    "topParlorShares": [1, 0.5, 0.25],
+    "hearses": [
+      {
+        "price": 4,
+        "bonusTurns": 0
+      },
+      {
+        "price": 12,
+        "bonusTurns": 2,
+        "picture": "hearse/hearse1"
+      },
+      {
+        "price": 30,
+        "bonusTurns": 4,
+        "picture": "hearse/hearse2"
+      },
+      {
+        "price": 50,
+        "bonusTurns": 7,
+        "picture": "hearse/hearse3"
+      },
+      {
+        "price": 80,
+        "bonusTurns": 10,
+        "picture": "hearse/hearse4"
+      }
+    ],
+    "places": {
+      "tagValues": [1, 2, 4],
+      "store": {
+        "smokeDetector": 8,
+        "safe": 6,
+        "padlock": 6,
+        "lockpick": 1,
+        "padlockStrength": 100
+      },
+      "university": {
+        "psychBase": 4,
+        "psychPerLevel": 2,
+        "hpCostFactor": 1.2,
+        "strengthCostFactor": 3,
+        "hpGain": {
+          "min": 4,
+          "max": 5
+        },
+        "strengthGain": 1
+      },
+      "yangs": {
+        "dragon": {
+          "cost": 5,
+          "luck": 10,
+          "onlyBelowLuck": 40
+        },
+        "sparrow": {
+          "cost": 20,
+          "luck": 5
+        },
+        "tiger": {
+          "cost": 20,
+          "luck": 10
+        },
+        "newsOdds": 4
+      }
+    },
+    "newPlayer": {
+      "nameMin": 3,
+      "nameMax": 20,
+      "logonMin": 3,
+      "logonMax": 20,
+      "parlorMin": 3,
+      "parlorMax": 20,
+      "passwordMin": 1,
+      "passwordMax": 20,
+      "emailMin": 4,
+      "emailMax": 45
+    },
+    "zeroBpGraceDays": 3,
+    "mailRewardsOnDelivery": true,
+    "filterUserText": false,
+    "pvp": {
+      "lockpickDamage": {
+        "min": 5,
+        "max": 10
+      },
+      "stealMax": 3,
+      "battleStealMax": 4,
+      "defenderMissOneIn": 20,
+      "doubleDamageOneIn": 10,
+      "attackerWinGain": 0.02,
+      "attackerWinLoss": 0.01,
+      "defenderWinGain": 0.01,
+      "defenderWinLoss": 0.005
+    },
+    "textLimits": {
+      "mail": 4000,
+      "announcement": 600,
+      "battleQuote": 200,
+      "chat": 400,
+      "nameSearch": 40
+    },
+    "fixes": {
+      "newPlayerWelcome": true,
+      "policeNewDayMessage": true,
+      "zeroBpGracePeriod": true,
+      "catchUpMissedDays": true,
+      "hearseRebuy": true,
+      "battleDisconnect": true,
+      "visitTargetRecheck": true,
+      "emptyMailStop": true,
+      "oldPapersCancel": true
+    }
+  },
+  "original": {
+    "ruleset": "classic",
+    "settings": {
+      "turnsPerDay": 15,
+      "startingMoney": 500,
+      "experiencePerDay": 5,
+      "startingKarma": 50,
+      "startingRating": 40,
+      "startingLuck": 50,
+      "startingHp": 10,
+      "startingStrength": 3,
+      "startingWood": 5,
+      "startingSilver": 2,
+      "startingGold": 0,
+      "startingPlots": 0,
+      "casketSp": [1, 2, 3],
+      "plotSp": 1,
+      "yangsPerDay": 1,
+      "risk": 50,
+      "tournamentActive": false,
+      "tournamentDays": 30,
+      "bonusExp": 20,
+      "bonusLuck": 25,
+      "tradeBonus": 25,
+      "visitsPerDay": 2,
+      "normalOdds": 0.08,
+      "luckOdds": 0.08,
+      "scriptOdds": 0.05,
+      "tagsReceivablePerDay": 1,
+      "nameChangeCost": 1,
+      "maintDelete": true,
+      "maxPlayers": 800,
+      "inactiveDays": 15,
+      "swearFilter": true
+    },
+    "casketPrices": [800, 2600, 5300],
+    "bpMultiplier": 0.0064,
+    "perfectSaleBonus": 200,
+    "closeBonusExtra": 10,
+    "closeness": 100,
+    "bigSaleTv": 69,
+    "walkoutMood": 10,
+    "overLimitLeaveMood": 9,
+    "softRefuseMood": {
+      "base": 0.4,
+      "range": 0.7
+    },
+    "overLimitMood": {
+      "base": 0.4,
+      "range": 1
+    },
+    "hardRefuseMood": {
+      "base": 0.6,
+      "range": 1
+    },
+    "upgradeRefuseMood": {
+      "base": 0.7,
+      "range": 1
+    },
+    "hardRefuseCheapness": 8,
+    "softAcceptMoods": [2, 4, 7, 9],
+    "calmAcceptBelow": 7,
+    "guiltMood": {
+      "base": 0,
+      "range": 1
+    },
+    "guiltLovedMood": {
+      "base": 1,
+      "range": 2
+    },
+    "guiltCheapness": {
+      "base": 0.7,
+      "range": 2
+    },
+    "sympathyMood": {
+      "base": 0.4,
+      "range": 1
+    },
+    "sympathyNotLovedMood": {
+      "base": 1,
+      "range": 2
+    },
+    "sympathyCheapness": {
+      "base": 0.7,
+      "range": 2
+    },
+    "rivalBp": {
+      "min": 5,
+      "range": 5
+    },
+    "psychWeight": 0.98,
+    "psych": {
+      "resistance": {
+        "minAbove": -1,
+        "perLevel": 13,
+        "base": 20
+      },
+      "mood": {
+        "minAbove": 0,
+        "perLevel": 14,
+        "base": 0
+      },
+      "doubleLimit": {
+        "minAbove": 4,
+        "perLevel": 15,
+        "base": -65
+      },
+      "estimate": {
+        "minAbove": 1,
+        "perLevel": 15,
+        "base": -25
+      },
+      "halveResistance": {
+        "minAbove": 2,
+        "perLevel": 15,
+        "base": -35
+      },
+      "halveMood": {
+        "minAbove": 3,
+        "perLevel": 15,
+        "base": -50
+      }
+    },
+    "riskDecline": {
+      "min": 4,
+      "max": 10
+    },
+    "riskLuckWeight": 0.9,
+    "luckMin": 1,
+    "luckMax": 100,
+    "topParlorShares": [1, 0.5, 0.25],
+    "hearses": [
+      {
+        "price": 4,
+        "bonusTurns": 0
+      },
+      {
+        "price": 12,
+        "bonusTurns": 2,
+        "picture": "hearse/hearse1"
+      },
+      {
+        "price": 30,
+        "bonusTurns": 4,
+        "picture": "hearse/hearse2"
+      },
+      {
+        "price": 50,
+        "bonusTurns": 7,
+        "picture": "hearse/hearse3"
+      },
+      {
+        "price": 80,
+        "bonusTurns": 10,
+        "picture": "hearse/hearse4"
+      }
+    ],
+    "places": {
+      "tagValues": [1, 2, 4],
+      "store": {
+        "smokeDetector": 8,
+        "safe": 6,
+        "padlock": 6,
+        "lockpick": 1,
+        "padlockStrength": 100
+      },
+      "university": {
+        "psychBase": 4,
+        "psychPerLevel": 2,
+        "hpCostFactor": 1.2,
+        "strengthCostFactor": 3,
+        "hpGain": {
+          "min": 4,
+          "max": 5
+        },
+        "strengthGain": 1
+      },
+      "yangs": {
+        "dragon": {
+          "cost": 5,
+          "luck": 10,
+          "onlyBelowLuck": 40
+        },
+        "sparrow": {
+          "cost": 20,
+          "luck": 5
+        },
+        "tiger": {
+          "cost": 20,
+          "luck": 10
+        },
+        "newsOdds": 4
+      }
+    },
+    "newPlayer": {
+      "nameMin": 3,
+      "nameMax": 20,
+      "logonMin": 3,
+      "logonMax": 20,
+      "parlorMin": 3,
+      "parlorMax": 20,
+      "passwordMin": 1,
+      "passwordMax": 20,
+      "emailMin": 4,
+      "emailMax": 45
+    },
+    "zeroBpGraceDays": 3,
+    "mailRewardsOnDelivery": true,
+    "filterUserText": false,
+    "pvp": {
+      "lockpickDamage": {
+        "min": 5,
+        "max": 10
+      },
+      "stealMax": 3,
+      "battleStealMax": 4,
+      "defenderMissOneIn": 20,
+      "doubleDamageOneIn": 10,
+      "attackerWinGain": 0.02,
+      "attackerWinLoss": 0.01,
+      "defenderWinGain": 0.01,
+      "defenderWinLoss": 0.005
+    },
+    "textLimits": {
+      "mail": 4000,
+      "announcement": 600,
+      "battleQuote": 200,
+      "chat": 400,
+      "nameSearch": 40
+    },
+    "fixes": {
+      "newPlayerWelcome": false,
+      "policeNewDayMessage": false,
+      "zeroBpGracePeriod": false,
+      "catchUpMissedDays": false,
+      "hearseRebuy": false,
+      "battleDisconnect": false,
+      "visitTargetRecheck": false,
+      "emptyMailStop": false,
+      "oldPapersCancel": false
+    }
+  }
+}

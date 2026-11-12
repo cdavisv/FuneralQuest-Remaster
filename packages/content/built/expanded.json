@@ -7913,6 +7913,7 @@
         "note": "Deathville's finest. Mostly they are finest at doughnuts.",
         "intro": "`w{inspector}: `$\"Break-in? Assault? Lost cat? Pick one, sign here, and try not to lean on the desk. It is the only desk we have.\"",
         "introPatrolled": "\n\n`$A patrol car idles at the curb, pointed at your parlor. It is on your tab.",
+        "introAhead": "\n\n`w{inspector}: `$\"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual.\"",
         "buttons": {
           "report": "File a Report",
           "settle": "Take a Settlement",
@@ -8046,6 +8047,7 @@
         "truceOn": "There is a truce",
         "karmaTooLow": "Too respectable for this",
         "stanceChosen": "You have taken your stand today",
+        "holdRecent": "Your last stand still counts. Try again on day {day}",
         "noRivals": "No rival parlors to complain about"
       },
       "coroner": {

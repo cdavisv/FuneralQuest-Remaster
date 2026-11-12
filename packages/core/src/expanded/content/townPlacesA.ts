@@ -49,6 +49,8 @@ export interface PoliceText {
   intro: string;
   /** Added to the intro while tonight's patrol is on. */
   introPatrolled: string;
+  /** Added to the intro for a parlor that pays more for the car because it is ahead. `{inspector}`, `{extra}` */
+  introAhead: string;
   buttons: {
     report: string;
     settle: string;
@@ -209,6 +211,8 @@ export const PLACES_A_STARTER: PlacesAContent = {
       '`w{inspector}: `$"Break-in? Assault? Lost cat? Pick one, sign here, and try not to lean on the desk. It is the only desk we have."',
     introPatrolled:
       "\n\n`$A patrol car idles at the curb, pointed at your parlor. It is on your tab.",
+    introAhead:
+      '\n\n`w{inspector}: `$"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual."',
     buttons: {
       report: "File a Report",
       settle: "Take a Settlement",

@@ -153,6 +153,80 @@ describe("the Police Station", () => {
     expect(enabled(s.view, "police:backdoor")).toBe(false);
   });
 
+  it("a parlor ahead of the town pays more for the car, at the front desk and the back door alike", () => {
+    // 1,000 BP ahead of the average of the other two parlors (100 each).
+    const ahead = 1000;
+    const extra = Math.ceil((ahead * R.police.aheadPerBp) / 100) * 100;
+    expect(extra).toBeGreaterThan(0);
+    const lead = (t: TownState): void => {
+      player(t, 0).bp = 100 + ahead;
+    };
+    let s = at("police-station", lead);
+    expect(button(s.view, "police:patrol")?.detail).toBe(
+      `$${(R.police.patrol.price + extra).toLocaleString("en-US")}`,
+    );
+    expect(button(s.view, "police:backdoor")?.detail).toBe(
+      `$${(R.police.backdoor.price + extra).toLocaleString("en-US")}`,
+    );
+    // The sergeant says why, with the amount as money.
+    expect(text(s.view)).toContain(`$${extra.toLocaleString("en-US")} over the usual`);
+    s = pressRT(s, "police:patrol");
+    expect(player(s.town, 0).policeProtected).toBe(true);
+    expect(player(s.town, 0).money).toBe(50_000 - R.police.patrol.price - extra);
+    expect(text(s.view)).not.toContain("over the usual");
+
+    // The listed price alone is not enough for the leader.
+    const short = at("police-station", (t) => {
+      lead(t);
+      player(t, 0).money = R.police.patrol.price + extra - 1;
+    });
+    expect(enabled(short.view, "police:patrol")).toBe(false);
+    expect(button(short.view, "police:patrol")?.hint).toBeTruthy();
+
+    // The back door takes the same extra.
+    let b = at("police-station", lead);
+    b = pressRT(b, "police:backdoor");
+    expect(player(b.town, 0).money).toBe(50_000 - R.police.backdoor.price - extra);
+  });
+
+  it("a parlor at or below the town's average pays the listed price", () => {
+    for (const mine of [100, 40]) {
+      const s = at("police-station", (t) => {
+        player(t, 0).bp = mine;
+        player(t, 1).bp = 5000;
+      });
+      expect(button(s.view, "police:patrol")?.detail).toBe(
+        `$${R.police.patrol.price.toLocaleString("en-US")}`,
+      );
+      expect(button(s.view, "police:backdoor")?.detail).toBe(
+        `$${R.police.backdoor.price.toLocaleString("en-US")}`,
+      );
+      expect(text(s.view)).not.toContain("over the usual");
+    }
+  });
+
+  it("the average is of the other open parlors, and a small lead rounds up to $100", () => {
+    // Player 2 has closed: its BP is not counted. Player 1 has 100, so the lead is 3 BP.
+    const s = at("police-station", (t) => {
+      player(t, 0).bp = 103;
+      player(t, 2).bp = 1_000_000;
+      player(t, 2).active = false;
+    });
+    const extra = Math.ceil((3 * R.police.aheadPerBp) / 100) * 100;
+    expect(extra).toBe(100);
+    expect(button(s.view, "police:patrol")?.detail).toBe(
+      `$${(R.police.patrol.price + extra).toLocaleString("en-US")}`,
+    );
+    // Alone in town there is nobody to be ahead of.
+    const { town, ctx } = funded((t) => {
+      player(t, 0).bp = 9000;
+    }, 1);
+    const alone = visit(seat(town, ctx, 0), "police-station");
+    expect(button(alone.view, "police:patrol")?.detail).toBe(
+      `$${R.police.patrol.price.toLocaleString("en-US")}`,
+    );
+  });
+
   it("the back door always costs its price and karma; the draw is the same after a save", () => {
     let s = at("police-station");
     s = pressRT(s, "police:backdoor");

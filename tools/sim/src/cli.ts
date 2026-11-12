@@ -9,7 +9,7 @@ import {
 } from "@fq/bots";
 import { toMarkdown } from "./report.js";
 import { runSimulation } from "./run.js";
-import type { RulesName, SimOptions } from "./town.js";
+import { applyRuleSet, type RulesName, type SimOptions } from "./town.js";
 
 const HELP = `Usage: pnpm --filter @fq/sim run sim -- [options]
 
@@ -26,6 +26,8 @@ const HELP = `Usage: pnpm --filter @fq/sim run sim -- [options]
                     florist, gazette, coroner, health, pawn, mournes) or single buttons they
                     never press (crematorium:bulk, florist:bundle, police:patrol, mournes:hold),
                     to measure them by ablation
+  --set LIST        Expanded: comma list of rule numbers for this run only, path=value from
+                    EXPANDED_RULES.expanded (town.placesA.police.aheadPerBp=40)
   --oracle          seat the hidden-state oracle instead of fair bots
   --seed N          base seed (1)
   --workers N       worker threads (cores - 1; 0 = this thread)
@@ -79,6 +81,18 @@ function parse(argv: string[]): { options: SimOptions; workers?: number; out: st
     ...(args.has("places-off") ? { placesOff: (args.get("places-off") ?? "").split(",") } : {}),
     ...(args.has("challenges") ? { challenges: int("challenges", 6) } : {}),
   };
+  if (args.has("set")) {
+    const set: Record<string, number> = {};
+    for (const pair of (args.get("set") ?? "").split(",")) {
+      const [path, value] = pair.split("=");
+      const n = Number(value);
+      if (!path || value === undefined || !Number.isFinite(n)) throw new Error("bad --set");
+      set[path] = n;
+    }
+    options.set = set;
+    // The report is written on this thread, from the same rule book.
+    applyRuleSet(set);
+  }
   const workers = args.has("workers") ? int("workers", 0) : undefined;
   return {
     options,

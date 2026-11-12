@@ -40,6 +40,10 @@ police:
 
 
     `$A patrol car idles at the curb, pointed at your parlor. It is on your tab.'
+  introAhead: '
+
+
+    `w{inspector}: `$"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual."'
   buttons:
     report: 'File a Report'
     settle: 'Take a Settlement'

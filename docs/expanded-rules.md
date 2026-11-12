@@ -489,7 +489,7 @@ The numbers in this document are now tuned against whole seasons of the `@fq/bot
 
 ### What remains to tune
 
-- **Win shares.** Not met since the eight newer places (sections 30 and 31) entered the bots' play in round 19: the tycoon wins 3.38x its share (+6.5% of its towns' BP) and the necromancer 2.33x (-2.1%); five personalities are under a third (Soft Touch 0.31, saboteur 0.29, saint 0.26, organiser 0.23, scholar 0.22), all but the saboteur (-8.7%) within 1.7% of their towns' mean BP. Round 20 found that what the places give the tycoon is protection (the patrol, about 2 points) and karma (Mourne & Sons' free hold, about 1.8 points), and that no number of the places reaches it: its money has no other use, so dearer patrols, oven time or bouquets cost it nothing and land on the poorer parlors instead. The levers left need engine logic (a price or cooldown for the hold; a patrol priced against the buyer's BP, or a nightly limit), listed for the owner in `docs/balance/expanded-baseline.md`. The necromancer's share above 2 predates the places (its seasons swing three times as wide as a seller's). Read by mean place and BP against the town mean the field is within the bands; the baseline's proposals for the owner: judge Expanded by mean place and BP, and decide on the proposals that change how the game feels (shorter days).
+- **Win shares.** Nearly met after round 21 (`docs/balance/expanded-baseline.md`): the tycoon wins 2.34x its share (+5.3% of its towns' BP) and the politician 2.03x, every other style under 2x and none under a third (five were). Round 20 had found that what the places gave the tycoon was protection (the patrol) and karma (Mourne & Sons' free hold) and that no number of the places reached it; round 21 built the two rule changes the owner approved (decisions 25 and 26): the patrol and the back door cost a parlor ahead of the town $25 a BP of its lead (section 30), and the hold pays karma every three days (section 31). What is left of the tycoon's edge is the money it cannot spend (about $40,000 a season, section 28). The necromancer fell to 1.67x. Read by mean place and BP against the town mean the field is within the bands.
 - **Walkouts.** Bots almost never let a customer walk (0.06% of customers). Mood pacing, patience and the generosity of Coffee and Discount need human play.
 - **The exact match** lands on a quarter of a careful seller's sales and the closeness bonuses are a quarter of sale BP; that rewards reading, but pinning the limit with small cards is the grindiest play there is. Playtest whether it feels like skill or chores.
 - **Numbers the bots exercise but cannot judge:** trait strengths and tell frequency (bots read tells perfectly at hard), special customers' rewards, the content's prep choices (karma still moves fast: both paths reach their second perk within a few days), hearse upkeep.
@@ -1010,8 +1010,10 @@ Desk: Sergeant Bixby (`placesA.cast.sergeant`; the health inspector, Inspector M
 |---|---|
 | File a Report | Pick one rival who attacked you in the last 3 days (one row per rival). They are fined $600 (what they have, if less); you are paid half of it, +1 karma; the rival is mailed and the crime page prints it. One report or settlement a day. |
 | Take a Settlement | Same picker. The rival pays you $400 (or what they have) in private, -1 karma for you, nothing printed; the rival is mailed. Shares the daily limit. |
-| Hire a Patrol | $3,500. Sets the Classic police protection tonight: nobody can visit you (Classic) or land a hit (Reaper Club, 20.4). Disabled for Peaceful parlors and when tonight is covered. |
-| The Back Door | $1,500 and -3 karma either way; 70% (`random(100) < 70`) the patrol is set, otherwise the money is gone and you may try again. |
+| Hire a Patrol | $3,500, plus the leader's extra (below). Sets the Classic police protection tonight: nobody can visit you (Classic) or land a hit (Reaper Club, 20.4). Disabled for Peaceful parlors and when tonight is covered. |
+| The Back Door | $1,500, plus the same extra, and -3 karma either way; 70% (`random(100) < 70`) the patrol is set, otherwise the money is gone and you may try again. |
+
+**The leader's extra** (`police.aheadPerBp`, `patrolSurcharge` in `town/police.ts`, round 21). A parlor ahead of the town pays more for the car: $25 for each BP it is ahead of the average BP of the town's other open parlors, rounded up to $100, added to the patrol and to the back door alike. A parlor at or below that average, or alone in town, pays the listed price. Both buttons show the price the buyer pays, and Sergeant Bixby says how much of it is extra (`police.introAhead`). No random draw is added. `aheadPerBp: 0` turns it off.
 
 The choice: money against karma and certainty (report is clean and public; settlement is quick, private and dirty; the back door is cheaper than the patrol but not sure). Fairness: the police only help a victim, an attack is reported once, and a rival is fined at most $600, far below what a won fight gains, so it is a deterrent, not a BP engine. Peaceful parlors are never offered the patrol (they cannot be visited anyway).
 
@@ -1057,6 +1059,10 @@ An advert's customer is a Classic-style lead (the next Wait for Customer is a su
 ### Balance (round 19)
 
 The bots now use all four places (`packages/bots/src/expanded/places.ts`) and the simulator reports them (`docs/balance/expanded-baseline.md`, "the eight newer places"). Numbers changed: the police fine $800 -> $600 and the settlement $500 -> $400 (the parlor that is reported fell furthest); the Gazette's classified $800 -> $750, display advert $2,000 -> $1,800, smear $3,000 -> $2,500. Measured over 200 towns: the Crematorium's oven pays the parlors that sell cremations (+$3,100 a season) and nobody else, the Florist's bouquets return about $1.5 a dollar to the parlors that sell flowers, the patrol and back door were bought on 10% of seat-nights without changing the number of attacks (no lock), the church wreath is rarely worth its $600, and the Gazette is the dearest place and buys no measured BP.
+
+### Balance (round 21)
+
+The patrol is priced against the leader (`police.aheadPerBp` 25, decision 25; the table of A1 and `patrolSurcharge` in `town/police.ts`). At 60 towns the tycoon's patrols fall by two thirds and its parlor-fight losses go from 262 to 683 BP a season; with the hold limit of section 31 it ends at +5.1% of its towns' BP and 1.78x its share (round 20: +7.8%, 4.44x). The field's BP is unchanged. Rate 10 left the leader buying; rate 50 stopped it buying and gave its edge back (`docs/balance/expanded-tuning-log.md`, round 21).
 
 ### Balance (round 20)
 
@@ -1126,12 +1132,16 @@ Augustus Mourne and his sons Ned and Rollo (`cast.mournes`, `cast.sons`). The fa
 | --- | --- | --- | --- |
 | Spy on the Mournes | $300 | `randomYesNo(luck, 0.6)`: success gives a tip (the next family's cheapness is told); caught: -1 karma, -1 word of mouth | once a day, not while a tip is held, not in a truce |
 | Undercut their prices (choice) | $500 | `randomYesNo(luck, 0.5)`: +2 word of mouth and +1 luck; otherwise -2 word of mouth | one stand a day, not in a truce |
-| Hold your prices (choice) | free | +1 karma | shares the stand limit |
+| Hold your prices (choice) | free | +1 karma | shares the stand limit; once held, it opens again 3 game days later (`mournes.hold.everyDays`, round 21), shown disabled with that day until then; undercutting stays open |
 | Offer a truce | $2,000 | 7 days (today included): +2 karma and one customer lead (capped at the hospital's lead maximum), and spying, undercutting and holding are closed | not while one runs |
 
 ### Balance (round 19)
 
 Numbers changed in round 19 (`docs/balance/expanded-tuning-log.md`), all in the tables above: the tip $600 -> $300; the certificate $800 -> $1,600, every 4 days; the quiet favour $700 -> $300 with a 50% chance (it was a $20,000-a-season pump for the evil path); the inspection and the clean bill last 8 days (clean bill $1,200); the complaint $500 -> $1,500; second-hand lots 65% -> 80% of Di-Mart's price; loot $300 -> $200. Watch items, not changed: Mourne & Sons' "hold your prices" gives +1 karma a day for nothing (it was pressed 35,467 times in 200 towns).
+
+### Balance (round 21)
+
+The hold pays its karma once every three game days (`mournes.hold.everyDays`, decision 26; the table of B4). Alone it takes the tycoon's good path from 36% to 8% of its seats and about 1.3 points of its BP at 60 towns; with the patrol price of section 30 the tycoon ends at +5.1% and 1.78x its share (`docs/balance/expanded-tuning-log.md`, round 21).
 
 ### Balance (round 20)
 

@@ -12,4 +12,11 @@ export {
 } from "./metrics.js";
 export { buildReport, type Row, type SimReport, toMarkdown, type WinRow } from "./report.js";
 export { type RunOptions, runSimulation } from "./run.js";
-export { type RulesName, rulesByName, type SimOptions, simulateTown, townSeed } from "./town.js";
+export {
+  applyRuleSet,
+  type RulesName,
+  rulesByName,
+  type SimOptions,
+  simulateTown,
+  townSeed,
+} from "./town.js";
