@@ -90,7 +90,10 @@ function buildClient(name, soloOnly) {
   for (const f of ["index.html", "sw.js", "manifest.webmanifest", "audio/manifest.json"]) {
     if (!existsSync(join(dir, f))) fail(`${f} is missing from the bundle`);
   }
-  if (existsSync(join(dir, "audio-studio"))) fail("the Studio sound pack is in the bundle");
+  // Every sound pack and the voices ship in every build (decision 24, 2026-11-07).
+  for (const pack of ["audio-studio", "audio-remaster", "voice"]) {
+    if (!existsSync(join(dir, pack, "manifest.json"))) fail(`${pack} is missing from the bundle`);
+  }
   return dir;
 }
 
