@@ -51,7 +51,7 @@ The game is playable in a browser, online against the server and solo with compu
 
 - **The Docker image** (`apps/server/Dockerfile`, `docker-compose.yml`): built and run on 2026-11-07 (`/health` answered, the client and every sound pack were served, museum mode absent by default); no tournament has been played through it. It reports the commit it was built from when `FQ_BUILD` is passed (2026-11-08: built with it and `/health` showed the build), `dev` otherwise. The Dockerfile and its ignore list gained the audio package and the sound packs, which the first build was missing.
 - **The release workflow** (`.github/workflows/release.yml`): has run on GitHub on the tags `v0.1.0-alpha.1` (2026-11-07) and `v0.1.0-alpha.2` (2026-11-12, build 0117487) and made both pre-releases; the second alpha's eight files were downloaded and checked against `SHA256SUMS`, and the Pages site serves the same build.
-- **The GitHub Pages workflow** (`.github/workflows/pages.yml`): ran once by hand on 2026-11-07 and published the solo-only build at https://cdavisv.github.io/FuneralQuest-Remaster/; it is run again by hand to update the site.
+- **The GitHub Pages workflow** (`.github/workflows/pages.yml`): run by hand after a merge to update the site (the release workflow does not deploy it). First run 2026-11-07, which published the solo-only build at https://cdavisv.github.io/FuneralQuest-Remaster/; run again on 2026-11-12 after pull requests 12 and 13, so the site serves build `0117487`, the second alpha's.
 - **iOS**: the Xcode project is in the tree and cannot be built on Linux.
 - **Windows and macOS builds** of the desktop app: only configured, in `.github/workflows/release-desktop.yml`; unsigned and never run.
 - **A real phone**, Android or iOS, and a real tablet.
