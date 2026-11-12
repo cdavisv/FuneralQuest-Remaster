@@ -477,3 +477,132 @@ No single place explains the tycoon's rise (+4.0% to +6.6%); with the oven and t
 | Bots | none of the eight places | every personality has a place style (`packages/bots/src/expanded/places.ts`) |
 
 Not changed: patrol $3,500, back door $1,500 at 70% and -3 karma, oven $900 and bulk $2,400, bouquet $100 and payout 60% (at most $300), wreath $600, front page $2,500, Mournes' spy, undercut, hold and truce, Pawn's bad-lot chance. The 200-town baseline with these bots and numbers is `docs/balance/expanded-baseline.md` (1,751 s, checks passed).
+
+## Balance round 20 (the tycoon and the eight places; measured, numbers not applied)
+
+Goal: bring the tycoon (3.25x its share, +6.6% of its towns' BP after round 19) back to about 2x and +4.5% by tuning the eight places' own numbers (`rules.town.placesA`, `placesB`), without raising the rest of the field's cost of the places above 1% of BP and without making a place dead or dominant. Runs: `pnpm --filter @fq/sim run sim -- --days 30 --towns 60 --players 8 --rules expanded --seed 1 --challenges 0` (60 towns, about 9 minutes), then the 200-town baseline. At 60 towns the tycoon has about 40 seats and one standard error of its BP against the town mean is about 0.8 points.
+
+**Simulator** (`tools/sim`, `packages/bots/src/expanded/places.ts`): `--places-off` now also takes single buttons (`crematorium:bulk`, `florist:bundle,florist:buy`, `police:patrol`, `mournes:hold`), which the bots then read as disabled, so one action of a place can be left out.
+
+### Ablations (60 towns, round-19 numbers)
+
+"Field" is the mean final BP of every seat but the tycoon's; its cost of the places is against the run without them.
+
+| run | tycoon BP against the mean (wins / fair) | necromancer | saboteur | shark | field (cost) |
+| --- | --- | --- | --- | --- | --- |
+| all eight places | +7.8% (4.44) | -3.2% (2.26) | -9.0% | -1.7% | 19,339 (-0.8%) |
+| none (`--places-off` all eight) | +4.5% (2.22) | -5.6% (1.85) | -9.6% | -1.0% | 19,493 |
+| without the oven (`crematorium:bulk`) | +7.3% (3.78) | -3.4% | -9.1% | -1.6% | 19,342 |
+| without the bouquets (`florist:bundle,florist:buy`) | +7.3% (3.56) | -3.8% | -9.6% | -1.4% | 19,344 |
+| without the patrol (`police:patrol`) | +5.7% (3.11) | -2.6% | -9.1% | -1.6% | 19,418 |
+| without the hold (`mournes:hold`) | +6.0% (2.89) | -5.0% | -7.7% | -0.6% | 19,351 |
+| without the crematorium | +7.0% (3.33) | -3.4% | -9.1% | -1.8% | 19,361 |
+| without the police | +5.4% (2.89) | -4.6% (2.67) | -7.2% | -1.7% | 19,494 (0.0%) |
+
+The places lift the tycoon 3.3 points; the patrol (2.1) and the hold (1.8) are the measurable part, the oven and the bouquets 0.5 each (inside the noise). The patrol keeps the leader out of the fights it would lose (416 -> 262 BP a season of parlor-fight losses; seven patrols a season, $25,000) and turns those attacks onto the rest of the field; the free hold (+27 karma a season) carries the tycoon, a neutral parlor, into the good path in 36% of its seats (3% without the places). The police station is nearly all of the field's cost. The tycoon ends the season with $44,600 in cash its capped sinks cannot use, and its oven and bouquets net it only $1,100 and $3,000 a season.
+
+### Iterations (60 towns)
+
+| run | change | tycoon | field (cost) | other effects | kept? |
+| --- | --- | --- | --- | --- | --- |
+| 20a | Police `patrol.price` $3,500 -> $6,000; bots: the good styles send the church wreath every fourth day as well as when short of karma | +7.7% (4.00) | 19,333 (-0.8%) | the tycoon still bought 6 patrols a season ($37,700); the saint stopped, the Soft Touch kept paying ($16,900); church wreath 555 presses by 158 seats (was dead) | wreath habit kept; price reverted |
+| 20b | patrol back to $3,500; Crematorium `oven.bulkPrice` $2,400 -> $2,700 (no bulk discount); Florist `payout.share` 0.6 -> 0.45 | +6.7% (2.89) | 19,369 (-0.6%) | the oven break-even for the tycoon, still +$1,300 for the shark (-1.4%); bouquets 1.2 to 1 | taken to 200 towns, then reverted (below) |
+| 20c | 20b and Crematorium `ashes.scatter.karma` 1 -> 0 | +6.4% (2.89) | 19,364 | tycoon karma 67 -> 57, good path 22% -> 6%, BP within noise; the pack's line still says "the town thinks better of you" | reverted |
+| 20d | 20b and `patrol.price` $9,000 | +6.6% (2.67) | 19,334 (-0.8%) | still 5.7 patrols a season ($51,500) | reverted |
+
+At 200 towns 20b gave the tycoon 3.71 and +6.8% (round 19: 3.25, +6.6%), the organiser 0.9% -> 0.4% and the pacifist 2.5% -> 2.1%: the 60-town gain was noise, and the bouquet cut cost its other buyers. Reverted; the baseline was run again with the round-19 numbers and the wreath habit.
+
+### Per personality, before and after (200 towns, seed 1)
+
+| personality | win / fair before -> after | mean place before -> after | BP against the town mean before -> after |
+| --- | --- | --- | --- |
+| tycoon | 3.25 -> 3.38 | 2.33 -> 2.28 | +6.6% -> +6.5% |
+| necromancer | 2.33 -> 2.33 | 4.54 -> 4.66 | -2.4% -> -2.1% |
+| politician | 1.57 -> 1.68 | 3.07 -> 3.05 | +3.9% -> +3.9% |
+| pacifist | 1.35 -> 1.41 | 3.88 -> 3.85 | +2.5% -> +2.4% |
+| shark | 1.05 -> 0.98 | 4.50 -> 4.71 | -0.2% -> -0.6% |
+| builder | 0.56 -> 0.63 | 4.27 -> 4.38 | +1.0% -> +0.8% |
+| gambler | 0.48 -> 0.42 | 5.75 -> 5.57 | -3.6% -> -3.6% |
+| Soft Touch | 0.19 -> 0.31 | 5.16 -> 5.11 | -0.6% -> -0.4% |
+| saboteur | 0.29 -> 0.29 | 6.64 -> 6.61 | -8.8% -> -8.7% |
+| saint | 0.72 -> 0.26 | 4.01 -> 4.16 | +1.8% -> +1.7% |
+| organiser | 0.29 -> 0.23 | 4.54 -> 4.49 | +0.9% -> +0.6% |
+| scholar | 0.11 -> 0.22 | 5.08 -> 4.96 | -0.4% -> -0.1% |
+
+Mean BP 19,437 -> 19,440. Church wreath 9 -> 1,793 presses (529 seats); every other place within a few percent of round 19.
+
+### Findings and what was not changed
+
+- **No number of the eight places reaches the tycoon.** What the places give it is protection (the patrol) and karma (the hold), and its money is no constraint: it ends the season with about $46,000 it cannot spend, so a dearer patrol, oven or bouquet costs it nothing it would have used. Every price lever tried either missed it or landed on the poorer parlors that share the purchase (the saint and the Soft Touch for the patrol; the builder, organiser and pacifist for the bouquets; the shark for the oven).
+- **The hold and the patrol need engine logic** (proposals in `expanded-baseline.md`): a price or a cooldown for the hold (`mournes.hold.price` checked in `standRefusal`, or `mournes.hold.everyDays`); a patrol price that grows with the buyer's BP, as the Reaper Club's hit does, or a nightly limit (`police.patrol.perWeek`). Not built.
+- **The necromancer** is fed about 1.4 points by the police (the back door, nine a season, cuts its fight losses: -3.2% with the police, -4.6% without, 60 towns), but its share above 2 predates the places (2.33 in round 17), so it was left alone.
+- **The rest of the field's cost of the places**: 0.8% of BP at 60 towns, nearly all at the police station; under the 1% line.
+- No Classic rule or number changed; Classic's simulator report (60 towns, seed 7) is identical before and after except its run time (JSON equal without `durationMs`).
+
+## Shipped (round 20)
+
+| change | from | to |
+| --- | --- | --- |
+| Bots: the church wreath (Soft Touch, saint, politician, pacifist) | only while karma is under 90 | also every fourth day (day 2, 6, 10 ... while investing), for its word of mouth |
+| `--places-off` (`tools/sim`, `setPlacesOff` in `packages/bots`) | places only | places or single buttons |
+| Rules numbers | | none (patrol $6,000 and $9,000, oven bulk $2,700, bouquet share 45%, scattered ashes without karma: tried, reverted) |
+
+The 200-town baseline is `docs/balance/expanded-baseline.md` (2,406 s, checks passed).
+
+## Balance round 21 (the two rule changes of round 20, built and measured)
+
+The owner said yes (2026-11-12, decisions 25 and 26) to the two levers round 20 found and could not build with a number: a patrol priced against the leader, and a limit on Mourne & Sons' free hold. Both are engine logic in the Expanded modules only; no Classic file, number or playthrough changed (decision 27, `classicIsolation.test.ts`).
+
+**The rules** (`expanded-rules.md` sections 30 and 31):
+
+- `police.aheadPerBp` (25): the patrol and the back door cost $25 more for each BP the buyer is ahead of the average BP of the town's other open parlors, rounded up to $100. A parlor at or below the average, or alone in town, pays the listed price. Both buttons show the price the buyer pays and Sergeant Bixby says how much is extra (`placesA.police.introAhead`). No random draw is added, so the oracle comparison and the saved-game round trips are untouched.
+- `mournes.hold.everyDays` (3): once held, the hold opens again three game days later, shown disabled with that day (`placesB.hints.holdRecent`, `PlacesBState.holdDay`); undercutting stays open. Older saves hold at once.
+
+**Simulator** (`tools/sim`): `--set path=value,...` changes Expanded rule numbers for one run without editing the source (`town.placesA.police.aheadPerBp=10`); the report's heading names what was set.
+
+### The rate, chosen at 60 towns
+
+Runs: `pnpm --filter @fq/sim run sim -- --days 30 --towns 60 --players 8 --rules expanded --seed 1 --challenges 0 [--set town.placesA.police.aheadPerBp=N]`, the same 60 towns and seeds as round 20's ablations. The hold limit (3 days) is on in every run. "Field" is the mean final BP of every seat but the tycoon's.
+
+| run | tycoon BP against the mean (wins / fair) | tycoon patrols a season | its parlor-fight losses (BP) | its good path | field |
+| --- | --- | --- | --- | --- | --- |
+| round 20, all eight places, no change | +7.8% (4.44) | 7 | 262 | 36% | 19,339 |
+| hold limit only (`aheadPerBp` 0) | +6.5% (3.33) | 460 patrols in all | 550 | 8% | 19,341 |
+| hold limit and rate 10 | +6.2% (1.78) | 233 in all | 589 | 8% | 19,338 |
+| **hold limit and rate 25** | **+5.1% (1.78)** | 158 in all | 683 | 6% | 19,328 |
+| hold limit and rate 50 | +6.7% (3.56) | 77 in all | 759 | 11% | 19,357 |
+
+(One standard error of the tycoon's BP against the mean is about 0.8 points at this size; patrols are the town's total, 1,502 in 200 towns at round 20, about 450 per 60.)
+
+- The hold limit alone takes the tycoon's good path from 36% to 8% of its seats (karma 67 -> 62) and about 1.3 points of its BP, in line with round 20's 1.8-point ablation.
+- Rate 25 is the one that works: the leader's car costs it $3,500 plus $25 a BP of lead (a 500-BP lead is $16,000 a night), the town's patrols fall by two thirds, the leader's parlor-fight losses go from 262 to 683 BP a season, and it ends at +5.1% and 1.78x its share, against the targets of about +4.5% and 2x. The field's BP does not move (19,328 against 19,341), so the extra lands on the leader only.
+- Rate 10 leaves the leader buying (233 patrols) and most of its edge. Rate 50 stops it buying altogether (77 patrols, $60,000 unspent) and its BP comes back (+6.7%): with no car at all the attacks it loses are the ones it would have lost anyway, and the ones it wins pay it. A price the leader sometimes pays beats one it never pays.
+- The necromancer's share (2.46, 3.08, 2.26, 1.85 across the four runs) is noise at 39 seats and predates the places (round 20).
+
+### At 200 towns (the new baseline)
+
+The baseline was run again with both changes (`docs/balance/expanded-baseline.md`, 2,591 s, checks passed). Against round 20, same 200 towns and seeds:
+
+| personality | win / fair before -> after | mean place before -> after | BP against the town mean before -> after |
+| --- | --- | --- | --- |
+| tycoon | 3.38 -> 2.34 | 2.28 -> 2.51 | +6.5% -> +5.3% |
+| necromancer | 2.33 -> 1.67 | 4.66 -> 4.90 | -2.1% -> -3.2% |
+| politician | 1.68 -> 2.03 | 3.05 -> 2.96 | +3.9% -> +4.3% |
+| pacifist | 1.41 -> 1.80 | 3.85 -> 3.77 | +2.4% -> +2.8% |
+| shark | 0.98 -> 0.49 | 4.71 -> 5.28 | -0.6% -> -2.0% |
+| builder | 0.62 -> 1.06 | 4.38 -> 4.12 | +0.8% -> +1.8% |
+| gambler | 0.42 -> 0.60 | 5.57 -> 5.69 | -3.6% -> -3.1% |
+| Soft Touch | 0.31 -> 0.38 | 5.11 -> 4.97 | -0.4% -> -0.0% |
+| saboteur | 0.29 -> 0.35 | 6.61 -> 6.59 | -8.7% -> -8.9% |
+| saint | 0.26 -> 0.59 | 4.16 -> 3.97 | +1.7% -> +2.0% |
+| organiser | 0.23 -> 0.34 | 4.49 -> 4.34 | +0.6% -> +1.2% |
+| scholar | 0.22 -> 0.39 | 4.96 -> 4.77 | -0.1% -> +0.3% |
+
+Town mean BP 19,440 -> 19,383 (-0.25%); the parlors other than the tycoon 19,317 -> 19,291. Patrols 1,502 -> 490 (185 seats), back doors 3,454 -> 2,038, holds 35,453 -> 12,522; the Police Station now takes $9,780 a user a season (was $3,800), all of it from leaders' extras. The tycoon's good path 28% -> 13% of its seats, its cash $46,300 -> $40,200, its parlor-fight losses 539 -> 619 BP a season.
+
+### Findings
+
+- **Both targets nearly met.** No personality is below a third of its share any more (five were); the tycoon is at 2.34 and +5.3% against the targets of about 2x and +4.5%, and the politician at 2.03 is the other style a little over 2x. The wins the tycoon no longer takes went to the field, not to one style.
+- **The changes reach the leader only.** The field's BP is unchanged and a parlor at or below the town's average pays the listed price; what the leader keeps is its unspendable money (about $40,000 a season), which is section 28's question and not a number of the places.
+- **Evil lost a point** (-3.9% -> -4.8%): the back door takes the same extra, so an evil leader pays or goes without (the shark went without). Within a few percent; watch it with people.
+- No Classic rule, number, pack line or recorded playthrough changed (`classicRegression.test.ts`, the new `classicIsolation.test.ts`, the oracle comparison).

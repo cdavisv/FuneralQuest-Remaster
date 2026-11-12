@@ -107,7 +107,7 @@ function login() {
     } }, "Sign in"))));
 }
 
-var TABS = [["reports", "Reports"], ["mutes", "Mutes"], ["accounts", "Accounts"], ["towns", "Towns"], ["backups", "Backups"], ["bans", "Address bans"], ["audit", "Audit log"]];
+var TABS = [["reports", "Reports"], ["mutes", "Mutes"], ["accounts", "Accounts"], ["towns", "Towns"], ["backups", "Backups"], ["activity", "Activity"], ["invites", "Invites"], ["bans", "Address bans"], ["audit", "Audit log"]];
 function render() {
   var nav = $("nav"); clear(nav);
   $("whoBox").hidden = !state.token;
@@ -118,7 +118,7 @@ function render() {
   });
   nav.appendChild(h("button", { onclick: signOut }, "Sign out"));
   var main = $("main"); clear(main);
-  ({ reports: reportsTab, mutes: mutesTab, accounts: accountsTab, towns: townsTab, backups: backupsTab, bans: bansTab, audit: auditTab })[state.tab](main);
+  ({ reports: reportsTab, mutes: mutesTab, accounts: accountsTab, towns: townsTab, backups: backupsTab, activity: activityTab, invites: invitesTab, bans: bansTab, audit: auditTab })[state.tab](main);
 }
 
 function select(options, value, onchange, any) {
@@ -496,6 +496,81 @@ function download(name) {
     var a = h("a", { href: url, download: name });
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+  }).catch(fail);
+}
+
+// ----------------------------------------------------------------- activity
+var activity = { town: "", days: "60" };
+function pct(x) { return x === null ? "-" : Math.round(x * 100) + "%"; }
+function activityTab(main) {
+  var town = h("select", { onchange: function (e) { activity.town = e.target.value; render(); } }, h("option", { value: "" }, "All towns"));
+  var days = select(["14", "30", "60", "90", "180", "365"], activity.days, function (e) { activity.days = e.target.value; render(); });
+  var box = h("div", null, "Loading...");
+  main.appendChild(h("p", null, "Recorded: for each account, the days (UTC) on which it played at least one action in a town. Not recorded: addresses, times of day, what anyone typed, or anything from Solo careers."));
+  main.appendChild(h("div", { class: "filters" }, town, days, h("span", { class: "mut" }, "days")));
+  main.appendChild(box);
+  api("GET", "/admin/towns").then(function (d) {
+    d.towns.forEach(function (t) { town.appendChild(h("option", { value: t.id, selected: t.id === activity.town }, t.name + " (" + t.id + ")")); });
+  }).catch(fail);
+  api("GET", "/admin/stats?days=" + activity.days + (activity.town ? "&town=" + encodeURIComponent(activity.town) : "")).then(function (d) {
+    clear(box);
+    var o = d.overall;
+    box.appendChild(h("div", { class: "grid" },
+      h("div", { class: "card" }, h("div", { class: "mut" }, "Active today"), h("strong", null, String(o.activeLast1Days))),
+      h("div", { class: "card" }, h("div", { class: "mut" }, "Active in the last 7 days"), h("strong", null, String(o.activeLast7Days))),
+      h("div", { class: "card" }, h("div", { class: "mut" }, "Active in the last 30 days"), h("strong", null, String(o.activeLast30Days)))));
+    box.appendChild(h("p", { class: "mut" }, o.accounts + " accounts on record; median days played per account: " + (o.medianDaysPlayed === null ? "-" : o.medianDaysPlayed) + ". Rows older than " + (d.retentionDays || "no limit of") + " days are deleted. Today is " + d.today + " (UTC)."));
+    box.appendChild(h("p", { class: "mut" }, "Each row is the cohort of accounts that first played that day. \"Day N\" is the share that played again exactly N days later; in brackets, the share that came back on day N or any day after. A dash means the day has not ended yet, or nobody started that day."));
+    var head = ["Day", "New", "Active"].concat(["1", "3", "7", "14", "30"].map(function (n) { return "Day " + n; }));
+    var t = h("table", { class: "stats" }, h("tr", null, head.map(function (x) { return h("th", null, x); })));
+    d.daily.forEach(function (r) {
+      var cells = [h("td", null, r.day), h("td", null, String(r.newAccounts)), h("td", null, String(r.activeAccounts))];
+      ["day1", "day3", "day7", "day14", "day30"].forEach(function (k) {
+        var on = r.returnedExactlyOnDay[k], after = r.returnedOnOrAfterDay[k];
+        cells.push(h("td", null, on === null ? "-" : pct(on) + " (" + pct(after) + ")"));
+      });
+      t.appendChild(h("tr", null, cells));
+    });
+    box.appendChild(t);
+  }).catch(fail);
+}
+
+// ------------------------------------------------------------------ invites
+var INVITE_STATES = { active: ["open", "good"], used_up: ["used up", ""], expired: ["expired", "bad"], revoked: ["revoked", "bad"] };
+function invitesTab(main) {
+  var box = h("div", null, "Loading...");
+  var label = h("input", { type: "text", maxlength: "80", placeholder: "Label, e.g. Discord batch 1", class: "grow" });
+  var uses = h("input", { type: "number", min: "1", max: "1000", value: "1", class: "w6", title: "Accounts the code may make" });
+  var days = h("input", { type: "number", min: "1", placeholder: "Expires in days (blank: never)", class: "w11" });
+  var made = h("p", { class: "mut" });
+  main.appendChild(h("div", { class: "card" },
+    h("p", null, "An invite code lets new players make an account or start as a guest while FQ_INVITE_REQUIRED is on. One code can be shared by a group: give it as many uses as people you are inviting. A guest who later makes a full account does not need a second code."),
+    h("div", { class: "row2" }, label, uses, h("span", { class: "mut" }, "uses"), days, h("button", { class: "on", onclick: function () {
+      if (!label.value.trim()) return toast("Give the code a label.", true);
+      var n = Number(uses.value);
+      if (!(n >= 1 && n <= 1000 && Math.floor(n) === n)) return toast("Uses must be a whole number from 1 to 1000.", true);
+      var body = { label: label.value.trim(), uses: n };
+      if (days.value) body.expiresInDays = Number(days.value);
+      api("POST", "/admin/invites", body).then(function (inv) { toast("Code " + inv.code + " made."); render(); }).catch(fail);
+    } }, "Make a code")), made));
+  main.appendChild(box);
+  api("GET", "/admin/invites").then(function (d) {
+    clear(box);
+    made.textContent = d.inviteRequired ? "Invites are required on this server now." : "Invites are not required right now (FQ_INVITE_REQUIRED is off): anyone may sign up, and codes are ignored.";
+    box.appendChild(h("p", { class: "mut" }, d.recorded));
+    if (!d.invites.length) { box.appendChild(h("p", { class: "mut" }, "No invite codes yet.")); return; }
+    var t = h("table", null, h("tr", null, ["Code", "Label", "Used", "Expires", "State", ""].map(function (x) { return h("th", null, x); })));
+    d.invites.forEach(function (inv) {
+      var st = INVITE_STATES[inv.state] || [inv.state, ""];
+      t.appendChild(h("tr", null, h("td", null, h("code", null, inv.code)), h("td", null, inv.label), h("td", null, inv.used + " of " + inv.uses),
+        h("td", null, inv.expiresAt ? when(inv.expiresAt) : "never"), h("td", null, tag(st[0], st[1])),
+        h("td", null, h("div", { class: "row2" },
+          navigator.clipboard ? h("button", { onclick: function () { navigator.clipboard.writeText(inv.code).then(function () { toast("Copied " + inv.code + "."); }).catch(fail); } }, "Copy") : null,
+          inv.state === "revoked" ? null : h("button", { class: "danger", onclick: function () {
+            if (ask("Revoke the code " + inv.code + " (" + inv.label + ")? Nobody can use it after this; accounts it already made stay.")) api("POST", "/admin/invites/" + inv.id + "/revoke").then(function () { toast("Revoked."); render(); }).catch(fail);
+          } }, "Revoke")))));
+    });
+    box.appendChild(t);
   }).catch(fail);
 }
 

@@ -92,23 +92,33 @@ export function stripCodes(text: string): string {
 }
 
 /**
- * A button's `hint` and `detail` are plain strings (docs/expanded-rules.md 11.2, 26), drawn as
- * they come. Some reach the client with the original's colour codes still in them (the black
- * market's reward summaries, `rewardSummary` in packages/core/src/expanded/players.ts), which
- * would show as stray backticks; they are taken out here. Classic Views carry neither field.
+ * A button's `hint` and `detail`, and a picker's or a text box's `prompt`, are plain strings
+ * (docs/expanded-rules.md 11.2, 26), drawn as they come. Some reach the client with the
+ * original's colour codes still in them (the black market's reward summaries, `rewardSummary` in
+ * packages/core/src/expanded/players.ts; the police, Gazette and health department pickers'
+ * prompts, placesA.yaml and placesB.yaml), which would show as stray backticks; they are taken
+ * out here. Classic Views carry no hint or detail, and no codes in a prompt.
  */
 export function plainButtons(view: View): View {
   const dirty = view.buttons.some(
     (b) => (b.hint?.includes("`") ?? false) || (b.detail?.includes("`") ?? false),
   );
-  if (!dirty) return view;
-  return {
-    ...view,
-    buttons: view.buttons.map((b) => {
-      const next: Button = { ...b };
-      if (b.hint !== undefined) next.hint = stripCodes(b.hint);
-      if (b.detail !== undefined) next.detail = stripCodes(b.detail);
-      return next;
-    }),
-  };
+  const overlay = view.overlay;
+  const dirtyPrompt =
+    (overlay?.kind === "playerPicker" || overlay?.kind === "textInput") &&
+    overlay.prompt.includes("`");
+  if (!dirty && !dirtyPrompt) return view;
+  const next: View = { ...view };
+  if (dirty) {
+    next.buttons = view.buttons.map((b) => {
+      const plain: Button = { ...b };
+      if (b.hint !== undefined) plain.hint = stripCodes(b.hint);
+      if (b.detail !== undefined) plain.detail = stripCodes(b.detail);
+      return plain;
+    });
+  }
+  if (dirtyPrompt && (overlay?.kind === "playerPicker" || overlay?.kind === "textInput")) {
+    next.overlay = { ...overlay, prompt: stripCodes(overlay.prompt) };
+  }
+  return next;
 }

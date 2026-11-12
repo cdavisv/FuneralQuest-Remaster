@@ -2,7 +2,7 @@ import type { Button, View } from "@fq/protocol";
 import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
-import { fill, intToCash } from "../../text/format.js";
+import { fill } from "../../text/format.js";
 import { refreshRating } from "../parlor.js";
 import { applyReward, moneyMod, xp, xr } from "../players.js";
 import { xt } from "./life.js";
@@ -109,7 +109,7 @@ function buyTip(turn: Turn): View {
   paid(turn, "coroner", r.price);
   pb(turn).tip = { loved: true, cheap: false, traits: r.traits };
   mark(turn, "tip");
-  return main(turn, say(turn, btext(turn).coroner.tipBought, { price: intToCash(r.price) }));
+  return main(turn, say(turn, btext(turn).coroner.tipBought, { price: cash(r.price) }));
 }
 
 function buyCertificate(turn: Turn): View {
@@ -144,7 +144,7 @@ function quiet(turn: Turn): View {
   const t = btext(turn).coroner;
   const p = turn.player;
   moneyMod(p, r.quietPay);
-  let text = say(turn, t.quietDone, { money: intToCash(r.quietPay), karma: r.quietKarma });
+  let text = say(turn, t.quietDone, { money: cash(r.quietPay), karma: r.quietKarma });
   applyReward(turn, p, { karma: r.quietKarma });
   // Whether anybody noticed: a luck-weighted draw, as the seance.
   if (!turn.rng.randomYesNo(p.luck, r.quietLuckWeight)) {

@@ -1,4 +1,4 @@
-import { type FormEvent, type ReactNode, useId, useRef, useState } from "react";
+import { type FormEvent, type ReactNode, type Ref, useId, useRef, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import { useT } from "../i18n/I18nContext.js";
 import type { MessageKey } from "../i18n/messages.js";
@@ -107,21 +107,113 @@ export function FormAlert({ problem }: { problem: FormProblem | null }) {
   );
 }
 
+/** True when the player typed something that could be a code (spaces and dashes do not count). */
+export function hasInviteCode(typed: string): boolean {
+  return typed.replace(/[\s-]+/g, "") !== "";
+}
+
+/** A problem for a field the form is not showing, moved to the form as a whole. */
+function unfielded(problem: FormProblem | null, field: FieldName): FormProblem | null {
+  return problem && problem.field === field ? { ...problem, field: null } : problem;
+}
+
+/** The one "Invite code" field, shown only while the server requires invites. */
+export function InviteField({
+  value,
+  onChange,
+  error,
+  onEnter,
+  inputRef,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  error?: string | undefined;
+  /** Enter in the field (inside another form, so it does not submit that one). */
+  onEnter?: () => void;
+  inputRef?: Ref<HTMLInputElement>;
+}) {
+  const t = useT();
+  return (
+    <Field label={t("form.invite")} hint={t("form.invite.hint")} error={error}>
+      {(p) => (
+        <input
+          {...p}
+          ref={inputRef}
+          type="text"
+          value={value}
+          maxLength={40}
+          autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={
+            onEnter
+              ? (e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    onEnter();
+                  }
+                }
+              : undefined
+          }
+        />
+      )}
+    </Field>
+  );
+}
+
 export interface LogonFormProps {
   onLogIn: (login: string, password: string) => Promise<void>;
   onNewUser: () => void;
-  onGuest: () => void;
+  /** Starts a guest; `invite` is the code while the server requires one. May throw what the server said. */
+  onGuest: (invite?: string) => void | Promise<void>;
   busy: boolean;
+  /** The server needs an invite code for a guest (and a new account). */
+  inviteRequired?: boolean;
 }
 
 /** The original's plaque: "Please enter your name and password", LOGON, or click NEW USER. */
-export function LogonForm({ onLogIn, onNewUser, onGuest, busy }: LogonFormProps) {
+export function LogonForm({
+  onLogIn,
+  onNewUser,
+  onGuest,
+  busy,
+  inviteRequired = false,
+}: LogonFormProps) {
   const t = useT();
   const text = useProblemText();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [problem, setProblem] = useState<FormProblem | null>(null);
+  const [guestOpen, setGuestOpen] = useState(false);
+  const [invite, setInvite] = useState("");
   const pwd = useRef<HTMLInputElement>(null);
+  const inviteBox = useRef<HTMLInputElement>(null);
+
+  const startGuest = async () => {
+    if (busy) return;
+    if (!inviteRequired) {
+      await onGuest();
+      return;
+    }
+    if (!guestOpen) {
+      setGuestOpen(true);
+      setTimeout(() => inviteBox.current?.focus(), 0);
+      return;
+    }
+    if (!hasInviteCode(invite)) {
+      setProblem({ field: "invite", key: "form.err.inviteRequired" });
+      inviteBox.current?.focus();
+      return;
+    }
+    setProblem(null);
+    try {
+      await onGuest(invite);
+    } catch (error) {
+      setProblem(describeError(error, "login"));
+      inviteBox.current?.focus();
+    }
+  };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -178,7 +270,7 @@ export function LogonForm({ onLogIn, onNewUser, onGuest, busy }: LogonFormProps)
           />
         )}
       </Field>
-      <FormAlert problem={problem} />
+      <FormAlert problem={inviteRequired && guestOpen ? problem : unfielded(problem, "invite")} />
       <div className="fq-door-actions">
         <DoorButton type="submit" disabled={busy} variant="primary">
           {t("door.logon.go")}
@@ -189,11 +281,31 @@ export function LogonForm({ onLogIn, onNewUser, onGuest, busy }: LogonFormProps)
         </DoorButton>
       </div>
       <p className="fq-door-guest">
-        <button type="button" className="fq-linkbtn" onClick={onGuest} disabled={busy}>
+        <button
+          type="button"
+          className="fq-linkbtn"
+          onClick={() => void startGuest()}
+          disabled={busy}
+          aria-expanded={inviteRequired ? guestOpen : undefined}
+        >
           {t("door.guest")}
         </button>
         <span className="fq-field-note">{t("door.guest.note")}</span>
       </p>
+      {inviteRequired && guestOpen && (
+        <div className="fq-door-guest-invite">
+          <InviteField
+            value={invite}
+            onChange={setInvite}
+            error={text(problem, "invite")}
+            onEnter={() => void startGuest()}
+            inputRef={inviteBox}
+          />
+          <DoorButton onClick={() => void startGuest()} disabled={busy}>
+            {t("door.guest.start")}
+          </DoorButton>
+        </div>
+      )}
     </form>
   );
 }
@@ -235,15 +347,20 @@ export function CredentialsForm({
   onSubmit,
   onBack,
   busy,
+  inviteRequired = false,
 }: {
-  onSubmit: (login: string, password: string) => Promise<void>;
+  /** `invite` is the code typed, sent only while the server requires one. */
+  onSubmit: (login: string, password: string, invite?: string) => Promise<void>;
   onBack: () => void;
   busy: boolean;
+  /** The server needs an invite code for a new account: show the field. */
+  inviteRequired?: boolean;
 }) {
   const t = useT();
   const text = useProblemText();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [invite, setInvite] = useState("");
   const [show, setShow] = useState(false);
   const [problem, setProblem] = useState<FormProblem | null>(null);
 
@@ -251,11 +368,16 @@ export function CredentialsForm({
     e.preventDefault();
     if (busy) return;
     const name = login.trim();
-    const bad = checkLogin(name) ?? checkPassword(password);
+    const bad =
+      checkLogin(name) ??
+      checkPassword(password) ??
+      (inviteRequired && !hasInviteCode(invite)
+        ? ({ field: "invite", key: "form.err.inviteRequired" } as const)
+        : null);
     setProblem(bad);
     if (bad) return;
     try {
-      await onSubmit(name, password);
+      await (inviteRequired ? onSubmit(name, password, invite) : onSubmit(name, password));
     } catch (error) {
       setProblem(describeError(error, "signup"));
     }
@@ -299,7 +421,10 @@ export function CredentialsForm({
         <input type="checkbox" checked={show} onChange={(e) => setShow(e.target.checked)} />
         {t("form.password.show")}
       </label>
-      <FormAlert problem={problem} />
+      {inviteRequired && (
+        <InviteField value={invite} onChange={setInvite} error={text(problem, "invite")} />
+      )}
+      <FormAlert problem={inviteRequired ? problem : unfielded(problem, "invite")} />
       <ArrowRow
         onBack={onBack}
         backLabel={t("newuser.back")}

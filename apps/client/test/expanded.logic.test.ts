@@ -6,6 +6,7 @@ import {
   cardState,
   groupButtons,
   hasDetails,
+  plainButtons,
   usesGroups,
 } from "../src/expanded/buttons.js";
 import { clerkTip } from "../src/expanded/clerk.js";
@@ -443,5 +444,37 @@ describe("the Reaper Club's tables (docs 20.2)", () => {
     expect(roundKind({ game: "draw", stake: 100, outcome: "push", payout: 100, net: 0 })).toBe(
       "even",
     );
+  });
+});
+
+describe("plain strings without colour codes (docs 11.2, 26)", () => {
+  const view = (patch: Partial<View>): View =>
+    ({ scene: "location", title: "x", text: [], buttons: [], ...patch }) as unknown as View;
+
+  it("takes the codes out of a button's hint and detail", () => {
+    const out = plainButtons(
+      view({ buttons: [{ id: "a:b", label: "A", hint: "`5(+5 luck)`$", detail: "`w$100" }] }),
+    );
+    expect(out.buttons[0]?.hint).toBe("(+5 luck)");
+    expect(out.buttons[0]?.detail).toBe("$100");
+  });
+
+  it("takes the codes out of a player picker's prompt (the police desk's)", () => {
+    const out = plainButtons(
+      view({
+        overlay: {
+          kind: "playerPicker",
+          id: "police:reportpick",
+          prompt: '`wSergeant Bixby: `$"Who broke in on you?"',
+          players: [{ id: 2, name: "Ned (day 1)" }],
+        },
+      }),
+    );
+    expect(out.overlay).toMatchObject({ prompt: 'Sergeant Bixby: "Who broke in on you?"' });
+  });
+
+  it("leaves a View without codes as it is", () => {
+    const plain = view({ buttons: [{ id: "a", label: "A", hint: "plain" }] });
+    expect(plainButtons(plain)).toBe(plain);
   });
 });

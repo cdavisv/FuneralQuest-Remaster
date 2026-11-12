@@ -2,7 +2,7 @@ import type { Button, View } from "@fq/protocol";
 import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
-import { intToCash } from "../../text/format.js";
+import { fill } from "../../text/format.js";
 import { refreshRating } from "../parlor.js";
 import { applyReward, moneyMod, xr } from "../players.js";
 import { life, xt } from "./life.js";
@@ -58,7 +58,17 @@ export function standRefusal(turn: Turn, stand: "undercut" | "hold"): string {
   const h = btext(turn).hints;
   if (truceActive(turn)) return h.truceOn;
   if (did(turn, "undercut") || did(turn, "hold")) return h.stanceChosen;
-  return stand === "undercut" ? cashShort(turn, brules(turn).mournes.undercut.price) : "";
+  if (stand === "undercut") return cashShort(turn, brules(turn).mournes.undercut.price);
+  // The hold is free, so it pays its karma only every few days (balance round 21): a daily
+  // hold carried a neutral parlor into the good path for nothing.
+  const again = holdAgainDay(turn);
+  return turn.town.day < again ? fill(h.holdRecent, { day: again }) : "";
+}
+
+/** The first game day the prices can be held again (0 when they never were). */
+export function holdAgainDay(turn: Turn): number {
+  const last = pb(turn).holdDay ?? 0;
+  return last > 0 ? last + brules(turn).mournes.hold.everyDays : 0;
 }
 
 /** Why a truce cannot be offered now, or "". */
@@ -101,11 +111,11 @@ function spy(turn: Turn): View {
   let text: string;
   if (turn.rng.randomYesNo(p.luck, r.luckWeight)) {
     pb(turn).tip = { loved: false, cheap: true, traits: 0 };
-    text = say(turn, t.spyOk, { price: intToCash(r.price) });
+    text = say(turn, t.spyOk, { price: cash(r.price) });
   } else {
     applyReward(turn, p, { karma: r.failKarma, reviews: r.failReviews });
     text = say(turn, t.spyCaught, {
-      price: intToCash(r.price),
+      price: cash(r.price),
       karma: r.failKarma,
       reviews: r.failReviews,
     });
@@ -126,13 +136,13 @@ function undercut(turn: Turn): View {
   if (turn.rng.randomYesNo(p.luck, r.luckWeight)) {
     applyReward(turn, p, { reviews: r.reviews, luck: r.luck });
     text = say(turn, t.undercutWin, {
-      price: intToCash(r.price),
+      price: cash(r.price),
       reviews: r.reviews,
       luck: r.luck,
     });
   } else {
     applyReward(turn, p, { reviews: r.failReviews });
-    text = say(turn, t.undercutLose, { price: intToCash(r.price), reviews: r.failReviews });
+    text = say(turn, t.undercutLose, { price: cash(r.price), reviews: r.failReviews });
   }
   refreshRating(turn.rules, p);
   return main(turn, text);
@@ -143,6 +153,7 @@ function hold(turn: Turn): View {
   const r = brules(turn).mournes.hold;
   applyReward(turn, turn.player, { karma: r.karma });
   mark(turn, "hold");
+  pb(turn).holdDay = turn.town.day;
   refreshRating(turn.rules, turn.player);
   return main(turn, say(turn, btext(turn).mournes.holdDone, { karma: r.karma }));
 }
@@ -161,7 +172,7 @@ function truce(turn: Turn): View {
   const leads = Math.max(0, Math.min(r.leads, room));
   l.leads += leads;
   refreshRating(turn.rules, p);
-  let text = say(turn, t.truceDone, { days: r.days, karma: r.karma, price: intToCash(r.price) });
+  let text = say(turn, t.truceDone, { days: r.days, karma: r.karma, price: cash(r.price) });
   if (leads > 0) text += `\n${say(turn, t.truceLead, { leads })}`;
   return main(turn, text);
 }

@@ -408,6 +408,7 @@ describe("data export", () => {
         "activity",
         "blocks",
         "dailyChallenge",
+        "daysPlayed",
         "exportedAt",
         "format",
         "hallOfFame",

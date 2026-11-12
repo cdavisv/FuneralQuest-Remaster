@@ -205,3 +205,23 @@ describe("checks", () => {
     );
   });
 });
+
+describe("--set (rule numbers for one run)", () => {
+  it("writes a rule number by its path and refuses a path that is not one", async () => {
+    const { applyRuleSet } = await import("../src/index.js");
+    const { EXPANDED_RULES } = await import("@fq/core");
+    const rules = EXPANDED_RULES.expanded;
+    if (!rules) throw new Error("no Expanded rules");
+    const before = rules.town.placesA.police.aheadPerBp;
+    try {
+      applyRuleSet({ "town.placesA.police.aheadPerBp": before + 5 });
+      expect(rules.town.placesA.police.aheadPerBp).toBe(before + 5);
+      expect(() => applyRuleSet({ "town.placesA.police.nothing": 1 })).toThrow(/not a rule number/);
+      expect(() => applyRuleSet({ "town.nowhere.at.all": 1 })).toThrow(/no rule/);
+      expect(() => applyRuleSet({ "town.placesA.police": 1 })).toThrow(/not a rule number/);
+    } finally {
+      applyRuleSet({ "town.placesA.police.aheadPerBp": before });
+    }
+    expect(rules.town.placesA.police.aheadPerBp).toBe(before);
+  });
+});

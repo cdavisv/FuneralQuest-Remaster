@@ -15,7 +15,7 @@ cp apps/server/.env.example apps/server/.env
 # edit apps/server/.env: set FQ_ADMIN_TOKEN (openssl rand -hex 32) and FQ_BACKUP_INTERVAL_HOURS=24
 # FQ_BUILD puts the commit on /health and in the game's Settings (the image has no .git); without it: "dev"
 FQ_BUILD=$(git rev-parse --short=7 HEAD) docker compose up -d --build
-curl localhost:8080/health          # {"status":"ok","version":"0.1.0-alpha.1",...}
+curl localhost:8080/health          # {"status":"ok","version":"0.1.0-alpha.2",...}
 ```
 
 Open `http://<your machine>:8080`. Everything the server keeps lives in the Docker volume `fq-data` (mounted at `/data` in the container). The image has been built and started once by the project (its `/health` and client answered); no tournament has been played through it yet, so if it misbehaves, the Node.js route below is the better-tested one.
@@ -49,6 +49,7 @@ Settings are environment variables in `apps/server/.env`; `.env.example` explain
 | `FQ_BACKUP_INTERVAL_HOURS=24` | A backup every day, kept in `FQ_BACKUP_DIR` (default: `backups/` next to the database). `FQ_BACKUP_KEEP` (14) says how many. |
 | `FQ_DEFAULT_TOWNS` or `FQ_CREATE_DEFAULT_TOWN=false` | A fresh server makes an Expanded town and a Classic one. Set `classic` or `expanded` for one of them, or `false` to make your own (next section). |
 | `FQ_SIGNUP_ENABLED`, `FQ_GUEST_ENABLED` | Turn off sign-up once everyone has an account, and guests if you do not want strangers. |
+| `FQ_INVITE_REQUIRED` | `true` for a closed beta: new accounts and guests need an invite code you make on the admin page. See "Running a closed beta". |
 | `FQ_CONTACT_EMAIL` | Shown on the account deletion page. |
 | `FQ_TRUST_PROXY` | The number of proxies in front (1 behind Caddy or nginx). |
 
@@ -66,7 +67,7 @@ You can also create towns from a file (`FQ_TOWNS_FILE`, see `towns.example.json`
 
 ## 4. Invite players
 
-Send your friends the address. Each makes an account (New user: a log-in name and a password) and then a parlor in your town. A guest (one click, no password) can play too but cannot write chat, letters or announcements, and loses the parlor if they lose the browser's storage; they can turn the guest into a full account from Settings without losing anything. If you turned sign-up off, turn it on while people join.
+Send your friends the address. Each makes an account (New user: a log-in name and a password) and then a parlor in your town. A guest (one click, no password) can play too but cannot write chat, letters or announcements, and loses the parlor if they lose the browser's storage; they can turn the guest into a full account from Settings without losing anything. If you turned sign-up off, turn it on while people join. To let in only the people you choose, see "Running a closed beta" below.
 
 ## 5. Day to day
 
@@ -78,8 +79,27 @@ There is nothing you have to do: midnight runs by itself in the town's time zone
 - **Accounts**: find an account, ban or unban it (a ban logs them off everywhere and ends their sessions; after an unban they log in again). **Address bans** block an address or range.
 - **Reports** and **Mutes**: what players reported and what you did about it (see "Player safety and moderation" in the server README).
 - **Audit log**: every action, every midnight and every admin change, with who did it.
+- **Activity**: are players coming back? See below.
 - **Health**: `GET /health` answers `{"status":"ok", "version", "build", ...}`; point an uptime monitor at it.
 - **Logs**: JSON lines on stdout (`docker compose logs -f`, `journalctl -u ...`). Anything at level 40 (warn) or above deserves a look.
+
+### Are players coming back?
+
+Open the admin page's **Activity** tab (or `GET /admin/stats`, optionally `?town=<id>&days=90`). The three numbers at the top are the accounts that played today, in the last 7 days and in the last 30. The table has one row per day: how many accounts played for the first time that day (the day's "cohort"), how many played at all, and for each cohort the share that came back exactly 1, 3, 7, 14 and 30 days later, with the share that came back on that day or any day after in brackets. A dash means that day has not ended yet. The usual question is the day-7 figure: of the people who started a week ago, how many were back a week later.
+
+What the server keeps for this is only which account played in which town on which day (UTC): no addresses, times or text, nothing from Solo careers, and nothing sent anywhere. A player's rows go with their account and are in their data export. Rows older than `FQ_ACTIVITY_RETENTION_DAYS` (400) are deleted; `0` keeps them.
+
+### Running a closed beta
+
+A closed beta is a town open only to the people you invite, say 50 players for one season, before you open the door to everyone.
+
+1. **Turn invites on.** Set `FQ_INVITE_REQUIRED=true` in `apps/server/.env` and restart. Leave `FQ_SIGNUP_ENABLED` and `FQ_GUEST_ENABLED` on: the invite is what closes the door. From now on the front door's New user form, and Play as guest, ask for an invite code; anyone without one is told the server is invite-only. Players who already have an account log on as before. (Museum mode's original client has nowhere to type a code, so it cannot make new accounts while invites are required.)
+2. **Make a batch.** On the admin page open **Invites**, type a label you will recognise later ("Discord batch 1"), how many accounts the code may make (1 to 1,000) and, if you like, how many days it stays valid, then **Make a code**. One code can serve a whole group: a code with 50 uses lets 50 people in. Or make one single-use code per person if you want to know when each has joined. (`POST /admin/invites` does the same.)
+3. **Hand the codes out.** A code looks like `ABCDE-FGHJK`: no 0, O, 1, I or L, so it survives being read aloud, and players may type it in small letters, with or without the dash. A guest needs a code too; a guest who later makes a full account from Settings does not need a second one. Watch the **Used** column fill up; **Revoke** a code that has leaked (the accounts it already made stay). Every code made or revoked is in the audit log.
+4. **Watch the Activity tab.** Are the people you let in coming back? The day-7 figure for each day's newcomers is the one to watch (see "Are players coming back?" above). Reports and Mutes work as for any town.
+5. **Open sign-up later.** When you are ready, set `FQ_INVITE_REQUIRED=false` and restart. Everyone can sign up again, codes are simply ignored, and the codes and their counts stay on the Invites tab for your records.
+
+What the server keeps about invites is the code, its label, how many accounts it may make and has made, its expiry and when it was made or revoked. It does **not** record which account used which code, only the count, so nothing about a player is kept here. Wrong codes are counted like wrong passwords: ten from one address in 15 minutes and that address must wait.
 
 ## 6. Backups
 

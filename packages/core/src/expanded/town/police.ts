@@ -44,6 +44,28 @@ function reportWhy(turn: Turn): string {
   return "";
 }
 
+/**
+ * What tonight's car costs this parlor on top of the listed price (balance round 21): `aheadPerBp`
+ * dollars for each BP it is ahead of the average of the town's other open parlors, rounded up to
+ * $100. A parlor at or below that average, or alone in town, pays the listed price. A flat price
+ * never reached the season's leader, whose money has no other use, and only shut out the poorer
+ * parlors (docs/balance/expanded-tuning-log.md, round 20).
+ */
+export function patrolSurcharge(turn: Turn): number {
+  const rate = ra(turn).police.aheadPerBp;
+  if (rate <= 0) return 0;
+  let sum = 0;
+  let others = 0;
+  for (const p of turn.town.players) {
+    if (!p.active || !p.expanded || p.id === turn.player.id) continue;
+    sum += p.bp;
+    others++;
+  }
+  if (others === 0) return 0;
+  const ahead = turn.player.bp - sum / others;
+  return ahead > 0 ? Math.ceil((ahead * rate) / 100) * 100 : 0;
+}
+
 function patrolWhy(turn: Turn, price: number): string {
   const t = tx(turn).police;
   if (turn.player.expanded?.rivalry === "peaceful") return t.peacefulSafe;
@@ -55,18 +77,24 @@ function patrolWhy(turn: Turn, price: number): string {
 function main(turn: Turn, message = ""): View {
   const t = tx(turn).police;
   const c = ra(turn).police;
+  const extra = patrolSurcharge(turn);
+  const patrolPrice = c.patrol.price + extra;
+  const backdoorPrice = c.backdoor.price + extra;
   let text = fill(t.intro, { inspector: tx(turn).cast.sergeant });
   if (turn.player.policeProtected) text += t.introPatrolled;
+  // The leader is told why the car costs more, while there is a car to hire.
+  else if (extra > 0 && patrolWhy(turn, 0) === "")
+    text += fill(t.introAhead, { inspector: tx(turn).cast.sergeant, extra: cash(extra) });
   const buttons: Button[] = [
     gate(button(`${POLICE}:report`, t.buttons.report), reportWhy(turn)),
     gate(button(`${POLICE}:settle`, t.buttons.settle), reportWhy(turn)),
     gate(
-      { ...button(`${POLICE}:patrol`, t.buttons.patrol), detail: cash(c.patrol.price) },
-      patrolWhy(turn, c.patrol.price),
+      { ...button(`${POLICE}:patrol`, t.buttons.patrol), detail: cash(patrolPrice) },
+      patrolWhy(turn, patrolPrice),
     ),
     gate(
-      { ...button(`${POLICE}:backdoor`, t.buttons.backdoor), detail: cash(c.backdoor.price) },
-      patrolWhy(turn, c.backdoor.price),
+      { ...button(`${POLICE}:backdoor`, t.buttons.backdoor), detail: cash(backdoorPrice) },
+      patrolWhy(turn, backdoorPrice),
     ),
     goButton("map", t.buttons.leave),
   ];
@@ -153,7 +181,7 @@ function resolve(turn: Turn, mode: "report" | "settle", id: number | null): View
 function buyPatrol(turn: Turn, sure: boolean): View {
   const t = tx(turn).police;
   const c = ra(turn).police;
-  const price = sure ? c.patrol.price : c.backdoor.price;
+  const price = (sure ? c.patrol.price : c.backdoor.price) + patrolSurcharge(turn);
   if (patrolWhy(turn, price) !== "") throw new Error("Cannot hire");
   const me = turn.player;
   moneyMod(me, -price);

@@ -7913,6 +7913,7 @@
         "note": "Deathville's finest. Mostly they are finest at doughnuts.",
         "intro": "`w{inspector}: `$\"Break-in? Assault? Lost cat? Pick one, sign here, and try not to lean on the desk. It is the only desk we have.\"",
         "introPatrolled": "\n\n`$A patrol car idles at the curb, pointed at your parlor. It is on your tab.",
+        "introAhead": "\n\n`w{inspector}: `$\"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual.\"",
         "buttons": {
           "report": "File a Report",
           "settle": "Take a Settlement",
@@ -7941,6 +7942,7 @@
         "title": "Crematorium",
         "note": "The oven runs hot and the owner runs hotter.",
         "intro": "`w{keeper}: `$\"Oven time by the slot, no questions, no inspections. You have `w{slots}`$ slots reserved until day `w{until}`$ and `w{ashes}`$ urns on the shelf.\"",
+        "introNone": "`w{keeper}: `$\"Oven time by the slot, no questions, no inspections. You have no slots reserved and `w{ashes}`$ urns on the shelf.\"",
         "permitNote": "\n`$The crematory permit on your wall knocks the price down.",
         "buttons": {
           "rent": "Rent Oven Time",
@@ -7972,7 +7974,7 @@
           "rain": "It is raining, so lilies are in season and cheaper.",
           "fog": "The fog hurts the deliveries, but not the prices.",
           "storm": "The storm smashed the front window, so everything is on clearance.",
-          "heat": "It is hot, and flowers in the heat cost double to keep alive.",
+          "heat": "It is hot, and flowers in the heat cost extra to keep alive.",
           "snow": "The snow shut the growers, so hothouse stems cost extra."
         },
         "specialNone": "The price is whatever it is today.",
@@ -8045,6 +8047,7 @@
         "truceOn": "There is a truce",
         "karmaTooLow": "Too respectable for this",
         "stanceChosen": "You have taken your stand today",
+        "holdRecent": "Your last stand still counts. Try again on day {day}",
         "noRivals": "No rival parlors to complain about"
       },
       "coroner": {
@@ -8089,7 +8092,7 @@
         "complaintPrompt": "Which parlor has been breaking the rules? It will cost `w{price}`$ to be heard.",
         "complaintFiled": "`${inspector} takes your complaint and files it where complaints are filed. \"I will look into {name}'s kitchen.\" `5({karma} karma)`$",
         "complaintDismissed": "`${inspector} reads the complaint and puts it down. {name} holds a current certificate, so there is nothing to look into. The {price} stays in his drawer.",
-        "complaintBackfired": "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5({reviews} reputation)`$",
+        "complaintBackfired": "`4The complaint is traced straight back to you. Citation for `w{fine}`4 for wasting an inspector's time. `5(-{reviews} reputation)`$",
         "complaintMail": "`4A complaint was filed against {parlor} with the Health Department. Somebody in town does not like you. Your reputation dipped.`$",
         "complaintNews": "`7COMPLAINT AT {parlor}\n`^The Health Department has received a complaint about {name}'s parlor. Nobody will say who made it.\n\n",
         "boostEnded": "`$The health certificate by your door has gone yellow and fallen off. Your reputation slips back with it."

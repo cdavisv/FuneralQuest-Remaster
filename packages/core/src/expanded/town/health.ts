@@ -5,7 +5,7 @@ import type { LocationModule } from "../../engine/registry.js";
 import type { Turn } from "../../engine/turn.js";
 import { goButton } from "../../engine/view.js";
 import type { PlayerState } from "../../state/types.js";
-import { fill, intToCash } from "../../text/format.js";
+import { fill } from "../../text/format.js";
 import { refreshRating } from "../parlor.js";
 import { applyReward, karmaMod, moneyMod, xr } from "../players.js";
 import { isPeaceful } from "../pvp.js";
@@ -136,7 +136,7 @@ function inspect(turn: Turn): View {
     pb(turn).citation = r.fine;
     applyReward(turn, p, { reviews: r.failReviews });
     refreshRating(turn.rules, p);
-    text = say(turn, t.failed, { fine: intToCash(r.fine), reviews: Math.abs(r.failReviews) });
+    text = say(turn, t.failed, { fine: cash(r.fine), reviews: Math.abs(r.failReviews) });
   }
   return main(turn, text);
 }
@@ -177,7 +177,7 @@ function picker(turn: Turn): View {
       kind: "playerPicker",
       id: `${HEALTH}:complaintpick`,
       prompt: say(turn, t.complaintPrompt, {
-        price: intToCash(brules(turn).health.complaint.price),
+        price: cash(brules(turn).health.complaint.price),
       }),
       players: complaintTargets(turn).map((q) => ({ id: q.id, name: `${q.name} (${q.parlor})` })),
     },
@@ -198,7 +198,7 @@ function file(turn: Turn, id: number | null): View {
   mark(turn, "complaint");
   let text: string;
   if (lifeOf(turn.town, target).certifiedUntil >= turn.town.day) {
-    text = say(turn, t.complaintDismissed, { name: target.name, price: intToCash(r.price) });
+    text = say(turn, t.complaintDismissed, { name: target.name, price: cash(r.price) });
   } else if (turn.rng.randomYesNo(p.luck, r.luckWeight)) {
     applyReward(turn, target, { reviews: r.targetReviews });
     refreshRating(turn.rules, target);
@@ -217,7 +217,7 @@ function file(turn: Turn, id: number | null): View {
     moneyMod(p, -Math.min(p.money, r.fine));
     applyReward(turn, p, { reviews: r.backfireReviews });
     text = say(turn, t.complaintBackfired, {
-      fine: intToCash(r.fine),
+      fine: cash(r.fine),
       reviews: Math.abs(r.backfireReviews),
     });
   }

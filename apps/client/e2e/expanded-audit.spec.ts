@@ -1,13 +1,13 @@
 import { expandedPack } from "@fq/content";
-import { CLASSIC_TEXT } from "@fq/core";
+import { CLASSIC_TEXT, TOWN_PLACES } from "@fq/core";
 import { type BrowserContext, expect, type Locator, type Page, test } from "@playwright/test";
 import { ADMIN_TOKEN, createParlor, newPlayer, type Player, signUp } from "./helpers";
 import { inspect, type Problem } from "./layout-check";
 
 /**
  * The Expanded audit (docs/expanded-audit.md): every player-facing feature of the Expanded
- * ruleset (docs/expanded-rules.md sections 3 to 10 and 16 to 24, presented as sections 11 and 26
- * say), driven through the real web client against the real server, with the Expanded content
+ * ruleset (docs/expanded-rules.md sections 3 to 10, 16 to 24, 30 and 31, presented as sections 11
+ * and 26 say), driven through the real web client against the real server, with the Expanded content
  * pack as the oracle. Expected strings come from `expandedPack` (`@fq/content`, the pack the
  * server's Expanded towns load) and are matched as patterns with the placeholders left open.
  *
@@ -241,6 +241,7 @@ const ADMIN = `Bearer ${ADMIN_TOKEN}`;
 const TOWNS = {
   main: { id: "xaudit-main", name: "Expanded Audit" },
   life: { id: "xaudit-life", name: "Expanded Life" },
+  places: { id: "xaudit-places", name: "Expanded Places" },
 } as const;
 type Town = { id: string; name: string };
 const created: string[] = [];
@@ -1979,7 +1980,1182 @@ test("the Daily Challenge: a guest plays the whole seeded day to the end and is 
   await expect(board.locator("tr[data-mine]")).toContainText("Carl Board");
 });
 
+// ------------------------------------------------------------------ 30, 31 the eight newer places
+
+/*
+ * The Police Station, Crematorium, Florist and Town Gazette (section 30) and the Coroner, Health
+ * Department, Cousin Sal's Pawn and Mourne & Sons (section 31), played in an Expanded town of
+ * their own by two parlors, Pia and Quin, so their attacks, smears and complaints touch nobody
+ * else and their days can be forced freely. These places' numbers (`town.placesA`,
+ * `town.placesB`) are being tuned and are not among the numbers a sysop may set or read for a town
+ * (apps/server/src/game/tuning.ts), so no price, payout or chance is written here: a price is read
+ * from its button's tag and an amount in a line is matched as a pattern. Chance outcomes are
+ * reached with the luck and karma the player editor sets, and by repeating within a bound, over
+ * forced days when the action is once a day.
+ */
+
+if (!XP.placesA || !XP.placesB) throw new Error("the Expanded pack has no batch A or B places");
+const PA = XP.placesA;
+const PB = XP.placesB;
+const TC = TOWN.cast;
+
+/** A place's name on the map (the engine's `TOWN_PLACES`). */
+function placeName(id: string): string {
+  const place = TOWN_PLACES.find((p) => p.id === id);
+  if (!place) throw new Error(`no map place ${id}`);
+  return place.label;
+}
+const NEW = {
+  police: placeName("police-station"),
+  crematorium: placeName("crematorium"),
+  florist: placeName("florist"),
+  gazette: placeName("gazette"),
+  coroner: placeName("coroner"),
+  health: placeName("health-department"),
+  pawn: placeName("pawn-shop"),
+  mournes: placeName("mournes"),
+} as const;
+
+const cashNow = async (page: Page): Promise<number> => num(await chip(page, "money").textContent());
+const karmaNow = async (page: Page): Promise<number> =>
+  num(await chip(page, "karma").textContent());
+
+/** The dollar amount on a button's tag ("$1,200", "3 for $2,400", "+$300", "$250 each"). */
+async function tagPrice(page: Page, id: string): Promise<number> {
+  const tag = bid(page, id).locator(".fq-plaque-detail, .fq-card-detail").first();
+  const text = norm(await tag.textContent());
+  const m = /\$([\d,]+)/.exec(text);
+  expect(m, `${id} has a price on its tag ("${text}")`).not.toBeNull();
+  return num(m?.[1]);
+}
+
+/** A button shown disabled with its reason. */
+async function refused(page: Page, id: string, why: string): Promise<void> {
+  await expect(bid(page, id)).toHaveAttribute("aria-disabled", "true");
+  await expect(bid(page, id)).toHaveAccessibleDescription(stripCodes(why));
+}
+
+/** A pack line as a pattern with `key` captured as an amount (with or without its dollar sign). */
+function grab(template: string, key: string): RegExp {
+  const source = stripCodes(template)
+    .split(/(\{[A-Za-z]+\})/)
+    .map((part) =>
+      part === `{${key}}` ? "\\$?([\\d,]+)" : /^\{[A-Za-z]+\}$/.test(part) ? ".*?" : escapeRx(part),
+    )
+    .join("")
+    .replace(/\s+/g, "\\s*");
+  return new RegExp(source);
+}
+
+/** The amount `key` stands for in the line of `template` on the screen. */
+async function amountIn(page: Page, template: string, key: string): Promise<number> {
+  const text = norm(await well(page).textContent());
+  const m = grab(template, key).exec(text);
+  expect(m, `"${template}" with its ${key} in: ${text}`).not.toBeNull();
+  return num(m?.[1]);
+}
+
+/** The place's own pictures are drawn (not the stand-in for a missing picture). */
+async function seePictures(page: Page, picture: { fg?: string; bg?: string }): Promise<void> {
+  for (const layer of ["bg", "fg"] as const) {
+    const id = picture[layer];
+    if (!id) continue;
+    const file = id.split("/").pop() as string;
+    await expect(page.locator(`img.fq-layer-${layer}[src*="${file}"]`).first()).toHaveAttribute(
+      "data-status",
+      "ok",
+    );
+  }
+  await expect(page.locator(".fq-ph")).toHaveCount(0);
+}
+
+/** Through the row of parlors to a rival's front door. */
+async function visitParlor(page: Page, target: Who): Promise<void> {
+  await goTo(page, PLACE.rivals);
+  await press(page, "competitors:visit");
+  await submitText(page, target.player.name.slice(0, 8));
+  await expect(dialog(page)).toContainText(`Do you mean ${target.player.name}?`);
+  await dialog(page).getByRole("button", { name: "Yes", exact: true }).click();
+  await settle(page);
+}
+
+/** The letters a player finds on the way back in to the parlor, with the screen's text. */
+async function mailOf(page: Page): Promise<string> {
+  await toDesk(page);
+  await press(page, "go:map");
+  await page.getByRole("button", { name: "Go to Your Parlor" }).click();
+  await settle(page);
+  return `${await readLetters(page)} ${norm(await well(page).textContent())}`;
+}
+
+/**
+ * One customer, start to end: a cremation offered when `cremate`, a flowers package pitched when
+ * `flowers`, Done, and a dishonest body-preparation choice when `evil` and one is offered.
+ * Returns the Done screen's text ("" when the family walked out).
+ */
+async function sellOne(
+  page: Page,
+  opts: { cremate?: boolean; flowers?: boolean; evil?: boolean } = {},
+): Promise<string> {
+  await meet(page);
+  if (opts.cremate && (await bid(page, "neg:cremation").isVisible())) {
+    if ((await bid(page, "neg:cremation").getAttribute("aria-disabled")) === null) {
+      await press(page, "neg:cremation");
+    }
+  }
+  if (opts.flowers && !(await walkedOut(page))) {
+    await press(page, "neg:packages");
+    const card = hand(page)
+      .locator('.fq-card:not([aria-disabled="true"])')
+      .filter({ has: page.locator(".fq-card-label", { hasText: /^Flowers: / }) })
+      .first();
+    if ((await card.count()) > 0) {
+      await card.click();
+      await settle(page);
+    }
+    if (await bid(page, "neg:back").isVisible()) await press(page, "neg:back");
+  }
+  let done = "";
+  if (await bid(page, "neg:done").isVisible()) done = await pressText(page, "neg:done");
+  if (opts.evil && (await bid(page, "prep:start").isVisible())) {
+    await press(page, "prep:start");
+    const evil = page
+      .getByRole("navigation", { name: "A choice about the body" })
+      .locator('[data-tone="evil"]:not([aria-disabled="true"])')
+      .first();
+    if ((await evil.count()) > 0) {
+      await evil.click();
+      await settle(page);
+    }
+  }
+  await toDesk(page);
+  return done;
+}
+
+const PT = TOWNS.places;
+let pia!: Who;
+let quin!: Who;
+/** Whether a morning has said that a health certificate ran out (31 B0, the health boost). */
+let boostEnded = false;
+
+/** A forced midnight, and both parlors through their mornings (the patrol and the day's limits reset). */
+async function nextDay(): Promise<{ pia: string; quin: string }> {
+  await toDesk(pia.page);
+  await toDesk(quin.page);
+  await newDay(pia.page, PT);
+  const mornings = { pia: await morning(pia.page), quin: await morning(quin.page) };
+  if (rx(PB.health.boostEnded).test(`${mornings.pia} ${mornings.quin}`)) boostEnded = true;
+  return mornings;
+}
+
+test("the eight newer places: a town of their own, two parlors, and every place on the map", async ({
+  browser,
+}) => {
+  test.setTimeout(120_000);
+  {
+    const ctx = await browser.newContext();
+    const p = await ctx.newPage();
+    await p.goto("/");
+    await makeTown(
+      p,
+      PT,
+      {
+        turnsPerDay: 400,
+        normalOdds: 0,
+        luckOdds: 0,
+        scriptOdds: 0,
+        visitsPerDay: 8,
+        // The town's days are forced many times over: nobody is closed for staying away.
+        maintDelete: false,
+        inactiveDays: 400,
+      },
+      { "town.world.newsChance": 0, "town.world.arcChance": 0 },
+      4321,
+    );
+    await ctx.close();
+  }
+  pia = await join(browser, PT, "xpia");
+  await sitDown(pia.page);
+  quin = await join(browser, PT, "xquin");
+  await sitDown(quin.page);
+  await edit(pia.page, PT, pia, { money: 500_000 });
+  await edit(quin.page, PT, quin, { money: 200_000 });
+  // The map: the twenty places of an Expanded town, each one a control named for it.
+  const page = pia.page;
+  await press(page, "go:map");
+  await expect(page.locator(".fq-hotspots .fq-hotspot")).toHaveCount(20);
+  for (const name of Object.values(NEW)) {
+    await expect(page.getByRole("button", { name: `Go to ${name}`, exact: true })).toBeVisible();
+  }
+  await toDesk(page);
+});
+
+test("the Police Station: a break-in reported, a settlement taken, a patrol that turns a visitor away, the back door", async () => {
+  test.setTimeout(240_000);
+  const T = PA.police;
+  const sergeant = PA.cast.sergeant;
+  const a = pia.page;
+  const q = quin.page;
+  await goTo(a, NEW.police);
+  await seeText(a, rx(T.intro.replace("{inspector}", sergeant)));
+  await seePictures(a, PA.pictures.police);
+  // Nobody has hit the parlor yet: nothing to report or settle.
+  await refused(a, "police:report", T.noGrievances);
+  await refused(a, "police:settle", T.noGrievances);
+  await expect(bid(a, "police:patrol")).toContainText(T.buttons.patrol);
+  await expect(bid(a, "police:backdoor")).toContainText(T.buttons.backdoor);
+
+  // Quin breaks in while Pia is away (a break-in is an attack the police hear about).
+  await logOff(pia);
+  await visitParlor(q, pia);
+  await press(q, "competitors:trydoor");
+  await labelled(q, "Steal").click();
+  await settle(q);
+  await seeText(q, head(X.visit.cashStolen));
+  await toDesk(q);
+  await logBackOn(pia);
+  expect(await wakeUp(a)).toMatch(head(X.visit.cashStolenMail));
+
+  // A report: the picker names the rival and the day; the rival is fined, Pia paid a share.
+  await goTo(a, NEW.police);
+  const day = await townDay(a, PT);
+  await press(a, "police:report");
+  await expect(dialog(a)).toContainText(rx(T.reportPrompt.replace("{inspector}", sergeant)));
+  await expect(dialog(a)).toContainText(
+    T.grievanceRow.replace("{rival}", quin.player.name).replace("{day}", String(day)),
+  );
+  let cash0 = await cashNow(a);
+  let karma0 = await karmaNow(a);
+  await pick(a, quin.player.name);
+  await seeText(a, rx(T.reported.replace("{name}", quin.player.name)));
+  const share = await amountIn(a, T.reported, "share");
+  expect(share).toBeGreaterThan(0);
+  await expect(chip(a, "money")).toHaveText(money(cash0 + share));
+  expect(await karmaNow(a)).toBeGreaterThan(karma0);
+  // One report or settlement a day.
+  await refused(a, "police:settle", PA.hints.doneToday);
+  expect(await mailOf(q)).toMatch(rx(T.fineMail.replace("{name}", pia.player.name)));
+  await toDesk(q);
+  expect(await readPaper(a)).toMatch(rx(T.fineNews.replace("{name}", quin.player.name)));
+
+  // A patrol for tonight: paid, said, and nobody gets in.
+  await goTo(a, NEW.police);
+  const patrol = await tagPrice(a, "police:patrol");
+  cash0 = await cashNow(a);
+  await press(a, "police:patrol");
+  await seeText(a, rx(T.patrolBought.replace("{inspector}", sergeant)));
+  await seeText(a, rx(T.introPatrolled));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - patrol));
+  await refused(a, "police:patrol", T.alreadyPatrolled);
+  await refused(a, "police:backdoor", T.alreadyPatrolled);
+  await logOff(pia);
+  await visitParlor(q, pia);
+  await seeText(
+    q,
+    rx(
+      CLASSIC_TEXT.social.visit.police
+        .replace("{name}", pia.player.name)
+        .replace("{parlor}", pia.player.parlor),
+    ),
+  );
+  await toDesk(q);
+
+  // The next day: Pia's morning ends the patrol; Quin breaks in again; Pia settles in private.
+  await logBackOn(pia);
+  await wakeUp(a);
+  await nextDay();
+  await logOff(pia);
+  await visitParlor(q, pia);
+  await press(q, "competitors:trydoor");
+  await labelled(q, "Steal").click();
+  await settle(q);
+  await toDesk(q);
+  await logBackOn(pia);
+  await wakeUp(a);
+  await goTo(a, NEW.police);
+  await press(a, "police:settle");
+  await expect(dialog(a)).toContainText(rx(T.settlePrompt.replace("{inspector}", sergeant)));
+  cash0 = await cashNow(a);
+  karma0 = await karmaNow(a);
+  await pick(a, quin.player.name);
+  await seeText(a, rx(T.settled.replace("{name}", quin.player.name)));
+  const amount = await amountIn(a, T.settled, "amount");
+  await expect(chip(a, "money")).toHaveText(money(cash0 + amount));
+  expect(await karmaNow(a)).toBeLessThan(karma0);
+  await refused(a, "police:report", PA.hints.doneToday);
+  expect(await mailOf(q)).toMatch(rx(T.settleMail.replace("{name}", pia.player.name)));
+  await toDesk(q);
+
+  // The back door: paid and karma lost either way; it works or the money is gone (try again).
+  // Both parlors use it, over days, until both outcomes have been seen.
+  const seen = { worked: false, failed: false };
+  for (let d = 0; d < 8 && !(seen.worked && seen.failed); d++) {
+    if (d > 0) await nextDay();
+    for (const who of [pia, quin]) {
+      const p = who.page;
+      await edit(p, PT, who, { karma: 50, money: 200_000 });
+      await goTo(p, NEW.police);
+      for (
+        let i = 0;
+        i < 6 && (await bid(p, "police:backdoor").getAttribute("aria-disabled")) === null;
+        i++
+      ) {
+        const price = await tagPrice(p, "police:backdoor");
+        const c0 = await cashNow(p);
+        const k0 = await karmaNow(p);
+        const text = await pressText(p, "police:backdoor");
+        expect(text).toMatch(anyOf(T.backdoorWorked, T.backdoorFailed));
+        await expect(chip(p, "money")).toHaveText(money(c0 - price));
+        expect(await karmaNow(p)).toBeLessThan(k0);
+        if (rx(T.backdoorWorked).test(text)) {
+          seen.worked = true;
+          await refused(p, "police:backdoor", T.alreadyPatrolled);
+        } else seen.failed = true;
+      }
+      await toDesk(p);
+    }
+  }
+  console.log(`police back door: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ worked: true, failed: true });
+  await edit(a, PT, pia, { karma: 50 });
+  await edit(q, PT, quin, { karma: 50 });
+});
+
+test("the Crematorium and the Florist: oven slots and bouquets bought, a cremation and a flowers sale paid for them, the ashes scattered and pressed, a wreath", async () => {
+  test.setTimeout(300_000);
+  const C = PA.crematorium;
+  const F = PA.florist;
+  const a = pia.page;
+  await nextDay();
+  await edit(a, PT, pia, { money: 500_000, karma: 50, luck: 50 });
+  // The incinerator opens the cremation track; the storeroom keeps the caskets from running out.
+  await press(a, "go:parlor");
+  await press(a, "parlor:upgrades");
+  await press(a, "parlor:buy:storeroom");
+  await press(a, "parlor:buy:incinerator");
+  await toDesk(a);
+
+  // The oven: one slot, a bulk lot, then the rack is full; no urns yet.
+  await goTo(a, NEW.crematorium);
+  // No slot is held yet, so the keeper names no count and no day.
+  await seeText(a, rx(C.introNone.replace("{keeper}", PA.cast.ovenKeeper)));
+  await seePictures(a, PA.pictures.crematorium);
+  await refused(a, "crematorium:scatter", C.noAshes);
+  await refused(a, "crematorium:diamonds", C.noAshes);
+  let cash0 = await cashNow(a);
+  let price = await tagPrice(a, "crematorium:rent");
+  await press(a, "crematorium:rent");
+  await seeText(a, rx(C.rented.replace("{keeper}", PA.cast.ovenKeeper).replace("{slots}", "1")));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  // The bulk lot ("3 for $2,400"), when the rack has room for it.
+  const bulk = num(
+    /^(\d+) for/.exec(
+      norm(await bid(a, "crematorium:bulk").locator(".fq-plaque-detail").textContent()),
+    )?.[1],
+  );
+  let held = 1;
+  if ((await bid(a, "crematorium:bulk").getAttribute("aria-disabled")) === null) {
+    cash0 = await cashNow(a);
+    price = await tagPrice(a, "crematorium:bulk");
+    await press(a, "crematorium:bulk");
+    held += bulk;
+    await seeText(
+      a,
+      rx(C.bulkBought.replace("{keeper}", PA.cast.ovenKeeper).replace("{slots}", String(held))),
+    );
+    await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  }
+  // Single slots until the rack is full.
+  for (
+    let i = 0;
+    i < 12 && (await bid(a, "crematorium:rent").getAttribute("aria-disabled")) === null;
+    i++
+  ) {
+    await press(a, "crematorium:rent");
+    held++;
+    await seeText(
+      a,
+      rx(C.rented.replace("{keeper}", PA.cast.ovenKeeper).replace("{slots}", String(held))),
+    );
+  }
+  await refused(a, "crematorium:rent", C.ovenFull);
+  await refused(a, "crematorium:bulk", C.ovenFull);
+  await toDesk(a);
+
+  // The florist: the day's weather (the desk's strip) sets the price and the florist says why.
+  const weather = norm(
+    await strip(a).locator('[data-kind="weather"] .fq-strip-label').first().textContent(),
+  );
+  await goTo(a, NEW.florist);
+  await seePictures(a, PA.pictures.florist);
+  const weatherId = TOWN.weather.find((w) => w.label === weather)?.id ?? "";
+  const special = (F.special as Record<string, string>)[weatherId] ?? F.specialNone;
+  await seeText(a, rx(F.intro.replace("{florist}", PA.cast.florist).replace("{special}", special)));
+  cash0 = await cashNow(a);
+  price = await tagPrice(a, "florist:buy");
+  await press(a, "florist:buy");
+  await seeText(a, rx(F.bought.replace("{florist}", PA.cast.florist).replace("{count}", "1")));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  if ((await bid(a, "florist:bundle").getAttribute("aria-disabled")) === null) {
+    cash0 = await cashNow(a);
+    price = await tagPrice(a, "florist:bundle");
+    const bundle = norm(await bid(a, "florist:bundle").locator(".fq-plaque-detail").textContent());
+    const count = /^(\d+) for/.exec(bundle)?.[1] ?? "";
+    await press(a, "florist:bundle");
+    await seeText(a, rx(F.bought.replace("{florist}", PA.cast.florist).replace("{count}", count)));
+    await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  }
+  // Single bouquets until the cooler is full.
+  for (
+    let i = 0;
+    i < 12 && (await bid(a, "florist:buy").getAttribute("aria-disabled")) === null;
+    i++
+  ) {
+    await press(a, "florist:buy");
+  }
+  await refused(a, "florist:buy", F.shelfFull);
+  await refused(a, "florist:bundle", F.shelfFull);
+  // A wreath for the church (karma, word of mouth); then the ward's flowers wait for tomorrow.
+  const karma0 = await karmaNow(a);
+  cash0 = await cashNow(a);
+  price = await tagPrice(a, "florist:church");
+  await press(a, "florist:church");
+  await seeText(a, rx(F.churchSent));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  expect(await karmaNow(a)).toBeGreaterThan(karma0);
+  await refused(a, "florist:ward", F.wreathDone);
+  await toDesk(a);
+
+  // Sales: a cremation uses an oven slot, a flowers package uses a bouquet; each says what it saved
+  // or earned. The first cremation's urn is scattered, the second's pressed.
+  const oven = rx(PA.saleNotes.oven);
+  const flowers = rx(PA.saleNotes.flowers);
+  let cremations = 0;
+  let flowersPaid = false;
+  let scattered = false;
+  let pressed = false;
+  for (let n = 0; n < 40 && !(pressed && flowersPaid); n++) {
+    const done = await sellOne(a, { cremate: cremations < 2, flowers: !flowersPaid });
+    if (oven.test(done)) {
+      expect(done).toMatch(rx(X.done.success.replace("{casket}", X.done.cremated)));
+      expect(done).toMatch(grab(PA.saleNotes.oven, "money"));
+      cremations++;
+    }
+    if (flowers.test(done)) {
+      expect(done).toMatch(grab(PA.saleNotes.flowers, "money"));
+      flowersPaid = true;
+    }
+    if ((cremations === 1 && !scattered) || (cremations === 2 && !pressed)) {
+      await goTo(a, NEW.crematorium);
+      const k0 = await karmaNow(a);
+      const c0 = await cashNow(a);
+      if (!scattered) {
+        const text = await pressText(a, "crematorium:scatter");
+        expect(text).toMatch(rx(C.scattered.replace("{count}", "1")));
+        expect(await karmaNow(a)).toBeGreaterThan(k0);
+        scattered = true;
+      } else {
+        const each = await tagPrice(a, "crematorium:diamonds");
+        const text = await pressText(a, "crematorium:diamonds");
+        expect(text).toMatch(rx(C.pressed.replace("{count}", "1")));
+        await expect(chip(a, "money")).toHaveText(money(c0 + each));
+        expect(await karmaNow(a)).toBeLessThan(k0);
+        pressed = true;
+      }
+      await refused(a, "crematorium:scatter", C.noAshes);
+      await toDesk(a);
+    }
+  }
+  console.log(`crematorium and florist: ${JSON.stringify({ cremations, flowersPaid })}`);
+  expect(scattered).toBe(true);
+  expect(pressed).toBe(true);
+  expect(flowersPaid).toBe(true);
+
+  // The next day the ward's flowers (luck) can be sent instead.
+  await nextDay();
+  await goTo(a, NEW.florist);
+  await press(a, "florist:ward");
+  await seeText(a, rx(F.wardSent.replace("{nurse}", TC.nurse)));
+  await refused(a, "florist:church", F.wreathDone);
+  await toDesk(a);
+});
+
+test("the Town Gazette: a classified and a display advert bring a customer, the puff piece on the front page, a smear that lands or backfires", async () => {
+  test.setTimeout(300_000);
+  const G = PA.gazette;
+  const editor = PA.cast.editor;
+  const a = pia.page;
+  const q = quin.page;
+  await nextDay();
+  await edit(a, PT, pia, { money: 300_000, karma: 50, luck: 50 });
+  await goTo(a, NEW.gazette);
+  await seeText(a, rx(G.intro.replace("{editor}", editor)));
+  await seePictures(a, PA.pictures.gazette);
+  // A display advert: a sure customer at the next new day; one advert a day.
+  let cash0 = await cashNow(a);
+  let price = await tagPrice(a, "gazette:display");
+  await press(a, "gazette:display");
+  await seeText(a, rx(G.displayBooked.replace("{editor}", editor)));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  await refused(a, "gazette:classified", G.adBooked);
+  await refused(a, "gazette:display", G.adBooked);
+  // The puff piece: on today's front page, once a day.
+  cash0 = await cashNow(a);
+  price = await tagPrice(a, "gazette:puff");
+  await press(a, "gazette:puff");
+  await seeText(a, rx(G.puffPrinted.replace("{editor}", editor)));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  await refused(a, "gazette:puff", G.puffDone);
+  await toDesk(a);
+  expect(await readPaper(a)).toMatch(rx(G.puffNews.replace(/\{name\}/g, pia.player.name)));
+  // The advert's customer: the morning says so and the books count the lead.
+  const leads0 = (await books(a).locator('[data-chip="leads"]').count())
+    ? num(await chip(a, "leads").textContent())
+    : 0;
+  const { pia: piaMorning } = await nextDay();
+  expect(piaMorning).toMatch(rx(G.adMorning.replace("{count}", "1")));
+  await expect(chip(a, "leads")).toHaveText(String(leads0 + 1));
+
+  // The classified (a luck draw) and the smear (a chance, or a backfire): both parlors, over days,
+  // until each outcome has been seen. Each is once a day.
+  const seen = { booked: false, flop: false, landed: false, backfired: false };
+  for (let d = 0; d < 8 && Object.values(seen).some((v) => !v); d++) {
+    if (d > 0) await nextDay();
+    for (const [who, other] of [
+      [pia, quin],
+      [quin, pia],
+    ] as const) {
+      const p = who.page;
+      await edit(p, PT, who, {
+        money: 300_000,
+        karma: 50,
+        luck: !seen.booked ? 100 : 1,
+      });
+      await goTo(p, NEW.gazette);
+      if (!seen.booked || !seen.flop) {
+        cash0 = await cashNow(p);
+        price = await tagPrice(p, "gazette:classified");
+        const text = await pressText(p, "gazette:classified");
+        expect(text).toMatch(anyOf(G.classifiedBooked, G.classifiedFlop));
+        await expect(chip(p, "money")).toHaveText(money(cash0 - price));
+        if (rx(G.classifiedBooked).test(text)) seen.booked = true;
+        else seen.flop = true;
+      }
+      if (!seen.landed || !seen.backfired) {
+        cash0 = await cashNow(p);
+        price = await tagPrice(p, "gazette:smear");
+        const karma0 = await karmaNow(p);
+        await press(p, "gazette:smear");
+        await expect(dialog(p)).toContainText(rx(G.smearPrompt.replace("{editor}", editor)));
+        await pick(p, other.player.name);
+        const text = norm(await well(p).textContent());
+        expect(text).toMatch(
+          anyOf(
+            G.smearDone2.replace("{name}", other.player.name),
+            G.smearBackfire.replace("{name}", other.player.name),
+          ),
+        );
+        expect(await karmaNow(p)).toBeLessThan(karma0);
+        await refused(p, "gazette:smear", G.smearDone);
+        const paper = await readPaper(p);
+        const mail = await mailOf(other.page);
+        if (rx(G.smearDone2).test(text)) {
+          seen.landed = true;
+          expect(await cashNow(p)).toBe(cash0 - price);
+          expect(paper).toMatch(rx(G.smearNews.replace("{name}", other.player.name)));
+          expect(mail).toMatch(rx(G.smearMail));
+        } else {
+          seen.backfired = true;
+          // The fine comes on top of the price.
+          const fine = num(grab(G.smearBackfire, "fine").exec(text)?.[1]);
+          expect(await cashNow(p)).toBeLessThan(cash0 - price);
+          expect(fine).toBeGreaterThan(0);
+          expect(paper).toMatch(
+            rx(
+              G.smearBackfireNews
+                .replace("{target}", other.player.name)
+                .replace("{name}", who.player.name),
+            ),
+          );
+          expect(mail).toMatch(rx(G.smearBackfireMail.replace("{name}", who.player.name)));
+        }
+        await toDesk(other.page);
+      }
+      await toDesk(p);
+    }
+  }
+  console.log(`gazette: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ booked: true, flop: true, landed: true, backfired: true });
+  await edit(a, PT, pia, { karma: 50, luck: 50 });
+  await edit(q, PT, quin, { karma: 50, luck: 50 });
+});
+
+test("the Coroner's Office: a tip on the next family, a fast-tracked certificate, the favour (a proper burial, or signed over quietly)", async () => {
+  test.setTimeout(240_000);
+  const C = PB.coroner;
+  const a = pia.page;
+  await nextDay();
+  await edit(a, PT, pia, { money: 300_000, karma: 50, luck: 50 });
+  await goTo(a, NEW.coroner);
+  await seeText(
+    a,
+    rx(C.greeting.replace("{coroner}", TC.coroner).replace("{player}", pia.player.name)),
+  );
+  await seePictures(a, PB.pictures.coroner);
+  // The tip: paid, one held at a time.
+  let cash0 = await cashNow(a);
+  let price = await tagPrice(a, "coroner:tip");
+  await press(a, "coroner:tip");
+  await seeText(a, rx(C.tipBought.replace("{coroner}", TC.coroner)));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  await refused(a, "coroner:tip", PB.hints.tipHeld);
+  // The certificate: word of mouth, then a wait of some days.
+  cash0 = await cashNow(a);
+  price = await tagPrice(a, "coroner:certificate");
+  await press(a, "coroner:certificate");
+  await seeText(a, rx(C.certBought.replace("{coroner}", TC.coroner)));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  await refused(a, "coroner:certificate", PB.hints.certWait);
+  // The favour: the choice, then a proper burial (karma, luck); one favour a day.
+  await press(a, "coroner:favour");
+  await seeText(a, rx(C.favourIntro.replace(/\{coroner\}/g, TC.coroner)));
+  await expect(bid(a, "coroner:burial")).toContainText(C.buttons.burial);
+  await expect(bid(a, "coroner:quiet")).toContainText(C.buttons.quiet);
+  const karma0 = await karmaNow(a);
+  cash0 = await cashNow(a);
+  price = await tagPrice(a, "coroner:burial");
+  await press(a, "coroner:burial");
+  await seeText(a, rx(C.burialDone));
+  await expect(chip(a, "money")).toHaveText(money(cash0 - price));
+  expect(await karmaNow(a)).toBeGreaterThan(karma0);
+  await refused(a, "coroner:favour", TT.hints.doneToday);
+  await toDesk(a);
+  // The next family through the door: the note's lines are at the top of the arrival.
+  await meet(a, async () => true);
+  const arrival = norm(await well(a).textContent());
+  expect(arrival).toMatch(anyOf(C.tipLoved, C.tipTrait));
+  if (await bid(a, "neg:done").isVisible()) await finish(a);
+  else {
+    await clickClear(a, a.locator(".fq-r-buttons [data-button-id]").first());
+    await settle(a);
+    await toDesk(a);
+  }
+
+  // Signing a body over: paid, karma lost, and a luck draw on whether the town talks. Both
+  // parlors, over days, until both outcomes are seen.
+  const seen = { quiet: false, talk: false };
+  for (let d = 0; d < 6 && !(seen.quiet && seen.talk); d++) {
+    await nextDay();
+    for (const [who, luck] of [
+      [pia, 100],
+      [quin, 1],
+    ] as const) {
+      const p = who.page;
+      await edit(p, PT, who, { karma: 50, luck });
+      await goTo(p, NEW.coroner);
+      await press(p, "coroner:favour");
+      const pay = await tagPrice(p, "coroner:quiet");
+      const c0 = await cashNow(p);
+      const k0 = await karmaNow(p);
+      const text = await pressText(p, "coroner:quiet");
+      expect(text).toMatch(rx(C.quietDone.replace("{coroner}", TC.coroner)));
+      await expect(chip(p, "money")).toHaveText(money(c0 + pay));
+      expect(await karmaNow(p)).toBeLessThan(k0);
+      if (rx(C.quietTalk).test(text)) seen.talk = true;
+      else seen.quiet = true;
+      await refused(p, "coroner:favour", TT.hints.doneToday);
+      await toDesk(p);
+    }
+  }
+  console.log(`coroner: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ quiet: true, talk: true });
+  await edit(a, PT, pia, { karma: 50, luck: 50 });
+  await edit(quin.page, PT, quin, { karma: 50, luck: 50 });
+});
+
+test("the Health Department: an inspection passed and failed, the fine paid, a clean bill of health, complaints filed, backfired and dismissed", async () => {
+  test.setTimeout(300_000);
+  const H = PB.health;
+  const inspector = TC.inspector;
+  const a = pia.page;
+  const q = quin.page;
+  await nextDay();
+  await goTo(a, NEW.health);
+  await seeText(
+    a,
+    rx(
+      H.greeting
+        .replace("{inspector}", inspector)
+        .replace("{player}", pia.player.name)
+        .replace("{parlor}", pia.player.parlor),
+    ),
+  );
+  await seePictures(a, PB.pictures.health);
+  await refused(a, "health-department:fine", PB.hints.noCitation);
+  // A complaint needs a low karma (Pia's is 50).
+  await refused(a, "health-department:complaint", PB.hints.karmaTooLow);
+  await toDesk(a);
+
+  // Inspections. At karma 1 and rating 0 one fails: the citation on file blocks both kinds until
+  // the fine is paid. At karma 100 and rating 100 one passes: its boost blocks both until it ends.
+  // Quin looks for the failure first (Pia if Quin passes), then Pia for the pass; the clean bill
+  // of health goes to whichever of them has no boost running.
+  const seen = { failed: false, paid: false, passed: false, bought: false };
+  /** One requested inspection, with the fine paid when it fails. True when it passed. */
+  const inspect = async (p: Page): Promise<boolean> => {
+    const price = await tagPrice(p, "health-department:inspect");
+    const c0 = await cashNow(p);
+    const text = await pressText(p, "health-department:inspect");
+    expect(text).toMatch(anyOf(H.passed.replace("{inspector}", inspector), H.failed));
+    await expect(chip(p, "money")).toHaveText(money(c0 - price));
+    if (rx(H.passed).test(text)) {
+      seen.passed = true;
+      await refused(p, "health-department:inspect", PB.hints.boostOn);
+      await refused(p, "health-department:buy", PB.hints.boostOn);
+      return true;
+    }
+    seen.failed = true;
+    await refused(p, "health-department:inspect", PB.hints.citationOpen);
+    await refused(p, "health-department:buy", PB.hints.citationOpen);
+    const fine = await tagPrice(p, "health-department:fine");
+    const c1 = await cashNow(p);
+    await press(p, "health-department:fine");
+    await seeText(p, rx(H.finePaid));
+    await expect(chip(p, "money")).toHaveText(money(c1 - fine));
+    await refused(p, "health-department:fine", PB.hints.noCitation);
+    seen.paid = true;
+    return false;
+  };
+  const boosted = new Set<Who>();
+  for (const who of [quin, pia]) {
+    if (seen.failed) break;
+    await edit(who.page, PT, who, { karma: 1, rating: 0, money: 300_000 });
+    await goTo(who.page, NEW.health);
+    if (await inspect(who.page)) boosted.add(who);
+    await toDesk(who.page);
+  }
+  if (!seen.passed) {
+    await edit(a, PT, pia, { karma: 100, rating: 100, money: 300_000 });
+    await goTo(a, NEW.health);
+    for (let i = 0; i < 10 && !seen.passed; i++) {
+      if (await inspect(a)) boosted.add(pia);
+    }
+    await toDesk(a);
+  }
+  const buyer = [quin, pia].find((who) => !boosted.has(who));
+  if (buyer) {
+    const p = buyer.page;
+    await edit(p, PT, buyer, { karma: 50, money: 300_000 });
+    await goTo(p, NEW.health);
+    const price = await tagPrice(p, "health-department:buy");
+    const c0 = await cashNow(p);
+    const k0 = await karmaNow(p);
+    await press(p, "health-department:buy");
+    await seeText(p, rx(H.bought.replace("{inspector}", inspector)));
+    await expect(chip(p, "money")).toHaveText(money(c0 - price));
+    expect(await karmaNow(p)).toBeLessThan(k0);
+    await refused(p, "health-department:buy", PB.hints.boostOn);
+    await refused(p, "health-department:inspect", PB.hints.boostOn);
+    seen.bought = true;
+    await toDesk(p);
+  }
+  console.log(`health inspections: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ failed: true, paid: true, passed: true, bought: true });
+
+  // Complaints, at karma 10: filed (luck 100) and backfired (luck 1), over days; and against a
+  // parlor with City Hall's certificate, dismissed.
+  const filed = { filed: false, backfired: false };
+  for (let d = 0; d < 6 && !(filed.filed && filed.backfired); d++) {
+    if (d > 0) await nextDay();
+    for (const [who, other] of [
+      [pia, quin],
+      [quin, pia],
+    ] as const) {
+      if (filed.filed && filed.backfired) break;
+      const p = who.page;
+      await edit(p, PT, who, { karma: 10, luck: filed.filed ? 1 : 100, money: 300_000 });
+      await goTo(p, NEW.health);
+      const price = await tagPrice(p, "health-department:complaint");
+      const c0 = await cashNow(p);
+      const k0 = await karmaNow(p);
+      await press(p, "health-department:complaint");
+      await expect(dialog(p)).toContainText(rx(H.complaintPrompt));
+      await expect(dialog(p)).toContainText(`${other.player.name} (${other.player.parlor})`);
+      await pick(p, other.player.name);
+      const text = norm(await well(p).textContent());
+      expect(text).toMatch(
+        anyOf(
+          H.complaintFiled.replace("{inspector}", inspector).replace("{name}", other.player.name),
+          H.complaintBackfired,
+        ),
+      );
+      expect(await karmaNow(p)).toBeLessThan(k0);
+      await refused(p, "health-department:complaint", TT.hints.doneToday);
+      if (rx(H.complaintBackfired).test(text)) {
+        filed.backfired = true;
+        expect(await cashNow(p)).toBeLessThan(c0 - price);
+      } else {
+        filed.filed = true;
+        await expect(chip(p, "money")).toHaveText(money(c0 - price));
+        expect(await mailOf(other.page)).toMatch(
+          rx(H.complaintMail.replace("{parlor}", other.player.parlor)),
+        );
+        await toDesk(other.page);
+        expect(await readPaper(p)).toMatch(
+          rx(
+            H.complaintNews
+              .replace("{parlor}", other.player.parlor)
+              .replace("{name}", other.player.name),
+          ),
+        );
+      }
+      await toDesk(p);
+    }
+  }
+  console.log(`health complaints: ${JSON.stringify(filed)}`);
+  expect(filed).toEqual({ filed: true, backfired: true });
+  // City Hall's certificate shields a parlor: the complaint is dismissed and the money kept.
+  await nextDay();
+  await edit(a, PT, pia, { karma: 50, money: 300_000 });
+  await goTo(a, PLACE.cityHall);
+  await press(a, "city-hall:inspection");
+  await press(a, "city-hall:certify");
+  await seeText(a, rx(TT.cityHall.certifiedUntil));
+  await toDesk(a);
+  await edit(q, PT, quin, { karma: 10, money: 300_000 });
+  await goTo(q, NEW.health);
+  await press(q, "health-department:complaint");
+  await pick(q, pia.player.name);
+  await seeText(
+    q,
+    rx(H.complaintDismissed.replace("{inspector}", inspector).replace("{name}", pia.player.name)),
+  );
+  await toDesk(q);
+  await edit(a, PT, pia, { karma: 50, luck: 50 });
+  await edit(q, PT, quin, { karma: 50, luck: 50 });
+});
+
+test("Cousin Sal's Pawn: the lots on offer, a lot good or bad, one a day, and the loot from a body preparation pawned", async () => {
+  test.setTimeout(300_000);
+  const S = PB.pawn;
+  const a = pia.page;
+  await nextDay();
+  await edit(a, PT, pia, { money: 300_000, karma: 50, luck: 50 });
+  await goTo(a, NEW.pawn);
+  await seeText(
+    a,
+    rx(S.greeting.replace("{pawnbroker}", PB.cast.pawnbroker).replace("{player}", pia.player.name)),
+  );
+  await seePictures(a, PB.pictures.pawn);
+  // Each lot is a line with its price, size and risk.
+  for (const lot of ["wood", "silver"] as const) {
+    await seeText(a, rx(S.lotLine.replace("{name}", S.buttons[lot])));
+    await expect(bid(a, `pawn-shop:lot:${lot}`)).toContainText(S.buttons[lot]);
+  }
+  await toDesk(a);
+
+  // Lots, one a day: bought at luck 100 (seldom bad) and luck 1 (often bad) until both are seen.
+  const seen = { good: false, bad: false };
+  for (let d = 0; d < 8 && !(seen.good && seen.bad); d++) {
+    if (d > 0) await nextDay();
+    for (const [who, luck] of [
+      [pia, seen.good ? 1 : 100],
+      [quin, 1],
+    ] as const) {
+      const p = who.page;
+      await edit(p, PT, who, { luck, money: 300_000 });
+      await goTo(p, NEW.pawn);
+      const open = p
+        .locator('[data-button-id^="pawn-shop:lot:"]:not([aria-disabled="true"])')
+        .first();
+      if ((await open.count()) === 0) {
+        // A full storeroom: the lots say so.
+        await expect(bid(p, "pawn-shop:lot:wood")).toHaveAccessibleDescription(
+          anyOf(X.hints.storeroomFull, TT.hints.doneToday),
+        );
+        await toDesk(p);
+        continue;
+      }
+      const id = (await open.getAttribute("data-button-id")) as string;
+      const price = await tagPrice(p, id);
+      const c0 = await cashNow(p);
+      const text = await pressText(p, id);
+      expect(text).toMatch(
+        anyOf(
+          S.lotGood.replace("{pawnbroker}", PB.cast.pawnbroker),
+          S.lotBad.replace("{pawnbroker}", PB.cast.pawnbroker),
+        ),
+      );
+      await expect(chip(p, "money")).toHaveText(money(c0 - price));
+      if (rx(S.lotBad).test(text)) seen.bad = true;
+      else seen.good = true;
+      await refused(p, id, TT.hints.doneToday);
+      await toDesk(p);
+    }
+  }
+  console.log(`pawn lots: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ good: true, bad: true });
+
+  // Loot: a dishonest body-preparation choice that pays leaves a piece to pawn.
+  await edit(a, PT, pia, { luck: 50, karma: 50, money: 300_000 });
+  await goTo(a, NEW.pawn);
+  if ((await bid(a, "pawn-shop:loot").getAttribute("aria-disabled")) !== null) {
+    await refused(a, "pawn-shop:loot", PB.hints.noLoot);
+  }
+  await toDesk(a);
+  let pawned = false;
+  for (let n = 0; n < 40 && !pawned; n++) {
+    await sellOne(a, { evil: true });
+    if (n % 3 !== 2) continue;
+    await goTo(a, NEW.pawn);
+    if ((await bid(a, "pawn-shop:loot").getAttribute("aria-disabled")) === null) {
+      const pay = await tagPrice(a, "pawn-shop:loot");
+      const c0 = await cashNow(a);
+      await press(a, "pawn-shop:loot");
+      await seeText(a, rx(S.lootSold.replace("{pawnbroker}", PB.cast.pawnbroker)));
+      await expect(chip(a, "money")).toHaveText(money(c0 + pay));
+      await refused(a, "pawn-shop:loot", PB.hints.noLoot);
+      pawned = true;
+    }
+    await toDesk(a);
+  }
+  expect(pawned).toBe(true);
+  await edit(a, PT, pia, { karma: 50 });
+});
+
+test("Mourne & Sons: spying (a tip, or caught), the day's price war (undercut won or lost, or hold), a truce", async () => {
+  test.setTimeout(300_000);
+  const M2 = PB.mournes;
+  const v = (s: string, who: Who) =>
+    s
+      .replace(/\{mourne\}/g, TC.mourne)
+      .replace(/\{mournes\}/g, TC.mournes)
+      .replace(/\{sons\}/g, TC.sons)
+      .replace(/\{player\}/g, who.player.name);
+  const a = pia.page;
+  await nextDay();
+  await goTo(a, NEW.mournes);
+  await seeText(a, rx(v(M2.greeting, pia)));
+  await seePictures(a, PB.pictures.mournes);
+  await toDesk(a);
+
+  const seen = { spyOk: false, caught: false, won: false, lost: false, held: false, tip: false };
+  for (let d = 0; d < 8 && Object.values(seen).some((x) => !x); d++) {
+    if (d > 0) await nextDay();
+    for (const [who, luck] of [
+      [pia, 100],
+      [quin, 1],
+    ] as const) {
+      const p = who.page;
+      await edit(p, PT, who, { luck, karma: 50, money: 300_000 });
+      await goTo(p, NEW.mournes);
+      // Spying: paid; a success is a tip on the next family's purse, a failure costs face.
+      let tipped = false;
+      if ((await bid(p, "mournes:spy").getAttribute("aria-disabled")) === null) {
+        const price = await tagPrice(p, "mournes:spy");
+        const c0 = await cashNow(p);
+        const text = await pressText(p, "mournes:spy");
+        expect(text).toMatch(anyOf(v(M2.spyOk, who), v(M2.spyCaught, who)));
+        await expect(chip(p, "money")).toHaveText(money(c0 - price));
+        if (rx(v(M2.spyCaught, who)).test(text)) seen.caught = true;
+        else {
+          seen.spyOk = true;
+          tipped = true;
+          await refused(p, "mournes:spy", PB.hints.tipHeld);
+        }
+      }
+      // The price war: undercut (luck), or hold once both undercut outcomes are seen.
+      if (seen.won && seen.lost && !seen.held) {
+        const k0 = await karmaNow(p);
+        await press(p, "mournes:hold");
+        await seeText(p, rx(v(M2.holdDone, who)));
+        expect(await karmaNow(p)).toBeGreaterThan(k0);
+        seen.held = true;
+      } else if (!seen.won || !seen.lost) {
+        const price = await tagPrice(p, "mournes:undercut");
+        const c0 = await cashNow(p);
+        const text = await pressText(p, "mournes:undercut");
+        expect(text).toMatch(anyOf(v(M2.undercutWin, who), v(M2.undercutLose, who)));
+        await expect(chip(p, "money")).toHaveText(money(c0 - price));
+        if (rx(v(M2.undercutWin, who)).test(text)) seen.won = true;
+        else seen.lost = true;
+      }
+      if ((await bid(p, "mournes:undercut").getAttribute("aria-disabled")) !== null) {
+        await refused(p, "mournes:undercut", PB.hints.stanceChosen);
+        await refused(p, "mournes:hold", PB.hints.stanceChosen);
+      }
+      await toDesk(p);
+      // A tip from the price list: the next family's cheapness, at the top of their arrival.
+      // (The tip is spent on that family, so the parlor can spy again.)
+      if (tipped) {
+        await meet(p, async () => true);
+        const arrival = norm(await well(p).textContent());
+        const notes = (await file(p).isVisible()) ? norm(await file(p).textContent()) : "";
+        const cheap = anyOf(XP.tells.cheapLow, XP.tells.cheapMid, XP.tells.cheapHigh);
+        expect(`${arrival} ${notes}`).toMatch(cheap);
+        seen.tip = true;
+        if (await bid(p, "neg:done").isVisible()) await finish(p);
+        else {
+          await clickClear(p, p.locator(".fq-r-buttons [data-button-id]").first());
+          await settle(p);
+          await toDesk(p);
+        }
+      }
+    }
+  }
+  console.log(`mournes: ${JSON.stringify(seen)}`);
+  expect(seen).toEqual({ spyOk: true, caught: true, won: true, lost: true, held: true, tip: true });
+
+  // A truce: days of peace, karma and a family sent over; the rivalry's actions close.
+  await nextDay();
+  const q = quin.page;
+  await edit(q, PT, quin, { karma: 50, luck: 50, money: 300_000 });
+  // (Leads held already would leave no room for the Mournes' family: Quin sells them first.)
+  for (let i = 0; i < 4 && (await books(q).locator('[data-chip="leads"]').count()) > 0; i++) {
+    await sellOne(q);
+  }
+  await goTo(q, NEW.mournes);
+  const price = await tagPrice(q, "mournes:truce");
+  const c0 = await cashNow(q);
+  const k0 = await karmaNow(q);
+  await press(q, "mournes:truce");
+  await seeText(q, rx(v(M2.truceDone, quin)));
+  await seeText(q, rx(v(M2.truceLead, quin)));
+  await seeText(q, rx(M2.truceActive));
+  await expect(chip(q, "money")).toHaveText(money(c0 - price));
+  expect(await karmaNow(q)).toBeGreaterThan(k0);
+  await expect(chip(q, "leads")).toHaveText("1");
+  for (const id of ["mournes:spy", "mournes:undercut", "mournes:hold", "mournes:truce"]) {
+    await refused(q, id, PB.hints.truceOn);
+  }
+  await toDesk(q);
+  await edit(a, PT, pia, { luck: 50 });
+});
+
+/*
+ * What the audit of the eight newer places found outside the client (docs/expanded-audit.md,
+ * "Defects"), fixed since in the engine and the pack. Each was a `test.fixme` that showed the
+ * defect and is now a live test, as the three at the end of the file are. They run here, before
+ * Quin takes the Peace Pledge, since one needs him as a target.
+ */
+
+// The four batch-B places filled `{price}`, `{money}` and `{fine}` with a bare number ("Second-Hand
+// Wood Lot, 1,440: 3 caskets", "(-300)", "A citation for 500") where the pack's lines take money
+// ("$1,440", placesB.yaml's header). They now use `cash`, as batch A does.
+test("the batch-B places write their amounts as money, with the dollar sign", async () => {
+  const a = pia.page;
+  await goTo(a, NEW.pawn);
+  await seeText(a, new RegExp(`${escapeRx(PB.pawn.buttons.wood)},\\s*\\$[\\d,]+:`));
+  await toDesk(a);
+});
+
+// placesB.yaml's `complaintBackfired` wrote "({reviews} reputation)" with no minus sign, so the
+// filer read "(1 reputation)" for a point lost. It now writes "-{reviews}", as the failed
+// inspection does.
+test("a backfired complaint shows the reputation it cost as a loss", async () => {
+  test.setTimeout(180_000);
+  const a = pia.page;
+  await edit(quin.page, PT, quin, { money: 300_000 });
+  let text = "";
+  for (let d = 0; d < 6 && !rx(PB.health.complaintBackfired).test(text); d++) {
+    await nextDay();
+    await edit(a, PT, pia, { karma: 10, luck: 1, money: 300_000 });
+    await goTo(a, NEW.health);
+    await press(a, "health-department:complaint");
+    await pick(a, quin.player.name);
+    text = norm(await well(a).textContent());
+    await toDesk(a);
+  }
+  expect(text).toMatch(/\(-\d+ reputation\)/);
+});
+
+// A parlor that never rented read "You have 0 slots reserved until day 0". With no slot held the
+// keeper now says placesA.yaml's `crematorium.introNone`, which names no count and no day.
+test("the crematorium names no day for oven slots nobody holds", async () => {
+  const q = quin.page;
+  await goTo(q, NEW.crematorium);
+  await expect(well(q)).not.toContainText(/until day 0\b/);
+  await seeText(q, rx(PA.crematorium.introNone));
+  await toDesk(q);
+});
+
+test("the newer places at the end: a Peaceful parlor needs no patrol and is no target; a health certificate runs out", async () => {
+  test.setTimeout(180_000);
+  const a = pia.page;
+  const q = quin.page;
+  // Quin takes the Peace Pledge: no patrol to buy, and the Gazette and the inspector leave him be.
+  await toDesk(q);
+  await press(q, "go:parlor");
+  await press(q, "parlor:rivalry");
+  await press(q, "parlor:rivalry:peaceful");
+  await toDesk(q);
+  await goTo(q, NEW.police);
+  await refused(q, "police:patrol", PA.police.peacefulSafe);
+  await refused(q, "police:backdoor", PA.police.peacefulSafe);
+  await toDesk(q);
+  await edit(a, PT, pia, { karma: 50, money: 300_000 });
+  await goTo(a, NEW.gazette);
+  await refused(a, "gazette:smear", PA.hints.noRivals);
+  await toDesk(a);
+  // The boost of an inspection or a clean bill ends after its days, with a line in the morning
+  // (perhaps already on one of the mornings above).
+  for (let d = 0; d < 12 && !boostEnded; d++) await nextDay();
+  expect(boostEnded).toBe(true);
+});
+
 // ------------------------------------------------------------------ 11, 26 the three layouts
+
+/**
+ * The town map's own check (26): the twenty places of an Expanded town, no place over another or
+ * over the map's "Deathville Map" title or under the town strip, and every place reachable, by its spot (nothing covers
+ * the spot's middle) or by its row in the list of places beside the map.
+ */
+async function mapProblems(page: Page): Promise<string[]> {
+  return page.evaluate(() => {
+    const out: string[] = [];
+    const spots = [...document.querySelectorAll<HTMLElement>(".fq-hotspots .fq-hotspot")];
+    if (spots.length !== 20) out.push(`the map has ${spots.length} places, not 20`);
+    const over = (a: DOMRect, b: DOMRect) =>
+      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
+      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
+    // The title: drawn over the hand-drawn map, part of the picture of the Classic art's map
+    // (20,13 152x30 in its viewBox -244,-275 452x343, as apps/client/test/placesA.map.test.ts).
+    let title: DOMRect | null = null;
+    const drawn = document.querySelector(".fq-map-title");
+    const list = document.querySelector(".fq-hotspots");
+    if (drawn) title = drawn.getBoundingClientRect();
+    else if (document.querySelector(".fq-map-base") && list) {
+      const r = list.getBoundingClientRect();
+      title = new DOMRect(
+        r.left + (r.width * (20 + 244)) / 452,
+        r.top + (r.height * (13 + 275)) / 343,
+        (r.width * 152) / 452,
+        (r.height * 30) / 343,
+      );
+    }
+    const rows = [...document.querySelectorAll<HTMLElement>(".fq-map-list button")];
+    // The town strip drawn over the map (wide and classic layouts) covers no place.
+    const townStrip = document.querySelector(".fq-map > .fq-townstrip");
+    const stripBox = townStrip ? townStrip.getBoundingClientRect() : null;
+    spots.forEach((spot, i) => {
+      const name = spot.getAttribute("aria-label") ?? "?";
+      const r = spot.getBoundingClientRect();
+      for (const other of spots.slice(i + 1)) {
+        if (over(r, other.getBoundingClientRect()))
+          out.push(`${name} covers ${other.getAttribute("aria-label")}`);
+      }
+      if (title && over(r, title)) out.push(`${name} covers the map's title`);
+      if (stripBox && over(r, stripBox)) out.push(`the town strip covers ${name}`);
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      const bySpot = r.width >= 8 && r.height >= 8 && !!hit && spot.contains(hit);
+      const label = name.replace(/^Go to /, "");
+      const byRow = rows.some((b) => b.textContent?.trim() === label && b.offsetWidth > 0);
+      if (!bySpot && !byRow)
+        out.push(`${name} cannot be reached (its middle is under ${hit?.className ?? "nothing"})`);
+    });
+    return out;
+  });
+}
 
 const SIZES = [
   { name: "classic", width: 1024, height: 745 },
@@ -2094,6 +3270,8 @@ for (const size of SIZES) {
     await toDesk(page);
     await press(page, "go:map");
     await check("the town map");
+    for (const what of await mapProblems(page))
+      problems.push({ screen: `the town map / ${size.name}`, what });
     const places: [string, string, (() => Promise<void>) | null][] = [
       [
         "Di-Mart",
@@ -2185,6 +3363,43 @@ for (const size of SIZES) {
         async () => {
           await press(page, "competitors:look");
           await check("the parlors' look list");
+        },
+      ],
+      // The eight newer places (30, 31).
+      ["the police station", NEW.police, null],
+      ["the crematorium", NEW.crematorium, null],
+      ["the florist", NEW.florist, null],
+      [
+        "the Gazette",
+        NEW.gazette,
+        async () => {
+          await press(page, "gazette:smear");
+          await check("the Gazette's smear picker");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
+        },
+      ],
+      [
+        "the coroner's office",
+        NEW.coroner,
+        async () => {
+          await press(page, "coroner:favour");
+          await check("the coroner's favour");
+        },
+      ],
+      ["the pawn shop", NEW.pawn, null],
+      ["Mourne & Sons", NEW.mournes, null],
+      [
+        "the health department",
+        NEW.health,
+        async () => {
+          // A complaint is for karma 30 or less.
+          await edit(page, M, me, { karma: 10 });
+          await goTo(page, NEW.health);
+          await press(page, "health-department:complaint");
+          await check("the health department's complaint picker");
+          await dialog(page).getByRole("button", { name: "Cancel" }).click();
+          await settle(page);
         },
       ],
     ];

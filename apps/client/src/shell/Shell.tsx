@@ -69,6 +69,8 @@ export function Shell({ backend, solo }: ShellProps) {
   );
   const [museum, setMuseum] = useState<string | null>(null);
   const [dailyOn, setDailyOn] = useState(false);
+  // A closed beta: new accounts and guests need an invite code (`/api/features` access).
+  const [inviteRequired, setInviteRequired] = useState(false);
   const [playingDaily, setPlayingDaily] = useState(false);
   const [dailyProblem, setDailyProblem] = useState<string | null>(null);
   // moderation hook: the conduct notice must be agreed to once before online play
@@ -217,6 +219,7 @@ export function Shell({ backend, solo }: ShellProps) {
         setConductContact(f.safety?.contactEmail); // moderation hook
         if (f.museum.enabled) setMuseum(f.museum.path);
         if (f.dailyChallenge?.enabled && backend.daily) setDailyOn(true);
+        setInviteRequired(f.access?.inviteRequired === true);
       })
       .catch(() => undefined);
     return () => {
@@ -250,20 +253,25 @@ export function Shell({ backend, solo }: ShellProps) {
       await afterAuth();
     });
 
-  const onGuest = () =>
+  const onGuest = (invite?: string) =>
     guard(async () => {
       try {
-        await backend.guest();
+        await (invite === undefined ? backend.guest() : backend.guest(invite));
       } catch (error) {
-        setNotice(describeError(error, "login"));
+        const problem = describeError(error, "login");
+        // An invite problem belongs under the invite field the log-on form shows.
+        if (problem.field === "invite" && invite !== undefined) throw error;
+        setNotice(problem.field === "invite" ? { ...problem, field: null } : problem);
         return;
       }
       await afterAuth();
     });
 
-  const onSignUp = (login: string, password: string) =>
+  const onSignUp = (login: string, password: string, invite?: string) =>
     guard(async () => {
-      await backend.signUp(login, password);
+      await (invite === undefined
+        ? backend.signUp(login, password)
+        : backend.signUp(login, password, invite));
       await loadAccount();
       setStep("parlor");
     });
@@ -347,17 +355,31 @@ export function Shell({ backend, solo }: ShellProps) {
     [backend, t],
   );
 
-  const dailyGuest = useCallback(async () => {
-    setBusy(true);
-    try {
-      await backend.guest();
-      await loadAccount();
-    } catch {
-      if (alive.current) setDailyProblem(t("x.challenge.error"));
-    } finally {
-      if (alive.current) setBusy(false);
-    }
-  }, [backend, loadAccount, t]);
+  const dailyGuest = useCallback(
+    async (invite?: string) => {
+      setBusy(true);
+      setDailyProblem(null);
+      try {
+        await (invite === undefined ? backend.guest() : backend.guest(invite));
+        await loadAccount();
+      } catch (error) {
+        if (!alive.current) return;
+        // What the server said about the invite code is shown as it is; anything else is the
+        // challenge's general error.
+        const problem = describeError(error, "login");
+        setDailyProblem(
+          problem.field === "invite"
+            ? problem.key
+              ? t(problem.key)
+              : (problem.text ?? t("x.challenge.error"))
+            : t("x.challenge.error"),
+        );
+      } finally {
+        if (alive.current) setBusy(false);
+      }
+    },
+    [backend, loadAccount, t],
+  );
 
   if (step === "playing" && transport) {
     // the sound follows the town's ruleset (a Daily Challenge run is its own mode)
@@ -426,7 +448,8 @@ export function Shell({ backend, solo }: ShellProps) {
           busy={busy}
           problem={dailyProblem}
           onPlay={(parlor) => void playDaily(parlor)}
-          onGuest={() => void dailyGuest()}
+          onGuest={(invite) => void dailyGuest(invite)}
+          inviteRequired={inviteRequired}
           onResults={() => setStep("dailyResults")}
           onBack={() => setStep("door")}
         />
@@ -436,7 +459,14 @@ export function Shell({ backend, solo }: ShellProps) {
       return <DailyResults daily={backend.daily} onBack={() => setStep("door")} />;
     }
     if (step === "account") {
-      return <CredentialsForm onSubmit={onSignUp} onBack={() => setStep("door")} busy={busy} />;
+      return (
+        <CredentialsForm
+          onSubmit={onSignUp}
+          onBack={() => setStep("door")}
+          busy={busy}
+          inviteRequired={inviteRequired}
+        />
+      );
     }
     if (step === "parlor") {
       return <ParlorForm onSubmit={onParlor} onBack={() => setStep("door")} busy={busy} />;
@@ -464,8 +494,9 @@ export function Shell({ backend, solo }: ShellProps) {
             setNotice(null);
             setStep("account");
           }}
-          onGuest={() => void onGuest()}
+          onGuest={(invite) => onGuest(invite)}
           busy={busy || lobby.state !== "ready"}
+          inviteRequired={inviteRequired}
         />
         <FormAlert problem={notice} />
       </>

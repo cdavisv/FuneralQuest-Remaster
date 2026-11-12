@@ -7,7 +7,8 @@ import { CLOSED_PARLOR, type NameHistory } from "./erase.js";
 /**
  * Account deletion and data export.
  *
- * Deletion removes the account, its sessions, blocks (both ways), mutes and Daily Challenge runs,
+ * Deletion removes the account, its sessions, blocks (both ways), mutes, Daily Challenge runs and
+ * activity record (the days it played, `activity_days`),
  * deletes or anonymises its parlors in every town (`TownRuntime.eraseParlor`), takes its names out
  * of the hall of fame, deletes the reports it filed that are resolved and the audit rows that hold
  * what it typed, and keeps only: the audit rows of moderation (`admin:*`, `mod:*`, `report:*`
@@ -37,6 +38,8 @@ export interface DeletionSummary {
   reportsAnonymised: number;
   openReportsKept: number;
   auditRowsDeleted: number;
+  /** Rows of the activity record (days played) deleted. */
+  activityDaysDeleted: number;
 }
 
 /** Names this account used in a town, from the audit log (creation and moderator renames). */
@@ -182,6 +185,7 @@ export async function deleteAccount(
     host.hall.forgetOwner(account.id);
     const reports = host.moderation.reports.eraseAccount(account.id);
     const auditRowsDeleted = host.audit.eraseAccount(account.id, KEPT_AUDIT);
+    const activityDaysDeleted = host.activityStore.eraseAccount(account.id);
     host.audit.append({
       at: ctx.clock.now(),
       accountId: account.id,
@@ -204,8 +208,10 @@ export async function deleteAccount(
       reportsAnonymised: reports.anonymised,
       openReportsKept: reports.keptOpen,
       auditRowsDeleted,
+      activityDaysDeleted,
     } satisfies DeletionSummary;
   });
+  host.activity.forget(account.id);
   host.moderation.forgetAccount(account.id);
   host.challenge.invalidate();
   await host.moderation.applyEverywhere();
@@ -342,6 +348,10 @@ export function exportAccount(ctx: SafetyContext, account: Account): Record<stri
     dailyChallenge: daily,
     hallOfFame,
     activity,
+    // The activity record: the UTC days on which you played in each town (nothing else is kept).
+    daysPlayed: host.activityStore
+      .forAccount(account.id)
+      .map((r) => ({ day: r.day, townId: r.town_id })),
     notRepeated: [
       "Letters other players wrote to you, and text of reports about you or by you, belong to those players or to the moderators and are not repeated here.",
       "Audit rows about what the game did (rather than what you typed) are not repeated.",

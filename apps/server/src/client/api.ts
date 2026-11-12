@@ -124,16 +124,29 @@ export class ApiClient {
     return auth;
   }
 
-  async signUp(login: string, password: string): Promise<AuthResponse> {
-    return this.remember(await this.call("POST", "/api/auth/signup", { login, password }));
+  /** `invite`: the invite code, on a server that requires one (`features().access`). */
+  async signUp(login: string, password: string, invite?: string): Promise<AuthResponse> {
+    return this.remember(
+      await this.call("POST", "/api/auth/signup", {
+        login,
+        password,
+        ...(invite !== undefined && invite.trim() !== "" ? { invite } : {}),
+      }),
+    );
   }
 
   async logIn(login: string, password: string): Promise<AuthResponse> {
     return this.remember(await this.call("POST", "/api/auth/login", { login, password }));
   }
 
-  async guest(): Promise<AuthResponse> {
-    return this.remember(await this.call("POST", "/api/auth/guest", {}));
+  async guest(invite?: string): Promise<AuthResponse> {
+    return this.remember(
+      await this.call(
+        "POST",
+        "/api/auth/guest",
+        invite !== undefined && invite.trim() !== "" ? { invite } : {},
+      ),
+    );
   }
 
   /** Makes a guest a full account with this log-in name and password; the parlor and session carry on. */

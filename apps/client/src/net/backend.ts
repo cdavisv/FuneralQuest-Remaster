@@ -57,8 +57,9 @@ export interface Backend {
   hasSession(): boolean;
   me(): Promise<MeResponse>;
   logIn(login: string, password: string): Promise<AuthResponse>;
-  signUp(login: string, password: string): Promise<AuthResponse>;
-  guest(): Promise<AuthResponse>;
+  /** `invite`: the invite code, on a server that requires one (`features().access`). */
+  signUp(login: string, password: string, invite?: string): Promise<AuthResponse>;
+  guest(invite?: string): Promise<AuthResponse>;
   /** Revokes the token on the server and forgets it here. Never throws. */
   logOut(): Promise<void>;
   /** Forgets the token without telling the server (it was already refused). */
@@ -98,8 +99,8 @@ export function createBackend(options: {
     hasSession: () => api.token !== null,
     me: () => api.me(),
     logIn: async (login, password) => remember(await api.logIn(login, password)),
-    signUp: async (login, password) => remember(await api.signUp(login, password)),
-    guest: async () => remember(await api.guest()),
+    signUp: async (login, password, invite) => remember(await api.signUp(login, password, invite)),
+    guest: async (invite) => remember(await api.guest(invite)),
     async logOut() {
       try {
         await api.logOut();

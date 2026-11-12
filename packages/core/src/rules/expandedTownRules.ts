@@ -212,7 +212,8 @@ export interface ExpandedTownRules {
         luck: number;
         failReviews: number;
       };
-      hold: { karma: number };
+      /** Karma for holding your prices, and how many game days apart a hold can be made. */
+      hold: { karma: number; everyDays: number };
       truce: { price: number; days: number; karma: number; leads: number };
     };
   };
@@ -227,6 +228,11 @@ export interface ExpandedTownRules {
       patrol: { price: number };
       /** The cheap way: percent chance it holds, and karma either way. */
       backdoor: { price: number; chance: number; karma: number };
+      /**
+       * Dollars added to the patrol and the back door for each BP the buyer is ahead of the
+       * average of the town's other open parlors, rounded up to $100 (balance round 21).
+       */
+      aheadPerBp: number;
       /** Attacks remembered. */
       maxAttacks: number;
     };
@@ -478,7 +484,7 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
     mournes: {
       spy: { price: 300, luckWeight: 0.6, failReviews: -1, failKarma: -1 },
       undercut: { price: 500, luckWeight: 0.5, reviews: 2, luck: 1, failReviews: -2 },
-      hold: { karma: 1 },
+      hold: { karma: 1, everyDays: 3 },
       truce: { price: 2000, days: 7, karma: 2, leads: 1 },
     },
   },
@@ -489,6 +495,7 @@ export const EXPANDED_TOWN: ExpandedTownRules = {
       settle: { amount: 400, karma: -1 },
       patrol: { price: 3500 },
       backdoor: { price: 1500, chance: 70, karma: -3 },
+      aheadPerBp: 25,
       maxAttacks: 8,
     },
     crematorium: {

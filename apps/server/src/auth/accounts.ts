@@ -1,8 +1,15 @@
 import { createHash, randomBytes } from "node:crypto";
 import type { Clock } from "../clock.js";
-import type { Db } from "../db/database.js";
-import type { IpBanRow } from "../db/stores.js";
-import { IpBanStore } from "../db/stores.js";
+import { type Db, transaction } from "../db/database.js";
+import type { InviteRow, IpBanRow } from "../db/stores.js";
+import { InviteStore, IpBanStore } from "../db/stores.js";
+import {
+  generateInviteCode,
+  type InviteInfo,
+  inviteInfo,
+  inviteState,
+  normaliseInviteCode,
+} from "./invites.js";
 import { type IpRule, parseAddress, parseIpRule, ruleMatches } from "./ip.js";
 import type { PasswordHasher } from "./passwords.js";
 
@@ -28,7 +35,18 @@ export type AuthFailure =
   | "ip_banned"
   | "signup_disabled"
   | "guest_disabled"
-  | "not_guest";
+  | "not_guest"
+  | "invite_required"
+  | "invite_invalid"
+  | "invite_used_up"
+  | "invite_expired";
+
+/** The invite failures that mean a wrong code was typed (counted like a wrong password). */
+export const INVITE_FAILURES: ReadonlySet<AuthFailure> = new Set<AuthFailure>([
+  "invite_invalid",
+  "invite_used_up",
+  "invite_expired",
+]);
 
 export class AuthError extends Error {
   constructor(readonly code: AuthFailure) {
@@ -78,6 +96,7 @@ interface ParsedBan {
  */
 export class AccountService {
   private readonly ipBans: IpBanStore;
+  readonly invites: InviteStore;
   private banCache: ParsedBan[] | null = null;
   /** A hash to verify against when the login does not exist, so timing does not reveal it. */
   private dummyHash: Promise<string>;
@@ -90,30 +109,43 @@ export class AccountService {
       sessionTtlMs: number;
       signupEnabled: boolean;
       guestEnabled: boolean;
+      /** A new account or guest needs an invite code (`FQ_INVITE_REQUIRED`). */
+      inviteRequired: boolean;
     },
   ) {
     this.ipBans = new IpBanStore(db);
+    this.invites = new InviteStore(db);
     this.dummyHash = hasher.hash(randomBytes(16).toString("hex"));
   }
 
   // -------------------------------------------------------------- sign-up
 
+  /**
+   * `invite` is the code the player typed; needed only while invites are required, and ignored
+   * otherwise. The code's use is taken in the same transaction as the account is made, so a code
+   * with one use left makes one account however many requests race for it.
+   */
   async signUp(
     login: string,
     password: string,
     ip: string,
+    invite?: string,
   ): Promise<{ account: Account; token: string; expiresAt: number }> {
     if (!this.options.signupEnabled) throw new AuthError("signup_disabled");
     this.assertIpAllowed(ip);
+    const code = this.checkInvite(invite);
     const passwordHash = await this.hasher.hash(password);
     const now = this.clock.now();
     try {
-      const r = this.db
-        .prepare(
-          "INSERT INTO accounts (login, password_hash, is_guest, created_at, last_login_at) VALUES (?, ?, 0, ?, ?)",
-        )
-        .run(login, passwordHash, now, now);
-      return this.startSession(Number(r.lastInsertRowid), ip);
+      return transaction(this.db, () => {
+        if (code !== null) this.redeemInvite(code);
+        const r = this.db
+          .prepare(
+            "INSERT INTO accounts (login, password_hash, is_guest, created_at, last_login_at) VALUES (?, ?, 0, ?, ?)",
+          )
+          .run(login, passwordHash, now, now);
+        return this.startSession(Number(r.lastInsertRowid), ip);
+      });
     } catch (error) {
       if (error instanceof Error && /UNIQUE/i.test(error.message)) {
         throw new AuthError("login_taken");
@@ -122,25 +154,32 @@ export class AccountService {
     }
   }
 
-  /** A throwaway account with no password, for trying the game. */
-  async createGuest(ip: string): Promise<{ account: Account; token: string; expiresAt: number }> {
+  /** A throwaway account with no password, for trying the game. Needs an invite like `signUp`. */
+  async createGuest(
+    ip: string,
+    invite?: string,
+  ): Promise<{ account: Account; token: string; expiresAt: number }> {
     if (!this.options.guestEnabled) throw new AuthError("guest_disabled");
     this.assertIpAllowed(ip);
+    const code = this.checkInvite(invite);
     const now = this.clock.now();
-    for (let attempt = 0; attempt < 5; attempt++) {
-      const login = `guest-${randomBytes(4).toString("hex")}`;
-      try {
-        const r = this.db
-          .prepare(
-            "INSERT INTO accounts (login, password_hash, is_guest, created_at, last_login_at) VALUES (?, NULL, 1, ?, ?)",
-          )
-          .run(login, now, now);
-        return this.startSession(Number(r.lastInsertRowid), ip);
-      } catch (error) {
-        if (!(error instanceof Error && /UNIQUE/i.test(error.message))) throw error;
+    return transaction(this.db, () => {
+      if (code !== null) this.redeemInvite(code);
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const login = `guest-${randomBytes(4).toString("hex")}`;
+        try {
+          const r = this.db
+            .prepare(
+              "INSERT INTO accounts (login, password_hash, is_guest, created_at, last_login_at) VALUES (?, NULL, 1, ?, ?)",
+            )
+            .run(login, now, now);
+          return this.startSession(Number(r.lastInsertRowid), ip);
+        } catch (error) {
+          if (!(error instanceof Error && /UNIQUE/i.test(error.message))) throw error;
+        }
       }
-    }
-    throw new Error("could not allocate a guest name");
+      throw new Error("could not allocate a guest name");
+    });
   }
 
   /** A password hash for `upgradeGuest`, made before the town locks are taken (hashing is slow). */
@@ -186,6 +225,8 @@ export class AccountService {
    */
   async createWithPassword(login: string, password: string): Promise<Account> {
     if (!this.options.signupEnabled) throw new AuthError("signup_disabled");
+    // The original client has nowhere to type an invite code.
+    if (this.options.inviteRequired) throw new AuthError("invite_required");
     const passwordHash = await this.hasher.hash(password);
     const now = this.clock.now();
     try {
@@ -230,6 +271,72 @@ export class AccountService {
       .prepare("UPDATE accounts SET last_login_at = ? WHERE id = ?")
       .run(this.clock.now(), row.id);
     return toAccount(row);
+  }
+
+  // -------------------------------------------------------------- invites
+
+  get inviteRequired(): boolean {
+    return this.options.inviteRequired;
+  }
+
+  /**
+   * While invites are required: the normalised code, after a first look that it is open (a fast
+   * refusal before the slow password hash; `redeemInvite` decides). Null when invites are off.
+   */
+  private checkInvite(typed: string | undefined): string | null {
+    if (!this.options.inviteRequired) return null;
+    const code = normaliseInviteCode(typed ?? "");
+    if (code === "") throw new AuthError("invite_required");
+    const row = this.invites.byCode(code);
+    if (!row) throw new AuthError("invite_invalid");
+    this.assertInviteOpen(row);
+    return code;
+  }
+
+  /** Takes one use of the code, or throws why it cannot. Call inside the account's transaction. */
+  private redeemInvite(code: string): void {
+    if (this.invites.redeem(code, this.clock.now())) return;
+    const row = this.invites.byCode(code);
+    if (!row) throw new AuthError("invite_invalid");
+    this.assertInviteOpen(row);
+    throw new AuthError("invite_used_up");
+  }
+
+  private assertInviteOpen(row: InviteRow): void {
+    switch (inviteState(row, this.clock.now())) {
+      case "revoked":
+      case "expired":
+        throw new AuthError("invite_expired");
+      case "used_up":
+        throw new AuthError("invite_used_up");
+      case "active":
+        return;
+    }
+  }
+
+  /** A new code for `uses` accounts; `expiresAt` null for none. */
+  createInvite(label: string, uses: number, expiresAt: number | null): InviteInfo {
+    const now = this.clock.now();
+    for (let attempt = 0; attempt < 10; attempt++) {
+      const row = this.invites.add(generateInviteCode(), label, uses, expiresAt, now);
+      if (row) return inviteInfo(row, now);
+    }
+    throw new Error("could not allocate an invite code");
+  }
+
+  listInvites(): InviteInfo[] {
+    const now = this.clock.now();
+    return this.invites.list().map((row) => inviteInfo(row, now));
+  }
+
+  getInvite(id: number): InviteInfo | undefined {
+    const row = this.invites.get(id);
+    return row ? inviteInfo(row, this.clock.now()) : undefined;
+  }
+
+  /** Revokes the code; false when it was revoked already. */
+  revokeInvite(id: number): boolean {
+    return this.invites.revoke(id, this.clock.now());
   }
 
   // --------------------------------------------------------------- log-in

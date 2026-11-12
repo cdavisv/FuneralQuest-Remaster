@@ -387,10 +387,29 @@ describe("B2 the health department", () => {
         overlayId: "health-department:complaintpick",
         playerId: target,
       });
-      if (player(q.town, 0).money === 100_000 - R.health.complaint.price - R.health.complaint.fine)
+      if (
+        player(q.town, 0).money ===
+        100_000 - R.health.complaint.price - R.health.complaint.fine
+      ) {
         backfired++;
+        // The point lost reads as a loss, and the fine as money (docs/expanded-audit.md).
+        expect(text(q.view)).toContain(
+          `(-${Math.abs(R.health.complaint.backfireReviews)} reputation)`,
+        );
+        expect(text(q.view)).toMatch(/Citation for \$[\d,]+ /);
+      }
     }
     expect(backfired).toBeGreaterThan(0);
+  });
+
+  it("B0 amounts in the text are money, with the dollar sign", () => {
+    // The pack's lines take {price}, {money} and {fine} already formatted as "$1,000".
+    const pawn = at("pawn-shop");
+    expect(text(pawn.view)).toMatch(/, \$[\d,]+: \d+ caskets at/);
+    const lot = press(pawn, "pawn-shop:lot:wood");
+    expect(text(lot.view)).toMatch(/\(-\$[\d,]+\)/);
+    const spy = press(at("mournes"), "mournes:spy");
+    expect(text(spy.view)).toMatch(/\(-\$[\d,]+[,)]/);
   });
 
   it("B2.4 the target is told by mail and the paper reports it", () => {
@@ -571,6 +590,48 @@ describe("B4 Mourne & Sons", () => {
     expect(player(s.town, 0).money).toBe(100_000);
     expect(player(s.town, 0).karma).toBe(50 + R.mournes.hold.karma);
     expect(enabled(s.view, "mournes:undercut")).toBe(false);
+  });
+
+  it("B4.2b the hold opens again only every few game days; undercutting stays open", () => {
+    const every = R.mournes.hold.everyDays;
+    expect(every).toBeGreaterThan(1);
+    let s = at("mournes", (t) => {
+      player(t, 0).karma = 50;
+    });
+    const held = s.town.day;
+    s = pressRT(s, "mournes:hold");
+    expect(pbOfPlayer(s.town).holdDay).toBe(held);
+
+    // The days in between: the hold is shown disabled with the day it opens; the price war is not closed.
+    for (let d = 1; d < every; d++) {
+      s = visit(seat(midnight(s.town, s.ctx), s.ctx, 0), "mournes");
+      expect(s.town.day).toBe(held + d);
+      expect(enabled(s.view, "mournes:hold")).toBe(false);
+      expect(button(s.view, "mournes:hold")?.hint).toContain(`day ${held + every}`);
+      expect(enabled(s.view, "mournes:undercut")).toBe(true);
+      expect(() => press(s, "mournes:hold")).toThrow();
+    }
+    expect(player(s.town, 0).karma).toBe(50 + R.mournes.hold.karma);
+
+    // The day it opens: karma again.
+    s = visit(seat(midnight(s.town, s.ctx), s.ctx, 0), "mournes");
+    expect(s.town.day).toBe(held + every);
+    expect(enabled(s.view, "mournes:hold")).toBe(true);
+    const before = player(s.town, 0).karma;
+    s = pressRT(s, "mournes:hold");
+    expect(player(s.town, 0).karma).toBe(before + R.mournes.hold.karma);
+    expect(pbOfPlayer(s.town).holdDay).toBe(held + every);
+  });
+
+  it("B4.2c a save from before the limit (no hold day) can hold at once", () => {
+    // A record as older builds made it: `newPlacesB` leaves the hold day out.
+    const s = at("mournes", (t) => {
+      withState(t, (b) => {
+        expect("holdDay" in b).toBe(false);
+      });
+    });
+    expect(pbOfPlayer(s.town).holdDay).toBeUndefined();
+    expect(enabled(s.view, "mournes:hold")).toBe(true);
   });
 
   it("B4.3 a truce costs money, gives karma and a lead, and closes the war and the spying", () => {

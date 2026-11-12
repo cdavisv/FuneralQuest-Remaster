@@ -30,6 +30,8 @@ export interface PlacesBState {
   citation: number;
   /** Last game day of a truce with the Mournes (0 = none). */
   truceUntil: number;
+  /** Game day the prices were last held at Mourne & Sons (absent in older saves, or 0 = never). */
+  holdDay?: number;
 }
 
 export function newPlacesB(): PlacesBState {

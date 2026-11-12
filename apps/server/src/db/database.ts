@@ -219,6 +219,34 @@ const MIGRATIONS: string[] = [
   CREATE INDEX audit_account ON audit_log(account_id, id);
   CREATE INDEX challenge_stale ON challenge_runs(status, updated_at);
   `,
+  // Activity record, for return rates (`GET /admin/stats`): one row per account, town and UTC day
+  // on which the account played at least one accepted action there. Nothing else: no address, no
+  // time finer than the day, no content. Goes with the account; kept after its town is deleted (the
+  // server-wide figures still count it), pruned by `FQ_ACTIVITY_RETENTION_DAYS`.
+  `
+  CREATE TABLE activity_days (
+    account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    town_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    PRIMARY KEY (account_id, town_id, day)
+  ) WITHOUT ROWID;
+  CREATE INDEX activity_days_day ON activity_days(day);
+  CREATE INDEX activity_days_town ON activity_days(town_id, day);
+  `,
+  // Invite codes, for a closed beta (`FQ_INVITE_REQUIRED`). Only the count of accounts each code
+  // made is kept, never which accounts: nothing here links to `accounts`.
+  `
+  CREATE TABLE invites (
+    id INTEGER PRIMARY KEY,
+    code TEXT NOT NULL UNIQUE,
+    label TEXT NOT NULL,
+    max_uses INTEGER NOT NULL CHECK (max_uses BETWEEN 1 AND 1000),
+    used INTEGER NOT NULL DEFAULT 0 CHECK (used >= 0 AND used <= max_uses),
+    expires_at INTEGER,
+    created_at INTEGER NOT NULL,
+    revoked_at INTEGER
+  );
+  `,
 ];
 
 /** The schema version this server writes (`PRAGMA user_version` after every migration ran). */

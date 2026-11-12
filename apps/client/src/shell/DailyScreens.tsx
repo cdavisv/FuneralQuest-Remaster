@@ -10,7 +10,16 @@ import type {
   ParlorForm,
 } from "../net/backend.js";
 import { checkNames, type FormProblem } from "../net/errors.js";
-import { ArrowRow, DoorButton, Field, FormAlert, SexPicker, useProblemText } from "./forms.js";
+import {
+  ArrowRow,
+  DoorButton,
+  Field,
+  FormAlert,
+  hasInviteCode,
+  InviteField,
+  SexPicker,
+  useProblemText,
+} from "./forms.js";
 
 const nf = new Intl.NumberFormat("en-US");
 const dollars = (n: number) => `$${nf.format(n)}`;
@@ -254,6 +263,7 @@ export function DailyDoor({
   problem,
   onPlay,
   onGuest,
+  inviteRequired = false,
   onResults,
   onBack,
 }: {
@@ -265,11 +275,22 @@ export function DailyDoor({
   problem: string | null;
   /** Start or resume; `parlor` is the board name the player chose (absent when resuming). */
   onPlay: (parlor?: ParlorForm) => void;
-  onGuest: () => void;
+  /** Starts a guest; `invite` is the code while the server requires one. */
+  onGuest: (invite?: string) => void;
+  /** A closed beta: a guest needs an invite code, as at the log-on plaque. */
+  inviteRequired?: boolean;
   onResults: () => void;
   onBack: () => void;
 }) {
   const t = useT();
+  const [invite, setInvite] = useState("");
+  const [inviteMissing, setInviteMissing] = useState(false);
+  const startGuest = () => {
+    if (!inviteRequired) return onGuest();
+    if (!hasInviteCode(invite)) return setInviteMissing(true);
+    setInviteMissing(false);
+    onGuest(invite);
+  };
   const info = useLoaded<DailyChallengeInfo>(() => daily.info(), `${signedIn}`);
   const you = info.state === "ready" ? info.value.you : null;
   const done = you?.status === "finished";
@@ -344,9 +365,24 @@ export function DailyDoor({
               </DoorButton>
             )
           ) : (
-            <DoorButton onClick={onGuest} disabled={busy} autoFocus variant="primary">
-              {t("x.challenge.guest")}
-            </DoorButton>
+            <>
+              {inviteRequired && (
+                <InviteField
+                  value={invite}
+                  onChange={setInvite}
+                  error={inviteMissing ? t("form.err.inviteRequired") : undefined}
+                  onEnter={startGuest}
+                />
+              )}
+              <DoorButton
+                onClick={startGuest}
+                disabled={busy}
+                autoFocus={!inviteRequired}
+                variant="primary"
+              >
+                {t("x.challenge.guest")}
+              </DoorButton>
+            </>
           )}
           {!done && (
             <DoorButton onClick={onResults} disabled={busy} variant="quiet">

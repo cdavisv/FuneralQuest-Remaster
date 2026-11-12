@@ -49,6 +49,8 @@ export interface PoliceText {
   intro: string;
   /** Added to the intro while tonight's patrol is on. */
   introPatrolled: string;
+  /** Added to the intro for a parlor that pays more for the car because it is ahead. `{inspector}`, `{extra}` */
+  introAhead: string;
   buttons: {
     report: string;
     settle: string;
@@ -94,6 +96,8 @@ export interface CrematoriumText {
   note: string;
   /** `{keeper}`, `{slots}`, `{until}`, `{ashes}` */
   intro: string;
+  /** The greeting for a parlor that holds no oven slot today. `{keeper}`, `{ashes}` */
+  introNone: string;
   /** Added when the Crematory Emissions Permit gives the discount. */
   permitNote: string;
   buttons: { rent: string; bulk: string; scatter: string; diamonds: string; leave: string };
@@ -207,6 +211,8 @@ export const PLACES_A_STARTER: PlacesAContent = {
       '`w{inspector}: `$"Break-in? Assault? Lost cat? Pick one, sign here, and try not to lean on the desk. It is the only desk we have."',
     introPatrolled:
       "\n\n`$A patrol car idles at the curb, pointed at your parlor. It is on your tab.",
+    introAhead:
+      '\n\n`w{inspector}: `$"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual."',
     buttons: {
       report: "File a Report",
       settle: "Take a Settlement",
@@ -246,6 +252,8 @@ export const PLACES_A_STARTER: PlacesAContent = {
     note: "The oven runs hot and the owner runs hotter.",
     intro:
       '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have `w{slots}`$ slots reserved until day `w{until}`$ and `w{ashes}`$ urns on the shelf."',
+    introNone:
+      '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have no slots reserved and `w{ashes}`$ urns on the shelf."',
     permitNote: "\n`$The crematory permit on your wall knocks the price down.",
     buttons: {
       rent: "Rent Oven Time",
@@ -283,7 +291,7 @@ export const PLACES_A_STARTER: PlacesAContent = {
       rain: "It is raining, so lilies are in season and cheaper.",
       fog: "The fog hurts the deliveries, but not the prices.",
       storm: "The storm smashed the front window, so everything is on clearance.",
-      heat: "It is hot, and flowers in the heat cost double to keep alive.",
+      heat: "It is hot, and flowers in the heat cost extra to keep alive.",
       snow: "The snow shut the growers, so hothouse stems cost extra.",
     },
     specialNone: "The price is whatever it is today.",

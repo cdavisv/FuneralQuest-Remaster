@@ -45,6 +45,7 @@ describe("admin access", () => {
       ["GET", "/admin/accounts"],
       ["GET", "/admin/bans"],
       ["GET", "/admin/audit"],
+      ["GET", "/admin/stats"],
       ["POST", "/admin/towns/main/new-day"],
       ["POST", "/admin/towns/main/broadcast"],
     ];

@@ -40,6 +40,10 @@ police:
 
 
     `$A patrol car idles at the curb, pointed at your parlor. It is on your tab.'
+  introAhead: '
+
+
+    `w{inspector}: `$"A parlor doing as well as yours draws a crowd, and a crowd is overtime. Tonight the car is `w{extra}`$ over the usual."'
   buttons:
     report: 'File a Report'
     settle: 'Take a Settlement'
@@ -70,6 +74,7 @@ crematorium:
   title: 'Crematorium'
   note: 'The oven runs hot and the owner runs hotter.'
   intro: '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have `w{slots}`$ slots reserved until day `w{until}`$ and `w{ashes}`$ urns on the shelf."'
+  introNone: '`w{keeper}: `$"Oven time by the slot, no questions, no inspections. You have no slots reserved and `w{ashes}`$ urns on the shelf."'
   permitNote: '
 
     `$The crematory permit on your wall knocks the price down.'
@@ -100,7 +105,7 @@ florist:
     rain: 'It is raining, so lilies are in season and cheaper.'
     fog: 'The fog hurts the deliveries, but not the prices.'
     storm: 'The storm smashed the front window, so everything is on clearance.'
-    heat: 'It is hot, and flowers in the heat cost double to keep alive.'
+    heat: 'It is hot, and flowers in the heat cost extra to keep alive.'
     snow: 'The snow shut the growers, so hothouse stems cost extra.'
   specialNone: 'The price is whatever it is today.'
   shelfFull: 'Your cooler is full.'

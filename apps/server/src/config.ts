@@ -58,6 +58,8 @@ const ConfigSchema = z.object({
   requestTimeoutSeconds: intish(1, 600),
   signupEnabled: boolish,
   guestEnabled: boolish,
+  /** A new account or guest needs an invite code made on the admin page (a closed beta). */
+  inviteRequired: boolish,
   sessionTtlDays: intish(1, 365),
   /** Minutes without an action before a player is logged off (calls `leaveGame`). */
   idleTimeoutMinutes: intish(1, 10_080),
@@ -67,6 +69,8 @@ const ConfigSchema = z.object({
   snapshotKeep: intish(1, 10_000),
   /** Audit rows older than this many days are deleted. 0 keeps everything. */
   auditRetentionDays: intish(0, 36_500),
+  /** Activity-record rows (one per account, town and day played) older than this many days are deleted. 0 keeps everything. */
+  activityRetentionDays: intish(0, 36_500),
   /** Most missed days run in one catch-up (a safety cap, not a rule). */
   maxCatchUpDays: intish(1, 100_000),
   /** Rate limits: requests per window per key. */
@@ -159,12 +163,14 @@ const ENV_KEYS: Record<keyof ServerConfig, string> = {
   requestTimeoutSeconds: "FQ_REQUEST_TIMEOUT_SECONDS",
   signupEnabled: "FQ_SIGNUP_ENABLED",
   guestEnabled: "FQ_GUEST_ENABLED",
+  inviteRequired: "FQ_INVITE_REQUIRED",
   sessionTtlDays: "FQ_SESSION_TTL_DAYS",
   idleTimeoutMinutes: "FQ_IDLE_TIMEOUT_MINUTES",
   idleSweepSeconds: "FQ_IDLE_SWEEP_SECONDS",
   snapshotIntervalMinutes: "FQ_SNAPSHOT_INTERVAL_MINUTES",
   snapshotKeep: "FQ_SNAPSHOT_KEEP",
   auditRetentionDays: "FQ_AUDIT_RETENTION_DAYS",
+  activityRetentionDays: "FQ_ACTIVITY_RETENTION_DAYS",
   maxCatchUpDays: "FQ_MAX_CATCH_UP_DAYS",
   rateGlobalMax: "FQ_RATE_GLOBAL_MAX",
   rateAuthMax: "FQ_RATE_AUTH_MAX",
@@ -218,12 +224,14 @@ export const DEFAULT_CONFIG: Record<keyof ServerConfig, string | number | boolea
   requestTimeoutSeconds: 30,
   signupEnabled: true,
   guestEnabled: true,
+  inviteRequired: false,
   sessionTtlDays: 30,
   idleTimeoutMinutes: 15,
   idleSweepSeconds: 30,
   snapshotIntervalMinutes: 60,
   snapshotKeep: 48,
   auditRetentionDays: 90,
+  activityRetentionDays: 400,
   maxCatchUpDays: 365,
   rateGlobalMax: 600,
   rateAuthMax: 10,
