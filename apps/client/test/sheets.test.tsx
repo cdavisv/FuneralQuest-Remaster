@@ -1,8 +1,11 @@
 import type { RankingRow, StatLine, View } from "@fq/protocol";
-import { screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { groupStats } from "../src/components/Sheets.js";
+import { ArtProvider } from "../src/art/ArtContext.js";
+import { groupStats, StatsSheet } from "../src/components/Sheets.js";
+import { I18nProvider } from "../src/i18n/I18nContext.js";
 import { FIXTURES } from "../src/mock/fixtures.js";
+import { SettingsProvider } from "../src/settings/settings.js";
 import { moodTier, moodTierForLevel } from "../src/util/mood.js";
 import { renderGame, ScriptedTransport, viewWith } from "./helpers.js";
 
@@ -70,7 +73,28 @@ describe("the stats sheet", () => {
     expect(row).toHaveTextContent("Total Bury Points");
     expect(row).toHaveTextContent("1,850");
     expect(sheet.querySelector('[data-stat="rating"]')).toHaveTextContent("A respectable name");
+    // The stats cabinet has a dark well under the parchment: the lines after the inventory are
+    // written there instead of scrolling out of sight at the parchment's foot.
+    expect(within(sheet).queryByText("Cobwebs")).toBeNull();
+    const more = screen.getByRole("region", { name: "More of your stats" });
+    expect(within(more).getByText("Cobwebs")).toBeInTheDocument();
+    expect(more.closest(".fq-r-well")).not.toBeNull();
+  });
+
+  it("splits the sheet between the parchment and the well only where the cabinet has a well", () => {
+    render(
+      <SettingsProvider>
+        <I18nProvider>
+          <ArtProvider>
+            <StatsSheet stats={stats} />
+          </ArtProvider>
+        </I18nProvider>
+      </SettingsProvider>,
+    );
+    // Without a part (the hand-drawn cabinet, a phone) it is one sheet, everything in it.
+    const sheet = screen.getByRole("region", { name: "Your stats and inventory" });
     expect(within(sheet).getByText("Cobwebs")).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "More of your stats" })).toBeNull();
   });
 
   it("falls back to the plain text when the server sends no stat lines", async () => {

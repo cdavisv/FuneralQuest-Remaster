@@ -2,25 +2,42 @@ import type { RichText as RichTextSpans } from "@fq/protocol";
 import { type CSSProperties, type ReactNode, type RefObject, useEffect, useRef } from "react";
 import { useT } from "../i18n/I18nContext.js";
 import { useSettings } from "../settings/settings.js";
+import { lineHeight, useFitText } from "../util/useFitText.js";
+import { useMoreBelow } from "../util/useMoreBelow.js";
 import { useScrollable } from "../util/useScrollable.js";
 import { useTypewriter } from "../util/useTypewriter.js";
 import { ArrowIcon } from "./Icons.js";
 import { RichText, richTextLength } from "./RichText.js";
 
 /** The gold up/down capsule that scrolls the text well. */
-export function ScrollCapsule({ target }: { target: RefObject<HTMLElement | null> }) {
+export function ScrollCapsule({
+  target,
+  more = false,
+}: {
+  target: RefObject<HTMLElement | null>;
+  /** There is text below what the well shows: the down arrow says so. */
+  more?: boolean;
+}) {
   const t = useT();
   const scroll = (dir: 1 | -1) => {
     const el = target.current;
     if (!el) return;
-    el.scrollBy({ top: dir * Math.max(40, el.clientHeight * 0.8), behavior: "smooth" });
+    // By whole lines (all but one of those in view), so a line is never left cut in half.
+    const line = lineHeight(el);
+    const step = line > 0 ? Math.max(1, Math.floor((el.clientHeight * 0.85) / line)) * line : 0;
+    el.scrollBy({ top: dir * Math.max(40, step || el.clientHeight * 0.8), behavior: "smooth" });
   };
   return (
     <div className="fq-capsule">
       <button type="button" aria-label={t("text.scrollUp")} onClick={() => scroll(-1)}>
         <ArrowIcon direction="up" />
       </button>
-      <button type="button" aria-label={t("text.scrollDown")} onClick={() => scroll(1)}>
+      <button
+        type="button"
+        aria-label={t("text.scrollDown")}
+        data-more={more || undefined}
+        onClick={() => scroll(1)}
+      >
         <ArrowIcon direction="down" />
       </button>
     </div>
@@ -68,10 +85,21 @@ export function TextPanel({
   const t = useT();
   const { settings } = useSettings();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
   const scrolls = useScrollable(scrollRef);
   const total = richTextLength(text);
   const speed = instant ? "off" : settings.typewriter;
   const tw = useTypewriter(total, revealKey, speed);
+  const animated = speed !== "off";
+  const more = useMoreBelow(scrollRef, `${revealKey}|${total}`);
+  // A well's text a line or two too long for the art is set a little smaller rather than cut off
+  // (not when the player chose a larger size, and not for a chat or a table under the text).
+  useFitText(
+    scrollRef,
+    measureRef,
+    `${revealKey}|${total}|${animated}`,
+    variant === "well" && settings.fontSize === "normal" && !after && stickBottomKey === undefined,
+  );
 
   // A new screen starts at the top.
   // biome-ignore lint/correctness/useExhaustiveDependencies: revealKey is the trigger.
@@ -103,7 +131,6 @@ export function TextPanel({
     return () => window.removeEventListener("keydown", onKey);
   }, [typing, skip]);
 
-  const animated = speed !== "off";
   return (
     <section
       className={`fq-textpanel fq-textpanel-${variant} fq-surface-${surface ?? (variant === "sheet" ? "light" : "dark")}`}
@@ -129,6 +156,15 @@ export function TextPanel({
         title={typing ? t("text.skipHint") : undefined}
         aria-live="polite"
       >
+        {animated && (
+          // The whole text, laid out unseen, so the fit is chosen for the text the typewriter is
+          // still writing.
+          <div className="fq-text-measure" aria-hidden="true">
+            <div className="fq-text" ref={measureRef}>
+              <RichText spans={text} />
+            </div>
+          </div>
+        )}
         <div className="fq-text">
           {animated ? (
             <>
@@ -146,7 +182,7 @@ export function TextPanel({
         {after}
       </div>
       {footer}
-      <ScrollCapsule target={scrollRef} />
+      <ScrollCapsule target={scrollRef} more={more} />
       {status && status.length > 0 && (
         <p className="fq-status" role="status">
           <RichText spans={status} />

@@ -28,8 +28,21 @@
   margin: 0 0 calc(var(--u) * 6);
 }
 
+/* A column whose report box gives up height first, so the Copy and Close buttons stay on screen
+   in a short window (at 1366 x 768 they were cut in half under the dialog's edge). */
 .fq-feedback {
   width: min(640px, 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.fq-feedback > * {
+  flex: none;
+}
+
+.fq-feedback .fq-feedback-report {
+  flex: 0 1 auto;
+  min-height: 5.5em;
 }
 
 .fq-feedback-label {

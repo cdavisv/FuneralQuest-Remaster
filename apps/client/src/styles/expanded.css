@@ -38,8 +38,20 @@
   bottom: calc(100% + var(--u) * 6);
   z-index: 40;
   white-space: normal;
-  max-width: calc(var(--u) * 280);
+  /* As wide as its text up to the cap: sized by the chip it hangs from, a tip on a short chip
+     ("Hail") was one word wide on a phone. */
+  width: max-content;
+  /* The design-unit cap is about 106 px on a phone, so it has a floor in rem. */
+  max-width: min(max(calc(var(--u) * 280), 15rem), calc(100vw - 24px));
   text-align: left;
+}
+
+/* A phone stretches a plaque's hint across its plaque (left and right 0); a chip's note keeps its
+   own width, or it is the chip's width, one word to a line. */
+.fq-cabinet[data-layout="phone"] .fq-tip.fq-tip-x {
+  right: auto;
+  width: max-content;
+  max-width: min(15rem, calc(100vw - 24px));
 }
 
 .fq-tip-x[data-placement="below"] {
@@ -51,6 +63,13 @@
 .fq-tipped:focus-within > .fq-tip-x,
 .fq-tipped[data-open] > .fq-tip-x {
   visibility: visible;
+}
+
+/* One tooltip at a time: one opened by a click (or holding the focus) gives way while another is
+   hovered, so two never overlap (the map's weather and ballot chips did). */
+body:has(.fq-tipped:hover) .fq-tipped[data-open]:not(:hover) > .fq-tip-x,
+body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
+  visibility: hidden;
 }
 
 /* ---------- Ledger: the HUD of an Expanded parlor ---------- */
@@ -88,6 +107,27 @@
   --lg-x: 306;
   --lg-y: 70;
   --lg-w: 500;
+}
+
+/* The ledger ends a step short of the mute button (which sits one gear-to-exit
+   step left of the gear) instead of covering it, and its chips are a little tighter so the top
+   row (cash, karma, rating) still fits on one line in the narrower box. */
+.fq-cabinet:not([data-layout="phone"]) .fq-ledger {
+  width: calc(var(--u) * (2 * var(--gear-x) - var(--exit-x) - var(--lg-x) - 10));
+  padding: calc(var(--u) * 6);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-ledger .fq-ledger-row {
+  gap: calc(var(--u) * 5);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-ledger .fq-lchip {
+  padding: 0 calc(var(--u) * 5);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-ledger .fq-lchip,
+.fq-cabinet:not([data-layout="phone"]) .fq-ledger .fq-lchip .fq-tipped {
+  gap: calc(var(--u) * 4);
 }
 
 .fq-ledger-row {
@@ -159,6 +199,7 @@
 }
 
 .fq-lchip-label {
+  white-space: nowrap;
   font-size: 0.74em;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -689,6 +730,12 @@
   display: none;
 }
 
+/* More notes below: the foot of the pane fades out instead of showing the top of a cut line. */
+.fq-file-pane[data-more] {
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 1.6em), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - 1.6em), transparent);
+}
+
 .fq-notes {
   margin: 0;
   padding: 0;
@@ -736,6 +783,13 @@
   border-bottom: 0;
   font-weight: 700;
   font-size: 1.08em;
+}
+
+/* On a phone the page scrolls, not the pane: a sticky total stuck to the foot of the screen and
+   covered the line above it, so the lines on show did not add up to the total. */
+[data-layout="phone"] .fq-bill tfoot th,
+[data-layout="phone"] .fq-bill tfoot td {
+  position: static;
 }
 
 .fq-file-gauge {
@@ -1008,6 +1062,9 @@
 .fq-app[data-art="pieces"] .fq-plaques[data-size="small"] .fq-plaque {
   min-height: calc(var(--u) * var(--plaque-h, 40) * 0.96);
   height: auto;
+  /* The stretched art's rims are about 12% (top) and 16% (bottom) of the plaque's height: for a
+     two-line label that is a third and nearly half of a line, so the lines stay on the face. */
+  padding-block: 0.32em 0.44em;
   font-size: max(15px, calc(var(--au) * 14));
 }
 
@@ -1399,6 +1456,32 @@
   font-size: max(15px, calc(var(--u) * 19));
 }
 
+/* The wide map's list of twenty places was a scrolling panel that hid the last seven: it now runs
+   the side panel's full height with compact plaques (a thinner rim, so the label stays on the
+   face), and every place shows at once. */
+.fq-cabinet[data-layout="wide"] .fq-map-list[data-many] {
+  bottom: calc(var(--u) * 36);
+  padding: calc(var(--u) * 8);
+}
+
+.fq-cabinet[data-layout="wide"] .fq-map-list[data-many] ul {
+  gap: calc(var(--u) * 2);
+}
+
+/* On a phone the list is two columns: a long name (Health Department) takes two lines, and the
+   plaque grows for them (app.css) instead of putting them on its rims. */
+.fq-cabinet[data-layout="phone"] .fq-map-list[data-many] .fq-listbtn {
+  font-size: 18px;
+}
+
+.fq-app .fq-cabinet[data-layout="wide"] .fq-map-list[data-many] .fq-listbtn {
+  min-height: 0;
+  height: calc(var(--u) * 29);
+  border-image-width: 4px 14px 6px 14px;
+  font-size: max(14px, calc(var(--u) * 16.5));
+  line-height: 1;
+}
+
 /* (The map strip's one row, with the rules above.) */
 .fq-cabinet:not([data-layout="phone"]) .fq-map > .fq-townstrip[data-variant="map"] ul {
   flex-wrap: nowrap;
@@ -1544,6 +1627,35 @@
 
 .fq-karmascale-now b {
   font-size: 1.25em;
+}
+
+/* The cards of a body-preparation choice stand inside the well, above its rim (plaques sit on the
+   rim; these are taller and hung over it onto the cabinet). */
+.fq-cabinet:not([data-layout="phone"]) .fq-r-buttons[data-prep] {
+  bottom: calc(var(--u) * (var(--btn-bottom) + 14));
+}
+
+/* ...and are compact there (the well is short): tighter lines, and a gamble's meter beside its
+   odds instead of above them. */
+.fq-cabinet:not([data-layout="phone"]) .fq-mb {
+  min-height: calc(var(--u) * 64);
+  padding: calc(var(--u) * 4) calc(var(--u) * 10);
+  gap: calc(var(--u) * 1);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-mb-label {
+  font-size: max(20px, calc(var(--u) * 26));
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-mb-risk {
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: calc(var(--u) * 6);
+  row-gap: 0;
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-mb-risk small {
+  grid-column: 1 / -1;
 }
 
 .fq-moral ul {
@@ -2160,6 +2272,13 @@
   --lg-w: 652;
 }
 
+/* Between the hand-drawn title and the mute button the 4:3 ledger has 424 design pixels: a little
+   smaller type keeps cash, karma and rating on one line, so the ledger stays above the note. */
+.fq-app[data-art="drawn"] .fq-cabinet[data-layout="classic"] .fq-ledger {
+  --lg-x: 352;
+  font-size: max(11px, calc(var(--u) * 12));
+}
+
 /* With several towns the chooser and the ruleset line need room: the panel climbs and tightens. */
 .fq-door-info[data-multi] {
   top: calc(var(--u) * 98);
@@ -2321,6 +2440,26 @@
   min-width: 0;
   padding: 4px 8px;
   font-size: 19px;
+}
+
+/* A phone's half-width plaque had no room beside its price: the tag covered the label ("Buy a
+   Bou[$125]"). The label and the price stack inside the plaque, which grows when a name wraps. */
+.fq-app .fq-cabinet[data-layout="phone"] .fq-plaques-plaque .fq-plaque[data-has-detail] {
+  height: auto;
+  min-height: 56px;
+  /* Clear of the art's rims (6 px above, 9 px below): a two-line label touched the top one. */
+  padding: 10px 8px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.fq-app .fq-cabinet[data-layout="phone"] .fq-plaque[data-has-detail] .fq-plaque-detail {
+  position: static;
+  max-width: 100%;
+  transform: none;
 }
 
 .fq-cabinet[data-layout="phone"] .fq-deck .fq-plaques:not([data-size]) .fq-plaque-item {

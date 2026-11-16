@@ -659,6 +659,9 @@
 .fq-page-inner {
   position: relative;
   display: grid;
+  /* One column no wider than the window: a long unbroken word or link in a page (the credits)
+     wraps instead of making the page wider than a phone. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   width: min(100%, 860px);
   margin: 0 auto;
@@ -688,6 +691,7 @@
 }
 
 .fq-page-panel {
+  overflow-wrap: anywhere;
   padding: clamp(16px, 3vw, 30px);
   border: 6px solid;
   border-color: #947845 #56391b #56391b #947845;
@@ -761,7 +765,7 @@
 
 /* ---------- Notices: banners, toasts, the mail indicator ---------- */
 
-.fq-notices {
+.fq-noticelayer {
   position: fixed;
   left: 0;
   right: 0;
@@ -808,6 +812,16 @@
   animation: fq-pulse 1.4s ease-in-out infinite;
 }
 
+/* On a phone the round buttons are a row at the top of the page: banners start below them, and
+   the toasts below a banner (the new day's banner covered Exit and mute). */
+.fq-app[data-layout="phone"] .fq-banners {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 62px);
+}
+
+.fq-app[data-layout="phone"] .fq-toasts {
+  top: calc(env(safe-area-inset-top, 0px) + 112px);
+}
+
 .fq-banner-day {
   font-family: var(--fq-font-script);
   font-style: italic;
@@ -833,7 +847,11 @@
 .fq-toasts {
   position: absolute;
   left: 10px;
-  top: max(54px, calc(env(safe-area-inset-top) + 48px));
+  top: max(
+    54px,
+    calc(env(safe-area-inset-top) + 48px),
+    calc(var(--u, 1px) * 8 + max(44px, var(--u, 1px) * 44) + 8px)
+  );
   display: grid;
   gap: 6px;
   width: min(420px, calc(100vw - 20px));

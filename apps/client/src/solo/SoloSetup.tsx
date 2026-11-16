@@ -191,6 +191,21 @@ export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
               )}
             </p>
           </fieldset>
+          {/* The tour is asked under the skulls, where the left column has room: in the right
+              column it pushed the form past the bottom of an 800 x 600 window. */}
+          {expanded && !daily && (
+            <Chips
+              legend={t("solo.setup.tour")}
+              hint={t("solo.setup.tour.hint")}
+              name="tour"
+              value={tour}
+              options={[
+                { value: "yes", label: t("solo.setup.tour.yes") },
+                { value: "no", label: t("solo.setup.tour.no") },
+              ]}
+              onChange={setTour}
+            />
+          )}
         </div>
         <div className="fq-solo-col">
           <Chips
@@ -244,19 +259,6 @@ export function SoloSetup({ onStart, onBack, newSeed, busy }: SoloSetupProps) {
             ]}
             onChange={setMode}
           />
-          {expanded && !daily && (
-            <Chips
-              legend={t("solo.setup.tour")}
-              hint={t("solo.setup.tour.hint")}
-              name="tour"
-              value={tour}
-              options={[
-                { value: "yes", label: t("solo.setup.tour.yes") },
-                { value: "no", label: t("solo.setup.tour.no") },
-              ]}
-              onChange={setTour}
-            />
-          )}
         </div>
       </div>
       <FormAlert problem={problem} />

@@ -89,6 +89,7 @@ export const en = {
   "settings.audio.voices.note":
     "The town's characters speak some of their lines aloud, generated with ElevenLabs from the game's own text. On by default in Expanded towns and Solo careers; off by default in Classic towns, because the 2001 game had no recorded voices.",
   "settings.audio.none": "No music playing",
+  "settings.audio.about": "More about the sound packs and voices",
   "audio.mute": "Mute sound",
   "audio.unmute": "Unmute sound",
   "settings.reducedMotion": "Your system asks for reduced motion, so animations are off.",
@@ -198,6 +199,7 @@ export const en = {
   "ended.noWinner": "The tournament is over.",
 
   "sheet.stats": "Your stats and inventory",
+  "sheet.statsMore": "More of your stats",
   "sheet.rankings": "Rankings",
   "sheet.group.standing": "Standing",
   "sheet.group.inventory": "Inventory",

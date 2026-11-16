@@ -79,6 +79,7 @@ export function cabinetVars(spec: CabinetSpec, fit: Fit, layout: CabinetLayout):
     if (!w) vars[`--${name}-h`] = px(b.h);
   };
   set("note", r.note);
+  set("well", r.well);
   set("frame", r.frame);
   set("exit", r.exit, true);
   set("gear", r.gear, true);

@@ -178,7 +178,9 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
   const desk =
     view.scene === "desk" ? splitDesk(view.buttons, (name) => art.piece(name) !== undefined) : null;
   // A body-preparation choice is two heavy cards; a gamble's odds and failure need a third line.
-  const prepRows = prepChoices.some((o) => o.choice.risk) ? 2.5 : 1.6;
+  // The cards stand inside the well, above its rim (desk.css lifts the row), so the text keeps
+  // the room above them: the cards hung over the rim onto the cabinet and over the text's last line.
+  const prepRows = prepChoices.some((o) => o.choice.risk) ? 2.85 : 2.0;
   const rows = desk
     ? 2
     : prep
@@ -213,6 +215,9 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
   // Structured stats and rankings replace the plain-text version of the same sheet.
   const statsSheet = view.scene === "stats" && view.stats && view.stats.length > 0;
   const rankTable = view.scene === "rankings" && view.rankings && view.rankings.length > 0;
+  // The stats cabinet has a dark well under its parchment: what does not fit the parchment (the
+  // errands, and Expanded's other lines) is written there rather than scrolled out of sight.
+  const statsWell = Boolean(statsSheet && !phone && cab?.spec.regions.well);
   // A place's panel (the bank's books, the ballots, the monuments...) takes the parchment where the
   // place's note was written. The note is still the place's own words (at the bank, the 2001
   // original's), so it follows the screen's text in the well instead of disappearing.
@@ -313,7 +318,13 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
           rows={rows}
           extra={grouped && !desk && !prep ? deckExtra(view.buttons) : 0}
           {...(cafe ? { stickBottomKey: chat.length } : {})}
-          {...(statsSheet && view.stats ? { after: <StatsSheet stats={view.stats} /> } : {})}
+          {...(statsSheet && view.stats
+            ? {
+                after: (
+                  <StatsSheet stats={view.stats} {...(statsWell ? { part: "top" as const } : {})} />
+                ),
+              }
+            : {})}
           {...(rankTable && view.rankings ? { after: <RankingsTable rows={view.rankings} /> } : {})}
           {...(cafe
             ? {
@@ -334,10 +345,16 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
             : {})}
         />
       </div>
+      {statsWell && view.stats && (
+        <div className="fq-r-well fq-surface-dark">
+          <StatsSheet stats={view.stats} part="bottom" />
+        </div>
+      )}
       <div
         className="fq-r-buttons"
         data-rows={rows}
         data-desk={desk ? "" : undefined}
+        data-prep={prep ? "" : undefined}
         data-x={grouped ? "" : undefined}
         data-more={groups.more.length > 0 ? "" : undefined}
       >

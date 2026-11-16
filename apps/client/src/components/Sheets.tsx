@@ -42,19 +42,34 @@ const TAG_IDS: Record<string, TagKind> = { wood: "wood", silver: "silver", gold:
 /** Long values (the rating line) take the whole row. */
 const WIDE_AT = 24;
 
-/** The parlor report: stats and inventory as a sheet of label and value pairs. */
-export function StatsSheet({ stats }: { stats: StatLine[] }) {
+/** The groups that stay on the parchment when the sheet is split (see `StatsSheet`'s `part`). */
+const TOP_GROUPS = new Set(["standing", "inventory"]);
+
+/**
+ * The parlor report: stats and inventory as a sheet of label and value pairs. `part` splits it
+ * where the cabinet has a second place to write (the stats cabinet's dark well under the
+ * parchment): "top" is the rating, standing and inventory, "bottom" everything after them.
+ */
+export function StatsSheet({ stats, part }: { stats: StatLine[]; part?: "top" | "bottom" }) {
   const t = useT();
-  const rating = stats.find((s) => s.id === RATING);
+  const rating = part === "bottom" ? undefined : stats.find((s) => s.id === RATING);
+  const groups = groupStats(stats).filter(
+    (g) => part === undefined || TOP_GROUPS.has(g.id) === (part === "top"),
+  );
+  if (groups.length === 0 && !rating) return null;
   return (
-    <section className="fq-sheet-stats" aria-label={t("sheet.stats")}>
+    <section
+      className="fq-sheet-stats"
+      aria-label={t(part === "bottom" ? "sheet.statsMore" : "sheet.stats")}
+      data-part={part}
+    >
       {rating && (
         <p className="fq-sheet-rating" data-stat={RATING}>
           <span>{rating.label}</span>
           {rating.value}
         </p>
       )}
-      {groupStats(stats).map((group) => (
+      {groups.map((group) => (
         <section key={group.id} className="fq-sheet-group" data-group={group.id}>
           <h2 className="fq-sheet-heading">{t(groupLabel(group.id))}</h2>
           <dl className="fq-sheet-list">
