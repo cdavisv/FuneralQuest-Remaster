@@ -115,7 +115,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const opts = <T extends string>(prefix: string, values: T[]) =>
     values.map((value) => ({ value, label: t(`${prefix}.${value}` as MessageKey) }));
-  const helpAndVersion = (
+  const help = (
     <>
       <h3 className="fq-set-heading">{t("settings.help")}</h3>
       <p className="fq-set-note">
@@ -133,6 +133,10 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           </span>
         ))}
       </p>
+    </>
+  );
+  const version = (
+    <>
       <h3 className="fq-set-heading">{t("about.version")}</h3>
       <p className="fq-set-note fq-version-line">
         <VersionText />{" "}
@@ -152,8 +156,8 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
       <h2 id={id} className="fq-settings-title">
         {t("settings.title")}
       </h2>
-      {/* Three columns where the window is wide enough (display; sound levels, help and version;
-          sound pack), two in a narrower one, one on a phone. */}
+      {/* Three columns where the window is wide enough (display and help; sound levels and the
+          version; the art and sound packs), one on a phone. */}
       <div className="fq-set-cols">
         <div className="fq-set-col">
           <h3 className="fq-set-heading">{t("settings.display")}</h3>
@@ -178,15 +182,8 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
             options={opts("settings.layout", ["auto", "classic", "wide", "phone"])}
             onChange={(layout) => update({ layout })}
           />
-          <Choice<string>
-            legend={t("settings.artPack")}
-            name="fq-art-pack"
-            value={art.pack.id}
-            options={PACKS.map((p) => ({ value: p.id, label: p.name }))}
-            onChange={(artPack) => update({ artPack })}
-          />
-          {art.pack.description && <p className="fq-set-note">{art.pack.description}</p>}
           {prefersReducedMotion() && <p className="fq-set-note">{t("settings.reducedMotion")}</p>}
+          {help}
         </div>
         <div className="fq-set-col">
           <h3 className="fq-set-heading">{t("settings.audio")}</h3>
@@ -233,9 +230,17 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           <p className="fq-set-note">
             {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
           </p>
-          {helpAndVersion}
+          {version}
         </div>
         <div className="fq-set-col">
+          <Choice<string>
+            legend={t("settings.artPack")}
+            name="fq-art-pack"
+            value={art.pack.id}
+            options={PACKS.map((p) => ({ value: p.id, label: p.name }))}
+            onChange={(artPack) => update({ artPack })}
+          />
+          {art.pack.description && <p className="fq-set-note">{art.pack.description}</p>}
           <Choice<SoundPackSetting>
             legend={t("settings.audio.pack")}
             name="fq-sound-pack"
@@ -247,6 +252,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           {/* The rest of the explanations are a click away, so the controls fit the window. */}
           <details className="fq-set-more">
             <summary>{t("settings.audio.about")}</summary>
+            <p className="fq-set-note">{t("settings.audio.pack.more")}</p>
             <p className="fq-set-note" data-testid="sound-pack-note">
               {settings.soundPack === "auto"
                 ? t("settings.audio.note.auto", {

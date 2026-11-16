@@ -10,15 +10,25 @@ const money = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-/** Mood face, running total, and (when the psych skill revealed it) the resistance gauge. */
-export function CustomerReadout({ customer }: { customer: CustomerPanel }) {
+/**
+ * Mood face, running total, and (when the psych skill revealed it) the resistance gauge. Over the
+ * portrait (`variant="picture"`) the mood's words stay for screen readers only: the portrait's own
+ * caption already says the mood.
+ */
+export function CustomerReadout({
+  customer,
+  variant,
+}: {
+  customer: CustomerPanel;
+  variant?: "picture";
+}) {
   const t = useT();
   const resistance =
     customer.resistancePercent === undefined
       ? undefined
       : Math.max(0, Math.min(100, Math.round(customer.resistancePercent)));
   return (
-    <section className="fq-readout" aria-label={t("customer.region")}>
+    <section className="fq-readout" data-variant={variant} aria-label={t("customer.region")}>
       <span className="fq-readout-item fq-readout-mood">
         <MoodFace tier={moodTier(customer.moodLabel, customer.moodLevel)} />
         <span className="fq-readout-label">{t("customer.mood")}</span>

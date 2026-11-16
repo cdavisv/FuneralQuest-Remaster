@@ -114,6 +114,32 @@ describe("notices on screen", () => {
     }
   });
 
+  it("keeps the town's toasts back while the paper is open, and shows them after it", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      const t = new LiveScriptedTransport(FIXTURES.news, () => FIXTURES.desk);
+      renderGame(t);
+      await screen.findByRole("button", { name: /continue/i });
+      act(() => t.notice({ kind: "broadcast", text: text("Skelly logs on.") }));
+      act(() => t.notice({ kind: "server", text: text("Back in five minutes.") }));
+      // The sysop's message shows at once; the town's chatter waits, its nine seconds unstarted.
+      expect(screen.getByText("Back in five minutes.")).toBeInTheDocument();
+      expect(screen.queryByText("Skelly logs on.")).toBeNull();
+      act(() => {
+        vi.advanceTimersByTime(20_000);
+      });
+      await userEvent.click(screen.getByRole("button", { name: /continue/i }));
+      await screen.findByRole("heading", { level: 1, name: "Your Desk" });
+      expect(screen.getByText("Skelly logs on.")).toBeInTheDocument();
+      act(() => {
+        vi.advanceTimersByTime(10_000);
+      });
+      expect(screen.queryByText("Skelly logs on.")).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("announces a new day with a banner that goes away", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     try {
