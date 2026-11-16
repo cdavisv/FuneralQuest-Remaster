@@ -349,7 +349,7 @@ function seamHedge(x0, x1, y0, y1, R) {
       );
     }
   }
-  return shadowOf(band, 2) + `<path fill="${BUSH}" d="${band}"/>` + leaves.join("");
+  return `${shadowOf(band, 2)}<path fill="${BUSH}" d="${band}"/>${leaves.join("")}`;
 }
 
 // ------------------------------------------------------------------ the new town

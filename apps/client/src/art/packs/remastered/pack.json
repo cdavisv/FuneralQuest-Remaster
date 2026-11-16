@@ -4,12 +4,7 @@
   "description": "The original 2001 artwork with new drawings in its style: the photo backdrops redrawn, and the Expanded places, people and icons drawn for the first time. Anything not redrawn is the Classic art.",
   "extends": "classic",
   "expandedMap": {
-    "viewBox": [
-      -244,
-      -275,
-      752,
-      533
-    ],
+    "viewBox": [-244, -275, 752, 533],
     "buildings": {
       "spirit-university": {
         "x": -221.7,
