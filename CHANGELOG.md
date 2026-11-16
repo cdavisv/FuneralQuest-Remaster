@@ -12,7 +12,7 @@ The version number lives in one place, the root `package.json`, and every app re
   - The Expanded ledger (cash, karma, rating) covered the mute button; it now ends before it.
   - The text well sets its type a little smaller (never under 85%, only at the Normal text size) when a screen's text is a line or two too long, and when it still has to scroll it shows whole lines only, so no line is cut in half; the scroll arrows move by whole lines.
   - The stats screen wrote everything on the parchment, which cut off "You and your errands" (and Expanded's other lines) and left the dark well under it empty; those lines are now written in the well.
-  - The Settings dialog was two and a half windows tall at 1366 x 768; it is in columns on a wide window and fits without scrolling (the longest sound-pack notes are one click away; the note that no pack is the 2001 audio stays in view).
+  - The Settings dialog was two and a half windows tall at 1366 x 768; it is in columns on a wide window and fits without scrolling (the longest sound-pack notes are one click away; the note that no pack is the 2001 audio stays in view). The columns sit on a darker inset, so the notes, the chosen sound pack and the help links keep their contrast where the wider dialog put them over the lighter middle of its art.
   - The Send Feedback dialog cut its Copy and Close buttons in half on a 768-pixel-tall window; its report box now gives up the room.
   - The Expanded new-career form ran off the bottom of an 800 x 600 window with no way to reach "open the parlor"; the tour question moved under the skulls and the form tightens in a short window.
   - The wide Expanded map's list hid seven of its twenty places below the fold; all twenty show.
