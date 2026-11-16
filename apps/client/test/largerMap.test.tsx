@@ -55,6 +55,16 @@ describe("the larger map of an Expanded town", () => {
     }
   });
 
+  it("keeps the new places' tops below the town strip drawn over the top of the map", () => {
+    // The strip is about 30 layout units tall over a map 700 to 730 units tall, 23 art units at
+    // most: a new place starts 29 below the top edge (City Hall and the Crematorium were under
+    // a full strip at 1024 x 745).
+    const top = larger.viewBox[1];
+    for (const id of EXPANDED_IDS.filter((i) => !CLASSIC_IDS.includes(i))) {
+      expect((larger.buildings[id] as Rect).y - top, id).toBeGreaterThanOrEqual(29);
+    }
+  });
+
   it("draws the new places at the size of the originals, not squeezed in", () => {
     const area = (r: Rect) => r.w * r.h;
     const originals = CLASSIC_IDS.map((id) => area(original.buildings[id] as Rect));

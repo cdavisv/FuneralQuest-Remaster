@@ -1441,6 +1441,14 @@ body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
   background: rgba(255, 244, 190, 0.16);
 }
 
+/* The graveyard's spot is part of the map's own drawing: like a building's, it keeps its drawn
+   size. On a phone's larger map it is under 44px, and grown to that it covered the parlors below
+   it; the list of places under the map is the touch target there. */
+.fq-hotspots .fq-hotspot-area {
+  min-width: 0;
+  min-height: 0;
+}
+
 .fq-cabinet[data-layout="phone"] .fq-map > .fq-townstrip[data-variant="map"] {
   position: static;
   max-width: none;

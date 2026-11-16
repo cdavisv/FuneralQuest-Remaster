@@ -494,30 +494,30 @@ function render() {
   const detail = [
     // A: the crematorium's sheds, Mourne & Sons' garden with a walk, mourners' cars.
     place(paths, SHEDS, SHED_BOX, [298, -226], { scale: 0.7, clip: "shed-clip" }),
-    garden(250, -86, 306, -34, R, {
+    garden(250, -84, 306, -36, R, {
       extra: walk([
-        [255, -40],
-        [278, -58],
+        [255, -42],
+        [278, -60],
         [300, -80],
       ]),
     }),
-    place(paths, CARS, CAR_BOX, [208, -64]),
+    place(paths, CARS, CAR_BOX, [208, -62]),
     bush(318, -246, R),
     bush(304, -178, R, 0.8),
     // B: City Hall's lawn and walk, the police station's cars.
-    garden(370, -160, 486, -128, R, {
+    garden(370, -148, 486, -122, R, {
       extra: walk(
         [
-          [380, -144],
-          [428, -150],
-          [476, -144],
+          [380, -135],
+          [428, -140],
+          [476, -135],
         ],
         4,
       ),
     }),
-    place(paths, CARS, CAR_BOX, [448, -118], { flip: true, w: 37 }),
+    place(paths, CARS, CAR_BOX, [448, -110], { flip: true, w: 37 }),
     bush(352, -240, R),
-    bush(372, -36, R, 0.9),
+    bush(374, -32, R, 0.9),
     // C2: the florist's beds, the club's car park, a bush.
     garden(268, 196, 338, 232, R),
     place(paths, CARS, CAR_BOX, [352, 194]),
