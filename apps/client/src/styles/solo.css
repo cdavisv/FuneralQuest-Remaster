@@ -214,6 +214,41 @@
   grid-template-columns: 1fr;
 }
 
+/* A short window (800 x 600): the form climbs a little and tightens, the eight rival chips fit one
+   row, and "open the parlor" stays above the version footer instead of under it (the Expanded
+   form ran off the bottom of the window with no way to reach it). */
+@media (max-height: 720px) {
+  .fq-door[data-variant="setup"]:not([data-layout="phone"]) .fq-door-plaque {
+    top: calc(var(--u) * 84);
+  }
+
+  .fq-door:not([data-layout="phone"]) .fq-solo-setup.fq-door-form {
+    gap: 2px;
+  }
+
+  .fq-door:not([data-layout="phone"]) .fq-solo-setup .fq-door-heading {
+    margin-bottom: 0;
+  }
+
+  .fq-door:not([data-layout="phone"]) .fq-solo-setup .fq-solo-col {
+    gap: 2px;
+  }
+
+  .fq-door:not([data-layout="phone"]) .fq-solo-setup .fq-chips-row {
+    gap: 4px;
+  }
+
+  .fq-door:not([data-layout="phone"]) .fq-solo-setup .fq-chip {
+    min-width: 30px;
+    min-height: 32px;
+    padding: 0 calc(var(--u) * 8);
+  }
+
+  .fq-door[data-variant="setup"]:not([data-layout="phone"]) .fq-skull img {
+    height: 40px;
+  }
+}
+
 .fq-door[data-layout="phone"][data-variant="setup"] .fq-door-plaque {
   left: auto;
   top: auto;

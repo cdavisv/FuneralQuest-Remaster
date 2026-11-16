@@ -113,6 +113,9 @@ export interface CabinetRegions {
   };
   /** The sheet for stats and rankings text (the text region, when a cabinet has no picture). */
   sheet?: Rect;
+  /** A dark text well under the sheet (the stats cabinet's): the part of the sheet that does not
+   * fit the parchment is written there instead of scrolling out of sight. */
+  well?: Rect;
   /** Where the message box sits, for the cafe: below the text, beside the plaques. */
   chatBar?: Rect;
 }

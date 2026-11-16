@@ -734,10 +734,25 @@ textarea {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  /* useFitText: a little smaller when the text would not otherwise fit the well. */
+  font-size: calc(1em * var(--fq-fit, 1));
   padding: calc(var(--u) * 4) calc(var(--u) * 4);
   scrollbar-width: thin;
   scrollbar-color: var(--fq-gold) transparent;
   cursor: default;
+}
+
+/* The unseen copy useFitText measures: no height of its own, so it never adds to the scroll. */
+.fq-text-measure {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 0;
+  padding: 0 calc(var(--u) * 4);
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .fq-text {
@@ -796,6 +811,28 @@ textarea {
 
 .fq-capsule button:hover {
   filter: brightness(1.15);
+}
+
+/* More text below what the well shows: the down arrow glows (and pulses, motion allowing), the
+   way a player knows to press it. */
+.fq-capsule button[data-more] {
+  box-shadow:
+    0 0 0 2px rgba(255, 226, 120, 0.85),
+    0 0 12px 3px rgba(255, 214, 90, 0.7);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fq-capsule button[data-more] {
+    animation: fq-more 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes fq-more {
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255, 226, 120, 0.45),
+      0 0 4px 1px rgba(255, 214, 90, 0.3);
+  }
 }
 
 .fq-capsule .fq-icon {
@@ -1281,6 +1318,75 @@ textarea {
   margin: 6px 0 0;
   font-size: 0.85em;
   color: #ffe9b0;
+}
+
+/* Settings in columns where the window allows it (display; sound levels, help and version; the
+   sound pack and what it is): as one column it was more than two windows tall at 1366 x 768 and had to
+   be scrolled through. */
+.fq-set-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: calc(var(--u) * 36);
+  /* A dark inset under the columns: widened, the dialog put its middle columns on the lighter
+     centre of its art, where the notes, the chosen sound pack and the help links fell under 4.5:1
+     contrast (the accessibility check measures the painted page). */
+  padding: calc(var(--u) * 6) calc(var(--u) * 14) calc(var(--u) * 10);
+  border-radius: calc(var(--u) * 8);
+  background: rgba(26, 16, 2, 0.34);
+}
+
+.fq-set-col > .fq-set-heading:first-child {
+  margin-top: calc(var(--u) * 4);
+}
+
+@media (min-width: 760px) {
+  .fq-app .fq-dialog.fq-settings,
+  .fq-app[data-art="pieces"] .fq-dialog.fq-settings {
+    width: min(calc(var(--u) * 980), 100%);
+    font-size: max(15px, calc(var(--u) * 18 * var(--fq-font-scale)));
+  }
+
+  .fq-set-cols {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  .fq-settings .fq-set-group {
+    margin-bottom: calc(var(--u) * 6);
+  }
+
+  .fq-settings .fq-set-choice {
+    min-height: 30px;
+  }
+
+  .fq-settings .fq-set-slider {
+    min-height: 34px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .fq-app .fq-dialog.fq-settings,
+  .fq-app[data-art="pieces"] .fq-dialog.fq-settings {
+    width: min(calc(var(--u) * 1120), 100%);
+  }
+}
+
+/* The rest of the sound packs' and voices' explanations, a click away. */
+.fq-set-more {
+  margin: 8px 0 0;
+  font-size: 0.85em;
+  color: #ffe9b0;
+}
+
+.fq-set-more summary {
+  display: list-item;
+  min-height: 32px;
+  padding-top: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.fq-set-more .fq-set-note {
+  font-size: 1em;
 }
 
 /* Spiral notepad */
@@ -1837,6 +1943,31 @@ textarea.fq-notepad-input {
   order: 5;
   flex: none;
 }
+
+/* The page grows with the text instead of squeezing the well under the picture and the
+   full-width plaques (a few lines, the last cut in half); only a long text (the desk's log, a
+   long sheet) scrolls inside the well, past three-fifths of the screen. */
+.fq-cabinet[data-layout="phone"]:not([data-full]),
+.fq-cabinet[data-layout="phone"]:not([data-full]) .fq-cabinet-inner {
+  height: auto;
+  min-height: max(100dvh, 600px);
+}
+
+.fq-cabinet[data-layout="phone"] .fq-r-text,
+.fq-cabinet[data-layout="phone"] .fq-r-sheet,
+.fq-cabinet[data-layout="phone"] .fq-textpanel,
+.fq-cabinet[data-layout="phone"] .fq-textscroll {
+  flex: 1 0 auto;
+}
+
+.fq-cabinet[data-layout="phone"] .fq-textscroll {
+  max-height: 60dvh;
+}
+
+/* The stats and rankings sheet is the screen: it is shown whole. */
+.fq-cabinet[data-layout="phone"] .fq-r-sheet .fq-textscroll {
+  max-height: none;
+}
 .fq-cabinet[data-layout="phone"] .fq-textpanel {
   flex: 1;
   padding: 12px;
@@ -2082,9 +2213,12 @@ textarea.fq-notepad-input {
   gap: 8px;
 }
 
-.fq-cabinet[data-layout="phone"] .fq-listbtn {
+/* (Under .fq-app so it outranks the art pack's one-line plaque, which has no vertical padding.) */
+.fq-app .fq-cabinet[data-layout="phone"] .fq-listbtn {
+  height: auto;
+  padding: 6px 6px 9px;
   font-size: 18px;
-  padding: 0 6px;
+  line-height: 1.05;
 }
 
 .fq-cabinet[data-layout="phone"] .fq-map-caption {
@@ -2124,8 +2258,15 @@ textarea.fq-notepad-input {
   --u: 1.05px;
 }
 
+/* Sized to the phone's paper: at 44 px the masthead touched both edges of the page's frame. */
 .fq-cabinet[data-layout="phone"] .fq-masthead {
-  font-size: 44px;
+  gap: 8px;
+  padding-left: 8px;
+  font-size: clamp(28px, 9vw, 44px);
+}
+
+.fq-cabinet[data-layout="phone"] .fq-masthead .fq-house {
+  width: 1.7em;
 }
 
 .fq-cabinet[data-layout="phone"] .fq-paper-body {
@@ -2149,6 +2290,17 @@ textarea.fq-notepad-input {
 
 .fq-cabinet[data-layout="phone"] .fq-dialog {
   --u: 1.05px;
+}
+
+/* A dialog taller than the phone scrolls; its buttons stay pinned to its foot instead of waiting
+   at the end of the scroll (the Send feedback dialog's Copy and Close were found cut in half). */
+.fq-app[data-layout="phone"] .fq-dialog > .fq-dialog-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding-block: 14px 6px;
+  /* Opaque below a short fade: the scrolled text showed through behind the buttons. */
+  background: linear-gradient(180deg, rgba(50, 42, 30, 0), rgb(50, 42, 30) 12px);
 }
 
 /* ---------- Motion ---------- */

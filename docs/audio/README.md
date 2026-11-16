@@ -38,6 +38,8 @@ To hear both side by side and leave notes, open [`listen.html`](listen.html) (be
 
 To regenerate one track: change its prompt in the brief, generate it in the flow, add the take to `takes.json` (mark it chosen), put the MP3 in the source cache, and run `pnpm --filter @fq/audio run studio -- --only <id>`.
 
+The desk's "Office Hours" was retaken this way on 2026-11-15, on the Music page rather than the flow (two takes, recorded with their project id as the session and `music-page` as the node): the first take kept time with a woodblock "wall clock", and with the clock ambience over it the office was a constant tick-tock. The new prompt asks for no percussion and no ticking; the take kept has the least energy above 2 kHz and the cleaner loop. A brief entry can also carry `levelDb`, an offset from its kind's loudness target: the desk clock is -6 dB in both the Studio and the remastered pack, where the 2001 clock sat under the music.
+
 ### Speech screen
 
 The music model can return singing or speech. Every chosen music take was run through faster-whisper (base model, CPU) with its Silero voice-activity filter; none produced a speech segment. As a positive control, the screen was run on a spoken sample mixed into the Studio main theme at a similar level, and it transcribed the words. A human listen is still the final word.

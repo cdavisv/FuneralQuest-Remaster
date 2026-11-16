@@ -2,7 +2,7 @@
   "generator": "ElevenLabs generations post-processed by packages/audio (pnpm --filter @fq/audio run studio)",
   "license": "Generated with ElevenLabs under the owner's account; redistribution terms are ElevenLabs' terms for that plan, unconfirmed (see LICENSES.md).",
   "sampleRate": 48000,
-  "totalBytes": 12789843,
+  "totalBytes": 12667919,
   "live": [
     "ui-click",
     "ui-hover",
@@ -90,18 +90,18 @@
         {
           "ogg": "ambience/amb-clock.ogg",
           "m4a": "ambience/amb-clock.m4a",
-          "bytes": 61665
+          "bytes": 61278
         }
       ],
-      "lufs": -26.1,
-      "peakDb": -6,
-      "lufsEncoded": -30.9,
+      "lufs": -32,
+      "peakDb": -10.7,
+      "lufsEncoded": -36.6,
       "loopStart": 0.25,
       "loopEnd": 8.25,
       "loopCheck": {
-        "periodDb": -2.6,
-        "rawJoin": 0.56,
-        "joinRatio": 0.26
+        "periodDb": -3.5,
+        "rawJoin": 0.55,
+        "joinRatio": 0.32
       }
     },
     "amb-fire": {
@@ -672,27 +672,27 @@
       "title": "Office Hours",
       "loop": true,
       "channels": 2,
-      "duration": 47.427,
+      "duration": 38.542,
       "files": [
         {
           "ogg": "music/desk.ogg",
           "m4a": "music/desk.m4a",
-          "bytes": 571830
+          "bytes": 450293
         }
       ],
       "lufs": -16,
       "peakDb": -3,
       "lufsEncoded": -16,
       "loopStart": 0.25,
-      "loopEnd": 46.927333,
+      "loopEnd": 38.042,
       "loopCheck": {
-        "periodDb": -13.8,
-        "rawJoin": 0.23,
-        "joinRatio": 0.12
+        "periodDb": -18.7,
+        "rawJoin": 2.04,
+        "joinRatio": 0.03
       },
-      "bpm": 72.1,
+      "bpm": 64.7,
       "key": "A minor",
-      "bars": 14,
+      "bars": 10,
       "beatsPerBar": 4
     },
     "dice": {

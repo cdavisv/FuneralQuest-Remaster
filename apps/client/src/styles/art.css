@@ -221,6 +221,12 @@
   box-shadow: none;
 }
 
+.fq-cabinet[data-cab] .fq-capsule button[data-more] {
+  box-shadow:
+    0 0 0 2px rgba(255, 226, 120, 0.85),
+    0 0 12px 3px rgba(255, 214, 90, 0.7);
+}
+
 .fq-cabinet[data-cab] .fq-capsule button:hover {
   background: rgba(255, 235, 170, 0.22);
   filter: none;
@@ -246,9 +252,11 @@
   padding: 0 calc(var(--au) * 6);
   border: 0;
   border-radius: 0;
+  /* The stretching copy of the plaque: a plaque narrower or wider than the art's 102 x 29 (the
+     desk's Exit, a long label) is drawn filling its box, not letterboxed into a flat sliver. */
   background:
     linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
-    var(--art-plaque-button) center / 100% 100% no-repeat;
+    var(--art-plaque-button-wide, var(--art-plaque-button)) center / 100% 100% no-repeat;
   box-shadow: none;
   color: #120900;
   font-size: max(15px, calc(var(--au) * 19));
@@ -266,7 +274,12 @@
 }
 
 .fq-app[data-art="pieces"] .fq-plaques-plaque .fq-plaque[aria-disabled="true"] {
-  background-image: var(--art-plaque-button);
+  /* One image where the enabled plaque has two layers: sized and placed as that layer, or it
+     tiled at its own 102 x 29 (the bank's greyed Repay and Send Tags were drawn as broken tiles). */
+  background-image: var(--art-plaque-button-wide, var(--art-plaque-button));
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   filter: saturate(0.3) brightness(0.8);
   color: #2a1f0b;
 }
@@ -298,6 +311,56 @@
 
 .fq-cabinet[data-cab="status"] .fq-textpanel {
   color: var(--fq-parchment-ink);
+}
+
+/* The stats cabinet's dark well under the parchment: the rest of the stats sheet (the errands,
+   Expanded's other lines), light on dark, above the plaques on its rim. */
+.fq-r-well {
+  position: absolute;
+  left: calc(var(--u) * var(--well-x));
+  top: calc(var(--u) * var(--well-y));
+  width: calc(var(--u) * var(--well-w));
+  /* It ends above the plaques on the well's rim, so no line scrolls under them. */
+  height: calc(var(--u) * var(--well-h) - var(--au) * 27);
+  padding: calc(var(--u) * (var(--text-pad-t) + 4)) calc(var(--u) * (var(--text-pad-r) + 4))
+    calc(var(--u) * 2) calc(var(--u) * (var(--text-pad-l) + 4));
+  overflow: hidden auto;
+  font-size: max(13px, calc(var(--au) * 12 * var(--fq-font-scale)));
+}
+
+.fq-r-well .fq-sheet-stats {
+  margin-top: 0;
+  background: rgba(24, 12, 0, 0.22);
+  color: var(--fq-c-default);
+}
+
+/* Expanded's long "Other" group takes two thirds of the well, in two columns of its own. */
+.fq-r-well .fq-sheet-stats:has([data-group="other"]) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.fq-r-well .fq-sheet-group[data-group="other"] .fq-sheet-list {
+  display: block;
+  columns: 2;
+  column-gap: calc(var(--u) * 26);
+}
+
+.fq-r-well .fq-sheet-group[data-group="other"] .fq-sheet-row {
+  break-inside: avoid;
+}
+
+.fq-r-well .fq-sheet-heading {
+  background: none;
+  border-bottom-color: rgba(255, 220, 150, 0.35);
+  color: var(--fq-gold-light);
+}
+
+.fq-r-well .fq-sheet-row {
+  border-bottom-color: rgba(255, 220, 150, 0.22);
+}
+
+.fq-r-well .fq-sheet-row dd {
+  color: var(--fq-c-yellow);
 }
 
 .fq-cabinet[data-cab="rankings"] .fq-text {
@@ -335,8 +398,12 @@
   font-size: max(13px, calc(var(--au) * 11));
 }
 
+/* The hint in the proportional face, which fits the art's bar ("Type a message and press E" in
+   the typewriter face was cut at every size); an ellipsis if a window is narrower still. */
 .fq-cabinet[data-cab="chat"] .fq-chatform input::placeholder {
   color: #5a4520;
+  font-family: var(--fq-font-ui);
+  text-overflow: ellipsis;
 }
 
 .fq-cabinet[data-cab="chat"] .fq-chatsend {
@@ -348,7 +415,7 @@
   border-radius: 0;
   background:
     linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
-    var(--art-plaque-button) center / 100% 100% no-repeat;
+    var(--art-plaque-button-wide, var(--art-plaque-button)) center / 100% 100% no-repeat;
   color: #120900;
   font-size: max(15px, calc(var(--au) * 15));
 }
@@ -400,14 +467,14 @@
 .fq-app[data-art="pieces"] .fq-hotspot-pin {
   background:
     linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
-    var(--art-plaque-button) center / 100% 100% no-repeat;
+    var(--art-plaque-button-wide, var(--art-plaque-button)) center / 100% 100% no-repeat;
 }
 
 .fq-app[data-art="pieces"] .fq-hotspot-pin:hover,
 .fq-app[data-art="pieces"] .fq-hotspot-pin:focus-visible {
   background:
     linear-gradient(var(--fq-plaque-lift), var(--fq-plaque-lift)),
-    var(--art-plaque-button) center / 100% 100% no-repeat;
+    var(--art-plaque-button-wide, var(--art-plaque-button)) center / 100% 100% no-repeat;
   box-shadow: none;
   filter: brightness(1.12);
 }
@@ -541,7 +608,7 @@
   background: none;
   border: solid transparent;
   border-width: 0 16px;
-  border-image: var(--art-plaque-button) 0 18 0 18 fill / 0 16px 0 16px stretch;
+  border-image: var(--art-plaque-button) 4 18 6 18 fill / 6px 16px 9px 16px stretch;
   font-size: 26px;
 }
 
@@ -675,17 +742,29 @@
   padding: 4px 8px;
 }
 
+/* The plaque's rim and shadow are sliced off the art at a fixed thickness (4 and 6 of its 29
+   units), so a plaque taller than one line (a two-line note, a wrapped label) keeps a thin rim and
+   a face that grows with its text, instead of stretching the rim until the text sits on it. */
 .fq-app[data-art="pieces"] .fq-dbtn,
 .fq-app[data-art="pieces"] .fq-listbtn {
-  min-height: 46px;
+  /* Tall enough for its label's line and both rims at every size (at 1920 x 1080 the label is
+     32 px and a 46 px plaque put it on the rims). */
+  min-height: max(46px, calc(var(--au) * 15 * 1.25 + 16px));
   padding: 0 4px;
   border: solid transparent;
   border-width: 0 16px;
-  border-image: var(--art-plaque-button) 0 18 0 18 fill / 0 16px 0 16px stretch;
+  border-image: var(--art-plaque-button) 4 18 6 18 fill / 6px 16px 9px 16px stretch;
   border-radius: 0;
   background: none;
   color: #120900;
   font-size: max(19px, calc(var(--au) * 15));
+}
+
+/* The online-or-solo choices are tall plaques (a title and a note): the rule above resets the
+   padding for one-line buttons, which put the title on the top rim and the note's last line on
+   the bottom one. */
+.fq-app[data-art="pieces"] .fq-dbtn.fq-choice {
+  padding: calc(var(--u) * 10) calc(var(--u) * 4) calc(var(--u) * 14);
 }
 
 .fq-app[data-art="pieces"] .fq-dbtn[aria-disabled="true"] {
@@ -743,6 +822,30 @@
 
 .fq-notepad-art .fq-notepad-prompt[data-len="long"] {
   font-size: max(12px, calc(var(--au) * 12.5));
+}
+
+/* A long question (the letter's "Who would you like to mail? (enter full or partial name)", the
+   bank's "How many Wood tags would you like to exchange?") ran up under the spiral rings: it takes
+   the paper from just below the rings to the first ruled line, a longer one a little smaller... */
+.fq-notepad-art .fq-notepad-prompt[data-len="long"],
+.fq-notepad-art .fq-notepad-prompt[data-len="longer"] {
+  top: calc(var(--au) * 21);
+  height: calc(var(--au) * 41);
+}
+
+.fq-notepad-art .fq-notepad-prompt[data-len="longer"] {
+  font-size: max(12px, calc(var(--au) * 11.5));
+}
+
+/* ...and over a one-line answer (a name, a number) it takes the first ruled line too: the answer
+   moves down exactly one line, so it still sits on the drawn rules. */
+.fq-notepad-art .fq-notepad-form[data-single][data-prompt="longer"] .fq-notepad-prompt {
+  height: calc(var(--au) * 61);
+}
+
+.fq-notepad-art .fq-notepad-form[data-single][data-prompt="longer"] .fq-notepad-lines {
+  top: calc(var(--au) * 85);
+  height: calc(var(--au) * 160);
 }
 
 .fq-notepad-art .fq-notepad-lines {

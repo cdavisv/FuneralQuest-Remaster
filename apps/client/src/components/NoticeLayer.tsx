@@ -79,7 +79,9 @@ export function NoticeLayer({
   }, [day, dispatch]);
 
   return (
-    <div className="fq-notices">
+    // Not "fq-notices": that is the paper's wall of notes (NewsScene), whose rules (340 wide, a
+    // column, relative on a phone) squeezed this layer into the wall's column on every screen.
+    <div className="fq-noticelayer">
       <div className="fq-banners" role="status" aria-live="polite">
         {state.connection === "reconnecting" && (
           <p className="fq-banner fq-banner-conn" data-state="reconnecting">

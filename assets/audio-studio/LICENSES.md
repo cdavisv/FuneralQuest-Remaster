@@ -14,7 +14,7 @@ What every file in this directory is, and on what terms it is distributed.
 - **Licence.** These files are not covered by the project's licence the way the Synth pack is: their redistribution terms are those of ElevenLabs' terms of service for the plan the owner's account was on when they were generated. The owner confirmed on 2026-11-07 that the ElevenLabs plan's terms allow distributing these files in the public repository, in the web, desktop and mobile builds and in store builds (docs/DECISIONS.md, decision 24). They ship in every build.
 - **The Synth pack** (`assets/audio/`) remains fully generated from this repository's own code
   and carries the project's licence; any id this pack lacks plays from it.
-- **Cost.** 19801 credits in all (the ledger is in `sources.json`).
+- **Cost.** 21601 credits in all (the ledger is in `sources.json`).
 
 | File | Kind | Id | Model | Generation id | Generated on |
 |---|---|---|---|---|---|
@@ -76,8 +76,8 @@ What every file in this directory is, and on what terms it is distributed.
 | sfx/coins.m4a | sfx | `coins` | eleven_text_to_sound_v2 | g4rZLdj6wjloUi16MyYR | 2026-11-06 |
 | music/defeat.ogg | stinger | `defeat` | eleven_music_v2_5 | nI2f3iPEjwMZruPeq76d | 2026-11-06 |
 | music/defeat.m4a | stinger | `defeat` | eleven_music_v2_5 | nI2f3iPEjwMZruPeq76d | 2026-11-06 |
-| music/desk.ogg | music | `desk` | eleven_music_v2_5 | 6JovC0mNBViY4IN2tW4Q | 2026-11-06 |
-| music/desk.m4a | music | `desk` | eleven_music_v2_5 | 6JovC0mNBViY4IN2tW4Q | 2026-11-06 |
+| music/desk.ogg | music | `desk` | eleven_music_v2_5 | G1BtbYIXtxxkiDo1kgya | 2026-11-15 |
+| music/desk.m4a | music | `desk` | eleven_music_v2_5 | G1BtbYIXtxxkiDo1kgya | 2026-11-15 |
 | sfx/dice.ogg | sfx | `dice` | eleven_text_to_sound_v2 | GVtMCAGlqWieGPCnvlh7 | 2026-11-06 |
 | sfx/dice.m4a | sfx | `dice` | eleven_text_to_sound_v2 | GVtMCAGlqWieGPCnvlh7 | 2026-11-06 |
 | music/dimart.ogg | music | `dimart` | eleven_music_v2_5 | m3FzdwtV5NEN7WGbH8Z5 | 2026-11-06 |

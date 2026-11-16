@@ -36,12 +36,42 @@
   gap: calc(var(--u) * 8);
 }
 
-.fq-cabinet[data-cab] .fq-deskmenu-before ul {
-  grid-auto-columns: minmax(calc(var(--u) * 144), max-content);
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu-before ul {
+  grid-auto-columns: minmax(calc(var(--u) * 136), max-content);
 }
 
-.fq-cabinet[data-cab] .fq-deskmenu-after ul {
-  grid-auto-columns: minmax(calc(var(--u) * 96), max-content);
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu-after ul {
+  grid-auto-columns: minmax(calc(var(--u) * 80), max-content);
+  gap: calc(var(--u) * 6);
+}
+
+/* One row in the 4:3 and 16:9 cabinets, even with a host's End the Day and Expanded's sixth icon
+   (Parlor): wait (136) + six icons (6 x 62 + 5 x 4) + Exit and End the Day (about 200) is under the
+   text well's 760. Wrapping put the plaques in a second and third row over the well's last lines,
+   which the well only keeps clear for two. */
+.fq-cabinet:not([data-layout="phone"]) .fq-deskmenu {
+  flex-wrap: nowrap;
+  gap: calc(var(--u) * 6);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-orbs ul {
+  grid-auto-columns: calc(var(--u) * 62);
+  gap: calc(var(--u) * 4);
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-orb {
+  font-size: max(12px, calc(var(--u) * 14));
+}
+
+.fq-cabinet:not([data-layout="phone"]) .fq-orb-icon {
+  width: max(40px, calc(var(--u) * 42));
+  height: max(40px, calc(var(--u) * 42));
+}
+
+/* A label wraps, balanced, rather than running into the next icon's ("Town Map Read Paper" at
+   800 x 600, where an icon's column is 48 pixels). */
+.fq-cabinet:not([data-layout="phone"]) .fq-orb-label {
+  text-wrap: balance;
 }
 
 /* The row sits inside the text well, above its bezel. */

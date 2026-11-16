@@ -260,6 +260,10 @@ function NotepadDialog({
   const left = Math.max(0, overlay.maxLength - text.length);
   const submit = () => onAction({ type: "submitText", overlayId: overlay.id, text });
   const cancel = () => onAction({ type: "submitText", overlayId: overlay.id, text: null });
+  // How much room the question needs on the notepad's art (art.css): up to two short lines, two
+  // or three smaller ones under the rings, or more (it then takes the first ruled line too).
+  const promptChars = (overlay.prompt || t("overlay.textPrompt")).length;
+  const promptLen = promptChars > 60 ? "longer" : promptChars > 26 ? "long" : undefined;
   return (
     <Dialog className={notepad ? "fq-notepad fq-notepad-art" : "fq-notepad"} labelledBy={id}>
       {notepad ? (
@@ -274,16 +278,14 @@ function NotepadDialog({
       )}
       <form
         className="fq-notepad-form"
+        data-prompt={promptLen}
+        data-single={overlay.multiline ? undefined : ""}
         onSubmit={(e) => {
           e.preventDefault();
           submit();
         }}
       >
-        <p
-          id={id}
-          className="fq-notepad-prompt"
-          data-len={(overlay.prompt || t("overlay.textPrompt")).length > 26 ? "long" : undefined}
-        >
+        <p id={id} className="fq-notepad-prompt" data-len={promptLen}>
           {overlay.prompt || t("overlay.textPrompt")} {!notepad && <QuillIcon />}
         </p>
         <div className="fq-notepad-lines">

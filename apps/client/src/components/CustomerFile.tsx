@@ -2,6 +2,7 @@ import type { CustomerPanel } from "@fq/protocol";
 import { useEffect, useId, useRef, useState } from "react";
 import { gaugeFor } from "../expanded/gauge.js";
 import { useT } from "../i18n/I18nContext.js";
+import { useMoreBelow } from "../util/useMoreBelow.js";
 import { useScrollable } from "../util/useScrollable.js";
 import { EstimateGauge } from "./EstimateGauge.js";
 import { RichText } from "./RichText.js";
@@ -151,6 +152,10 @@ export function CustomerFile({
   const billPane = useRef<HTMLDivElement>(null);
   const notesScroll = useScrollable(notesPane);
   const billScroll = useScrollable(billPane);
+  // The notes fade at their foot while there are more below (a third note was out of sight, the
+  // edge of its first line showing under the second). The bill needs no fade: its total stays
+  // pinned at the foot of the pane.
+  const notesMore = useMoreBelow(notesPane, `${customer.name}|${notes.length}|${tab}`);
   const [why, setWhy] = useState(false);
   // A new customer starts on the notes.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the name identifies the customer.
@@ -261,6 +266,7 @@ export function CustomerFile({
             hidden={tab !== "notes"}
             className="fq-file-pane"
             ref={notesPane}
+            data-more={notesMore || undefined}
             {...(notesScroll ? { tabIndex: 0 } : {})}
           >
             {notesBody}

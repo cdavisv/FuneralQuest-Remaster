@@ -115,140 +115,8 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const opts = <T extends string>(prefix: string, values: T[]) =>
     values.map((value) => ({ value, label: t(`${prefix}.${value}` as MessageKey) }));
-  return (
-    <Dialog className="fq-dialog fq-settings fq-surface-dark" labelledBy={id}>
-      <h2 id={id} className="fq-settings-title">
-        {t("settings.title")}
-      </h2>
-      <h3 className="fq-set-heading">{t("settings.display")}</h3>
-      <Choice<FontSize>
-        legend={t("settings.fontSize")}
-        name="fq-font-size"
-        value={settings.fontSize}
-        options={opts("settings.fontSize", ["small", "normal", "large", "xlarge"])}
-        onChange={(fontSize) => update({ fontSize })}
-      />
-      <Choice<TypewriterSpeed>
-        legend={t("settings.typewriter")}
-        name="fq-typewriter"
-        value={settings.typewriter}
-        options={opts("settings.typewriter", ["off", "fast", "normal"])}
-        onChange={(typewriter) => update({ typewriter })}
-      />
-      <Choice<LayoutChoice>
-        legend={t("settings.layout")}
-        name="fq-layout"
-        value={settings.layout}
-        options={opts("settings.layout", ["auto", "classic", "wide", "phone"])}
-        onChange={(layout) => update({ layout })}
-      />
-      <Choice<string>
-        legend={t("settings.artPack")}
-        name="fq-art-pack"
-        value={art.pack.id}
-        options={PACKS.map((p) => ({ value: p.id, label: p.name }))}
-        onChange={(artPack) => update({ artPack })}
-      />
-      {art.pack.description && <p className="fq-set-note">{art.pack.description}</p>}
-      {prefersReducedMotion() && <p className="fq-set-note">{t("settings.reducedMotion")}</p>}
-      <h3 className="fq-set-heading">{t("settings.audio")}</h3>
-      <Slider
-        label={t("settings.volume.master")}
-        value={settings.volume.master}
-        onChange={(master) => update({ volume: { master } })}
-      />
-      <Slider
-        label={t("settings.volume.music")}
-        value={settings.volume.music}
-        onChange={(m) => update({ volume: { music: m } })}
-      />
-      <Slider
-        label={t("settings.volume.ambience")}
-        value={settings.volume.ambience}
-        onChange={(ambience) => update({ volume: { ambience } })}
-      />
-      <Slider
-        label={t("settings.volume.effects")}
-        value={settings.volume.effects}
-        onChange={(effects) => update({ volume: { effects } })}
-      />
-      <Toggle
-        label={t("settings.audio.mute")}
-        checked={settings.muted}
-        onChange={(muted) => update({ muted })}
-      />
-      <Toggle
-        label={t("settings.audio.radio")}
-        checked={settings.radio}
-        onChange={(radio) => update({ radio })}
-      />
-      <Choice<SoundPackSetting>
-        legend={t("settings.audio.pack")}
-        name="fq-sound-pack"
-        value={settings.soundPack}
-        options={opts("settings.audio.pack", [...SOUND_PACK_SETTINGS])}
-        onChange={(soundPack) => update({ soundPack, soundPackChosen: true })}
-      />
-      <p className="fq-set-note">{t("settings.audio.pack.note")}</p>
-      <p className="fq-set-note" data-testid="sound-pack-note">
-        {settings.soundPack === "auto"
-          ? t("settings.audio.note.auto", {
-              pack: t(`settings.audio.pack.${sound.pack}`),
-              reason: t(`settings.audio.reason.${autoReason(sound.context)}`),
-            })
-          : t(`settings.audio.note.${settings.soundPack}`)}
-      </p>
-      <p className="fq-set-note">
-        {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
-      </p>
-      <Toggle
-        label={t("settings.audio.voices")}
-        checked={voicesOn}
-        onChange={(on) => update({ voices: on ? "on" : "off" })}
-      />
-      <Slider
-        label={t("settings.volume.voice")}
-        value={settings.volume.voice}
-        onChange={(voice) => update({ volume: { voice } })}
-      />
-      <p className="fq-set-note">{t("settings.audio.voices.note")}</p>
-      {soloOnly() && getWrapper()?.openSettings && (
-        <>
-          <h3 className="fq-set-heading">{t("settings.reminders")}</h3>
-          <p className="fq-set-note">{t("settings.reminders.note")}</p>
-          <p>
-            <button
-              type="button"
-              className="fq-dbtn"
-              data-testid="reminder-settings"
-              onClick={() => openWrapperSettings()}
-            >
-              {t("settings.reminders.open")}
-            </button>
-          </p>
-        </>
-      )}
-      {!soloOnly() && getWrapper()?.openSettings && (
-        <>
-          <h3 className="fq-set-heading">{t("settings.server")}</h3>
-          <p className="fq-set-note">{t("settings.server.note")}</p>
-          <p>
-            <button
-              type="button"
-              className="fq-dbtn"
-              data-testid="server-address"
-              onClick={() => {
-                // The wrapper's own dialog opens above this one; it reloads the page if the address changes.
-                openWrapperSettings();
-              }}
-            >
-              {t("settings.server.open")}
-            </button>
-          </p>
-        </>
-      )}
-      {/* moderation hook: renders only in an online session */}
-      <SafetySettings />
+  const helpAndVersion = (
+    <>
       <h3 className="fq-set-heading">{t("settings.help")}</h3>
       <p className="fq-set-note">
         {(["intro", "gameplay", "rules", "credits"] as const).map((page, i) => (
@@ -277,6 +145,157 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           {t("feedback.open")}
         </button>
       </p>
+    </>
+  );
+  return (
+    <Dialog className="fq-dialog fq-settings fq-surface-dark" labelledBy={id}>
+      <h2 id={id} className="fq-settings-title">
+        {t("settings.title")}
+      </h2>
+      {/* Three columns where the window is wide enough (display; sound levels, help and version;
+          sound pack), two in a narrower one, one on a phone. */}
+      <div className="fq-set-cols">
+        <div className="fq-set-col">
+          <h3 className="fq-set-heading">{t("settings.display")}</h3>
+          <Choice<FontSize>
+            legend={t("settings.fontSize")}
+            name="fq-font-size"
+            value={settings.fontSize}
+            options={opts("settings.fontSize", ["small", "normal", "large", "xlarge"])}
+            onChange={(fontSize) => update({ fontSize })}
+          />
+          <Choice<TypewriterSpeed>
+            legend={t("settings.typewriter")}
+            name="fq-typewriter"
+            value={settings.typewriter}
+            options={opts("settings.typewriter", ["off", "fast", "normal"])}
+            onChange={(typewriter) => update({ typewriter })}
+          />
+          <Choice<LayoutChoice>
+            legend={t("settings.layout")}
+            name="fq-layout"
+            value={settings.layout}
+            options={opts("settings.layout", ["auto", "classic", "wide", "phone"])}
+            onChange={(layout) => update({ layout })}
+          />
+          <Choice<string>
+            legend={t("settings.artPack")}
+            name="fq-art-pack"
+            value={art.pack.id}
+            options={PACKS.map((p) => ({ value: p.id, label: p.name }))}
+            onChange={(artPack) => update({ artPack })}
+          />
+          {art.pack.description && <p className="fq-set-note">{art.pack.description}</p>}
+          {prefersReducedMotion() && <p className="fq-set-note">{t("settings.reducedMotion")}</p>}
+        </div>
+        <div className="fq-set-col">
+          <h3 className="fq-set-heading">{t("settings.audio")}</h3>
+          <Slider
+            label={t("settings.volume.master")}
+            value={settings.volume.master}
+            onChange={(master) => update({ volume: { master } })}
+          />
+          <Slider
+            label={t("settings.volume.music")}
+            value={settings.volume.music}
+            onChange={(m) => update({ volume: { music: m } })}
+          />
+          <Slider
+            label={t("settings.volume.ambience")}
+            value={settings.volume.ambience}
+            onChange={(ambience) => update({ volume: { ambience } })}
+          />
+          <Slider
+            label={t("settings.volume.effects")}
+            value={settings.volume.effects}
+            onChange={(effects) => update({ volume: { effects } })}
+          />
+          <Toggle
+            label={t("settings.audio.mute")}
+            checked={settings.muted}
+            onChange={(muted) => update({ muted })}
+          />
+          <Toggle
+            label={t("settings.audio.radio")}
+            checked={settings.radio}
+            onChange={(radio) => update({ radio })}
+          />
+          <Toggle
+            label={t("settings.audio.voices")}
+            checked={voicesOn}
+            onChange={(on) => update({ voices: on ? "on" : "off" })}
+          />
+          <Slider
+            label={t("settings.volume.voice")}
+            value={settings.volume.voice}
+            onChange={(voice) => update({ volume: { voice } })}
+          />
+          <p className="fq-set-note">
+            {music ? t("settings.audio.nowPlaying", { id: music }) : t("settings.audio.none")}
+          </p>
+          {helpAndVersion}
+        </div>
+        <div className="fq-set-col">
+          <Choice<SoundPackSetting>
+            legend={t("settings.audio.pack")}
+            name="fq-sound-pack"
+            value={settings.soundPack}
+            options={opts("settings.audio.pack", [...SOUND_PACK_SETTINGS])}
+            onChange={(soundPack) => update({ soundPack, soundPackChosen: true })}
+          />
+          <p className="fq-set-note">{t("settings.audio.pack.note")}</p>
+          {/* The rest of the explanations are a click away, so the controls fit the window. */}
+          <details className="fq-set-more">
+            <summary>{t("settings.audio.about")}</summary>
+            <p className="fq-set-note" data-testid="sound-pack-note">
+              {settings.soundPack === "auto"
+                ? t("settings.audio.note.auto", {
+                    pack: t(`settings.audio.pack.${sound.pack}`),
+                    reason: t(`settings.audio.reason.${autoReason(sound.context)}`),
+                  })
+                : t(`settings.audio.note.${settings.soundPack}`)}
+            </p>
+            <p className="fq-set-note">{t("settings.audio.voices.note")}</p>
+          </details>
+          {soloOnly() && getWrapper()?.openSettings && (
+            <>
+              <h3 className="fq-set-heading">{t("settings.reminders")}</h3>
+              <p className="fq-set-note">{t("settings.reminders.note")}</p>
+              <p>
+                <button
+                  type="button"
+                  className="fq-dbtn"
+                  data-testid="reminder-settings"
+                  onClick={() => openWrapperSettings()}
+                >
+                  {t("settings.reminders.open")}
+                </button>
+              </p>
+            </>
+          )}
+          {!soloOnly() && getWrapper()?.openSettings && (
+            <>
+              <h3 className="fq-set-heading">{t("settings.server")}</h3>
+              <p className="fq-set-note">{t("settings.server.note")}</p>
+              <p>
+                <button
+                  type="button"
+                  className="fq-dbtn"
+                  data-testid="server-address"
+                  onClick={() => {
+                    // The wrapper's own dialog opens above this one; it reloads the page if the address changes.
+                    openWrapperSettings();
+                  }}
+                >
+                  {t("settings.server.open")}
+                </button>
+              </p>
+            </>
+          )}
+          {/* moderation hook: renders only in an online session */}
+          <SafetySettings />
+        </div>
+      </div>
       {feedbackOpen && <FeedbackDialog onClose={() => setFeedbackOpen(false)} />}
       <div className="fq-dialog-actions">
         <button type="button" className="fq-dbtn" onClick={onClose}>
