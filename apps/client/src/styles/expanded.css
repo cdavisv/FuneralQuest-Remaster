@@ -1441,10 +1441,39 @@ body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
   background: rgba(255, 244, 190, 0.16);
 }
 
+/* The graveyard's spot is part of the map's own drawing: like a building's, it keeps its drawn
+   size. On a phone's larger map it is under 44px, and grown to that it covered the parlors below
+   it; the list of places under the map is the touch target there. */
+.fq-hotspots .fq-hotspot-area {
+  min-width: 0;
+  min-height: 0;
+}
+
 .fq-cabinet[data-layout="phone"] .fq-map > .fq-townstrip[data-variant="map"] {
   position: static;
   max-width: none;
   margin: 0 0 8px;
+}
+
+/* An Expanded town's larger map (the 2001 map with the town grown east and south) keeps its own
+   shape and fits the room: beside the list of places on a wide window, the whole stage in the
+   1024 x 745 layout, the page's width on a phone. */
+.fq-cabinet:not([data-layout="phone"]) .fq-map[data-map="expanded"] {
+  container-type: size;
+}
+
+.fq-map[data-map="expanded"] .fq-map-frame {
+  aspect-ratio: var(--map-ratio);
+  height: auto;
+  width: min(100%, calc(100cqh * var(--map-ratio)));
+}
+
+.fq-cabinet[data-layout="wide"] .fq-map[data-map="expanded"] .fq-map-frame {
+  width: min(calc(var(--u) * 990), calc(100cqh * var(--map-ratio)));
+}
+
+.fq-cabinet[data-layout="phone"] .fq-map[data-map="expanded"] .fq-map-frame {
+  width: 100%;
 }
 
 .fq-map-list[data-many] ul {

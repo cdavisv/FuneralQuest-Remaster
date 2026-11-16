@@ -117,6 +117,7 @@ export function buildPacks(
       cabinets: json.cabinets ?? {},
       fits: json.fits ?? {},
       ...(json.map ? { map: json.map } : {}),
+      ...(json.expandedMap ? { expandedMap: json.expandedMap } : {}),
       ...(json.news ? { news: json.news } : {}),
     });
   }
@@ -132,7 +133,10 @@ export function buildPacks(
  * alone; a player on any other pack should still see them instead of a stand-in. So a pack that
  * lacks an icon takes it from any other pack that has it, and a piece that is only a stand-in in
  * one pack is replaced by the real piece of another. A pack's own art always wins, and the
- * chrome (cabinets, geometry) is never borrowed.
+ * chrome (cabinets, geometry) is never borrowed, with one exception: the larger map of an
+ * Expanded town, which has no Classic original either. A pack that draws the 2001 map takes the
+ * larger map (its picture and where the places stand) from a pack that has it, so the Classic
+ * art shows an Expanded town on it too; a Classic town keeps the 2001 map in every pack.
  */
 export function shareAcross(packs: ArtPack[]): ArtPack[] {
   return packs.map((pack) => {
@@ -150,9 +154,17 @@ export function shareAcross(packs: ArtPack[]): ArtPack[] {
       if (real?.pieces[name]) pieces[name] = real.pieces[name];
       else placeholders.push(name);
     }
+    const big = pack.expandedMap
+      ? undefined
+      : others.find((o) => o.expandedMap && o.pieces["deathville-map-expanded-base"]);
+    const bigBase = big?.pieces["deathville-map-expanded-base"];
+    const borrow = bigBase !== undefined && pieces["deathville-map-base"] !== undefined;
+    if (borrow) pieces["deathville-map-expanded-base"] = bigBase;
+    const expandedMap = pack.expandedMap ?? (borrow ? big?.expandedMap : undefined);
     const { placeholders: _dropped, ...rest } = pack;
     return {
       ...rest,
+      ...(expandedMap ? { expandedMap } : {}),
       pieces,
       ...(placeholders.length > 0 ? { placeholders } : {}),
       ...(Object.keys(icons).length > 0 ? { icons } : {}),
@@ -187,6 +199,9 @@ function inherit(pack: ArtPack, all: ArtPack[], seen: Set<string> = new Set()): 
     cabinets: { ...base.cabinets, ...pack.cabinets },
     fits: { ...base.fits, ...pack.fits },
     ...(pack.map || base.map ? { map: pack.map ?? base.map } : {}),
+    ...(pack.expandedMap || base.expandedMap
+      ? { expandedMap: pack.expandedMap ?? base.expandedMap }
+      : {}),
     ...(pack.news || base.news ? { news: pack.news ?? base.news } : {}),
   };
 }

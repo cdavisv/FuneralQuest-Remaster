@@ -3122,18 +3122,22 @@ async function mapProblems(page: Page): Promise<string[]> {
       Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
       Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
     // The title: drawn over the hand-drawn map, part of the picture of the Classic art's map
-    // (20,13 152x30 in its viewBox -244,-275 452x343, as apps/client/test/placesA.map.test.ts).
+    // (20,13 152x30 in its viewBox -244,-275 452x343, as apps/client/test/placesA.map.test.ts),
+    // and on the new boulevard of an Expanded town's larger map (296.5,39.5 152x30 in its
+    // viewBox -244,-275 752x533; tools/art/pieces/map.mjs moves the caption by 276.5, 26.5).
     let title: DOMRect | null = null;
     const drawn = document.querySelector(".fq-map-title");
     const list = document.querySelector(".fq-hotspots");
+    const larger = document.querySelector('.fq-map[data-map="expanded"]') !== null;
+    const [tx, ty, vw, vh] = larger ? [296.5, 39.5, 752, 533] : [20, 13, 452, 343];
     if (drawn) title = drawn.getBoundingClientRect();
     else if (document.querySelector(".fq-map-base") && list) {
       const r = list.getBoundingClientRect();
       title = new DOMRect(
-        r.left + (r.width * (20 + 244)) / 452,
-        r.top + (r.height * (13 + 275)) / 343,
-        (r.width * 152) / 452,
-        (r.height * 30) / 343,
+        r.left + (r.width * (tx + 244)) / vw,
+        r.top + (r.height * (ty + 275)) / vh,
+        (r.width * 152) / vw,
+        (r.height * 30) / vh,
       );
     }
     const rows = [...document.querySelectorAll<HTMLElement>(".fq-map-list button")];

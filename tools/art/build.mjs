@@ -92,6 +92,8 @@ async function main() {
         kind: p.kind,
         ...(p.overrides ? { overrides: p.overrides } : { adds: true }),
         ...(p.usedBy ? { usedBy: p.usedBy } : {}),
+        // A piece that holds original art (the larger map holds the whole 2001 map) names it.
+        ...(p.embeds ? { embeds: p.embeds } : {}),
         grade: p.grade,
         notes: p.notes,
         viewBox: p.viewBox ?? "0 0 550 400",

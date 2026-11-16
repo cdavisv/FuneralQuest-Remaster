@@ -45,10 +45,16 @@ for (const file of walk(dir)) {
   if (!vb) problems.push(`${id}: no viewBox`);
   else if (entry && vb !== entry.viewBox)
     problems.push(`${id}: viewBox ${vb}, manifest says ${entry.viewBox}`);
-  if (/<image\b/i.test(svg)) problems.push(`${id}: embeds an <image>`);
-  if (/data:image\//i.test(svg)) problems.push(`${id}: embeds a data: bitmap`);
-  if (/(?:xlink:)?href="(?!#)/i.test(svg)) problems.push(`${id}: external href`);
-  if (/url\((?!#)/i.test(svg)) problems.push(`${id}: external url()`);
+  // A piece that holds original art (manifest `embeds`) may carry that art's own bitmaps, byte
+  // for byte (the 2001 map's two textures), and no other.
+  const source = entry?.embeds ? readFileSync(join(root, entry.embeds), "utf8") : null;
+  const bitmaps = svg.match(/data:image\/[^"')\s]+/gi) ?? [];
+  const own = source !== null && bitmaps.every((b) => source.includes(b));
+  if (/<image\b/i.test(svg) && !own) problems.push(`${id}: embeds an <image>`);
+  if (bitmaps.length > 0 && !own) problems.push(`${id}: embeds a data: bitmap`);
+  const refs = own ? svg.replace(/href="data:image\/[^"]+"/gi, "") : svg;
+  if (/(?:xlink:)?href="(?!#)/i.test(refs)) problems.push(`${id}: external href`);
+  if (/url\((?!#)/i.test(refs)) problems.push(`${id}: external url()`);
   if (/<text\b|<tspan\b|font-family|@font-face/i.test(svg))
     problems.push(`${id}: live text or a font`);
   if (/<script\b|<foreignObject\b|\son[a-z]+=/i.test(svg))

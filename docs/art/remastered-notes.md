@@ -2,7 +2,7 @@
 
 The Remastered pack is new vector art for FuneralQuest Remastered, drawn in the style of Akiko Robinson's 2001 artwork (see `style-guide.md`). It redraws the twelve auto-traced photographs, and adds the Expanded ruleset's places, people and icons. It replaces no original portrait. Everything it does not draw is the Classic art, and the UI chrome stays the original's.
 
-- **Files:** `assets/remastered/<id>.svg` (96 SVGs, 1.5 MB in all, largest 131 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
+- **Files:** `assets/remastered/<id>.svg` (97 SVGs, 1.8 MB in all, largest the larger map at 294 KB), listed with grade, notes, credit and licence in `assets/remastered/manifest.json`.
 - **Sheets:** `assets/remastered/contact-sheet.png` and `.html` (every piece with its grade); `assets/remastered/comparisons.png` and `comparisons/*.png` (each traced original beside its redraw).
 - **Credit:** "FuneralQuest Remastered project, in the style of Akiko Robinson's original art", CC BY 4.0. No original portrait is overridden: every original person picture is used unchanged under every art pack.
 
@@ -19,7 +19,7 @@ Every piece is hand-authored SVG written as code in `tools/art/`:
 | `font.mjs` | Hand-lettered capitals drawn as paths, for signs (no fonts in any file). |
 | `pieces/*.mjs` | One function per piece, with its id, grade and notes. |
 | `build.mjs` | Writes every piece and the manifest; `--preview DIR` renders PNGs. UI pieces and icons are copied into the client pack. |
-| `check.mjs` | Fails on any SVG that does not render, has the wrong viewBox, or holds a bitmap, an external reference, live text or script. |
+| `check.mjs` | Fails on any SVG that does not render, has the wrong viewBox, or holds a bitmap, an external reference, live text or script. The one exception: a piece whose manifest entry `embeds` an original file may carry that file's own bitmaps, byte for byte (the larger map holds the 2001 map and its two textures). |
 | `sheets.py` | The contact sheet and comparison sheets. |
 | `thumbs.mjs` | The first-pass thumbnails (composition block-ins), kept for reference. |
 
@@ -30,7 +30,7 @@ node tools/art/check.mjs            # verify
 python3 tools/art/sheets.py         # contact and comparison sheets
 ```
 
-The output files are standalone: each has its own `<defs>`, and nothing references anything outside it. Parts are shared in the generator, never between files.
+The output files are standalone: each has its own `<defs>`, and nothing references anything outside it. Parts are shared in the generator, never between files. One piece is not all new drawing: `ui/deathville-map-expanded-base` holds the whole 2001 map (see below), so its manifest entry names the file it embeds and gives both credits and both licences.
 
 ## The client
 
@@ -71,13 +71,15 @@ A ships; B is an acceptable placeholder that holds up beside the originals; C ne
 
 **The eight batch A and B places** (docs/expanded-rules.md sections 30 and 31):
 
-- **Map buildings** (`ui/building-police-station`, `-crematorium`, `-florist`, `-gazette`, `-coroner`, `-health-department`, `-pawn-shop`, `-mournes`; **B**): the oblique projection, 1.3 unit black outline, translucent shadow and two-tone gradient faces of the City Hall and Reaper Club. Police: blue-grey stone, POLICE band, globe lamps, beacon, flag. Crematorium: brick, iron oven door, tall chimney and smoke. Florist: pink cottage, green gable, striped awnings, blooms. Gazette: tall tan office, red masthead, water tank. Coroner: pale green-grey block, green lamps, hearse bay. Health Department: white clinic, green band and cross, clipboard board. Pawn Shop: brownstone, PAWN banner, three gold balls. Mourne & Sons: charcoal Victorian, white porch, wreathed black door. They are drawn smaller than the original buildings (about 60% of the City Hall's footprint) because the base map has little free ground; their hot-spots also left the bottom edge, where the baked-in "Deathville Map" title sits (`apps/client/src/art/packs/classic/pack.json` `map.expanded`, `src/scenes/mapData.ts`). `tools/art/placeholders.mjs` writes the same buildings flat (plain fills, no texture lines) as the Classic pack's stand-ins.
+- **Map buildings** (`ui/building-police-station`, `-crematorium`, `-florist`, `-gazette`, `-coroner`, `-health-department`, `-pawn-shop`, `-mournes`; **B**): the oblique projection, 1.3 unit black outline, translucent shadow and two-tone gradient faces of the City Hall and Reaper Club. Police: blue-grey stone, POLICE band, globe lamps, beacon, flag. Crematorium: brick, iron oven door, tall chimney and smoke. Florist: pink cottage, green gable, striped awnings, blooms. Gazette: tall tan office, red masthead, water tank. Coroner: pale green-grey block, green lamps, hearse bay. Health Department: white clinic, green band and cross, clipboard board. Pawn Shop: brownstone, PAWN banner, three gold balls. Mourne & Sons: charcoal Victorian, white porch, wreathed black door. On the 2001 map they had to be squeezed in at about 60% of the City Hall's footprint (`apps/client/src/art/packs/classic/pack.json` `map.expanded`, still the fallback for a pack that draws the 2001 map but has no larger one); an Expanded town now has the larger map below, where they stand at the originals' size. `tools/art/placeholders.mjs` writes the same buildings flat (plain fills, no texture lines) as the Classic pack's stand-ins.
 - **Scenes** (`places/florist`, `places/gazette`, `places/coroner`, `places/health-department`, `places/pawn-shop`, `places/mournes`; **B**): flat interiors in the manner of `places/parlor-office` and `places/prep-table`, the middle third left calm for the portrait. The Police Station keeps the original `places/funeral_enemy_police` (a squad car at a funeral home) and the Crematorium the original `places/creamation_oven`; both already fit.
 - **Portraits** (`people/sergeant-bixby`, `marigold-thorne`, `hal-pennywhistle`, `dr-grimble`, `cousin-sal`, `augustus-mourne`; **C**): the same parametric head as the other new portraits, with the same limits. The Health Department keeps `people/inspector-mudge`.
 - **Sheets:** `assets/remastered/places-comparison.png` (the Classic map with every building in place, then the new buildings beside the originals) and `places-scenes-comparison.png` (new scenes beside existing ones, each new portrait in front of its scene). Sources: `tools/art/pieces/buildings8.mjs`, `places8.mjs`, `people3.mjs`; `fit8.mjs` measures each building's fit; `places8_sheet.py` makes the sheets.
 - **Grade:** the buildings match the City Hall and Reaper Club closely (projection, line, gradients) and sit well beside the original hospital, store and church, but are plainer than the originals' painted detail and smaller on the map (B, not A). The scenes are flat and tidy beside the Di-Mart and bank redraws. The portraits are C like the rest.
 
-Totals: 1 A, 80 B, 15 C.
+**The larger map** (`ui/deathville-map-expanded-base`, **B**; `tools/art/pieces/map.mjs`): an Expanded town's map, 752 x 533 art units against the 2001 map's 452 x 343. The 2001 base map is kept whole, every path unchanged and in its place with its two textures; the town grows east and south round it. The new streets continue the original's road edges where they leave the old map (the boulevard's lot edge leaves at y 2.5 running 1 in 13 downhill, the bottom-left lot's at x -150.3 heading down and left; both measured on the original), the new lots are in its pavement texture over its kerb (a flat #999 band offset down and right), and the ground detail is mostly the original's own: its parked cars and its row of sheds placed again, its top-left park mirrored into the two new bottom corners so its cut edges lie on the frame. New drawing: hedged lawns and white walks in the original's colours, bush clumps, flower beds by the florist, and a hedge where the old edge cut through the graveyard park (it covers the old map's last few units there). The frame is stretched to the new size and the "Deathville Map" caption sits on the new boulevard. Where each place stands is the Remastered pack's `expandedMap`: the nine originals where the 2001 map has them (the Cafe trimmed as in any Expanded town), the twelve Expanded places at 75 to 96 units, the originals' size. The client uses it for any town with a place the 2001 map lacks, in every pack that draws the 2001 map (it is shared like the Expanded buildings, since an Expanded town has no original map); a Classic town keeps the 2001 map. Credit and licence: the 2001 map is Akiko Robinson's (Robinson Technologies) under the Proton SDK license, the additions are the project's under CC BY 4.0, as the manifest entry says. Tests: `apps/client/test/largerMap.test.tsx`.
+
+Totals: 1 A, 81 B, 15 C.
 
 ## Compared and corrected
 
