@@ -54,6 +54,8 @@ export const PIECE_NAMES = [
   "skull-female",
   // Map.
   "deathville-map-base",
+  // The larger map of an Expanded town (Remastered): the 2001 map grown east and south.
+  "deathville-map-expanded-base",
   "building-funeral-home",
   "building-bank",
   "building-store",
@@ -218,6 +220,19 @@ export interface PackJson {
      */
     expanded?: Record<string, Rect>;
   };
+  /**
+   * The larger map of an Expanded town: the piece `deathville-map-expanded-base` (the 2001 map
+   * with the town grown round it) and where every place stands on it, in its own art units. Used
+   * instead of `map` when the town has any place the original map does not have, so a Classic
+   * town's map is exactly the original's.
+   */
+  expandedMap?: MapGeometry;
+}
+
+/** A map picture's art units and the place each building stands, keyed by place id. */
+export interface MapGeometry {
+  viewBox: [number, number, number, number];
+  buildings: Record<string, Rect>;
 }
 
 export interface ArtPack {
@@ -243,5 +258,6 @@ export interface ArtPack {
   cabinets: Record<string, CabinetSpec>;
   fits: Partial<Record<"classic" | "wide", Fit>>;
   map?: PackJson["map"];
+  expandedMap?: MapGeometry;
   news?: NewsSpec;
 }

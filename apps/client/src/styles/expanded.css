@@ -1447,6 +1447,27 @@ body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
   margin: 0 0 8px;
 }
 
+/* An Expanded town's larger map (the 2001 map with the town grown east and south) keeps its own
+   shape and fits the room: beside the list of places on a wide window, the whole stage in the
+   1024 x 745 layout, the page's width on a phone. */
+.fq-cabinet:not([data-layout="phone"]) .fq-map[data-map="expanded"] {
+  container-type: size;
+}
+
+.fq-map[data-map="expanded"] .fq-map-frame {
+  aspect-ratio: var(--map-ratio);
+  height: auto;
+  width: min(100%, calc(100cqh * var(--map-ratio)));
+}
+
+.fq-cabinet[data-layout="wide"] .fq-map[data-map="expanded"] .fq-map-frame {
+  width: min(calc(var(--u) * 990), calc(100cqh * var(--map-ratio)));
+}
+
+.fq-cabinet[data-layout="phone"] .fq-map[data-map="expanded"] .fq-map-frame {
+  width: 100%;
+}
+
 .fq-map-list[data-many] ul {
   gap: calc(var(--u) * 4);
 }

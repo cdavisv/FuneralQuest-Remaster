@@ -1,16 +1,19 @@
 import type { CSSProperties } from "react";
 import { useArt } from "../art/ArtContext.js";
-import type { PieceName, Rect } from "../art/types.js";
+import type { MapGeometry, PieceName, Rect } from "../art/types.js";
 import { PictureLayers } from "../components/Picture.js";
 import { Plaques } from "../components/Plaques.js";
 import { RichText } from "../components/RichText.js";
 import { TownStrip } from "../components/TownStrip.js";
 import { useT } from "../i18n/I18nContext.js";
 import { FallbackMap } from "./FallbackMap.js";
-import { hotspotBox, mapRects, pinBox } from "./mapData.js";
+import { hotspotBox, isExpandedTown, mapRects, pinBox } from "./mapData.js";
 import type { SceneProps } from "./types.js";
 
 const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
+
+/** True for a spot in the map's top row: its label goes under it (above, the frame cut it off). */
+const nearTop = (r: Rect, vb: [number, number, number, number]) => (r.y - vb[1]) / vb[3] < 0.12;
 
 /** A building's box as a share of the map picture. */
 function buildingBox(r: Rect, vb: [number, number, number, number]): CSSProperties {
@@ -28,20 +31,36 @@ export function MapScene({ view, layout, onPress, onAction }: SceneProps) {
   const art = useArt();
   const places = view.map ?? [];
   const visit = (placeId: string) => onAction({ type: "visit", placeId });
-  const baseUrl = art.piece("deathville-map-base");
-  const geometry = baseUrl ? art.pack.map : undefined;
-  const rects = geometry
-    ? mapRects(
-        places.map((p) => p.id),
-        geometry.buildings,
-        geometry.expanded,
-      )
-    : {};
+  const ids = places.map((p) => p.id);
+  // The 2001 map, or for an Expanded town the larger map when the pack has one (the town grown
+  // round the 2001 map, every place at the originals' size).
+  const original = art.piece("deathville-map-base") ? art.pack.map : undefined;
+  const larger = art.pack.expandedMap;
+  const largerUrl = art.piece("deathville-map-expanded-base");
+  const useLarger =
+    original !== undefined &&
+    larger !== undefined &&
+    largerUrl !== undefined &&
+    isExpandedTown(ids, original.buildings);
+  const baseUrl = useLarger ? largerUrl : art.piece("deathville-map-base");
+  const geometry: MapGeometry | undefined = useLarger ? larger : original;
+  const rects: Record<string, Rect> = useLarger
+    ? larger.buildings
+    : original
+      ? mapRects(ids, original.buildings, original.expanded)
+      : {};
+  const frameStyle = useLarger
+    ? ({ "--map-ratio": (larger.viewBox[2] / larger.viewBox[3]).toFixed(4) } as CSSProperties)
+    : undefined;
   return (
-    <div className="fq-map" data-art-map={geometry ? "pieces" : undefined}>
+    <div
+      className="fq-map"
+      data-art-map={geometry ? "pieces" : undefined}
+      data-map={useLarger ? "expanded" : undefined}
+    >
       <h1 className="fq-sr">{view.title}</h1>
       {view.town && <TownStrip town={view.town} variant="map" />}
-      <div className="fq-map-frame">
+      <div className="fq-map-frame" style={frameStyle}>
         <div className="fq-map-art">
           {geometry && baseUrl ? (
             <img className="fq-map-base" src={baseUrl} alt="" draggable={false} />
@@ -68,6 +87,7 @@ export function MapScene({ view, layout, onPress, onAction }: SceneProps) {
                     <button
                       type="button"
                       className="fq-hotspot fq-hotspot-building"
+                      data-edge={nearTop(rect, geometry.viewBox) ? "top" : undefined}
                       onClick={() => visit(p.id)}
                       aria-label={t("map.visit", { place: p.label })}
                     >
@@ -87,6 +107,7 @@ export function MapScene({ view, layout, onPress, onAction }: SceneProps) {
                     <button
                       type="button"
                       className="fq-hotspot fq-hotspot-area"
+                      data-edge={nearTop(rect, geometry.viewBox) ? "top" : undefined}
                       onClick={() => visit(p.id)}
                       aria-label={t("map.visit", { place: p.label })}
                     >

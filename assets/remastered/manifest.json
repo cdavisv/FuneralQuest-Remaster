@@ -562,6 +562,19 @@
       "license": "CC BY 4.0"
     },
     {
+      "id": "ui/deathville-map-expanded-base",
+      "file": "remastered/ui/deathville-map-expanded-base.svg",
+      "kind": "ui",
+      "adds": true,
+      "usedBy": "the Deathville map of an Expanded town (the buildings are laid over it)",
+      "embeds": "assets/classic/ui/deathville-map-base.svg",
+      "grade": "B",
+      "notes": "The 2001 map whole and unchanged, with the town grown east and south: new streets that continue the original's road edges in its curves, new lots in its pavement texture over its kerb, its parked cars, sheds and top-left park reused as ground detail, new hedged lawns and white walks, a hedge where the old edge cut the graveyard park, the frame stretched and the caption moved onto the new boulevard.",
+      "viewBox": "-244 -275 752 533",
+      "credit": "The 2001 map: Akiko Robinson (Robinson Technologies). The additions: FuneralQuest Remastered project, in the style of Akiko Robinson's original art",
+      "license": "The 2001 map: Proton SDK license. The additions: CC BY 4.0"
+    },
+    {
       "id": "places/palors",
       "file": "remastered/places/palors.svg",
       "kind": "redraw",

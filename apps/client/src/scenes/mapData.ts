@@ -122,3 +122,11 @@ export function mapRects<R>(
   const isExpanded = Object.keys(expanded).some((id) => !(id in buildings) && ids.includes(id));
   return isExpanded ? { ...buildings, ...expanded } : buildings;
 }
+
+/**
+ * True when the town has a place the 2001 map does not (`buildings` are the original's spots):
+ * an Expanded town, which gets the larger map when the art pack has one.
+ */
+export function isExpandedTown(ids: string[], buildings: Record<string, unknown>): boolean {
+  return ids.some((id) => !(id in buildings));
+}
