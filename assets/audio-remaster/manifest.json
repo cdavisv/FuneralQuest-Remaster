@@ -2,7 +2,7 @@
   "generator": "ElevenLabs generations post-processed by packages/audio (pnpm --filter @fq/audio run remaster)",
   "license": "Generated with ElevenLabs under the owner's account from text prompts; no original 2001 audio was used. Redistribution terms are ElevenLabs' terms for that plan, unconfirmed (see LICENSES.md).",
   "sampleRate": 48000,
-  "totalBytes": 1218744,
+  "totalBytes": 1218391,
   "live": [
     "ui-click",
     "ui-hover",
@@ -73,16 +73,16 @@
         {
           "ogg": "ambience/places-desk.ogg",
           "m4a": "ambience/places-desk.m4a",
-          "bytes": 12210
+          "bytes": 11857
         }
       ],
-      "lufs": -27.4,
-      "peakDb": -6,
-      "lufsEncoded": -32,
+      "lufs": -33.4,
+      "peakDb": -12,
+      "lufsEncoded": -38,
       "loopStart": 0.25,
       "loopEnd": 1.24,
       "loopCheck": {
-        "periodDb": -9.1,
+        "periodDb": -7.4,
         "rawJoin": 0,
         "joinRatio": 0
       }
@@ -803,16 +803,16 @@
         {
           "ogg": "ambience/places-desk.ogg",
           "m4a": "ambience/places-desk.m4a",
-          "bytes": 12210
+          "bytes": 11857
         }
       ],
-      "lufs": -27.4,
-      "peakDb": -6,
-      "lufsEncoded": -32,
+      "lufs": -33.4,
+      "peakDb": -12,
+      "lufsEncoded": -38,
       "loopStart": 0.25,
       "loopEnd": 1.24,
       "loopCheck": {
-        "periodDb": -9.1,
+        "periodDb": -7.4,
         "rawJoin": 0,
         "joinRatio": 0
       }
@@ -827,16 +827,16 @@
         {
           "ogg": "ambience/places-desk.ogg",
           "m4a": "ambience/places-desk.m4a",
-          "bytes": 12210
+          "bytes": 11857
         }
       ],
-      "lufs": -27.4,
-      "peakDb": -6,
-      "lufsEncoded": -32,
+      "lufs": -33.4,
+      "peakDb": -12,
+      "lufsEncoded": -38,
       "loopStart": 0.25,
       "loopEnd": 1.24,
       "loopCheck": {
-        "periodDb": -9.1,
+        "periodDb": -7.4,
         "rawJoin": 0,
         "joinRatio": 0
       }

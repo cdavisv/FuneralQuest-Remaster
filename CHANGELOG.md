@@ -6,7 +6,7 @@ The version number lives in one place, the root `package.json`, and every app re
 
 ## Unreleased
 
-Nothing yet.
+- **The office no longer ticks at you.** At the desk the music kept time with a woodblock "wall clock" and the clock ambience ticked over it at the full ambience level (in Classic a one-second loop), so the office was a constant tick-tock. The desk music ("Office Hours", Studio pack; Classic plays it too, the 2001 desk having had no music) is retaken without percussion or ticking: soft reed organ, muted strings, a little upright bass and celesta, generated with ElevenLabs on the owner's account (two takes, 1,800 credits; the one with the least click energy and the cleaner loop is used, and no speech was found in it). Both desk clocks are 6 dB quieter (the remastered one at -33 LUFS, back where the 2001 clock sat under the music; the Studio one at -32). The packs' briefs carry the change (`levelDb`), and their ledgers are written as committed (the scripts had an old licence paragraph).
 
 ## 0.1.0-alpha.2 (2026-11-12)
 

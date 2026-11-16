@@ -57,6 +57,13 @@ export interface RemasterEntry {
   key?: string;
   /** Takes to generate (two for effects and ambience, one for music). */
   takes: number;
+  /**
+   * Extra level in dB on top of the pack's target and the original's relative loudness, where a
+   * listen found the remake too present in play. The desk clock: the 2001 clock sat 13 to 17 dB
+   * under the game's music and the desk had no music at all; delivered at the ambience target
+   * it ticked a whole second loop over the office music (owner's report, 2026-11-15).
+   */
+  levelDb?: number;
 }
 
 const music = (s: number) => ({
@@ -225,6 +232,7 @@ export const REMASTER: RemasterEntry[] = [
     seconds: 0.99,
     loop: true,
     takes: 2,
+    levelDb: -6,
   },
   {
     id: "places-embalming-room",

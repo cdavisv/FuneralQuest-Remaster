@@ -293,13 +293,24 @@ describe("the pack manifests", () => {
     expect(studio.live).toEqual(synth.live);
   });
 
-  it("studio loudness matches the Synth targets", () => {
+  it("studio loudness matches the Synth targets (plus a brief's own levelDb)", () => {
     if (!studio) return;
     for (const [id, t] of Object.entries(studio.tracks)) {
+      const offset = BRIEF.find((b) => b.id === id)?.levelDb ?? 0;
       if (t.kind === "music" || t.kind === "stinger")
-        expect(Math.abs(t.lufs + 16), id).toBeLessThan(0.6);
-      if (t.kind === "ambience") expect(Math.abs(t.lufs + 26), id).toBeLessThan(0.6);
+        expect(Math.abs(t.lufs + 16 - offset), id).toBeLessThan(0.6);
+      if (t.kind === "ambience") expect(Math.abs(t.lufs + 26 - offset), id).toBeLessThan(0.6);
     }
+  });
+
+  it("the desk clock is quieter than the ambience target, under music without a clock", () => {
+    // Owner's report 2026-11-15: the office was a constant tick-tock (a clock in the music and a
+    // clock ambience at full level). The desk music is retaken without one, the clock is 6 dB down.
+    expect(BRIEF.find((b) => b.id === "amb-clock")?.levelDb).toBe(-6);
+    const desk = BRIEF.find((b) => b.id === "desk");
+    expect(desk?.prompt).toMatch(/no ticking/i);
+    expect(desk?.prompt).not.toMatch(/woodblock|wall clock/i);
+    if (studio?.tracks["amb-clock"]) expect(studio.tracks["amb-clock"].lufs).toBeLessThan(-30);
   });
 
   it("studio negotiation stems are whole pieces in step, crossfaded", () => {

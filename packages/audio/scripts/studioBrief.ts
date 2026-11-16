@@ -39,6 +39,12 @@ export interface BriefEntry {
    * this rate (beats per minute, the tracker's prior) and grouping, about `loopSeconds` long.
    */
   pulse?: { bpm: number; beatsPerBar: number };
+  /**
+   * Extra level in dB on top of the kind's target, where a listen found the track too present in
+   * play. The desk clock: the office music already keeps time, and a clock at the ambience target
+   * made the desk a constant ticking (owner's report, 2026-11-15).
+   */
+  levelDb?: number;
 }
 
 const instrumental = (seconds: number) => ({
@@ -95,9 +101,11 @@ export const BRIEF: BriefEntry[] = [
     where:
       "The player's own parlor: the desk, the news, the embalming room, waiting for customers.",
     model: MUSIC_MODEL,
-    prompt: `Quiet instrumental office music in A minor at 72 bpm: soft muted reed organ chords, a sparse upright bass, and a steady woodblock and rim click like a ticking wall clock, with an occasional lazy vibraphone phrase. Patient, a little drowsy and wry, very low-key background. ${STEADY}`,
-    params: instrumental(65),
-    bpm: 72,
+    // Retaken 2026-11-15 (owner's report): the first take kept time with a woodblock "wall
+    // clock", and under the desk's own clock ambience the office was a constant tick-tock.
+    prompt: `Quiet instrumental funeral-parlor office music in A minor at 66 bpm: warm, soft reed organ chords and muted strings, a sparse plucked upright bass, and now and then a gentle celesta phrase. Calm, respectful and faintly wry, like the back office of a small-town funeral home on a slow afternoon. No drums, no percussion, no ticking. ${STEADY}`,
+    params: instrumental(60),
+    bpm: 66,
     beatsPerBar: 4,
     key: "A minor",
     loopSeconds: 53,
@@ -389,6 +397,7 @@ export const BRIEF: BriefEntry[] = [
     params: { ...amb(12), prompt_influence: 0.7 },
     pulse: { bpm: 60, beatsPerBar: 2 },
     loopSeconds: 8,
+    levelDb: -6,
   },
   {
     id: "amb-wind",

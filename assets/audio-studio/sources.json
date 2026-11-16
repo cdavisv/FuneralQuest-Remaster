@@ -54,6 +54,12 @@
       "description": "negotiation x3, main-stinger, victory, defeat, endday x1",
       "estimated": 4922.5,
       "actual": 2685
+    },
+    {
+      "batch": "desk2",
+      "description": "desk retake x2 on the Music page (no clock)",
+      "estimated": 1800,
+      "actual": 1800
     }
   ],
   "tracks": {
@@ -258,13 +264,13 @@
           },
           "checks": {
             "seconds": 8,
-            "lufsIntegrated": -31.1,
-            "lufsMomentaryMax": -27.9,
-            "truePeakDb": -5.9,
-            "centroidHz": 2452,
-            "longestQuietSec": 0.1,
+            "lufsIntegrated": -36.6,
+            "lufsMomentaryMax": -34.1,
+            "truePeakDb": -11.6,
+            "centroidHz": 2545,
+            "longestQuietSec": 0.25,
             "leadingSilenceSec": 0,
-            "dc": -0.000088,
+            "dc": -0.000041,
             "clippedSamples": 0,
             "flags": []
           }
@@ -1482,39 +1488,56 @@
           "brief": "desk",
           "studioTitle": "Office Hours",
           "model": "eleven_music_v2_5",
-          "prompt": "Quiet instrumental office music in A minor at 72 bpm: soft muted reed organ chords, a sparse upright bass, and a steady woodblock and rim click like a ticking wall clock, with an occasional lazy vibraphone phrase. Patient, a little drowsy and wry, very low-key background. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+          "prompt": "Quiet instrumental funeral-parlor office music in A minor at 66 bpm: warm, soft reed organ chords and muted strings, a sparse plucked upright bass, and now and then a gentle celesta phrase. Calm, respectful and faintly wry, like the back office of a small-town funeral home on a slow afternoon. No drums, no percussion, no ticking. Keep one steady groove the whole way through: no big intro, no build, no ending.",
           "params": {
-            "duration_seconds": 65,
+            "duration_seconds": 60,
             "instrumental": true,
             "lyrics_type": "instrumental"
           },
-          "generationId": "6JovC0mNBViY4IN2tW4Q",
-          "sessionId": "Gu67JsT2HwqUwAYtdv2S",
-          "nodeId": "UMii5thauAJlZ1e9iJTX",
-          "generatedOn": "2026-11-06",
-          "credits": 975,
-          "chosenBecause": "The only take (one take per music piece).",
-          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found. Positive control: the same screen found the words in a spoken sample mixed into this pack's main theme.",
-          "otherTakes": [],
+          "generationId": "G1BtbYIXtxxkiDo1kgya",
+          "sessionId": "vcVhd4TkYs8l8HGUSgrU",
+          "nodeId": "music-page",
+          "generatedOn": "2026-11-15",
+          "credits": 900,
+          "chosenBecause": "Retake without the woodblock clock (owner's report 2026-11-15: the desk was a constant tick-tock). Two takes on the Music page (music v2.5, 60 s, instrumental, prompt improvement off); chosen for the least high-band (clock and click) energy, 0.9 % of the spectrum against 2.7 % for the other take and 5.8 % for the first take, and the fewest strong onsets. Its loop also joins more cleanly (seam 2.04 before the crossfade and 0.03 after, against 6.31 and 0.14).",
+          "voiceCheck": "faster-whisper base (int8, CPU) with Silero VAD over the whole take: no speech found.",
+          "otherTakes": [
+            {
+              "generationId": "6JovC0mNBViY4IN2tW4Q",
+              "credits": 975,
+              "date": "2026-11-06",
+              "prompt": "Quiet instrumental office music in A minor at 72 bpm: soft muted reed organ chords, a sparse upright bass, and a steady woodblock and rim click like a ticking wall clock, with an occasional lazy vibraphone phrase. Patient, a little drowsy and wry, very low-key background. Keep one steady groove the whole way through: no big intro, no build, no ending.",
+              "params": {
+                "duration_seconds": 65,
+                "instrumental": true,
+                "lyrics_type": "instrumental"
+              }
+            },
+            {
+              "generationId": "vfbNyFCKocsD1KixJYMw",
+              "credits": 900,
+              "date": "2026-11-15"
+            }
+          ],
           "post": {
-            "bars": 14,
-            "seamSimilarity": 0.792,
-            "method": "bar lines 6.677 s to 53.355 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
+            "bars": 10,
+            "seamSimilarity": 0.887,
+            "method": "bar lines 18.475 s to 56.267 s of the recording, 0.60 s equal-power crossfade of the continuation into the head"
           },
           "checks": {
-            "seconds": 46.68,
+            "seconds": 37.79,
             "lufsIntegrated": -16,
-            "lufsMomentaryMax": -9.7,
-            "truePeakDb": -2.2,
-            "centroidHz": 196,
+            "lufsMomentaryMax": -10.1,
+            "truePeakDb": -2.4,
+            "centroidHz": 100,
             "longestQuietSec": 0,
             "leadingSilenceSec": 0,
-            "dc": -0.000065,
+            "dc": -0.000033,
             "clippedSamples": 0,
             "flags": [],
-            "bpmEstimated": 72,
-            "keyEstimated": "Eb minor (r 0.44)",
-            "narrowband": "68% of frames @ 293 Hz"
+            "bpmEstimated": 65,
+            "keyEstimated": "C# major (r 0.46)",
+            "narrowband": "88% of frames @ 293 Hz"
           }
         }
       ]
