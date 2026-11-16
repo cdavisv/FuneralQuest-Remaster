@@ -6,6 +6,11 @@ The version number lives in one place, the root `package.json`, and every app re
 
 ## Unreleased
 
+- **What the layout pass left open, done.**
+  - An Expanded customer's text well held the mood and running total, two rows of choices (or a hand of cards) and room for two lines of what is said (one beside a hand). The mood face and the total now sit in the portrait's lower right corner, opposite the 2001 caption that already gives the mood, and the well shows three or four lines (two beside a hand) at every size. Classic, with its one row, and a phone keep them in the well.
+  - The town's toasts (a TV line, a player logging on) arrived with the morning paper and covered its wall of notes for their nine seconds. They now wait while the paper is open and show, and start their nine seconds, once it is closed; a sysop's message still shows at once.
+  - Settings fits without scrolling at 800 x 600, 1024 x 745, 1280 x 720 and 1366 x 768 (it scrolled 330 and 230 pixels at the first two). It keeps three columns from 760 wide, the volume labels go above their sliders in a narrow column (the sliders were stubs 32 pixels long), the art style moved beside the sound pack, and the sound pack's note keeps in view that no pack is the 2001 audio, the rest of it under "More about the sound packs and voices". In a short window the Close button sits beside the title.
+  - In the 1024 x 745 layout an Expanded town's map, which takes the whole stage, has a Places button in its lower right corner that opens the list of the twenty places over it (Escape closes it), as the wider layouts show it beside the map.
 - **Text that ran off, overlapped or had to be scrolled, fixed across the client.** Both rulesets were played in Solo for three days at five window sizes (1920 x 1080, 1366 x 768, 1024 x 745, 800 x 600 and a phone), with every screen checked for text outside its box, text under a button and boxes that clip or scroll. What changed:
   - The desk's buttons (Wait for Customer, the five or six round icons, Exit, End the Day) wrapped onto three rows and covered the last lines of the activity log; they fit one row again. The plaque art stretches to a plaque's size, so a narrow one (Exit) is no longer drawn as a flat sliver.
   - The front door's "Play online / Play solo" plaques kept their text on the plaque's face, not on its rim.

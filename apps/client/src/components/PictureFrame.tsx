@@ -1,14 +1,20 @@
 import type { CustomerPanel, View } from "@fq/protocol";
+import type { ReactNode } from "react";
 import { useT } from "../i18n/I18nContext.js";
 import { PictureLayers } from "./Picture.js";
 
-/** Dark wood frame around the picture layers, with Class and Mood overlaid during a sale. */
+/**
+ * Dark wood frame around the picture layers, with Class and Mood overlaid during a sale, and
+ * `readout` (an Expanded customer's mood face and running total) in the opposite corner.
+ */
 export function PictureFrame({
   view,
   customer,
+  readout,
 }: {
   view: View;
   customer: CustomerPanel | undefined;
+  readout?: ReactNode;
 }) {
   const t = useT();
   return (
@@ -25,6 +31,7 @@ export function PictureFrame({
             </span>
           </p>
         )}
+        {readout}
       </div>
       {customer && (
         <p className="fq-sr">

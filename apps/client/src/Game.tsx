@@ -388,7 +388,7 @@ export function Game({ transport, onLeave, busyNote, ownLobby, solo }: GameProps
           </div>
         </Dialog>
       )}
-      <NoticeLayer state={notices} dispatch={noticeDispatch} />
+      <NoticeLayer state={notices} dispatch={noticeDispatch} hold={view.scene === "news"} />
       {busyNote && slowBusy && (
         <p className="fq-busy-note" role="status">
           {busyNote}

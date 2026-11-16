@@ -195,7 +195,13 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
   // The rankings sheet is text on bare wood; every other sheet is parchment.
   const surface = cab?.variant === "rankings" ? "dark" : undefined;
   const phone = layout === "phone";
-  const customerReadout = view.customer ? <CustomerReadout customer={view.customer} /> : undefined;
+  // An Expanded customer's well holds two rows of choices or a hand of cards, which left two lines
+  // (one beside a hand) for what is said: the mood face and running total go onto the portrait,
+  // whose caption already gives the mood, and the well keeps the room for text. Classic, with its
+  // one row, and a phone, whose page grows, keep them in the well.
+  const readoutOnPicture = Boolean(file && view.customer && !phone);
+  const customerReadout =
+    view.customer && !readoutOnPicture ? <CustomerReadout customer={view.customer} /> : undefined;
   const readout = (
     <>
       {customerReadout ?? (view.battle ? <BattleReadout battle={view.battle} /> : undefined)}
@@ -302,7 +308,13 @@ export function CabinetScene({ view, layout, onPress, onAction, revealKey, log }
             </div>
           )}
           <div className="fq-r-frame">
-            <PictureFrame view={view} customer={view.customer} />
+            <PictureFrame
+              view={view}
+              customer={view.customer}
+              {...(readoutOnPicture && view.customer
+                ? { readout: <CustomerReadout customer={view.customer} variant="picture" /> }
+                : {})}
+            />
           </div>
         </>
       )}

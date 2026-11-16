@@ -46,13 +46,20 @@ function ToastItem({ toast, dispatch }: { toast: Toast; dispatch: Dispatch<Notic
  * Everything the push channel puts on screen without taking over: a slim connection banner,
  * the "new day" banner, and a short stack of toasts for TV, town and sysop messages. All of it
  * is a polite live region, so it never steals focus from a form or the chat box.
+ *
+ * `hold` keeps the town's toasts back while the paper is open: they arrived with the morning and
+ * sat over the paper's wall of notes for the nine seconds they last. They show (and start their
+ * nine seconds) when the paper is closed; a sysop's message, which stays until closed, still
+ * shows at once.
  */
 export function NoticeLayer({
   state,
   dispatch,
+  hold = false,
 }: {
   state: NoticeState;
   dispatch: Dispatch<NoticeEvent>;
+  hold?: boolean;
 }) {
   const t = useT();
   const [restored, setRestored] = useState(false);
@@ -71,6 +78,7 @@ export function NoticeLayer({
     return () => clearTimeout(timer);
   }, [state.connection]);
 
+  const shown = hold ? state.toasts.filter((toast) => toast.kind === "server") : state.toasts;
   const day = state.newDay;
   useEffect(() => {
     if (day === null) return;
@@ -107,9 +115,9 @@ export function NoticeLayer({
           </p>
         )}
       </div>
-      {state.toasts.length > 0 && (
+      {shown.length > 0 && (
         <ul className="fq-toasts" aria-live="polite">
-          {state.toasts.map((toast) => (
+          {shown.map((toast) => (
             <ToastItem key={toast.id} toast={toast} dispatch={dispatch} />
           ))}
         </ul>

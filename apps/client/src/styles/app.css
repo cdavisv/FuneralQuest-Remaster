@@ -1314,6 +1314,25 @@ textarea {
   color: var(--fq-text-body);
 }
 
+/* In a narrow column (three in an 800-wide window) the label goes above its slider: beside it,
+   it left the slider a stub 32 pixels long. */
+.fq-set-col {
+  container-type: inline-size;
+}
+
+@container (max-width: 320px) {
+  .fq-set-slider {
+    grid-template-columns: minmax(0, 1fr) 3.2em;
+    row-gap: 0;
+    min-height: 0;
+    padding-block: 2px;
+  }
+
+  .fq-set-slider label {
+    grid-column: 1 / -1;
+  }
+}
+
 .fq-set-note {
   margin: 6px 0 0;
   font-size: 0.85em;
@@ -1346,8 +1365,10 @@ textarea {
     font-size: max(15px, calc(var(--u) * 18 * var(--fq-font-scale)));
   }
 
+  /* Three columns from 760 wide: in two, the third (the sound pack) went under the others and
+     the dialog scrolled at 800 x 600 and at 1024 x 745. */
   .fq-set-cols {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .fq-settings .fq-set-group {
@@ -1367,6 +1388,34 @@ textarea {
   .fq-app .fq-dialog.fq-settings,
   .fq-app[data-art="pieces"] .fq-dialog.fq-settings {
     width: min(calc(var(--u) * 1120), 100%);
+  }
+}
+
+/* A short window (800 x 600): the Close button goes up beside the title and the choices sit a
+   little closer (26px rows, above the 24px a pointer target needs), so the three columns fit
+   without scrolling. */
+@media (min-width: 760px) and (max-height: 640px) {
+  .fq-settings .fq-set-choice {
+    min-height: 26px;
+  }
+
+  .fq-settings .fq-set-slider {
+    min-height: 0;
+  }
+
+  .fq-settings .fq-set-group {
+    margin-bottom: calc(var(--u) * 4);
+  }
+
+  .fq-settings .fq-set-note {
+    font-size: 0.8em;
+  }
+
+  .fq-dialog.fq-settings > .fq-dialog-actions {
+    position: absolute;
+    top: calc(var(--u) * 14);
+    right: calc(var(--u) * 22);
+    margin: 0;
   }
 }
 

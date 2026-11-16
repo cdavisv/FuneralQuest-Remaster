@@ -1436,6 +1436,42 @@ body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
   max-width: calc(var(--u) * 170);
 }
 
+/* An Expanded customer's mood face and running total, in the portrait's lower right corner
+   (the 2001 caption, class and mood, is in the lower left): out of the text well, which keeps its
+   lines for what is said. A dark backing keeps it readable over any portrait; the mood's words
+   are for screen readers only there, the caption already showing them. */
+.fq-frame .fq-readout[data-variant="picture"] {
+  position: absolute;
+  right: calc(var(--u) * 10);
+  bottom: calc(var(--u) * 8);
+  z-index: 1;
+  max-width: 62%;
+  justify-content: flex-end;
+  gap: calc(var(--u) * 4) calc(var(--u) * 12);
+  margin: 0;
+  padding: calc(var(--u) * 4) calc(var(--u) * 10);
+  border: 0;
+  border-radius: calc(var(--u) * 8);
+  background: rgba(16, 10, 2, 0.74);
+  pointer-events: none;
+}
+
+.fq-cabinet[data-cab] .fq-frame .fq-readout[data-variant="picture"] {
+  right: calc(var(--au) * 5);
+  bottom: calc(var(--au) * 4);
+  font-size: max(13px, calc(var(--au) * 12));
+}
+
+.fq-readout[data-variant="picture"] .fq-readout-mood .fq-readout-label,
+.fq-readout[data-variant="picture"] .fq-readout-mood strong {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .fq-hotspot-area:hover,
 .fq-hotspot-area:focus-visible {
   background: rgba(255, 244, 190, 0.16);
@@ -1474,6 +1510,59 @@ body:has(.fq-tipped:hover) .fq-tipped:focus-within:not(:hover) > .fq-tip-x {
 
 .fq-cabinet[data-layout="phone"] .fq-map[data-map="expanded"] .fq-map-frame {
   width: 100%;
+}
+
+/* The 1024 x 745 layout has no room for the list of places beside the map: a town with many
+   places gets a Places button in the map's lower right corner (over the corner park, clear of
+   every building and of the town strip along the top), and the list opens above it. */
+.fq-map-places {
+  position: absolute;
+  right: calc(var(--u) * 44);
+  bottom: calc(var(--u) * 46);
+  z-index: 5;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: calc(var(--u) * 6);
+}
+
+.fq-map-places-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 8);
+  min-height: 36px;
+  padding: calc(var(--u) * 4) calc(var(--u) * 18);
+  border: 1px solid #d3a24c;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #4b3015, #2d1b09);
+  box-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 8) rgba(0, 0, 0, 0.55);
+  color: #ffe9b0;
+  font-weight: 700;
+  font-size: max(14px, calc(var(--u) * 17));
+  cursor: pointer;
+}
+
+.fq-map-places-btn:hover,
+.fq-map-places-btn:focus-visible {
+  filter: brightness(1.18);
+}
+
+.fq-map-places-btn[aria-expanded="true"] {
+  background: linear-gradient(180deg, #6a4418, #3e250c);
+}
+
+.fq-map-places .fq-map-list[data-popover] {
+  position: static;
+  width: calc(var(--u) * 470);
+  max-height: calc(var(--u) * 600);
+  overflow-y: auto;
+  box-shadow:
+    0 calc(var(--u) * 8) calc(var(--u) * 24) rgba(0, 0, 0, 0.6),
+    inset 0 0 0 calc(var(--u) * 2) #1d0f02;
+}
+
+.fq-map > .fq-map-places .fq-map-list[data-popover] ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .fq-map-list[data-many] ul {

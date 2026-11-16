@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import { useArt } from "../art/ArtContext.js";
 import type { MapGeometry, PieceName, Rect } from "../art/types.js";
 import { PictureLayers } from "../components/Picture.js";
@@ -23,6 +23,87 @@ function buildingBox(r: Rect, vb: [number, number, number, number]): CSSProperti
     width: pct(r.w, vb[2]),
     height: pct(r.h, vb[3]),
   };
+}
+
+/** The places as a list of plaques (beside the map, under it on a phone, or opened over it). */
+function PlaceList({
+  places,
+  visit,
+  id,
+  popover = false,
+}: {
+  places: { id: string; label: string }[];
+  visit: (placeId: string) => void;
+  id?: string;
+  popover?: boolean;
+}) {
+  const t = useT();
+  return (
+    <nav
+      id={id}
+      className="fq-map-list fq-surface-dark"
+      aria-label={t("map.places")}
+      data-many={places.length > 10 ? "" : undefined}
+      data-popover={popover ? "" : undefined}
+    >
+      <ul>
+        {places.map((p) => (
+          <li key={p.id}>
+            <button type="button" className="fq-listbtn" onClick={() => visit(p.id)}>
+              {p.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+/**
+ * In the 1024 x 745 layout the map takes the whole stage and there is no room for the list of
+ * places beside it: a town with many places (an Expanded one, twenty) gets a Places button that
+ * opens the list over the map's corner. Escape, the button again, or a place closes it.
+ */
+function PlacesButton({
+  places,
+  visit,
+}: {
+  places: { id: string; label: string }[];
+  visit: (placeId: string) => void;
+}) {
+  const t = useT();
+  const id = useId();
+  const [open, setOpen] = useState(false);
+  const button = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.stopPropagation();
+      setOpen(false);
+      button.current?.focus();
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [open]);
+  return (
+    <div className="fq-map-places">
+      <button
+        ref={button}
+        type="button"
+        className="fq-map-places-btn"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span aria-hidden="true" className="fq-map-places-icon">
+          ☰
+        </span>
+        {t("map.placesButton")}
+      </button>
+      {open && <PlaceList places={places} visit={visit} id={id} popover />}
+    </div>
+  );
 }
 
 /** Full-frame Deathville map with a hot-spot per building. Sends `visit` actions. */
@@ -141,23 +222,8 @@ export function MapScene({ view, layout, onPress, onAction }: SceneProps) {
           </ul>
         </div>
       </div>
-      {layout !== "classic" && (
-        <nav
-          className="fq-map-list fq-surface-dark"
-          aria-label={t("map.places")}
-          data-many={places.length > 10 ? "" : undefined}
-        >
-          <ul>
-            {places.map((p) => (
-              <li key={p.id}>
-                <button type="button" className="fq-listbtn" onClick={() => visit(p.id)}>
-                  {p.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+      {layout !== "classic" && <PlaceList places={places} visit={visit} />}
+      {layout === "classic" && places.length > 10 && <PlacesButton places={places} visit={visit} />}
       {view.text.length > 0 && (
         <p className="fq-map-caption fq-surface-dark">
           <RichText spans={view.text} />
