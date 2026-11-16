@@ -198,12 +198,16 @@ const PLACE = {
   university: /Go to Spirit University/,
 } as const;
 
+/** The stats screen's two regions: the sheet on the parchment and, in a cabinet with a dark well
+ * under it, the rest of the stats written there ("More of your stats"). */
+const STATS_REGIONS = /^(Your stats and inventory|More of your stats)$/;
+
 /** The stats sheet as a map of stat id to value; leaves with Back. */
 async function readStats(page: Page): Promise<Record<string, string>> {
   await toDesk(page);
   await btn(page, "Stats").click();
-  const sheet = page.getByRole("region", { name: "Your stats and inventory" });
-  await expect(sheet).toBeVisible();
+  const sheet = page.getByRole("region", { name: STATS_REGIONS });
+  await expect(sheet.first()).toBeVisible();
   const stats = await sheet
     .locator("[data-stat]")
     .evaluateAll((rows) =>
@@ -523,7 +527,7 @@ test("the stats sheet shows every stat of a new parlor, and the rating line", as
   const stats = await readStats(page);
   const labels = T.stats.labels;
   await btn(page, "Stats").click();
-  const sheet = page.getByRole("region", { name: "Your stats and inventory" });
+  const sheet = page.getByRole("region", { name: STATS_REGIONS });
   for (const label of Object.values(labels)) {
     await expect(sheet.getByText(label, { exact: true })).toBeVisible();
   }

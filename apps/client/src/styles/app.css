@@ -1327,6 +1327,12 @@ textarea {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   column-gap: calc(var(--u) * 36);
+  /* A dark inset under the columns: widened, the dialog put its middle columns on the lighter
+     centre of its art, where the notes, the chosen sound pack and the help links fell under 4.5:1
+     contrast (the accessibility check measures the painted page). */
+  padding: calc(var(--u) * 6) calc(var(--u) * 14) calc(var(--u) * 10);
+  border-radius: calc(var(--u) * 8);
+  background: rgba(26, 16, 2, 0.34);
 }
 
 .fq-set-col > .fq-set-heading:first-child {

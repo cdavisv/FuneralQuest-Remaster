@@ -955,7 +955,10 @@ test("karma: a body-preparation choice, the perk paths (Bless, Raise Mourners, D
   // The good paths: Trusted and Church Associate at karma 90; Bless once per customer (8.3).
   await edit(page, M, alice, { karma: 90 });
   await press(page, "go:stats");
-  const sheet = page.getByRole("region", { name: "Your stats and inventory" });
+  // The sheet on the parchment and the rest of the stats in the dark well under it.
+  const sheet = page.getByRole("region", {
+    name: /^(Your stats and inventory|More of your stats)$/,
+  });
   // The lines 11.1 adds to the Classic sheet, with the rating as a number and a title.
   const L = X.stats.labels;
   for (const label of [
